@@ -3,11 +3,12 @@
     "relation": ["delegate_permission/common.handle_all_urls"],
     "target": {
       "namespace": "android_app",
-      "package_name": "com.example.myapp",
+      "package_name": "com.syncras.app",
       "sha256_cert_fingerprints": [
         "72:EE:2F:98:B2:09:2F:22:AB:61:1E:73:28:01:69:4A:2D:6A:3D:EA:93:1C:AF:01:C9:D7:A7:CA:CA:C4:BD:C3"
       ]
     }
   }
 ]
+
 
