@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blog Syncras | Guide e recensioni per acquisti intelligenti</title>
-  <meta name="description" content="Il blog di Syncras: articoli, guide e prove reali per applicare il Metodo SmartShop e scegliere prodotti utili, duraturi e con buon rapporto qualità/prezzo.">
+  <title>Blog Syncras | Guide SmartShop per acquisti intelligenti</title>
+  <meta name="description" content="Articoli e guide di Syncras per scegliere meglio: tecnologia, casa, energia, elettrodomestici e molto altro, spiegati in modo semplice e ironico.">
   <meta name="robots" content="index,follow">
+
   <style>
     body {
       font-family: 'Arial', sans-serif;
@@ -30,6 +31,35 @@
     nav a:hover {
       text-decoration: underline;
     }
+
+    /* Dropdown menu */
+    .dropdown {
+      display: inline-block;
+      position: relative;
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #4CAF50;
+      min-width: 220px;
+      border-radius: 6px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      z-index: 20;
+    }
+    .dropdown-content a {
+      color: white;
+      padding: 10px;
+      text-decoration: none;
+      display: block;
+      font-weight: normal;
+    }
+    .dropdown-content a:hover {
+      background-color: #3e8e41;
+    }
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
     main {
       max-width: 900px;
       margin: 30px auto;
@@ -41,27 +71,36 @@
     h2, h3 {
       color: #2f6f34;
     }
+
     .post-list {
       list-style: none;
-      padding: 0;
+      padding-left: 0;
+      margin: 20px 0 0 0;
     }
     .post-card {
-      margin-bottom: 20px;
+      background: #f6faf7;
+      border-radius: 10px;
+      border: 1px solid #d7e8dc;
       padding: 15px;
-      border-radius: 8px;
-      border: 1px solid #e0e0e0;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-      background-color: #fafafa;
+      margin-bottom: 15px;
     }
     .post-card h3 {
       margin-top: 0;
-      margin-bottom: 8px;
+      margin-bottom: 5px;
     }
     .post-meta {
       font-size: 0.9rem;
-      color: #666;
+      color: #777;
       margin-bottom: 8px;
     }
+    .post-card a {
+      text-decoration: none;
+      color: inherit;
+    }
+    .post-card a:hover h3 {
+      text-decoration: underline;
+    }
+
     footer {
       text-align: center;
       padding: 15px;
@@ -70,152 +109,94 @@
     }
   </style>
 </head>
+
 <body>
   <header>
-    /* Dropdown menu */
-.dropdown {
-  display: inline-block;
-  position: relative;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #4CAF50;
-  min-width: 200px;
-  border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  z-index: 10;
-}
-
-.dropdown-content a {
-  color: white;
-  padding: 10px;
-  text-decoration: none;
-  display: block;
-  font-weight: normal;
-}
-
-.dropdown-content a:hover {
-  background-color: #3e8e41;
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
     <h1>Blog di Syncras</h1>
-   <nav>
-  <a href="index.html">Home</a> |
-  <a href="blog.html">Blog</a> |
+    <nav>
+      <a href="index.html">Home</a> |
+      <a href="blog.html">Blog</a> |
 
-  <div class="dropdown">
-    <a href="offerte.html">Offerte Amazon ▾</a>
-    <div class="dropdown-content">
-      <a href="categorie.html#smartphone">📱 Smartphone</a>
-      <a href="categorie.html#elettrodomestici">🍳 Elettrodomestici</a>
-      <a href="categorie.html#robot">🤖 Robot pulizia</a>
-      <a href="categorie.html#clima">🌬 Clima & Riscaldamento</a>
-      <a href="categorie.html#energia">⚡ Energia & Fotovoltaico</a>
-      <a href="categorie.html#casa">🏠 Casa & Comfort</a>
-    </div>
-  </div>
-  |
-
-  <a href="categorie.html">Categorie</a> |
-  <a href="chi.html">Chi siamo</a>
-</nav>
-
+      <div class="dropdown">
+        <a href="offerte.html">Offerte Amazon ▾</a>
+        <div class="dropdown-content">
+          <a href="categorie.html#smartphone">📱 Smartphone</a>
+          <a href="categorie.html#elettrodomestici">🍳 Elettrodomestici</a>
+          <a href="categorie.html#robot">🤖 Robot Pulizia</a>
+          <a href="categorie.html#clima">🌬 Clima & Riscaldamento</a>
+          <a href="categorie.html#energia">⚡ Energia & Fotovoltaico</a>
+          <a href="categorie.html#casa">🏠 Casa & Comfort</a>
+        </div>
+      </div>
+      |
+      <a href="categorie.html">Categorie</a> |
+      <a href="chi.html">Chi siamo</a>
+    </nav>
   </header>
 
   <main>
     <h2>Articoli e guide SmartShop</h2>
     <p>
-      In questa sezione trovi gli articoli in cui metto in pratica il
-      <strong>Metodo SmartShop</strong>: niente recensioni “copiate”, ma
-      ragionamenti, confronti e scelte spiegate come a un amico.
+      Qui trovi gli articoli in cui metto in pratica il <strong>Metodo SmartShop</strong>:
+      niente recensioni “copiate”, ma ragionamenti, confronti e scelte spiegate come a un amico.
     </p>
 
     <ul class="post-list">
-
-      <!-- ARTICOLO VERO PUBBLICATO -->
       <li class="post-card">
-        <a href="fotovoltaico-4kw-accumulo-10kwh.html" style="text-decoration:none; color:inherit;">
+        <a href="fotovoltaico-4kw-accumulo-10kwh.html">
           <h3>Fotovoltaico 4 kW con accumulo 10 kWh: quanto costa davvero nel 2025?</h3>
-          <div class="post-meta">18 novembre 2025 • Energia • Risparmio</div>
+          <div class="post-meta">18 novembre 2025 • Energia • Fotovoltaico</div>
           <p>
-            Analisi pratica dei costi reali di un impianto da 4 kW con batteria da 10 kWh,
-            con incentivi, esempi e confronto ironico con il rendimento in banca.
+            Impianto reale, numeri veri, pro e contro spiegati senza marketing. Quanto spendi,
+            quanto recuperi e in quanti anni ti rientra l’investimento.
           </p>
         </a>
       </li>
-<li class="post-card">
-  <a href="resistenza-termosifone-fotovoltaico.html" style="text-decoration:none; color:inherit;">
-    <h3>La soluzione per la stanza più fredda: resistenza elettrica per termosifone (perfetta con fotovoltaico)</h3>
-    <div class="post-meta">19 novembre 2025 • Casa • Risparmio energetico</div>
-    <p>
-      Come ho risolto il problema della stanza più fredda installando una resistenza elettrica
-      per termosifone: guida semplice, consigli e uso con fotovoltaico.
-    </p>
-  </a>
-</li>
-<li class="post-card">
-  <a href="robot-cucina-economici-2025.html" style="text-decoration:none; color:inherit;">
-    <h3>Robot da cucina economici sotto 150€ – guida ironica 2025</h3>
-    <div class="post-meta">18 novembre 2025 • Cucina • Elettrodomestici</div>
-    <p>
-      Niente robot da 700€ con mille programmi che non userai mai: qui trovi 5 modelli sotto 150€
-      che tritano, impastano e ti salvano la cena… senza salvarti solo il portafoglio.
-    </p>
-  </a>
-</li>
-<li class="post-card">
-  <a href="smartphone-sotto-200-euro-2025.html" style="text-decoration:none; color:inherit;">
-    <h3>I migliori smartphone sotto i 200€ – guida amichevole e ironica 2025</h3>
-    <div class="post-meta">18 novembre 2025 • Tecnologia • Smartphone</div>
-    <p>
-      Una guida semplice, ironica e senza tecnicismi per scegliere lo smartphone giusto sotto i 200€.
-      Quattro modelli davvero validi spiegati come a un amico davanti a un caffè.
-    </p>
-  </a>
-</li>
-<li class="post-card">
-  <a href="cuffie-wireless-sotto-50-euro-2025.html" style="text-decoration:none; color:inherit;">
-    <h3>Cuffie wireless sotto 50€ (2025) – guida amichevole, pratica e un po’ ironica</h3>
-    <div class="post-meta">18 novembre 2025 • Tecnologia • Audio</div>
-    <p>
-      Le migliori cuffie wireless sotto 50€ del 2025: audio pulito, buona autonomia e consigli
-      ironici in stile Syncras per evitare fregature e scegliere il modello giusto per le tue abitudini.
-    </p>
-  </a>
-</li>
 
-
-      <!-- Articoli di esempio -->
       <li class="post-card">
-        <h3>Come scegliere un condizionatore senza buttare soldi</h3>
-        <div class="post-meta">Esempio di articolo • Clima e comfort</div>
-        <p>
-          Potenza giusta, consumi reali, installazione, rumore: i parametri che contano
-          davvero e quelli che puoi ignorare serenamente.
-        </p>
+        <a href="resistenza-termosifone-fotovoltaico.html">
+          <h3>Come ho migliorato il comfort con una resistenza sul termosifone (e il fotovoltaico)</h3>
+          <div class="post-meta">18 novembre 2025 • Clima & comfort • Casa</div>
+          <p>
+            Termosifone, resistenza elettrica, fotovoltaico e un po’ di buon senso: cosa ha funzionato,
+            quanto consuma davvero e quando ha senso farlo.
+          </p>
+        </a>
       </li>
 
       <li class="post-card">
-        <h3>I 10 errori più comuni quando si compra tecnologia</h3>
-        <div class="post-meta">Esempio di articolo • Tecnologia</div>
-        <p>
-          Dalle offerte “imperdibili” agli acquisti doppioni: una lista di errori ricorrenti
-          che il Metodo SmartShop ti aiuta a evitare.
-        </p>
+        <a href="robot-cucina-economici-2025.html">
+          <h3>I robot da cucina economici nel 2025: quando hanno senso davvero</h3>
+          <div class="post-meta">18 novembre 2025 • Cucina • Elettrodomestici</div>
+          <p>
+            Non ti serve uno chef in casa, ma un aiuto furbo sì: come scegliere un robot economico
+            senza farti portare via lo stipendio.
+          </p>
+        </a>
       </li>
 
+      <li class="post-card">
+        <a href="smartphone-sotto-200-euro-2025.html">
+          <h3>I migliori smartphone sotto i 200€ – guida amichevole e ironica 2025</h3>
+          <div class="post-meta">18 novembre 2025 • Tecnologia • Smartphone</div>
+          <p>
+            Una guida semplice, ironica e senza tecnicismi per scegliere lo smartphone giusto sotto i 200€.
+            Quattro modelli validi spiegati come a un amico al bar.
+          </p>
+        </a>
+      </li>
+
+      <li class="post-card">
+        <a href="cuffie-wireless-sotto-50-euro-2025.html">
+          <h3>Cuffie wireless sotto 50€ (2025) – guida amichevole, pratica e un po’ ironica</h3>
+          <div class="post-meta">18 novembre 2025 • Audio • Cuffie</div>
+          <p>
+            Le migliori cuffie bluetooth economiche spiegate senza paroloni: autonomia, comfort,
+            quando bastano 50€ e quando è meglio non esagerare con il risparmio.
+          </p>
+        </a>
+      </li>
     </ul>
-
-    <p style="margin-top: 25px;">
-      Queste sono solo idee di partenza: man mano che pubblicheremo articoli reali,
-      questa pagina verrà aggiornata con contenuti veri e link diretti alle guide.
-    </p>
   </main>
 
   <footer>
@@ -223,5 +204,4 @@
   </footer>
 </body>
 </html>
-
 
