@@ -1,81 +1,144 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Smartphone top di gamma 2025 | Syncras</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top di Gamma 2025 | Syncras</title>
+  <meta name="description" content="I migliori smartphone top di gamma del 2025, selezionati con il Metodo SmartShop: prestazioni estreme, foto eccellenti e qualità superiore.">
+  <meta name="robots" content="index,follow">
 
-<style>
-body { font-family: Arial; background:#f5f5f5; margin:0; padding:0; }
-header { background:#4CAF50; color:white; padding:20px; text-align:center; }
-main {
-  max-width:900px; margin:20px auto; padding:20px;
-  background:white; border-radius:10px; box-shadow:0 4px 6px rgba(0,0,0,0.1);
-}
-.product-box {
-  padding:15px; margin-bottom:20px;
-  border:1px solid #ddd; border-radius:8px; background:#fafafa;
-}
-.product-box:hover { background:#f0f8f0; }
-a.btn {
-  display:inline-block; padding:10px 15px; background:#4CAF50;
-  color:white; border-radius:6px; text-decoration:none;
-}
-footer {
-  text-align:center; padding:15px; background:#ddd; margin-top:30px;
-}
-</style>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background:#f5f5f5;
+      margin:0;
+      padding:0;
+      color:#333;
+      line-height:1.6;
+    }
+
+    header {
+      background:#4CAF50;
+      color:white;
+      padding:20px 10px;
+      text-align:center;
+    }
+
+    nav a {
+      color:white;
+      text-decoration:none;
+      margin:0 15px;
+      font-weight:bold;
+    }
+
+    nav a:hover {
+      text-decoration:underline;
+    }
+
+    main {
+      max-width:900px;
+      margin:20px auto;
+      padding:20px;
+      background:white;
+      border-radius:10px;
+      box-shadow:0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    h2, h3 {
+      color:#2f6f34;
+    }
+
+    .product-box {
+      padding:15px;
+      margin-bottom:20px;
+      border:1px solid #ddd;
+      background:#fafafa;
+      border-radius:8px;
+    }
+
+    .product-box:hover {
+      background:#f0f8f0;
+    }
+
+    a.btn {
+      display:inline-block;
+      padding:10px 15px;
+      background:#4CAF50;
+      color:white;
+      border-radius:6px;
+      text-decoration:none;
+      font-size:0.95rem;
+    }
+
+    a.btn:hover {
+      background:#3e8e41;
+    }
+
+    footer {
+      text-align:center;
+      padding:15px;
+      background-color:#ddd;
+      margin-top:40px;
+    }
+  </style>
 </head>
+
 <body>
 
-<header>
-  <h1>Top di gamma 2025</h1>
-</header>
+  <header>
+    <h1>Top di Gamma 2025</h1>
+    <nav>
+      <a href="index.html">Home</a> |
+      <a href="blog.html">Blog</a> |
+      <a href="offerte.html">Offerte Amazon</a> |
+      <a href="categorie.html">Categorie</a> |
+      <a href="chi.html">Chi siamo</a>
+    </nav>
+  </header>
 
-<main>
-  <p>
-    Qui non si parla di “risparmiare a tutti i costi”, ma di scegliere
-    tra i migliori smartphone in assoluto: display, fotocamera, prestazioni e materiali al top.
-  </p>
-
-  <div class="product-box">
-    <h3>🏆 I top più venduti</h3>
-    <p>Gli smartphone di fascia alta più acquistati dagli utenti.</p>
-    <a class="btn" href="https://www.amazon.it/gp/bestsellers/electronics/473262031?tag=mywebcorner4-21" target="_blank">
-      Vai ai top più venduti
-    </a>
-  </div>
-
-  <div class="product-box">
-    <h3>📸 Per chi vuole il meglio in foto e video</h3>
-    <p>Modelli pensati per fotografia, social, vlog e video di qualità.</p>
-    <a class="btn" href="https://www.amazon.it/s?k=smartphone+top+di+gamma&tag=mywebcorner4-21" target="_blank">
-      Cerca top di gamma 2025
-    </a>
-  </div>
-
-  <div class="product-box">
-    <h3>🧠 Consiglio SmartShop</h3>
+  <main>
+    <h2>I migliori smartphone top di gamma del 2025</h2>
     <p>
-      Prima di spendere cifre molto alte, chiediti:
+      Qui trovi la selezione “senza compromessi”.  
+      Prestazioni, fotocamera, materiali, aggiornamenti… tutto al massimo livello.
+      Se cerchi il meglio del meglio, sei nel posto giusto.
     </p>
-    <ul>
-      <li>Userai davvero tutta questa potenza?</li>
-      <li>Ti serve ora, o puoi prendere un modello di fascia 400–600€ e cambiare prima?</li>
-      <li>Meglio uno smartphone top, o una buona via di mezzo + un altro investimento utile?</li>
-    </ul>
-  </div>
 
-  <p style="font-size:0.85rem; color:#555;">
-    I link portano a ricerche e liste Amazon che si aggiornano nel tempo.
-    Alcuni link sono di affiliazione: tu non paghi di più, ma supporti Syncras.
-  </p>
-</main>
+    <div class="product-box">
+      <h3>🔥 Bestseller top di gamma</h3>
+      <p>I modelli premium più venduti del momento, aggiornati automaticamente da Amazon.</p>
+      <a class="btn" href="https://www.amazon.it/gp/bestsellers/electronics?tag=mywebcorner4-21" target="_blank">
+        Vedi bestseller top di gamma
+      </a>
+    </div>
 
-<footer>
-  © 2025 Syncras
-</footer>
+    <div class="product-box">
+      <h3>📱 Smartphone in offerta (fascia premium)</h3>
+      <p>A volte i top di gamma scendono parecchio: conviene tenerli d’occhio.</p>
+      <a class="btn" href="https://www.amazon.it/gp/goldbox?tag=mywebcorner4-21" target="_blank">
+        Offerte smartphone premium
+      </a>
+    </div>
+
+    <div class="product-box">
+      <h3>✨ I consigliati da Syncras</h3>
+      <ul>
+        <li><strong>Samsung S24 Ultra</strong> → fotocamera stellare, autonomia ottima, software maturo.</li>
+        <li><strong>iPhone 15 Pro</strong> → velocità, qualità video incredibile, ecosistema perfetto.</li>
+        <li><strong>Xiaomi 14 Pro</strong> → hardware estremo, ricarica velocissima, grande schermo.</li>
+      </ul>
+    </div>
+
+    <p style="font-size:0.9rem; color:#555;">
+      Nota SmartShop: un top di gamma dura anni, ma solo se ha <strong>aggiornamenti garantiti</strong>.
+      Non guardare solo i megapixel: guarda il supporto software.
+    </p>
+
+  </main>
+
+  <footer>
+    <p>© 2025 Syncras</p>
+  </footer>
 
 </body>
 </html>
-
