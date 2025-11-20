@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Categorie Intelligenti | Syncras</title>
-  <meta name="description" content="Categorie Syncras: smartphone per fascia di prezzo, elettrodomestici, robot, climatizzazione, energia e altre guide intelligenti per acquistare meglio.">
+  <title>Categorie SmartShop | Syncras</title>
+  <meta name="description" content="Categorie SmartShop: smartphone per fasce di prezzo, elettrodomestici, casa, riscaldamento, energia e scelte intelligenti secondo il Metodo SmartShop.">
   <meta name="robots" content="index,follow">
 
   <style>
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Arial', sans-serif;
       margin: 0;
       padding: 0;
       background-color: #f5f5f5;
@@ -37,7 +37,6 @@
       display: inline-block;
       position: relative;
     }
-
     .dropdown-content {
       display: none;
       position: absolute;
@@ -47,7 +46,6 @@
       box-shadow: 0 4px 8px rgba(0,0,0,0.2);
       z-index: 20;
     }
-
     .dropdown-content a {
       color: white;
       padding: 10px;
@@ -55,11 +53,9 @@
       display: block;
       font-weight: normal;
     }
-
     .dropdown-content a:hover {
       background-color: #3e8e41;
     }
-
     .dropdown:hover .dropdown-content {
       display: block;
     }
@@ -72,17 +68,28 @@
       border-radius: 10px;
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
-
     h2, h3 {
       color: #2f6f34;
     }
 
-    .category-block {
-      margin-bottom: 30px;
-      padding: 15px;
+    .category-card {
       background: #f6faf7;
+      padding: 20px;
       border: 1px solid #d7e8dc;
       border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    .category-card h3 {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+    .category-card a {
+      text-decoration: none;
+      color: inherit;
+    }
+    .category-card:hover {
+      background-color: #eef8f0;
+      cursor: pointer;
     }
 
     footer {
@@ -95,6 +102,7 @@
 </head>
 
 <body>
+
   <header>
     <h1>Syncras</h1>
     <nav>
@@ -113,55 +121,48 @@
         </div>
       </div>
       |
-
       <a href="categorie.html">Categorie</a> |
       <a href="chi.html">Chi siamo</a>
     </nav>
   </header>
 
   <main>
-    <h2>Categorie Syncras</h2>
+
+    <h2>Categorie SmartShop</h2>
     <p>
-      Qui troverai le categorie principali per scegliere meglio: smartphone per fascia di prezzo,
-      elettrodomestici, prodotti per la casa, riscaldamento, energia e molto altro.
-      Tutto con il Metodo SmartShop.
+      Qui trovi tutte le categorie principali pensate per aiutarti a scegliere meglio:
+      smartphone per fascia di prezzo, elettrodomestici, prodotti per la casa, riscaldamento,
+      energia e molto altro. Tutto secondo il <strong>Metodo SmartShop</strong>.
     </p>
 
-    <!-- SMARTPHONE -->
-    <div class="category-block" id="smartphone">
+    <div id="smartphone" class="category-card">
       <h3>📱 Smartphone</h3>
       <p>Fasce di prezzo, bestseller e offerte sempre aggiornate.</p>
-      <!-- Qui inseriremo i link delle fasce (200/400/600...) -->
     </div>
 
-    <!-- ELETTRODOMESTICI -->
-    <div class="category-block" id="elettrodomestici">
-      <h3>🍳 Elettrodomestici</h3>
-      <p>Friggitrici ad aria, robot da cucina, minipimer, piastre, ecc.</p>
+    <div id="elettrodomestici" class="category-card">
+      <h3>🔍 Elettrodomestici</h3>
+      <p>Frigoriferi, robot cucina, lavatrici, piccoli elettrodomestici e guida alla scelta.</p>
     </div>
 
-    <!-- ROBOT -->
-    <div class="category-block" id="robot">
-      <h3>🤖 Robot & Pulizia</h3>
-      <p>Robot aspirapolvere, scope elettriche, pulizia automatica.</p>
+    <div id="robot" class="category-card">
+      <h3>🤖 Robot Pulizia</h3>
+      <p>Aspirapolvere robot, lavapavimenti e offerte lampo su modelli affidabili.</p>
     </div>
 
-    <!-- CLIMA -->
-    <div class="category-block" id="clima">
+    <div id="clima" class="category-card">
       <h3>🌬 Clima & Riscaldamento</h3>
-      <p>Stufe, pannelli, condizionatori, deumidificatori.</p>
+      <p>Climatizzatori, deumidificatori, riscaldamento smart e soluzioni comfort.</p>
     </div>
 
-    <!-- ENERGIA -->
-    <div class="category-block" id="energia">
+    <div id="energia" class="category-card">
       <h3>⚡ Energia & Fotovoltaico</h3>
-      <p>Prese smart, wattmetri, accessori energia, power stations.</p>
+      <p>Pannelli solari, risparmio energetico, fotovoltaico e soluzioni green.</p>
     </div>
 
-    <!-- CASA -->
-    <div class="category-block" id="casa">
+    <div id="casa" class="category-card">
       <h3>🏠 Casa & Comfort</h3>
-      <p>Prodotti utili per la casa, bagno, camera, comfort termico.</p>
+      <p>Prodotti per migliorare la casa, pulizia, organizzazione e benessere.</p>
     </div>
 
   </main>
@@ -169,6 +170,7 @@
   <footer>
     <p>© 2025 Syncras</p>
   </footer>
+
 </body>
 </html>
 
