@@ -35,7 +35,35 @@ footer { text-align:center; padding:15px; margin-top:40px; background:#ddd; }
   <h1>Guida alle Smart TV 2025 – Per chi vuole ridere e scegliere bene</h1>
 </header>
 
+<div style="margin-top: 10px; margin-bottom: 20px;">
+  <a href="index.html">← Torna alla Home</a> |
+  <a href="blog.html">Vai al Blog</a> |
+  <a href="categorie.html">Categorie</a>
+</div>
+
 <main>
+
+<button id="shareBtn"
+  style="background:#4CAF50;color:white;padding:10px 15px;border:none;
+         border-radius:6px;cursor:pointer;margin-bottom:20px;">
+  📎 Condividi questa guida
+</button>
+
+<script>
+  const shareBtn = document.getElementById('shareBtn');
+  if (navigator.share) {
+    shareBtn.addEventListener('click', () => {
+      navigator.share({
+        title: "Guida Smart TV 2025 – Versione ironica",
+        text: "Guida divertente e pratica per scegliere la TV giusta in base al budget.",
+        url: window.location.href
+      });
+    });
+  } else {
+    // se non supportato (PC ecc.) nascondo il bottone
+    shareBtn.style.display = "none";
+  }
+</script>
 
 <h2>Comprare una TV oggi? Sembra facile…</h2>
 <p>
@@ -225,12 +253,18 @@ Sceglila per goderti:
 <p class="small">
 Nota: i link portano alle ricerche già filtrate su Amazon.  
 Tu pensa solo a quanto vuoi spendere… al resto ci pensa lo schermo.
-  <p><strong>Disclaimer:</strong> Alcuni link presenti su questo sito sono link di affiliazione Amazon
-  e ottengo una piccola commissione dagli acquisti idonei, senza costi aggiuntivi per te.</p>
+</p>
 
-  <p>I contenuti presenti su Syncras.app hanno scopo puramente informativo e ironico.
-  Non forniamo consulenze professionali e non ci assumiamo responsabilità su eventuali acquisti,
-  scelte personali o utilizzo dei prodotti suggeriti. Decidi sempre in autonomia.</p>
+<p class="small">
+<strong>Disclaimer:</strong> Alcuni link presenti su questo sito sono link di affiliazione Amazon
+e ottengo una piccola commissione dagli acquisti idonei, senza costi aggiuntivi per te.
+</p>
+
+<p class="small">
+I contenuti presenti su Syncras.app hanno scopo puramente informativo e ironico.
+Non forniamo consulenze professionali e non ci assumiamo responsabilità su eventuali acquisti,
+scelte personali o utilizzo dei prodotti suggeriti. Decidi sempre in autonomia.
+</p>
 
 </main>
 
@@ -240,4 +274,5 @@ Tu pensa solo a quanto vuoi spendere… al resto ci pensa lo schermo.
 
 </body>
 </html>
+
 
