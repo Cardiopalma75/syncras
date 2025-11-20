@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chi siamo - Metodo SmartShop per acquisti intelligenti | Syncras</title>
-  <meta name="description" content="Scopri il Metodo SmartShop di Syncras: 3 principi per fare acquisti intelligenti, evitare fregature e scegliere prodotti con il miglior rapporto qualità/prezzo.">
+  <title>Chi siamo | Syncras</title>
+  <meta name="description" content="Chi c'è dietro Syncras e il Metodo SmartShop: un modo semplice, pratico e un po' ironico per fare acquisti intelligenti.">
   <meta name="robots" content="index,follow">
+
   <style>
     body {
       font-family: 'Arial', sans-serif;
@@ -30,6 +31,35 @@
     nav a:hover {
       text-decoration: underline;
     }
+
+    /* Dropdown menu */
+    .dropdown {
+      display: inline-block;
+      position: relative;
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #4CAF50;
+      min-width: 220px;
+      border-radius: 6px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      z-index: 20;
+    }
+    .dropdown-content a {
+      color: white;
+      padding: 10px;
+      text-decoration: none;
+      display: block;
+      font-weight: normal;
+    }
+    .dropdown-content a:hover {
+      background-color: #3e8e41;
+    }
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
     main {
       max-width: 900px;
       margin: 30px auto;
@@ -52,116 +82,59 @@
     }
   </style>
 </head>
+
 <body>
   <header>
-    /* Dropdown menu */
-.dropdown {
-  display: inline-block;
-  position: relative;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #4CAF50;
-  min-width: 200px;
-  border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  z-index: 10;
-}
-
-.dropdown-content a {
-  color: white;
-  padding: 10px;
-  text-decoration: none;
-  display: block;
-  font-weight: normal;
-}
-
-.dropdown-content a:hover {
-  background-color: #3e8e41;
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
     <h1>Chi siamo</h1>
     <nav>
       <a href="index.html">Home</a> |
       <a href="blog.html">Blog</a> |
+
+      <div class="dropdown">
+        <a href="offerte.html">Offerte Amazon ▾</a>
+        <div class="dropdown-content">
+          <a href="categorie.html#smartphone">📱 Smartphone</a>
+          <a href="categorie.html#elettrodomestici">🍳 Elettrodomestici</a>
+          <a href="categorie.html#robot">🤖 Robot Pulizia</a>
+          <a href="categorie.html#clima">🌬 Clima & Riscaldamento</a>
+          <a href="categorie.html#energia">⚡ Energia & Fotovoltaico</a>
+          <a href="categorie.html#casa">🏠 Casa & Comfort</a>
+        </div>
+      </div>
+      |
+      <a href="categorie.html">Categorie</a> |
       <a href="chi.html">Chi siamo</a>
     </nav>
   </header>
 
   <main>
-
     <h2>La filosofia di Syncras</h2>
     <p>
       Syncras è uno spazio dedicato a chi vuole scegliere con intelligenza,
       evitando acquisti impulsivi, sorprese poco piacevoli e prodotti che deludono dopo pochi mesi.
     </p>
 
-    <h2>Perché compriamo male?</h2>
-    <p>Spesso le nostre decisioni sono influenzate da tre fattori:</p>
+    <h3>Perché compriamo male?</h3>
     <ul>
-      <li><strong>Sovraccarico di informazioni</strong> che confonde invece di chiarire</li>
-      <li><strong>Recensioni poco affidabili</strong> o manipolate</li>
-      <li><strong>Pressione psicologica</strong> di offerte “a tempo”</li>
-    </ul>
-    <p>Il risultato? Soldi buttati, rimorsi e tempo perso.</p>
-
-    <h2>Il Metodo SmartShop</h2>
-    <p>
-      SmartShop introduce un approccio semplice ma potentissimo, basato su tre principi fondamentali.
-    </p>
-
-    <h3>1. Essenziale prima di tutto</h3>
-    <p>
-      Chiediti: <strong>“Mi serve davvero?”</strong><br>
-      Se la risposta non è immediata, forse è un acquisto impulsivo.
-    </p>
-
-    <h3>2. Valore, non prezzo</h3>
-    <p>
-      Risparmiare è importante, ma scegliere un prodotto che dura è ancora meglio.
-      Il prezzo dice poco: <strong>il valore dice tutto</strong>.
-    </p>
-
-    <h3>3. Informazioni verificate</h3>
-    <p>
-      Basta recensioni finte e opinioni social non attendibili.  
-      SmartShop aiuta a capire:
-    </p>
-    <ul>
-      <li>quali caratteristiche contano davvero,</li>
-      <li>quali sono inutili,</li>
-      <li>quali difetti emergono nell’uso reale.</li>
+      <li><strong>Sovraccarico di informazioni</strong>: troppe recensioni, troppe opinioni, poca chiarezza.</li>
+      <li><strong>Offerte a tempo</strong>: il timer che scorre ti fa cliccare “compra ora” senza pensarci davvero.</li>
+      <li><strong>Marketing furbo</strong>: promesse enormi per prodotti normali.</li>
     </ul>
 
-    <h2>Gli errori da evitare</h2>
-    <ul>
-      <li>fidarsi delle offerte “solo per oggi”,</li>
-      <li>ignorare compatibilità, consumi e costi nascosti.</li>
-    </ul>
-
-    <h2>La missione di SmartShop</h2>
+    <h3>Cos’è il Metodo SmartShop</h3>
     <p>
-      Scegliere bene non è un caso: è una disciplina.  
-      SmartShop vuole essere la tua guida stabile per:
+      Il Metodo SmartShop è il modo in cui Syncras affronta ogni acquisto:
     </p>
     <ul>
-      <li>Sorprese poco piacevoli,</li>
-      <li>risparmiare in modo intelligente,</li>
-      <li>migliorare la qualità e la durata degli acquisti.</li>
+      <li>Capire se il prodotto serve davvero.</li>
+      <li>Valutare il rapporto tra costo, qualità e vita utile.</li>
+      <li>Evitare funzioni inutili e pagare solo ciò che porta valore.</li>
     </ul>
 
-    <h2>Vuoi vedere il metodo in pratica?</h2>
     <p>
-      Scopri le nostre analisi reali andando nella sezione  
-      <a href="blog.html"><strong>Articoli del Blog</strong></a>.
+      Nei vari articoli del <a href="blog.html"><strong>blog</strong></a> trovi questo metodo applicato a
+      tecnologia, casa, energia, comfort e molto altro, sempre con un tono semplice e un po’ ironico.
     </p>
-
   </main>
 
   <footer>
