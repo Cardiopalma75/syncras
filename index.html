@@ -51,48 +51,61 @@
       background-color: #ddd;
       margin-top: 40px;
     }
+
+    /* Dropdown menu */
+    .dropdown {
+      display: inline-block;
+      position: relative;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #4CAF50;
+      min-width: 220px;
+      border-radius: 6px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      z-index: 20;
+    }
+
+    .dropdown-content a {
+      color: white;
+      padding: 10px;
+      text-decoration: none;
+      display: block;
+      font-weight: normal;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #3e8e41;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
   </style>
 
 </head>
 <body>
   <header>
-    /* Dropdown menu */
-.dropdown {
-  display: inline-block;
-  position: relative;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #4CAF50;
-  min-width: 200px;
-  border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  z-index: 10;
-}
-
-.dropdown-content a {
-  color: white;
-  padding: 10px;
-  text-decoration: none;
-  display: block;
-  font-weight: normal;
-}
-
-.dropdown-content a:hover {
-  background-color: #3e8e41;
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
     <h1>Syncras</h1>
     <nav>
       <a href="index.html">Home</a> |
       <a href="blog.html">Blog</a> |
-      <a href="offerte.html">Offerte Amazon</a> |
+
+      <div class="dropdown">
+        <a href="offerte.html">Offerte Amazon ▾</a>
+        <div class="dropdown-content">
+          <a href="categorie.html#smartphone">📱 Smartphone</a>
+          <a href="categorie.html#elettrodomestici">🍳 Elettrodomestici</a>
+          <a href="categorie.html#robot">🤖 Robot Pulizia</a>
+          <a href="categorie.html#clima">🌬 Clima & Riscaldamento</a>
+          <a href="categorie.html#energia">⚡ Energia & Fotovoltaico</a>
+          <a href="categorie.html#casa">🏠 Casa & Comfort</a>
+        </div>
+      </div>
+      |
+      <a href="categorie.html">Categorie</a> |
       <a href="chi.html">Chi siamo</a>
     </nav>
   </header>
@@ -128,4 +141,5 @@
   </footer>
 </body>
 </html>
+
 
