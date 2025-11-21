@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Syncras.App | Metodo SmartShop per acquisti intelligenti</title>
-  <meta name="description" content="Syncras.App applica il Metodo SmartShop: consigli, prove e idee per fare acquisti intelligenti, evitare fregature e scegliere prodotti con il miglior rapporto qualità/prezzo.">
+  <title>Syncras.App | Scelte furbe e guide ironiche agli acquisti</title>
+  <meta name="description" content="Syncras.App ti aiuta a scegliere cosa comprare: smartphone, TV, casa, energia e offerte Amazon. Guide semplici, ironiche e senza tecnicismi inutili.">
   <meta name="robots" content="index,follow">
 
   <style>
@@ -16,23 +16,48 @@
       color: #333;
       line-height: 1.6;
     }
-
     header {
       background-color: #4CAF50;
       color: white;
       padding: 20px 10px;
       text-align: center;
     }
-
     nav a {
       color: white;
       text-decoration: none;
       margin: 0 15px;
       font-weight: bold;
     }
-
     nav a:hover {
       text-decoration: underline;
+    }
+
+    /* Dropdown menu */
+    .dropdown {
+      display: inline-block;
+      position: relative;
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #4CAF50;
+      min-width: 220px;
+      border-radius: 6px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      z-index: 20;
+    }
+    .dropdown-content a {
+      color: white;
+      padding: 10px;
+      text-decoration: none;
+      display: block;
+      font-weight: normal;
+    }
+    .dropdown-content a:hover {
+      background-color: #3e8e41;
+    }
+    .dropdown:hover .dropdown-content {
+      display: block;
     }
 
     main {
@@ -43,13 +68,105 @@
       border-radius: 10px;
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
-
     h2, h3 {
       color: #2f6f34;
     }
+    p {
+      margin-bottom: 12px;
+    }
 
-    ul {
-      margin-left: 20px;
+    .hero-intro {
+      margin-bottom: 20px;
+    }
+
+    .quick-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 15px 0 30px 0;
+    }
+    .quick-actions a {
+      flex: 1 1 220px;
+      text-align: center;
+      background: #4CAF50;
+      color: #fff;
+      text-decoration: none;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 0.95rem;
+    }
+    .quick-actions a:hover {
+      background: #3e8e41;
+    }
+
+    .feature-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin: 20px 0 30px 0;
+    }
+    .feature-card {
+      flex: 1 1 260px;
+      background: #f6faf7;
+      border-radius: 10px;
+      border: 1px solid #d7e8dc;
+      padding: 16px;
+    }
+    .feature-card h3 {
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+    .feature-card p {
+      margin-bottom: 10px;
+    }
+    .feature-card a {
+      display: inline-block;
+      margin-top: 6px;
+      font-size: 0.9rem;
+      text-decoration: none;
+      color: #2f6f34;
+      font-weight: bold;
+    }
+    .feature-card a:hover {
+      text-decoration: underline;
+    }
+
+    .post-list {
+      list-style: none;
+      padding-left: 0;
+      margin: 15px 0 0 0;
+    }
+    .post-card {
+      background: #f6faf7;
+      border-radius: 10px;
+      border: 1px solid #d7e8dc;
+      padding: 12px 15px;
+      margin-bottom: 10px;
+    }
+    .post-card h3 {
+      margin: 0 0 4px 0;
+    }
+    .post-meta {
+      font-size: 0.85rem;
+      color: #777;
+      margin-bottom: 4px;
+    }
+    .post-card a {
+      text-decoration: none;
+      color: inherit;
+    }
+    .post-card a:hover h3 {
+      text-decoration: underline;
+    }
+
+    .note-smartshop {
+      font-size: 0.92rem;
+      background: #f0f7f1;
+      border-radius: 8px;
+      padding: 10px 12px;
+      border: 1px solid #d7e8dc;
+      margin-top: 20px;
     }
 
     footer {
@@ -59,44 +176,132 @@
       margin-top: 40px;
     }
   </style>
-
 </head>
+
 <body>
   <header>
-   <h1>Syncras.App</h1>
+    <h1>Syncras</h1>
     <nav>
       <a href="index.html">Home</a> |
       <a href="blog.html">Blog</a> |
-      <a href="offerte.html">Offerte Amazon</a> |
+
+      <div class="dropdown">
+        <a href="offerte.html">Offerte Amazon ▾</a>
+        <div class="dropdown-content">
+          <a href="categorie.html#smartphone">📱 Smartphone</a>
+          <a href="categorie.html#elettrodomestici">🍳 Elettrodomestici</a>
+          <a href="categorie.html#robot">🤖 Robot Pulizia</a>
+          <a href="categorie.html#clima">🌬 Clima & Riscaldamento</a>
+          <a href="categorie.html#energia">⚡ Energia & Fotovoltaico</a>
+          <a href="categorie.html#casa">🏠 Casa & Comfort</a>
+        </div>
+      </div>
+      |
       <a href="categorie.html">Categorie</a> |
       <a href="chi.html">Chi siamo</a>
     </nav>
   </header>
 
   <main>
-    <h2>Benvenuto su Syncras</h2>
-    <p>
-      Syncras.App è il punto di partenza per chi vuole fare <strong>acquisti intelligenti</strong>:
-      meno sprechi, meno fregature, più valore vero da ogni euro speso.
-    </p>
+    <div class="hero-intro">
+      <h2>Qui si compra con la testa (e con un po’ di ironia)</h2>
+      <p>
+        Syncras.App è per chi, prima di comprare, vuole capire se ha senso davvero:
+        niente recensioni “copiate”, niente tecnicismi inutili, solo
+        <strong>consigli pratici e qualche risata</strong>.
+      </p>
+    </div>
 
-    <h3>Cosa trovi qui</h3>
-    <ul>
-      <li>Guide pratiche per capire cosa comprare e cosa evitare.</li>
-      <li>Riflessioni e prove su tecnologia, casa, energia, auto e molto altro.</li>
-      <li>Un metodo semplice per scegliere meglio, senza ansia da “offerta a tempo”.</li>
+    <div class="quick-actions">
+      <a href="categorie.html#smartphone">📱 Scegli uno smartphone per prezzo</a>
+      <a href="smart-tv-guida-ironica.html">📺 Guida ironica alle Smart TV</a>
+      <a href="offerte.html">🔥 Vai alle offerte Amazon</a>
+    </div>
+
+    <h3>Cosa ti può interessare subito</h3>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <h3>📱 Smartphone per fascia di prezzo</h3>
+        <p>
+          Niente lista infinita di modelli: 3–4 telefoni per fascia, spiegati come a un amico.
+        </p>
+        <a href="smartphone-200.html">Sotto 200€ – migliori affari →</a><br>
+        <a href="smartphone-400.html">Sotto 400€ – equilibrio →</a><br>
+        <a href="smartphone-600.html">Sotto 600€ – fascia alta “furba” →</a><br>
+        <a href="smartphone-top.html">Top di gamma – solo se ha senso →</a>
+      </div>
+
+      <div class="feature-card">
+        <h3>📺 Smart TV – Guida 2025</h3>
+        <p>
+          Tre fasce di prezzo, scene di vita vera (nonno incluso) e consigli per non pentirti
+          alla prima rata della finanziaria.
+        </p>
+        <a href="smart-tv-guida-ironica.html">Leggi la guida alle Smart TV →</a>
+      </div>
+
+      <div class="feature-card">
+        <h3>⚡ Fotovoltaico, casa & comfort</h3>
+        <p>
+          Esperienze reali: impianto fotovoltaico, resistenza sul termosifone,
+          comfort in casa e risparmio sulla bolletta.
+        </p>
+        <a href="fotovoltaico-4kw-accumulo-10kwh.html">Impianto 4 kW + 10 kWh →</a><br>
+        <a href="resistenza-termosifone-fotovoltaico.html">Stanza fredda e resistenza →</a>
+      </div>
+    </div>
+
+    <h3>Ultime guide pubblicate</h3>
+    <ul class="post-list">
+      <li class="post-card">
+        <a href="smart-tv-guida-ironica.html">
+          <h3>Guida Smart TV 2025 – versione ironica</h3>
+          <div class="post-meta">TV • Tecnologia</div>
+          <p>Tre fasce di prezzo, nonno sul divano e la verità su quando ha senso “giocarsi tutto”.</p>
+        </a>
+      </li>
+      <li class="post-card">
+        <a href="fotovoltaico-4kw-accumulo-10kwh.html">
+          <h3>Fotovoltaico 4 kW con accumulo 10 kWh: quanto costa davvero nel 2025?</h3>
+          <div class="post-meta">Energia • Fotovoltaico</div>
+          <p>Impianto reale, numeri veri: quanto spendi, quanto recuperi e in quanti anni rientri.</p>
+        </a>
+      </li>
+      <li class="post-card">
+        <a href="resistenza-termosifone-fotovoltaico.html">
+          <h3>Come ho scaldato la stanza più fredda (con una resistenza e il fotovoltaico)</h3>
+          <div class="post-meta">Casa & comfort</div>
+          <p>Termosifone, resistenza, fotovoltaico e buon senso: cosa ha funzionato davvero.</p>
+        </a>
+      </li>
+      <li class="post-card">
+        <a href="robot-cucina-economici-2025.html">
+          <h3>I robot da cucina economici nel 2025: quando hanno senso davvero</h3>
+          <div class="post-meta">Cucina • Elettrodomestici</div>
+          <p>Un aiuto furbo in cucina sì, ma solo se non si mangia tutto lo stipendio.</p>
+        </a>
+      </li>
+      <li class="post-card">
+        <a href="smartphone-sotto-200-euro-2025.html">
+          <h3>I migliori smartphone sotto i 200€ – guida amichevole 2025</h3>
+          <div class="post-meta">Tecnologia • Smartphone</div>
+          <p>Quattro modelli sensati spiegati senza paroloni, come al bar.</p>
+        </a>
+      </li>
+      <li class="post-card">
+        <a href="cuffie-wireless-sotto-50-euro-2025.html">
+          <h3>Cuffie wireless sotto 50€ – guida pratica e un po’ ironica</h3>
+          <div class="post-meta">Audio • Cuffie</div>
+          <p>Quando bastano 50€ e quando è meglio non esagerare col risparmio.</p>
+        </a>
+      </li>
     </ul>
 
-    <h3>Da dove iniziare</h3>
-    <p>
-      Se vuoi capire la filosofia che c’è dietro Syncras, leggi la pagina
-      <a href="chi.html"><strong>Chi siamo e Metodo SmartShop</strong></a>.
-    </p>
-    <p>
-      Se invece vuoi andare subito al sodo, passa agli
-      <a href="blog.html"><strong>articoli del blog</strong></a> dove il Metodo SmartShop
-      viene messo in pratica con esempi concreti.
-    </p>
+    <div class="note-smartshop">
+      Vuoi capire meglio cosa c’è dietro Syncras.App e il <strong>Metodo SmartShop</strong>?  
+      Dai un’occhiata alla pagina <a href="chi.html"><strong>Chi siamo</strong></a>:
+      lì spiego come cerco di evitare brutte sorprese, acquisti inutili e sensi di colpa post-pacco Amazon.
+    </div>
   </main>
 
   <footer>
