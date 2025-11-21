@@ -176,143 +176,125 @@
       margin-top: 40px;
     }
 
-   
+    /* LAYOUT CON COLONNA LATERALE DESTRA */
 
-   /* BOX GENERICI SYNCRAS – VERSIONE LIGHT */
+    .layout {
+      display: flex;
+      gap: 20px;
+    }
 
-.syn-box {
-  background-color: #ffffff;
-  padding: 0.7rem 0.9rem;
-  margin: 0.7rem 0;
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-  border-left: 3px solid #2196f3;
-  font-family: inherit;
-  line-height: 1.45;
-}
+    .main-content {
+      flex: 1;
+    }
 
-.syn-box + .syn-box {
-  margin-top: 0.6rem;
-}
+    .sidebar {
+      width: 270px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: sticky;
+      top: 20px;
+      height: fit-content;
+    }
 
-.syn-box-title {
-  font-weight: 600;
-  margin-bottom: 0.25rem;
-  font-size: 0.9rem;
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-}
+    /* Su smartphone la sidebar va sotto (oppure si può nascondere) */
+    @media (max-width: 900px) {
+      .layout {
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 100%;
+        position: static;
+      }
+    }
 
-.syn-box-title span.emoji {
-  font-size: 1rem;
-}
+    /* BOX GENERICI SYNCRAS – VERSIONE LIGHT */
 
-.syn-box-text {
-  font-size: 0.85rem;
-}
+    .syn-box {
+      background-color: #ffffff;
+      padding: 0.7rem 0.9rem;
+      margin: 0.7rem 0;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+      border-left: 3px solid #2196f3;
+      font-family: inherit;
+      line-height: 1.45;
+    }
 
-.syn-box-note {
-  margin-top: 0.3rem;
-  font-size: 0.78rem;
-  opacity: 0.8;
-}
+    .syn-box + .syn-box {
+      margin-top: 0.6rem;
+    }
 
-/* VARIANTI SPECIFICHE */
+    .syn-box-title {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
 
-.syn-consiglio {
-  border-left-color: #00897b;
-  background-color: #f6fbfa;
-}
+    .syn-box-title span.emoji {
+      font-size: 1rem;
+    }
 
-.syn-errore {
-  border-left-color: #f44336;
-  background-color: #fff8f8;
-}
+    .syn-box-text {
+      font-size: 0.85rem;
+    }
 
-.syn-top3 {
-  border-left-color: #ff9800;
-  background-color: #fffaf3;
-}
-
-.syn-sapeviche {
-  border-left-color: #3f51b5;
-  background-color: #f5f6ff;
-}
-
-.syn-calcolo {
-  border-left-color: #9c27b0;
-  background-color: #fbf5ff;
-}
-
-.syn-best {
-  border-left-color: #2e7d32;
-  background-color: #f5fbf6;
-}
-
-/* Lista top 3 */
-.syn-top3-list {
-  padding-left: 1rem;
-  margin: 0.25rem 0 0.25rem 0;
-}
-
-.syn-top3-list li {
-  margin-bottom: 0.2rem;
-}
-
-/* Link nei box */
-.syn-box a {
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 0.85rem;
-}
-
-.syn-box a:hover {
-  text-decoration: underline;
-}
-
+    .syn-box-note {
+      margin-top: 0.3rem;
+      font-size: 0.78rem;
+      opacity: 0.8;
+    }
 
     /* VARIANTI SPECIFICHE */
 
     .syn-consiglio {
-      border-left-color: #00796b;
+      border-left-color: #00897b;
+      background-color: #f6fbfa;
     }
 
     .syn-errore {
       border-left-color: #f44336;
-      background-color: #fff7f7;
+      background-color: #fff8f8;
     }
 
     .syn-top3 {
       border-left-color: #ff9800;
+      background-color: #fffaf3;
     }
 
     .syn-sapeviche {
       border-left-color: #3f51b5;
+      background-color: #f5f6ff;
     }
 
     .syn-calcolo {
       border-left-color: #9c27b0;
+      background-color: #fbf5ff;
     }
 
     .syn-best {
       border-left-color: #2e7d32;
+      background-color: #f5fbf6;
     }
 
     /* Lista top 3 */
     .syn-top3-list {
-      padding-left: 1.1rem;
-      margin: 0.3rem 0 0.3rem 0;
+      padding-left: 1rem;
+      margin: 0.25rem 0 0.25rem 0;
     }
 
     .syn-top3-list li {
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.2rem;
     }
 
     /* Link nei box */
     .syn-box a {
       text-decoration: none;
       font-weight: 600;
+      font-size: 0.85rem;
     }
 
     .syn-box a:hover {
@@ -346,101 +328,94 @@
   </header>
 
   <main>
-  <div class="layout">
+    <div class="layout">
 
-    <!-- CONTENUTO CENTRALE -->
-    <div class="main-content">
+      <!-- CONTENUTO CENTRALE -->
+      <div class="main-content">
 
-      <div class="hero-intro">
-        <h2>Qui si compra con la testa (e con un po’ di ironia)</h2>
-        <p>
-          Syncras.App è per chi, prima di comprare, vuole capire se ha senso davvero:
-          niente recensioni “copiate”, niente tecnicismi inutili, solo
-          <strong>consigli pratici e qualche risata</strong>.
-        </p>
-      </div>
-
-      <div class="quick-actions">
-        <a href="categorie.html#smartphone">📱 Scegli uno smartphone per prezzo</a>
-        <a href="smart-tv-guida-ironica.html">📺 Guida ironica alle Smart TV</a>
-        <a href="offerte.html">🔥 Vai alle offerte Amazon</a>
-      </div>
-
-      <h3>Cosa ti può interessare subito</h3>
-
-      <div class="feature-grid">
-        <div class="feature-card">
-          <h3>📱 Smartphone per fascia di prezzo</h3>
-          <p>Niente lista infinita di modelli: 3–4 telefoni per fascia, spiegati come a un amico.</p>
-          <a href="smartphone-200.html">Sotto 200€ – migliori affari →</a><br>
-          <a href="smartphone-400.html">Sotto 400€ – equilibrio →</a><br>
-          <a href="smartphone-600.html">Sotto 600€ – fascia alta “furba” →</a><br>
-          <a href="smartphone-top.html">Top di gamma – solo se ha senso →</a>
+        <div class="hero-intro">
+          <h2>Qui si compra con la testa (e con un po’ di ironia)</h2>
+          <p>
+            Syncras.App è per chi, prima di comprare, vuole capire se ha senso davvero:
+            niente recensioni “copiate”, niente tecnicismi inutili, solo
+            <strong>consigli pratici e qualche risata</strong>.
+          </p>
         </div>
 
-        <div class="feature-card">
-          <h3>📺 Smart TV – Guida 2025</h3>
-          <p>Tre fasce di prezzo, scene di vita vera (nonno incluso) e consigli per non pentirti.</p>
-          <a href="smart-tv-guida-ironica.html">Leggi la guida alle Smart TV →</a>
+        <div class="quick-actions">
+          <a href="categorie.html#smartphone">📱 Scegli uno smartphone per prezzo</a>
+          <a href="smart-tv-guida-ironica.html">📺 Guida ironica alle Smart TV</a>
+          <a href="offerte.html">🔥 Vai alle offerte Amazon</a>
         </div>
 
-        <div class="feature-card">
-          <h3>⚡ Fotovoltaico, casa & comfort</h3>
-          <p>Esperienze reali: fotovoltaico, resistenza sul termosifone, comfort e risparmio.</p>
-          <a href="fotovoltaico-4kw-accumulo-10kwh.html">Impianto 4 kW + 10 kWh →</a><br>
-          <a href="resistenza-termosifone-fotovoltaico.html">Stanza fredda e resistenza →</a>
+        <h3>Cosa ti può interessare subito</h3>
+
+        <div class="feature-grid">
+          <div class="feature-card">
+            <h3>📱 Smartphone per fascia di prezzo</h3>
+            <p>Niente lista infinita di modelli: 3–4 telefoni per fascia, spiegati come a un amico.</p>
+            <a href="smartphone-200.html">Sotto 200€ – migliori affari →</a><br>
+            <a href="smartphone-400.html">Sotto 400€ – equilibrio →</a><br>
+            <a href="smartphone-600.html">Sotto 600€ – fascia alta “furba” →</a><br>
+            <a href="smartphone-top.html">Top di gamma – solo se ha senso →</a>
+          </div>
+
+          <div class="feature-card">
+            <h3>📺 Smart TV – Guida 2025</h3>
+            <p>Tre fasce di prezzo, scene di vita vera (nonno incluso) e consigli per non pentirti.</p>
+            <a href="smart-tv-guida-ironica.html">Leggi la guida alle Smart TV →</a>
+          </div>
+
+          <div class="feature-card">
+            <h3>⚡ Fotovoltaico, casa & comfort</h3>
+            <p>Esperienze reali: fotovoltaico, resistenza sul termosifone,
+              comfort e risparmio.</p>
+            <a href="fotovoltaico-4kw-accumulo-10kwh.html">Impianto 4 kW + 10 kWh →</a><br>
+            <a href="resistenza-termosifone-fotovoltaico.html">Stanza fredda e resistenza →</a>
+          </div>
         </div>
-      </div>
 
-    </div> <!-- fine main-content -->
+      </div> <!-- fine main-content -->
 
 
-    <!-- SIDEBAR DESTRA -->
-    <div class="sidebar">
+      <!-- SIDEBAR DESTRA -->
+      <div class="sidebar">
 
-      <!-- BOX 1 -->
-      <div class="syn-box syn-consiglio">
-        <div class="syn-box-title"><span class="emoji">💡</span><span>Consiglio del giorno</span></div>
-        <div class="syn-box-text">
-          Prima di cliccare “Compra ora”, chiediti: <strong>“Mi serve davvero?”</strong>
+        <div class="syn-box syn-consiglio">
+          <div class="syn-box-title"><span class="emoji">💡</span><span>Consiglio del giorno</span></div>
+          <div class="syn-box-text">
+            Prima di cliccare “Compra ora”, chiediti: <strong>“Mi serve davvero?”</strong>
+          </div>
         </div>
-      </div>
 
-      <!-- BOX 2 -->
-      <div class="syn-box syn-errore">
-        <div class="syn-box-title"><span class="emoji">⚠️</span><span>Errore da evitare</span></div>
-        <div class="syn-box-text">
-          Non comprare solo perché è in offerta. Mai.
+        <div class="syn-box syn-errore">
+          <div class="syn-box-title"><span class="emoji">⚠️</span><span>Errore da evitare</span></div>
+          <div class="syn-box-text">
+            Non comprare solo perché è in offerta. Mai.
+          </div>
         </div>
-      </div>
 
-      <!-- BOX 3 -->
-      <div class="syn-box syn-top3">
-        <div class="syn-box-title"><span class="emoji">🏆</span><span>Top 3 sotto 200€</span></div>
-        <ol class="syn-top3-list">
-          <li><strong>Redmi 13C</strong><br>👉 <a href="https://amzn.to/49x2vV2">Amazon</a></li>
-          <li><strong>Galaxy A15</strong><br>👉 <a href="https://amzn.to/44lr0AU">Amazon</a></li>
-          <li><strong>POCO M6</strong><br>👉 <a href="https://amzn.to/3McOfH8">Amazon</a></li>
-        </ol>
-      </div>
-
-      <!-- BOX 4 -->
-      <div class="syn-box syn-best">
-        <div class="syn-box-title"><span class="emoji">📈</span><span>Più cliccato</span></div>
-        <div class="syn-box-text">
-          Robot aspirapolvere XYZ<br>
-          👉 <a href="#">Guarda l’offerta</a>
+        <div class="syn-box syn-top3">
+          <div class="syn-box-title"><span class="emoji">🏆</span><span>Top 3 sotto 200€</span></div>
+          <ol class="syn-top3-list">
+            <li><strong>Redmi 13C</strong><br>👉 <a href="https://amzn.to/49x2vV2" target="_blank" rel="nofollow">Amazon</a></li>
+            <li><strong>Galaxy A15</strong><br>👉 <a href="https://amzn.to/44lr0AU" target="_blank" rel="nofollow">Amazon</a></li>
+            <li><strong>POCO M6</strong><br>👉 <a href="https://amzn.to/3McOfH8" target="_blank" rel="nofollow">Amazon</a></li>
+          </ol>
         </div>
-      </div>
 
-    </div> <!-- fine sidebar -->
+        <div class="syn-box syn-best">
+          <div class="syn-box-title"><span class="emoji">📈</span><span>Prodotto più cliccato</span></div>
+          <div class="syn-box-text">
+            Robot aspirapolvere XYZ – ideale per chi odia passare l’aspirapolvere ma
+            ama trovare il pavimento già fatto.<br>
+            👉 <a href="#" target="_blank" rel="nofollow">Guarda l’offerta su Amazon</a>
+          </div>
+        </div>
 
-  </div> <!-- fine layout -->
+      </div> <!-- fine sidebar -->
 
-  
-
-
-
+    </div> <!-- fine layout -->
 
     <h3>Ultime guide pubblicate</h3>
     <ul class="post-list">
@@ -511,23 +486,6 @@
         Uno smartphone da <strong>200€</strong> usato per <strong>3 anni</strong> ti costa circa 
         <strong>0,18€ al giorno</strong>.<br>
         Meno di un caffè, molto meno di una bolletta sbagliata.
-      </div>
-    </div>
-
-    <!-- BOX: Prodotto più cliccato della settimana -->
-    <div class="syn-box syn-best">
-      <div class="syn-box-title">
-        <span class="emoji">📈</span>
-        <span>Prodotto più cliccato della settimana su Syncras</span>
-      </div>
-      <div class="syn-box-text">
-        In questi giorni i lettori di Syncras stanno cliccando soprattutto su:<br>
-        <strong>Robot aspirapolvere XYZ</strong> – ideale per chi odia passare l’aspirapolvere ma 
-        ama trovare il pavimento già fatto.<br>
-        👉 <a href="#" target="_blank" rel="nofollow">Guarda l’offerta su Amazon</a>
-      </div>
-      <div class="syn-box-note">
-        Dato reale: se lo cliccano in tanti, vuol dire che la descrizione ha convinto più di una persona.
       </div>
     </div>
 
