@@ -8,42 +8,48 @@
   <meta name="robots" content="index,follow">
 
   <style>
-    /* LAYOUT A DUE COLONNE PER LE CATEGORIE */
-.category-row {
-  display: flex;
-  gap: 20px;
-  align-items: flex-start;
-}
+    /* Layout a due colonne per la riga "smartphone + box" */
+    .category-row {
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
 
-.category-left {
-  flex: 2;
-}
+    .category-left {
+      flex: 3;
+    }
 
-.category-right {
-  flex: 1;
-}
+    .category-right {
+      flex: 2;
+    }
 
-/* BOX A DESTRA: "prima di acquistare" */
-.category-tip {
-  background: #f6fbfa;
-  border-left: 3px solid #00897b;
-  border-radius: 8px;
-  padding: 8px 10px;
-  font-size: 0.85rem;
-  line-height: 1.4;
-}
+    /* Box "prima di un acquisto impulsivo" – versione soft */
+    .category-tip {
+      background: #fffdf6;
+      border-radius: 10px;
+      border: 1px solid #ffd27f;
+      border-left: 4px solid #ff9800;
+      padding: 10px 12px;
+      font-size: 0.9rem;
+      line-height: 1.45;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
 
-.category-tip strong {
-  display: block;
-  margin-bottom: 4px;
-}
+    .category-tip strong {
+      display: block;
+      margin-bottom: 4px;
+    }
 
-/* RESPONSIVE PER TELEFONO */
-@media (max-width: 900px) {
-  .category-row {
-    flex-direction: column;
-  }
-}
+    /* Responsive per telefono */
+    @media (max-width: 900px) {
+      .category-row {
+        flex-direction: column;
+      }
+      .category-right {
+        width: 100%;
+      }
+    }
 
     body {
       font-family: 'Arial', sans-serif;
@@ -134,69 +140,85 @@
       energia e molto altro. Tutto secondo il <strong>Metodo SmartShop</strong>.
     </p>
 
+    <!-- SMARTPHONE -->
     <div id="smartphone" class="category-card">
-    <h2>📱 Smartphone per fascia di prezzo</h2>
+      <h3>📱 Smartphone per fascia di prezzo</h3>
 
-<div class="category-row">
-  <!-- SINISTRA: link alle fasce di prezzo -->
-  <div class="category-left">
-    <p>Clicca sulla fascia che ti interessa:</p>
-    <ul>
-      <li><a href="smartphone-200.html">Sotto 200€ – migliori affari</a></li>
-      <li><a href="smartphone-400.html">Sotto 400€ – equilibrio perfetto</a></li>
-      <li><a href="smartphone-600.html">Sotto 600€ – fascia alta intelligente</a></li>
-      <li><a href="smartphone-top.html">Top di gamma – il meglio del 2025</a></li>
-    </ul>
-  </div>
+      <div class="category-row">
+        <!-- Sinistra: fasce di prezzo -->
+        <div class="category-left">
+          <p>Clicca sulla fascia che ti interessa:</p>
+          <ul>
+            <li><a href="smartphone-200.html">Sotto 200€ – migliori affari</a></li>
+            <li><a href="smartphone-400.html">Sotto 400€ – equilibrio perfetto</a></li>
+            <li><a href="smartphone-600.html">Sotto 600€ – fascia alta intelligente</a></li>
+            <li><a href="smartphone-top.html">Top di gamma – il meglio del 2025</a></li>
+          </ul>
+        </div>
 
-  <!-- DESTRA: “prima di acquistare compulsivo” -->
-  <div class="category-right">
-    <div class="category-tip">
-      <strong>🤚 Prima di un acquisto impulsivo…</strong>
-      Se vuoi evitare di spendere male 200 o 400€, leggiti prima la guida:
-      <br>
-      👉 <a href="smartphone-sotto-200-euro-2025.html">Come scegliere davvero lo smartphone giusto</a>
+        <!-- Destra: box anti-acquisto impulsivo -->
+        <div class="category-right">
+          <div class="category-tip">
+            <strong>🤚 Prima di un acquisto impulsivo…</strong>
+            Se vuoi evitare di spendere male 200 o 400€, leggiti prima la guida:
+            <br>
+            👉 <a href="smartphone-sotto-200-euro-2025.html">
+              Come scegliere davvero lo smartphone giusto
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
 
-        <li><a href="smartphone-200.html">Sotto 200€ – migliori affari</a></li>
-        <li><a href="smartphone-400.html">Sotto 400€ – equilibrio perfetto</a></li>
-        <li><a href="smartphone-600.html">Sotto 600€ – fascia alta intelligente</a></li>
-        <li><a href="smartphone-top.html">Top di gamma – il meglio del 2025</a></li>
+    <!-- SMART TV -->
+    <div id="smart-tv" class="category-card">
+      <h3>📺 Smart TV</h3>
+      <p>Scegli la fascia di prezzo giusta.</p>
+      <ul>
+        <li>
+          <a href="https://www.amazon.it/s?k=smart+tv&rh=p_36:0-70000&tag=mywebcorner4-21" target="_blank" rel="nofollow">
+            Sotto 700€ – ottimi affari
+          </a>
+        </li>
+        <li>
+          <a href="https://www.amazon.it/s?k=smart+tv&rh=p_36:70000-120000&tag=mywebcorner4-21" target="_blank" rel="nofollow">
+            700–1200€ – qualità/prezzo top
+          </a>
+        </li>
+        <li>
+          <a href="https://www.amazon.it/s?k=smart+tv&rh=p_36:120000-&tag=mywebcorner4-21" target="_blank" rel="nofollow">
+            Oltre 1200€ – top di gamma
+          </a>
+        </li>
       </ul>
     </div>
-<div id="smarttv" class="category-card">
-  <h3>📺 Smart TV</h3>
-  <p>Scegli la fascia di prezzo giusta.</p>
-  <ul>
-    <li><a href="https://www.amazon.it/s?k=smart+tv&rh=p_36:0-70000&tag=mywebcorner4-21" target="_blank">Sotto 700€ – ottimi affari</a></li>
-    <li><a href="https://www.amazon.it/s?k=smart+tv&rh=p_36:70000-120000&tag=mywebcorner4-21" target="_blank">700–1200€ – qualità/prezzo top</a></li>
-    <li><a href="https://www.amazon.it/s?k=smart+tv&rh=p_36:120000-&tag=mywebcorner4-21" target="_blank">Oltre 1200€ – top di gamma</a></li>
-  </ul>
-</div>
 
+    <!-- ELETTRODOMESTICI -->
     <div id="elettrodomestici" class="category-card">
       <h3>🔍 Elettrodomestici</h3>
       <p>Frigoriferi, robot cucina, lavatrici, piccoli elettrodomestici e guida alla scelta.</p>
       <!-- In futuro: link a elettrodomestici.html -->
     </div>
 
+    <!-- ROBOT PULIZIA -->
     <div id="robot" class="category-card">
       <h3>🤖 Robot Pulizia</h3>
       <p>Aspirapolvere robot, lavapavimenti e offerte lampo su modelli affidabili.</p>
     </div>
 
+    <!-- CLIMA & RISCALDAMENTO -->
     <div id="clima" class="category-card">
       <h3>🌬 Clima & Riscaldamento</h3>
       <p>Climatizzatori, deumidificatori, riscaldamento smart e soluzioni comfort.</p>
     </div>
 
+    <!-- ENERGIA & FOTOVOLTAICO -->
     <div id="energia" class="category-card">
       <h3>⚡ Energia & Fotovoltaico</h3>
       <p>Pannelli solari, risparmio energetico, fotovoltaico e soluzioni green.</p>
     </div>
 
+    <!-- CASA & COMFORT -->
     <div id="casa" class="category-card">
       <h3>🏠 Casa & Comfort</h3>
       <p>Prodotti per migliorare la casa, pulizia, organizzazione e benessere.</p>
