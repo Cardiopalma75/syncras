@@ -178,43 +178,99 @@
 
     /* BOX GENERICI SYNCRAS */
 
-    .syn-box {
-      background-color: #ffffff;
-      padding: 1rem 1.2rem;
-      margin: 1rem 0;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
-      border-left: 4px solid #2196f3;
-      font-family: inherit;
-      line-height: 1.5;
-    }
+   /* BOX GENERICI SYNCRAS – VERSIONE LIGHT */
 
-    .syn-box + .syn-box {
-      margin-top: 0.75rem;
-    }
+.syn-box {
+  background-color: #ffffff;
+  padding: 0.7rem 0.9rem;
+  margin: 0.7rem 0;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  border-left: 3px solid #2196f3;
+  font-family: inherit;
+  line-height: 1.45;
+}
 
-    .syn-box-title {
-      font-weight: 700;
-      margin-bottom: 0.35rem;
-      font-size: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
-    }
+.syn-box + .syn-box {
+  margin-top: 0.6rem;
+}
 
-    .syn-box-title span.emoji {
-      font-size: 1.2rem;
-    }
+.syn-box-title {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
 
-    .syn-box-text {
-      font-size: 0.95rem;
-    }
+.syn-box-title span.emoji {
+  font-size: 1rem;
+}
 
-    .syn-box-note {
-      margin-top: 0.4rem;
-      font-size: 0.85rem;
-      opacity: 0.8;
-    }
+.syn-box-text {
+  font-size: 0.85rem;
+}
+
+.syn-box-note {
+  margin-top: 0.3rem;
+  font-size: 0.78rem;
+  opacity: 0.8;
+}
+
+/* VARIANTI SPECIFICHE */
+
+.syn-consiglio {
+  border-left-color: #00897b;
+  background-color: #f6fbfa;
+}
+
+.syn-errore {
+  border-left-color: #f44336;
+  background-color: #fff8f8;
+}
+
+.syn-top3 {
+  border-left-color: #ff9800;
+  background-color: #fffaf3;
+}
+
+.syn-sapeviche {
+  border-left-color: #3f51b5;
+  background-color: #f5f6ff;
+}
+
+.syn-calcolo {
+  border-left-color: #9c27b0;
+  background-color: #fbf5ff;
+}
+
+.syn-best {
+  border-left-color: #2e7d32;
+  background-color: #f5fbf6;
+}
+
+/* Lista top 3 */
+.syn-top3-list {
+  padding-left: 1rem;
+  margin: 0.25rem 0 0.25rem 0;
+}
+
+.syn-top3-list li {
+  margin-bottom: 0.2rem;
+}
+
+/* Link nei box */
+.syn-box a {
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.syn-box a:hover {
+  text-decoration: underline;
+}
+
 
     /* VARIANTI SPECIFICHE */
 
