@@ -8,6 +8,43 @@
   <meta name="robots" content="index,follow">
 
   <style>
+    /* LAYOUT A DUE COLONNE PER LE CATEGORIE */
+.category-row {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.category-left {
+  flex: 2;
+}
+
+.category-right {
+  flex: 1;
+}
+
+/* BOX A DESTRA: "prima di acquistare" */
+.category-tip {
+  background: #f6fbfa;
+  border-left: 3px solid #00897b;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.category-tip strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* RESPONSIVE PER TELEFONO */
+@media (max-width: 900px) {
+  .category-row {
+    flex-direction: column;
+  }
+}
+
     body {
       font-family: 'Arial', sans-serif;
       margin: 0;
