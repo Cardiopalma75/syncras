@@ -32,7 +32,7 @@
       text-decoration: underline;
     }
 
-    /* Dropdown menu */
+    /* Dropdown menu (non più usato in home, ma innocuo se rimane) */
     .dropdown {
       display: inline-block;
       position: relative;
@@ -60,14 +60,15 @@
       display: block;
     }
 
-    main {
-      max-width: 900px;
-      margin: 30px auto;
-      padding: 20px;
-      background-color: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
+   main {
+  max-width: 1150px; /* era 900px */
+  margin: 30px auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
     h2, h3 {
       color: #2f6f34;
     }
@@ -88,7 +89,7 @@
     .quick-actions a {
       flex: 1 1 220px;
       text-align: center;
-      background: #4CAF50;
+      background: #4CAF40;
       color: #fff;
       text-decoration: none;
       padding: 10px 12px;
@@ -179,11 +180,10 @@
     /* LAYOUT CON COLONNA LATERALE DESTRA */
 
     .layout {
-  display: flex;
-  gap: 35px; /* aumenta lo spazio tra le colonne */
-  padding-right: 20px; /* spinge ancora un po’ la sidebar a destra */
-}
-
+      display: flex;
+      gap: 35px; /* aumenta lo spazio tra le colonne */
+      padding-right: 20px; /* spinge ancora un po’ la sidebar a destra */
+    }
 
     .main-content {
       flex: 1;
@@ -199,7 +199,7 @@
       height: fit-content;
     }
 
-    /* Su smartphone la sidebar va sotto (oppure si può nascondere) */
+    /* Su smartphone la sidebar va sotto */
     @media (max-width: 900px) {
       .layout {
         flex-direction: column;
@@ -281,10 +281,11 @@
       border-left-color: #2e7d32;
       background-color: #f5fbf6;
     }
-.syn-quiz {
-  border-left-color: #ff5722;
-  background-color: #fff6f2;
-}
+
+    .syn-quiz {
+      border-left-color: #ff5722;
+      background-color: #fff6f2;
+    }
 
     /* Lista top 3 */
     .syn-top3-list {
@@ -315,19 +316,7 @@
     <nav>
       <a href="index.html">Home</a> |
       <a href="blog.html">Blog</a> |
-
-      <div class="dropdown">
-        <a href="offerte.html">Offerte Amazon ▾</a>
-        <div class="dropdown-content">
-          <a href="categorie.html#smartphone">📱 Smartphone</a>
-          <a href="categorie.html#elettrodomestici">🍳 Elettrodomestici</a>
-          <a href="categorie.html#robot">🤖 Robot Pulizia</a>
-          <a href="categorie.html#clima">🌬 Clima & Riscaldamento</a>
-          <a href="categorie.html#energia">⚡ Energia & Fotovoltaico</a>
-          <a href="categorie.html#casa">🏠 Casa & Comfort</a>
-        </div>
-      </div>
-      |
+      <a href="offerte.html">Offerte Amazon</a> |
       <a href="categorie.html">Categorie</a> |
       <a href="chi.html">Chi siamo</a>
     </nav>
@@ -494,73 +483,73 @@
         Meno di un caffè, molto meno di una bolletta sbagliata.
       </div>
     </div>
-<!-- MINI TEST SMARTSHOP INTERATTIVO -->
-<div class="syn-box syn-calcolo" id="mini-test-smartshop">
-  <div class="syn-box-title">
-    <span class="emoji">💭</span>
-    <span>Mini Test SmartShop (30 secondi)</span>
-  </div>
-  <div class="syn-box-text">
-    <p>Prima di comprare qualcosa online, rispondi a queste 3 domande:</p>
 
-    <ol>
-      <li>
-        Lo userò almeno una volta a settimana?<br>
-        <label><input type="radio" name="q1" value="si"> Sì</label>
-        <label><input type="radio" name="q1" value="no"> No</label>
-      </li>
-      <li>
-        Ho già in casa qualcosa che fa una cosa simile?<br>
-        <label><input type="radio" name="q2" value="si"> Sì</label>
-        <label><input type="radio" name="q2" value="no"> No</label>
-      </li>
-      <li>
-        Se domani non fosse più in offerta, lo comprerei lo stesso?<br>
-        <label><input type="radio" name="q3" value="si"> Sì</label>
-        <label><input type="radio" name="q3" value="no"> No</label>
-      </li>
-    </ol>
+    <!-- MINI TEST SMARTSHOP INTERATTIVO -->
+    <div class="syn-box syn-calcolo" id="mini-test-smartshop">
+      <div class="syn-box-title">
+        <span class="emoji">💭</span>
+        <span>Mini Test SmartShop (30 secondi)</span>
+      </div>
+      <div class="syn-box-text">
+        <p>Prima di comprare qualcosa online, rispondi a queste 3 domande:</p>
 
-    <button type="button" onclick="valutaMiniTest()" style="margin-top:6px; padding:6px 10px; border-radius:6px; border:none; background:#4CAF50; color:#fff; cursor:pointer; font-size:0.85rem;">
-      Calcola risultato
-    </button>
+        <ol>
+          <li>
+            Lo userò almeno una volta a settimana?<br>
+            <label><input type="radio" name="q1" value="si"> Sì</label>
+            <label><input type="radio" name="q1" value="no"> No</label>
+          </li>
+          <li>
+            Ho già in casa qualcosa che fa una cosa simile?<br>
+            <label><input type="radio" name="q2" value="si"> Sì</label>
+            <label><input type="radio" name="q2" value="no"> No</label>
+          </li>
+          <li>
+            Se domani non fosse più in offerta, lo comprerei lo stesso?<br>
+            <label><input type="radio" name="q3" value="si"> Sì</label>
+            <label><input type="radio" name="q3" value="no"> No</label>
+          </li>
+        </ol>
 
-    <p id="mini-test-risultato" style="margin-top:8px; font-weight:bold;"></p>
-  </div>
-</div>
+        <button type="button" onclick="valutaMiniTest()" style="margin-top:6px; padding:6px 10px; border-radius:6px; border:none; background:#4CAF50; color:#fff; cursor:pointer; font-size:0.85rem;">
+          Calcola risultato
+        </button>
 
-<script>
-  function valutaMiniTest() {
-    const domande = ['q1', 'q2', 'q3'];
-    let si = 0;
-    let no = 0;
+        <p id="mini-test-risultato" style="margin-top:8px; font-weight:bold;"></p>
+      </div>
+    </div>
 
-    domande.forEach(function(nome) {
-      const selezionata = document.querySelector('input[name="' + nome + '"]:checked');
-      if (selezionata) {
-        if (selezionata.value === 'si') si++;
-        if (selezionata.value === 'no') no++;
+    <script>
+      function valutaMiniTest() {
+        const domande = ['q1', 'q2', 'q3'];
+        let si = 0;
+        let no = 0;
+
+        domande.forEach(function(nome) {
+          const selezionata = document.querySelector('input[name="' + nome + '"]:checked');
+          if (selezionata) {
+            if (selezionata.value === 'si') si++;
+            if (selezionata.value === 'no') no++;
+          }
+        });
+
+        const risultato = document.getElementById('mini-test-risultato');
+
+        if (si + no < 3) {
+          risultato.textContent = 'Rispondi a tutte le domande per vedere il risultato 😉';
+          risultato.style.color = '#e65100';
+          return;
+        }
+
+        if (no >= 2) {
+          risultato.textContent = 'Attenzione: sembra un possibile acquisto d’impulso. Meglio pensarci un attimo prima di cliccare “Compra ora”.';
+          risultato.style.color = '#c62828';
+        } else {
+          risultato.textContent = 'Buono! La tua scelta sembra abbastanza ragionata secondo il Metodo SmartShop.';
+          risultato.style.color = '#2e7d32';
+        }
       }
-    });
-
-    const risultato = document.getElementById('mini-test-risultato');
-
-    if (si + no < 3) {
-      risultato.textContent = 'Rispondi a tutte le domande per vedere il risultato 😉';
-      risultato.style.color = '#e65100';
-      return;
-    }
-
-    if (no >= 2) {
-      risultato.textContent = 'Attenzione: sembra un possibile acquisto d’impulso. Meglio pensarci un attimo prima di cliccare “Compra ora”.';
-      risultato.style.color = '#c62828';
-    } else {
-      risultato.textContent = 'Buono! La tua scelta sembra abbastanza ragionata secondo il Metodo SmartShop.';
-      risultato.style.color = '#2e7d32';
-    }
-  }
-</script>
-
+    </script>
 
     <div class="note-smartshop">
       Vuoi capire meglio cosa c’è dietro Syncras.App e il <strong>Metodo SmartShop</strong>?  
@@ -569,24 +558,24 @@
     </div>
   </main>
 
- <footer style="text-align:center; margin-top:40px; padding:20px; background:#eee; font-family:Arial; font-size:0.9rem;">
-  © 2025 Syncras.App — Tutti i diritti riservati<br>
+  <footer style="text-align:center; margin-top:40px; padding:20px; background:#eee; font-family:Arial; font-size:0.9rem;">
+    © 2025 Syncras.App — Tutti i diritti riservati<br>
 
-  <div style="margin-top:8px;">
-    <a href="privacy.html">Privacy Policy</a> |
-    <a href="cookie.html">Cookie Policy</a> |
-    <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
-    <a href="note-legali.html">Note Legali</a>
-  </div>
+    <div style="margin-top:8px;">
+      <a href="privacy.html">Privacy Policy</a> |
+      <a href="cookie.html">Cookie Policy</a> |
+      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
+      <a href="note-legali.html">Note Legali</a>
+    </div>
 
-  <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
-    Syncras.App partecipa al Programma Affiliazione Amazon EU.  
-    Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
-    senza alcun costo aggiuntivo per l’utente.  
-    Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
-    è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
-  </p>
-</footer>
+    <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+      senza alcun costo aggiuntivo per l’utente.  
+      Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+      è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+    </p>
+  </footer>
 
 </body>
 </html>
