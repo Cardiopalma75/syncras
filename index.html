@@ -502,6 +502,16 @@
     .syn-box a:hover {
       text-decoration: underline;
     }
+
+    /* SEZIONE QUIZ */
+
+    .quiz-section {
+      margin-top: 25px;
+    }
+
+    .quiz-section h3 {
+      margin-bottom: 8px;
+    }
   </style>
 </head>
 
@@ -687,40 +697,43 @@
           </div>
         </div>
 
-        <!-- MINI TEST SMARTSHOP INTERATTIVO -->
-        <div class="syn-box syn-calcolo" id="mini-test-smartshop">
-          <div class="syn-box-title">
-            <span class="emoji">💭</span>
-            <span>Mini Test SmartShop (30 secondi)</span>
+        <!-- SEZIONE QUIZ PRIMA DELL'ACQUISTO -->
+        <section class="quiz-section" id="quiz-smartshop">
+          <h3>Quiz prima dell’acquisto</h3>
+          <div class="syn-box syn-calcolo" id="mini-test-smartshop">
+            <div class="syn-box-title">
+              <span class="emoji">💭</span>
+              <span>Mini Test SmartShop (30 secondi)</span>
+            </div>
+            <div class="syn-box-text">
+              <p>Prima di comprare qualcosa online, rispondi a queste 3 domande:</p>
+
+              <ol>
+                <li>
+                  Lo userò almeno una volta a settimana?<br>
+                  <label><input type="radio" name="q1" value="si"> Sì</label>
+                  <label><input type="radio" name="q1" value="no"> No</label>
+                </li>
+                <li>
+                  Ho già in casa qualcosa che fa una cosa simile?<br>
+                  <label><input type="radio" name="q2" value="si"> Sì</label>
+                  <label><input type="radio" name="q2" value="no"> No</label>
+                </li>
+                <li>
+                  Se domani non fosse più in offerta, lo comprerei lo stesso?<br>
+                  <label><input type="radio" name="q3" value="si"> Sì</label>
+                  <label><input type="radio" name="q3" value="no"> No</label>
+                </li>
+              </ol>
+
+              <button type="button" onclick="valutaMiniTest()" style="margin-top:6px; padding:6px 10px; border-radius:6px; border:none; background:#4CAF50; color:#fff; cursor:pointer; font-size:0.85rem;">
+                Calcola risultato
+              </button>
+
+              <p id="mini-test-risultato" style="margin-top:8px; font-weight:bold;"></p>
+            </div>
           </div>
-          <div class="syn-box-text">
-            <p>Prima di comprare qualcosa online, rispondi a queste 3 domande:</p>
-
-            <ol>
-              <li>
-                Lo userò almeno una volta a settimana?<br>
-                <label><input type="radio" name="q1" value="si"> Sì</label>
-                <label><input type="radio" name="q1" value="no"> No</label>
-              </li>
-              <li>
-                Ho già in casa qualcosa che fa una cosa simile?<br>
-                <label><input type="radio" name="q2" value="si"> Sì</label>
-                <label><input type="radio" name="q2" value="no"> No</label>
-              </li>
-              <li>
-                Se domani non fosse più in offerta, lo comprerei lo stesso?<br>
-                <label><input type="radio" name="q3" value="si"> Sì</label>
-                <label><input type="radio" name="q3" value="no"> No</label>
-              </li>
-            </ol>
-
-            <button type="button" onclick="valutaMiniTest()" style="margin-top:6px; padding:6px 10px; border-radius:6px; border:none; background:#4CAF50; color:#fff; cursor:pointer; font-size:0.85rem;">
-              Calcola risultato
-            </button>
-
-            <p id="mini-test-risultato" style="margin-top:8px; font-weight:bold;"></p>
-          </div>
-        </div>
+        </section>
 
         <div class="note-smartshop">
           Vuoi capire meglio cosa c’è dietro Syncras.App e il <strong>Metodo SmartShop</strong>?  
@@ -760,9 +773,21 @@
         <div class="syn-box syn-best">
           <div class="syn-box-title"><span class="emoji">📈</span><span>Prodotto più cliccato</span></div>
           <div class="syn-box-text">
-            Robot aspirapolvere XYZ – ideale per chi odia passare l’aspirapolvere ma
+            Robot aspirapolvere – perfetto per chi odia passare l’aspirapolvere ma
             ama trovare il pavimento già fatto.<br>
-            👉 <a href="#" target="_blank" rel="nofollow">Guarda l’offerta su Amazon</a>
+            👉 <a href="https://www.amazon.it/s?k=robot+aspirapolvere+offerta&tag=mywebcorner4-21" target="_blank" rel="nofollow">
+              Guarda i robot in offerta su Amazon
+            </a>
+          </div>
+        </div>
+
+        <div class="syn-box syn-best">
+          <div class="syn-box-title"><span class="emoji">⭐</span><span>Prodotti più venduti</span></div>
+          <div class="syn-box-text">
+            La vetrina dei bestseller Amazon aggiornata di continuo:<br>
+            👉 <a href="https://www.amazon.it/gp/bestsellers?tag=mywebcorner4-21" target="_blank" rel="nofollow">
+              Vai ai prodotti più venduti
+            </a>
           </div>
         </div>
 
