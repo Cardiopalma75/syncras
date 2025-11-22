@@ -215,17 +215,38 @@
       padding: 14px 16px;
     }
 
-    .highlight-secondary-wrap {
+    .highlight-main-inner {
       display: flex;
-      flex-direction: column;
-      gap: 12px;
+      gap: 14px;
+      align-items: stretch;
     }
 
-    .highlight-card {
-      background: #f9fbfa;
+    .highlight-thumb-large {
+      flex: 0 0 38%;
       border-radius: 10px;
-      border: 1px solid #d7e8dc;
-      padding: 10px 12px;
+      min-height: 150px;
+      background: linear-gradient(135deg, #263238, #4CAF50);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .highlight-thumb-tag {
+      position: absolute;
+      bottom: 8px;
+      left: 8px;
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+    }
+
+    .highlight-text {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 6px;
     }
 
     .highlight-label {
@@ -259,9 +280,55 @@
       text-decoration: underline;
     }
 
+    .highlight-secondary-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .highlight-card {
+      background: #f9fbfa;
+      border-radius: 10px;
+      border: 1px solid #d7e8dc;
+      padding: 10px 12px;
+    }
+
+    .highlight-card-inner {
+      display: flex;
+      gap: 10px;
+      align-items: stretch;
+    }
+
+    .highlight-thumb-small {
+      flex: 0 0 32%;
+      border-radius: 8px;
+      min-height: 80px;
+      background: linear-gradient(135deg, #1e88e5, #64b5f6);
+    }
+
+    .highlight-card-text {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 4px;
+    }
+
     @media (max-width: 900px) {
       .highlight-grid {
         grid-template-columns: 1fr;
+      }
+
+      .highlight-main-inner {
+        flex-direction: column;
+      }
+
+      .highlight-thumb-large {
+        min-height: 130px;
+      }
+
+      .highlight-card-inner {
+        flex-direction: row;
       }
     }
 
@@ -281,8 +348,35 @@
       background: #f6faf7;
       border-radius: 10px;
       border: 1px solid #d7e8dc;
-      padding: 12px 15px;
+      padding: 10px 12px;
       margin-bottom: 10px;
+    }
+
+    .post-card-link {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .post-thumb {
+      flex: 0 0 90px;
+      height: 70px;
+      border-radius: 8px;
+      background: #e0e0e0;
+      overflow: hidden;
+    }
+
+    .post-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .post-content {
+      flex: 1;
     }
 
     .post-card h3 {
@@ -295,12 +389,7 @@
       margin-bottom: 4px;
     }
 
-    .post-card a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    .post-card a:hover h3 {
+    .post-card-link:hover h3 {
       text-decoration: underline;
     }
 
@@ -460,30 +549,47 @@
         <section class="highlight-grid">
           <article class="highlight-main">
             <div class="highlight-label">In evidenza • Smart TV</div>
-            <a href="smart-tv-guida-ironica.html">
-              <h2>Guida Smart TV 2025 – versione ironica</h2>
-              <p>
-                Tre fasce di prezzo, nonno sul divano e la verità su quando ha senso
-                “giocarsi tutto” su una TV nuova.
-              </p>
-            </a>
+            <div class="highlight-main-inner">
+              <div class="highlight-thumb-large">
+                <div class="highlight-thumb-tag">Smart TV 2025</div>
+              </div>
+              <div class="highlight-text">
+                <a href="smart-tv-guida-ironica.html">
+                  <h2>Guida Smart TV 2025 – versione ironica</h2>
+                  <p>
+                    Tre fasce di prezzo, nonno sul divano e la verità su quando ha senso
+                    “giocarsi tutto” su una TV nuova.
+                  </p>
+                </a>
+              </div>
+            </div>
           </article>
 
           <div class="highlight-secondary-wrap">
             <article class="highlight-card">
-              <div class="highlight-label">Energia • Fotovoltaico</div>
-              <a href="fotovoltaico-4kw-accumulo-10kwh.html">
-                <h3>Fotovoltaico 4 kW + 10 kWh: quanto costa davvero nel 2025?</h3>
-                <p>Impianto reale, numeri veri: quanto spendi, quanto recuperi e in quanti anni rientri.</p>
-              </a>
+              <div class="highlight-card-inner">
+                <div class="highlight-thumb-small"></div>
+                <div class="highlight-card-text">
+                  <div class="highlight-label">Energia • Fotovoltaico</div>
+                  <a href="fotovoltaico-4kw-accumulo-10kwh.html">
+                    <h3>Fotovoltaico 4 kW + 10 kWh: quanto costa davvero nel 2025?</h3>
+                    <p>Impianto reale, numeri veri: quanto spendi, quanto recuperi e in quanti anni rientri.</p>
+                  </a>
+                </div>
+              </div>
             </article>
 
             <article class="highlight-card">
-              <div class="highlight-label">Tecnologia • Smartphone</div>
-              <a href="smartphone-sotto-200-euro-2025.html">
-                <h3>I migliori smartphone sotto i 200€ – guida amichevole 2025</h3>
-                <p>Quattro modelli sensati spiegati senza paroloni, come al bar.</p>
-              </a>
+              <div class="highlight-card-inner">
+                <div class="highlight-thumb-small" style="background:linear-gradient(135deg,#8e24aa,#ce93d8);"></div>
+                <div class="highlight-card-text">
+                  <div class="highlight-label">Tecnologia • Smartphone</div>
+                  <a href="smartphone-sotto-200-euro-2025.html">
+                    <h3>I migliori smartphone sotto i 200€ – guida amichevole 2025</h3>
+                    <p>Quattro modelli sensati spiegati senza paroloni, come al bar.</p>
+                  </a>
+                </div>
+              </div>
             </article>
           </div>
         </section>
@@ -493,45 +599,63 @@
           <h3>Ultime guide pubblicate</h3>
           <ul class="post-list">
             <li class="post-card">
-              <a href="smart-tv-guida-ironica.html">
-                <h3>Guida Smart TV 2025 – versione ironica</h3>
-                <div class="post-meta">TV • Tecnologia</div>
-                <p>Tre fasce di prezzo, nonno sul divano e la verità su quando ha senso “giocarsi tutto”.</p>
+              <a class="post-card-link" href="smart-tv-guida-ironica.html">
+                <div class="post-thumb"></div>
+                <div class="post-content">
+                  <h3>Guida Smart TV 2025 – versione ironica</h3>
+                  <div class="post-meta">TV • Tecnologia</div>
+                  <p>Tre fasce di prezzo, nonno sul divano e la verità su quando ha senso “giocarsi tutto”.</p>
+                </div>
               </a>
             </li>
             <li class="post-card">
-              <a href="fotovoltaico-4kw-accumulo-10kwh.html">
-                <h3>Fotovoltaico 4 kW con accumulo 10 kWh: quanto costa davvero nel 2025?</h3>
-                <div class="post-meta">Energia • Fotovoltaico</div>
-                <p>Impianto reale, numeri veri: quanto spendi, quanto recuperi e in quanti anni rientri.</p>
+              <a class="post-card-link" href="fotovoltaico-4kw-accumulo-10kwh.html">
+                <div class="post-thumb"></div>
+                <div class="post-content">
+                  <h3>Fotovoltaico 4 kW con accumulo 10 kWh: quanto costa davvero nel 2025?</h3>
+                  <div class="post-meta">Energia • Fotovoltaico</div>
+                  <p>Impianto reale, numeri veri: quanto spendi, quanto recuperi e in quanti anni rientri.</p>
+                </div>
               </a>
             </li>
             <li class="post-card">
-              <a href="resistenza-termosifone-fotovoltaico.html">
-                <h3>Come ho scaldato la stanza più fredda (con una resistenza e il fotovoltaico)</h3>
-                <div class="post-meta">Casa & comfort</div>
-                <p>Termosifone, resistenza, fotovoltaico e buon senso: cosa ha funzionato davvero.</p>
+              <a class="post-card-link" href="resistenza-termosifone-fotovoltaico.html">
+                <div class="post-thumb"></div>
+                <div class="post-content">
+                  <h3>Come ho scaldato la stanza più fredda (con una resistenza e il fotovoltaico)</h3>
+                  <div class="post-meta">Casa & comfort</div>
+                  <p>Termosifone, resistenza, fotovoltaico e buon senso: cosa ha funzionato davvero.</p>
+                </div>
               </a>
             </li>
             <li class="post-card">
-              <a href="robot-cucina-economici-2025.html">
-                <h3>I robot da cucina economici nel 2025: quando hanno senso davvero</h3>
-                <div class="post-meta">Cucina • Elettrodomestici</div>
-                <p>Un aiuto furbo in cucina sì, ma solo se non si mangia tutto lo stipendio.</p>
+              <a class="post-card-link" href="robot-cucina-economici-2025.html">
+                <div class="post-thumb"></div>
+                <div class="post-content">
+                  <h3>I robot da cucina economici nel 2025: quando hanno senso davvero</h3>
+                  <div class="post-meta">Cucina • Elettrodomestici</div>
+                  <p>Un aiuto furbo in cucina sì, ma solo se non si mangia tutto lo stipendio.</p>
+                </div>
               </a>
             </li>
             <li class="post-card">
-              <a href="smartphone-sotto-200-euro-2025.html">
-                <h3>I migliori smartphone sotto i 200€ – guida amichevole 2025</h3>
-                <div class="post-meta">Tecnologia • Smartphone</div>
-                <p>Quattro modelli sensati spiegati senza paroloni, come al bar.</p>
+              <a class="post-card-link" href="smartphone-sotto-200-euro-2025.html">
+                <div class="post-thumb"></div>
+                <div class="post-content">
+                  <h3>I migliori smartphone sotto i 200€ – guida amichevole 2025</h3>
+                  <div class="post-meta">Tecnologia • Smartphone</div>
+                  <p>Quattro modelli sensati spiegati senza paroloni, come al bar.</p>
+                </div>
               </a>
             </li>
             <li class="post-card">
-              <a href="cuffie-wireless-sotto-50-euro-2025.html">
-                <h3>Cuffie wireless sotto 50€ – guida pratica e un po’ ironica</h3>
-                <div class="post-meta">Audio • Cuffie</div>
-                <p>Quando bastano 50€ e quando è meglio non esagerare col risparmio.</p>
+              <a class="post-card-link" href="cuffie-wireless-sotto-50-euro-2025.html">
+                <div class="post-thumb"></div>
+                <div class="post-content">
+                  <h3>Cuffie wireless sotto 50€ – guida pratica e un po’ ironica</h3>
+                  <div class="post-meta">Audio • Cuffie</div>
+                  <p>Quando bastano 50€ e quando è meglio non esagerare col risparmio.</p>
+                </div>
               </a>
             </li>
           </ul>
