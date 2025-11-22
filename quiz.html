@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test SmartShop | Syncras.App</title>
+  <meta name="description" content="Test seri per capire se il tuo prossimo acquisto ha davvero senso: verifica impulso, budget e scopri che smartphone fa per te.">
+  <meta name="robots" content="index,follow">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-59D9XRYKF3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-59D9XRYKF3');
+  </script>
+
+  <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --violet-soft: #A29BFE;
+      --text-main: #403E43;
+      --bg-page: #F7F7FB;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    /* HEADER */
+
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color: white;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+
+    #main-nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding-bottom: 2px;
+      border-bottom: 2px solid transparent;
+    }
+
+    #main-nav a:hover {
+      text-decoration: underline;
+    }
+
+    #main-nav a.active {
+      border-bottom-color: rgba(255,255,255,0.9);
+    }
+
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .menu-toggle span {
+      margin-left: 4px;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        margin: 0 auto;
+        max-width: 1180px;
+        flex-direction: column;
+        background-color: var(--violet-dark);
+        padding: 10px 16px 12px 16px;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
+      }
+
+      #main-nav a {
+        padding: 6px 0;
+      }
+
+      body.nav-open #main-nav {
+        display: flex;
+      }
+
+      .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+
+    /* MAIN */
+
+    main {
+      max-width: 1180px;
+      margin: 30px auto;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.08);
+    }
+
+    h1, h2, h3 {
+      color: var(--violet-dark);
+      margin-top: 0;
+    }
+
+    .page-intro {
+      margin-bottom: 20px;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 10px;
+    }
+
+    .badge-page {
+      display: inline-block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(108, 92, 231, 0.08);
+      border: 1px solid rgba(108, 92, 231, 0.35);
+      border-radius: 999px;
+      padding: 2px 8px;
+      color: #3730a3;
+      margin-bottom: 8px;
+    }
+
+    .tests-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1.1fr);
+      gap: 24px;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 900px) {
+      .tests-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .test-card {
+      background: #fdfbff;
+      border-radius: 14px;
+      padding: 18px 18px 16px;
+      border: 1px solid #e4ddff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+      margin-bottom: 18px;
+    }
+
+    .test-card h2 {
+      margin-bottom: 4px;
+      font-size: 1.2rem;
+    }
+
+    .test-subtitle {
+      font-size: 0.9rem;
+      color: #6b7280;
+      margin-bottom: 12px;
+    }
+
+    .test-section-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #6b7280;
+      margin-bottom: 4px;
+    }
+
+    ol.test-questions {
+      padding-left: 1.1rem;
+      margin: 0 0 10px 0;
+      font-size: 0.92rem;
+    }
+
+    ol.test-questions li {
+      margin-bottom: 8px;
+    }
+
+    label {
+      font-size: 0.88rem;
+      margin-right: 10px;
+    }
+
+    button.test-btn {
+      margin-top: 8px;
+      padding: 7px 12px;
+      border-radius: 7px;
+      border: none;
+      background: var(--violet-main);
+      color: #fff;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    button.test-btn:hover {
+      background: var(--violet-dark);
+    }
+
+    .test-result {
+      margin-top: 10px;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .result-good   { color: #16A34A; }
+    .result-medium { color: #CA8A04; }
+    .result-bad    { color: #DC2626; }
+
+    /* SIDEBAR INFO */
+
+    .side-box {
+      background: #f4f5ff;
+      border-radius: 12px;
+      padding: 14px 14px 12px;
+      border: 1px solid #e0dbff;
+      font-size: 0.9rem;
+      margin-bottom: 14px;
+    }
+
+    .side-box h3 {
+      margin-top: 0;
+      margin-bottom: 6px;
+      font-size: 1rem;
+    }
+
+    .side-box ul {
+      padding-left: 1.1rem;
+      margin: 4px 0 0 0;
+    }
+
+    .side-box li {
+      margin-bottom: 4px;
+    }
+
+    .side-note {
+      font-size: 0.8rem;
+      opacity: 0.85;
+      margin-top: 6px;
+    }
+
+    a {
+      color: var(--violet-dark);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* FOOTER */
+
+    .syncras-footer {
+      margin-top: 40px;
+      padding: 2.5rem 1.5rem 1.5rem;
+      background: #2b1840;
+      color: #f3eaff;
+      font-family: Arial, sans-serif;
+      font-size: 0.9rem;
+    }
+
+    .syncras-footer a {
+      color: #f3eaff;
+      text-decoration: none;
+    }
+
+    .syncras-footer a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-inner {
+      max-width: 1180px;
+      margin: 0 auto 1.5rem auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+    }
+
+    .footer-column h4 {
+      margin-top: 0;
+      margin-bottom: 0.7rem;
+      font-size: 1rem;
+    }
+
+    .footer-column p {
+      margin: 0;
+      font-size: 0.85rem;
+    }
+
+    .footer-column ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-column li {
+      margin-bottom: 0.4rem;
+      font-size: 0.85rem;
+    }
+
+    .footer-bottom {
+      max-width: 1180px;
+      margin: 0 auto;
+      text-align: center;
+      font-size: 0.8rem;
+      opacity: 0.9;
+    }
+
+    .footer-bottom p {
+      margin: 4px 0;
+    }
+
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
+
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
+
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="offerte.html">Offerte Amazon</a>
+        <a href="categorie.html">Categorie</a>
+        <a href="chi.html">Chi siamo</a>
+        <a href="quiz.html" class="active">Test SmartShop</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="page-intro">
+      <span class="badge-page">Area Test</span>
+      <h1>Test SmartShop: prima di comprare, prova qui</h1>
+      <p>
+        Qui non vendiamo nulla: ti facciamo solo qualche domanda scomoda prima che la carta di credito 
+        faccia danni. Rispondi con sincerità, il risultato lo vedi solo tu.
+      </p>
+    </div>
+
+    <div class="tests-layout">
+      <!-- COLONNA TEST -->
+      <div>
+        <!-- TEST 1: Decisione acquisto -->
+        <section class="test-card" id="test-acquisto">
+          <div class="test-section-label">Test generale</div>
+          <h2>Test decisione acquisto – versione seria</h2>
+          <p class="test-subtitle">
+            5 domande per capire se il tuo prossimo acquisto è davvero sensato o se è solo “voglia di clic”.
+          </p>
+
+          <ol class="test-questions">
+            <li>
+              Ho un motivo concreto e preciso per comprarlo (non solo “mi piace”)?<br>
+              <label><input type="radio" name="a_q1" value="si"> Sì</label>
+              <label><input type="radio" name="a_q1" value="no"> No</label>
+            </li>
+            <li>
+              Rientra nel mio budget di questo mese senza toccare risparmi o soldi per emergenze?<br>
+              <label><input type="radio" name="a_q2" value="si"> Sì</label>
+              <label><input type="radio" name="a_q2" value="no"> No</label>
+            </li>
+            <li>
+              Ho confrontato almeno 2–3 alternative serie (prezzo, recensioni, caratteristiche)?<br>
+              <label><input type="radio" name="a_q3" value="si"> Sì</label>
+              <label><input type="radio" name="a_q3" value="no"> No</label>
+            </li>
+            <li>
+              Sto risolvendo un problema reale che ho da tempo, non un desiderio nato negli ultimi 2–3 giorni?<br>
+              <label><input type="radio" name="a_q4" value="si"> Sì</label>
+              <label><input type="radio" name="a_q4" value="no"> No</label>
+            </li>
+            <li>
+              Se tra una settimana non potessi più restituirlo, sarei comunque tranquillo della scelta?<br>
+              <label><input type="radio" name="a_q5" value="si"> Sì</label>
+              <label><input type="radio" name="a_q5" value="no"> No</label>
+            </li>
+          </ol>
+
+          <button type="button" class="test-btn" onclick="valutaTestAcquisto()">Calcola risultato</button>
+          <p id="risultato-acquisto" class="test-result"></p>
+        </section>
+
+        <!-- TEST 2: Smartphone -->
+        <section class="test-card" id="test-smartphone">
+          <div class="test-section-label">Test specifico</div>
+          <h2>Test Smartphone 2025 – quale fa per te?</h2>
+          <p class="test-subtitle">
+            Niente sigle strane: rispondi a queste domande e ti diciamo a quale fascia di smartphone ha senso guardare.
+          </p>
+
+          <ol class="test-questions">
+            <li>
+              Qual è il budget realistico per il prossimo smartphone?<br>
+              <label><input type="radio" name="s_q1" value="1">&lt; 200€</label>
+              <label><input type="radio" name="s_q1" value="2">200–350€</label>
+              <label><input type="radio" name="s_q1" value="3">&gt; 350€</label>
+            </li>
+            <li>
+              Come lo userai <strong>la maggior parte del tempo</strong>?<br>
+              <label><input type="radio" name="s_q2" value="1">Chiamate, WhatsApp, poche app</label><br>
+              <label><input type="radio" name="s_q2" value="2">Social, foto, qualche app in più</label><br>
+              <label><input type="radio" name="s_q2" value="3">Gaming, video, tante app pesanti</label>
+            </li>
+            <li>
+              Cosa è più importante per te?<br>
+              <label><input type="radio" name="s_q3" value="2">Batteria che duri tanto</label>
+              <label><input type="radio" name="s_q3" value="2">Foto decenti in ogni situazione</label>
+              <label><input type="radio" name="s_q3" value="3">Prestazioni e fluidità al top</label>
+            </li>
+            <li>
+              Quanto ti piace “smanettare” con le impostazioni?<br>
+              <label><input type="radio" name="s_q4" value="1">Zero: voglio qualcosa di semplice</label><br>
+              <label><input type="radio" name="s_q4" value="3">Mi piace provare funzioni e personalizzazioni</label>
+            </li>
+            <li>
+              Quanto ti pesa rinunciare a un “marchio famoso” per risparmiare?<br>
+              <label><input type="radio" name="s_q5" value="2">Voglio un brand conosciuto</label>
+              <label><input type="radio" name="s_q5" value="3">Se il telefono è valido, il marchio mi interessa poco</label>
+            </li>
+          </ol>
+
+          <button type="button" class="test-btn" onclick="valutaTestSmartphone()">Calcola fascia consigliata</button>
+          <p id="risultato-smartphone" class="test-result"></p>
+        </section>
+      </div>
+
+      <!-- COLONNA INFO -->
+      <aside>
+        <div class="side-box">
+          <h3>Come leggere i risultati</h3>
+          <ul>
+            <li><strong>Verde</strong>: acquisto ragionato, puoi procedere con calma.</li>
+            <li><strong>Giallo</strong>: qualcosa non torna, forse è meglio aspettare.</li>
+            <li><strong>Rosso</strong>: alto rischio di acquisto d’impulso.</li>
+          </ul>
+          <p class="side-note">
+            Nessuno dei test è un oracolo infallibile.  
+            L’idea è semplice: farti ragionare 2 minuti in più prima di spendere soldi.
+          </p>
+        </div>
+
+        <div class="side-box">
+          <h3>Dopo il test, cosa faccio?</h3>
+          <ul>
+            <li>Se il risultato è <strong>verde</strong>, vai alle nostre guide:</li>
+            <li><a href="smartphone-sotto-200-euro-2025.html">Smartphone sotto 200€</a></li>
+            <li><a href="smart-tv-guida-ironica.html">Guida Smart TV 2025</a></li>
+            <li><a href="fotovoltaico-4kw-accumulo-10kwh.html">Fotovoltaico: numeri reali</a></li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="syncras-footer">
+    <div class="footer-inner">
+      <div class="footer-column">
+        <h4>Syncras.App</h4>
+        <p>
+          Metodo SmartShop per fare acquisti con la testa (e con un po’ di ironia).<br>
+          Niente tecnicismi inutili, solo esperienze reali e numeri spiegati semplice.
+        </p>
+      </div>
+
+      <div class="footer-column">
+        <h4>Link utili</h4>
+        <ul>
+          <li><a href="blog.html">Tutte le guide SmartShop</a></li>
+          <li><a href="offerte.html">Offerte Amazon selezionate</a></li>
+          <li><a href="smartphone-sotto-200-euro-2025.html">Smartphone 2025 sotto 200€</a></li>
+          <li><a href="resistenza-termosifone-fotovoltaico.html">La stanza più fredda della casa</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h4>Legale & Privacy</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="cookie.html">Cookie Policy</a></li>
+          <li><a href="disclaimer-amazon.html">Disclaimer Amazon</a></li>
+          <li><a href="note-legali.html">Note Legali</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© <span id="year-span"></span> Syncras.App — Tutti i diritti riservati.</p>
+      <p>
+        Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+        Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+        senza alcun costo aggiuntivo per l’utente.
+      </p>
+      <p>
+        Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+        è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.body.classList.toggle('nav-open');
+    }
+
+    function valutaTestAcquisto() {
+      const domande = ['a_q1', 'a_q2', 'a_q3', 'a_q4', 'a_q5'];
+      let si = 0;
+      let risposte = 0;
+
+      domande.forEach(function(nome) {
+        const sel = document.querySelector('input[name="' + nome + '"]:checked');
+        if (sel) {
+          risposte++;
+          if (sel.value === 'si') si++;
+        }
+      });
+
+      const el = document.getElementById('risultato-acquisto');
+      el.className = 'test-result';
+
+      if (risposte < domande.length) {
+        el.textContent = 'Rispondi a tutte le domande per vedere il risultato.';
+        return;
+      }
+
+      if (si >= 4) {
+        el.textContent = 'Verde: il tuo acquisto sembra ragionato. Se il prodotto è giusto e il prezzo è onesto, puoi procedere piuttosto tranquillo.';
+        el.classList.add('result-good');
+      } else if (si >= 2) {
+        el.textContent = 'Giallo: ci sono alcuni punti deboli. Forse è meglio aspettare ancora un po’, confrontare meglio prezzi e alternative.';
+        el.classList.add('result-medium');
+      } else {
+        el.textContent = 'Rosso: qui suona forte il campanello dell’acquisto d’impulso. Meglio fermarsi e ripensarci tra qualche giorno.';
+        el.classList.add('result-bad');
+      }
+    }
+
+    function valutaTestSmartphone() {
+      const domande = ['s_q1', 's_q2', 's_q3', 's_q4', 's_q5'];
+      let punteggio = 0;
+      let risposte = 0;
+
+      domande.forEach(function(nome) {
+        const sel = document.querySelector('input[name="' + nome + '"]:checked');
+        if (sel) {
+          risposte++;
+          punteggio += parseInt(sel.value, 10);
+        }
+      });
+
+      const el = document.getElementById('risultato-smartphone');
+      el.className = 'test-result';
+
+      if (risposte < domande.length) {
+        el.textContent = 'Completa tutte le risposte per vedere la fascia consigliata.';
+        return;
+      }
+
+      // Caso speciale: budget basso + uso leggero
+      const budget = document.querySelector('input[name="s_q1"]:checked').value;
+      const uso = document.querySelector('input[name="s_q2"]:checked').value;
+
+      if (budget === '1' && uso === '1') {
+        el.textContent = 'Per il tuo uso uno smartphone sotto i 200€ è più che sufficiente. Prima di cambiare, valuta se quello che hai ti limita davvero.';
+        el.classList.add('result-good');
+        return;
+      }
+
+      if (punteggio <= 8) {
+        el.textContent = 'Fascia consigliata: smartphone base sotto 200–220€. Modelli semplici, batteria ok, zero fronzoli. Perfetti per chat, chiamate e qualche app.';
+        el.classList.add('result-good');
+      } else if (punteggio <= 12) {
+        el.textContent = 'Fascia consigliata: 200–350€. Equilibrio tra prestazioni, foto e batteria. Ottima zona per non buttare soldi ma avere un telefono completo.';
+        el.classList.add('result-medium');
+      } else {
+        el.textContent = 'Fascia consigliata: oltre 350€. Cerchi prestazioni alte, buon comparto foto e magari gaming. Prima di spendere così tanto, assicurati di sfruttarlo davvero.';
+        el.classList.add('result-medium');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      var span = document.getElementById('year-span');
+      if (span) {
+        span.textContent = new Date().getFullYear();
+      }
+    });
+  </script>
+</body>
+</html>
