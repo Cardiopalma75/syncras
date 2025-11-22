@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>La stanza più fredda della casa? Ecco come l’ho sistemata | Syncras</title>
+  <title>La stanza più fredda della casa? Ecco come l’ho sistemata | Syncras.App</title>
   <meta name="description" content="Stanza più fredda della casa? Ho risolto con una resistenza elettrica per termosifone. Guida ironica, semplice e perfetta per chi ha il fotovoltaico.">
   <meta name="robots" content="index,follow">
 
@@ -17,61 +17,142 @@
   </script>
 
   <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --bg-page: #F7F7FB;
+      --text-main: #403E43;
+    }
+
     body {
       font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
+      background-color: var(--bg-page);
       margin: 0;
       padding: 0;
-      color: #333;
+      color: var(--text-main);
       line-height: 1.6;
     }
-    header {
-      background-color: #4CAF50;
+
+    /* HEADER MODERNO VIOLA */
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
       color: white;
-      padding: 20px 10px;
-      text-align: center;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
     }
-    nav a {
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+    #main-nav a {
       color: white;
       text-decoration: none;
-      margin: 0 15px;
-      font-weight: bold;
+      font-weight: 600;
     }
-    nav a:hover {
+    #main-nav a:hover {
       text-decoration: underline;
     }
+
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    .menu-toggle span {
+      margin-left: 4px;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0; right: 0; top: 56px;
+        background-color: var(--violet-dark);
+        padding: 10px 16px;
+        flex-direction: column;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+      }
+      body.nav-open #main-nav {
+        display: flex;
+      }
+      .menu-toggle {
+        display: inline-flex;
+      }
+    }
+
+    /* CONTENUTO */
     main {
       max-width: 900px;
       margin: 30px auto;
       padding: 20px;
       background-color: white;
-      border-radius: 10px;
+      border-radius: 12px;
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
+
     h1, h2, h3 {
-      color: #2f6f34;
+      color: var(--violet-dark);
     }
+
     blockquote {
-      border-left: 4px solid #4CAF50;
+      border-left: 4px solid var(--violet-main);
       padding-left: 12px;
       color: #555;
       font-style: italic;
-      margin-left: 0;
     }
-    ul {
-      margin-left: 20px;
+
+    .share-btn {
+      padding: 10px 18px;
+      margin-bottom: 20px;
+      background-color: var(--violet-main);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
     }
+    .share-btn:hover {
+      background-color: var(--violet-dark);
+    }
+
     .amazon-link {
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       font-weight: bold;
       display: inline-block;
       margin: 15px 0;
-      color: #1a0dab;
+      color: var(--violet-dark);
+      text-decoration: none;
     }
+    .amazon-link:hover {
+      text-decoration: underline;
+    }
+
     footer {
       text-align: center;
-      padding: 15px;
-      background-color: #ddd;
+      padding: 20px;
+      background-color: #eee;
       margin-top: 40px;
     }
   </style>
@@ -79,37 +160,48 @@
 
 <body>
 
-<header>
-  <h1>La stanza più fredda della casa? Ecco come l’ho sistemata</h1>
-  <nav>
-    <a href="index.html">Home</a> |
-    <a href="blog.html">Blog</a> |
-    <a href="chi.html">Chi siamo</a>
-  </nav>
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo">Syncras.App</div>
+
+    <button class="menu-toggle" onclick="toggleMenu()">Menu <span>☰</span></button>
+
+    <nav id="main-nav">
+      <a href="index.html">Home</a>
+      <a href="blog.html">Blog</a>
+      <a href="offerte.html">Offerte Amazon</a>
+      <a href="categorie.html">Categorie</a>
+      <a href="chi.html">Chi siamo</a>
+    </nav>
+  </div>
 </header>
+
+<script>
+function toggleMenu() {
+  document.body.classList.toggle('nav-open');
+}
+</script>
 
 <main>
 
-  <h2>La stanza più fredda della casa (quella dove anche il pinguino dice: fratè mi siedo)</h2>
-<button onclick="navigator.share({
-    title: document.title,
-    text: 'Guarda questo articolo su Syncras:',
-    url: window.location.href
-}).catch(() => {
-    alert('Copia questo link per condividerlo:\n\n' + window.location.href);
-});"
-style="padding:10px 18px; margin-bottom:20px; background-color:#4CAF50; color:white; border:none; border-radius:8px; cursor:pointer; font-size:1rem;">
-  🔗 Condividi questo articolo
-</button>
+  <h1>La stanza più fredda della casa? Ecco come l’ho sistemata</h1>
+
+  <button class="share-btn"
+    onclick="navigator.share({
+      title: document.title,
+      text: 'Guarda questo articolo su Syncras:',
+      url: window.location.href
+    }).catch(() => { alert('Copia questo link:\n' + window.location.href); })">
+    🔗 Condividi questo articolo
+  </button>
+
+  <h2>La stanza più fredda della casa (quella dove anche il pinguino dice: “fratè mi siedo”)</h2>
 
   <p>
     Non so se succede anche a te, ma ogni casa ha <strong>la stanza maledetta</strong>.
-    Quella dove entri e ti viene voglia di dire:
   </p>
 
-  <blockquote>
-    “Fratè… ma che siamo al Polo Sud?”
-  </blockquote>
+  <blockquote>“Fratè… ma che siamo al Polo Sud?”</blockquote>
 
   <p>
     Io quella stanza ce l’avevo. Finché un giorno ho detto:
@@ -117,7 +209,7 @@ style="padding:10px 18px; margin-bottom:20px; background-color:#4CAF50; color:wh
   </p>
 
   <p>
-    E mi sono inventato una soluzione semplice, furba e soprattutto perfetta per chi ha il fotovoltaico:
+    E mi sono inventato una soluzione semplice e perfetta per chi ha il fotovoltaico:
     <strong>la resistenza elettrica per termosifone</strong>.
   </p>
 
@@ -126,94 +218,61 @@ style="padding:10px 18px; margin-bottom:20px; background-color:#4CAF50; color:wh
   <h2>Perché proprio questa resistenza?</h2>
 
   <ul>
-    <li><strong>Facile da montare</strong> – Se sai avvitare un tappo, sei già un idraulico esperto.</li>
-    <li><strong>Scalda anche senza caldaia</strong> – Finalmente puoi spegnere tutto e far finta di risparmiare.</li>
-    <li><strong>Col fotovoltaico è una poesia</strong> – Gli altri pagano la bolletta, tu ti scaldi col sole.</li>
+    <li><strong>Facile da montare</strong></li>
+    <li><strong>Scalda anche senza caldaia</strong></li>
+    <li><strong>Col fotovoltaico è una poesia</strong></li>
   </ul>
 
-  <blockquote>
-    Tipo lucertola sul balcone. Però molto più intelligente.
-  </blockquote>
+  <blockquote>Tipo lucertola sul balcone. Però molto più intelligente.</blockquote>
 
   <hr>
 
   <h2>Come si monta (spiegato come a un amico)</h2>
 
-  <p>Niente NASA, niente tecnici, niente tuo cugino che “sa fare tutto”.</p>
-
   <ul>
-    <li>Spegni la caldaia (se no parte la sigla di “Chi l’ha visto?”).</li>
-    <li>Prima di svitare il tappo assicurati che abbia un doppio foro, o nel caso non ci sia
-      rivolgiti al negoziante di idraulica, costa una sciocchezza
-      (4 tappi 5 euro).</li>
-    <li>Svita il tappo basso del termosifone, lato libero.  
-        Esce un po’ d’acqua: NON è il lago di Garda.</li>
-    <li>Avvita la resistenza. Facile come aprire una bottiglia.</li>
-    <li>Rimetti l’acqua nel circuito.</li>
-    <li>Collega la resistenza alla corrente.</li>
-    <li>Riaccendi la caldaia (anche se già scalda da sola).</li>
+    <li>Spegni la caldaia</li>
+    <li>Verifica il tappo con doppio foro</li>
+    <li>Svita il tappo basso lato libero</li>
+    <li>Avvita la resistenza</li>
+    <li>Rimetti acqua nel circuito</li>
+    <li>Collega la corrente</li>
+    <li>Riaccendi la caldaia</li>
   </ul>
 
   <p>
-    Lei ha un sensore interno e si spegne da sola.  
-    puo funzionare sia con la caldaia che con la corrente e l'uno
-    non esclude l'altro.
-    Una roba più intelligente di certe persone che conosco.
+    Ha un sensore interno che la spegne da sola.  
+    Può funzionare sia con caldaia che con corrente.
   </p>
-
-  <hr>
-
-  <h2>È davvero utile?</h2>
-
-  <p>
-    Sì.  
-    Se hai il fotovoltaico, è <strong>oro puro</strong>.Se non hai il fotovoltaivo aiuta a scaldare senza caldaia
-  </p>
-
-  <p>
-    Mentre fuori ci sono 4 gradi e il vicino spara la caldaia a 12.000 giri,
-    tu ti scaldi GRATIS col sole.
-  </p>
-
-  <blockquote>
-    “Enel, mi dispiace… questo mese non ti do niente.”
-  </blockquote>
 
   <hr>
 
   <h2>Dove ho preso la mia</h2>
 
-  <p>
-    Qui trovi la resistenza che uso io, funziona da paura:
-  </p>
+  <p>Ecco la resistenza che uso io:</p>
 
   <a class="amazon-link"
      href="https://amzn.to/4p9eTPs"
      target="_blank"
-     rel="noopener noreferrer"
-     onclick="gtag('event', 'click_affiliato', { event_category: 'Amazon', event_label: 'Resistenza Termosifone 2025' });">
-      👉 Resistenza elettrica per termosifone su Amazon
+     rel="noopener noreferrer">
+     👉 Resistenza elettrica per termosifone (Amazon)
   </a>
 
   <p style="font-size:0.9rem; color:#777;">
-    Link affiliato Amazon: potrei ricevere una piccola commissione (senza nessun costo per te).
+    Link affiliato Amazon.
   </p>
 
   <hr>
 
-  <h2>Nota legale (importante)</h2>
+  <h2>Nota legale</h2>
 
   <p style="font-size:0.9rem; color:#555;">
-    Questo articolo è a scopo informativo.  
     Prima di fare qualsiasi installazione, verifica sempre le istruzioni del produttore
-    e/o chiedi a un tecnico qualificato.  
-    Non mi assumo responsabilità per allagamenti, esplosioni, sparizioni misteriose del gatto
-    o termosifoni che diventano astronavi.
+    o chiedi a un tecnico qualificato.
   </p>
 
 </main>
 
-<footer style="text-align:center; margin-top:40px; padding:20px; background:#eee; font-family:Arial; font-size:0.9rem;">
+<footer>
   © 2025 Syncras.App — Tutti i diritti riservati<br>
 
   <div style="margin-top:8px;">
@@ -224,14 +283,9 @@ style="padding:10px 18px; margin-bottom:20px; background-color:#4CAF50; color:wh
   </div>
 
   <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
-    Syncras.App partecipa al Programma Affiliazione Amazon EU.  
-    Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
-    senza alcun costo aggiuntivo per l’utente.  
-    Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
-    è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+    Syncras.App partecipa al Programma Affiliazione Amazon EU.
   </p>
 </footer>
-
 
 </body>
 </html>
