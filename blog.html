@@ -8,24 +8,29 @@
   <meta name="robots" content="index,follow">
 
   <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --bg-page: #F7F7FB;
+      --text-main: #403E43;
+    }
+
     body {
       font-family: 'Arial', sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f5f5f5;
-      color: #333;
+      background-color: var(--bg-page);
+      color: var(--text-main);
       line-height: 1.6;
     }
 
-    /* HEADER come nella home */
-
+    /* HEADER identico alla home */
     .site-header {
-      background: linear-gradient(90deg, #2e7d32, #4CAF50);
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
       color: white;
       padding: 12px 14px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.15);
     }
-
     .header-inner {
       max-width: 1180px;
       margin: 0 auto;
@@ -34,30 +39,25 @@
       justify-content: space-between;
       gap: 16px;
     }
-
     .logo {
       font-size: 1.4rem;
       font-weight: bold;
       letter-spacing: 0.03em;
     }
-
     #main-nav {
       display: flex;
       gap: 18px;
       font-size: 0.95rem;
     }
-
     #main-nav a {
       color: white;
       text-decoration: none;
       font-weight: 600;
       padding-bottom: 2px;
     }
-
     #main-nav a:hover {
       text-decoration: underline;
     }
-
     .menu-toggle {
       display: none;
       background: rgba(255,255,255,0.12);
@@ -68,13 +68,10 @@
       font-size: 0.9rem;
       cursor: pointer;
     }
-
     .menu-toggle span {
       margin-left: 4px;
       font-size: 1.1rem;
     }
-
-    /* MENU MOBILE */
 
     @media (max-width: 768px) {
       #main-nav {
@@ -86,40 +83,41 @@
         margin: 0 auto;
         max-width: 1180px;
         flex-direction: column;
-        background-color: #2e7d32;
+        background-color: var(--violet-dark);
         padding: 10px 16px 12px 16px;
         border-radius: 0 0 8px 8px;
         box-shadow: 0 3px 6px rgba(0,0,0,0.25);
         z-index: 50;
       }
-
       #main-nav a {
         padding: 6px 0;
       }
-
       body.nav-open #main-nav {
         display: flex;
       }
-
       .menu-toggle {
         display: inline-flex;
         align-items: center;
       }
     }
 
-    /* CONTENUTO BLOG */
-
     main {
       max-width: 900px;
       margin: 30px auto;
       padding: 20px;
-      background-color: white;
+      background-color: #ffffff;
       border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 6px rgba(0,0,0,0.08);
     }
 
     h2, h3 {
-      color: #2f6f34;
+      color: var(--violet-dark);
+    }
+
+    .intro {
+      margin-bottom: 20px;
+      border-bottom: 1px solid #E5E7EB;
+      padding-bottom: 10px;
     }
 
     .post-list {
@@ -127,62 +125,37 @@
       padding-left: 0;
       margin: 20px 0 0 0;
     }
-
     .post-card {
-      background: #f6faf7;
+      background: #F6F4FF;
       border-radius: 10px;
-      border: 1px solid #d7e8dc;
-      padding: 10px 12px;
+      border: 1px solid #DDD7FF;
+      padding: 15px;
       margin-bottom: 15px;
     }
-
-    .post-card-link {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      text-decoration: none;
-      color: inherit;
-    }
-
-    .post-thumb {
-      flex: 0 0 90px;
-      height: 70px;
-      border-radius: 8px;
-      background: #e0e0e0;
-      overflow: hidden;
-    }
-
-    .post-thumb img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    .post-content {
-      flex: 1;
-    }
-
     .post-card h3 {
       margin-top: 0;
       margin-bottom: 5px;
     }
-
     .post-meta {
-      font-size: 0.9rem;
-      color: #777;
+      font-size: 0.85rem;
+      color: #6B7280;
       margin-bottom: 8px;
     }
-
-    .post-card-link:hover h3 {
+    .post-card a {
+      text-decoration: none;
+      color: inherit;
+    }
+    .post-card a:hover h3 {
       text-decoration: underline;
     }
 
     footer {
       text-align: center;
-      padding: 15px;
-      background-color: #ddd;
-      margin-top: 40px;
+      padding: 20px;
+      background:#eee;
+      font-family:Arial;
+      font-size:0.9rem;
+      margin-top:40px;
     }
   </style>
 </head>
@@ -207,93 +180,77 @@
   </header>
 
   <main>
-    <h2>Articoli e guide SmartShop</h2>
-    <p>
-      Qui trovi gli articoli in cui metto in pratica il <strong>Metodo SmartShop</strong>:
-      niente recensioni “copiate”, ma ragionamenti, confronti e scelte spiegate come a un amico.
-    </p>
+    <section class="intro">
+      <h2>Articoli e guide SmartShop</h2>
+      <p>
+        Qui trovi gli articoli in cui metto in pratica il <strong>Metodo SmartShop</strong>:
+        niente recensioni “copiate”, ma ragionamenti, confronti e scelte spiegate come a un amico.
+      </p>
+    </section>
 
     <ul class="post-list">
       <li class="post-card">
-        <a class="post-card-link" href="smart-tv-guida-ironica.html">
-          <div class="post-thumb"></div>
-          <div class="post-content">
-            <h3>Guida Smart TV 2025 (versione ironica)</h3>
-            <div class="post-meta">20 novembre 2025 • TV • Tecnologia</div>
-            <p>
-              Una guida divertente e pratica per scegliere la TV giusta in base al budget.
-            </p>
-          </div>
+        <a href="smart-tv-guida-ironica.html">
+          <h3>Guida Smart TV 2025 (versione ironica)</h3>
+          <div class="post-meta">20 novembre 2025 • TV • Tecnologia</div>
+          <p>
+            Una guida divertente e pratica per scegliere la TV giusta in base al budget.
+          </p>
         </a>
       </li>
 
       <li class="post-card">
-        <a class="post-card-link" href="fotovoltaico-4kw-accumulo-10kwh.html">
-          <div class="post-thumb"></div>
-          <div class="post-content">
-            <h3>Fotovoltaico 4 kW con accumulo 10 kWh: quanto costa davvero nel 2025?</h3>
-            <div class="post-meta">18 novembre 2025 • Energia • Fotovoltaico</div>
-            <p>
-              Impianto reale, numeri veri, pro e contro spiegati senza marketing. Quanto spendi,
-              quanto recuperi e in quanti anni ti rientra l’investimento.
-            </p>
-          </div>
+        <a href="fotovoltaico-4kw-accumulo-10kwh.html">
+          <h3>Fotovoltaico 4 kW con accumulo 10 kWh: quanto costa davvero nel 2025?</h3>
+          <div class="post-meta">18 novembre 2025 • Energia • Fotovoltaico</div>
+          <p>
+            Impianto reale, numeri veri, pro e contro spiegati senza marketing. Quanto spendi,
+            quanto recuperi e in quanti anni ti rientra l’investimento.
+          </p>
         </a>
       </li>
 
       <li class="post-card">
-        <a class="post-card-link" href="resistenza-termosifone-fotovoltaico.html">
-          <div class="post-thumb"></div>
-          <div class="post-content">
-            <h3>Come ho migliorato il comfort con una resistenza sul termosifone (e il fotovoltaico)</h3>
-            <div class="post-meta">18 novembre 2025 • Clima & comfort • Casa</div>
-            <p>
-              Termosifone, resistenza elettrica, fotovoltaico e un po’ di buon senso: cosa ha funzionato,
-              quanto consuma davvero e quando ha senso farlo.
-            </p>
-          </div>
+        <a href="resistenza-termosifone-fotovoltaico.html">
+          <h3>Come ho migliorato il comfort con una resistenza sul termosifone (e il fotovoltaico)</h3>
+          <div class="post-meta">18 novembre 2025 • Clima & comfort • Casa</div>
+          <p>
+            Termosifone, resistenza elettrica, fotovoltaico e un po’ di buon senso: cosa ha funzionato,
+            quanto consuma davvero e quando ha senso farlo.
+          </p>
         </a>
       </li>
 
       <li class="post-card">
-        <a class="post-card-link" href="robot-cucina-economici-2025.html">
-          <div class="post-thumb"></div>
-          <div class="post-content">
-            <h3>I robot da cucina economici nel 2025: quando hanno senso davvero</h3>
-            <div class="post-meta">18 novembre 2025 • Cucina • Elettrodomestici</div>
-            <p>
-              Non ti serve uno chef in casa, ma un aiuto furbo sì: come scegliere un robot economico
-              senza farti portare via lo stipendio.
-            </p>
-          </div>
+        <a href="robot-cucina-economici-2025.html">
+          <h3>I robot da cucina economici nel 2025: quando hanno senso davvero</h3>
+          <div class="post-meta">18 novembre 2025 • Cucina • Elettrodomestici</div>
+          <p>
+            Non ti serve uno chef in casa, ma un aiuto furbo sì: come scegliere un robot economico
+            senza farti portare via lo stipendio.
+          </p>
         </a>
       </li>
 
       <li class="post-card">
-        <a class="post-card-link" href="smartphone-sotto-200-euro-2025.html">
-          <div class="post-thumb"></div>
-          <div class="post-content">
-            <h3>I migliori smartphone sotto i 200€ – guida amichevole e ironica 2025</h3>
-            <div class="post-meta">18 novembre 2025 • Tecnologia • Smartphone</div>
-            <p>
-              Una guida semplice, ironica e senza tecnicismi per scegliere lo smartphone giusto sotto i 200€.
-              Quattro modelli validi spiegati come a un amico al bar.
-            </p>
-          </div>
+        <a href="smartphone-sotto-200-euro-2025.html">
+          <h3>I migliori smartphone sotto i 200€ – guida amichevole e ironica 2025</h3>
+          <div class="post-meta">18 novembre 2025 • Tecnologia • Smartphone</div>
+          <p>
+            Una guida semplice, ironica e senza tecnicismi per scegliere lo smartphone giusto sotto i 200€.
+            Quattro modelli validi spiegati come a un amico al bar.
+          </p>
         </a>
       </li>
 
       <li class="post-card">
-        <a class="post-card-link" href="cuffie-wireless-sotto-50-euro-2025.html">
-          <div class="post-thumb"></div>
-          <div class="post-content">
-            <h3>Cuffie wireless sotto 50€ (2025) – guida amichevole, pratica e un po’ ironica</h3>
-            <div class="post-meta">18 novembre 2025 • Audio • Cuffie</div>
-            <p>
-              Le migliori cuffie bluetooth economiche spiegate senza paroloni: autonomia, comfort,
-              quando bastano 50€ e quando è meglio non esagerare con il risparmio.
-            </p>
-          </div>
+        <a href="cuffie-wireless-sotto-50-euro-2025.html">
+          <h3>Cuffie wireless sotto 50€ (2025) – guida amichevole, pratica e un po’ ironica</h3>
+          <div class="post-meta">18 novembre 2025 • Audio • Cuffie</div>
+          <p>
+            Le migliori cuffie bluetooth economiche spiegate senza paroloni: autonomia, comfort,
+            quando bastano 50€ e quando è meglio non esagerare con il risparmio.
+          </p>
         </a>
       </li>
     </ul>
@@ -305,16 +262,14 @@
     }
   </script>
 
-  <footer style="text-align:center; margin-top:40px; padding:20px; background:#eee; font-family:Arial; font-size:0.9rem;">
+  <footer>
     © 2025 Syncras.App — Tutti i diritti riservati<br>
-
     <div style="margin-top:8px;">
       <a href="privacy.html">Privacy Policy</a> |
       <a href="cookie.html">Cookie Policy</a> |
       <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
       <a href="note-legali.html">Note Legali</a>
     </div>
-
     <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
       Syncras.App partecipa al Programma Affiliazione Amazon EU.  
       Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
@@ -323,7 +278,6 @@
       è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
     </p>
   </footer>
-
 </body>
 </html>
 
