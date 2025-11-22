@@ -83,16 +83,24 @@
 </head>
 
 <body>
-  <header>
-    <h1>Syncras.App</h1>
-    <nav>
-      <a href="index.html">Home</a> |
-      <a href="blog.html">Blog</a> |
-      <a href="offerte.html">Offerte Amazon</a> |
-      <a href="categorie.html">Categorie</a> |
+  <header class="site-header">
+  <div class="header-inner">
+    <div class="logo">Syncras.App</div>
+
+    <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+      Menu <span>☰</span>
+    </button>
+
+    <nav id="main-nav">
+      <a href="index.html">Home</a>
+      <a href="blog.html">Blog</a>
+      <a href="offerte.html">Offerte Amazon</a>
+      <a href="categorie.html">Categorie</a>
       <a href="chi.html">Chi siamo</a>
     </nav>
-  </header>
+  </div>
+</header>
+
 
   <main>
     <h2>Articoli e guide SmartShop</h2>
