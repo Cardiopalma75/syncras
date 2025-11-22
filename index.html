@@ -609,14 +609,39 @@
       text-decoration: underline;
     }
 
-    /* SEZIONE QUIZ */
+    /* SEZIONE QUIZ – resa più evidente */
 
     .quiz-section {
-      margin-top: 25px;
+      margin-top: 32px;
+      padding: 18px 16px 20px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #fdf2ff, #eef2ff);
+      border: 1px solid #e5d3ff;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.06);
     }
 
     .quiz-section h3 {
-      margin-bottom: 8px;
+      margin-top: 0;
+      margin-bottom: 6px;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .quiz-section h3 span.badge-quiz {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: rgba(76, 81, 191, 0.12);
+      border: 1px solid rgba(76, 81, 191, 0.35);
+      color: #312e81;
+      border-radius: 999px;
+      padding: 2px 8px;
+    }
+
+    .quiz-section .syn-box {
+      margin-top: 10px;
     }
 
     /* FOOTER POTENZIATO */
@@ -913,7 +938,7 @@
               </div>
             </li>
 
-            <!-- Puoi aggiungere qui altri prodotti fino a #10, copiando la struttura dei <li> -->
+            <!-- Aggiungi qui eventuali altri prodotti fino a #10 -->
           </ol>
         </section>
 
@@ -953,9 +978,9 @@
           </div>
         </div>
 
-        <!-- SEZIONE QUIZ -->
+        <!-- SEZIONE QUIZ – evidenziata -->
         <section class="quiz-section" id="quiz-smartshop">
-          <h3>Quiz prima dell’acquisto</h3>
+          <h3>🧩 Quiz prima dell’acquisto <span class="badge-quiz">Mini test SmartShop</span></h3>
           <div class="syn-box syn-calcolo" id="mini-test-smartshop">
             <div class="syn-box-title">
               <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -1085,6 +1110,22 @@
             👉 <a href="https://www.amazon.it/gp/bestsellers?tag=mywebcorner4-21" target="_blank" rel="nofollow">
               Vai ai prodotti più venduti
             </a>
+          </div>
+        </div>
+
+        <!-- BOX: Richiamo al quiz -->
+        <div class="syn-box syn-calcolo">
+          <div class="syn-box-title">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M9 9a3 3 0 0 1 5.83 1c0 2-2.33 2.5-2.33 4.25" stroke-width="2" stroke-linecap="round"></path>
+              <circle cx="12" cy="18" r="1" fill="currentColor"></circle>
+              <circle cx="12" cy="12" r="9" stroke-width="2"></circle>
+            </svg>
+            <span>Metti alla prova l’acquisto</span>
+          </div>
+          <div class="syn-box-text">
+            Hai un prodotto in mente? Fai il <strong>Mini Test SmartShop</strong> prima di comprare:<br>
+            👉 <a href="#quiz-smartshop">Vai al Quiz prima dell’acquisto</a>
           </div>
         </div>
 
