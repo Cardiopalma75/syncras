@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>I migliori smartphone sotto i 200€ (2025) | Syncras</title>
+  <title>I migliori smartphone sotto i 200€ (2025) | Syncras.App</title>
   <meta name="description" content="Guida pratica, ironica e amichevole agli smartphone migliori sotto i 200€. Modelli consigliati, confronto, pro e contro e consigli da amico.">
   <meta name="robots" content="index,follow">
 
@@ -16,49 +16,131 @@
     gtag('config', 'G-59D9XRYKF3');
   </script>
 
-  <!-- STILE IDENTICO AGLI ALTRI ARTICOLI -->
   <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --bg-page: #F7F7FB;
+      --text-main: #403E43;
+    }
+
     body {
       font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
+      background-color: var(--bg-page);
       margin: 0;
       padding: 0;
-      color: #333;
+      color: var(--text-main);
       line-height: 1.6;
     }
-    header {
-      background-color: #4CAF50;
+
+    /* HEADER MODERNO VIOLA */
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
       color: white;
-      padding: 20px 10px;
-      text-align: center;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
     }
-    nav a {
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+    #main-nav a {
       color: white;
       text-decoration: none;
-      margin: 0 15px;
-      font-weight: bold;
+      font-weight: 600;
     }
-    nav a:hover {
+    #main-nav a:hover {
       text-decoration: underline;
     }
+
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    .menu-toggle span {
+      margin-left: 4px;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0; right: 0; top: 56px;
+        background-color: var(--violet-dark);
+        padding: 10px 16px;
+        flex-direction: column;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
+      }
+      body.nav-open #main-nav {
+        display: flex;
+      }
+      .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+
+    /* CONTENUTO */
     main {
       max-width: 900px;
       margin: 30px auto;
       padding: 20px;
       background-color: white;
-      border-radius: 10px;
+      border-radius: 12px;
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
+
     h1, h2, h3 {
-      color: #2f6f34;
+      color: var(--violet-dark);
     }
+
     blockquote {
-      border-left: 4px solid #4CAF50;
+      border-left: 4px solid var(--violet-main);
       padding-left: 12px;
       color: #555;
       font-style: italic;
       margin-left: 0;
     }
+
+    .share-btn {
+      padding: 10px 18px;
+      margin-bottom: 20px;
+      background-color: var(--violet-main);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .share-btn:hover {
+      background-color: var(--violet-dark);
+    }
+
     table {
       width: 100%;
       border-collapse: collapse;
@@ -66,255 +148,279 @@
       background: #fafafa;
       border-radius: 8px;
       overflow: hidden;
+      font-size: 0.95rem;
     }
     table th {
-      background: #4CAF50;
-      color: white;
+      background: #ecebfb;
+      color: #322b80;
       padding: 8px;
     }
     table td {
       padding: 8px;
       border: 1px solid #ddd;
     }
+
     .amazon-link {
       font-size: 1.05rem;
       font-weight: bold;
       display: inline-block;
       margin: 12px 0;
-      color: #1a0dab;
+      color: var(--violet-dark);
+      text-decoration: none;
     }
+    .amazon-link:hover {
+      text-decoration: underline;
+    }
+
     footer {
       text-align: center;
-      padding: 15px;
-      background-color: #ddd;
+      padding: 20px;
+      background-color: #eee;
       margin-top: 40px;
+      font-size: 0.9rem;
     }
   </style>
 </head>
 
 <body>
 
-<header>
-  <h1>I migliori smartphone sotto i 200€ (2025)</h1>
-  <nav>
-    <a href="index.html">Home</a> |
-    <a href="blog.html">Blog</a> |
-    <a href="chi.html">Chi siamo</a>
-  </nav>
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo">Syncras.App</div>
+
+    <button class="menu-toggle" onclick="toggleMenu()">Menu <span>☰</span></button>
+
+    <nav id="main-nav">
+      <a href="index.html">Home</a>
+      <a href="blog.html">Blog</a>
+      <a href="offerte.html">Offerte Amazon</a>
+      <a href="categorie.html">Categorie</a>
+      <a href="chi.html">Chi siamo</a>
+    </nav>
+  </div>
 </header>
+
+<script>
+function toggleMenu() {
+  document.body.classList.toggle('nav-open');
+}
+</script>
 
 <main>
 
-<h2>La guida amichevole (e un po’ ironica) per non sbagliare acquisto</h2>
+  <h1>I migliori smartphone sotto i 200€ (2025)</h1>
 
-<button onclick="navigator.share({
-    title: document.title,
-    text: 'Guarda questo articolo su Syncras:',
-    url: window.location.href
-}).catch(() => {
-    alert('Copia questo link per condividerlo:\n\n' + window.location.href);
-});"
-style="padding:10px 18px; margin-bottom:20px; background-color:#4CAF50; color:white; border:none; border-radius:8px; cursor:pointer; font-size:1rem;">
-  🔗 Condividi questo articolo
-</button>
+  <h2>La guida amichevole (e un po’ ironica) per non sbagliare acquisto</h2>
 
-<p>
-Trovare uno <strong>smartphone sotto i 200€</strong> che non ti faccia rimpiangere il Nokia 3310
-è diventata una missione: ogni modello promette la Luna, ma poi nella realtà alcuni rallentano,
-altri hanno la batteria che dura meno di un caffè al bar, altri ancora si bloccano solo a vedere l’icona di Instagram.
-</p>
+  <button
+    class="share-btn"
+    onclick="navigator.share({
+      title: document.title,
+      text: 'Guarda questo articolo su Syncras:',
+      url: window.location.href
+    }).catch(() => {
+      alert('Copia questo link per condividerlo:\n\n' + window.location.href);
+    });">
+    🔗 Condividi questo articolo
+  </button>
 
-<blockquote>
-  “Mi consigli un telefono buono ma economico, ma buono eh…”
-</blockquote>
+  <p>
+    Trovare uno <strong>smartphone sotto i 200€</strong> che non ti faccia rimpiangere il Nokia 3310
+    è diventata una missione: ogni modello promette la Luna, ma poi nella realtà alcuni rallentano,
+    altri hanno la batteria che dura meno di un caffè al bar, altri ancora si bloccano solo a vedere l’icona di Instagram.
+  </p>
 
-<p>
-E allora eccoci qui: guida semplice, ironica e amichevole — come se fossimo al bar,
-tu con il cappuccino e io che ti evito la fregatura da volantino “offertissima solo oggi”.
-</p>
+  <blockquote>
+    “Mi consigli un telefono buono ma economico, ma buono eh…”
+  </blockquote>
 
-<hr>
+  <p>
+    E allora eccoci qui: guida semplice, ironica e amichevole — come se fossimo al bar,
+    tu con il cappuccino e io che ti evito la fregatura da volantino “offertissima solo oggi”.
+  </p>
 
-<h2>Prima domanda: che uso ne devi fare davvero?</h2>
+  <hr>
 
-<p>
-Prima di scegliere il modello, guardiamo in faccia la realtà: <strong>come lo userai davvero?</strong><br>
-No, non per chiamare la NASA. Di solito è una di queste tre categorie:
-</p>
+  <h2>Prima domanda: che uso ne devi fare davvero?</h2>
 
-<h3>1) WhatsApp, foto e social</h3>
-<ul>
-  <li>Display buono, così non devi indovinare i dettagli delle storie.</li>
-  <li>Batteria solida, che non ti abbandona alle 16:30.</li>
-  <li>Fotocamera decente, per foto di famiglia che non sembrino fatte con una patata.</li>
-</ul>
+  <p>
+    Prima di scegliere il modello, guardiamo in faccia la realtà: <strong>come lo userai davvero?</strong><br>
+    No, non per chiamare la NASA. Di solito è una di queste tre categorie:
+  </p>
 
-<h3>2) Giochi e app</h3>
-<p>
-Ti serve un processore che reagisca in fretta: nulla di estremo, ma neanche un bradipo digitale.
-Se quando apri un gioco puoi andare a fare il caffè nel frattempo, non va bene.
-</p>
+  <h3>1) WhatsApp, foto e social</h3>
+  <ul>
+    <li>Display buono, così non devi indovinare i dettagli delle storie.</li>
+    <li>Batteria solida, che non ti abbandona alle 16:30.</li>
+    <li>Fotocamera decente, per foto di famiglia che non sembrino fatte con una patata.</li>
+  </ul>
 
-<h3>3) Vuoi che duri negli anni?</h3>
-<p>
-Allora meglio puntare su modelli recenti, con hardware moderno e aggiornamenti
-che non finiscono dopo due mesi. L’idea è: lo compri oggi e fra due anni funziona ancora,
-non relegato a fermacarte di design.
-</p>
+  <h3>2) Giochi e app</h3>
+  <p>
+    Ti serve un processore che reagisca in fretta: nulla di estremo, ma neanche un bradipo digitale.
+    Se quando apri un gioco puoi andare a fare il caffè nel frattempo, non va bene.
+  </p>
 
-<hr>
+  <h3>3) Vuoi che duri negli anni?</h3>
+  <p>
+    Allora meglio puntare su modelli recenti, con hardware moderno e aggiornamenti
+    che non finiscono dopo due mesi. L’idea è: lo compri oggi e fra due anni funziona ancora,
+    non relegato a fermacarte di design.
+  </p>
 
-<h2>I modelli consigliati sotto i 200€</h2>
+  <hr>
 
-<p>
-Qui sotto trovi una selezione di modelli che soddisfano il <strong>Metodo SmartShop</strong>:
-prezzo onesto, poche menate, tanta sostanza.  
-E un po’ di ironia, che non guasta.
-</p>
+  <h2>I modelli consigliati sotto i 200€</h2>
 
-<h3>1. Redmi Note 14 – il re del rapporto qualità/prezzo</h3>
-<p>👉 <a href="https://amzn.to/47JTuXm" target="_blank">Link Amazon</a></p>
-<p>
-Ottimo display, foto buone, batteria che arriva sempre a sera senza ansia “modalità risparmio”
-alle 15:00.  
-Dà proprio la sensazione del telefono che costa meno di quello che offre: fluido con le app di tutti i giorni,
-perfetto per chat, social, qualche video e un po’ di streaming.
-</p>
-<p>
-È il classico modello che consiglieresti anche a un parente che “non capisce niente di telefoni”,
-sapendo che non ti richiamerà fra due settimane per lamentarsi.
-</p>
+  <p>
+    Qui sotto trovi una selezione di modelli che soddisfano il <strong>Metodo SmartShop</strong>:
+    prezzo onesto, poche menate, tanta sostanza.  
+    E un po’ di ironia, che non guasta.
+  </p>
 
-<h3>2. Samsung Galaxy A15 – affidabilità totale, zero sorprese</h3>
-<p>👉 <a href="https://amzn.to/47Ykcdx" target="_blank">Link Amazon</a></p>
-<p>
-Questo è il telefono “senza drammi”: interfaccia semplice, aggiornamenti regolari,
-ecosistema Samsung con tutte le sue comodità.  
-La batteria regge bene la giornata, lo schermo è piacevole da guardare e l’esperienza generale è stabile.
-</p>
-<p>
-Perfetto per chi dice: “Non mi interessa avere il missile, l’importante è che <em>funzioni sempre</em>”.
-Genitori, ragazzi, utenti tranquilli: qui cascate in piedi.
-</p>
+  <h3>1. Redmi Note 14 – il re del rapporto qualità/prezzo</h3>
+  <p>👉 <a class="amazon-link" href="https://amzn.to/47JTuXm" target="_blank">Link Amazon</a></p>
+  <p>
+    Ottimo display, foto buone, batteria che arriva sempre a sera senza ansia “modalità risparmio”
+    alle 15:00.  
+    Dà proprio la sensazione del telefono che costa meno di quello che offre: fluido con le app di tutti i giorni,
+    perfetto per chat, social, qualche video e un po’ di streaming.
+  </p>
+  <p>
+    È il classico modello che consiglieresti anche a un parente che “non capisce niente di telefoni”,
+    sapendo che non ti richiamerà fra due settimane per lamentarsi.
+  </p>
 
-<h3>3. Motorola Moto G34 – il più scattante</h3>
-<p>👉 <a href="https://amzn.to/4o0UGdA" target="_blank">Link Amazon</a></p>
-<p>
-Motorola da anni punta su una parola chiave: <strong>fluidità</strong>.  
-Pochi fronzoli, niente app inutili all’avvio, interfaccia pulita: risultato, il telefono gira bene
-in quasi ogni situazione quotidiana.
-</p>
-<p>
-Se vuoi qualcosa che risponda subito ai comandi, apra le app velocemente e non si blocchi
-appena apri due cose insieme, è un’ottima scelta.  
-Non è nato per il gaming estremo, ma per l’uso di tutti i giorni è una piccola macchina instancabile.
-</p>
+  <h3>2. Samsung Galaxy A15 – affidabilità totale, zero sorprese</h3>
+  <p>👉 <a class="amazon-link" href="https://amzn.to/47Ykcdx" target="_blank">Link Amazon</a></p>
+  <p>
+    Questo è il telefono “senza drammi”: interfaccia semplice, aggiornamenti regolari,
+    ecosistema Samsung con tutte le sue comodità.  
+    La batteria regge bene la giornata, lo schermo è piacevole da guardare e l’esperienza generale è stabile.
+  </p>
+  <p>
+    Perfetto per chi dice: “Non mi interessa avere il missile, l’importante è che <em>funzioni sempre</em>”.
+    Genitori, ragazzi, utenti tranquilli: qui cascate in piedi.
+  </p>
 
-<h3>4. Realme C67 – la batteria che non molla mai</h3>
-<p>👉 <a href="https://amzn.to/3JFqW8j" target="_blank">Link Amazon</a></p>
-<p>
-Questo è il campione per chi si dimentica sistematicamente il caricatore a casa.
-La batteria è il suo punto forte, pensata proprio per arrivare a sera e spesso anche oltre.
-</p>
-<p>
-Le prestazioni sono buone per un uso normale: social, video, messaggi, un po’ di tutto.
-Non è il più potente della lista, ma punta tutto sulla sicurezza di non rimanere mai
-con l’1% nel momento meno opportuno.
-</p>
+  <h3>3. Motorola Moto G34 – il più scattante</h3>
+  <p>👉 <a class="amazon-link" href="https://amzn.to/4o0UGdA" target="_blank">Link Amazon</a></p>
+  <p>
+    Motorola da anni punta su una parola chiave: <strong>fluidità</strong>.  
+    Pochi fronzoli, niente app inutili all’avvio, interfaccia pulita: risultato, il telefono gira bene
+    in quasi ogni situazione quotidiana.
+  </p>
+  <p>
+    Se vuoi qualcosa che risponda subito ai comandi, apra le app velocemente e non si blocchi
+    appena apri due cose insieme, è un’ottima scelta.  
+    Non è nato per il gaming estremo, ma per l’uso di tutti i giorni è una piccola macchina instancabile.
+  </p>
 
-<hr>
+  <h3>4. Realme C67 – la batteria che non molla mai</h3>
+  <p>👉 <a class="amazon-link" href="https://amzn.to/3JFqW8j" target="_blank">Link Amazon</a></p>
+  <p>
+    Questo è il campione per chi si dimentica sistematicamente il caricatore a casa.
+    La batteria è il suo punto forte, pensata proprio per arrivare a sera e spesso anche oltre.
+  </p>
+  <p>
+    Le prestazioni sono buone per un uso normale: social, video, messaggi, un po’ di tutto.
+    Non è il più potente della lista, ma punta tutto sulla sicurezza di non rimanere mai
+    con l’1% nel momento meno opportuno.
+  </p>
 
-<h2>Tabella comparativa</h2>
+  <hr>
 
-<p>
-Se ti piace vedere tutto in ordine, ecco una piccola tabella riassuntiva per capire a colpo d’occhio
-qual è il modello più adatto a te.
-</p>
+  <h2>Tabella comparativa</h2>
 
-<table>
-  <thead>
-    <tr>
-      <th>Modello</th>
-      <th>Punto forte</th>
-      <th>Batteria</th>
-      <th>Fotocamera</th>
-      <th>Prestazioni</th>
-      <th>Link</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Redmi Note 14</td>
-      <td>Miglior qualità/prezzo</td>
-      <td>Molto buona</td>
-      <td>Ottime per uso quotidiano</td>
-      <td>Fluido nelle app di tutti i giorni</td>
-      <td><a href="https://amzn.to/47JTuXm">Amazon</a></td>
-    </tr>
-    <tr>
-      <td>Samsung A15</td>
-      <td>Affidabilità e semplicità</td>
-      <td>Ottima</td>
-      <td>Buona</td>
-      <td>Stabile e costante</td>
-      <td><a href="https://amzn.to/47Ykcdx">Amazon</a></td>
-    </tr>
-    <tr>
-      <td>Moto G34</td>
-      <td>Velocità e fluidità</td>
-      <td>Buona</td>
-      <td>Discreta</td>
-      <td>Molto fluido</td>
-      <td><a href="https://amzn.to/4o0UGdA">Amazon</a></td>
-    </tr>
-    <tr>
-      <td>Realme C67</td>
-      <td>Autonomia</td>
-      <td>Eccellente</td>
-      <td>Buona</td>
-      <td>Prestazioni nella media</td>
-      <td><a href="https://amzn.to/3JFqW8j">Amazon</a></td>
-    </tr>
-  </tbody>
-</table>
+  <p>
+    Se ti piace vedere tutto in ordine, ecco una piccola tabella riassuntiva per capire a colpo d’occhio
+    qual è il modello più adatto a te.
+  </p>
 
-<hr>
+  <table>
+    <thead>
+      <tr>
+        <th>Modello</th>
+        <th>Punto forte</th>
+        <th>Batteria</th>
+        <th>Fotocamera</th>
+        <th>Prestazioni</th>
+        <th>Link</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Redmi Note 14</td>
+        <td>Miglior qualità/prezzo</td>
+        <td>Molto buona</td>
+        <td>Ottime per uso quotidiano</td>
+        <td>Fluido nelle app di tutti i giorni</td>
+        <td><a href="https://amzn.to/47JTuXm" target="_blank">Amazon</a></td>
+      </tr>
+      <tr>
+        <td>Samsung A15</td>
+        <td>Affidabilità e semplicità</td>
+        <td>Ottima</td>
+        <td>Buona</td>
+        <td>Stabile e costante</td>
+        <td><a href="https://amzn.to/47Ykcdx" target="_blank">Amazon</a></td>
+      </tr>
+      <tr>
+        <td>Moto G34</td>
+        <td>Velocità e fluidità</td>
+        <td>Buona</td>
+        <td>Discreta</td>
+        <td>Molto fluido</td>
+        <td><a href="https://amzn.to/4o0UGdA" target="_blank">Amazon</a></td>
+      </tr>
+      <tr>
+        <td>Realme C67</td>
+        <td>Autonomia</td>
+        <td>Eccellente</td>
+        <td>Buona</td>
+        <td>Prestazioni nella media</td>
+        <td><a href="https://amzn.to/3JFqW8j" target="_blank">Amazon</a></td>
+      </tr>
+    </tbody>
+  </table>
 
-<h2>Consiglio da amico: non inseguire le “mega specifiche”</h2>
+  <hr>
 
-<p>
-Spesso ci facciamo abbagliare da numeri e sigle:
-108 MP, 120 Hz, ultra-hyper-mega-processore…  
-La verità è che, per l’uso quotidiano, tra 50 e 108 MP la differenza la noti solo se fai il fotografo spaziale.
-</p>
+  <h2>Consiglio da amico: non inseguire le “mega specifiche”</h2>
 
-<p>
-Quello che conta davvero è che il telefono:
-</p>
+  <p>
+    Spesso ci facciamo abbagliare da numeri e sigle:
+    108 MP, 120 Hz, ultra-hyper-mega-processore…  
+    La verità è che, per l’uso quotidiano, tra 50 e 108 MP la differenza la noti solo se fai il fotografo spaziale.
+  </p>
 
-<ul>
-  <li>si accenda sempre senza drammi,</li>
-  <li>non si blocchi mentre fai un video importante,</li>
-  <li>non ti tradisca quando sei fuori casa e sei già al 15% di batteria.</li>
-</ul>
+  <p>
+    Quello che conta davvero è che il telefono:
+  </p>
 
-<p>
-I modelli che hai visto qui sopra fanno esattamente questo: niente magie, tanta concretezza.
-</p>
+  <ul>
+    <li>si accenda sempre senza drammi,</li>
+    <li>non si blocchi mentre fai un video importante,</li>
+    <li>non ti tradisca quando sei fuori casa e sei già al 15% di batteria.</li>
+  </ul>
 
-<hr>
+  <p>
+    I modelli che hai visto qui sopra fanno esattamente questo: niente magie, tanta concretezza.
+  </p>
 
-<h2>Nota legale</h2>
+  <hr>
 
-<p style="font-size:0.9rem; color:#555;">
-Questo articolo ha scopo informativo.  
-I link Amazon possono essere affiliati: potrei ricevere una piccola commissione (senza costi per te).  
-Caratteristiche, prezzi e disponibilità possono cambiare nel tempo: verifica sempre le informazioni aggiornate sulla pagina del prodotto.
-</p>
+  <h2>Nota legale</h2>
+
+  <p style="font-size:0.9rem; color:#555;">
+    Questo articolo ha scopo informativo.  
+    I link Amazon possono essere affiliati: potrei ricevere una piccola commissione (senza costi per te).  
+    Caratteristiche, prezzi e disponibilità possono cambiare nel tempo: verifica sempre le informazioni aggiornate sulla pagina del prodotto.
+  </p>
 
 </main>
 
-<footer style="text-align:center; margin-top:40px; padding:20px; background:#eee; font-family:Arial; font-size:0.9rem;">
+<footer>
   © 2025 Syncras.App — Tutti i diritti riservati<br>
 
   <div style="margin-top:8px;">
@@ -332,7 +438,6 @@ Caratteristiche, prezzi e disponibilità possono cambiare nel tempo: verifica se
     è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
   </p>
 </footer>
-
 
 </body>
 </html>
