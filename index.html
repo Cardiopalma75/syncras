@@ -32,7 +32,7 @@
       text-decoration: underline;
     }
 
-    /* Dropdown menu (non più usato in home, ma innocuo se rimane) */
+    /* Dropdown menu (se lo usi altrove, qui non dà fastidio) */
     .dropdown {
       display: inline-block;
       position: relative;
@@ -60,14 +60,14 @@
       display: block;
     }
 
-   main {
-  max-width: 1150px; /* era 900px */
-  margin: 30px auto;
-  padding: 20px;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
+    main {
+      max-width: 1180px;
+      margin: 30px auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
 
     h2, h3 {
       color: #2f6f34;
@@ -76,15 +76,54 @@
       margin-bottom: 12px;
     }
 
+    /* LAYOUT TIPO MAGAZINE: COLONNA CONTENUTI + SIDEBAR */
+    .layout {
+      display: flex;
+      gap: 35px;
+      padding-right: 10px;
+    }
+
+    .main-content {
+      flex: 0 0 70%;
+      max-width: 70%;
+    }
+
+    .sidebar {
+      flex: 0 0 30%;
+      max-width: 30%;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      position: sticky;
+      top: 20px;
+      height: fit-content;
+    }
+
+    /* Su smartphone la sidebar va sotto e tutto torna a colonna singola */
+    @media (max-width: 900px) {
+      .layout {
+        flex-direction: column;
+        padding-right: 0;
+      }
+      .main-content,
+      .sidebar {
+        flex: 1 1 100%;
+        max-width: 100%;
+        position: static;
+      }
+    }
+
     .hero-intro {
-      margin-bottom: 20px;
+      margin-bottom: 15px;
+      border-bottom: 1px solid #e0e0e0;
+      padding-bottom: 10px;
     }
 
     .quick-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
-      margin: 15px 0 30px 0;
+      margin: 10px 0 20px 0;
     }
     .quick-actions a {
       flex: 1 1 220px;
@@ -101,36 +140,74 @@
       background: #3e8e41;
     }
 
-    .feature-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      margin: 20px 0 30px 0;
+    /* GRIGLIA ARTICOLI IN EVIDENZA (stile D-Day) */
+    .highlight-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 18px;
+      margin: 10px 0 25px 0;
     }
-    .feature-card {
-      flex: 1 1 260px;
+
+    .highlight-main {
       background: #f6faf7;
       border-radius: 10px;
       border: 1px solid #d7e8dc;
-      padding: 16px;
+      padding: 14px 16px;
     }
-    .feature-card h3 {
+
+    .highlight-secondary-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .highlight-card {
+      background: #f9fbfa;
+      border-radius: 10px;
+      border: 1px solid #d7e8dc;
+      padding: 10px 12px;
+    }
+
+    .highlight-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #777;
+      margin-bottom: 4px;
+    }
+
+    .highlight-main h2,
+    .highlight-card h3 {
       margin-top: 0;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
-    .feature-card p {
-      margin-bottom: 10px;
-    }
-    .feature-card a {
-      display: inline-block;
-      margin-top: 6px;
+
+    .highlight-main p,
+    .highlight-card p {
+      margin: 0;
       font-size: 0.9rem;
-      text-decoration: none;
-      color: #2f6f34;
-      font-weight: bold;
     }
-    .feature-card a:hover {
+
+    .highlight-main a,
+    .highlight-card a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .highlight-main a:hover h2,
+    .highlight-card a:hover h3 {
       text-decoration: underline;
+    }
+
+    @media (max-width: 900px) {
+      .highlight-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* LISTA ARTICOLI – ULTIME GUIDE (tipo elenco D-Day) */
+    .latest-section {
+      margin-top: 10px;
     }
 
     .post-list {
@@ -175,39 +252,6 @@
       padding: 15px;
       background-color: #ddd;
       margin-top: 40px;
-    }
-
-    /* LAYOUT CON COLONNA LATERALE DESTRA */
-
-    .layout {
-      display: flex;
-      gap: 35px; /* aumenta lo spazio tra le colonne */
-      padding-right: 20px; /* spinge ancora un po’ la sidebar a destra */
-    }
-
-    .main-content {
-      flex: 1;
-    }
-
-    .sidebar {
-      width: 270px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      position: sticky;
-      top: 20px;
-      height: fit-content;
-    }
-
-    /* Su smartphone la sidebar va sotto */
-    @media (max-width: 900px) {
-      .layout {
-        flex-direction: column;
-      }
-      .sidebar {
-        width: 100%;
-        position: static;
-      }
     }
 
     /* BOX GENERICI SYNCRAS – VERSIONE LIGHT */
@@ -325,7 +369,7 @@
   <main>
     <div class="layout">
 
-      <!-- CONTENUTO CENTRALE -->
+      <!-- COLONNA PRINCIPALE (stile magazine) -->
       <div class="main-content">
 
         <div class="hero-intro">
@@ -343,38 +387,159 @@
           <a href="offerte.html">🔥 Vai alle offerte Amazon</a>
         </div>
 
-        <h3>Cosa ti può interessare subito</h3>
+        <!-- ARTICOLI IN EVIDENZA – STILE PRIMA RIGA D-DAY -->
+        <section class="highlight-grid">
+          <article class="highlight-main">
+            <div class="highlight-label">In evidenza • Smart TV</div>
+            <a href="smart-tv-guida-ironica.html">
+              <h2>Guida Smart TV 2025 – versione ironica</h2>
+              <p>
+                Tre fasce di prezzo, nonno sul divano e la verità su quando ha senso
+                “giocarsi tutto” su una TV nuova.
+              </p>
+            </a>
+          </article>
 
-        <div class="feature-grid">
-          <div class="feature-card">
-            <h3>📱 Smartphone per fascia di prezzo</h3>
-            <p>Niente lista infinita di modelli: 3–4 telefoni per fascia, spiegati come a un amico.</p>
-            <a href="smartphone-200.html">Sotto 200€ – migliori affari →</a><br>
-            <a href="smartphone-400.html">Sotto 400€ – equilibrio →</a><br>
-            <a href="smartphone-600.html">Sotto 600€ – fascia alta “furba” →</a><br>
-            <a href="smartphone-top.html">Top di gamma – solo se ha senso →</a>
-          </div>
+          <div class="highlight-secondary-wrap">
+            <article class="highlight-card">
+              <div class="highlight-label">Energia • Fotovoltaico</div>
+              <a href="fotovoltaico-4kw-accumulo-10kwh.html">
+                <h3>Fotovoltaico 4 kW + 10 kWh: quanto costa davvero nel 2025?</h3>
+                <p>Impianto reale, numeri veri: quanto spendi, quanto recuperi e in quanti anni rientri.</p>
+              </a>
+            </article>
 
-          <div class="feature-card">
-            <h3>📺 Smart TV – Guida 2025</h3>
-            <p>Tre fasce di prezzo, scene di vita vera (nonno incluso) e consigli per non pentirti.</p>
-            <a href="smart-tv-guida-ironica.html">Leggi la guida alle Smart TV →</a>
+            <article class="highlight-card">
+              <div class="highlight-label">Tecnologia • Smartphone</div>
+              <a href="smartphone-sotto-200-euro-2025.html">
+                <h3>I migliori smartphone sotto i 200€ – guida amichevole 2025</h3>
+                <p>Quattro modelli sensati spiegati senza paroloni, come al bar.</p>
+              </a>
+            </article>
           </div>
+        </section>
 
-          <div class="feature-card">
-            <h3>⚡ Fotovoltaico, casa & comfort</h3>
-            <p>Esperienze reali: fotovoltaico, resistenza sul termosifone,
-              comfort e risparmio.</p>
-            <a href="fotovoltaico-4kw-accumulo-10kwh.html">Impianto 4 kW + 10 kWh →</a><br>
-            <a href="resistenza-termosifone-fotovoltaico.html">Stanza fredda e resistenza →</a>
+        <!-- SEZIONE ULTIME GUIDE -->
+        <section class="latest-section">
+          <h3>Ultime guide pubblicate</h3>
+          <ul class="post-list">
+            <li class="post-card">
+              <a href="smart-tv-guida-ironica.html">
+                <h3>Guida Smart TV 2025 – versione ironica</h3>
+                <div class="post-meta">TV • Tecnologia</div>
+                <p>Tre fasce di prezzo, nonno sul divano e la verità su quando ha senso “giocarsi tutto”.</p>
+              </a>
+            </li>
+            <li class="post-card">
+              <a href="fotovoltaico-4kw-accumulo-10kwh.html">
+                <h3>Fotovoltaico 4 kW con accumulo 10 kWh: quanto costa davvero nel 2025?</h3>
+                <div class="post-meta">Energia • Fotovoltaico</div>
+                <p>Impianto reale, numeri veri: quanto spendi, quanto recuperi e in quanti anni rientri.</p>
+              </a>
+            </li>
+            <li class="post-card">
+              <a href="resistenza-termosifone-fotovoltaico.html">
+                <h3>Come ho scaldato la stanza più fredda (con una resistenza e il fotovoltaico)</h3>
+                <div class="post-meta">Casa & comfort</div>
+                <p>Termosifone, resistenza, fotovoltaico e buon senso: cosa ha funzionato davvero.</p>
+              </a>
+            </li>
+            <li class="post-card">
+              <a href="robot-cucina-economici-2025.html">
+                <h3>I robot da cucina economici nel 2025: quando hanno senso davvero</h3>
+                <div class="post-meta">Cucina • Elettrodomestici</div>
+                <p>Un aiuto furbo in cucina sì, ma solo se non si mangia tutto lo stipendio.</p>
+              </a>
+            </li>
+            <li class="post-card">
+              <a href="smartphone-sotto-200-euro-2025.html">
+                <h3>I migliori smartphone sotto i 200€ – guida amichevole 2025</h3>
+                <div class="post-meta">Tecnologia • Smartphone</div>
+                <p>Quattro modelli sensati spiegati senza paroloni, come al bar.</p>
+              </a>
+            </li>
+            <li class="post-card">
+              <a href="cuffie-wireless-sotto-50-euro-2025.html">
+                <h3>Cuffie wireless sotto 50€ – guida pratica e un po’ ironica</h3>
+                <div class="post-meta">Audio • Cuffie</div>
+                <p>Quando bastano 50€ e quando è meglio non esagerare col risparmio.</p>
+              </a>
+            </li>
+          </ul>
+        </section>
+
+        <!-- BOX: Sapevi che? -->
+        <div class="syn-box syn-sapeviche">
+          <div class="syn-box-title">
+            <span class="emoji">❓</span>
+            <span>Sapevi che?</span>
           </div>
+          <div class="syn-box-text">
+            Uno smartphone nuovo perde in media il <strong>40% del valore</strong> nel primo anno.<br>
+            Ma i modelli sotto i 200€ spesso tengono il prezzo meglio dei top di gamma:
+            meno “moda”, più sostanza.
+          </div>
+        </div>
+
+        <!-- BOX: Calcolo rapido -->
+        <div class="syn-box syn-calcolo">
+          <div class="syn-box-title">
+            <span class="emoji">🧮</span>
+            <span>Calcolo rapido</span>
+          </div>
+          <div class="syn-box-text">
+            Uno smartphone da <strong>200€</strong> usato per <strong>3 anni</strong> ti costa circa 
+            <strong>0,18€ al giorno</strong>.<br>
+            Meno di un caffè, molto meno di una bolletta sbagliata.
+          </div>
+        </div>
+
+        <!-- MINI TEST SMARTSHOP INTERATTIVO -->
+        <div class="syn-box syn-calcolo" id="mini-test-smartshop">
+          <div class="syn-box-title">
+            <span class="emoji">💭</span>
+            <span>Mini Test SmartShop (30 secondi)</span>
+          </div>
+          <div class="syn-box-text">
+            <p>Prima di comprare qualcosa online, rispondi a queste 3 domande:</p>
+
+            <ol>
+              <li>
+                Lo userò almeno una volta a settimana?<br>
+                <label><input type="radio" name="q1" value="si"> Sì</label>
+                <label><input type="radio" name="q1" value="no"> No</label>
+              </li>
+              <li>
+                Ho già in casa qualcosa che fa una cosa simile?<br>
+                <label><input type="radio" name="q2" value="si"> Sì</label>
+                <label><input type="radio" name="q2" value="no"> No</label>
+              </li>
+              <li>
+                Se domani non fosse più in offerta, lo comprerei lo stesso?<br>
+                <label><input type="radio" name="q3" value="si"> Sì</label>
+                <label><input type="radio" name="q3" value="no"> No</label>
+              </li>
+            </ol>
+
+            <button type="button" onclick="valutaMiniTest()" style="margin-top:6px; padding:6px 10px; border-radius:6px; border:none; background:#4CAF50; color:#fff; cursor:pointer; font-size:0.85rem;">
+              Calcola risultato
+            </button>
+
+            <p id="mini-test-risultato" style="margin-top:8px; font-weight:bold;"></p>
+          </div>
+        </div>
+
+        <div class="note-smartshop">
+          Vuoi capire meglio cosa c’è dietro Syncras.App e il <strong>Metodo SmartShop</strong>?  
+          Dai un’occhiata alla pagina <a href="chi.html"><strong>Chi siamo</strong></a>:
+          lì spiego come cerco di evitare brutte sorprese, acquisti inutili e sensi di colpa post-pacco Amazon.
         </div>
 
       </div> <!-- fine main-content -->
 
 
-      <!-- SIDEBAR DESTRA -->
-      <div class="sidebar">
+      <!-- SIDEBAR DESTRA (stile portale / D-Day) -->
+      <aside class="sidebar">
 
         <div class="syn-box syn-consiglio">
           <div class="syn-box-title"><span class="emoji">💡</span><span>Consiglio del giorno</span></div>
@@ -408,155 +573,42 @@
           </div>
         </div>
 
-      </div> <!-- fine sidebar -->
+      </aside>
 
     </div> <!-- fine layout -->
-
-    <h3>Ultime guide pubblicate</h3>
-    <ul class="post-list">
-      <li class="post-card">
-        <a href="smart-tv-guida-ironica.html">
-          <h3>Guida Smart TV 2025 – versione ironica</h3>
-          <div class="post-meta">TV • Tecnologia</div>
-          <p>Tre fasce di prezzo, nonno sul divano e la verità su quando ha senso “giocarsi tutto”.</p>
-        </a>
-      </li>
-      <li class="post-card">
-        <a href="fotovoltaico-4kw-accumulo-10kwh.html">
-          <h3>Fotovoltaico 4 kW con accumulo 10 kWh: quanto costa davvero nel 2025?</h3>
-          <div class="post-meta">Energia • Fotovoltaico</div>
-          <p>Impianto reale, numeri veri: quanto spendi, quanto recuperi e in quanti anni rientri.</p>
-        </a>
-      </li>
-      <li class="post-card">
-        <a href="resistenza-termosifone-fotovoltaico.html">
-          <h3>Come ho scaldato la stanza più fredda (con una resistenza e il fotovoltaico)</h3>
-          <div class="post-meta">Casa & comfort</div>
-          <p>Termosifone, resistenza, fotovoltaico e buon senso: cosa ha funzionato davvero.</p>
-        </a>
-      </li>
-      <li class="post-card">
-        <a href="robot-cucina-economici-2025.html">
-          <h3>I robot da cucina economici nel 2025: quando hanno senso davvero</h3>
-          <div class="post-meta">Cucina • Elettrodomestici</div>
-          <p>Un aiuto furbo in cucina sì, ma solo se non si mangia tutto lo stipendio.</p>
-        </a>
-      </li>
-      <li class="post-card">
-        <a href="smartphone-sotto-200-euro-2025.html">
-          <h3>I migliori smartphone sotto i 200€ – guida amichevole 2025</h3>
-          <div class="post-meta">Tecnologia • Smartphone</div>
-          <p>Quattro modelli sensati spiegati senza paroloni, come al bar.</p>
-        </a>
-      </li>
-      <li class="post-card">
-        <a href="cuffie-wireless-sotto-50-euro-2025.html">
-          <h3>Cuffie wireless sotto 50€ – guida pratica e un po’ ironica</h3>
-          <div class="post-meta">Audio • Cuffie</div>
-          <p>Quando bastano 50€ e quando è meglio non esagerare col risparmio.</p>
-        </a>
-      </li>
-    </ul>
-
-    <!-- BOX: Sapevi che? -->
-    <div class="syn-box syn-sapeviche">
-      <div class="syn-box-title">
-        <span class="emoji">❓</span>
-        <span>Sapevi che?</span>
-      </div>
-      <div class="syn-box-text">
-        Uno smartphone nuovo perde in media il <strong>40% del valore</strong> nel primo anno.<br>
-        Ma i modelli sotto i 200€ spesso tengono il prezzo meglio dei top di gamma:
-        meno “moda”, più sostanza.
-      </div>
-    </div>
-
-    <!-- BOX: Calcolo rapido -->
-    <div class="syn-box syn-calcolo">
-      <div class="syn-box-title">
-        <span class="emoji">🧮</span>
-        <span>Calcolo rapido</span>
-      </div>
-      <div class="syn-box-text">
-        Uno smartphone da <strong>200€</strong> usato per <strong>3 anni</strong> ti costa circa 
-        <strong>0,18€ al giorno</strong>.<br>
-        Meno di un caffè, molto meno di una bolletta sbagliata.
-      </div>
-    </div>
-
-    <!-- MINI TEST SMARTSHOP INTERATTIVO -->
-    <div class="syn-box syn-calcolo" id="mini-test-smartshop">
-      <div class="syn-box-title">
-        <span class="emoji">💭</span>
-        <span>Mini Test SmartShop (30 secondi)</span>
-      </div>
-      <div class="syn-box-text">
-        <p>Prima di comprare qualcosa online, rispondi a queste 3 domande:</p>
-
-        <ol>
-          <li>
-            Lo userò almeno una volta a settimana?<br>
-            <label><input type="radio" name="q1" value="si"> Sì</label>
-            <label><input type="radio" name="q1" value="no"> No</label>
-          </li>
-          <li>
-            Ho già in casa qualcosa che fa una cosa simile?<br>
-            <label><input type="radio" name="q2" value="si"> Sì</label>
-            <label><input type="radio" name="q2" value="no"> No</label>
-          </li>
-          <li>
-            Se domani non fosse più in offerta, lo comprerei lo stesso?<br>
-            <label><input type="radio" name="q3" value="si"> Sì</label>
-            <label><input type="radio" name="q3" value="no"> No</label>
-          </li>
-        </ol>
-
-        <button type="button" onclick="valutaMiniTest()" style="margin-top:6px; padding:6px 10px; border-radius:6px; border:none; background:#4CAF50; color:#fff; cursor:pointer; font-size:0.85rem;">
-          Calcola risultato
-        </button>
-
-        <p id="mini-test-risultato" style="margin-top:8px; font-weight:bold;"></p>
-      </div>
-    </div>
-
-    <script>
-      function valutaMiniTest() {
-        const domande = ['q1', 'q2', 'q3'];
-        let si = 0;
-        let no = 0;
-
-        domande.forEach(function(nome) {
-          const selezionata = document.querySelector('input[name="' + nome + '"]:checked');
-          if (selezionata) {
-            if (selezionata.value === 'si') si++;
-            if (selezionata.value === 'no') no++;
-          }
-        });
-
-        const risultato = document.getElementById('mini-test-risultato');
-
-        if (si + no < 3) {
-          risultato.textContent = 'Rispondi a tutte le domande per vedere il risultato 😉';
-          risultato.style.color = '#e65100';
-          return;
-        }
-
-        if (no >= 2) {
-          risultato.textContent = 'Attenzione: sembra un possibile acquisto d’impulso. Meglio pensarci un attimo prima di cliccare “Compra ora”.';
-          risultato.style.color = '#c62828';
-        } else {
-          risultato.textContent = 'Buono! La tua scelta sembra abbastanza ragionata secondo il Metodo SmartShop.';
-          risultato.style.color = '#2e7d32';
-        }
-      }
-    </script>
-
-    <div class="note-smartshop">
-      Vuoi capire meglio cosa c’è dietro Syncras.App e il <strong>Metodo SmartShop</strong>?  
-      Dai un’occhiata alla pagina <a href="chi.html"><strong>Chi siamo</strong></a>:
-      lì spiego come cerco di evitare brutte sorprese, acquisti inutili e sensi di colpa post-pacco Amazon.
-    </div>
   </main>
+
+  <script>
+    function valutaMiniTest() {
+      const domande = ['q1', 'q2', 'q3'];
+      let si = 0;
+      let no = 0;
+
+      domande.forEach(function(nome) {
+        const selezionata = document.querySelector('input[name="' + nome + '"]:checked');
+        if (selezionata) {
+          if (selezionata.value === 'si') si++;
+          if (selezionata.value === 'no') no++;
+        }
+      });
+
+      const risultato = document.getElementById('mini-test-risultato');
+
+      if (si + no < 3) {
+        risultato.textContent = 'Rispondi a tutte le domande per vedere il risultato 😉';
+        risultato.style.color = '#e65100';
+        return;
+      }
+
+      if (no >= 2) {
+        risultato.textContent = 'Attenzione: sembra un possibile acquisto d’impulso. Meglio pensarci un attimo prima di cliccare “Compra ora”.';
+        risultato.style.color = '#c62828';
+      } else {
+        risultato.textContent = 'Buono! La tua scelta sembra abbastanza ragionata secondo il Metodo SmartShop.';
+        risultato.style.color = '#2e7d32';
+      }
+    }
+  </script>
 
   <footer style="text-align:center; margin-top:40px; padding:20px; background:#eee; font-family:Arial; font-size:0.9rem;">
     © 2025 Syncras.App — Tutti i diritti riservati<br>
