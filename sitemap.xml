@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://syncras.app/</loc>
+  </url>
+
+  <url>
+    <loc>https://syncras.app/blog.html</loc>
+  </url>
+
+  <url>
+    <loc>https://syncras.app/categorie.html</loc>
+  </url>
+
+  <url>
+    <loc>https://syncras.app/offerte.html</loc>
+  </url>
+
+  <url>
+    <loc>https://syncras.app/chi.html</loc>
+  </url>
+
+  <!-- ARTICOLI -->
+  <url>
+    <loc>https://syncras.app/smart-tv-guida-ironica.html</loc>
+  </url>
+  <url>
+    <loc>https://syncras.app/fotovoltaico-4kw-accumulo-10kwh.html</loc>
+  </url>
+  <url>
+    <loc>https://syncras.app/resistenza-termosifone-fotovoltaico.html</loc>
+  </url>
+  <url>
+    <loc>https://syncras.app/robot-cucina-economici-2025.html</loc>
+  </url>
+  <url>
+    <loc>https://syncras.app/smartphone-sotto-200-euro-2025.html</loc>
+  </url>
+  <url>
+    <loc>https://syncras.app/cuffie-wireless-sotto-50-euro-2025.html</loc>
+  </url>
+
+  <!-- PAGINE CATEGORIA TV / SMARTPHONE se esistono -->
+  <url>
+    <loc>https://syncras.app/smart-tv-sotto-700.html</loc>
+  </url>
+  <url>
+    <loc>https://syncras.app/smart-tv-700-1200.html</loc>
+  </url>
+  <url>
+    <loc>https://syncras.app/smart-tv-top.html</loc>
+  </url>
+
+</urlset>
