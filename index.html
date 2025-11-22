@@ -8,19 +8,27 @@
   <meta name="robots" content="index,follow">
 
   <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --violet-soft: #A29BFE;
+      --text-main: #403E43;
+      --bg-page: #F7F7FB;
+    }
+
     body {
       font-family: 'Arial', sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f5f5f5;
-      color: #333;
+      background-color: var(--bg-page);
+      color: var(--text-main);
       line-height: 1.6;
     }
 
     /* HEADER */
 
     .site-header {
-      background: linear-gradient(90deg, #2e7d32, #4CAF50);
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
       color: white;
       padding: 12px 14px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.15);
@@ -86,7 +94,7 @@
         margin: 0 auto;
         max-width: 1180px;
         flex-direction: column;
-        background-color: #2e7d32;
+        background-color: var(--violet-dark);
         padding: 10px 16px 12px 16px;
         border-radius: 0 0 8px 8px;
         box-shadow: 0 3px 6px rgba(0,0,0,0.25);
@@ -113,20 +121,18 @@
       max-width: 1180px;
       margin: 30px auto;
       padding: 20px;
-      background-color: white;
+      background-color: #ffffff;
       border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.08);
     }
 
     h2, h3 {
-      color: #2f6f34;
+      color: var(--violet-dark);
     }
 
     p {
       margin-bottom: 12px;
     }
-
-    /* LAYOUT TIPO MAGAZINE: COLONNA CONTENUTI + SIDEBAR */
 
     .layout {
       display: flex;
@@ -185,7 +191,7 @@
     .quick-actions a {
       flex: 1 1 220px;
       text-align: center;
-      background: #4CAF40;
+      background: var(--violet-main);
       color: #fff;
       text-decoration: none;
       padding: 10px 12px;
@@ -196,10 +202,10 @@
     }
 
     .quick-actions a:hover {
-      background: #3e8e41;
+      background: var(--violet-dark);
     }
 
-    /* GRIGLIA ARTICOLI IN EVIDENZA (stile D-Day) */
+    /* HIGHLIGHT GRID (stile magazine) */
 
     .highlight-grid {
       display: grid;
@@ -209,9 +215,9 @@
     }
 
     .highlight-main {
-      background: #f6faf7;
+      background: #f6f4ff;
       border-radius: 10px;
-      border: 1px solid #d7e8dc;
+      border: 1px solid #ddd7ff;
       padding: 14px 16px;
     }
 
@@ -225,7 +231,7 @@
       flex: 0 0 38%;
       border-radius: 10px;
       min-height: 150px;
-      background: linear-gradient(135deg, #263238, #4CAF50);
+      background: linear-gradient(135deg, #1E1B4B, var(--violet-main));
       position: relative;
       overflow: hidden;
     }
@@ -253,7 +259,7 @@
       font-size: 0.78rem;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      color: #777;
+      color: #6b7280;
       margin-bottom: 4px;
     }
 
@@ -287,9 +293,9 @@
     }
 
     .highlight-card {
-      background: #f9fbfa;
+      background: #faf7ff;
       border-radius: 10px;
-      border: 1px solid #d7e8dc;
+      border: 1px solid #e0dbff;
       padding: 10px 12px;
     }
 
@@ -303,7 +309,7 @@
       flex: 0 0 32%;
       border-radius: 8px;
       min-height: 80px;
-      background: linear-gradient(135deg, #1e88e5, #64b5f6);
+      background: linear-gradient(135deg, #312E81, #6366F1);
     }
 
     .highlight-card-text {
@@ -326,13 +332,9 @@
       .highlight-thumb-large {
         min-height: 130px;
       }
-
-      .highlight-card-inner {
-        flex-direction: row;
-      }
     }
 
-    /* SEZIONE ULTIME GUIDE */
+    /* ULTIME GUIDE */
 
     .latest-section {
       margin-top: 10px;
@@ -345,9 +347,9 @@
     }
 
     .post-card {
-      background: #f6faf7;
+      background: #f6f4ff;
       border-radius: 10px;
-      border: 1px solid #d7e8dc;
+      border: 1px solid #ddd7ff;
       padding: 10px 12px;
       margin-bottom: 10px;
     }
@@ -365,14 +367,6 @@
       height: 70px;
       border-radius: 8px;
       background: #e0e0e0;
-      overflow: hidden;
-    }
-
-    .post-thumb img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
     }
 
     .post-content {
@@ -385,7 +379,7 @@
 
     .post-meta {
       font-size: 0.85rem;
-      color: #777;
+      color: #6b7280;
       margin-bottom: 4px;
     }
 
@@ -395,21 +389,14 @@
 
     .note-smartshop {
       font-size: 0.92rem;
-      background: #f0f7f1;
+      background: #f4f5ff;
       border-radius: 8px;
       padding: 10px 12px;
-      border: 1px solid #d7e8dc;
+      border: 1px solid #ddd7ff;
       margin-top: 20px;
     }
 
-    footer {
-      text-align: center;
-      padding: 15px;
-      background-color: #ddd;
-      margin-top: 40px;
-    }
-
-    /* BOX GENERICI SYNCRAS – VERSIONE LIGHT */
+    /* BOX SYNCRAS (sidebar e box vari) */
 
     .syn-box {
       background-color: #ffffff;
@@ -417,7 +404,7 @@
       margin: 0.7rem 0;
       border-radius: 8px;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-      border-left: 3px solid #2196f3;
+      border-left: 3px solid var(--violet-main);
       font-family: inherit;
       line-height: 1.45;
     }
@@ -432,11 +419,14 @@
       font-size: 0.9rem;
       display: flex;
       align-items: center;
-      gap: 0.3rem;
+      gap: 0.35rem;
     }
 
-    .syn-box-title span.emoji {
-      font-size: 1rem;
+    .icon {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      color: var(--violet-main);
     }
 
     .syn-box-text {
@@ -450,38 +440,33 @@
     }
 
     .syn-consiglio {
-      border-left-color: #00897b;
-      background-color: #f6fbfa;
+      border-left-color: #10B981;
+      background-color: #ECFDF5;
     }
 
     .syn-errore {
-      border-left-color: #f44336;
-      background-color: #fff8f8;
+      border-left-color: #F97316;
+      background-color: #FFF7ED;
     }
 
     .syn-top3 {
-      border-left-color: #ff9800;
-      background-color: #fffaf3;
+      border-left-color: #FACC15;
+      background-color: #FEFCE8;
     }
 
     .syn-sapeviche {
-      border-left-color: #3f51b5;
-      background-color: #f5f6ff;
+      border-left-color: #6366F1;
+      background-color: #EEF2FF;
     }
 
     .syn-calcolo {
-      border-left-color: #9c27b0;
-      background-color: #fbf5ff;
+      border-left-color: #A855F7;
+      background-color: #FAF5FF;
     }
 
     .syn-best {
-      border-left-color: #2e7d32;
-      background-color: #f5fbf6;
-    }
-
-    .syn-quiz {
-      border-left-color: #ff5722;
-      background-color: #fff6f2;
+      border-left-color: #EC4899;
+      background-color: #FDF2F8;
     }
 
     .syn-top3-list {
@@ -497,6 +482,7 @@
       text-decoration: none;
       font-weight: 600;
       font-size: 0.85rem;
+      color: var(--violet-dark);
     }
 
     .syn-box a:hover {
@@ -511,6 +497,15 @@
 
     .quiz-section h3 {
       margin-bottom: 8px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background:#eee;
+      font-family:Arial;
+      font-size:0.9rem;
+      margin-top:40px;
     }
   </style>
 </head>
@@ -537,7 +532,7 @@
   <main>
     <div class="layout">
 
-      <!-- COLONNA PRINCIPALE (stile magazine) -->
+      <!-- COLONNA PRINCIPALE -->
       <div class="main-content">
 
         <div class="hero-intro">
@@ -555,7 +550,7 @@
           <a href="offerte.html">🔥 Vai alle offerte Amazon</a>
         </div>
 
-        <!-- ARTICOLI IN EVIDENZA – STILE PRIMA RIGA D-DAY -->
+        <!-- ARTICOLI IN EVIDENZA -->
         <section class="highlight-grid">
           <article class="highlight-main">
             <div class="highlight-label">In evidenza • Smart TV</div>
@@ -591,7 +586,7 @@
 
             <article class="highlight-card">
               <div class="highlight-card-inner">
-                <div class="highlight-thumb-small" style="background:linear-gradient(135deg,#8e24aa,#ce93d8);"></div>
+                <div class="highlight-thumb-small" style="background:linear-gradient(135deg,#4338CA,#A855F7);"></div>
                 <div class="highlight-card-text">
                   <div class="highlight-label">Tecnologia • Smartphone</div>
                   <a href="smartphone-sotto-200-euro-2025.html">
@@ -604,7 +599,7 @@
           </div>
         </section>
 
-        <!-- SEZIONE ULTIME GUIDE -->
+        <!-- ULTIME GUIDE -->
         <section class="latest-section">
           <h3>Ultime guide pubblicate</h3>
           <ul class="post-list">
@@ -674,7 +669,11 @@
         <!-- BOX: Sapevi che? -->
         <div class="syn-box syn-sapeviche">
           <div class="syn-box-title">
-            <span class="emoji">❓</span>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <circle cx="12" cy="12" r="9" stroke-width="2"></circle>
+              <path d="M12 8v5" stroke-width="2" stroke-linecap="round"></path>
+              <circle cx="12" cy="16.5" r="1" fill="currentColor"></circle>
+            </svg>
             <span>Sapevi che?</span>
           </div>
           <div class="syn-box-text">
@@ -687,7 +686,13 @@
         <!-- BOX: Calcolo rapido -->
         <div class="syn-box syn-calcolo">
           <div class="syn-box-title">
-            <span class="emoji">🧮</span>
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <rect x="5" y="3" width="14" height="18" rx="2" stroke-width="2"></rect>
+              <line x1="9" y1="8" x2="15" y2="8" stroke-width="2" stroke-linecap="round"></line>
+              <line x1="9" y1="12" x2="11" y2="12" stroke-width="2" stroke-linecap="round"></line>
+              <line x1="13" y1="12" x2="15" y2="12" stroke-width="2" stroke-linecap="round"></line>
+              <line x1="9" y1="16" x2="15" y2="16" stroke-width="2" stroke-linecap="round"></line>
+            </svg>
             <span>Calcolo rapido</span>
           </div>
           <div class="syn-box-text">
@@ -697,12 +702,16 @@
           </div>
         </div>
 
-        <!-- SEZIONE QUIZ PRIMA DELL'ACQUISTO -->
+        <!-- SEZIONE QUIZ -->
         <section class="quiz-section" id="quiz-smartshop">
           <h3>Quiz prima dell’acquisto</h3>
           <div class="syn-box syn-calcolo" id="mini-test-smartshop">
             <div class="syn-box-title">
-              <span class="emoji">💭</span>
+              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M9 9a3 3 0 0 1 5.83 1c0 2-2.33 2.5-2.33 4.25" stroke-width="2" stroke-linecap="round"></path>
+                <circle cx="12" cy="18" r="1" fill="currentColor"></circle>
+                <circle cx="12" cy="12" r="9" stroke-width="2"></circle>
+              </svg>
               <span>Mini Test SmartShop (30 secondi)</span>
             </div>
             <div class="syn-box-text">
@@ -726,7 +735,7 @@
                 </li>
               </ol>
 
-              <button type="button" onclick="valutaMiniTest()" style="margin-top:6px; padding:6px 10px; border-radius:6px; border:none; background:#4CAF50; color:#fff; cursor:pointer; font-size:0.85rem;">
+              <button type="button" onclick="valutaMiniTest()" style="margin-top:6px; padding:6px 10px; border-radius:6px; border:none; background:var(--violet-main); color:#fff; cursor:pointer; font-size:0.85rem;">
                 Calcola risultato
               </button>
 
@@ -741,28 +750,45 @@
           lì spiego come cerco di evitare brutte sorprese, acquisti inutili e sensi di colpa post-pacco Amazon.
         </div>
 
-      </div> <!-- fine main-content -->
+      </div>
 
-
-      <!-- SIDEBAR DESTRA (stile portale / D-Day) -->
+      <!-- SIDEBAR -->
       <aside class="sidebar">
 
         <div class="syn-box syn-consiglio">
-          <div class="syn-box-title"><span class="emoji">💡</span><span>Consiglio del giorno</span></div>
+          <div class="syn-box-title">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M12 3a6 6 0 0 0-3 11.24V16a3 3 0 0 0 6 0v-1.76A6 6 0 0 0 12 3z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M10 21h4" stroke-width="2" stroke-linecap="round"></path>
+            </svg>
+            <span>Consiglio del giorno</span>
+          </div>
           <div class="syn-box-text">
             Prima di cliccare “Compra ora”, chiediti: <strong>“Mi serve davvero?”</strong>
           </div>
         </div>
 
         <div class="syn-box syn-errore">
-          <div class="syn-box-title"><span class="emoji">⚠️</span><span>Errore da evitare</span></div>
+          <div class="syn-box-title">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M12 3 3 19h18L12 3z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M12 9v5" stroke-width="2" stroke-linecap="round"></path>
+              <circle cx="12" cy="17" r="1" fill="currentColor"></circle>
+            </svg>
+            <span>Errore da evitare</span>
+          </div>
           <div class="syn-box-text">
             Non comprare solo perché è in offerta. Mai.
           </div>
         </div>
 
         <div class="syn-box syn-top3">
-          <div class="syn-box-title"><span class="emoji">🏆</span><span>Top 3 sotto 200€</span></div>
+          <div class="syn-box-title">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M12 3.5 14.6 9l5.4.5-4.1 3.4 1.3 5.3L12 15.9 6.8 18.2 8.1 13 4 9.5 9.4 9z" stroke-width="2" stroke-linejoin="round"></path>
+            </svg>
+            <span>Top 3 sotto 200€</span>
+          </div>
           <ol class="syn-top3-list">
             <li><strong>Redmi 13C</strong><br>👉 <a href="https://amzn.to/49x2vV2" target="_blank" rel="nofollow">Amazon</a></li>
             <li><strong>Galaxy A15</strong><br>👉 <a href="https://amzn.to/44lr0AU" target="_blank" rel="nofollow">Amazon</a></li>
@@ -771,7 +797,15 @@
         </div>
 
         <div class="syn-box syn-best">
-          <div class="syn-box-title"><span class="emoji">📈</span><span>Prodotto più cliccato</span></div>
+          <div class="syn-box-title">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M3 3v18h18" stroke-width="2" stroke-linecap="round"></path>
+              <rect x="6" y="13" width="3" height="5" stroke-width="2"></rect>
+              <rect x="11" y="9" width="3" height="9" stroke-width="2"></rect>
+              <rect x="16" y="11" width="3" height="7" stroke-width="2"></rect>
+            </svg>
+            <span>Prodotto più cliccato</span>
+          </div>
           <div class="syn-box-text">
             Robot aspirapolvere – perfetto per chi odia passare l’aspirapolvere ma
             ama trovare il pavimento già fatto.<br>
@@ -782,7 +816,13 @@
         </div>
 
         <div class="syn-box syn-best">
-          <div class="syn-box-title"><span class="emoji">⭐</span><span>Prodotti più venduti</span></div>
+          <div class="syn-box-title">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M4 19h16" stroke-width="2" stroke-linecap="round"></path>
+              <path d="M7 15V7m5 8V5m5 10V9" stroke-width="2" stroke-linecap="round"></path>
+            </svg>
+            <span>Prodotti più venduti</span>
+          </div>
           <div class="syn-box-text">
             La vetrina dei bestseller Amazon aggiornata di continuo:<br>
             👉 <a href="https://www.amazon.it/gp/bestsellers?tag=mywebcorner4-21" target="_blank" rel="nofollow">
@@ -793,7 +833,7 @@
 
       </aside>
 
-    </div> <!-- fine layout -->
+    </div>
   </main>
 
   <script>
@@ -818,21 +858,21 @@
 
       if (si + no < 3) {
         risultato.textContent = 'Rispondi a tutte le domande per vedere il risultato 😉';
-        risultato.style.color = '#e65100';
+        risultato.style.color = '#F97316';
         return;
       }
 
       if (no >= 2) {
         risultato.textContent = 'Attenzione: sembra un possibile acquisto d’impulso. Meglio pensarci un attimo prima di cliccare “Compra ora”.';
-        risultato.style.color = '#c62828';
+        risultato.style.color = '#DC2626';
       } else {
         risultato.textContent = 'Buono! La tua scelta sembra abbastanza ragionata secondo il Metodo SmartShop.';
-        risultato.style.color = '#2e7d32';
+        risultato.style.color = '#16A34A';
       }
     }
   </script>
 
-  <footer style="text-align:center; margin-top:40px; padding:20px; background:#eee; font-family:Arial; font-size:0.9rem;">
+  <footer>
     © 2025 Syncras.App — Tutti i diritti riservati<br>
 
     <div style="margin-top:8px;">
@@ -850,7 +890,6 @@
       è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
     </p>
   </footer>
-
 </body>
 </html>
 
