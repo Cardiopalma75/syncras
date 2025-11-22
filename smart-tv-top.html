@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart TV oltre 1200€ – Ha davvero senso? | Syncras.App</title>
+  <meta name="description" content="Prima di comprare una Smart TV oltre 1200€, fai il test SmartShop: poche domande per capire se un top di gamma ha davvero senso per te.">
+  <meta name="robots" content="index,follow">
+
+  <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --bg-page: #F7F7FB;
+      --text-main: #403E43;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color: white;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+    #main-nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding-bottom: 2px;
+    }
+    #main-nav a:hover {
+      text-decoration: underline;
+    }
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .menu-toggle span {
+      margin-left: 4px;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        margin: 0 auto;
+        max-width: 1180px;
+        flex-direction: column;
+        background-color: var(--violet-dark);
+        padding: 10px 16px 12px 16px;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
+      }
+      #main-nav a {
+        padding: 6px 0;
+      }
+      body.nav-open #main-nav {
+        display: flex;
+      }
+      .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+
+    main {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.08);
+    }
+
+    h1, h2, h3 {
+      color: var(--violet-dark);
+    }
+
+    .pill-top {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #EFEAFF;
+      color: var(--violet-dark);
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .quiz-block {
+      border-radius: 10px;
+      border: 1px solid #DDD7FF;
+      background: #F6F4FF;
+      padding: 16px 14px;
+      margin-top: 16px;
+    }
+
+    .quiz-block ol {
+      padding-left: 18px;
+      margin-top: 10px;
+    }
+
+    .quiz-block li {
+      margin-bottom: 10px;
+    }
+
+    .quiz-options {
+      margin-top: 4px;
+      font-size: 0.9rem;
+    }
+
+    .quiz-options label {
+      margin-right: 12px;
+    }
+
+    .quiz-button {
+      margin-top: 10px;
+      padding: 8px 14px;
+      border-radius: 6px;
+      border: none;
+      background: var(--violet-main);
+      color: #fff;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .quiz-button:hover {
+      background: var(--violet-dark);
+    }
+
+    #quiz-risultato {
+      margin-top: 10px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .cta-box {
+      margin-top: 22px;
+      padding: 14px;
+      border-radius: 10px;
+      border: 1px solid #E5E7EB;
+      background: #F9FAFB;
+    }
+
+    .cta-button {
+      display: inline-block;
+      margin-top: 10px;
+      background: var(--violet-main);
+      color: #fff;
+      text-decoration: none;
+      padding: 10px 16px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    .cta-button:hover {
+      background: var(--violet-dark);
+    }
+
+    .note-small {
+      font-size: 0.8rem;
+      color: #6B7280;
+      margin-top: 6px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background:#eee;
+      font-family:Arial;
+      font-size:0.9rem;
+      margin-top:40px;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
+
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
+
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="offerte.html">Offerte Amazon</a>
+        <a href="categorie.html">Categorie</a>
+        <a href="chi.html">Chi siamo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <span class="pill-top">Smart TV • Oltre 1200€</span>
+    <h1>Top di gamma: ti serve davvero?</h1>
+    <p>
+      Oltre i <strong>1200€</strong> entri nel mondo dei pannelli premium: OLED, miniLED, neri profondi,
+      luminosità altissima, design sottilissimo. Ma ha senso solo se sfrutti davvero queste differenze.
+      Vediamolo con il test.
+    </p>
+
+    <div class="quiz-block">
+      <h2>Test rapido: sei da TV top di gamma?</h2>
+      <p>Rispondi sinceramente, non come vorrebbe la pubblicità.</p>
+
+      <ol>
+        <li>
+          Guardi spesso film in 4K HDR al buio (cinema in casa) o contenuti molto curati visivamente?
+          <div class="quiz-options">
+            <label><input type="radio" name="q1" value="si"> Sì</label>
+            <label><input type="radio" name="q1" value="no"> No</label>
+          </div>
+        </li>
+        <li>
+          Noti davvero la differenza tra un buon pannello “medio” e uno top (contrasto, neri, uniformità)?
+          <div class="quiz-options">
+            <label><input type="radio" name="q2" value="si"> Sì</label>
+            <label><input type="radio" name="q2" value="no"> No</label>
+          </div>
+        </li>
+        <li>
+          Hai una stanza che valorizza la TV (posizione, luce, distanza) e non un soggiorno caotico dove la TV è solo “in sottofondo”?
+          <div class="quiz-options">
+            <label><input type="radio" name="q3" value="si"> Sì</label>
+            <label><input type="radio" name="q3" value="no"> No</label>
+          </div>
+        </li>
+        <li>
+          Usi console/PC di fascia alta e ti interessano funzioni avanzate (120 Hz, VRR, HDMI 2.1, ecc.)?
+          <div class="quiz-options">
+            <label><input type="radio" name="q4" value="si"> Sì</label>
+            <label><input type="radio" name="q4" value="no"> No</label>
+          </div>
+        </li>
+        <li>
+          Spendere oltre 1200€ per la TV non ti crea sensi di colpa né problemi sul resto del budget famigliare?
+          <div class="quiz-options">
+            <label><input type="radio" name="q5" value="si"> Sì</label>
+            <label><input type="radio" name="q5" value="no"> No</label>
+          </div>
+        </li>
+      </ol>
+
+      <button class="quiz-button" type="button" onclick="valutaQuizTVTop()">
+        Vedi il risultato
+      </button>
+
+      <p id="quiz-risultato"></p>
+    </div>
+
+    <div class="cta-box">
+      <h2>Se sei ancora convinto…</h2>
+      <p>
+        Qui trovi le <strong>Smart TV top di gamma</strong> oltre 1200€ su Amazon:
+      </p>
+      <a class="cta-button"
+         href="https://www.amazon.it/s?k=smart+tv&rh=p_36:120000-&tag=mywebcorner4-21"
+         target="_blank"
+         rel="nofollow">
+        Vai alle Smart TV top di gamma su Amazon
+      </a>
+      <p class="note-small">
+        Link di affiliazione: per te il prezzo non cambia, ma una piccola percentuale aiuta Syncras.App a restare online.
+      </p>
+    </div>
+  </main>
+
+  <script>
+    function toggleMenu() {
+      document.body.classList.toggle('nav-open');
+    }
+
+    function valutaQuizTVTop() {
+      const domande = ['q1','q2','q3','q4','q5'];
+      let si = 0;
+      let no = 0;
+
+      domande.forEach(function(nome) {
+        const selezionata = document.querySelector('input[name="' + nome + '"]:checked');
+        if (selezionata) {
+          if (selezionata.value === 'si') si++;
+          if (selezionata.value === 'no') no++;
+        }
+      });
+
+      const risultato = document.getElementById('quiz-risultato');
+
+      if (si + no < domande.length) {
+        risultato.textContent = 'Completa tutte le risposte per capire se sei davvero da TV top di gamma.';
+        risultato.style.color = '#F59E0B';
+        return;
+      }
+
+      if (si >= 4) {
+        risultato.textContent = 'Ok, qui il top di gamma ha senso: sfrutterai davvero la qualità in più. Scegli bene il modello, ma non sentirti in colpa.';
+        risultato.style.color = '#15803D';
+      } else if (si === 3) {
+        risultato.textContent = 'Se ti puoi permettere la spesa e ami davvero il cinema o il gaming, può starci. Ma una fascia 700–1200€ probabilmente ti darebbe già molto.';
+        risultato.style.color = '#2563EB';
+      } else {
+        risultato.textContent = 'Sembra più uno sfizio che una necessità. Una buona TV sotto i 1200€ probabilmente ti darà tutto quello che ti serve senza stressare il portafoglio.';
+        risultato.style.color = '#B91C1C';
+      }
+    }
+  </script>
+
+  <footer>
+    © 2025 Syncras.App — Tutti i diritti riservati<br>
+    <div style="margin-top:8px;">
+      <a href="privacy.html">Privacy Policy</a> |
+      <a href="cookie.html">Cookie Policy</a> |
+      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
+      <a href="note-legali.html">Note Legali</a>
+    </div>
+    <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+      senza alcun costo aggiuntivo per l’utente.  
+      Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+      è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+    </p>
+  </footer>
+</body>
+</html>
