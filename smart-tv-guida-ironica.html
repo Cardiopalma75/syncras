@@ -1,295 +1,456 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guida Smart TV 2025 – Versione ironica | Syncras.App</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guida Smart TV 2025 – Versione ironica | Syncras.App</title>
 
-<style>
-body { font-family: Arial, sans-serif; background:#f5f5f5; margin:0; padding:0; line-height:1.6; }
-header { background:#4CAF50; color:white; padding:20px; text-align:center; }
-main {
-  max-width:900px; margin:30px auto; padding:20px;
-  background:white; border-radius:10px; box-shadow:0 4px 6px rgba(0,0,0,0.1);
-}
-h2, h3 { color:#2f6f34; }
-p { margin-bottom:15px; }
-ul { margin-left:20px; }
-.box {
-  background:#f6faf7; border:1px solid #d7e8dc; border-radius:10px;
-  padding:20px; margin-bottom:20px;
-}
-.btn {
-  display:inline-block; padding:10px 14px; background:#4CAF50; color:white;
-  border-radius:6px; text-decoration:none; margin-top:8px;
-}
-.btn:hover { background:#3e8e41; }
-footer { text-align:center; padding:15px; margin-top:40px; background:#ddd; }
-.small { font-size:0.9rem; color:#555; }
-</style>
+  <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --bg-page: #F7F7FB;
+      --text-main: #403E43;
+    }
 
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg-page);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      color: var(--text-main);
+    }
+
+    /* HEADER VIOLA UNIFICATO */
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color: white;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+    #main-nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding-bottom: 2px;
+    }
+    #main-nav a:hover {
+      text-decoration: underline;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .menu-toggle span {
+      margin-left: 4px;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        margin: 0 auto;
+        max-width: 1180px;
+        flex-direction: column;
+        background-color: var(--violet-dark);
+        padding: 10px 16px 12px 16px;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
+      }
+      #main-nav a {
+        padding: 6px 0;
+      }
+      body.nav-open #main-nav {
+        display: flex;
+      }
+      .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+
+    main {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    h1, h2, h3 {
+      color: var(--violet-dark);
+    }
+    p {
+      margin-bottom: 15px;
+    }
+    ul {
+      margin-left: 20px;
+    }
+
+    .box {
+      background: #f6faf7;
+      border: 1px solid #d7e8dc;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 14px;
+      background: var(--violet-main);
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    .btn:hover {
+      background: var(--violet-dark);
+    }
+
+    .back-links {
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+    .back-links a {
+      color: var(--violet-dark);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .back-links a:hover {
+      text-decoration: underline;
+    }
+
+    .small {
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      background: #eee;
+      font-family: Arial;
+      font-size: 0.9rem;
+    }
+  </style>
 </head>
+
 <body>
 
-<header>
-  <h1>Guida alle Smart TV 2025 – Per chi vuole ridere e scegliere bene</h1>
-</header>
+  <!-- HEADER UNIFICATO -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
 
-<p style="margin-bottom: 20px;">
-  ← <a href="index.html">Torna alla Home</a> |
-  <a href="blog.html">Vai al Blog</a> |
-  <a href="categorie.html">Categorie</a>
-</p>
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
 
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="offerte.html">Offerte Amazon</a>
+        <a href="categorie.html">Categorie</a>
+        <a href="chi.html">Chi siamo</a>
+      </nav>
+    </div>
+  </header>
 
-<main>
+  <main>
+    <div class="back-links">
+      ← <a href="index.html">Torna alla Home</a> |
+      <a href="blog.html">Vai al Blog</a> |
+      <a href="categorie.html">Categorie</a>
+    </div>
 
-<button id="shareBtn"
-  style="background:#4CAF50;color:white;padding:10px 15px;border:none;
-         border-radius:6px;cursor:pointer;margin-bottom:20px;">
-  📎 Condividi questa guida
-</button>
+    <h1>Guida alle Smart TV 2025 – Per chi vuole ridere e scegliere bene</h1>
 
-<script>
-  const shareBtn = document.getElementById('shareBtn');
-  if (navigator.share) {
-    shareBtn.addEventListener('click', () => {
-      navigator.share({
-        title: "Guida Smart TV 2025 – Versione ironica",
-        text: "Guida divertente e pratica per scegliere la TV giusta in base al budget.",
-        url: window.location.href
-      });
-    });
-  } else {
-    // se non supportato (PC ecc.) nascondo il bottone
-    shareBtn.style.display = "none";
-  }
-</script>
+    <button id="shareBtn"
+      style="background: var(--violet-main); color:white; padding:10px 15px; border:none;
+             border-radius:6px; cursor:pointer; margin-bottom:20px; font-weight:600;">
+      📎 Condividi questa guida
+    </button>
 
-<h2>Comprare una TV oggi? Sembra facile…</h2>
-<p>
-Comprare una Smart TV nel 2025 è una cosa semplice, ti dicono.<br>
-Poi entri online e ti investono:
-</p>
-<ul>
-  <li><strong>OLED, QLED, MiniLED</strong></li>
-  <li><strong>HDR10+, Dolby Vision, 120 Hz, 144 Hz</strong></li>
-  <li>Modalità cinema, sport, gioco, “nonno che dorme sul divano”…</li>
-</ul>
-<p>
-E tu pensi:
-<br>
-<i>“Io volevo solo vedere la partita e una serie con calma, non fare l’esame di ingegneria elettronica…”</i>
-</p>
+    <script>
+      const shareBtn = document.getElementById('shareBtn');
+      if (navigator.share) {
+        shareBtn.addEventListener('click', () => {
+          navigator.share({
+            title: "Guida Smart TV 2025 – Versione ironica",
+            text: "Guida divertente e pratica per scegliere la TV giusta in base al budget.",
+            url: window.location.href
+          });
+        });
+      } else {
+        // se non supportato (PC ecc.) nascondo il bottone
+        shareBtn.style.display = "none";
+      }
+    </script>
 
-<p>
-Qui proviamo a fare quello che nessuno fa: 
-spiegarti le TV <strong>in base a quello che veramente conta: quanti soldi hai</strong> e 
-a quello che succede DAVVERO in salotto:
-nonno che non sente, figli che urlano, 
-vicino di casa che bussa quando esulti al 90° minuto.
-</p>
+    <h2>Comprare una TV oggi? Sembra facile…</h2>
+    <p>
+      Comprare una Smart TV nel 2025 è una cosa semplice, ti dicono.<br>
+      Poi entri online e ti investono:
+    </p>
+    <ul>
+      <li><strong>OLED, QLED, MiniLED</strong></li>
+      <li><strong>HDR10+, Dolby Vision, 120 Hz, 144 Hz</strong></li>
+      <li>Modalità cinema, sport, gioco, “nonno che dorme sul divano”...</li>
+    </ul>
+    <p>
+      E tu pensi:
+      <br>
+      <i>“Io volevo solo vedere la partita e una serie con calma, non fare l’esame di ingegneria elettronica…”</i>
+    </p>
 
-<hr>
+    <p>
+      Qui proviamo a fare quello che nessuno fa:
+      spiegarti le TV <strong>in base a quello che veramente conta: quanti soldi hai</strong> e
+      a quello che succede DAVVERO in salotto:
+      nonno che non sente, figli che urlano,
+      vicino di casa che bussa quando esulti al 90° minuto.
+    </p>
 
-<!-- 1) SOTTO 700 -->
-<div class="box">
-<h3>💶 1) Smart TV sotto i 700€ – “La TV onesta”</h3>
-<p>
-Questa è la TV <strong>onesta</strong>: non fa miracoli, ma fa il suo dovere.
-È come il panino con la mortadella: magari non è gourmet, ma ti mette di buon umore.
-</p>
+    <hr>
 
-<h4>Per chi è?</h4>
-<ul>
-  <li>Per chi guarda serie, notiziari, YouTube e partite in HD</li>
-  <li>Per chi ha il nonno in casa che dice sempre: <i>“Alza il volume, non si sente niente!”</i></li>
-  <li>Per chi vuole una TV nuova senza vedere il conto in banca in modalità “pianto greco”</li>
-</ul>
+    <!-- 1) SOTTO 700 -->
+    <div class="box">
+      <h3>💶 1) Smart TV sotto i 700€ – “La TV onesta”</h3>
+      <p>
+        Questa è la TV <strong>onesta</strong>: non fa miracoli, ma fa il suo dovere.
+        È come il panino con la mortadella: magari non è gourmet, ma ti mette di buon umore.
+      </p>
 
-<h4>Cosa succede davvero in salotto con questa fascia</h4>
-<ul>
-  <li>Immagine buona: i giocatori si vedono, non sembrano ologrammi</li>
-  <li>Luminosità ok: non serve mettere gli occhiali da sole in salotto</li>
-  <li>Audio normale: a 20 non senti, a 40 sì, a 60 arriva il vicino a chiederti com’è finita la partita</li>
-</ul>
+      <h4>Per chi è?</h4>
+      <ul>
+        <li>Per chi guarda serie, notiziari, YouTube e partite in HD</li>
+        <li>Per chi ha il nonno in casa che dice sempre: <i>“Alza il volume, non si sente niente!”</i></li>
+        <li>Per chi vuole una TV nuova senza vedere il conto in banca in modalità “pianto greco”</li>
+      </ul>
 
-<h4>Scena tipica</h4>
-<p>
-Tu stai guardando una serie, la TV si sente così così.  
-Il nonno passa, guarda lo schermo e dice:
-<br>
-<i>“Ma questa è la stessa TV di prima?”</i><br>
-Tu: “No nonno, è nuova”.  
-Lui: “Allora alza, sennò manco la vedo la differenza!”.  
-</p>
+      <h4>Cosa succede davvero in salotto con questa fascia</h4>
+      <ul>
+        <li>Immagine buona: i giocatori si vedono, non sembrano ologrammi</li>
+        <li>Luminosità ok: non serve mettere gli occhiali da sole in salotto</li>
+        <li>Audio normale: a 20 non senti, a 40 sì, a 60 arriva il vicino a chiederti com’è finita la partita</li>
+      </ul>
 
-<h4>Consiglio ironico</h4>
-<p>
-Se vuoi una TV che <strong>non ti rovina il portafoglio</strong> 
-e ti fa vedere tutto quello che ti serve,  
-questa fascia è perfetta. Nessuna mania di grandezza, solo buon senso.
-</p>
+      <h4>Scena tipica</h4>
+      <p>
+        Tu stai guardando una serie, la TV si sente così così.  
+        Il nonno passa, guarda lo schermo e dice:
+        <br>
+        <i>“Ma questa è la stessa TV di prima?”</i><br>
+        Tu: “No nonno, è nuova”.  
+        Lui: “Allora alza, sennò manco la vedo la differenza!”.  
+      </p>
 
-<a class="btn" href="https://www.amazon.it/s?k=smart+tv&rh=p_36:0-70000&tag=mywebcorner4-21" target="_blank">
-Smart TV sotto 700€
-</a>
-</div>
+      <h4>Consiglio ironico</h4>
+      <p>
+        Se vuoi una TV che <strong>non ti rovina il portafoglio</strong>
+        e ti fa vedere tutto quello che ti serve,
+        questa fascia è perfetta. Nessuna mania di grandezza, solo buon senso.
+      </p>
 
-<!-- 2) 700-1200 -->
-<div class="box">
-<h3>💶💶 2) Smart TV 700–1200€ – “La TV che ti fa dire: Ah però…”</h3>
-<p>
-Qui entriamo nella fascia <strong>pericolosa</strong>:  
-quella in cui accendi la TV e la prima cosa che pensi è:
-<br>
-<i>“Ah però… guarda come si vede!”</i>
-</p>
+      <a class="btn" href="https://www.amazon.it/s?k=smart+tv&rh=p_36:0-70000&tag=mywebcorner4-21" target="_blank">
+        Smart TV sotto 700€
+      </a>
+    </div>
 
-<h4>Per chi è?</h4>
-<ul>
-  <li>Per chi ama film e serie come si deve, non “in sottofondo mentre stiri”</li>
-  <li>Per chi urla durante le partite e ha bisogno di vedere bene se era fuorigioco</li>
-  <li>Per le famiglie dove i figli dicono: <i>“Metti la modalità gaming, papà, quella vera!”</i></li>
-</ul>
+    <!-- 2) 700-1200 -->
+    <div class="box">
+      <h3>💶💶 2) Smart TV 700–1200€ – “La TV che ti fa dire: Ah però…”</h3>
+      <p>
+        Qui entriamo nella fascia <strong>pericolosa</strong>:  
+        quella in cui accendi la TV e la prima cosa che pensi è:
+        <br>
+        <i>“Ah però… guarda come si vede!”</i>
+      </p>
 
-<h4>Cosa offre davvero</h4>
-<ul>
-  <li>Colori più vivi: l’erba del campo è verde, non verde radioattivo</li>
-  <li>Neri più neri: le scene al buio non sono un quadro tutto grigio</li>
-  <li>Movimenti più fluidi: il pallone non lascia la scia tipo cometa di Natale</li>
-  <li>Più ingressi, più funzioni, più “ma questa cosa a cosa serve?”</li>
-</ul>
+      <h4>Per chi è?</h4>
+      <ul>
+        <li>Per chi ama film e serie come si deve, non “in sottofondo mentre stiri”</li>
+        <li>Per chi urla durante le partite e ha bisogno di vedere bene se era fuorigioco</li>
+        <li>Per le famiglie dove i figli dicono: <i>“Metti la modalità gaming, papà, quella vera!”</i></li>
+      </ul>
 
-<h4>Scena tipica</h4>
-<p>
-Inviti gli amici a vedere la partita.  
-Uno entra, guarda lo schermo e dice:
-<br>
-<i>“Oh, ma il mio televisore a casa è un microonde in confronto…”</i><br>
-Da quel giorno iniziano a venire a vedere la TV da te. Con le birre, però. Minimo sindacale.
-</p>
+      <h4>Cosa offre davvero</h4>
+      <ul>
+        <li>Colori più vivi: l’erba del campo è verde, non verde radioattivo</li>
+        <li>Neri più neri: le scene al buio non sono un quadro tutto grigio</li>
+        <li>Movimenti più fluidi: il pallone non lascia la scia tipo cometa di Natale</li>
+        <li>Più ingressi, più funzioni, più “ma questa cosa a cosa serve?”</li>
+      </ul>
 
-<h4>Consiglio ironico</h4>
-<p>
-Questa fascia è la <strong>miglior qualità/prezzo</strong>.  
-Se vuoi una TV che ti faccia godere senza entrare in modalità  
-<i>“mi vendo un rene”</i>, è qui che devi guardare.
-</p>
+      <h4>Scena tipica</h4>
+      <p>
+        Inviti gli amici a vedere la partita.  
+        Uno entra, guarda lo schermo e dice:
+        <br>
+        <i>“Oh, ma il mio televisore a casa è un microonde in confronto…”</i><br>
+        Da quel giorno iniziano a venire a vedere la TV da te. Con le birre, però. Minimo sindacale.
+      </p>
 
-<a class="btn" href="https://www.amazon.it/s?k=smart+tv&rh=p_36:70000-120000&tag=mywebcorner4-21" target="_blank">
-Smart TV 700–1200€
-</a>
-</div>
+      <h4>Consiglio ironico</h4>
+      <p>
+        Questa fascia è la <strong>miglior qualità/prezzo</strong>.  
+        Se vuoi una TV che ti faccia godere senza entrare in modalità  
+        <i>“mi vendo un rene”</i>, è qui che devi guardare.
+      </p>
 
-<!-- 3) OLTRE 1200 -->
-<div class="box">
-<h3>💶💶💶 3) Smart TV oltre 1200€ – “Modalità: mi gioco tutto”</h3>
-<p>
-Qui non parliamo più di TV.  
-Qui parliamo di <strong>altare domestico</strong>.  
-Questa è la fascia “lasciatemi sfogare” e “modalità mi gioco tutto”.
-</p>
+      <a class="btn" href="https://www.amazon.it/s?k=smart+tv&rh=p_36:70000-120000&tag=mywebcorner4-21" target="_blank">
+        Smart TV 700–1200€
+      </a>
+    </div>
 
-<h4>Per chi è?</h4>
-<ul>
-  <li>Per chi ama il cinema al punto che conosce i nomi dei direttori della fotografia</li>
-  <li>Per gamer seri che quando vedono il lag cambiano colore in faccia</li>
-  <li>Per chi dice la frase pericolosa:  
-    <i>“Una volta sola viviamo, almeno vediamola bene sta Champions”</i></li>
-  <li>Per chi vuole la TV che fa dire agli ospiti: “Ok, ma il biglietto dove lo timbro?”</li>
-</ul>
+    <!-- 3) OLTRE 1200 -->
+    <div class="box">
+      <h3>💶💶💶 3) Smart TV oltre 1200€ – “Modalità: mi gioco tutto”</h3>
+      <p>
+        Qui non parliamo più di TV.  
+        Qui parliamo di <strong>altare domestico</strong>.  
+        Questa è la fascia “lasciatemi sfogare” e “modalità mi gioco tutto”.
+      </p>
 
-<h4>Cosa offre davvero</h4>
-<ul>
-  <li>Neri così profondi che non capisci se è una scena buia o la bolletta della luce</li>
-  <li>HDR che quando parte dici: “Oh mamma mia…”</li>
-  <li>Colori da cinema vero: se sbagli la luminosità sembra un quadro moderno</li>
-  <li>Fluidità pazzesca: le scene d’azione non sono più un frullato di pixel</li>
-</ul>
+      <h4>Per chi è?</h4>
+      <ul>
+        <li>Per chi ama il cinema al punto che conosce i nomi dei direttori della fotografia</li>
+        <li>Per gamer seri che quando vedono il lag cambiano colore in faccia</li>
+        <li>Per chi dice la frase pericolosa:  
+          <i>“Una volta sola viviamo, almeno vediamola bene sta Champions”</i></li>
+        <li>Per chi vuole la TV che fa dire agli ospiti: “Ok, ma il biglietto dove lo timbro?”</li>
+      </ul>
 
-<h4>Scena tipica</h4>
-<p>
-Tu arrivi a casa con la scatola enorme, la metti in salotto e dici:
-<br>
-<i>“Da oggi niente più cinema, è il cinema che viene da noi!”</i><br>
-Qualcuno in famiglia ti guarda malissimo, ma poi vede una scena in 4K  
-e per cinque minuti tace. Poi chiede solo:
-<br>
-<i>“E adesso con la rata come facciamo?”</i>
-</p>
+      <h4>Cosa offre davvero</h4>
+      <ul>
+        <li>Neri così profondi che non capisci se è una scena buia o la bolletta della luce</li>
+        <li>HDR che quando parte dici: “Oh mamma mia…”</li>
+        <li>Colori da cinema vero: se sbagli la luminosità sembra un quadro moderno</li>
+        <li>Fluidità pazzesca: le scene d’azione non sono più un frullato di pixel</li>
+      </ul>
 
-<h4>Consiglio ironico</h4>
-<p>
-Se hai il budget e vuoi <strong>la TV definitiva</strong>, questa fascia ti farà sorridere ogni sera.  
-Se non hai il budget… va benissimo anche solo guardare le specifiche tecniche e sognare.
-</p>
+      <h4>Scena tipica</h4>
+      <p>
+        Tu arrivi a casa con la scatola enorme, la metti in salotto e dici:
+        <br>
+        <i>“Da oggi niente più cinema, è il cinema che viene da noi!”</i><br>
+        Qualcuno in famiglia ti guarda malissimo, ma poi vede una scena in 4K  
+        e per cinque minuti tace. Poi chiede solo:
+        <br>
+        <i>“E adesso con la rata come facciamo?”</i>
+      </p>
 
-<a class="btn" href="https://www.amazon.it/s?k=smart+tv&rh=p_36:120000-&tag=mywebcorner4-21" target="_blank">
-Smart TV oltre 1200€
-</a>
-</div>
+      <h4>Consiglio ironico</h4>
+      <p>
+        Se hai il budget e vuoi <strong>la TV definitiva</strong>, questa fascia ti farà sorridere ogni sera.  
+        Se non hai il budget… va benissimo anche solo guardare le specifiche tecniche e sognare.
+      </p>
 
-<hr>
+      <a class="btn" href="https://www.amazon.it/s?k=smart+tv&rh=p_36:120000-&tag=mywebcorner4-21" target="_blank">
+        Smart TV oltre 1200€
+      </a>
+    </div>
 
-<h3>🎬 La regola d’oro del salotto</h3>
-<p>
-Non scegliere la TV per far colpo sugli altri.<br>
-Sceglila per goderti:
-</p>
-<ul>
-  <li>la pizza del sabato sera,</li>
-  <li>la serie che ti addormenti dopo 10 minuti,</li>
-  <li>la partita in cui urla tutta la casa, nonno compreso,</li>
-  <li>il film visto mille volte ma “qui si vede meglio, fidati”.</li>
-</ul>
+    <hr>
 
-<h3>🎯 Conclusione versione SmartShop</h3>
-<ul>
-  <li><strong>Sotto 700€</strong> → TV onesta, zero drammi, perfetta per il 60% delle famiglie</li>
-  <li><strong>700–1200€</strong> → miglior equilibrio tra qualità e prezzo, scelta consigliata</li>
-  <li><strong>Oltre 1200€</strong> → modalità “mi gioco tutto”, cinema a casa e lacrimuccia di gioia</li>
-</ul>
+    <h3>🎬 La regola d’oro del salotto</h3>
+    <p>
+      Non scegliere la TV per far colpo sugli altri.<br>
+      Sceglila per goderti:
+    </p>
+    <ul>
+      <li>la pizza del sabato sera,</li>
+      <li>la serie che ti addormenti dopo 10 minuti,</li>
+      <li>la partita in cui urla tutta la casa, nonno compreso,</li>
+      <li>il film visto mille volte ma “qui si vede meglio, fidati”.</li>
+    </ul>
 
-<p class="small">
-Nota: i link portano alle ricerche già filtrate su Amazon.  
-Tu pensa solo a quanto vuoi spendere… al resto ci pensa lo schermo.
-</p>
+    <h3>🎯 Conclusione versione SmartShop</h3>
+    <ul>
+      <li><strong>Sotto 700€</strong> → TV onesta, zero drammi, perfetta per il 60% delle famiglie</li>
+      <li><strong>700–1200€</strong> → miglior equilibrio tra qualità e prezzo, scelta consigliata</li>
+      <li><strong>Oltre 1200€</strong> → modalità “mi gioco tutto”, cinema a casa e lacrimuccia di gioia</li>
+    </ul>
 
-<p class="small">
-<strong>Disclaimer:</strong> Alcuni link presenti su questo sito sono link di affiliazione Amazon
-e ottengo una piccola commissione dagli acquisti idonei, senza costi aggiuntivi per te.
-</p>
+    <p class="small">
+      Nota: i link portano alle ricerche già filtrate su Amazon.  
+      Tu pensa solo a quanto vuoi spendere… al resto ci pensa lo schermo.
+    </p>
 
-<p class="small">
-I contenuti presenti su Syncras.app hanno scopo puramente informativo e ironico.
-Non forniamo consulenze professionali e non ci assumiamo responsabilità su eventuali acquisti,
-scelte personali o utilizzo dei prodotti suggeriti. Decidi sempre in autonomia.
-</p>
+    <p class="small">
+      <strong>Disclaimer:</strong> Alcuni link presenti su questo sito sono link di affiliazione Amazon
+      e ottengo una piccola commissione dagli acquisti idonei, senza costi aggiuntivi per te.
+    </p>
 
-</main>
+    <p class="small">
+      I contenuti presenti su Syncras.App hanno scopo puramente informativo e ironico.
+      Non forniamo consulenze professionali e non ci assumiamo responsabilità su eventuali acquisti,
+      scelte personali o utilizzo dei prodotti suggeriti. Decidi sempre in autonomia.
+    </p>
+  </main>
 
-<footer style="text-align:center; margin-top:40px; padding:20px; background:#eee; font-family:Arial; font-size:0.9rem;">
-  © 2025 Syncras.App — Tutti i diritti riservati<br>
+  <script>
+    function toggleMenu() {
+      document.body.classList.toggle('nav-open');
+    }
+  </script>
 
-  <div style="margin-top:8px;">
-    <a href="privacy.html">Privacy Policy</a> |
-    <a href="cookie.html">Cookie Policy</a> |
-    <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
-    <a href="note-legali.html">Note Legali</a>
-  </div>
+  <footer>
+    © 2025 Syncras.App — Tutti i diritti riservati<br>
 
-  <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
-    Syncras.App partecipa al Programma Affiliazione Amazon EU.  
-    Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
-    senza alcun costo aggiuntivo per l’utente.  
-    Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
-    è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
-  </p>
-</footer>
+    <div style="margin-top:8px;">
+      <a href="privacy.html">Privacy Policy</a> |
+      <a href="cookie.html">Cookie Policy</a> |
+      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
+      <a href="note-legali.html">Note Legali</a>
+    </div>
 
+    <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+      senza alcun costo aggiuntivo per l’utente.  
+      Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+      è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+    </p>
+  </footer>
 
 </body>
 </html>
-
 
