@@ -3,156 +3,366 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smartphone sotto 200€ | Syncras.App</title>
-  <meta name="description" content="Selezione di smartphone affidabili sotto i 200€, con ricerche Amazon già pronte e consigli SmartShop.">
+  <title>Smartphone sotto 200€ – Test rapido SmartShop | Syncras.App</title>
+  <meta name="description" content="Prima di comprare uno smartphone sotto i 200€, fai il test rapido SmartShop: 5 domande per capire se ha senso l’acquisto e un link diretto alle offerte giuste.">
   <meta name="robots" content="index,follow">
 
   <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --bg-page: #F7F7FB;
+      --text-main: #403E43;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background:#f5f5f5;
-      margin:0;
-      padding:0;
-      color:#333;
-      line-height:1.6;
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.6;
     }
 
-    header {
-      background:#4CAF50;
-      color:white;
-      padding:20px 10px;
-      text-align:center;
+    /* HEADER uguale alle altre pagine */
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color: white;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+    #main-nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding-bottom: 2px;
+    }
+    #main-nav a:hover {
+      text-decoration: underline;
+    }
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .menu-toggle span {
+      margin-left: 4px;
+      font-size: 1.1rem;
     }
 
-    nav a {
-      color:white;
-      text-decoration:none;
-      margin:0 15px;
-      font-weight:bold;
-    }
-
-    nav a:hover {
-      text-decoration:underline;
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        margin: 0 auto;
+        max-width: 1180px;
+        flex-direction: column;
+        background-color: var(--violet-dark);
+        padding: 10px 16px 12px 16px;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
+      }
+      #main-nav a {
+        padding: 6px 0;
+      }
+      body.nav-open #main-nav {
+        display: flex;
+      }
+      .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+      }
     }
 
     main {
-      max-width:900px;
-      margin:20px auto;
-      padding:20px;
-      background:white;
-      border-radius:10px;
-      box-shadow:0 4px 6px rgba(0,0,0,0.1);
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.08);
     }
 
-    h2, h3 {
-      color:#2f6f34;
+    h1, h2, h3 {
+      color: var(--violet-dark);
     }
 
-    .product-box {
-      padding:15px;
-      margin-bottom:20px;
-      border:1px solid #ddd;
-      border-radius:8px;
-      background:#fafafa;
+    .pill-top {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #EFEAFF;
+      color: var(--violet-dark);
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 8px;
     }
 
-    .product-box:hover {
-      background:#f0f8f0;
+    .quiz-block {
+      border-radius: 10px;
+      border: 1px solid #DDD7FF;
+      background: #F6F4FF;
+      padding: 16px 14px;
+      margin-top: 16px;
     }
 
-    a.btn {
-      display:inline-block;
-      padding:10px 15px;
-      background:#4CAF50;
-      color:white;
-      border-radius:6px;
-      text-decoration:none;
-      font-size:0.95rem;
+    .quiz-block ol {
+      padding-left: 18px;
+      margin-top: 10px;
     }
 
-    a.btn:hover {
-      background:#3e8e41;
+    .quiz-block li {
+      margin-bottom: 10px;
+    }
+
+    .quiz-options {
+      margin-top: 4px;
+      font-size: 0.9rem;
+    }
+
+    .quiz-options label {
+      margin-right: 12px;
+    }
+
+    .quiz-button {
+      margin-top: 10px;
+      padding: 8px 14px;
+      border-radius: 6px;
+      border: none;
+      background: var(--violet-main);
+      color: #fff;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .quiz-button:hover {
+      background: var(--violet-dark);
+    }
+
+    #quiz-risultato {
+      margin-top: 10px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .cta-box {
+      margin-top: 22px;
+      padding: 14px;
+      border-radius: 10px;
+      border: 1px solid #E5E7EB;
+      background: #F9FAFB;
+    }
+
+    .cta-button {
+      display: inline-block;
+      margin-top: 10px;
+      background: var(--violet-main);
+      color: #fff;
+      text-decoration: none;
+      padding: 10px 16px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    .cta-button:hover {
+      background: var(--violet-dark);
+    }
+
+    .note-small {
+      font-size: 0.8rem;
+      color: #6B7280;
+      margin-top: 6px;
     }
 
     footer {
-      text-align:center;
-      padding:15px;
-      background-color:#ddd;
+      text-align: center;
+      padding: 20px;
+      background:#eee;
+      font-family:Arial;
+      font-size:0.9rem;
       margin-top:40px;
     }
   </style>
-
 </head>
-<body>
 
-  <header>
-    <h1>Smartphone sotto 200€</h1>
-    <nav>
-      <a href="index.html">Home</a> |
-      <a href="blog.html">Blog</a> |
-      <a href="offerte.html">Offerte Amazon</a> |
-      <a href="categorie.html">Categorie</a> |
-      <a href="chi.html">Chi siamo</a>
-    </nav>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
+
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
+
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="offerte.html">Offerte Amazon</a>
+        <a href="categorie.html">Categorie</a>
+        <a href="chi.html">Chi siamo</a>
+      </nav>
+    </div>
   </header>
 
   <main>
-    <h2>Smartphone affidabili sotto i 200€</h2>
+    <span class="pill-top">Smartphone • Sotto 200€</span>
+    <h1>Prima di comprare uno smartphone sotto 200€</h1>
     <p>
-      Qui trovi link che aprono <strong>ricerche Amazon già pronte</strong> per gli smartphone sotto i 200€.
-      Niente categorie a caso: parti subito da risultati più vicini a quello che cerchi.
+      Fascia sotto i 200€: qui si fanno spesso gli affari migliori… o le delusioni più grosse.  
+      Prima di cliccare “compra ora”, fai questo <strong>test rapido SmartShop</strong>.
     </p>
 
-    <div class="product-box">
-      <h3>🔥 Ricerca: “smartphone sotto 200 euro”</h3>
-      <p>Ti porta a una ricerca Amazon con già scritto “smartphone sotto 200 euro”.</p>
-      <a class="btn"
-         href="https://www.amazon.it/s?k=smartphone&rh=n:473262031,p_36:0-20000&tag=mywebcorner4-21"
-         target="_blank">
-        Vai alla ricerca sotto 200€
-      </a>
+    <div class="quiz-block">
+      <h2>Test rapido: è il momento giusto per cambiare telefono?</h2>
+      <p>Rispondi in modo sincero a queste 5 domande:</p>
+
+      <ol>
+        <li>
+          Il telefono che usi ora ti dà problemi seri (blocchi, batteria a terra, app che non partono)?
+          <div class="quiz-options">
+            <label><input type="radio" name="q1" value="si"> Sì</label>
+            <label><input type="radio" name="q1" value="no"> No</label>
+          </div>
+        </li>
+        <li>
+          Usi il telefono per cose “serie” (home banking, lavoro, documenti, salute) ogni giorno?
+          <div class="quiz-options">
+            <label><input type="radio" name="q2" value="si"> Sì</label>
+            <label><input type="radio" name="q2" value="no"> No</label>
+          </div>
+        </li>
+        <li>
+          Se domani lo smartphone che vuoi non fosse più in offerta, lo compreresti lo stesso?
+          <div class="quiz-options">
+            <label><input type="radio" name="q3" value="si"> Sì</label>
+            <label><input type="radio" name="q3" value="no"> No</label>
+          </div>
+        </li>
+        <li>
+          Hai già messo da parte un budget massimo (es. 180–200€) che non manda in crisi altre spese?
+          <div class="quiz-options">
+            <label><input type="radio" name="q4" value="si"> Sì</label>
+            <label><input type="radio" name="q4" value="no"> No</label>
+          </div>
+        </li>
+        <li>
+          Stai scegliendo il modello in base a ciò che TI serve, non alle pubblicità?
+          <div class="quiz-options">
+            <label><input type="radio" name="q5" value="si"> Sì</label>
+            <label><input type="radio" name="q5" value="no"> No</label>
+          </div>
+        </li>
+      </ol>
+
+      <button class="quiz-button" type="button" onclick="valutaQuiz()">
+        Vedi il risultato
+      </button>
+
+      <p id="quiz-risultato"></p>
     </div>
 
-    <div class="product-box">
-      <h3>📱 Solo smartphone (categoria telefonia)</h3>
-      <p>Ricerca nella categoria smartphone con prezzo contenuto.</p>
-      <a class="btn"
-         href="https://www.amazon.it/s?k=smartphone&rh=n:473262031,p_36:0-20000&tag=mywebcorner4-21"
-         target="_blank">
-        Smartphone fino a 200€ (filtrati)
+    <div class="cta-box">
+      <h2>Ok, adesso andiamo alle offerte sotto i 200€</h2>
+      <p>
+        Se dopo il test ha ancora senso comprare, qui trovi la selezione di
+        <strong>smartphone sotto i 200€</strong> su Amazon:
+      </p>
+      <a class="cta-button"
+         href="https://www.amazon.it/s?k=smartphone+sotto+200+euro&tag=mywebcorner4-21"
+         target="_blank"
+         rel="nofollow">
+        Vai agli smartphone sotto 200€ su Amazon
       </a>
-    </div>
-
-    <div class="product-box">
-      <h3>✨ Consigliati (logica da amico, non da volantino)</h3>
-      <ul>
-        <li>Redmi Note 13 → ottimo schermo e buon compromesso generale.</li>
-        <li>Samsung A15 → affidabilità Samsung e interfaccia semplice.</li>
-        <li>Realme C55 → veloce, leggero, ideale per uso quotidiano.</li>
-      </ul>
+      <p class="note-small">
+        Link di affiliazione: per te il prezzo non cambia, ma una piccola percentuale aiuta Syncras.App a restare online.
+      </p>
     </div>
   </main>
 
- <footer style="text-align:center; margin-top:40px; padding:20px; background:#eee; font-family:Arial; font-size:0.9rem;">
-  © 2025 Syncras.App — Tutti i diritti riservati<br>
+  <script>
+    function toggleMenu() {
+      document.body.classList.toggle('nav-open');
+    }
 
-  <div style="margin-top:8px;">
-    <a href="privacy.html">Privacy Policy</a> |
-    <a href="cookie.html">Cookie Policy</a> |
-    <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
-    <a href="note-legali.html">Note Legali</a>
-  </div>
+    function valutaQuiz() {
+      const domande = ['q1','q2','q3','q4','q5'];
+      let si = 0;
+      let no = 0;
 
-  <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
-    Syncras.App partecipa al Programma Affiliazione Amazon EU.  
-    Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
-    senza alcun costo aggiuntivo per l’utente.  
-    Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
-    è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
-  </p>
-</footer>
+      domande.forEach(function(nome) {
+        const selezionata = document.querySelector('input[name="' + nome + '"]:checked');
+        if (selezionata) {
+          if (selezionata.value === 'si') si++;
+          if (selezionata.value === 'no') no++;
+        }
+      });
 
+      const risultato = document.getElementById('quiz-risultato');
 
+      if (si + no < domande.length) {
+        risultato.textContent = 'Rispondi a tutte le domande per avere un consiglio sensato.';
+        risultato.style.color = '#F59E0B';
+        return;
+      }
+
+      if (si >= 4) {
+        risultato.textContent = 'Ha senso valutare seriamente un nuovo smartphone sotto i 200€. Vai alle offerte, ma resta sul budget che ti sei dato.';
+        risultato.style.color = '#15803D';
+      } else if (si === 3) {
+        risultato.textContent = 'Se trovi una buona offerta e il modello è adatto a te, l’acquisto può avere senso. Niente fretta: confronta 2–3 modelli.';
+        risultato.style.color = '#2563EB';
+      } else {
+        risultato.textContent = 'Al momento sembra più un acquisto di impulso che una necessità. Forse è meglio rimandare e usare ancora quello che hai.';
+        risultato.style.color = '#B91C1C';
+      }
+    }
+  </script>
+
+  <footer>
+    © 2025 Syncras.App — Tutti i diritti riservati<br>
+    <div style="margin-top:8px;">
+      <a href="privacy.html">Privacy Policy</a> |
+      <a href="cookie.html">Cookie Policy</a> |
+      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
+      <a href="note-legali.html">Note Legali</a>
+    </div>
+    <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+      senza alcun costo aggiuntivo per l’utente.  
+      Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+      è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+    </p>
+  </footer>
 </body>
 </html>
 
