@@ -16,22 +16,96 @@
       color: #333;
       line-height: 1.6;
     }
-    header {
-      background-color: #4CAF50;
+
+    /* HEADER moderno */
+    .site-header {
+      background: linear-gradient(90deg, #2e7d32, #4CAF50);
       color: white;
-      padding: 20px 10px;
-      text-align: center;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
     }
-    nav a {
+
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+
+    #main-nav a {
       color: white;
       text-decoration: none;
-      margin: 0 15px;
-      font-weight: bold;
+      font-weight: 600;
+      padding-bottom: 2px;
     }
-    nav a:hover {
+
+    #main-nav a:hover {
       text-decoration: underline;
     }
 
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .menu-toggle span {
+      margin-left: 4px;
+      font-size: 1.1rem;
+    }
+
+    /* MENU MOBILE */
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        margin: 0 auto;
+        max-width: 1180px;
+        flex-direction: column;
+        background-color: #2e7d32;
+        padding: 10px 16px 12px;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
+      }
+
+      #main-nav a {
+        padding: 6px 0;
+      }
+
+      body.nav-open #main-nav {
+        display: flex;
+      }
+
+      .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+
+    /* MAIN */
     main {
       max-width: 900px;
       margin: 30px auto;
@@ -40,12 +114,15 @@
       border-radius: 10px;
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
+
     h2, h3 {
       color: #2f6f34;
     }
+
     ul {
       margin-left: 20px;
     }
+
     footer {
       text-align: center;
       padding: 15px;
@@ -56,15 +133,23 @@
 </head>
 
 <body>
-  <header>
-    <h1>Chi siamo</h1>
-    <nav>
-      <a href="index.html">Home</a> |
-      <a href="blog.html">Blog</a> |
-      <a href="offerte.html">Offerte Amazon</a> |
-      <a href="categorie.html">Categorie</a> |
-      <a href="chi.html">Chi siamo</a>
-    </nav>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
+
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
+
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="offerte.html">Offerte Amazon</a>
+        <a href="categorie.html">Categorie</a>
+        <a href="chi.html">Chi siamo</a>
+      </nav>
+    </div>
   </header>
 
   <main>
@@ -97,24 +182,30 @@
     </p>
   </main>
 
+  <script>
+    function toggleMenu() {
+      document.body.classList.toggle('nav-open');
+    }
+  </script>
+
   <footer style="text-align:center; margin-top:40px; padding:20px; background:#eee; font-family:Arial; font-size:0.9rem;">
-  © 2025 Syncras.App — Tutti i diritti riservati<br>
+    © 2025 Syncras.App — Tutti i diritti riservati<br>
 
-  <div style="margin-top:8px;">
-    <a href="privacy.html">Privacy Policy</a> |
-    <a href="cookie.html">Cookie Policy</a> |
-    <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
-    <a href="note-legali.html">Note Legali</a>
-  </div>
+    <div style="margin-top:8px;">
+      <a href="privacy.html">Privacy Policy</a> |
+      <a href="cookie.html">Cookie Policy</a> |
+      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
+      <a href="note-legali.html">Note Legali</a>
+    </div>
 
-  <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
-    Syncras.App partecipa al Programma Affiliazione Amazon EU.  
-    Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
-    senza alcun costo aggiuntivo per l’utente.  
-    Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
-    è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
-  </p>
-</footer>
+    <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+      senza alcun costo aggiuntivo per l’utente.  
+      Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+      è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+    </p>
+  </footer>
 
 </body>
 </html>
