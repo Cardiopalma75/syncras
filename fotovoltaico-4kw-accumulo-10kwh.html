@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fotovoltaico 4 kW con accumulo 10 kWh: quanto costa davvero nel 2025? | Syncras</title>
+  <title>Fotovoltaico 4 kW con accumulo 10 kWh: quanto costa davvero nel 2025? | Syncras.App</title>
   <meta name="description" content="Quanto costa davvero un impianto fotovoltaico 4 kW con batteria da 10 kWh? Scopri prezzi, incentivi e ritorno economico “da amico”, con confronto ironico con il rendimento in banca.">
   <meta name="robots" content="index,follow">
 
@@ -17,29 +17,101 @@
   </script>
 
   <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --bg-page: #F7F7FB;
+      --text-main: #403E43;
+    }
+
     body {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f5f5f5;
-      color: #333;
+      background-color: var(--bg-page);
+      color: var(--text-main);
       line-height: 1.6;
     }
-    header {
-      background-color: #4CAF50;
+
+    /* HEADER VIOLA UNIFICATO */
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
       color: white;
-      padding: 20px 10px;
-      text-align: center;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
     }
-    nav a {
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+    #main-nav a {
       color: white;
       text-decoration: none;
-      margin: 0 15px;
-      font-weight: bold;
+      font-weight: 600;
+      padding-bottom: 2px;
     }
-    nav a:hover {
+    #main-nav a:hover {
       text-decoration: underline;
     }
+
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .menu-toggle span {
+      margin-left: 4px;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        margin: 0 auto;
+        max-width: 1180px;
+        flex-direction: column;
+        background-color: var(--violet-dark);
+        padding: 10px 16px 12px 16px;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
+      }
+      #main-nav a {
+        padding: 6px 0;
+      }
+      body.nav-open #main-nav {
+        display: flex;
+      }
+      .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+
     main {
       max-width: 900px;
       margin: 30px auto;
@@ -48,9 +120,11 @@
       border-radius: 10px;
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
+
     h1, h2, h3 {
-      color: #2f6f34;
+      color: var(--violet-dark);
     }
+
     table {
       width: 100%;
       border-collapse: collapse;
@@ -63,211 +137,268 @@
       padding: 8px 10px;
       text-align: left;
     }
+
     blockquote {
-      border-left: 4px solid #4CAF50;
+      border-left: 4px solid var(--violet-main);
       padding-left: 10px;
       margin-left: 0;
       color: #555;
       font-style: italic;
     }
+
+    .back-links {
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+    .back-links a {
+      color: var(--violet-dark);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .back-links a:hover {
+      text-decoration: underline;
+    }
+
+    .share-btn {
+      padding: 10px 18px;
+      margin-bottom: 20px;
+      background-color: var(--violet-main);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .share-btn:hover {
+      background-color: var(--violet-dark);
+    }
+
     footer {
       text-align: center;
-      padding: 15px;
-      background-color: #ddd;
+      padding: 20px;
+      background-color: #eee;
       margin-top: 40px;
+      font-family: Arial;
+      font-size: 0.9rem;
     }
   </style>
 </head>
 <body>
 
-<header>
-  <h1>Fotovoltaico 4 kW con accumulo 10 kWh</h1>
-  <nav>
-    <a href="index.html">Home</a> |
-    <a href="blog.html">Blog</a> |
-    <a href="chi.html">Chi siamo</a>
-  </nav>
-</header>
+  <!-- HEADER UNIFICATO -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
 
-<main>
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
 
-  <h2>Fotovoltaico 4 kW con accumulo 10 kWh: quanto costa davvero nel 2025?</h2>
-  <p><em>18 novembre 2025</em></p>
-<button onclick="navigator.share({
-    title: document.title,
-    text: 'Guarda questo articolo su Syncras:',
-    url: window.location.href
-}).catch(() => {
-    alert('Copia questo link per condividerlo:\n\n' + window.location.href);
-});"
-style="padding:10px 18px; margin-bottom:20px; background-color:#4CAF50; color:white; border:none; border-radius:8px; cursor:pointer; font-size:1rem;">
-  🔗 Condividi questo articolo
-</button>
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="offerte.html">Offerte Amazon</a>
+        <a href="categorie.html">Categorie</a>
+        <a href="chi.html">Chi siamo</a>
+      </nav>
+    </div>
+  </header>
 
-  <h2>Perché considerare un impianto fotovoltaico con accumulo</h2>
-  <p>
-    Amico mio, mettere pannelli sul tetto non è solo per sentirti “green” o per far vedere ai vicini che sei figo.
-    Significa risparmiare sulla bolletta, aumentare l’autonomia e, se lo dimensioni bene, far fruttare i tuoi soldi
-    meglio della banca (ne riparliamo tra poco).
-  </p>
+  <main>
+    <div class="back-links">
+      ← <a href="index.html">Torna alla Home</a> |
+      <a href="blog.html">Vai al Blog</a>
+    </div>
 
-  <p>
-    <strong>Tip da amico:</strong> se consumi molta energia di giorno e vuoi usarla anche di notte,
-    scegli un impianto con batteria. Certo, costa di più, ma dormi sonni tranquilli sapendo che il tuo
-    frigorifero non si spegne mai.
-  </p>
+    <h1>Fotovoltaico 4 kW con accumulo 10 kWh</h1>
 
-  <h2>Quanto costa un impianto 4 kW con accumulo 10 kWh</h2>
-  <p>Facciamo i conti senza giri di parole:</p>
+    <p><em>18 novembre 2025</em></p>
 
-  <table>
-    <tr>
-      <th>Componente</th>
-      <th>Costo medio stimato</th>
-    </tr>
-    <tr>
-      <td>Impianto 4 kW (pannelli + inverter + installazione)</td>
-      <td>8.000 € – 11.000 €</td>
-    </tr>
-    <tr>
-      <td>Batteria 10 kWh</td>
-      <td>4.500 € – 7.000 €</td>
-    </tr>
-    <tr>
-      <td><strong>Totale indicativo</strong></td>
-      <td><strong>13.000 € – 18.000 €</strong></td>
-    </tr>
-  </table>
+    <button
+      class="share-btn"
+      onclick="navigator.share({
+        title: document.title,
+        text: 'Guarda questo articolo su Syncras:',
+        url: window.location.href
+      }).catch(() => {
+        alert('Copia questo link per condividerlo:\n\n' + window.location.href);
+      });">
+      🔗 Condividi questo articolo
+    </button>
 
-  <p>
-    Sì, lo so, fa male al portafoglio. Ma aspetta, c’è un lato positivo.
-  </p>
+    <h2>Fotovoltaico 4 kW con accumulo 10 kWh: quanto costa davvero nel 2025?</h2>
 
-  <h2>Incentivi e agevolazioni 2025</h2>
-  <ul>
-    <li>Detrazione fiscale fino al 36–50%</li>
-    <li>Contributi regionali, fino al 40% della spesa per impianti e circa 1.130 €/kWh per batterie</li>
-    <li>Sconti su installazione se trovi aziende che fanno il “pacchetto chiavi in mano”</li>
-  </ul>
-  <p>
-    <strong>Tip da amico:</strong> controlla sempre incentivi e promozioni, altrimenti rischi di piangere sul tetto
-    invece che sorridere sulla bolletta.
-  </p>
+    <h2>Perché considerare un impianto fotovoltaico con accumulo</h2>
+    <p>
+      Amico mio, mettere pannelli sul tetto non è solo per sentirti “green” o per far vedere ai vicini che sei figo.
+      Significa risparmiare sulla bolletta, aumentare l’autonomia e, se lo dimensioni bene, far fruttare i tuoi soldi
+      meglio della banca (ne riparliamo tra poco).
+    </p>
 
-  <h2>Esempi di kit sul mercato</h2>
-  <ul>
-    <li>4 kW + batteria 10 kWh: ~13.000–15.000 € chiavi in mano</li>
-    <li>4 kW base senza batteria: ~8.000 €</li>
-    <li>Batteria extra 10 kWh: ~4.500–7.000 €</li>
-  </ul>
-  <p>
-    Kit “off-grid”? Costosi, ma se vuoi sentirti Elon Musk a casa tua, vai tranquillo.
-  </p>
+    <p>
+      <strong>Tip da amico:</strong> se consumi molta energia di giorno e vuoi usarla anche di notte,
+      scegli un impianto con batteria. Certo, costa di più, ma dormi sonni tranquilli sapendo che il tuo
+      frigorifero non si spegne mai.
+    </p>
 
-  <h2>Opportunità per chi abita in Abruzzo</h2>
-  <p>
-    Se sei in Abruzzo e vuoi stare sotto i 10.000 €, c’è un piccolo segreto:
-  </p>
-  <p>
-    Con <a href="https://www.geasunsystems.com/" target="_blank" rel="noopener noreferrer">Geasun Systems</a>
-    puoi trovare soluzioni convenienti per 4 kW + batteria 10 kWh. Sì, normalmente un impianto così fa tremare il
-    portafoglio, ma qui puoi fare un ottimo affare.
-  </p>
+    <h2>Quanto costa un impianto 4 kW con accumulo 10 kWh</h2>
+    <p>Facciamo i conti senza giri di parole:</p>
 
-  <h2>Fotovoltaico vs banca: facciamo i conti “da bar”</h2>
-  <p>Sediamoci e parliamo chiaro:</p>
+    <table>
+      <tr>
+        <th>Componente</th>
+        <th>Costo medio stimato</th>
+      </tr>
+      <tr>
+        <td>Impianto 4 kW (pannelli + inverter + installazione)</td>
+        <td>8.000 € – 11.000 €</td>
+      </tr>
+      <tr>
+        <td>Batteria 10 kWh</td>
+        <td>4.500 € – 7.000 €</td>
+      </tr>
+      <tr>
+        <td><strong>Totale indicativo</strong></td>
+        <td><strong>13.000 € – 18.000 €</strong></td>
+      </tr>
+    </table>
 
-  <p>
-    Se metti 10.000 € in banca oggi con un tasso medio di 2% annuo, guadagneresti solo 200 € all’anno.
-    Roba da non svegliarsi nemmeno per festeggiare. 🥱
-  </p>
+    <p>
+      Sì, lo so, fa male al portafoglio. Ma aspetta, c’è un lato positivo.
+    </p>
 
-  <p>Se li spendi sul tetto per un 4 kW con batteria 10 kWh:</p>
-  <ul>
-    <li>Ammortizzi circa il 90% delle bollette, cioè 1.200 × 0,9 = 1.080 €/anno</li>
-    <li>La metà della cifra spesa ti viene rimborsata dallo Stato in 10 anni, cioè 10.000 × 0,5 ÷ 10 = 500 €/anno</li>
-  </ul>
+    <h2>Incentivi e agevolazioni 2025</h2>
+    <ul>
+      <li>Detrazione fiscale fino al 36–50%</li>
+      <li>Contributi regionali, fino al 40% della spesa per impianti e circa 1.130 €/kWh per batterie</li>
+      <li>Sconti su installazione se trovi aziende che fanno il “pacchetto chiavi in mano”</li>
+    </ul>
+    <p>
+      <strong>Tip da amico:</strong> controlla sempre incentivi e promozioni, altrimenti rischi di piangere sul tetto
+      invece che sorridere sulla bolletta.
+    </p>
 
-  <p>Sommiamo i benefici:</p>
-  <ul>
-    <li>Risparmio bolletta + rimborso fiscale = 1.080 + 500 = 1.580 €/anno</li>
-    <li>Guadagno in banca = 200 €/anno</li>
-    <li>Differenza: 1.580 – 200 = 1.380 €/anno in più investendo sul tetto anziché in banca</li>
-  </ul>
+    <h2>Esempi di kit sul mercato</h2>
+    <ul>
+      <li>4 kW + batteria 10 kWh: ~13.000–15.000 € chiavi in mano</li>
+      <li>4 kW base senza batteria: ~8.000 €</li>
+      <li>Batteria extra 10 kWh: ~4.500–7.000 €</li>
+    </ul>
+    <p>
+      Kit “off-grid”? Costosi, ma se vuoi sentirti Elon Musk a casa tua, vai tranquillo.
+    </p>
 
-  <p>
-    Domanda ironica: vuoi guadagnare 200 € in banca o far lavorare i tuoi soldi sul tetto come veri professionisti del
-    risparmio? La risposta è chiara… il tetto vince a mani basse.
-  </p>
+    <h2>Opportunità per chi abita in Abruzzo</h2>
+    <p>
+      Se sei in Abruzzo e vuoi stare sotto i 10.000 €, c’è un piccolo segreto:
+    </p>
+    <p>
+      Con <a href="https://www.geasunsystems.com/" target="_blank" rel="noopener noreferrer">Geasun Systems</a>
+      puoi trovare soluzioni convenienti per 4 kW + batteria 10 kWh. Sì, normalmente un impianto così fa tremare il
+      portafoglio, ma qui puoi fare un ottimo affare.
+    </p>
 
-  <h2>Conviene installare adesso?</h2>
-  <p><strong>Pro:</strong></p>
-  <ul>
-    <li>Prezzi in calo rispetto a qualche anno fa</li>
-    <li>Risparmio in bolletta immediato e autonomia energetica</li>
-    <li>Incentivi ancora disponibili</li>
-  </ul>
+    <h2>Fotovoltaico vs banca: facciamo i conti “da bar”</h2>
+    <p>Sediamoci e parliamo chiaro:</p>
 
-  <p><strong>Contro:</strong></p>
-  <ul>
-    <li>Investimento iniziale medio-alto</li>
-    <li>Se consumi poco, il ritorno economico richiede più tempo</li>
-    <li>Batterie costose (ma ne vale la pena)</li>
-  </ul>
+    <p>
+      Se metti 10.000 € in banca oggi con un tasso medio di 2% annuo, guadagneresti solo 200 € all’anno.
+      Roba da non svegliarsi nemmeno per festeggiare. 🥱
+    </p>
 
-  <p>
-    <strong>Suggerimento da amico:</strong> fai preventivi reali, dimensiona l’impianto sui consumi veri e non su
-    “quanto mi piace la batteria rossa”.
-  </p>
+    <p>Se li spendi sul tetto per un 4 kW con batteria 10 kWh:</p>
+    <ul>
+      <li>Ammortizzi circa il 90% delle bollette, cioè 1.200 × 0,9 = 1.080 €/anno</li>
+      <li>La metà della cifra spesa ti viene rimborsata dallo Stato in 10 anni, cioè 10.000 × 0,5 ÷ 10 = 500 €/anno</li>
+    </ul>
 
-  <h2>Conclusione</h2>
-  <p>
-    Un impianto 4 kW + batteria 10 kWh oggi costa tra 13.000–18.000 €, ma con incentivi e promozioni la spesa netta
-    può scendere.
-  </p>
-  <p>
-    Se vuoi risparmiare e divertirti a vedere i tuoi soldi lavorare sul tetto, oggi è il momento giusto.
-  </p>
+    <p>Sommiamo i benefici:</p>
+    <ul>
+      <li>Risparmio bolletta + rimborso fiscale = 1.080 + 500 = 1.580 €/anno</li>
+      <li>Guadagno in banca = 200 €/anno</li>
+      <li>Differenza: 1.580 – 200 = 1.380 €/anno in più investendo sul tetto anziché in banca</li>
+    </ul>
 
-  <p>
-    <strong>Extra tip da amico:</strong> controlla marche, garanzie e offerte. E se sei in Abruzzo, non perdere
-    l’occasione con
-    <a href="https://www.geasunsystems.com/" target="_blank" rel="noopener noreferrer">Geasun Systems</a>:
-    un ottimo modo per stare sotto i 10.000 €, fare un vero affare e risparmiare 1.380 € all’anno in più
-    rispetto a lasciare i soldi in banca. 💸☀️
-  </p>
+    <p>
+      Domanda ironica: vuoi guadagnare 200 € in banca o far lavorare i tuoi soldi sul tetto come veri professionisti del
+      risparmio? La risposta è chiara… il tetto vince a mani basse.
+    </p>
 
-  <p style="font-size:0.85rem; color:#666; margin-top:40px;">
-    <strong>Nota legale:</strong> Le informazioni riportate in questo articolo hanno scopo informativo e rappresentano
-    opinioni personali basate su esperienze reali e stime indicative. Prezzi, incentivi e condizioni possono variare
-    nel tempo e in base alla zona. Syncras non fornisce consulenza tecnica, fiscale o finanziaria e non è responsabile
-    per decisioni prese esclusivamente sulla base di questi contenuti. Prima di procedere con acquisti o installazioni,
-    richiedi sempre preventivi ufficiali e verifica gli incentivi presso installatori qualificati ed enti competenti.
-    Eventuali riferimenti a marchi o aziende (come Geasun Systems) non costituiscono collaborazione commerciale
-    né garanzia diretta.
-  </p>
+    <h2>Conviene installare adesso?</h2>
+    <p><strong>Pro:</strong></p>
+    <ul>
+      <li>Prezzi in calo rispetto a qualche anno fa</li>
+      <li>Risparmio in bolletta immediato e autonomia energetica</li>
+      <li>Incentivi ancora disponibili</li>
+    </ul>
 
-</main>
+    <p><strong>Contro:</strong></p>
+    <ul>
+      <li>Investimento iniziale medio-alto</li>
+      <li>Se consumi poco, il ritorno economico richiede più tempo</li>
+      <li>Batterie costose (ma ne vale la pena)</li>
+    </ul>
 
-<footer style="text-align:center; margin-top:40px; padding:20px; background:#eee; font-family:Arial; font-size:0.9rem;">
-  © 2025 Syncras.App — Tutti i diritti riservati<br>
+    <p>
+      <strong>Suggerimento da amico:</strong> fai preventivi reali, dimensiona l’impianto sui consumi veri e non su
+      “quanto mi piace la batteria rossa”.
+    </p>
 
-  <div style="margin-top:8px;">
-    <a href="privacy.html">Privacy Policy</a> |
-    <a href="cookie.html">Cookie Policy</a> |
-    <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
-    <a href="note-legali.html">Note Legali</a>
-  </div>
+    <h2>Conclusione</h2>
+    <p>
+      Un impianto 4 kW + batteria 10 kWh oggi costa tra 13.000–18.000 €, ma con incentivi e promozioni la spesa netta
+      può scendere.
+    </p>
+    <p>
+      Se vuoi risparmiare e divertirti a vedere i tuoi soldi lavorare sul tetto, oggi è il momento giusto.
+    </p>
 
-  <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
-    Syncras.App partecipa al Programma Affiliazione Amazon EU.  
-    Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
-    senza alcun costo aggiuntivo per l’utente.  
-    Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
-    è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
-  </p>
-</footer>
+    <p>
+      <strong>Extra tip da amico:</strong> controlla marche, garanzie e offerte. E se sei in Abruzzo, non perdere
+      l’occasione con
+      <a href="https://www.geasunsystems.com/" target="_blank" rel="noopener noreferrer">Geasun Systems</a>:
+      un ottimo modo per stare sotto i 10.000 €, fare un vero affare e risparmiare 1.380 € all’anno in più
+      rispetto a lasciare i soldi in banca. 💸☀️
+    </p>
 
+    <p style="font-size:0.85rem; color:#666; margin-top:40px;">
+      <strong>Nota legale:</strong> Le informazioni riportate in questo articolo hanno scopo informativo e rappresentano
+      opinioni personali basate su esperienze reali e stime indicative. Prezzi, incentivi e condizioni possono variare
+      nel tempo e in base alla zona. Syncras non fornisce consulenza tecnica, fiscale o finanziaria e non è responsabile
+      per decisioni prese esclusivamente sulla base di questi contenuti. Prima di procedere con acquisti o installazioni,
+      richiedi sempre preventivi ufficiali e verifica gli incentivi presso installatori qualificati ed enti competenti.
+      Eventuali riferimenti a marchi o aziende (come Geasun Systems) non costituiscono collaborazione commerciale
+      né garanzia diretta.
+    </p>
+
+  </main>
+
+  <script>
+    function toggleMenu() {
+      document.body.classList.toggle('nav-open');
+    }
+  </script>
+
+  <footer>
+    © 2025 Syncras.App — Tutti i diritti riservati<br>
+
+    <div style="margin-top:8px;">
+      <a href="privacy.html">Privacy Policy</a> |
+      <a href="cookie.html">Cookie Policy</a> |
+      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
+      <a href="note-legali.html">Note Legali</a>
+    </div>
+
+    <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+      senza alcun costo aggiuntivo per l’utente.  
+      Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+      è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+    </p>
+  </footer>
 
 </body>
 </html>
+
