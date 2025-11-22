@@ -8,23 +8,28 @@
   <meta name="robots" content="index,follow">
 
   <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --bg-page: #F7F7FB;
+      --text-main: #403E43;
+    }
+
     body {
       font-family: 'Arial', sans-serif;
       margin: 0;
       padding: 0;
-      background-color: #f5f5f5;
-      color: #333;
+      background-color: var(--bg-page);
+      color: var(--text-main);
       line-height: 1.6;
     }
 
-    /* HEADER moderno come la home */
     .site-header {
-      background: linear-gradient(90deg, #2e7d32, #4CAF50);
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
       color: white;
       padding: 12px 14px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.15);
     }
-
     .header-inner {
       max-width: 1180px;
       margin: 0 auto;
@@ -33,30 +38,25 @@
       justify-content: space-between;
       gap: 16px;
     }
-
     .logo {
       font-size: 1.4rem;
       font-weight: bold;
       letter-spacing: 0.03em;
     }
-
     #main-nav {
       display: flex;
       gap: 18px;
       font-size: 0.95rem;
     }
-
     #main-nav a {
       color: white;
       text-decoration: none;
       font-weight: 600;
       padding-bottom: 2px;
     }
-
     #main-nav a:hover {
       text-decoration: underline;
     }
-
     .menu-toggle {
       display: none;
       background: rgba(255,255,255,0.12);
@@ -67,13 +67,11 @@
       font-size: 0.9rem;
       cursor: pointer;
     }
-
     .menu-toggle span {
       margin-left: 4px;
       font-size: 1.1rem;
     }
 
-    /* MENU MOBILE */
     @media (max-width: 768px) {
       #main-nav {
         display: none;
@@ -84,101 +82,66 @@
         margin: 0 auto;
         max-width: 1180px;
         flex-direction: column;
-        background-color: #2e7d32;
+        background-color: var(--violet-dark);
         padding: 10px 16px 12px 16px;
         border-radius: 0 0 8px 8px;
         box-shadow: 0 3px 6px rgba(0,0,0,0.25);
         z-index: 50;
       }
-
       #main-nav a {
         padding: 6px 0;
       }
-
       body.nav-open #main-nav {
         display: flex;
       }
-
       .menu-toggle {
         display: inline-flex;
         align-items: center;
       }
     }
 
-    /* MAIN / CONTENUTO */
     main {
       max-width: 900px;
       margin: 30px auto;
       padding: 20px;
-      background-color: white;
+      background-color: #ffffff;
       border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 6px rgba(0,0,0,0.08);
     }
 
     h2, h3 {
-      color: #2f6f34;
+      color: var(--violet-dark);
     }
 
-    .category-card {
-      background: #f6faf7;
-      padding: 20px;
-      border: 1px solid #d7e8dc;
-      border-radius: 10px;
-      margin-bottom: 20px;
-    }
-
-    .category-card h3 {
-      margin-top: 0;
-      margin-bottom: 10px;
-    }
-
-    .category-card a {
-      text-decoration: none;
-      color: #1d4ed8;
-    }
-
-    .category-card a:hover {
-      text-decoration: underline;
-    }
-
-    .category-card:hover {
-      background-color: #eef8f0;
-    }
-
-    /* Layout a due colonne per la riga "smartphone + box" */
+    /* Layout a due colonne per le righe con box */
     .category-row {
       display: flex;
       gap: 18px;
       align-items: flex-start;
       margin-bottom: 10px;
     }
-
     .category-left {
       flex: 3;
     }
-
     .category-right {
       flex: 2;
     }
 
-    /* Box "prima di un acquisto impulsivo" – versione soft */
     .category-tip {
-      background: #fffdf6;
+      background: #FFFDF6;
       border-radius: 10px;
-      border: 1px solid #ffd27f;
-      border-left: 4px solid #ff9800;
+      border: 1px solid #FFD27F;
+      border-left: 4px solid #F59E0B;
       padding: 10px 12px;
       font-size: 0.9rem;
       line-height: 1.45;
       box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
-
     .category-tip strong {
       display: block;
       margin-bottom: 4px;
     }
 
-    /* Responsive per telefono */
     @media (max-width: 900px) {
       .category-row {
         flex-direction: column;
@@ -188,17 +151,40 @@
       }
     }
 
+    .category-card {
+      background: #F6F4FF;
+      padding: 20px;
+      border: 1px solid #DDD7FF;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    .category-card h3 {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+    .category-card a {
+      text-decoration: none;
+      color: var(--violet-dark);
+    }
+    .category-card a:hover {
+      text-decoration: underline;
+    }
+    .category-card:hover {
+      background-color: #EFEAFF;
+    }
+
     footer {
       text-align: center;
-      padding: 15px;
-      background-color: #ddd;
-      margin-top: 40px;
+      padding: 20px;
+      background:#eee;
+      font-family:Arial;
+      font-size:0.9rem;
+      margin-top:40px;
     }
   </style>
 </head>
 
 <body>
-
   <header class="site-header">
     <div class="header-inner">
       <div class="logo">Syncras.App</div>
@@ -218,7 +204,6 @@
   </header>
 
   <main>
-
     <h2>Categorie SmartShop</h2>
     <p>
       Qui trovi tutte le categorie principali pensate per aiutarti a scegliere meglio:
@@ -231,7 +216,6 @@
       <h3>📱 Smartphone per fascia di prezzo</h3>
 
       <div class="category-row">
-        <!-- Sinistra: fasce di prezzo -->
         <div class="category-left">
           <p>Clicca sulla fascia che ti interessa:</p>
           <ul>
@@ -242,7 +226,6 @@
           </ul>
         </div>
 
-        <!-- Destra: box anti-acquisto impulsivo -->
         <div class="category-right">
           <div class="category-tip">
             <strong>🤚 Prima di un acquisto impulsivo…</strong>
@@ -261,7 +244,6 @@
       <h3>📺 Smart TV</h3>
 
       <div class="category-row">
-        <!-- SINISTRA: fasce di prezzo -->
         <div class="category-left">
           <p>Scegli la fascia di prezzo giusta.</p>
           <ul>
@@ -283,7 +265,6 @@
           </ul>
         </div>
 
-        <!-- DESTRA: box anti-compulsivo -->
         <div class="category-right">
           <div class="category-tip">
             <strong>🤚 Prima di prendere una TV al volo…</strong>
@@ -300,7 +281,6 @@
     <div id="elettrodomestici" class="category-card">
       <h3>🔍 Elettrodomestici</h3>
       <p>Frigoriferi, robot cucina, lavatrici, piccoli elettrodomestici e guida alla scelta.</p>
-      <!-- In futuro: link a elettrodomestici.html -->
     </div>
 
     <!-- ROBOT PULIZIA -->
@@ -335,16 +315,14 @@
     }
   </script>
 
-  <footer style="text-align:center; margin-top:40px; padding:20px; background:#eee; font-family:Arial; font-size:0.9rem;">
+  <footer>
     © 2025 Syncras.App — Tutti i diritti riservati<br>
-
     <div style="margin-top:8px;">
       <a href="privacy.html">Privacy Policy</a> |
       <a href="cookie.html">Cookie Policy</a> |
       <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
       <a href="note-legali.html">Note Legali</a>
     </div>
-
     <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
       Syncras.App partecipa al Programma Affiliazione Amazon EU.  
       Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
@@ -353,7 +331,6 @@
       è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
     </p>
   </footer>
-
 </body>
 </html>
 
