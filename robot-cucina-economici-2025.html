@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Robot da cucina economici sotto 150€ – guida ironica 2025 | Syncras</title>
-  <meta name="description" content="I migliori robot da cucina economici sotto 150€ del 2025, spiegati con ironia alla Checco Zalone. Consigli veri, modelli consigliati e link Amazon tracciati.">
+  <title>Robot da cucina economici sotto 150€ – guida ironica 2025 | Syncras.App</title>
+  <meta name="description" content="I migliori robot da cucina economici sotto 150€ del 2025, spiegati con ironia. Consigli veri, modelli consigliati e link Amazon affiliati.">
   <meta name="robots" content="index,follow">
 
   <!-- Google Analytics -->
@@ -17,104 +17,213 @@
   </script>
 
   <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --bg-page: #F7F7FB;
+      --text-main: #403E43;
+    }
+
     body {
       font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
+      background-color: var(--bg-page);
       margin: 0;
       padding: 0;
-      color: #333;
+      color: var(--text-main);
       line-height: 1.6;
     }
-    header {
-      background-color: #4CAF50;
+
+    /* HEADER MODERNO VIOLA */
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
       color: white;
-      padding: 20px 10px;
-      text-align: center;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
     }
-    nav a {
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+    #main-nav a {
       color: white;
       text-decoration: none;
-      margin: 0 15px;
-      font-weight: bold;
+      font-weight: 600;
     }
-    nav a:hover {
+    #main-nav a:hover {
       text-decoration: underline;
     }
+
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    .menu-toggle span {
+      margin-left: 4px;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0; right: 0; top: 56px;
+        background-color: var(--violet-dark);
+        padding: 10px 16px;
+        flex-direction: column;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
+      }
+      body.nav-open #main-nav {
+        display: flex;
+      }
+      .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+
+    /* CONTENUTO */
     main {
       max-width: 900px;
       margin: 30px auto;
       padding: 20px;
       background-color: white;
-      border-radius: 10px;
+      border-radius: 12px;
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
+
     h1, h2, h3 {
-      color: #2f6f34;
+      color: var(--violet-dark);
     }
+
     blockquote {
-      border-left: 4px solid #4CAF50;
+      border-left: 4px solid var(--violet-main);
       padding-left: 12px;
       color: #555;
       font-style: italic;
       margin-left: 0;
     }
+
     ul {
       margin-left: 20px;
     }
+
+    .share-btn {
+      padding: 10px 18px;
+      margin-bottom: 20px;
+      background-color: var(--violet-main);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .share-btn:hover {
+      background-color: var(--violet-dark);
+    }
+
     .amazon-link {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: bold;
       display: inline-block;
       margin: 10px 0;
-      color: #1a0dab;
+      color: var(--violet-dark);
+      text-decoration: none;
     }
+    .amazon-link:hover {
+      text-decoration: underline;
+    }
+
     table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 15px;
       margin-bottom: 15px;
+      font-size: 0.95rem;
     }
     table, th, td {
-      border: 1px solid #ccc;
+      border: 1px solid #d9d9e8;
       padding: 10px;
       text-align: left;
     }
     th {
-      background-color: #e8f5e9;
+      background-color: #ecebfb;
+      color: #322b80;
     }
+
     footer {
       text-align: center;
-      padding: 15px;
-      background-color: #ddd;
+      padding: 20px;
+      background-color: #eee;
       margin-top: 40px;
+      font-size: 0.9rem;
     }
   </style>
 </head>
 
 <body>
 
-<header>
-  <h1>Robot da cucina economici sotto 150€ – guida ironica 2025</h1>
-  <nav>
-    <a href="index.html">Home</a> |
-    <a href="blog.html">Blog</a> |
-    <a href="chi.html">Chi siamo</a>
-  </nav>
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo">Syncras.App</div>
+
+    <button class="menu-toggle" onclick="toggleMenu()">Menu <span>☰</span></button>
+
+    <nav id="main-nav">
+      <a href="index.html">Home</a>
+      <a href="blog.html">Blog</a>
+      <a href="offerte.html">Offerte Amazon</a>
+      <a href="categorie.html">Categorie</a>
+      <a href="chi.html">Chi siamo</a>
+    </nav>
+  </div>
 </header>
+
+<script>
+function toggleMenu() {
+  document.body.classList.toggle('nav-open');
+}
+</script>
 
 <main>
 
   <!-- Pulsante Condividi -->
-  <button onclick="navigator.share({
+  <button
+    class="share-btn"
+    onclick="navigator.share({
       title: document.title,
       text: 'Guarda questo articolo su Syncras:',
       url: window.location.href
     }).catch(() => {
       alert('Copia questo link per condividerlo:\n\n' + window.location.href);
-    });"
-    style="padding:10px 18px; margin-bottom:20px; background-color:#4CAF50; color:white; border:none; border-radius:8px; cursor:pointer; font-size:1rem;">
+    });">
     🔗 Condividi questo articolo
   </button>
+
+  <h1>Robot da cucina economici sotto 150€ – guida ironica 2025</h1>
 
   <h2>Robot da cucina da meno di 150€: la verità (quella che tua nonna non ti dice)</h2>
 
@@ -133,7 +242,6 @@
   </p>
 
   <ul>
-    
     <li>tritano, frullano, impastano,</li>
     <li>e ti salvano la cena anche quando rientri alle 20:00 distrutto.</li>
   </ul>
@@ -144,9 +252,9 @@
 
   <ul>
     <li><strong>Funzioni:</strong> se non trita almeno una cipolla senza piangere, scartalo.</li>
-    <li><strong>Capacità:</strong> per famiglie 1–1,5L. Se vivi da solo, basta che non sia una tazzina da caffè.</li>
-    <li><strong>Potenza:</strong> sotto i 500W è come spingere la Panda in salita.</li>
-    <li><strong>Pulizia:</strong> se non va in lavastoviglie, scappaaaa!</li>
+    <li><strong>Capacità:</strong> per famiglie 1–1,5 L. Se vivi da solo, basta che non sia una tazzina da caffè.</li>
+    <li><strong>Potenza:</strong> sotto i 500 W è come spingere la Panda in salita.</li>
+    <li><strong>Pulizia:</strong> se non va in lavastoviglie, scappa.</li>
   </ul>
 
   <hr>
@@ -242,28 +350,29 @@
 
   <p>
     I robot da cucina sotto 150€ oggi sono veri alleati.  
-    Ti fanno risparmiare tempo, fatica e soprattutto… inciampi culinari tragici.
+    Ti fanno risparmiare tempo, fatica e soprattutto… disastri culinari evitabili.
   </p>
 
   <blockquote>
     “E ricordati: se sbagli ricetta… la colpa è sempre del robot, mai tua.”
   </blockquote>
-<hr>
 
-<h2>Nota legale (importante)</h2>
-<p style="font-size:0.9rem; color:#555;">
-  Questo articolo ha scopo informativo e di intrattenimento.  
-  Prima di acquistare o utilizzare qualsiasi robot da cucina, verifica sempre le istruzioni del produttore.
-  L’autore non si assume responsabilità per impasti volati in cucina, biscotti diventati mattoni
-  o robot usati come frullatori industriali.  
-  <br><br>
-  Alcuni link presenti in questa pagina sono link affiliati Amazon: potrei ricevere una piccola
-  commissione senza nessun costo aggiuntivo per te.
-</p>
+  <hr>
+
+  <h2>Nota legale (importante)</h2>
+  <p style="font-size:0.9rem; color:#555;">
+    Questo articolo ha scopo informativo e di intrattenimento.  
+    Prima di acquistare o utilizzare qualsiasi robot da cucina, verifica sempre le istruzioni del produttore.
+    L’autore non si assume responsabilità per impasti volati in cucina, biscotti diventati mattoni
+    o robot usati come frullatori industriali.  
+    <br><br>
+    Alcuni link presenti in questa pagina sono link affiliati Amazon: potrei ricevere una piccola
+    commissione senza nessun costo aggiuntivo per te.
+  </p>
 
 </main>
 
-<footer style="text-align:center; margin-top:40px; padding:20px; background:#eee; font-family:Arial; font-size:0.9rem;">
+<footer>
   © 2025 Syncras.App — Tutti i diritti riservati<br>
 
   <div style="margin-top:8px;">
@@ -281,7 +390,6 @@
     è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
   </p>
 </footer>
-
 
 </body>
 </html>
