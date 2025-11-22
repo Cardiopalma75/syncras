@@ -16,49 +16,98 @@
       color: #333;
       line-height: 1.6;
     }
-    header {
-      background-color: #4CAF50;
+
+    /* HEADER */
+
+    .site-header {
+      background: linear-gradient(90deg, #2e7d32, #4CAF50);
       color: white;
-      padding: 20px 10px;
-      text-align: center;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
     }
-    nav a {
+
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+
+    #main-nav a {
       color: white;
       text-decoration: none;
-      margin: 0 15px;
-      font-weight: bold;
+      font-weight: 600;
+      padding-bottom: 2px;
     }
-    nav a:hover {
+
+    #main-nav a:hover {
       text-decoration: underline;
     }
 
-    /* Dropdown menu (se lo usi altrove, qui non dà fastidio) */
-    .dropdown {
-      display: inline-block;
-      position: relative;
-    }
-    .dropdown-content {
+    .menu-toggle {
       display: none;
-      position: absolute;
-      background-color: #4CAF50;
-      min-width: 220px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
       border-radius: 6px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-      z-index: 20;
-    }
-    .dropdown-content a {
       color: white;
-      padding: 10px;
-      text-decoration: none;
-      display: block;
-      font-weight: normal;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
     }
-    .dropdown-content a:hover {
-      background-color: #3e8e41;
+
+    .menu-toggle span {
+      margin-left: 4px;
+      font-size: 1.1rem;
     }
-    .dropdown:hover .dropdown-content {
-      display: block;
+
+    /* MENU MOBILE */
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        margin: 0 auto;
+        max-width: 1180px;
+        flex-direction: column;
+        background-color: #2e7d32;
+        padding: 10px 16px 12px 16px;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
+      }
+
+      #main-nav a {
+        padding: 6px 0;
+      }
+
+      body.nav-open #main-nav {
+        display: flex;
+      }
+
+      .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+      }
     }
+
+    /* MAIN LAYOUT */
 
     main {
       max-width: 1180px;
@@ -72,11 +121,13 @@
     h2, h3 {
       color: #2f6f34;
     }
+
     p {
       margin-bottom: 12px;
     }
 
     /* LAYOUT TIPO MAGAZINE: COLONNA CONTENUTI + SIDEBAR */
+
     .layout {
       display: flex;
       gap: 35px;
@@ -99,12 +150,12 @@
       height: fit-content;
     }
 
-    /* Su smartphone la sidebar va sotto e tutto torna a colonna singola */
     @media (max-width: 900px) {
       .layout {
         flex-direction: column;
         padding-right: 0;
       }
+
       .main-content,
       .sidebar {
         flex: 1 1 100%;
@@ -119,12 +170,18 @@
       padding-bottom: 10px;
     }
 
+    .hero-intro h2 {
+      margin-top: 0;
+      margin-bottom: 6px;
+    }
+
     .quick-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
       margin: 10px 0 20px 0;
     }
+
     .quick-actions a {
       flex: 1 1 220px;
       text-align: center;
@@ -135,12 +192,15 @@
       border-radius: 8px;
       font-weight: bold;
       font-size: 0.95rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.08);
     }
+
     .quick-actions a:hover {
       background: #3e8e41;
     }
 
     /* GRIGLIA ARTICOLI IN EVIDENZA (stile D-Day) */
+
     .highlight-grid {
       display: grid;
       grid-template-columns: 2fr 1fr;
@@ -205,7 +265,8 @@
       }
     }
 
-    /* LISTA ARTICOLI – ULTIME GUIDE (tipo elenco D-Day) */
+    /* SEZIONE ULTIME GUIDE */
+
     .latest-section {
       margin-top: 10px;
     }
@@ -215,6 +276,7 @@
       padding-left: 0;
       margin: 15px 0 0 0;
     }
+
     .post-card {
       background: #f6faf7;
       border-radius: 10px;
@@ -222,18 +284,22 @@
       padding: 12px 15px;
       margin-bottom: 10px;
     }
+
     .post-card h3 {
       margin: 0 0 4px 0;
     }
+
     .post-meta {
       font-size: 0.85rem;
       color: #777;
       margin-bottom: 4px;
     }
+
     .post-card a {
       text-decoration: none;
       color: inherit;
     }
+
     .post-card a:hover h3 {
       text-decoration: underline;
     }
@@ -294,8 +360,6 @@
       opacity: 0.8;
     }
 
-    /* VARIANTI SPECIFICHE */
-
     .syn-consiglio {
       border-left-color: #00897b;
       background-color: #f6fbfa;
@@ -331,7 +395,6 @@
       background-color: #fff6f2;
     }
 
-    /* Lista top 3 */
     .syn-top3-list {
       padding-left: 1rem;
       margin: 0.25rem 0 0.25rem 0;
@@ -341,7 +404,6 @@
       margin-bottom: 0.2rem;
     }
 
-    /* Link nei box */
     .syn-box a {
       text-decoration: none;
       font-weight: 600;
@@ -355,15 +417,22 @@
 </head>
 
 <body>
-  <header>
-    <h1>Syncras.App</h1>
-    <nav>
-      <a href="index.html">Home</a> |
-      <a href="blog.html">Blog</a> |
-      <a href="offerte.html">Offerte Amazon</a> |
-      <a href="categorie.html">Categorie</a> |
-      <a href="chi.html">Chi siamo</a>
-    </nav>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
+
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
+
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="offerte.html">Offerte Amazon</a>
+        <a href="categorie.html">Categorie</a>
+        <a href="chi.html">Chi siamo</a>
+      </nav>
+    </div>
   </header>
 
   <main>
@@ -579,6 +648,10 @@
   </main>
 
   <script>
+    function toggleMenu() {
+      document.body.classList.toggle('nav-open');
+    }
+
     function valutaMiniTest() {
       const domande = ['q1', 'q2', 'q3'];
       let si = 0;
@@ -631,5 +704,6 @@
 
 </body>
 </html>
+
 
 
