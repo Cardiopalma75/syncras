@@ -214,6 +214,51 @@
       background: var(--violet-dark);
     }
 
+    /* SEZIONE: Consigli veloci SmartShop */
+
+    .smartshop-tips {
+      max-width: 1100px;
+      margin: 0 auto 28px auto;
+      padding: 18px 18px 20px;
+      border-radius: 16px;
+      background: #f7f2ff;
+      border: 1px solid #ddd7ff;
+    }
+
+    .smartshop-tips h2 {
+      margin-top: 0;
+      margin-bottom: 6px;
+    }
+
+    .smartshop-tips .subtitle {
+      margin-bottom: 14px;
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    .tips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+    }
+
+    .tip-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 9px 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+      font-size: 0.9rem;
+      display: flex;
+      gap: 6px;
+      align-items: flex-start;
+    }
+
+    .tip-icon {
+      font-size: 1.2rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
     /* HIGHLIGHT GRID (stile magazine) */
 
     .highlight-grid {
@@ -405,6 +450,72 @@
       margin-top: 20px;
     }
 
+    /* SEZIONE: Top 10 scelte Syncras */
+
+    .top10-section {
+      max-width: 1100px;
+      margin: 28px auto 22px auto;
+      padding: 18px 18px 20px;
+      border-radius: 16px;
+      background: #ffffff;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+      border: 1px solid #eeeafc;
+    }
+
+    .top10-section h2 {
+      margin-top: 0;
+      margin-bottom: 6px;
+    }
+
+    .top10-section .subtitle {
+      margin-bottom: 14px;
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    .top10-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .top10-item {
+      display: flex;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .top10-item:last-child {
+      border-bottom: none;
+    }
+
+    .top10-rank {
+      font-weight: bold;
+      font-size: 1.15rem;
+      min-width: 40px;
+      color: var(--violet-dark);
+    }
+
+    .top10-content h3 {
+      margin: 0 0 4px 0;
+    }
+
+    .top10-content p {
+      margin: 0 0 4px 0;
+      font-size: 0.95rem;
+    }
+
+    .top10-content a {
+      font-size: 0.9rem;
+      text-decoration: underline;
+      color: var(--violet-dark);
+    }
+
+    .top10-content a:hover {
+      text-decoration: none;
+    }
+
     /* BOX SYNCRAS (sidebar e box vari) */
 
     .syn-box {
@@ -508,14 +619,68 @@
       margin-bottom: 8px;
     }
 
-    footer {
-      text-align: center;
-      padding: 20px;
-      background:#eee;
-      font-family:Arial;
-      font-size:0.9rem;
-      margin-top:40px;
+    /* FOOTER POTENZIATO */
+
+    .syncras-footer {
+      margin-top: 40px;
+      padding: 2.5rem 1.5rem 1.5rem;
+      background: #2b1840;
+      color: #f3eaff;
+      font-family: Arial, sans-serif;
+      font-size: 0.9rem;
     }
+
+    .syncras-footer a {
+      color: #f3eaff;
+      text-decoration: none;
+    }
+
+    .syncras-footer a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-inner {
+      max-width: 1180px;
+      margin: 0 auto 1.5rem auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+    }
+
+    .footer-column h4 {
+      margin-top: 0;
+      margin-bottom: 0.7rem;
+      font-size: 1rem;
+    }
+
+    .footer-column p {
+      margin: 0;
+      font-size: 0.85rem;
+    }
+
+    .footer-column ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-column li {
+      margin-bottom: 0.4rem;
+      font-size: 0.85rem;
+    }
+
+    .footer-bottom {
+      max-width: 1180px;
+      margin: 0 auto;
+      text-align: center;
+      font-size: 0.8rem;
+      opacity: 0.9;
+    }
+
+    .footer-bottom p {
+      margin: 4px 0;
+    }
+
   </style>
 </head>
 
@@ -558,6 +723,35 @@
           <a href="smart-tv-guida-ironica.html">📺 Guida ironica alle Smart TV</a>
           <a href="offerte.html">🔥 Vai alle offerte Amazon</a>
         </div>
+
+        <!-- SEZIONE: Consigli veloci SmartShop -->
+        <section class="smartshop-tips">
+          <h2>Consigli veloci SmartShop</h2>
+          <p class="subtitle">5 pillole per evitare acquisti senza senso (ma sempre con un sorriso).</p>
+
+          <div class="tips-grid">
+            <div class="tip-card">
+              <span class="tip-icon">🧠</span>
+              <p>Prima di comprare, respira. Il 78% degli acquisti online è puro riflesso del dito, non del cervello.</p>
+            </div>
+            <div class="tip-card">
+              <span class="tip-icon">⏳</span>
+              <p>Offerta “solo per oggi”? Se è davvero furba, torna anche domani. Se sparisce, forse era solo marketing.</p>
+            </div>
+            <div class="tip-card">
+              <span class="tip-icon">🔍</span>
+              <p>Recensioni tutte perfette? O è il prodotto del secolo… o hanno scritto mezzo parentado del venditore.</p>
+            </div>
+            <div class="tip-card">
+              <span class="tip-icon">💶</span>
+              <p>Prezzo basso ≠ affare. Affare = qualcosa che funziona bene per almeno 3 anni senza farti bestemmiare.</p>
+            </div>
+            <div class="tip-card">
+              <span class="tip-icon">♻️</span>
+              <p>Il vero risparmio non è lo sconto: è evitare di comprare due volte la stessa cosa “perché la prima era scarsa”.</p>
+            </div>
+          </div>
+        </section>
 
         <!-- ARTICOLI IN EVIDENZA -->
         <section class="highlight-grid">
@@ -673,6 +867,54 @@
               </a>
             </li>
           </ul>
+        </section>
+
+        <!-- SEZIONE: Top 10 scelte Syncras -->
+        <section class="top10-section">
+          <h2>Top 10 scelte Syncras</h2>
+          <p class="subtitle">Prodotti selezionati con il Metodo SmartShop: niente fronzoli, solo cose sensate e testate nella vita reale.</p>
+
+          <ol class="top10-list">
+            <li class="top10-item">
+              <div class="top10-rank">#1</div>
+              <div class="top10-content">
+                <h3>Redmi 13C – Lo smartphone “onesto”</h3>
+                <p>Perfetto per chi vuole spendere poco ma non vuole imprecare ogni volta che apre WhatsApp o la fotocamera.</p>
+                <a href="https://amzn.to/49x2vV2" target="_blank" rel="nofollow">Vedi Redmi 13C su Amazon</a>
+              </div>
+            </li>
+
+            <li class="top10-item">
+              <div class="top10-rank">#2</div>
+              <div class="top10-content">
+                <h3>Galaxy A15 – Per chi vuole “il marchio giusto”</h3>
+                <p>Samsung entry-level: niente fuochi d’artificio, ma fa il suo mestiere senza sceneggiate e con interfaccia familiare.</p>
+                <a href="https://amzn.to/44lr0AU" target="_blank" rel="nofollow">Vedi Galaxy A15 su Amazon</a>
+              </div>
+            </li>
+
+            <li class="top10-item">
+              <div class="top10-rank">#3</div>
+              <div class="top10-content">
+                <h3>POCO M6 – L’amico smanettone</h3>
+                <p>Per chi vuole un po’ più di potenza e batteria, ma senza buttarsi sui top di gamma da 800€.</p>
+                <a href="https://amzn.to/3McOfH8" target="_blank" rel="nofollow">Vedi POCO M6 su Amazon</a>
+              </div>
+            </li>
+
+            <li class="top10-item">
+              <div class="top10-rank">#4</div>
+              <div class="top10-content">
+                <h3>Robot aspirapolvere – Pavimento sempre fatto</h3>
+                <p>Per chi preferisce trovare il pavimento pulito invece di litigare con l’aspirapolvere tradizionale.</p>
+                <a href="https://www.amazon.it/s?k=robot+aspirapolvere+offerta&tag=mywebcorner4-21" target="_blank" rel="nofollow">
+                  Guarda i robot in offerta su Amazon
+                </a>
+              </div>
+            </li>
+
+            <!-- Puoi aggiungere qui altri prodotti fino a #10, copiando la struttura dei <li> -->
+          </ol>
         </section>
 
         <!-- BOX: Sapevi che? -->
@@ -800,17 +1042,15 @@
           </div>
           <ol class="syn-top3-list">
             <li><strong>Redmi 13C</strong><br>
-👉 <a href="https://amzn.to/49x2vV2" target="_blank" rel="nofollow">Vedi Redmi 13C su Amazon</a>
-</li>
-
-<li><strong>Galaxy A15</strong><br>
-👉 <a href="https://amzn.to/44lr0AU" target="_blank" rel="nofollow">Vedi Galaxy A15 su Amazon</a>
-</li>
-
-<li><strong>POCO M6</strong><br>
-👉 <a href="https://amzn.to/3McOfH8" target="_blank" rel="nofollow">Vedi POCO M6 su Amazon</a>
-</li>
-
+              👉 <a href="https://amzn.to/49x2vV2" target="_blank" rel="nofollow">Vedi Redmi 13C su Amazon</a>
+            </li>
+            <li><strong>Galaxy A15</strong><br>
+              👉 <a href="https://amzn.to/44lr0AU" target="_blank" rel="nofollow">Vedi Galaxy A15 su Amazon</a>
+            </li>
+            <li><strong>POCO M6</strong><br>
+              👉 <a href="https://amzn.to/3McOfH8" target="_blank" rel="nofollow">Vedi POCO M6 su Amazon</a>
+            </li>
+          </ol>
         </div>
 
         <div class="syn-box syn-best">
@@ -887,28 +1127,62 @@
         risultato.style.color = '#16A34A';
       }
     }
+
+    // Anno automatico nel footer
+    document.addEventListener('DOMContentLoaded', function() {
+      var span = document.getElementById('year-span');
+      if (span) {
+        span.textContent = new Date().getFullYear();
+      }
+    });
   </script>
 
-  <footer>
-    © 2025 Syncras.App — Tutti i diritti riservati<br>
+  <!-- FOOTER POTENZIATO -->
+  <footer class="syncras-footer">
+    <div class="footer-inner">
+      <div class="footer-column">
+        <h4>Syncras.App</h4>
+        <p>
+          Metodo SmartShop per fare acquisti con la testa (e con un po’ di ironia).<br>
+          Niente tecnicismi inutili, solo esperienze reali e numeri spiegati semplice.
+        </p>
+      </div>
 
-    <div style="margin-top:8px;">
-      <a href="privacy.html">Privacy Policy</a> |
-      <a href="cookie.html">Cookie Policy</a> |
-      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
-      <a href="note-legali.html">Note Legali</a>
+      <div class="footer-column">
+        <h4>Link utili</h4>
+        <ul>
+          <li><a href="blog.html">Tutte le guide SmartShop</a></li>
+          <li><a href="offerte.html">Offerte Amazon selezionate</a></li>
+          <li><a href="smartphone-sotto-200-euro-2025.html">Smartphone 2025 sotto 200€</a></li>
+          <li><a href="resistenza-termosifone-fotovoltaico.html">La stanza più fredda della casa</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h4>Legale & Privacy</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="cookie.html">Cookie Policy</a></li>
+          <li><a href="disclaimer-amazon.html">Disclaimer Amazon</a></li>
+          <li><a href="note-legali.html">Note Legali</a></li>
+        </ul>
+      </div>
     </div>
 
-    <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
-      Syncras.App partecipa al Programma Affiliazione Amazon EU.  
-      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
-      senza alcun costo aggiuntivo per l’utente.  
-      Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
-      è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
-    </p>
+    <div class="footer-bottom">
+      <p>© <span id="year-span"></span> Syncras.App — Tutti i diritti riservati.</p>
+      <p>
+        Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+        Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+        senza alcun costo aggiuntivo per l’utente.
+      </p>
+      <p>
+        Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+        è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+      </p>
+    </div>
   </footer>
 </body>
 </html>
-
 
 
