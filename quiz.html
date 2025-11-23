@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Test SmartShop | Syncras.App</title>
-  <meta name="description" content="Test seri per capire se il tuo prossimo acquisto ha davvero senso: verifica impulso, budget e scopri che smartphone fa per te.">
+  <meta name="description" content="Test seri per capire se il tuo prossimo acquisto ha davvero senso: verifica impulso, budget e scopri che smartphone e TV fanno per te.">
   <meta name="robots" content="index,follow">
 
   <!-- Google Analytics -->
@@ -359,12 +359,12 @@
       </button>
 
       <nav id="main-nav">
-         <a href="index.html">Home</a>
+        <a href="index.html">Home</a>
         <a href="blog.html">Blog</a>
         <a href="offerte.html">Offerte Amazon</a>
         <a href="categorie.html">Categorie</a>
         <a href="curiosita.html">Curiosità &amp; Misteri</a>
-        <a href="quiz.html">Test SmartShop</a>
+        <a href="quiz.html" class="active">Test SmartShop</a>
         <a href="chi.html">Chi siamo</a>
       </nav>
     </div>
@@ -465,6 +465,63 @@
           <button type="button" class="test-btn" onclick="valutaTestSmartphone()">Calcola fascia consigliata</button>
           <p id="risultato-smartphone" class="test-result"></p>
         </section>
+
+        <!-- TEST 3: TV -->
+        <section class="test-card" id="test-tv">
+          <div class="test-section-label">Test specifico</div>
+          <h2>Test TV – Smart TV economica o TV buona?</h2>
+          <p class="test-subtitle">
+            In base a budget, stanza e uso ti suggeriamo se ha più senso una TV economica, una TV di qualità o una TV abbinata a un box esterno.
+          </p>
+
+          <ol class="test-questions">
+            <li>
+              Qual è il budget realistico per la nuova TV?<br>
+              <label><input type="radio" name="t_q1" value="1">&lt; 300€</label>
+              <label><input type="radio" name="t_q1" value="2">300–500€</label>
+              <label><input type="radio" name="t_q1" value="3">&gt; 500€</label>
+            </li>
+            <li>
+              A che distanza guardi la TV, più o meno?<br>
+              <label><input type="radio" name="t_q2" value="1">Meno di 2 metri</label>
+              <label><input type="radio" name="t_q2" value="2">Tra 2 e 3 metri</label>
+              <label><input type="radio" name="t_q2" value="3">Oltre 3 metri</label>
+            </li>
+            <li>
+              La stanza è di solito:<br>
+              <label><input type="radio" name="t_q3" value="1">Molto luminosa</label>
+              <label><input type="radio" name="t_q3" value="2">Mista, a volte luminosa, a volte no</label>
+              <label><input type="radio" name="t_q3" value="3">Per lo più con luce bassa / sera</label>
+            </li>
+            <li>
+              Uso principale della TV:<br>
+              <label><input type="radio" name="t_q4" value="1">Canali tradizionali</label><br>
+              <label><input type="radio" name="t_q4" value="2">Film e serie in streaming</label><br>
+              <label><input type="radio" name="t_q4" value="3">Sport veloci / gaming</label>
+            </li>
+            <li>
+              Quanto ti dà fastidio un’immagine non perfetta (troppo chiara, troppo scura, colori strani)?<br>
+              <label><input type="radio" name="t_q5" value="1">Poco</label>
+              <label><input type="radio" name="t_q5" value="2">Un po’</label>
+              <label><input type="radio" name="t_q5" value="3">Molto</label>
+            </li>
+            <li>
+              Quanto ti dà fastidio un software lento quando apri le app della TV?<br>
+              <label><input type="radio" name="t_q6" value="1">Poco, posso aspettare</label>
+              <label><input type="radio" name="t_q6" value="2">Mi infastidisce</label>
+              <label><input type="radio" name="t_q6" value="3">Mi fa venire i nervi</label>
+            </li>
+            <li>
+              Quanto vorresti che ti durasse la TV?<br>
+              <label><input type="radio" name="t_q7" value="1">2–3 anni</label>
+              <label><input type="radio" name="t_q7" value="2">4–5 anni</label>
+              <label><input type="radio" name="t_q7" value="3">Più di 5 anni</label>
+            </li>
+          </ol>
+
+          <button type="button" class="test-btn" onclick="valutaTestTv()">Calcola tipo di TV consigliato</button>
+          <p id="risultato-tv" class="test-result"></p>
+        </section>
       </div>
 
       <!-- COLONNA INFO -->
@@ -488,6 +545,7 @@
             <li>Se il risultato è <strong>verde</strong>, vai alle nostre guide:</li>
             <li><a href="smartphone-sotto-200-euro-2025.html">Smartphone sotto 200€</a></li>
             <li><a href="smart-tv-guida-ironica.html">Guida Smart TV 2025</a></li>
+            <li><a href="smart-tv-economica-o-tv-buona-con-box.html">Smart TV economica o TV buona?</a></li>
             <li><a href="fotovoltaico-4kw-accumulo-10kwh.html">Fotovoltaico: numeri reali</a></li>
           </ul>
         </div>
@@ -599,10 +657,10 @@
         return;
       }
 
-      // Caso speciale: budget basso + uso leggero
       const budget = document.querySelector('input[name="s_q1"]:checked').value;
       const uso = document.querySelector('input[name="s_q2"]:checked').value;
 
+      // Caso speciale: budget basso + uso leggero
       if (budget === '1' && uso === '1') {
         el.textContent = 'Per il tuo uso uno smartphone sotto i 200€ è più che sufficiente. Prima di cambiare, valuta se quello che hai ti limita davvero.';
         el.classList.add('result-good');
@@ -621,6 +679,75 @@
       }
     }
 
+    function valutaTestTv() {
+      const domande = ['t_q1', 't_q2', 't_q3', 't_q4', 't_q5', 't_q6', 't_q7'];
+      let risposte = 0;
+
+      domande.forEach(function(nome) {
+        const sel = document.querySelector('input[name="' + nome + '"]:checked');
+        if (sel) {
+          risposte++;
+        }
+      });
+
+      const el = document.getElementById('risultato-tv');
+      el.className = 'test-result';
+
+      if (risposte < domande.length) {
+        el.textContent = 'Rispondi a tutte le domande per vedere il tipo di TV consigliato.';
+        return;
+      }
+
+      const budget = parseInt(document.querySelector('input[name="t_q1"]:checked').value, 10);
+      const distanza = parseInt(document.querySelector('input[name="t_q2"]:checked').value, 10);
+      const luce = parseInt(document.querySelector('input[name="t_q3"]:checked').value, 10);
+      const uso = parseInt(document.querySelector('input[name="t_q4"]:checked').value, 10);
+      const sensibilita = parseInt(document.querySelector('input[name="t_q5"]:checked').value, 10);
+      const velocita = parseInt(document.querySelector('input[name="t_q6"]:checked').value, 10);
+      const durata = parseInt(document.querySelector('input[name="t_q7"]:checked').value, 10);
+
+      // Logica semplice ma ragionata
+
+      // Caso 1: budget basso, uso semplice, poca sensibilità -> Smart TV economica
+      if (budget === 1 && uso === 1 && sensibilita <= 2 && velocita <= 2) {
+        el.textContent = 'Per il tuo uso va benissimo una Smart TV economica: canali tradizionali e qualche app base. Non ha senso spendere molto di più.';
+        el.classList.add('result-good');
+        return;
+      }
+
+      // Calcolo ricerca qualità generale
+      let punteggioQualita = 0;
+      if (uso >= 2) punteggioQualita++;
+      if (sensibilita >= 2) punteggioQualita++;
+      if (luce === 3) punteggioQualita++;
+      if (durata >= 2) punteggioQualita++;
+
+      // Caso 2: vuole qualità ma poca pretesa di software
+      if (punteggioQualita >= 2 && velocita <= 2 && budget >= 2) {
+        el.textContent = 'Per le tue esigenze è consigliata una TV di qualità senza per forza aggiungere un box esterno. Pannello migliore, buona resa con film e serie, software già sufficiente.';
+        el.classList.add('result-good');
+        return;
+      }
+
+      // Caso 3: vuole qualità alta + durata + software fluido
+      if (punteggioQualita >= 3 && velocita === 3 && durata >= 2 && budget >= 2) {
+        el.textContent = 'Per come userai la TV, la scelta più intelligente è una TV di buona qualità abbinata a un box multimediale esterno. Così hai immagini migliori oggi e una parte “smart” aggiornata anche tra qualche anno.';
+        el.classList.add('result-medium');
+        return;
+      }
+
+      // Caso 4: budget medio ma esigenze contrastanti
+      if (budget === 2 && punteggioQualita >= 2) {
+        el.textContent = 'Con il tuo budget e le tue esigenze puoi puntare a una TV di buona qualità, iniziando senza box esterno. In futuro, se il software dovesse rallentare, potrai aggiungere un box per allungarne la vita.';
+        el.classList.add('result-medium');
+        return;
+      }
+
+      // Fallback: soluzione prudente
+      el.textContent = 'In base alle tue risposte, puoi orientarti su una TV di fascia media: non la più economica, ma nemmeno il top assoluto. Se in futuro la parte smart dovesse diventare lenta, potrai sempre aggiungere un box esterno.';
+      el.classList.add('result-medium');
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
       var span = document.getElementById('year-span');
       if (span) {
@@ -630,3 +757,4 @@
   </script>
 </body>
 </html>
+
