@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Curiosità | Syncras.App</title>
-  <meta name="description" content="Curiosità tecnologiche, piccole stranezze della vita quotidiana e cose che non ti hanno mai spiegato bene, raccontate in stile Syncras.">
+  <title>Curiosità | Piccoli misteri della vita quotidiana spiegati semplice | Syncras.App</title>
+  <meta name="description" content="Curiosità sulla tecnologia, sui consumi in casa e sulla vita digitale spiegate in modo semplice e ironico. Niente complotti, solo buon senso e qualche risata.">
   <meta name="robots" content="index,follow">
 
-  <!-- Google tag (gtag.js) -->
+  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-59D9XRYKF3"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -20,7 +20,6 @@
     :root {
       --violet-main: #6C5CE7;
       --violet-dark: #4B3ACB;
-      --violet-soft: #A29BFE;
       --bg-page: #F7F7FB;
       --text-main: #403E43;
     }
@@ -114,17 +113,16 @@
     }
 
     main {
-      max-width: 900px;
+      max-width: 980px;
       margin: 30px auto;
       padding: 20px;
-      background-color: #ffffff;
+      background-color: white;
       border-radius: 10px;
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
 
     h1, h2, h3 {
       color: var(--violet-dark);
-      margin-top: 0;
     }
 
     .back-links {
@@ -140,19 +138,39 @@
       text-decoration: underline;
     }
 
-    .intro-box {
-      background: #f6f4ff;
-      border-radius: 10px;
-      padding: 14px 16px;
-      border: 1px solid #ddd7ff;
+    .page-intro {
       margin-bottom: 20px;
+      font-size: 0.98rem;
     }
 
-    .curiosita-grid {
+    .page-intro-quote {
+      background: #EEF2FF;
+      border-left: 4px solid var(--violet-main);
+      padding: 10px 12px;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      margin-bottom: 22px;
+    }
+
+    .section-block {
+      margin-top: 26px;
+    }
+
+    .section-block h2 {
+      margin-bottom: 6px;
+    }
+
+    .section-sub {
+      font-size: 0.9rem;
+      color: #4b5563;
+      margin-top: 0;
+      margin-bottom: 14px;
+    }
+
+    .card-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 16px;
-      margin-top: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 14px;
     }
 
     .curio-card {
@@ -160,38 +178,51 @@
       border-radius: 10px;
       padding: 12px 14px;
       border: 1px solid #E5E7EB;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      font-size: 0.94rem;
     }
 
     .curio-tag {
       font-size: 0.75rem;
-      text-transform: uppercase;
       letter-spacing: 0.06em;
-      color: #6B7280;
+      text-transform: uppercase;
+      color: #6b7280;
       margin-bottom: 4px;
     }
 
     .curio-card h3 {
-      margin: 0 0 6px 0;
-      font-size: 1.05rem;
+      margin-top: 0;
+      margin-bottom: 6px;
+      font-size: 1.02rem;
     }
 
     .curio-card p {
-      margin: 0;
-      font-size: 0.9rem;
+      margin: 0 0 6px 0;
     }
 
-    .curio-card a {
+    .curio-note {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    .soon-label {
       display: inline-block;
-      margin-top: 6px;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       font-weight: 600;
       color: var(--violet-dark);
-      text-decoration: none;
+      background: #EDE9FE;
+      padding: 2px 8px;
+      border-radius: 999px;
+      margin-top: 4px;
     }
 
-    .curio-card a:hover {
-      text-decoration: underline;
+    .mini-tip {
+      margin-top: 22px;
+      font-size: 0.9rem;
+      background: #F4F4FF;
+      border-radius: 8px;
+      padding: 10px 12px;
+      border: 1px solid #E0E7FF;
     }
 
     footer {
@@ -206,6 +237,7 @@
 </head>
 <body>
 
+  <!-- HEADER -->
   <header class="site-header">
     <div class="header-inner">
       <div class="logo">Syncras.App</div>
@@ -220,8 +252,8 @@
         <a href="offerte.html">Offerte Amazon</a>
         <a href="categorie.html">Categorie</a>
         <a href="curiosita.html">Curiosità &amp; Misteri</a>
-        <a href="quiz.html">Test SmartShop</a>
         <a href="chi.html">Chi siamo</a>
+        <a href="quiz-smartshop.html">Test SmartShop</a>
       </nav>
     </div>
   </header>
@@ -233,55 +265,178 @@
     </div>
 
     <h1>Curiosità</h1>
-    <p><em>Piccole cose che non ti ha mai spiegato nessuno (ma che ti fanno dire: “Ah, ecco perché!”).</em></p>
+    <p class="page-intro">
+      Qui finiscono le domande che ci facciamo tutti, ma che nessuno si prende mai la briga di spiegare con calma.
+      Niente formule, niente paroloni: solo <strong>buon senso, esempi pratici e un po’ di ironia</strong>.
+    </p>
 
-    <div class="intro-box">
-      <p>
-        Qui finiscono tutte le <strong>curiosità</strong> che non sapevi di voler sapere: tecnologia quotidiana,
-        energia, casa, vita digitale… spiegate in modo semplice, un po’ ironico, senza far finta di essere
-        un trattato universitario.
-      </p>
-      <p style="margin-top:6px;">
-        Presto troverai articoli tipo:
-      </p>
-      <ul style="margin-top:4px; padding-left:18px; font-size:0.9rem;">
-        <li>Perché il Wi-Fi prende meglio in certi angoli assurdi di casa</li>
-        <li>Quanto consuma davvero un caricabatterie lasciato sempre attaccato</li>
-        <li>Perché la batteria del telefono sembra crollare più veloce sotto il 20%</li>
-      </ul>
+    <div class="page-intro-quote">
+      💭 <strong>Filosofia di questa pagina:</strong> se una cosa ti fa dire “ma com’è possibile?”, probabilmente merita
+      di stare qui. Se invece ti fa solo arrabbiare, merita anche una battuta.
     </div>
 
-    <h2>Prossime curiosità in arrivo</h2>
+    <!-- SEZIONE 1: TECNOLOGIA QUOTIDIANA -->
+    <section class="section-block">
+      <h2>Tecnologia quotidiana senza panico</h2>
+      <p class="section-sub">
+        Smartphone che si scaricano, Wi-Fi che sparisce proprio quando serve, dispositivi che sembrano avere vita
+        propria: non è magia nera, di solito è solo elettronica annoiata.
+      </p>
 
-    <div class="curiosita-grid">
-      <article class="curio-card">
-        <div class="curio-tag">Tecnologia quotidiana</div>
-        <h3>Perché il Wi-Fi va forte in bagno e lento in salotto?</h3>
-        <p>Non è magia nera: sono muri, porte, router messi “a caso” e un po’ di fisica che nessuno ci ha mai spiegato bene.</p>
-        <a href="#">Articolo in arrivo</a>
-      </article>
+      <div class="card-grid">
+        <article class="curio-card">
+          <div class="curio-tag">Curiosità #1</div>
+          <h3>Perché il Wi-Fi prende solo in certi angoli di casa?</h3>
+          <p>
+            In salotto vola, in cucina va così così, in camera da letto muore. Non è che il router ce l’ha con te,
+            è che muri, porte, mobili e soprattutto scale gli fanno da palestra a ostacoli.
+          </p>
+          <p class="curio-note">
+            Approfondimento in arrivo: guida pratica per capire dove mettere il router senza tirare dadi.
+          </p>
+          <span class="soon-label">Articolo in arrivo</span>
+        </article>
 
-      <article class="curio-card">
-        <div class="curio-tag">Energia & casa</div>
-        <h3>La stanza più fredda di casa: colpa del termosifone o della casa?</h3>
-        <p>Tra ponti termici, dispersioni e abitudini strane, spesso il problema non è dove credi.</p>
-        <a href="#">Articolo in arrivo</a>
-      </article>
+        <article class="curio-card">
+          <div class="curio-tag">Curiosità #2</div>
+          <h3>Perché la batteria scende dal 40% al 15% in tre minuti?</h3>
+          <p>
+            Quando ti serve dura meno di un caffè al bar, quando sei sul divano sembra infinita. In realtà è
+            il software che cerca di indovinare i consumi… e a volte sbaglia come noi con le porzioni di pasta.
+          </p>
+          <p class="curio-note">
+            Più avanti vedremo qualche trucco semplice per farla durare di più, senza diventare schiavi del “risparmio energetico”.
+          </p>
+          <span class="soon-label">Articolo in arrivo</span>
+        </article>
 
-      <article class="curio-card">
-        <div class="curio-tag">Smartphone</div>
-        <h3>Perché il telefono “muore” sempre al momento sbagliato</h3>
-        <p>Non è sfortuna: è il modo in cui gestiamo ricariche, app in background e impostazioni nascoste.</p>
-        <a href="#">Articolo in arrivo</a>
-      </article>
+        <article class="curio-card">
+          <div class="curio-tag">Curiosità #3</div>
+          <h3>Perché alcuni dispositivi “sentono” i comandi e altri no?</h3>
+          <p>
+            A volte parli e sembra che ti ignorino, altre volte capiscono frasi che non erano nemmeno per loro.
+            Non è telepatia, è solo microfono, rumore di fondo e tanta, tanta confusione digitale.
+          </p>
+          <p class="curio-note">
+            In un prossimo articolo vedremo come parlare ai dispositivi senza urlare come allo stadio.
+          </p>
+          <span class="soon-label">Articolo in arrivo</span>
+        </article>
+      </div>
+    </section>
 
-      <article class="curio-card">
-        <div class="curio-tag">Vita digitale</div>
-        <h3>Perché ricevi pubblicità di cose che hai solo pensato (o quasi)</h3>
-        <p>Algoritmi, cookie, tracciamento e tante coincidenze molto meno mistiche di quanto sembri.</p>
-        <a href="#">Articolo in arrivo</a>
-      </article>
+    <!-- SEZIONE 2: CASA & CONSUMI -->
+    <section class="section-block">
+      <h2>Casa, consumi e piccoli misteri della bolletta</h2>
+      <p class="section-sub">
+        La luce che resta accesa, il forno che “tanto sono dieci minuti”, gli stand-by che non considera mai nessuno:
+        ogni mese fanno squadra contro il tuo portafoglio.
+      </p>
+
+      <div class="card-grid">
+        <article class="curio-card">
+          <div class="curio-tag">Curiosità #4</div>
+          <h3>Dove finiscono quei 200 kWh che non ti spieghi?</h3>
+          <p>
+            Non li hai usati tu, li hanno usati gli altri: frigorifero sempre acceso, lucine rosse in salotto,
+            caricabatterie dimenticati nella presa. La casa continua a vivere anche quando tu sei al lavoro.
+          </p>
+          <p class="curio-note">
+            Stiamo preparando una guida “da bar” per capire da dove arrivano i consumi nascosti senza fare ingegneria.
+          </p>
+          <span class="soon-label">Articolo in arrivo</span>
+        </article>
+
+        <article class="curio-card">
+          <div class="curio-tag">Curiosità #5</div>
+          <h3>Perché una stanza è sempre più fredda delle altre?</h3>
+          <p>
+            Non è sfortuna, è fisica spiccia: esposizione sbagliata, serramenti stanchi, termosifoni messi dove
+            non possono lavorare bene. La casa non è contro di te, ha solo un carattere particolare.
+          </p>
+          <p class="curio-note">
+            Più avanti vedremo piccoli interventi “alla portata di umani normali”, senza rifare la casa da capo.
+          </p>
+          <span class="soon-label">Articolo in arrivo</span>
+        </article>
+
+        <article class="curio-card">
+          <div class="curio-tag">Curiosità #6</div>
+          <h3>Perché il contatore scatta sempre “proprio adesso”?</h3>
+          <p>
+            Succede quando forno, lavatrice e climatizzatore decidono di fare festa tutti insieme.
+            Non è sfortuna: è la legge non scritta del “tutto acceso quando hai fretta”.
+          </p>
+          <p class="curio-note">
+            In un prossimo articolo vedremo come organizzare i carichi senza vivere con l’ansia del “non accendere niente”.
+          </p>
+          <span class="soon-label">Articolo in arrivo</span>
+        </article>
+      </div>
+    </section>
+
+    <!-- SEZIONE 3: VITA DIGITALE -->
+    <section class="section-block">
+      <h2>Vita digitale: come funziona davvero (senza complotti)</h2>
+      <p class="section-sub">
+        Annunci che sembrano leggerti nel pensiero, video tutti uguali, suggerimenti fin troppo precisi:
+        dietro non c’è magia, ma algoritmi che fanno quello che possono con i dati che hanno.
+      </p>
+
+      <div class="card-grid">
+        <article class="curio-card">
+          <div class="curio-tag">Curiosità #7</div>
+          <h3>Perché sembra che il telefono “sappia già” cosa vuoi?</h3>
+          <p>
+            Non ti legge nel cervello: ti studia dalle ricerche, dai clic e da quello che guardi più spesso.
+            In pratica, ricevi pubblicità su misura… basate sul tuo comportamento, non sui tuoi pensieri segreti.
+          </p>
+          <p class="curio-note">
+            Prossimamente: come difendersi un minimo senza andare a vivere in una grotta.
+          </p>
+          <span class="soon-label">Articolo in arrivo</span>
+        </article>
+
+        <article class="curio-card">
+          <div class="curio-tag">Curiosità #8</div>
+          <h3>Perché vedi sempre gli stessi contenuti?</h3>
+          <p>
+            Se metti like a certi video, la piattaforma pensa che tu voglia solo quelli. È come un bar che ti vede
+            prendere sempre il caffè e smette di chiederti se vuoi qualcos’altro.
+          </p>
+          <p class="curio-note">
+            Più avanti ti farò vedere come “resettare” un po’ il feed per scoprire cose nuove senza cambiare mondo.
+          </p>
+          <span class="soon-label">Articolo in arrivo</span>
+        </article>
+
+        <article class="curio-card">
+          <div class="curio-tag">Curiosità #9</div>
+          <h3>Perché quando cancelli un’app continua a comparire ovunque?</h3>
+          <p>
+            Perché non è offesa, è solo memorizzata nei tuoi dati. Finché non pulisci bene cronologia, account e
+            autorizzazioni, lei e le sue amiche digitali ti saluteranno ancora per un po’.
+          </p>
+          <p class="curio-note">
+            Guida pratica in arrivo: come fare un minimo di “pulizie di primavera” digitali senza rompere tutto.
+          </p>
+          <span class="soon-label">Articolo in arrivo</span>
+        </article>
+      </div>
+    </section>
+
+    <div class="mini-tip">
+      💡 <strong>Tip da amico:</strong> se leggendo queste curiosità ti riconosci,
+      sappi che non sei “scarso con la tecnologia”: è la tecnologia che spesso è spiegata male.
+      Qui proviamo a rimettere le cose in fila, con calma e con qualche sorriso.
     </div>
+
+    <p style="font-size:0.85rem; color:#666; margin-top:30px;">
+      <strong>Nota:</strong> i contenuti di questa pagina hanno scopo informativo e divulgativo.
+      Non sostituiscono il parere di tecnici o professionisti qualificati, soprattutto quando si parla
+      di impianti elettrici, sicurezza o modifiche strutturali in casa. Prima di “smanettare” su impianti
+      o dispositivi collegati alla rete elettrica, chiedi sempre a chi lo fa di mestiere.
+    </p>
 
   </main>
 
@@ -307,13 +462,6 @@
       senza alcun costo aggiuntivo per l’utente.  
       Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
       è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
-    </p>
-
-    <p style="font-size:0.75rem; opacity:0.75; max-width:800px; margin:12px auto 0;">
-      <strong>Disclaimer:</strong> I contenuti del sito hanno scopo informativo e rappresentano opinioni personali ed esempi generici. 
-      Syncras.App non fornisce consulenza tecnica, fiscale o commerciale e non garantisce l’accuratezza di prezzi, dati o informazioni. 
-      Le decisioni di acquisto restano sempre responsabilità dell’utente. 
-      Eventuali riferimenti a marchi o aziende sono puramente informativi e non costituiscono collaborazioni né offerte commerciali.
     </p>
   </footer>
 
