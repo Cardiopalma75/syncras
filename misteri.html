@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Misteri | Syncras.App</title>
-  <meta name="description" content="Misteri moderni, coincidenze strane e zone grigie tra tecnologia, vita reale ed energia. Niente complotti: solo domande giuste e un po’ di ironia.">
+  <title>Misteri | Cose che sembrano strane ma hanno una spiegazione | Syncras.App</title>
+  <meta name="description" content="Misteri moderni su tecnologia, energia e vita quotidiana spiegati senza complotti e con molta ironia. Quando succede qualcosa di strano, qui proviamo a capirci qualcosa.">
   <meta name="robots" content="index,follow">
 
-  <!-- Google tag (gtag.js) -->
+  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-59D9XRYKF3"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -20,7 +20,6 @@
     :root {
       --violet-main: #6C5CE7;
       --violet-dark: #4B3ACB;
-      --violet-soft: #A29BFE;
       --bg-page: #F7F7FB;
       --text-main: #403E43;
     }
@@ -34,7 +33,6 @@
       line-height: 1.6;
     }
 
-    /* HEADER VIOLA UNIFICATO */
     .site-header {
       background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
       color: white;
@@ -114,17 +112,16 @@
     }
 
     main {
-      max-width: 900px;
+      max-width: 980px;
       margin: 30px auto;
       padding: 20px;
-      background-color: #ffffff;
+      background-color: white;
       border-radius: 10px;
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
 
     h1, h2, h3 {
       color: var(--violet-dark);
-      margin-top: 0;
     }
 
     .back-links {
@@ -140,65 +137,91 @@
       text-decoration: underline;
     }
 
-    .intro-box {
-      background: #0f172a;
-      color: #E5E7EB;
-      border-radius: 10px;
-      padding: 14px 16px;
-      border: 1px solid #1f2937;
+    .page-intro {
       margin-bottom: 20px;
+      font-size: 0.98rem;
     }
 
-    .intro-box h2 {
-      color: #E5E7EB;
-      margin-top: 0;
+    .page-intro-quote {
+      background: #FEF3C7;
+      border-left: 4px solid #F59E0B;
+      padding: 10px 12px;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      margin-bottom: 22px;
+    }
+
+    .section-block {
+      margin-top: 26px;
+    }
+
+    .section-block h2 {
       margin-bottom: 6px;
     }
 
-    .misteri-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 16px;
-      margin-top: 10px;
+    .section-sub {
+      font-size: 0.9rem;
+      color: #4b5563;
+      margin-top: 0;
+      margin-bottom: 14px;
     }
 
-    .mistero-card {
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 14px;
+    }
+
+    .mistery-card {
       background: #F9FAFB;
       border-radius: 10px;
       padding: 12px 14px;
       border: 1px solid #E5E7EB;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      font-size: 0.94rem;
     }
 
-    .mistero-tag {
+    .mistery-tag {
       font-size: 0.75rem;
-      text-transform: uppercase;
       letter-spacing: 0.06em;
-      color: #6B7280;
+      text-transform: uppercase;
+      color: #6b7280;
       margin-bottom: 4px;
     }
 
-    .mistero-card h3 {
+    .mistery-card h3 {
+      margin-top: 0;
+      margin-bottom: 6px;
+      font-size: 1.02rem;
+    }
+
+    .mistery-card p {
       margin: 0 0 6px 0;
-      font-size: 1.05rem;
     }
 
-    .mistero-card p {
-      margin: 0;
-      font-size: 0.9rem;
+    .mistery-note {
+      font-size: 0.8rem;
+      color: #6b7280;
     }
 
-    .mistero-card a {
+    .soon-label {
       display: inline-block;
-      margin-top: 6px;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       font-weight: 600;
       color: var(--violet-dark);
-      text-decoration: none;
+      background: #EDE9FE;
+      padding: 2px 8px;
+      border-radius: 999px;
+      margin-top: 4px;
     }
 
-    .mistero-card a:hover {
-      text-decoration: underline;
+    .mini-tip {
+      margin-top: 22px;
+      font-size: 0.9rem;
+      background: #FEF9C3;
+      border-radius: 8px;
+      padding: 10px 12px;
+      border: 1px solid #FBBF24;
     }
 
     footer {
@@ -226,7 +249,9 @@
         <a href="blog.html">Blog</a>
         <a href="offerte.html">Offerte Amazon</a>
         <a href="categorie.html">Categorie</a>
+        <a href="curiosita.html">Curiosità &amp; Misteri</a>
         <a href="chi.html">Chi siamo</a>
+        <a href="quiz-smartshop.html">Test SmartShop</a>
       </nav>
     </div>
   </header>
@@ -234,55 +259,188 @@
   <main>
     <div class="back-links">
       ← <a href="index.html">Torna alla Home</a> |
-      <a href="blog.html">Vai al Blog</a>
+      <a href="curiosita.html">Vai alla pagina Curiosità</a>
     </div>
 
     <h1>Misteri</h1>
-    <p><em>Non parliamo di fantasmi, ma di quelle cose che tutti notano e nessuno spiega bene.</em></p>
+    <p class="page-intro">
+      Qui non parliamo di fantasmi né di luci nel cielo. Parliamo dei <strong>misteri moderni</strong>:
+      quelli che ti fanno dire “ma ti sembra normale?” guardando la bolletta, il telefono o il traffico
+      proprio quando sei in ritardo.
+    </p>
 
-    <div class="intro-box">
-      <h2>Misteri moderni (spiegati senza fare i complottisti)</h2>
-      <p>
-        Questa sezione è dedicata ai <strong>misteri leggeri</strong>: tecnologia che si comporta in modo strano,
-        coincidenze assurde, fenomeni quotidiani che sembrano magia ma dietro hanno logica, fisica e un po’ di psicologia.
-      </p>
-      <p style="margin-top:6px; font-size:0.9rem;">
-        Niente teorie strane, niente allarmismi: solo domande giuste, spiegazioni semplici e qualche sorriso.
-      </p>
+    <div class="page-intro-quote">
+      🕵️ <strong>Regola della casa:</strong> niente complotti, niente panico.
+      Se qualcosa sembra strano, prima di dare la colpa all’universo proviamo a capire se non sia solo
+      organizzazione, tecnologia o pura statistica che si diverte.
     </div>
 
-    <h2>Misteri in lavorazione</h2>
+    <!-- SEZIONE 1: TECNOLOGIA TROPPO "INTELLIGENTE" -->
+    <section class="section-block">
+      <h2>Tecnologia che sembra leggerti nel pensiero</h2>
+      <p class="section-sub">
+        Dispositivi che si attivano da soli, suggerimenti fin troppo precisi, notifiche puntuali come
+        il vicino curioso: a volte sembra tutto studiato per farti impressionare.
+      </p>
 
-    <div class="misteri-grid">
-      <article class="mistero-card">
-        <div class="mistero-tag">Tecnologia</div>
-        <h3>Alexa, Google & co: ci ascoltano davvero sempre?</h3>
-        <p>La sensazione è che sappiano più cose di noi del dovuto. Ma cosa fanno davvero i microfoni “sempre in ascolto”?</p>
-        <a href="#">Articolo in arrivo</a>
-      </article>
+      <div class="card-grid">
+        <article class="mistery-card">
+          <div class="mistery-tag">Mistero #1</div>
+          <h3>Perché certi dispositivi rispondono anche se non li hai chiamati?</h3>
+          <p>
+            Sei in salotto, parli con qualcuno, e all’improvviso una voce digitale dice di non aver capito.
+            No, non è posseduta: ha solo sentito una parola che assomigliava al comando di attivazione.
+          </p>
+          <p class="mistery-note">
+            In un prossimo articolo vedremo come limitare le “interruzioni spontanee” senza vivere nel silenzio assoluto.
+          </p>
+          <span class="soon-label">Articolo in arrivo</span>
+        </article>
 
-      <article class="mistero-card">
-        <div class="mistero-tag">Energia & casa</div>
-        <h3>Perché alcune bollette “schizzano” all’improvviso?</h3>
-        <p>È sempre colpa del fornitore? O ci sono dinamiche di consumo e tariffe che nessuno ci spiega bene?</p>
-        <a href="#">Articolo in arrivo</a>
-      </article>
+        <article class="mistery-card">
+          <div class="mistery-tag">Mistero #2</div>
+          <h3>Perché ti arrivano annunci sulle cose di cui hai appena parlato?</h3>
+          <p>
+            Sembra che qualcuno ascolti le conversazioni, in realtà di solito è più semplice:
+            ricerche, siti visitati, posizione, abitudini d’acquisto… tutto contribuisce a creare il tuo “profilo”.
+          </p>
+          <p class="mistery-note">
+            Analizzeremo come funzionano questi profili pubblicitari e cosa puoi fare per limitarli un minimo.
+          </p>
+          <span class="soon-label">Articolo in arrivo</span>
+        </article>
 
-      <article class="mistero-card">
-        <div class="mistero-tag">Vita digitale</div>
-        <h3>Pubblicità di cose che hai solo pensato (o quasi)</h3>
-        <p>Tra cookie, tracciamento, cronologia e abitudini, molte “coincidenze” sono meno mistiche di quanto sembrino.</p>
-        <a href="#">Articolo in arrivo</a>
-      </article>
+        <article class="mistery-card">
+          <div class="mistery-tag">Mistero #3</div>
+          <h3>Perché certi video sembrano fatti apposta per te?</h3>
+          <p>
+            Non è magia, è algoritmo: se resti a guardare certi contenuti più di altri, il sistema pensa che ti piacciano.
+            E ti riempie la bacheca di copie. Come un amico che ha capito male la battuta e continua a ripeterla.
+          </p>
+          <p class="mistery-note">
+            Più avanti vedremo come “raddrizzare” i suggerimenti quando iniziano a diventare tutti uguali.
+          </p>
+          <span class="soon-label">Articolo in arrivo</span>
+        </article>
+      </div>
+    </section>
 
-      <article class="mistero-card">
-        <div class="mistero-tag">Percezioni & mente</div>
-        <h3>Perché certi giorni “fila tutto storto”?</h3>
-        <p>È sfortuna pura o c’entrano attenzione selettiva, stress e come il cervello registra gli eventi?</p>
-        <a href="#">Articolo in arrivo</a>
-      </article>
+    <!-- SEZIONE 2: ENERGIA & BOLLETTE -->
+    <section class="section-block">
+      <h2>Misteri di energia, bollette e contatori</h2>
+      <p class="section-sub">
+        Perché la bolletta è più alta del previsto? Perché il contatore scatta proprio quando cucini?
+        Perché di notte qualcosa consuma comunque? Non è complotto, è spesso cattiva organizzazione.
+      </p>
+
+      <div class="card-grid">
+        <article class="mistery-card">
+          <div class="mistery-tag">Mistero #4</div>
+          <h3>Perché la bolletta sale anche se “non hai acceso quasi niente”?</h3>
+          <p>
+            Frigorifero, caldaia, pompe, stand-by, caricabatterie… tutti fanno finta di niente,
+            ma intanto divorano kWh giorno dopo giorno. È la versione energetica delle briciole che
+            diventano pagnotta.
+          </p>
+          <p class="mistery-note">
+            Stiamo preparando un articolo con esempi numerici reali per capire chi consuma cosa, senza formula shock.
+          </p>
+          <span class="soon-label">Articolo in arrivo</span>
+        </article>
+
+        <article class="mistery-card">
+          <div class="mistery-tag">Mistero #5</div>
+          <h3>Perché il contatore salta sempre “quando hai ospiti”?</h3>
+          <p>
+            Non è sfortuna, è statistica: più persone, più luci, più forno, più phon, più tutto.
+            Il contatore non ce l’ha con tua suocera, è solo che quel giorno va al massimo.
+          </p>
+          <p class="mistery-note">
+            Più avanti vedremo come distribuire i carichi in modo furbo, senza trasformare la casa in una centrale.
+          </p>
+          <span class="soon-label">Articolo in arrivo</span>
+        </article>
+
+        <article class="mistery-card">
+          <div class="mistery-tag">Mistero #6</div>
+          <h3>Perché alcuni apparecchi consumano anche da spenti?</h3>
+          <p>
+            La lucina che resta accesa non è solo decorazione: spesso indica che dentro c’è ancora
+            qualcosa in funzione. È il famoso “consumo di stand-by”, quello che nessuno considera ma
+            alla fine dell’anno presenta il conto.
+          </p>
+          <p class="mistery-note">
+            In un prossimo articolo parleremo di quanto incide davvero e quando conviene usare prese con interruttore.
+          </p>
+          <span class="soon-label">Articolo in arrivo</span>
+        </article>
+      </div>
+    </section>
+
+    <!-- SEZIONE 3: MISTERI DELLA VITA QUOTIDIANA -->
+    <section class="section-block">
+      <h2>Misteri spicci della vita di tutti i giorni</h2>
+      <p class="section-sub">
+        Non tutto si spiega con la fisica: alcune cose sono proprio leggi non scritte dell’universo domestico.
+        Qui ci ridiamo sopra, ma ogni tanto una soluzione pratica salta fuori.
+      </p>
+
+      <div class="card-grid">
+        <article class="mistery-card">
+          <div class="mistery-tag">Mistero #7</div>
+          <h3>Perché il corriere suona sempre quando sei in bagno?</h3>
+          <p>
+            È una delle grandi leggi dell’universo: se hai aspettato tutto il giorno, suonerà
+            esattamente nei trenta secondi in cui non puoi aprire. Non c’è spiegazione scientifica,
+            ma una cosa è certa: non è mai quando sei tranquillo sul divano.
+          </p>
+          <p class="mistery-note">
+            Articolo semi-serio in arrivo su tempi di consegna, notifiche e come organizzarsi per non impazzire.
+          </p>
+          <span class="soon-label">Articolo in arrivo</span>
+        </article>
+
+        <article class="mistery-card">
+          <div class="mistery-tag">Mistero #8</div>
+          <h3>Perché il telecomando sparisce solo quando c’è qualcosa di interessante?</h3>
+          <p>
+            In giornate normali è sempre lì. Quando finalmente trasmettono qualcosa che ti piace,
+            si volatilizza tra cuscini, plaid e dimensioni parallele. Alla fine è solo disordine,
+            ma intanto fai più movimento che in palestra.
+          </p>
+          <p class="mistery-note">
+            In futuro vedremo qualche trucco pratico per “organizzare il caos” del salotto.
+          </p>
+          <span class="soon-label">Articolo in arrivo</span>
+        </article>
+
+        <article class="mistery-card">
+          <div class="mistery-tag">Mistero #9</div>
+          <h3>Perché la pasta è sempre troppa o troppo poca?</h3>
+          <p>
+            Fai a occhio “come sempre” e ti ritrovi o con mezzo chilo di avanzo o con la guerra
+            per l’ultimo rigatone. È il mistero culinario per eccellenza: la matematica dice una cosa,
+            la pentola un’altra.
+          </p>
+          <p class="mistery-note">
+            Articolo leggero in arrivo: piccole dritte per evitare la sagra degli avanzi (o la carestia).
+          </p>
+          <span class="soon-label">Articolo in arrivo</span>
+        </article>
+      </div>
+    </section>
+
+    <div class="mini-tip">
+      🧩 <strong>Morale della storia:</strong> nella maggior parte dei casi non c’è nessun “grande piano segreto”.
+      Ci sono abitudini, algoritmi, abitudini sbagliate e un po’ di caso. Se riusciamo a ridere dei misteri
+      quotidiani, abbiamo già fatto metà del lavoro per viverli meglio.
     </div>
 
+    <p style="font-size:0.85rem; color:#666; margin-top:30px;">
+      <strong>Nota:</strong> i contenuti di questa pagina sono volutamente ironici e semplificati.
+      Non sostituiscono analisi tecniche, legali o professionali. Per problemi seri legati a sicurezza,
+      impianti o contratti, rivolgiti sempre a professionisti qualificati e a fonti ufficiali.
+    </p>
   </main>
 
   <script>
@@ -308,14 +466,8 @@
       Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
       è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
     </p>
-
-    <p style="font-size:0.75rem; opacity:0.75; max-width:800px; margin:12px auto 0;">
-      <strong>Disclaimer:</strong> I contenuti del sito hanno scopo informativo e rappresentano opinioni personali ed esempi generici. 
-      Syncras.App non fornisce consulenza tecnica, fiscale o commerciale e non garantisce l’accuratezza di prezzi, dati o informazioni. 
-      Le decisioni di acquisto restano sempre responsabilità dell’utente. 
-      Eventuali riferimenti a marchi o aziende sono puramente informativi e non costituiscono collaborazioni né offerte commerciali.
-    </p>
   </footer>
 
 </body>
 </html>
+
