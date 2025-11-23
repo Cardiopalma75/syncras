@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Curiosità | Syncras.App</title>
+  <meta name="description" content="Curiosità tecnologiche, piccole stranezze della vita quotidiana e cose che non ti hanno mai spiegato bene, raccontate in stile Syncras.">
+  <meta name="robots" content="index,follow">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-59D9XRYKF3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-59D9XRYKF3');
+  </script>
+
+  <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --violet-soft: #A29BFE;
+      --bg-page: #F7F7FB;
+      --text-main: #403E43;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    /* HEADER VIOLA UNIFICATO */
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color: white;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+    #main-nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding-bottom: 2px;
+    }
+    #main-nav a:hover {
+      text-decoration: underline;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .menu-toggle span {
+      margin-left: 4px;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        margin: 0 auto;
+        max-width: 1180px;
+        flex-direction: column;
+        background-color: var(--violet-dark);
+        padding: 10px 16px 12px 16px;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
+      }
+      #main-nav a {
+        padding: 6px 0;
+      }
+      body.nav-open #main-nav {
+        display: flex;
+      }
+      .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+
+    main {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    h1, h2, h3 {
+      color: var(--violet-dark);
+      margin-top: 0;
+    }
+
+    .back-links {
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+    .back-links a {
+      color: var(--violet-dark);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .back-links a:hover {
+      text-decoration: underline;
+    }
+
+    .intro-box {
+      background: #f6f4ff;
+      border-radius: 10px;
+      padding: 14px 16px;
+      border: 1px solid #ddd7ff;
+      margin-bottom: 20px;
+    }
+
+    .curiosita-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-top: 10px;
+    }
+
+    .curio-card {
+      background: #F9FAFB;
+      border-radius: 10px;
+      padding: 12px 14px;
+      border: 1px solid #E5E7EB;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    .curio-tag {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #6B7280;
+      margin-bottom: 4px;
+    }
+
+    .curio-card h3 {
+      margin: 0 0 6px 0;
+      font-size: 1.05rem;
+    }
+
+    .curio-card p {
+      margin: 0;
+      font-size: 0.9rem;
+    }
+
+    .curio-card a {
+      display: inline-block;
+      margin-top: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--violet-dark);
+      text-decoration: none;
+    }
+
+    .curio-card a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #eee;
+      margin-top: 40px;
+      font-family: Arial;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
+
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
+
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="offerte.html">Offerte Amazon</a>
+        <a href="categorie.html">Categorie</a>
+        <a href="chi.html">Chi siamo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="back-links">
+      ← <a href="index.html">Torna alla Home</a> |
+      <a href="blog.html">Vai al Blog</a>
+    </div>
+
+    <h1>Curiosità</h1>
+    <p><em>Piccole cose che non ti ha mai spiegato nessuno (ma che ti fanno dire: “Ah, ecco perché!”).</em></p>
+
+    <div class="intro-box">
+      <p>
+        Qui finiscono tutte le <strong>curiosità</strong> che non sapevi di voler sapere: tecnologia quotidiana,
+        energia, casa, vita digitale… spiegate in modo semplice, un po’ ironico, senza far finta di essere
+        un trattato universitario.
+      </p>
+      <p style="margin-top:6px;">
+        Presto troverai articoli tipo:
+      </p>
+      <ul style="margin-top:4px; padding-left:18px; font-size:0.9rem;">
+        <li>Perché il Wi-Fi prende meglio in certi angoli assurdi di casa</li>
+        <li>Quanto consuma davvero un caricabatterie lasciato sempre attaccato</li>
+        <li>Perché la batteria del telefono sembra crollare più veloce sotto il 20%</li>
+      </ul>
+    </div>
+
+    <h2>Prossime curiosità in arrivo</h2>
+
+    <div class="curiosita-grid">
+      <article class="curio-card">
+        <div class="curio-tag">Tecnologia quotidiana</div>
+        <h3>Perché il Wi-Fi va forte in bagno e lento in salotto?</h3>
+        <p>Non è magia nera: sono muri, porte, router messi “a caso” e un po’ di fisica che nessuno ci ha mai spiegato bene.</p>
+        <a href="#">Articolo in arrivo</a>
+      </article>
+
+      <article class="curio-card">
+        <div class="curio-tag">Energia & casa</div>
+        <h3>La stanza più fredda di casa: colpa del termosifone o della casa?</h3>
+        <p>Tra ponti termici, dispersioni e abitudini strane, spesso il problema non è dove credi.</p>
+        <a href="#">Articolo in arrivo</a>
+      </article>
+
+      <article class="curio-card">
+        <div class="curio-tag">Smartphone</div>
+        <h3>Perché il telefono “muore” sempre al momento sbagliato</h3>
+        <p>Non è sfortuna: è il modo in cui gestiamo ricariche, app in background e impostazioni nascoste.</p>
+        <a href="#">Articolo in arrivo</a>
+      </article>
+
+      <article class="curio-card">
+        <div class="curio-tag">Vita digitale</div>
+        <h3>Perché ricevi pubblicità di cose che hai solo pensato (o quasi)</h3>
+        <p>Algoritmi, cookie, tracciamento e tante coincidenze molto meno mistiche di quanto sembri.</p>
+        <a href="#">Articolo in arrivo</a>
+      </article>
+    </div>
+
+  </main>
+
+  <script>
+    function toggleMenu() {
+      document.body.classList.toggle('nav-open');
+    }
+  </script>
+
+  <footer>
+    © 2025 Syncras.App — Tutti i diritti riservati<br>
+
+    <div style="margin-top:8px;">
+      <a href="privacy.html">Privacy Policy</a> |
+      <a href="cookie.html">Cookie Policy</a> |
+      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
+      <a href="note-legali.html">Note Legali</a>
+    </div>
+
+    <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+      senza alcun costo aggiuntivo per l’utente.  
+      Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+      è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+    </p>
+
+    <p style="font-size:0.75rem; opacity:0.75; max-width:800px; margin:12px auto 0;">
+      <strong>Disclaimer:</strong> I contenuti del sito hanno scopo informativo e rappresentano opinioni personali ed esempi generici. 
+      Syncras.App non fornisce consulenza tecnica, fiscale o commerciale e non garantisce l’accuratezza di prezzi, dati o informazioni. 
+      Le decisioni di acquisto restano sempre responsabilità dell’utente. 
+      Eventuali riferimenti a marchi o aziende sono puramente informativi e non costituiscono collaborazioni né offerte commerciali.
+    </p>
+  </footer>
+
+</body>
+</html>
