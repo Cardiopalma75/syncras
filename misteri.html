@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Misteri | Syncras.App</title>
+  <meta name="description" content="Misteri moderni, coincidenze strane e zone grigie tra tecnologia, vita reale ed energia. Niente complotti: solo domande giuste e un po’ di ironia.">
+  <meta name="robots" content="index,follow">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-59D9XRYKF3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-59D9XRYKF3');
+  </script>
+
+  <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --violet-soft: #A29BFE;
+      --bg-page: #F7F7FB;
+      --text-main: #403E43;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    /* HEADER VIOLA UNIFICATO */
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color: white;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+    #main-nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding-bottom: 2px;
+    }
+    #main-nav a:hover {
+      text-decoration: underline;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .menu-toggle span {
+      margin-left: 4px;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        margin: 0 auto;
+        max-width: 1180px;
+        flex-direction: column;
+        background-color: var(--violet-dark);
+        padding: 10px 16px 12px 16px;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
+      }
+      #main-nav a {
+        padding: 6px 0;
+      }
+      body.nav-open #main-nav {
+        display: flex;
+      }
+      .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+
+    main {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    h1, h2, h3 {
+      color: var(--violet-dark);
+      margin-top: 0;
+    }
+
+    .back-links {
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+    .back-links a {
+      color: var(--violet-dark);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .back-links a:hover {
+      text-decoration: underline;
+    }
+
+    .intro-box {
+      background: #0f172a;
+      color: #E5E7EB;
+      border-radius: 10px;
+      padding: 14px 16px;
+      border: 1px solid #1f2937;
+      margin-bottom: 20px;
+    }
+
+    .intro-box h2 {
+      color: #E5E7EB;
+      margin-top: 0;
+      margin-bottom: 6px;
+    }
+
+    .misteri-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-top: 10px;
+    }
+
+    .mistero-card {
+      background: #F9FAFB;
+      border-radius: 10px;
+      padding: 12px 14px;
+      border: 1px solid #E5E7EB;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+
+    .mistero-tag {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #6B7280;
+      margin-bottom: 4px;
+    }
+
+    .mistero-card h3 {
+      margin: 0 0 6px 0;
+      font-size: 1.05rem;
+    }
+
+    .mistero-card p {
+      margin: 0;
+      font-size: 0.9rem;
+    }
+
+    .mistero-card a {
+      display: inline-block;
+      margin-top: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--violet-dark);
+      text-decoration: none;
+    }
+
+    .mistero-card a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #eee;
+      margin-top: 40px;
+      font-family: Arial;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
+
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
+
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="offerte.html">Offerte Amazon</a>
+        <a href="categorie.html">Categorie</a>
+        <a href="chi.html">Chi siamo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="back-links">
+      ← <a href="index.html">Torna alla Home</a> |
+      <a href="blog.html">Vai al Blog</a>
+    </div>
+
+    <h1>Misteri</h1>
+    <p><em>Non parliamo di fantasmi, ma di quelle cose che tutti notano e nessuno spiega bene.</em></p>
+
+    <div class="intro-box">
+      <h2>Misteri moderni (spiegati senza fare i complottisti)</h2>
+      <p>
+        Questa sezione è dedicata ai <strong>misteri leggeri</strong>: tecnologia che si comporta in modo strano,
+        coincidenze assurde, fenomeni quotidiani che sembrano magia ma dietro hanno logica, fisica e un po’ di psicologia.
+      </p>
+      <p style="margin-top:6px; font-size:0.9rem;">
+        Niente teorie strane, niente allarmismi: solo domande giuste, spiegazioni semplici e qualche sorriso.
+      </p>
+    </div>
+
+    <h2>Misteri in lavorazione</h2>
+
+    <div class="misteri-grid">
+      <article class="mistero-card">
+        <div class="mistero-tag">Tecnologia</div>
+        <h3>Alexa, Google & co: ci ascoltano davvero sempre?</h3>
+        <p>La sensazione è che sappiano più cose di noi del dovuto. Ma cosa fanno davvero i microfoni “sempre in ascolto”?</p>
+        <a href="#">Articolo in arrivo</a>
+      </article>
+
+      <article class="mistero-card">
+        <div class="mistero-tag">Energia & casa</div>
+        <h3>Perché alcune bollette “schizzano” all’improvviso?</h3>
+        <p>È sempre colpa del fornitore? O ci sono dinamiche di consumo e tariffe che nessuno ci spiega bene?</p>
+        <a href="#">Articolo in arrivo</a>
+      </article>
+
+      <article class="mistero-card">
+        <div class="mistero-tag">Vita digitale</div>
+        <h3>Pubblicità di cose che hai solo pensato (o quasi)</h3>
+        <p>Tra cookie, tracciamento, cronologia e abitudini, molte “coincidenze” sono meno mistiche di quanto sembrino.</p>
+        <a href="#">Articolo in arrivo</a>
+      </article>
+
+      <article class="mistero-card">
+        <div class="mistero-tag">Percezioni & mente</div>
+        <h3>Perché certi giorni “fila tutto storto”?</h3>
+        <p>È sfortuna pura o c’entrano attenzione selettiva, stress e come il cervello registra gli eventi?</p>
+        <a href="#">Articolo in arrivo</a>
+      </article>
+    </div>
+
+  </main>
+
+  <script>
+    function toggleMenu() {
+      document.body.classList.toggle('nav-open');
+    }
+  </script>
+
+  <footer>
+    © 2025 Syncras.App — Tutti i diritti riservati<br>
+
+    <div style="margin-top:8px;">
+      <a href="privacy.html">Privacy Policy</a> |
+      <a href="cookie.html">Cookie Policy</a> |
+      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
+      <a href="note-legali.html">Note Legali</a>
+    </div>
+
+    <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+      senza alcun costo aggiuntivo per l’utente.  
+      Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+      è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+    </p>
+
+    <p style="font-size:0.75rem; opacity:0.75; max-width:800px; margin:12px auto 0;">
+      <strong>Disclaimer:</strong> I contenuti del sito hanno scopo informativo e rappresentano opinioni personali ed esempi generici. 
+      Syncras.App non fornisce consulenza tecnica, fiscale o commerciale e non garantisce l’accuratezza di prezzi, dati o informazioni. 
+      Le decisioni di acquisto restano sempre responsabilità dell’utente. 
+      Eventuali riferimenti a marchi o aziende sono puramente informativi e non costituiscono collaborazioni né offerte commerciali.
+    </p>
+  </footer>
+
+</body>
+</html>
