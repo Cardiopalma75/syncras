@@ -39,8 +39,6 @@
       color: white;
       padding: 12px 14px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-      position: relative;
-      z-index: 100;
     }
     .header-inner {
       max-width: 1180px;
@@ -173,6 +171,34 @@
       font-size: 0.9rem;
       color: #555;
     }
+
+    /* Box e pulsante usati nel testo */
+    .tip-box {
+      background: #F6F4FF;
+      border-left: 4px solid #6C5CE7;
+      padding: 14px;
+      margin: 25px 0;
+      border-radius: 8px;
+    }
+    a.button {
+      display:inline-block;
+      background:#6C5CE7;
+      color:white;
+      padding:10px 18px;
+      border-radius:8px;
+      text-decoration:none;
+      font-weight:bold;
+      margin-top:10px;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      background: #eee;
+      font-family: Arial;
+      font-size: 0.9rem;
+    }
   </style>
 </head>
 
@@ -214,137 +240,167 @@
       📎 Condividi questa guida
     </button>
 
-<main>
+    <script>
+      const shareBtn = document.getElementById('shareBtn');
+      if (navigator.share) {
+        shareBtn.addEventListener('click', () => {
+          navigator.share({
+            title: "Meglio spendere tanto per il telefono o cambiarlo più spesso?",
+            text: "Guida ironica e pratica per decidere se puntare sul telefono caro o su quello onesto da cambiare più spesso.",
+            url: window.location.href
+          });
+        });
+      } else {
+        // se non supportato (PC ecc.) nascondo il bottone
+        shareBtn.style.display = "none";
+      }
+    </script>
 
-  <h1>Meglio spendere tanto per il telefono o cambiarlo più spesso?</h1>
-  <h2>La risposta sincera che nessuno ti dice</h2>
+    <!-- CONTENUTO ORIGINALE, INVARIATO -->
+    <h2>La risposta sincera che nessuno ti dice</h2>
 
-  <p>
-    Ogni volta che vai a comprare un telefono succede sempre la stessa cosa:
-    uno da 250€ che ti guarda come per dire <em>“Oh, fidati, faccio il mio”</em>,
-    e l’altro da 999€ che brilla come un’auto di lusso in concessionaria.
-    E tu lì in mezzo, che pensi: <strong>che faccio?</strong>
-  </p>
-
-  <p>
-    La domanda è antica quanto WhatsApp: 
-    <strong>meglio spendere tanto e tenerlo anni, o cambiare quando serve?</strong>
-    Facciamola semplice: zero tecnicismi, solo verità e buon senso.
-  </p>
-
-  <h3>1. I telefoni costosi durano meno del previsto</h3>
-
-  <p>
-    La frase classica: <em>“Prendo quello da 1200€, così mi dura 5 anni!”</em>.  
-    Certo. E io domani inizio la dieta mediterranea, giuro.
-  </p>
-
-  <ul>
-    <li>Dopo 2 anni la batteria è stanca come uno dopo la notte di Capodanno.</li>
-    <li>Gli aggiornamenti continuano… poi arrivano con la schiena piegata.</li>
-    <li>Se cade, cade sempre nel giorno sbagliato e sul pavimento sbagliato.</li>
-    <li>E soprattutto: dopo 3 anni ti sembra <em>lento</em>. Non c’è santo che tenga.</li>
-  </ul>
-
-  <p>
-    Morale: nessun telefono è eterno. Neanche quelli “da investimento”.
-  </p>
-
-  <h3>2. La matematica dice una cosa chiara (e non è un’opinione)</h3>
-
-  <p><strong>Telefono da 900€</strong></p>
-  <ul>
-    <li>Durata realistica: 3 anni</li>
-    <li>Costo annuo: <strong>300€</strong></li>
-  </ul>
-
-  <p><strong>Telefono da 250–300€</strong></p>
-  <ul>
-    <li>Durata reale: 2 anni</li>
-    <li>Costo annuo: <strong>125–150€</strong></li>
-  </ul>
-
-  <p>
-    Risultato: <strong>spendi la metà</strong> e hai sempre un telefono fresco.
-    Come quei parenti che ogni foto sembrano sempre più giovani. Misteri della vita.
-  </p>
-
-  <h3>3. Oggi i telefoni economici sono più furbi di te (e di me)</h3>
-
-  <p>
-    Una volta i modelli economici erano un tormento: lenti, fotocamere da patata, memoria zero.
-    Nel 2025? Tutta un’altra storia.
-  </p>
-
-  <ul>
-    <li>Foto ottime di giorno.</li>
-    <li>App che si aprono senza bestemmie (sempre elegante, eh).</li>
-    <li>Batteria che tira fino a sera.</li>
-    <li>128 o 256 GB di memoria, altro che “memoria piena”.</li>
-  </ul>
-
-  <p>
-    Per social, foto, mappe e vita normale… 
-    <strong>non senti la differenza tra un 300€ e un 1200€</strong>.  
-  </p>
-
-  <h3>4. Psicologia del telefono caro</h3>
-
-  <ul>
-    <li>Lo copri con una cover grossa quanto un materasso.</li>
-    <li>Lo appoggi sul tavolo con la delicatezza di un neonato.</li>
-    <li>Passi la giornata in ansia da graffio.</li>
-    <li>Alla fine lo rivendi per 80€ e ti chiedi: dove ho sbagliato.</li>
-  </ul>
-
-  <p>
-    Con uno da 250€ invece vivi sereno: lo usi, lo consumi, lo cambi. Fine.
-  </p>
-
-  <h3>5. La verità finale (che nessuno dice ma tutti sanno)</h3>
-
-  <p>
-    Se vuoi la risposta “da recensione seria”: dipende dalle esigenze.
-  </p>
-
-  <p>
-    Se vuoi la <strong>verità da amico sincero</strong>:
-  </p>
-
-  <p style="font-size:1.2rem; font-weight:bold;">
-    👉 Un telefono da 250–300€ ogni 2 anni è la scelta più intelligente nel 2025.
-  </p>
-
-  <p>
-    Spendi meno, ti arrabbi meno, vivi meglio.  
-  </p>
-
-  <div class="tip-box">
-    <h3>💬 Consiglio da amico</h3>
     <p>
-      Se usi il telefono per foto di famiglia, social, mappe, WhatsApp e guardare Syncras…
-      non ti serve un modello che costa come un weekend alle Maldive.
-      Con il soldi che ti restano goditeli.
-      Prendine uno onesto, usalo senza ansie e cambialo quando inizia a rallentare.
-    </p>
-  </div>
-
-  <div class="tip-box">
-    <h3>❓ Sei ancora indeciso?</h3>
-    <p>
-      Succede.  
-      Per questo abbiamo creato il <strong>Test SmartShop</strong>: 5 domande veloci 
-      per scoprire che tipo di “smartphonista” sei, e quale modello fa per te.
+      Ogni volta che vai a comprare un telefono succede sempre la stessa cosa:
+      uno da 250€ che ti guarda come per dire <em>“Oh, fidati, faccio il mio”</em>,
+      e l’altro da 999€ che brilla come un’auto di lusso in concessionaria.
+      E tu lì in mezzo, che pensi: <strong>che faccio?</strong>
     </p>
 
-    <a href="quiz.html" class="button">👉 Fai il Test SmartShop</a>
-  </div>
+    <p>
+      La domanda è antica quanto WhatsApp: 
+      <strong>meglio spendere tanto e tenerlo anni, o cambiare quando serve?</strong>
+      Facciamola semplice: zero tecnicismi, solo verità e buon senso.
+    </p>
 
-  <p><strong>Tag:</strong> smartphone 2025, guida acquisti, smartphone economici, Syncras</p>
+    <h3>1. I telefoni costosi durano meno del previsto</h3>
 
-</main>
+    <p>
+      La frase classica: <em>“Prendo quello da 1200€, così mi dura 5 anni!”</em>.  
+      Certo. E io domani inizio la dieta mediterranea, giuro.
+    </p>
 
-<footer>
+    <ul>
+      <li>Dopo 2 anni la batteria è stanca come uno dopo la notte di Capodanno.</li>
+      <li>Gli aggiornamenti continuano… poi arrivano con la schiena piegata.</li>
+      <li>Se cade, cade sempre nel giorno sbagliato e sul pavimento sbagliato.</li>
+      <li>E soprattutto: dopo 3 anni ti sembra <em>lento</em>. Non c’è santo che tenga.</li>
+    </ul>
+
+    <p>
+      Morale: nessun telefono è eterno. Neanche quelli “da investimento”.
+    </p>
+
+    <h3>2. La matematica dice una cosa chiara (e non è un’opinione)</h3>
+
+    <p><strong>Telefono da 900€</strong></p>
+    <ul>
+      <li>Durata realistica: 3 anni</li>
+      <li>Costo annuo: <strong>300€</strong></li>
+    </ul>
+
+    <p><strong>Telefono da 250–300€</strong></p>
+    <ul>
+      <li>Durata reale: 2 anni</li>
+      <li>Costo annuo: <strong>125–150€</strong></li>
+    </ul>
+
+    <p>
+      Risultato: <strong>spendi la metà</strong> e hai sempre un telefono fresco.
+      Come quei parenti che ogni foto sembrano sempre più giovani. Misteri della vita.
+    </p>
+
+    <h3>3. Oggi i telefoni economici sono più furbi di te (e di me)</h3>
+
+    <p>
+      Una volta i modelli economici erano un tormento: lenti, fotocamere da patata, memoria zero.
+      Nel 2025? Tutta un’altra storia.
+    </p>
+
+    <ul>
+      <li>Foto ottime di giorno.</li>
+      <li>App che si aprono senza bestemmie (sempre elegante, eh).</li>
+      <li>Batteria che tira fino a sera.</li>
+      <li>128 o 256 GB di memoria, altro che “memoria piena”.</li>
+    </ul>
+
+    <p>
+      Per social, foto, mappe e vita normale… 
+      <strong>non senti la differenza tra un 300€ e un 1200€</strong>.  
+    </p>
+
+    <h3>4. Psicologia del telefono caro</h3>
+
+    <ul>
+      <li>Lo copri con una cover grossa quanto un materasso.</li>
+      <li>Lo appoggi sul tavolo con la delicatezza di un neonato.</li>
+      <li>Passi la giornata in ansia da graffio.</li>
+      <li>Alla fine lo rivendi per 80€ e ti chiedi: dove ho sbagliato.</li>
+    </ul>
+
+    <p>
+      Con uno da 250€ invece vivi sereno: lo usi, lo consumi, lo cambi. Fine.
+    </p>
+
+    <h3>5. La verità finale (che nessuno dice ma tutti sanno)</h3>
+
+    <p>
+      Se vuoi la risposta “da recensione seria”: dipende dalle esigenze.
+    </p>
+
+    <p>
+      Se vuoi la <strong>verità da amico sincero</strong>:
+    </p>
+
+    <p style="font-size:1.2rem; font-weight:bold;">
+      👉 Un telefono da 250–300€ ogni 2 anni è la scelta più intelligente nel 2025.
+    </p>
+
+    <p>
+      Spendi meno, ti arrabbi meno, vivi meglio.  
+    </p>
+
+    <div class="tip-box">
+      <h3>💬 Consiglio da amico</h3>
+      <p>
+        Se usi il telefono per foto di famiglia, social, mappe, WhatsApp e guardare Syncras…
+        non ti serve un modello che costa come un weekend alle Maldive.
+        Con i soldi che ti restano goditeli.
+        Prendine uno onesto, usalo senza ansie e cambialo quando inizia a rallentare.
+      </p>
+    </div>
+
+    <div class="tip-box">
+      <h3>❓ Sei ancora indeciso?</h3>
+      <p>
+        Succede.  
+        Per questo abbiamo creato il <strong>Test SmartShop</strong>: 5 domande veloci 
+        per scoprire che tipo di “smartphonista” sei, e quale modello fa per te.
+      </p>
+
+      <a href="quiz.html" class="button">👉 Fai il Test SmartShop</a>
+    </div>
+
+    <p><strong>Tag:</strong> smartphone 2025, guida acquisti, smartphone economici, Syncras</p>
+
+    <p class="small">
+      <strong>Disclaimer:</strong> Alcuni link presenti su questo sito sono link di affiliazione Amazon
+      e ottengo una piccola commissione dagli acquisti idonei, senza costi aggiuntivi per te.
+    </p>
+
+    <p class="small">
+      I contenuti presenti su Syncras.App hanno scopo puramente informativo e ironico.
+      Non forniamo consulenze professionali e non ci assumiamo responsabilità su eventuali acquisti,
+      scelte personali o utilizzo dei prodotti suggeriti. Decidi sempre in autonomia.
+    </p>
+  </main>
+
+  <script>
+    function toggleMenu() {
+      document.body.classList.toggle('nav-open');
+    }
+  </script>
+
+  <footer>
     © 2025 Syncras.App — Tutti i diritti riservati<br>
     <div style="margin-top:8px;">
       <a href="privacy.html">Privacy Policy</a> |
@@ -360,6 +416,7 @@
       è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
     </p>
   </footer>
+
 </body>
 </html>
 
