@@ -394,6 +394,8 @@
   <a href="#test-smartphone" style="margin-right:12px;">📱 Test Smartphone</a>
   <a href="#test-lavatrice" style="margin-right:12px;">🧺 Test Lavatrice</a>
   <a href="#test-tv" style="margin-right:12px;">📺 Test TV</a>
+  <a href="#test-lavastoviglie">🧼 Test Lavastoviglie 45 o 60 cm</a>
+
 </div>
 
     <div class="tests-layout">
@@ -481,6 +483,62 @@
           <button type="button" class="test-btn" onclick="valutaTestSmartphone()">Calcola fascia consigliata</button>
           <p id="risultato-smartphone" class="test-result"></p>
         </section>
+                <!-- TEST 3: Lavastoviglie 45 o 60 cm -->
+        <section class="test-card" id="test-lavastoviglie">
+          <div class="test-section-label">Test specifico</div>
+          <h2>Test Lavastoviglie – 45 cm o 60 cm?</h2>
+          <p class="test-subtitle">
+            6 domande veloci per capire se ti basta una slim da 45 cm o se ti serve davvero una lavastoviglie da 60 cm.
+          </p>
+
+          <ol class="test-questions">
+            <li>
+              Quante persone mangiano regolarmente in casa?<br>
+              <label><input type="radio" name="l_q1" value="1"> 1–2 persone</label><br>
+              <label><input type="radio" name="l_q1" value="2"> 3–4 persone</label><br>
+              <label><input type="radio" name="l_q1" value="3"> 5 o più</label>
+            </li>
+
+            <li>
+              Quanto spesso cucinate “sul serio” (padelle, teglie, forno)?<br>
+              <label><input type="radio" name="l_q2" value="1"> Quasi mai, cose veloci</label><br>
+              <label><input type="radio" name="l_q2" value="2"> 3–4 volte a settimana</label><br>
+              <label><input type="radio" name="l_q2" value="3"> Quasi ogni giorno</label>
+            </li>
+
+            <li>
+              Quanto spazio reale hai nella colonna cucina?<br>
+              <label><input type="radio" name="l_q3" value="1"> 45 cm secchi (oltre serve rompere mobili)</label><br>
+              <label><input type="radio" name="l_q3" value="2"> 60 cm ci stanno ma tirati</label><br>
+              <label><input type="radio" name="l_q3" value="3"> 60 cm comodi, nessun problema di spazio</label>
+            </li>
+
+            <li>
+              Quanto ti dà fastidio vedere piatti nel lavello?<br>
+              <label><input type="radio" name="l_q4" value="1"> Poco: li lavo anche a mano</label><br>
+              <label><input type="radio" name="l_q4" value="2"> Mi infastidisce, ma sopravvivo</label><br>
+              <label><input type="radio" name="l_q4" value="3"> Non li sopporto: tutto dentro e via</label>
+            </li>
+
+            <li>
+              Usi spesso pentole e teglie grandi (forno, lasagne, arrosti)?<br>
+              <label><input type="radio" name="l_q5" value="1"> Quasi mai</label><br>
+              <label><input type="radio" name="l_q5" value="2"> Ogni tanto</label><br>
+              <label><input type="radio" name="l_q5" value="3"> Spesso</label>
+            </li>
+
+            <li>
+              Budget mentale per la lavastoviglie?<br>
+              <label><input type="radio" name="l_q6" value="1"> Voglio spendere il minimo possibile</label><br>
+              <label><input type="radio" name="l_q6" value="2"> Spendo il giusto se ne vale la pena</label><br>
+              <label><input type="radio" name="l_q6" value="3"> Se mi cambia la vita in cucina, investo</label>
+            </li>
+          </ol>
+
+          <button type="button" class="test-btn" onclick="valutaTestLavastoviglie()">Calcola dimensione consigliata</button>
+          <p id="risultato-lavastoviglie" class="test-result"></p>
+        </section>
+
 
         <!-- TEST LAVATRICE COMPLETO -->
 <section class="test-card" id="test-lavatrice">
@@ -903,6 +961,50 @@
         span.textContent = new Date().getFullYear();
       }
     });
+    function valutaTestLavastoviglie() {
+      const domande = ['l_q1','l_q2','l_q3','l_q4','l_q5','l_q6'];
+      let punteggio = 0;
+      let risposte = 0;
+
+      domande.forEach(function(nome) {
+        const sel = document.querySelector('input[name="' + nome + '"]:checked');
+        if (sel) {
+          risposte++;
+          punteggio += parseInt(sel.value, 10);
+        }
+      });
+
+      const el = document.getElementById('risultato-lavastoviglie');
+      el.className = 'test-result';
+
+      if (risposte < domande.length) {
+        el.textContent = 'Completa tutte le domande per vedere il risultato.';
+        return;
+      }
+
+      // logica base: punteggio basso = poco spazio / poco carico → 45 cm
+      // punteggio medio = dubbi → vanno bene entrambe
+      // punteggio alto = famiglia / pentole / spazio → 60 cm
+
+      if (punteggio <= 9) {
+        el.textContent =
+          'Per le tue abitudini una lavastoviglie slim da 45 cm è più che sufficiente. ' +
+          'Cucina piccola, carichi moderati e meno piatti: meglio salvare spazio in cucina.';
+        el.classList.add('result-good');
+      } else if (punteggio <= 13) {
+        el.textContent =
+          'Se hai spazio, una 60 cm ti darebbe più respiro, ma anche una buona 45 cm può bastare. ' +
+          'Se spesso ti trovi il lavello pieno, valuta seriamente la 60 cm.';
+        el.classList.add('result-medium');
+      } else {
+        el.textContent =
+          'Con famiglia, pentole, teglie e spazio disponibile, la scelta naturale è una lavastoviglie da 60 cm. ' +
+          'Più capienza, meno lavaggi e lavello che respira di più.';
+        el.classList.add('result-good');
+      }
+    }
+
+    
   </script>
 </body>
 </html>
