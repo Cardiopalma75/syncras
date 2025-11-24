@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quanti giga di memoria servono davvero a una persona normale? | Syncras.App</title>
+  <meta name="description" content="Quanti giga di memoria servono davvero su uno smartphone? Guida ironica ma seria per capire se bastano 64 GB, meglio 128 GB o se ti serve molto di più.">
+  <meta name="robots" content="index,follow">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-59D9XRYKF3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-59D9XRYKF3');
+  </script>
+
+  <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --bg-page: #F7F7FB;
+      --text-main: #403E43;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg-page);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      color: var(--text-main);
+    }
+
+    /* HEADER VIOLA UNIFICATO */
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color: white;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+    #main-nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding-bottom: 2px;
+    }
+    #main-nav a:hover {
+      text-decoration: underline;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .menu-toggle span {
+      margin-left: 4px;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        margin: 0 auto;
+        max-width: 1180px;
+        flex-direction: column;
+        background-color: var(--violet-dark);
+        padding: 10px 16px 12px 16px;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
+      }
+      #main-nav a {
+        padding: 6px 0;
+      }
+      body.nav-open #main-nav {
+        display: flex;
+      }
+      .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+
+    main {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    h1, h2, h3 {
+      color: var(--violet-dark);
+    }
+
+    p { margin-bottom: 15px; }
+    ul { margin-left: 20px; }
+
+    .box {
+      background: #f6faf7;
+      border: 1px solid #d7e8dc;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .tip-box {
+      background: #F6F4FF;
+      border-left: 4px solid #6C5CE7;
+      padding: 14px;
+      margin: 25px 0;
+      border-radius: 8px;
+    }
+
+    .mini-test {
+      background: #FDFBF6;
+      border-left: 4px solid #EAB308;
+      padding: 14px;
+      margin: 25px 0;
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+
+    .back-links {
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+    .back-links a {
+      color: var(--violet-dark);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .back-links a:hover {
+      text-decoration: underline;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 0.95rem;
+    }
+    th, td {
+      border: 1px solid #E5E7EB;
+      padding: 8px 10px;
+      text-align: left;
+    }
+    th {
+      background: #F3F4FF;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      background: #eee;
+      font-size: 0.9rem;
+    }
+
+    a.button {
+      display:inline-block;
+      background:#6C5CE7;
+      color:white;
+      padding:10px 18px;
+      border-radius:8px;
+      text-decoration:none;
+      font-weight:bold;
+      margin-top:10px;
+    }
+
+    .small {
+      font-size: 0.9rem;
+      color: #555;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER UNIFICATO -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
+
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
+
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="offerte.html">Offerte Amazon</a>
+        <a href="categorie.html">Categorie</a>
+        <a href="curiosita.html">Curiosità &amp; Misteri</a>
+        <a href="quiz.html">Test SmartShop</a>
+        <a href="chi.html">Chi siamo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="back-links">
+      ← <a href="index.html">Torna alla Home</a> |
+      <a href="blog.html">Vai al Blog</a> |
+      <a href="categorie.html">Categorie</a>
+    </div>
+
+    <h1>Quanti giga di memoria servono davvero a una persona normale?</h1>
+
+    <button id="shareBtn"
+      style="background: var(--violet-main); color:white; padding:10px 15px; border:none;
+             border-radius:6px; cursor:pointer; margin-bottom:20px; font-weight:600;">
+      📎 Condividi questa guida
+    </button>
+
+    <script>
+      const shareBtn = document.getElementById('shareBtn');
+      if (navigator.share) {
+        shareBtn.addEventListener('click', () => {
+          navigator.share({
+            title: "Quanti giga di memoria servono davvero a una persona normale?",
+            text: "Guida ironica ma serissima per capire quanti GB servono davvero sullo smartphone.",
+            url: window.location.href
+          });
+        });
+      } else {
+        shareBtn.style.display = "none";
+      }
+    </script>
+
+    <h2>La scena tipica: “Memoria piena” nel momento peggiore</h2>
+    <p>
+      Sei lì che vuoi fare la foto più bella della giornata: compleanno, gita, cane che fa una cosa
+      da premio Oscar…  
+      apri la fotocamera e sullo schermo compare il messaggio maledetto:
+      <strong>“Spazio di archiviazione insufficiente”</strong>.
+    </p>
+    <p>
+      In quel momento non ti interessa più la pace nel mondo, il clima, la geopolitica:  
+      vuoi solo sapere <strong>perché fior di giga sono già finiti</strong>.
+    </p>
+    <p>
+      In questa guida non parleremo come un manuale tecnico, ma come un amico al bar:
+      alla fine saprai se per te bastano <strong>64 GB</strong>, se è meglio <strong>128 GB</strong>  
+      o se sei da club “non ho problemi, prendo il massimo e buonanotte”.
+    </p>
+
+    <hr>
+
+    <h2>1. Cosa mangia davvero la memoria del telefono</h2>
+    <p>
+      Semplifichiamo: dentro la memoria del telefono convivono quattro grandi famiglie.
+    </p>
+    <ul>
+      <li><strong>Sistema e app di base</strong>: il “condominio” che non puoi sfrattare.</li>
+      <li><strong>Foto e video</strong>: i veri killer dei giga.</li>
+      <li><strong>Chat e audio</strong>: soprattutto i gruppi dove girano 300 foto a settimana.</li>
+      <li><strong>Giochi pesanti</strong>: se ne installi due, hai già fatto metà lavoro.</li>
+    </ul>
+
+    <div class="box">
+      <strong>Tradotto:</strong> i giga non li mangia la rubrica, ma:
+      <em>foto, video, gruppi di chat e giochi</em>.  
+      Se li usi tanto, 64 GB volano via come i weekend.
+    </div>
+
+    <h2>2. Cosa significano davvero 32, 64, 128, 256 GB</h2>
+    <p>
+      Quello che scrivono sulla scatola è la memoria “lordi”.  
+      Quella che puoi usare tu è sempre meno, perché una parte se la prende il sistema.
+    </p>
+
+    <table>
+      <tr>
+        <th>Taglio di memoria</th>
+        <th>Memoria reale per te (circa)</th>
+        <th>Uso pratico</th>
+      </tr>
+      <tr>
+        <td>32 GB</td>
+        <td>15–20 GB liberi</td>
+        <td>Solo chiamate, poche foto, poche app. Si riempie in un attimo.</td>
+      </tr>
+      <tr>
+        <td>64 GB</td>
+        <td>35–40 GB liberi</td>
+        <td>Uso base + foto normali + qualche app social. Serve un po’ di ordine.</td>
+      </tr>
+      <tr>
+        <td>128 GB</td>
+        <td>90–100 GB liberi</td>
+        <td>Profilo “persona normale moderna”: foto, video, chat, 2–3 giochi.</td>
+      </tr>
+      <tr>
+        <td>256 GB</td>
+        <td>200 GB liberi o più</td>
+        <td>Video ovunque, mille foto, giochi pesanti, zero ansia da spazio.</td>
+      </tr>
+    </table>
+
+    <h2>3. Che tipo di utilizzatore sei? (versione sincera)</h2>
+    <p>
+      Dimentichiamo per un attimo le specifiche tecniche.  
+      La domanda giusta è: <strong>come usi DAVVERO il telefono tutti i giorni?</strong>
+    </p>
+
+    <h3>Profilo 1 – “Minimalista distratto”</h3>
+    <ul>
+      <li>Usi il telefono per chiamate, messaggi, qualche foto.</li>
+      <li>Poche app, niente giochi seri.</li>
+      <li>Ogni tanto cancelli ciò che non ti serve (o almeno ci provi).</li>
+    </ul>
+    <p><strong>Per te:</strong> 64 GB possono bastare, ma meglio evitare 32 GB se non vuoi impazzire.</p>
+
+    <h3>Profilo 2 – “Social & famiglia”</h3>
+    <ul>
+      <li>Foto di figli, nipoti, animali, piante, caffè, nuvole…</li>
+      <li>Tanti gruppi di chat con foto, audio, video.</li>
+      <li>Ogni tanto un gioco, qualche app in più.</li>
+    </ul>
+    <p><strong>Per te:</strong> 128 GB è il vero punto di equilibrio: non esageri ma vivi sereno.</p>
+
+    <h3>Profilo 3 – “Regista amatoriale e gamer”</h3>
+    <ul>
+      <li>Registri video spesso, magari in alta definizione.</li>
+      <li>Scarichi giochi pesanti.</li>
+      <li>Non ti piace cancellare nulla “perché può servire”.</li>
+    </ul>
+    <p><strong>Per te:</strong> 256 GB non sono uno sfizio, ma la cura allo stress da memoria piena.</p>
+
+    <div class="box">
+      <strong>Regola semplice:</strong>  
+      se ti conosci e sai che non cancellerai mai niente, prendi almeno una taglia in più
+      rispetto a quella che pensi “basti”.
+    </div>
+
+    <h2>4. Mini test: quanti giga ti servono davvero?</h2>
+    <div class="mini-test">
+      <p><strong>Segna mentalmente le tue risposte e guarda il profilo finale.</strong></p>
+      <ol>
+        <li>
+          Quante foto fai in una settimana?
+          <br>• Meno di 20 → 1 punto A<br>
+          • Tra 20 e 100 → 1 punto B<br>
+          • Oltre 100 → 1 punto C
+        </li>
+        <li>
+          Quanti video fai al mese?
+          <br>• Quasi zero → 1 punto A<br>
+          • Qualcuno (feste, gite, momenti vari) → 1 punto B<br>
+          • Tanti, spesso lunghi → 1 punto C
+        </li>
+        <li>
+          Giochi sul telefono?
+          <br>• Mai o quasi → 1 punto A<br>
+          • Qualche gioco leggero → 1 punto B<br>
+          • Giochi pesanti, più di 2 installati → 1 punto C
+        </li>
+        <li>
+          Pulizia memoria:
+          <br>• Cancello spesso foto/app vecchie → 1 punto A<br>
+          • Ogni tanto faccio “pulizie di primavera” → 1 punto B<br>
+          • Non cancello quasi mai nulla → 1 punto C
+        </li>
+      </ol>
+
+      <p><strong>Risultato rapido:</strong></p>
+      <ul>
+        <li>Più A → <strong>64 GB</strong> possono bastare (ma 128 sono comfort).</li>
+        <li>Più B → <strong>128 GB</strong> è il punto giusto.</li>
+        <li>Più C → <strong>256 GB</strong> se vuoi dormire sonni tranquilli.</li>
+      </ul>
+
+      <p style="margin-top:10px;">
+        Vuoi un test più completo sul tuo stile di acquisto?  
+        Prova il <strong>Test SmartShop</strong> qui sotto: è pensato proprio per capire se sei
+        da modello base, medio o super esagerato.
+      </p>
+      <a href="quiz.html" class="button">👉 Vai al Test SmartShop completo</a>
+    </div>
+
+    <h2>5. Posso “risparmiare” memoria con trucchetti?</h2>
+    <p>
+      Sì, qualche trucco esiste, ma non fa miracoli:
+    </p>
+    <ul>
+      <li>Cancella periodicamente i media delle chat (soprattutto gruppi).</li>
+      <li>Evita di tenere tre app identiche per fare la stessa cosa.</li>
+      <li>Ogni tanto sposta sul computer le foto più vecchie.</li>
+      <li>Disinstalla i giochi che non apri da mesi.</li>
+    </ul>
+
+    <div class="tip-box">
+      <h3>💬 Consiglio da amico</h3>
+      <p>
+        Se devi cambiare telefono ora, non ragionare solo sul prezzo di oggi ma sui
+        <strong>prossimi 3 anni</strong>.  
+        Pagare un po’ di più per avere più memoria spesso significa tenersi il telefono
+        più a lungo e risparmiare un cambio anticipato.
+      </p>
+    </div>
+
+    <div class="tip-box">
+      <h3>❓ Ancora nel dubbio tra due tagli di memoria?</h3>
+      <p>
+        Se sei indeciso tra, per esempio, 64 e 128 GB, la risposta è quasi sempre:
+        <strong>prendi quello superiore</strong>.  
+        La memoria non si può aggiungere dopo come una bottiglia d’acqua: o c’è o non c’è.
+      </p>
+      <p>
+        Se vuoi capire meglio che tipo di acquirente sei (impulsivo, prudente, “tecnico”),
+        puoi fare il <strong>Test SmartShop</strong> dedicato agli acquisti ragionati.
+      </p>
+      <a href="quiz.html" class="button">👉 Fai il Test SmartShop</a>
+    </div>
+
+    <p class="small">
+      <strong>Tag:</strong> quanti giga servono, memoria smartphone, scelta smartphone, guida acquisto, consigli tecnologia
+    </p>
+
+  </main>
+
+  <script>
+    function toggleMenu() {
+      document.body.classList.toggle('nav-open');
+    }
+  </script>
+
+  <footer>
+    © 2025 Syncras.App — Tutti i diritti riservati<br>
+    <div style="margin-top:8px;">
+      <a href="privacy.html">Privacy Policy</a> |
+      <a href="cookie.html">Cookie Policy</a> |
+      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
+      <a href="note-legali.html">Note Legali</a>
+    </div>
+    <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+      senza alcun costo aggiuntivo per l’utente.  
+      Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+      è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+    </p>
+  </footer>
+
+</body>
+</html>
