@@ -540,74 +540,64 @@
           <p id="risultato-lavastoviglie" class="test-result"></p>
         </section>
 
-        <hr>
+ <hr>
 
 <section id="test-giga-smartphone">
-  <h2>Test Giga Smartphone – quanta memoria ti serve davvero?</h2>
+  <h2>Test Giga Smartphone – versione seria</h2>
   <p>
-    Qui non misuriamo quanto sei “tecnico”, ma quanto sei <strong>mangia-giga</strong>.
-    Rispondi con sincerità: il telefono ti serve per vivere… o per archiviare mezzo pianeta?
+    5 domande per capire quanta memoria ti serve davvero sullo smartphone.
+    Rispondi con sincerità: non ti giudica nessuno, al massimo il tuo archivio foto.
   </p>
 
   <ol>
     <li>
       Quante foto fai in una settimana?
       <br>
-      <label><input type="radio" name="giga1"> Meno di 20</label><br>
-      <label><input type="radio" name="giga1"> Tra 20 e 80</label><br>
-      <label><input type="radio" name="giga1"> Più di 80 (ogni cosa che si muove)</label>
+      <label><input type="radio" name="giga1" value="0"> Meno di 20</label><br>
+      <label><input type="radio" name="giga1" value="1"> Tra 20 e 80</label><br>
+      <label><input type="radio" name="giga1" value="2"> Più di 80 (fotografi anche il caffè)</label>
     </li>
 
     <li>
       Quanti video registri in un mese?
       <br>
-      <label><input type="radio" name="giga2"> Quasi zero</label><br>
-      <label><input type="radio" name="giga2"> Qualcuno per momenti speciali</label><br>
-      <label><input type="radio" name="giga2"> Tanti, spesso lunghi</label>
+      <label><input type="radio" name="giga2" value="0"> Quasi zero</label><br>
+      <label><input type="radio" name="giga2" value="1"> Qualcuno per momenti speciali</label><br>
+      <label><input type="radio" name="giga2" value="2"> Tanti, spesso lunghi</label>
     </li>
 
     <li>
-      Giochi col telefono?
+      Giochi sul telefono?
       <br>
-      <label><input type="radio" name="giga3"> Mai o quasi</label><br>
-      <label><input type="radio" name="giga3"> Qualche gioco leggero</label><br>
-      <label><input type="radio" name="giga3"> Giochi pesanti, più di due installati</label>
+      <label><input type="radio" name="giga3" value="0"> Mai o quasi</label><br>
+      <label><input type="radio" name="giga3" value="1"> Qualche gioco leggero</label><br>
+      <label><input type="radio" name="giga3" value="2"> Giochi pesanti, più di due installati</label>
     </li>
 
     <li>
       Ogni quanto cancelli foto, video o app che non usi?
       <br>
-      <label><input type="radio" name="giga4"> Spesso, mi piace tenere pulito</label><br>
-      <label><input type="radio" name="giga4"> Ogni tanto, quando mi ricordo</label><br>
-      <label><input type="radio" name="giga4"> Mai: “sono ricordi, non si tocca niente”</label>
+      <label><input type="radio" name="giga4" value="0"> Spesso, mi piace tenere pulito</label><br>
+      <label><input type="radio" name="giga4" value="1"> Ogni tanto, quando mi ricordo</label><br>
+      <label><input type="radio" name="giga4" value="2"> Mai: “sono ricordi, non si tocca niente”</label>
     </li>
 
     <li>
-      Le chat quanto pesano sulla memoria?
+      Le chat quanto pesano sulla memoria del telefono?
       <br>
-      <label><input type="radio" name="giga5"> Pochissimo, cancello spesso media e gruppi</label><br>
-      <label><input type="radio" name="giga5"> Un po’, ma non ho idea di quanto</label><br>
-      <label><input type="radio" name="giga5"> Tantissimo: non voglio neanche guardare</label>
+      <label><input type="radio" name="giga5" value="0"> Poco, cancello media e gruppi inutili</label><br>
+      <label><input type="radio" name="giga5" value="1"> Abbastanza, ma non ci penso troppo</label><br>
+      <label><input type="radio" name="giga5" value="2"> Tantissimo, ho paura ad aprire le impostazioni</label>
     </li>
   </ol>
 
-  <div class="tip-box">
-    <h3>Come leggere il risultato (versione sincera)</h3>
-    <p>
-      <strong>Prevalenza prima risposta</strong> → Profilo “tranquillo”: con 64 GB te la cavi,
-      ma 128 GB ti fanno vivere sereno.<br>
-      <strong>Prevalenza seconda risposta</strong> → Profilo “normale moderno”:
-      <strong>128 GB</strong> sono la scelta più equilibrata.<br>
-      <strong>Prevalenza terza risposta</strong> → Profilo “mangia-giga”:
-      <strong>256 GB</strong> (o più) non sono un lusso, sono un salvavita.
-    </p>
-    <p>
-      Se dopo questo test sei ancora indeciso, puoi fare anche il
-      <a href="#test-smartphone-generale">Test Smartphone</a> per capire se ti conviene
-      puntare su modello base, medio o super.
-    </p>
-  </div>
+  <button type="button" onclick="valutaTestGiga()">
+    Calcola il risultato
+  </button>
+
+  <p id="giga-result" class="test-result" style="margin-top:15px;"></p>
 </section>
+
 
 
         <!-- TEST LAVATRICE COMPLETO -->
@@ -1073,6 +1063,47 @@
         el.classList.add('result-good');
       }
     }
+
+
+  function valutaTestGiga() {
+    let punteggio = 0;
+
+    for (let i = 1; i <= 5; i++) {
+      const risposta = document.querySelector('input[name="giga' + i + '"]:checked');
+      if (!risposta) {
+        alert('Rispondi a tutte le domande del Test Giga Smartphone.');
+        return;
+      }
+      punteggio += parseInt(risposta.value, 10);
+    }
+
+    const el = document.getElementById('giga-result');
+    el.className = 'test-result'; // reset classi
+    let messaggio = '';
+
+    if (punteggio <= 3) {
+      // Verde – profilo leggero
+      el.classList.add('result-good');
+      messaggio =
+        'Verde: usi lo smartphone in modo leggero. ' +
+        'Con 64 GB te la cavi, con 128 GB vivi ancora più sereno.';
+    } else if (punteggio <= 7) {
+      // Giallo – profilo medio
+      el.classList.add('result-medium');
+      messaggio =
+        'Giallo: fai foto, video e usi chat e app in modo “normale moderno”. ' +
+        '128 GB sono il punto di equilibrio giusto per te.';
+    } else {
+      // Rosso – profilo mangia-giga
+      el.classList.add('result-bad');
+      messaggio =
+        'Rosso: sei ufficialmente un mangia-giga. Video, giochi, chat infinite… ' +
+        'per evitare la guerra con il messaggio “memoria piena”, meglio puntare su 256 GB.';
+    }
+
+    el.textContent = messaggio;
+  }
+
 
     
   </script>
