@@ -1,11 +1,9 @@
-<!DOCTYPE html>
+ html>
 <html lang="it">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>La stanza più fredda della casa? Ecco come l’ho sistemata | Syncras.App</title>
-  <meta name="description" content="Stanza più fredda della casa? Ho risolto con una resistenza elettrica per termosifone. Guida ironica, semplice e perfetta per chi ha il fotovoltaico.">
-  <meta name="robots" content="index,follow">
+  <title>Guida Smart TV 2025 – Versione ironica | Syncras.App</title>
 
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-59D9XRYKF3"></script>
@@ -26,14 +24,14 @@
 
     body {
       font-family: Arial, sans-serif;
-      background-color: var(--bg-page);
+      background: var(--bg-page);
       margin: 0;
       padding: 0;
-      color: var(--text-main);
       line-height: 1.6;
+      color: var(--text-main);
     }
 
-    /* HEADER MODERNO VIOLA */
+    /* HEADER VIOLA UNIFICATO */
     .site-header {
       background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
       color: white;
@@ -46,6 +44,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 16px;
     }
     .logo {
       font-size: 1.4rem;
@@ -62,6 +61,7 @@
       color: white;
       text-decoration: none;
       font-weight: 600;
+      padding-bottom: 2px;
     }
     #main-nav a:hover {
       text-decoration: underline;
@@ -74,8 +74,8 @@
       border-radius: 6px;
       color: white;
       padding: 6px 10px;
-      cursor: pointer;
       font-size: 0.9rem;
+      cursor: pointer;
     }
     .menu-toggle span {
       margin-left: 4px;
@@ -86,100 +86,158 @@
       #main-nav {
         display: none;
         position: absolute;
-        left: 0; right: 0; top: 56px;
-        background-color: var(--violet-dark);
-        padding: 10px 16px;
+        left: 0;
+        right: 0;
+        top: 56px;
+        margin: 0 auto;
+        max-width: 1180px;
         flex-direction: column;
+        background-color: var(--violet-dark);
+        padding: 10px 16px 12px 16px;
         border-radius: 0 0 8px 8px;
         box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
+      }
+      #main-nav a {
+        padding: 6px 0;
       }
       body.nav-open #main-nav {
         display: flex;
       }
       .menu-toggle {
         display: inline-flex;
+        align-items: center;
       }
     }
 
-    /* CONTENUTO */
     main {
       max-width: 900px;
       margin: 30px auto;
       padding: 20px;
-      background-color: white;
-      border-radius: 12px;
+      background: white;
+      border-radius: 10px;
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
 
     h1, h2, h3 {
       color: var(--violet-dark);
     }
-
-    blockquote {
-      border-left: 4px solid var(--violet-main);
-      padding-left: 12px;
-      color: #555;
-      font-style: italic;
+    p {
+      margin-bottom: 15px;
+    }
+    ul {
+      margin-left: 20px;
     }
 
-    .share-btn {
-      padding: 10px 18px;
+    .box {
+      background: #f6faf7;
+      border: 1px solid #d7e8dc;
+      border-radius: 10px;
+      padding: 20px;
       margin-bottom: 20px;
-      background-color: var(--violet-main);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 1rem;
-      font-weight: 600;
-    }
-    .share-btn:hover {
-      background-color: var(--violet-dark);
     }
 
-    .amazon-link {
-      font-size: 1.15rem;
-      font-weight: bold;
+    .btn {
       display: inline-block;
-      margin: 15px 0;
+      padding: 10px 14px;
+      background: var(--violet-main);
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    .btn:hover {
+      background: var(--violet-dark);
+    }
+
+    .back-links {
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+    .back-links a {
       color: var(--violet-dark);
       text-decoration: none;
+      font-weight: 600;
     }
-    .amazon-link:hover {
+    .back-links a:hover {
       text-decoration: underline;
+    }
+
+    .small {
+      font-size: 0.9rem;
+      color: #555;
     }
 
     footer {
       text-align: center;
-      padding: 20px;
-      background-color: #eee;
       margin-top: 40px;
+      padding: 20px;
+      background: #eee;
+      font-family: Arial;
+      font-size: 0.9rem;
     }
   </style>
 </head>
 
 <body>
 
-<header class="site-header">
-  <div class="header-inner">
-    <div class="logo">Syncras.App</div>
+  <!-- HEADER UNIFICATO -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
 
-    <button class="menu-toggle" onclick="toggleMenu()">Menu <span>☰</span></button>
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
 
-    <nav id="main-nav">
-      <a href="index.html">Home</a>
-      <a href="blog.html">Blog</a>
-      <a href="offerte.html">Offerte Amazon</a>
+      <nav id="main-nav">
+         <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="offerte.html">Offerte Amazon</a>
+        <a href="categorie.html">Categorie</a>
+        <a href="curiosita.html">Curiosità &amp; Misteri</a>
+        <a href="quiz.html">Test SmartShop</a>
+        <a href="chi.html">Chi siamo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="back-links">
+      ← <a href="index.html">Torna alla Home</a> |
+      <a href="blog.html">Vai al Blog</a> |
       <a href="categorie.html">Categorie</a>
-      <a href="chi.html">Chi siamo</a>
-    </nav>
-  </div>
-</header>
+    </div>
 
-<script>
-function toggleMenu() {
-  document.body.classList.toggle('nav-open');
-}
+    <h1>Meglio spendere tanto per il telefono o cambiarlo più spesso?/h1>
+
+    <button id="shareBtn"
+      style="background: var(--violet-main); color:white; padding:10px 15px; border:none;
+             border-radius:6px; cursor:pointer; margin-bottom:20px; font-weight:600;">
+      📎 Condividi questa guida
+    </button>
+
+    <script>
+      const shareBtn = document.getElementById('shareBtn');
+      if (navigator.share) {
+        shareBtn.addEventListener('click', () => {
+          navigator.share({
+            title: "Guida Smart TV 2025 – Versione ironica",
+            text: "Guida divertente e pratica per scegliere la TV giusta in base al budget.",
+            url: window.location.href
+          });
+        });
+      } else {
+        // se non supportato (PC ecc.) nascondo il bottone
+        shareBtn.style.display = "none";
+      }
+    </script>
+    <script>
+  function toggleMenu() {
+    document.body.classList.toggle('nav-open');
+  }
 </script>
 
 <main>
