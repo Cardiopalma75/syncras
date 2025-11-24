@@ -1,55 +1,159 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
+<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://syncras.app/</loc>
+    <loc>https://syncras.app/index.html</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.00</priority>
   </url>
-
   <url>
     <loc>https://syncras.app/blog.html</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.95</priority>
   </url>
-
   <url>
     <loc>https://syncras.app/categorie.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
   </url>
-
   <url>
     <loc>https://syncras.app/offerte.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
   </url>
-
+  <url>
+    <loc>https://syncras.app/curiosita.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://syncras.app/misteri.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.80</priority>
+  </url>
   <url>
     <loc>https://syncras.app/chi.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
   </url>
-
-  <!-- ARTICOLI -->
   <url>
-    <loc>https://syncras.app/smart-tv-guida-ironica.html</loc>
+    <loc>https://syncras.app/chi-siamo.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.60</priority>
+  </url>
+  <url>
+    <loc>https://syncras.app/quiz.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://syncras.app/privacy.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.30</priority>
+  </url>
+  <url>
+    <loc>https://syncras.app/cookie.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.30</priority>
+  </url>
+  <url>
+    <loc>https://syncras.app/disclaimer-amazon.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.30</priority>
+  </url>
+  <url>
+    <loc>https://syncras.app/note-legali.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.30</priority>
+  </url>
+  <url>
+    <loc>https://syncras.app/lavastoviglie-45-o-60-cm.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://syncras.app/lavare-a-mano-o-lavastoviglie-guida.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://syncras.app/lavatrice-quanti-kg-servono-davvero.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://syncras.app/fotovoltaico-4kw-accumulo-10kwh.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://syncras.app/resistenza-termosifone-fotovoltaico.html</loc>
-  </url>
-  <url>
-    <loc>https://syncras.app/robot-cucina-economici-2025.html</loc>
-  </url>
-  <url>
-    <loc>https://syncras.app/smartphone-sotto-200-euro-2025.html</loc>
-  </url>
-  <url>
-    <loc>https://syncras.app/cuffie-wireless-sotto-50-euro-2025.html</loc>
-  </url>
-
-  <!-- PAGINE CATEGORIA TV / SMARTPHONE se esistono -->
-  <url>
-    <loc>https://syncras.app/smart-tv-sotto-700.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
   </url>
   <url>
     <loc>https://syncras.app/smart-tv-700-1200.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://syncras.app/smart-tv-sotto-700.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://syncras.app/smart-tv-economica-o-tv-buona-con-box.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://syncras.app/smart-tv-guida-ironica.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
   </url>
   <url>
     <loc>https://syncras.app/smart-tv-top.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
   </url>
-
+  <url>
+    <loc>https://syncras.app/smartphone-200.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://syncras.app/smartphone-400.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://syncras.app/smartphone-600.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://syncras.app/smartphone-sotto-200-euro-2025.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://syncras.app/smartphone-spendere-tanto-o-cambiarlo.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://syncras.app/smartphone-top.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://syncras.app/cuffie-wireless-sotto-50-euro-2025.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://syncras.app/robot-cucina-economici-2025.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
 </urlset>
+
