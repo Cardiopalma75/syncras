@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lavastoviglie 45 o 60 cm? Guida ironica per non sbagliare | Syncras.App</title>
+  <meta name="description" content="Meglio una lavastoviglie slim da 45 cm o una da 60 cm? Guida semplice e ironica per scegliere in base a spazi, piatti, famiglia e consumi reali.">
+  <meta name="robots" content="index,follow">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-59D9XRYKF3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-59D9XRYKF3');
+  </script>
+
+  <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --bg-page: #F7F7FB;
+      --text-main: #403E43;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg-page);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      color: var(--text-main);
+    }
+
+    /* HEADER VIOLA UNIFICATO */
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color: white;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+    #main-nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding-bottom: 2px;
+    }
+    #main-nav a:hover {
+      text-decoration: underline;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .menu-toggle span {
+      margin-left: 4px;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        margin: 0 auto;
+        max-width: 1180px;
+        flex-direction: column;
+        background-color: var(--violet-dark);
+        padding: 10px 16px 12px 16px;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
+      }
+      #main-nav a {
+        padding: 6px 0;
+      }
+      body.nav-open #main-nav {
+        display: flex;
+      }
+      .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+
+    main {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    h1, h2, h3 {
+      color: var(--violet-dark);
+    }
+    p {
+      margin-bottom: 15px;
+    }
+    ul {
+      margin-left: 20px;
+    }
+
+    .box {
+      background: #f6faf7;
+      border: 1px solid #d7e8dc;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .tip-box {
+      background: #F6F4FF;
+      border-left: 4px solid #6C5CE7;
+      padding: 14px;
+      margin: 25px 0;
+      border-radius: 8px;
+    }
+
+    .mini-test {
+      background: #FDFBF6;
+      border-left: 4px solid #EAB308;
+      padding: 14px;
+      margin: 25px 0;
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 14px;
+      background: var(--violet-main);
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+      margin-top: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    .btn:hover {
+      background: var(--violet-dark);
+    }
+
+    a.button {
+      display:inline-block;
+      background:#6C5CE7;
+      color:white;
+      padding:10px 18px;
+      border-radius:8px;
+      text-decoration:none;
+      font-weight:bold;
+      margin-top:10px;
+    }
+
+    .back-links {
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+    .back-links a {
+      color: var(--violet-dark);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .back-links a:hover {
+      text-decoration: underline;
+    }
+
+    .small {
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 0.95rem;
+    }
+    th, td {
+      border: 1px solid #E5E7EB;
+      padding: 8px 10px;
+      text-align: left;
+    }
+    th {
+      background: #F3F4FF;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      background: #eee;
+      font-family: Arial;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER UNIFICATO -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
+
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
+
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="offerte.html">Offerte Amazon</a>
+        <a href="categorie.html">Categorie</a>
+        <a href="curiosita.html">Curiosità &amp; Misteri</a>
+        <a href="quiz.html">Test SmartShop</a>
+        <a href="chi.html">Chi siamo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="back-links">
+      ← <a href="index.html">Torna alla Home</a> |
+      <a href="blog.html">Vai al Blog</a> |
+      <a href="categorie.html">Categorie</a>
+    </div>
+
+    <h1>Lavastoviglie 45 o 60 cm? La guida ironica per non sbagliare</h1>
+
+    <button id="shareBtn"
+      style="background: var(--violet-main); color:white; padding:10px 15px; border:none;
+             border-radius:6px; cursor:pointer; margin-bottom:20px; font-weight:600;">
+      📎 Condividi questa guida
+    </button>
+
+    <script>
+      const shareBtn = document.getElementById('shareBtn');
+      if (navigator.share) {
+        shareBtn.addEventListener('click', () => {
+          navigator.share({
+            title: "Lavastoviglie 45 o 60 cm? Guida ironica per non sbagliare",
+            text: "Guida semplice e ironica per capire se ti conviene una lavastoviglie da 45 o da 60 cm.",
+            url: window.location.href
+          });
+        });
+      } else {
+        // se non supportato (PC ecc.) nascondo il bottone
+        shareBtn.style.display = "none";
+      }
+    </script>
+
+    <h2>La scena classica: tu, il negozio e i 15 modelli uguali</h2>
+    <p>
+      Entri (o apri il sito) e vedi file intere di lavastoviglie.  
+      Tutte bianche, tutte lucide, tutte con quella faccia da:
+      <em>“Io lavo meglio delle altre, fidati”</em>.
+    </p>
+    <p>
+      Poi leggi le misure: <strong>45 cm</strong>, <strong>60 cm</strong>, “slim”, “standard”, “9 coperti”, “14 coperti”…  
+      e tu pensi:
+      <br>
+      <em>“Senti, a me basta che lavi, che non faccia rumore e che non si inchiodi dopo due mesi…”</em>
+    </p>
+    <p>
+      In questa guida non ti prometto miracoli, ma una cosa sì:
+      alla fine saprai se per te ha più senso una <strong>slim da 45 cm</strong>
+      o una <strong>classica da 60 cm</strong>, senza fare l’esame di idraulica.
+    </p>
+
+    <hr>
+
+    <h2>1. Lavastoviglie da 45 cm – la “slim” che si infila ovunque</h2>
+    <p>
+      La lavastoviglie da 45 cm è quella “magrolina” della famiglia.  
+      Si infila nelle cucine strette, tra il mobile e il muro, e ti fa sentire moderno
+      senza dover abbattere una parete.
+    </p>
+
+    <h3>Per chi ha senso la 45 cm</h3>
+    <ul>
+      <li>Coppie o famiglie da 2–3 persone.</li>
+      <li>Cucina piccola, spazi stretti, colonne già piene.</li>
+      <li>Chi cucina poco ma sporca piatti “strategici”: tazze, piatti, qualche pentola.</li>
+    </ul>
+
+    <h3>Capacità pratica</h3>
+    <ul>
+      <li>In genere: circa <strong>9–10 coperti</strong> nominali.</li>
+      <li>Tradotto: piatti e bicchieri ok, le pentole grosse devi incastrarle con pazienza zen.</li>
+      <li>Se cucini spesso al forno, rischi il famoso Tetris delle teglie.</li>
+    </ul>
+
+    <h3>Pro</h3>
+    <ul>
+      <li>Occupa meno spazio (45 cm sono oro in certe cucine).</li>
+      <li>Consuma leggermente meno acqua per ciclo rispetto a una 60 cm.</li>
+      <li>Ideale se lavi tutti i giorni e non accumuli montagne di piatti.</li>
+    </ul>
+
+    <h3>Contro</h3>
+    <ul>
+      <li>Se siete in 4–5, la riempi in un pasto e devi farla partire spesso.</li>
+      <li>Le pentole grandi occupano subito mezza macchina.</li>
+      <li>Se arrivano amici a cena, preparati a due lavaggi di fila.</li>
+    </ul>
+
+    <div class="box">
+      <strong>Traduzione ironica:</strong> la 45 cm è perfetta per chi ha poco spazio e una vita “normale” in cucina.  
+      Se però la domenica ti trasformi in cuoco da trattoria, ti starà stretta come i jeans pre-pandemia.
+    </div>
+
+    <h2>2. Lavastoviglie da 60 cm – la “full size” da battaglia</h2>
+    <p>
+      La 60 cm è la lavastoviglie “seria”.  
+      Quella che guarda la montagna di piatti della domenica e dice:
+      <em>“Tranquillo, ci penso io”</em>.
+    </p>
+
+    <h3>Per chi ha senso la 60 cm</h3>
+    <ul>
+      <li>Famiglie da 3–5 persone (o anche di più).</li>
+      <li>Chi cucina spesso: primi, secondi, dolci, esperimenti vari.</li>
+      <li>Chi odia vedere piatti in giro e vuole lavare tutto in una volta sola.</li>
+    </ul>
+
+    <h3>Capacità pratica</h3>
+    <ul>
+      <li>In genere: <strong>12–14 coperti</strong> nominali.</li>
+      <li>Tradotto: servizio completo per la famiglia + teglia + pentola della pasta.</li>
+      <li>Meno incastri impossibili, più “butta dentro e chiudi”.</li>
+    </ul>
+
+    <h3>Pro</h3>
+    <ul>
+      <li>Spazio a volontà: piatti grandi, pentole, insalatiere, tutto dentro.</li>
+      <li>Se fai un lavaggio al giorno, lavi davvero tutto.</li>
+      <li>Ideale se inviti spesso parenti/amici e la tavola sembra un matrimonio.</li>
+    </ul>
+
+    <h3>Contro</h3>
+    <ul>
+      <li>Serve spazio in cucina: quei 15 cm in più bisogna averli.</li>
+      <li>Se siete in 1–2, rischi di farla partire mezza vuota o lasciare piatti giorni dentro.</li>
+      <li>Un po’ più acqua a ciclo rispetto a una 45 cm (anche se le moderne sono abbastanza ottimizzate).</li>
+    </ul>
+
+    <div class="box">
+      <strong>Traduzione ironica:</strong> la 60 cm è per chi vive la cucina sul serio.  
+      Se dopo pranzo il lavello sembra la zona lavaggio di un ristorante, è lei che ti salva la giornata.
+    </div>
+
+    <h2>3. Consumi: quanto “beve” davvero?</h2>
+    <p>
+      Dimentichiamoci le schede tecniche perfette e guardiamo la vita reale:
+    </p>
+
+    <ul>
+      <li>Una lavastoviglie moderna in classe alta consuma in genere circa <strong>0,6–0,9 kWh</strong> a ciclo eco.</li>
+      <li>L’acqua sta spesso tra i <strong>9 e i 12 litri</strong> a ciclo (a volte meno).</li>
+      <li>La differenza tra 45 e 60 cm non è enorme: quello che conta è quanto la riempi.</li>
+    </ul>
+
+    <p>
+      Se una 60 cm la fai partire sempre mezza vuota, sprechi.  
+      Se una 45 cm la fai partire piena una volta al giorno, sei efficiente come un tedesco con il cronometro.
+    </p>
+
+    <h3>Rumore: il dettaglio che scopri la sera</h3>
+    <ul>
+      <li>Valori tipici: tra <strong>43 e 48 dB</strong> per i modelli moderni più silenziosi.</li>
+      <li>Sotto i 45 dB senti più la TV che la lavastoviglie.</li>
+      <li>Sopra i 48 dB, la sera tardi la “senti” eccome.</li>
+    </ul>
+
+    <div class="box">
+      Se la fai partire la notte o mentre guardi un film, guarda sempre la rumorosità in dB.  
+      È il numero che ti separa dalla pace… o dal divano occupato dai piatti.
+    </div>
+
+    <h2>4. Tabella veloce: 45 cm vs 60 cm</h2>
+
+    <table>
+      <tr>
+        <th>Caratteristica</th>
+        <th>Lavastoviglie 45 cm (slim)</th>
+        <th>Lavastoviglie 60 cm (standard)</th>
+      </tr>
+      <tr>
+        <td>Larghezza</td>
+        <td>Circa 45 cm</td>
+        <td>Circa 60 cm</td>
+      </tr>
+      <tr>
+        <td>Coperti nominali</td>
+        <td>9–10</td>
+        <td>12–14</td>
+      </tr>
+      <tr>
+        <td>Persone in casa</td>
+        <td>1–3</td>
+        <td>3–5 (o più)</td>
+      </tr>
+      <tr>
+        <td>Uso tipico</td>
+        <td>Piatti di tutti i giorni, poche pentole grandi</td>
+        <td>Pranzi/cene completi, molte stoviglie</td>
+      </tr>
+      <tr>
+        <td>Consumi per ciclo</td>
+        <td>Leggermente inferiori, ma con più cicli se sei in tanti</td>
+        <td>Leggermente superiori, ma spesso 1 solo ciclo al giorno</td>
+      </tr>
+      <tr>
+        <td>Spazio richiesto</td>
+        <td>Perfetta per cucine piccole</td>
+        <td>Serve una base da 60 cm libera</td>
+      </tr>
+      <tr>
+        <td>Gestione ospiti</td>
+        <td>Due lavaggi se siete tanti</td>
+        <td>Spesso basta un ciclo</td>
+      </tr>
+    </table>
+
+    <h2>5. Mini test: tu sei da 45 o da 60?</h2>
+
+    <div class="mini-test">
+      <p><strong>Rispondi sinceramente (anche solo nella testa):</strong></p>
+      <ol>
+        <li>
+          Quante persone mangiano di solito in casa?
+          <br>• 1–2 → punto per la <strong>45 cm</strong><br>
+          • 3–5 → punto per la <strong>60 cm</strong>
+        </li>
+        <li>
+          Quante pentole/grandi teglie usi in una giornata “normale”?
+          <br>• 0–1 → regge la <strong>45 cm</strong><br>
+          • 2 o più → meglio la <strong>60 cm</strong>
+        </li>
+        <li>
+          La cucina è:
+          <br>• Piccola/stretta → <strong>45 cm</strong><br>
+          • Normale/ampia → puoi andare di <strong>60 cm</strong>
+        </li>
+        <li>
+          Odii vedere piatti nel lavello?
+          <br>• Poco, posso aspettare → ok 45 cm<br>
+          • Tanto, voglio svuotare tutto subito → 60 cm tutta la vita
+        </li>
+      </ol>
+      <p>
+        Se hai più risposte “45” → la slim è la tua miglior alleata.  
+        Se hai più risposte “60” → non pensarci troppo, vai di full size.  
+        Se sei a metà… benvenuto nel club degli indecisi cronici.
+      </p>
+    </div>
+
+    <div class="tip-box">
+      <h3>💬 Consiglio da amico</h3>
+      <p>
+        Se la cucina è piccola e siete in pochi, una <strong>45 cm</strong> usata bene è più che sufficiente.  
+        Se invece la tua lavastoviglie dovrà affrontare teglie, pranzi di famiglia e piatti infiniti,
+        una <strong>60 cm</strong> ti farà risparmiare tempo, nervi e litigi sul lavello pieno.
+      </p>
+    </div>
+
+    <div class="tip-box">
+      <h3>❓ Ancora indeciso?</h3>
+      <p>
+        Se dopo tutto questo sei ancora lì che ci pensi, fai un salto al
+        <strong>Test SmartShop</strong>: qualche domanda veloce per capire
+        se hai un profilo da “minimalista” o da “lavastoviglie da battaglia”.
+      </p>
+      <a href="quiz.html" class="button">👉 Fai il Test SmartShop</a>
+    </div>
+
+    <p class="small">
+      <strong>Tag:</strong> lavastoviglie 45 cm, lavastoviglie 60 cm, guida elettrodomestici, cucina, scelta lavastoviglie
+    </p>
+
+  </main>
+
+  <script>
+    function toggleMenu() {
+      document.body.classList.toggle('nav-open');
+    }
+  </script>
+
+  <footer>
+    © 2025 Syncras.App — Tutti i diritti riservati<br>
+    <div style="margin-top:8px;">
+      <a href="privacy.html">Privacy Policy</a> |
+      <a href="cookie.html">Cookie Policy</a> |
+      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
+      <a href="note-legali.html">Note Legali</a>
+    </div>
+    <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+      senza alcun costo aggiuntivo per l’utente.  
+      Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+      è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+    </p>
+  </footer>
+
+</body>
+</html>
