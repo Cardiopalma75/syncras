@@ -1,9 +1,11 @@
- html>
+<!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Guida Smart TV 2025 – Versione ironica | Syncras.App</title>
+  <title>Meglio spendere tanto per il telefono o cambiarlo più spesso? | Syncras.App</title>
+  <meta name="description" content="Conviene comprare un telefono caro che duri anni o uno più economico da cambiare più spesso? Guida ironica e pratica in stile Syncras.">
+  <meta name="robots" content="index,follow">
 
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-59D9XRYKF3"></script>
@@ -37,6 +39,8 @@
       color: white;
       padding: 12px 14px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+      position: relative;
+      z-index: 100;
     }
     .header-inner {
       max-width: 1180px;
@@ -169,15 +173,6 @@
       font-size: 0.9rem;
       color: #555;
     }
-
-    footer {
-      text-align: center;
-      margin-top: 40px;
-      padding: 20px;
-      background: #eee;
-      font-family: Arial;
-      font-size: 0.9rem;
-    }
   </style>
 </head>
 
@@ -193,7 +188,7 @@
       </button>
 
       <nav id="main-nav">
-         <a href="index.html">Home</a>
+        <a href="index.html">Home</a>
         <a href="blog.html">Blog</a>
         <a href="offerte.html">Offerte Amazon</a>
         <a href="categorie.html">Categorie</a>
@@ -211,34 +206,13 @@
       <a href="categorie.html">Categorie</a>
     </div>
 
-    <h1>Meglio spendere tanto per il telefono o cambiarlo più spesso?/h1>
+    <h1>Meglio spendere tanto per il telefono o cambiarlo più spesso?</h1>
 
     <button id="shareBtn"
       style="background: var(--violet-main); color:white; padding:10px 15px; border:none;
              border-radius:6px; cursor:pointer; margin-bottom:20px; font-weight:600;">
       📎 Condividi questa guida
     </button>
-
-    <script>
-      const shareBtn = document.getElementById('shareBtn');
-      if (navigator.share) {
-        shareBtn.addEventListener('click', () => {
-          navigator.share({
-            title: "Guida Smart TV 2025 – Versione ironica",
-            text: "Guida divertente e pratica per scegliere la TV giusta in base al budget.",
-            url: window.location.href
-          });
-        });
-      } else {
-        // se non supportato (PC ecc.) nascondo il bottone
-        shareBtn.style.display = "none";
-      }
-    </script>
-    <script>
-  function toggleMenu() {
-    document.body.classList.toggle('nav-open');
-  }
-</script>
 
 <main>
 
