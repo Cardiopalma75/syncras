@@ -1297,27 +1297,45 @@
       </p>
     </div>
   </footer>
-  <script>
-  // Carica i primi 3 articoli pubblicati dal blog
+ <script>
   fetch('blog.html')
     .then(response => response.text())
     .then(html => {
       const parser = new DOMParser();
       const doc = parser.parseFromString(html, 'text/html');
 
-      // Prendi tutte le .post-card
+      // Prendi i primi 3 articoli dal blog
       const cards = Array.from(doc.querySelectorAll('.post-card')).slice(0, 3);
 
       const container = document.getElementById('latest-guides');
       if (!container) return;
 
       cards.forEach(card => {
-        // Clona la card così com'è
-        container.appendChild(card.cloneNode(true));
+        const li = document.createElement('li');
+        li.className = 'post-card';
+
+        const link = card.querySelector('a');
+        const title = card.querySelector('h3')?.innerText || "";
+        const meta = card.querySelector('.post-meta')?.innerText || "";
+        const desc = card.querySelector('p')?.innerText || "";
+
+        li.innerHTML = `
+          <a class="post-card-link" href="${link.getAttribute('href')}">
+            <div class="post-thumb"></div>
+            <div class="post-content">
+              <h3>${title}</h3>
+              <div class="post-meta">${meta}</div>
+              <p>${desc}</p>
+            </div>
+          </a>
+        `;
+
+        container.appendChild(li);
       });
     })
     .catch(error => console.error('Errore caricamento ultime guide:', error));
 </script>
+
 
 </body>
 </html>
