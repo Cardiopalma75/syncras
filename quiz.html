@@ -17,6 +17,49 @@
   </script>
 
   <style>
+/* BOX JUMP LINK – “Vai direttamente al test che ti interessa” */
+.jump-box {
+  background: #f6f4ff;
+  border: 1px solid #d9d2ff;
+  padding: 18px 20px;
+  border-radius: 14px;
+  margin-bottom: 25px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+}
+
+.jump-box strong {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: #4b3acb;
+}
+
+.jump-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  font-size: 0.92rem;
+}
+
+.jump-links a {
+  display: flex;
+  align-items: center;
+  background: white;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #e0dbff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+  text-decoration: none;
+  color: #4b3acb;
+  font-weight: 600;
+}
+
+.jump-links a:hover {
+  background: #f0eaff;
+  border-color: #c9bfff;
+}
+
+    
     :root {
       --violet-main: #6C5CE7;
       --violet-dark: #4B3ACB;
@@ -400,22 +443,23 @@
       </p>
     </div>
 
-    <!-- INDEX DEI TEST -->
-    <div style="
-      background:#F6F4FF;
-      border:1px solid #DDD7FF;
-      padding:15px;
-      border-radius:12px;
-      margin-bottom:25px;">
-      <strong>Vai direttamente al test che ti interessa:</strong><br><br>
+   <!-- INDEX DEI TEST (versione pro) -->
+<div class="test-index-box">
+  <div class="test-index-title">Scegli il tuo test SmartShop</div>
+  <div class="test-index-subtitle">
+    Vai dritto al punto: tocca il test che ti serve.
+  </div>
 
-      <a href="#test-acquisto" style="margin-right:12px;">🟣 Test Acquisto</a>
-      <a href="#test-smartphone" style="margin-right:12px;">📱 Test Smartphone</a>
-      <a href="#test-giga-smartphone" style="margin-right:12px;">💾 Test Giga Smartphone</a>
-      <a href="#test-lavatrice" style="margin-right:12px;">🧺 Test Lavatrice</a>
-      <a href="#test-tv" style="margin-right:12px;">📺 Test TV</a>
-      <a href="#test-lavastoviglie">🧼 Test Lavastoviglie 45 o 60 cm</a>
-    </div>
+  <div class="test-index-links">
+    <a href="#test-acquisto" class="test-pill">🟣 Test Acquisto</a>
+    <a href="#test-smartphone" class="test-pill">📱 Test Smartphone</a>
+    <a href="#test-giga-smartphone" class="test-pill">💾 Test Giga Smartphone</a>
+    <a href="#test-lavatrice" class="test-pill">🧺 Test Lavatrice</a>
+    <a href="#test-tv" class="test-pill">📺 Test TV</a>
+    <a href="#test-lavastoviglie" class="test-pill">🧼 Lavastoviglie 45 / 60 cm</a>
+  </div>
+</div>
+
 
     <div class="tests-layout">
       <!-- COLONNA TEST -->
