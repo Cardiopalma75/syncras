@@ -443,71 +443,28 @@
 
     /* SEZIONE: Top 10 scelte Syncras */
 
-    .top10-section {
-      max-width: 1100px;
-      margin: 28px auto 22px auto;
-      padding: 18px 18px 20px;
-      border-radius: 16px;
-      background: #ffffff;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.05);
-      border: 1px solid #eeeafc;
-    }
+    .top10-item a {
+  display: flex;
+  gap: 12px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  background: #f6f4ff;
+  border-radius: 10px;
+  border: 1px solid #ddd7ff;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+  text-decoration: none;
+  color: inherit;
+}
 
-    .top10-section h2 {
-      margin-top: 0;
-      margin-bottom: 6px;
-    }
+.top10-item a:hover {
+  background: #e9e2ff;
+  cursor: pointer;
+}
 
-    .top10-section .subtitle {
-      margin-bottom: 14px;
-      font-size: 0.95rem;
-      color: #555;
-    }
+.top10-item:last-child a {
+  margin-bottom: 0;
+}
 
-    .top10-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    /* QUI RIPORTO LE CARD DELLA TOP 10 */
-
-    .top10-item {
-      display: flex;
-      gap: 12px;
-      padding: 12px 14px;
-      margin-bottom: 10px;
-      background: #f6f4ff;
-      border-radius: 10px;
-      border: 1px solid #ddd7ff;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
-    }
-
-    .top10-item:last-child {
-      margin-bottom: 0;
-    }
-
-    .top10-rank {
-      font-weight: bold;
-      font-size: 1.15rem;
-      min-width: 40px;
-      color: var(--violet-dark);
-    }
-
-    .top10-content h3 {
-      margin: 0 0 4px 0;
-    }
-
-    .top10-content p {
-      margin: 0 0 4px 0;
-      font-size: 0.95rem;
-    }
-
-    .top10-content a {
-      font-size: 0.9rem;
-      text-decoration: underline;
-      color: var(--violet-dark);
-    }
 
     .top10-content a:hover {
       text-decoration: none;
