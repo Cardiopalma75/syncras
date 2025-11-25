@@ -833,7 +833,7 @@
     </div>
   </footer>
 
-  <script>
+   <script>
     function toggleMenu() {
       document.body.classList.toggle('nav-open');
     }
@@ -910,6 +910,11 @@
       }
     };
 
+    // 🔗 Link generici usati nei test
+    const AMAZON_GENERIC_LINK = "https://amzn.to/4ikAX7D";
+    const AMAZON_SMARTPHONE_64_128 = "https://amzn.to/48hZzJs";
+    const AMAZON_SMARTPHONE_256    = "https://amzn.to/4ioryMm";
+
     function updateAmazonBox(testName, key) {
       const box = document.getElementById('amazon-' + testName);
       if (!box) return;
@@ -964,6 +969,12 @@
         el.textContent = 'Rosso: qui suona forte il campanello dell’acquisto d’impulso. Meglio fermarsi e ripensarci tra qualche giorno.';
         el.classList.add('result-bad');
       }
+
+      // 🔗 link Amazon generico dopo il risultato
+      el.innerHTML +=
+        '<br><br><a href="' + AMAZON_GENERIC_LINK +
+        '" target="_blank" style="color:#4B3ACB;font-weight:bold;">' +
+        '🔗 Cerca il prodotto su Amazon</a>';
     }
 
     /* ==============================
@@ -993,11 +1004,10 @@
       }
 
       const budget = document.querySelector('input[name="s_q1"]:checked').value;
-      const uso = document.querySelector('input[name="s_q2"]:checked').value;
+      const uso    = document.querySelector('input[name="s_q2"]:checked').value;
 
       let fasciaKey = 'media';
 
-      // Caso speciale: budget basso + uso leggero
       if (budget === '1' && uso === '1') {
         el.textContent = 'Per il tuo uso uno smartphone sotto i 200€ è più che sufficiente. Prima di cambiare, valuta se quello che hai ti limita davvero.';
         el.classList.add('result-good');
@@ -1026,7 +1036,7 @@
     function valutaTestLavastoviglie() {
       const domande = ['lv_q1','lv_q2','lv_q3','lv_q4','lv_q5','lv_q6'];
       let punteggio = 0;
-      let risposte = 0;
+      let risposte  = 0;
 
       domande.forEach(function(nome) {
         const sel = document.querySelector('input[name="' + nome + '"]:checked');
@@ -1081,7 +1091,7 @@
       ];
 
       let punteggio = 0;
-      let risposte = 0;
+      let risposte  = 0;
 
       domande.forEach(function(nome) {
         const sel = document.querySelector('input[name="' + nome + '"]:checked');
@@ -1106,18 +1116,15 @@
         el.textContent = '➡ Consigliata: lavatrice da 7–8 kg (uso leggero, nucleo piccolo, consumi bassi).';
         el.classList.add('result-good');
         key = '7-8';
-      } 
-      else if (punteggio <= 18) {
+      } else if (punteggio <= 18) {
         el.textContent = '➡ Consigliata: lavatrice da 8–9 kg (equilibrata, perfetta per la maggior parte delle famiglie).';
         el.classList.add('result-medium');
         key = '8-9';
-      } 
-      else if (punteggio <= 23) {
+      } else if (punteggio <= 23) {
         el.textContent = '➡ Consigliata: lavatrice da 9–10 kg (famiglie più numerose, lavaggi frequenti, capi pesanti).';
         el.classList.add('result-medium');
         key = '9-10';
-      } 
-      else {
+      } else {
         el.textContent = '➡ Consigliata: lavatrice da 10–11 kg (piumoni matrimoniali, carichi importanti, massima praticità).';
         el.classList.add('result-good');
         key = '10-11';
@@ -1150,13 +1157,13 @@
         return;
       }
 
-      const budget = parseInt(document.querySelector('input[name="t_q1"]:checked').value, 10);
-      const distanza = parseInt(document.querySelector('input[name="t_q2"]:checked').value, 10);
-      const luce = parseInt(document.querySelector('input[name="t_q3"]:checked').value, 10);
-      const uso = parseInt(document.querySelector('input[name="t_q4"]:checked').value, 10);
+      const budget      = parseInt(document.querySelector('input[name="t_q1"]:checked').value, 10);
+      const distanza    = parseInt(document.querySelector('input[name="t_q2"]:checked').value, 10);
+      const luce        = parseInt(document.querySelector('input[name="t_q3"]:checked').value, 10);
+      const uso         = parseInt(document.querySelector('input[name="t_q4"]:checked').value, 10);
       const sensibilita = parseInt(document.querySelector('input[name="t_q5"]:checked').value, 10);
-      const velocita = parseInt(document.querySelector('input[name="t_q6"]:checked').value, 10);
-      const durata = parseInt(document.querySelector('input[name="t_q7"]:checked').value, 10);
+      const velocita    = parseInt(document.querySelector('input[name="t_q6"]:checked').value, 10);
+      const durata      = parseInt(document.querySelector('input[name="t_q7"]:checked').value, 10);
 
       let key = 'media';
 
@@ -1229,25 +1236,43 @@
       const el = document.getElementById('giga-result');
       el.className = 'test-result';
       let messaggio = '';
+      let linkAmazon = '';
 
       if (punteggio <= 3) {
         el.classList.add('result-good');
         messaggio =
           'Verde: usi lo smartphone in modo leggero. ' +
           'Con 64 GB te la cavi, con 128 GB vivi ancora più sereno.';
+
+        linkAmazon =
+          '<br><br><a href="' + AMAZON_SMARTPHONE_64_128 +
+          '" target="_blank" style="color:#4B3ACB;font-weight:bold;">' +
+          '🔗 Vedi smartphone 64–128 GB su Amazon</a>';
+
       } else if (punteggio <= 7) {
         el.classList.add('result-medium');
         messaggio =
           'Giallo: fai foto, video e usi chat e app in modo “normale moderno”. ' +
           '128 GB sono il punto di equilibrio giusto per te.';
+
+        linkAmazon =
+          '<br><br><a href="' + AMAZON_SMARTPHONE_64_128 +
+          '" target="_blank" style="color:#4B3ACB;font-weight:bold;">' +
+          '🔗 Vedi smartphone 128 GB su Amazon</a>';
+
       } else {
         el.classList.add('result-bad');
         messaggio =
           'Rosso: sei ufficialmente un mangia-giga. Video, giochi, chat infinite… ' +
           'per evitare la guerra con il messaggio “memoria piena”, meglio puntare su 256 GB.';
+
+        linkAmazon =
+          '<br><br><a href="' + AMAZON_SMARTPHONE_256 +
+          '" target="_blank" style="color:#4B3ACB;font-weight:bold;">' +
+          '🔗 Vedi smartphone 256 GB su Amazon</a>';
       }
 
-      el.textContent = messaggio;
+      el.innerHTML = messaggio + linkAmazon;
     }
 
     /* ==============================
@@ -1261,6 +1286,7 @@
       }
     });
   </script>
+
 </body>
 </html>
 
