@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perché il Wi-Fi prende bene in salotto e muore in camera da letto? | Syncras.App</title>
+  <meta name="description" content="Wi-Fi fortissimo in salotto e inesistente in camera? Guida ironica e pratica per capire perché succede e cosa puoi fare senza diventare ingegnere.">
+  <meta name="robots" content="index,follow">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-59D9XRYKF3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-59D9XRYKF3');
+  </script>
+
+  <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --bg-page: #F7F7FB;
+      --text-main: #403E43;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: var(--bg-page);
+      margin: 0;
+      padding: 0;
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    /* HEADER MODERNO VIOLA */
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color: white;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+    #main-nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    #main-nav a:hover {
+      text-decoration: underline;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    .menu-toggle span {
+      margin-left: 4px;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0; right: 0; top: 56px;
+        background-color: var(--violet-dark);
+        padding: 10px 16px;
+        flex-direction: column;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+      }
+      body.nav-open #main-nav {
+        display: flex;
+      }
+      .menu-toggle {
+        display: inline-flex;
+      }
+    }
+
+    /* CONTENUTO */
+    main {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    h1, h2, h3 {
+      color: var(--violet-dark);
+    }
+
+    blockquote {
+      border-left: 4px solid var(--violet-main);
+      padding-left: 12px;
+      color: #555;
+      font-style: italic;
+    }
+
+    .share-btn {
+      padding: 10px 18px;
+      margin-bottom: 20px;
+      background-color: var(--violet-main);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .share-btn:hover {
+      background-color: var(--violet-dark);
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #eee;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo">Syncras.App</div>
+
+    <button class="menu-toggle" onclick="toggleMenu()">Menu <span>☰</span></button>
+
+    <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="offerte.html">Offerte Amazon</a>
+        <a href="categorie.html">Categorie</a>
+        <a href="curiosita.html">Curiosità &amp; Misteri</a>
+        <a href="quiz.html">Test SmartShop</a>
+        <a href="chi.html">Chi siamo</a>
+    </nav>
+  </div>
+</header>
+
+<script>
+function toggleMenu() {
+  document.body.classList.toggle('nav-open');
+}
+</script>
+
+<main>
+
+  <h1>Perché il Wi-Fi prende bene in salotto e muore in camera da letto?</h1>
+
+  <button class="share-btn"
+    onclick="navigator.share({
+      title: document.title,
+      text: 'Guarda questo articolo su Syncras:',
+      url: window.location.href
+    }).catch(() => { alert('Copia questo link:\\n' + window.location.href); })">
+    🔗 Condividi questo articolo
+  </button>
+
+  <h2>In salotto “razzo”, in camera “edge”: il mistero domestico</h2>
+
+  <p>
+    La scena è sempre la stessa: in salotto il Wi-Fi vola, video in alta definizione,
+    tutto fluido… ti sposti in camera da letto e, puff,
+    <strong>manca solo il rumore del modem a 56k</strong>.
+  </p>
+
+  <blockquote>“In questa casa arriva prima la pizza che il segnale Wi-Fi.”</blockquote>
+
+  <p>
+    Non è sfortuna, non è il destino cinico e baro, non è il vicino che ti ruba il segnale.
+    Sono semplicemente <strong>le gioie della fisica</strong> applicate all’appartamento medio italiano.
+  </p>
+
+  <hr>
+
+  <h2>Il Wi-Fi non è magia: è una lucina che sbatte contro i muri</h2>
+
+  <p>
+    Immagina il Wi-Fi come una lampadina al centro della casa.
+    Vicino alla lampadina vedi tutto benissimo (salotto).
+    Più ti allontani e più hai:
+  </p>
+
+  <ul>
+    <li><strong>Muri spessi</strong> che sembrano fatti di neutron star;</li>
+    <li><strong>Armadi pieni</strong> che assorbono il segnale e pure i sogni;</li>
+    <li><strong>Porte chiuse</strong> “per non far uscire il caldo” ma intanto esce il Wi-Fi;</li>
+    <li><strong>Corridori lunghi</strong> dove il segnale arriva già stanco e chiede un caffè.</li>
+  </ul>
+
+  <blockquote>Il Wi-Fi ama gli spazi aperti. Noi gli diamo corridoi, cantonate e tre pareti portanti.</blockquote>
+
+  <hr>
+
+  <h2>I veri nemici del Wi-Fi (spoiler: non è il gatto)</h2>
+
+  <p>Ecco perché in camera da letto il segnale muore come la voglia di alzarsi il lunedì mattina:</p>
+
+  <ul>
+    <li><strong>Distanza</strong>: ogni metro in più è un colpo al segnale. Salotto vicino, camera lontana = baratro.</li>
+    <li><strong>Muri portanti e cemento armato</strong>: per la casa sono sicurezza, per il Wi-Fi sono un muro di scudi.</li>
+    <li><strong>Elettrodomestici</strong> (frigo, microonde, ecc.): fanno la loro vita, ma creano disturbi.</li>
+    <li><strong>Piani diversi</strong>: se il router sta al piano di sotto, tu al piano di sopra e in mezzo ci sono travi, cemento e armadi… auguri.</li>
+  </ul>
+
+  <p>
+    Risultato: il letto diventa ufficialmente
+    <strong>zona a copertura limitata</strong>.
+  </p>
+
+  <hr>
+
+  <h2>Test casalingo “alla buona”: niente strumenti, solo giri per casa</h2>
+
+  <p>
+    Vuoi capire davvero dove il Wi-Fi muore? Prova questo test scientifico certificato dal
+    <em>“Ministero del Buon Senso”</em>:
+  </p>
+
+  <ol>
+    <li>
+      Vai vicino al router e guarda le “tacche” sul telefono.
+      Devono essere quasi piene: lì il segnale è al massimo.
+    </li>
+    <li>
+      Cammina lentamente verso la camera da letto,
+      tenendo lo schermo acceso.
+      Ogni volta che passi una porta o un muro, osserva se le tacche scendono.
+    </li>
+    <li>
+      Arrivato in camera, fai partire un video.
+      <ul>
+        <li>Parte subito? Sei fortunato.</li>
+        <li>Parte, ma a pezzetti? Sei nella zona “forse”.</li>
+        <li>Non parte? Benvenuto nel <strong>triangolo delle Bermuda domestico</strong>.</li>
+      </ul>
+    </li>
+  </ol>
+
+  <blockquote>Se il video si blocca e ti guarda fisso, non è un thriller psicologico. È il Wi-Fi che chiede aiuto.</blockquote>
+
+  <hr>
+
+  <h2>Cosa puoi fare senza diventare ingegnere</h2>
+
+  <p>
+    Niente formule, niente grafici: solo cose pratiche da umano normale
+    che vuole solo scrollare in pace prima di dormire.
+  </p>
+
+  <h3>1. Sposta il router in un punto più centrale</h3>
+
+  <p>
+    Se è infilato dietro alla TV, dentro un mobile, vicino al pavimento,
+    sta già partendo svantaggiato.
+    Mettilo:
+  </p>
+
+  <ul>
+    <li>il più possibile <strong>al centro della casa</strong>;</li>
+    <li>un po’ più <strong>in alto</strong> (mensola, mobile, non per terra);</li>
+    <li>lontano da muri enormi e metallo ovunque.</li>
+  </ul>
+
+  <h3>2. Evita il “sarcofago del router”</h3>
+
+  <p>
+    Se lo chiudi in un mobile “perché è brutto da vedere”,
+    è come mettere una persona in un armadio e chiederle di parlare forte.
+    Lascialo respirare, a vista, anche se esteticamente non vince concorsi.
+  </p>
+
+  <h3>3. Occhio alle stanze “bunker”</h3>
+
+  <p>
+    Se la camera è chiusa da muro portante, armadio gigante e porta sempre serrata,
+    il segnale fa fatica davvero.
+    A volte basta:
+  </p>
+
+  <ul>
+    <li>lasciare la porta socchiusa quando usi il telefono;</li>
+    <li>spostare leggermente il letto o il comodino;</li>
+    <li>evitare di piazzare dietro la testata del letto armadi pieni di oggetti metallici.</li>
+  </ul>
+
+  <h3>4. Se proprio non basta… rinforza il segnale</h3>
+
+  <p>
+    Quando la casa è grande o il router è lontanissimo dalla camera,
+    puoi valutare soluzioni che “portano” il segnale più in là,
+    come ripetitori o sistemi che sfruttano l’impianto elettrico.
+    Sono tutti strumenti che aiutano il Wi-Fi a non morire appena vede un muro.
+  </p>
+
+  <blockquote>Traduzione: invece di litigare con il telefono, fai squadra con la fisica.</blockquote>
+
+  <hr>
+
+  <h2>Riassunto “da bar”</h2>
+
+  <ul>
+    <li>In salotto il Wi-Fi va forte perché è vicino alla “sorgente”.</li>
+    <li>In camera da letto arrivano solo le briciole, dopo muri, porte e mobili.</li>
+    <li>Più la casa è piena e spezzata, più al segnale viene voglia di andare a vivere altrove.</li>
+    <li>Già solo spostare il router in un punto migliore può cambiare la situazione.</li>
+    <li>Se non basta, puoi rinforzare il segnale con dispositivi dedicati.</li>
+  </ul>
+
+  <p>
+    Morale: non è che il Wi-Fi ce l’abbia con la tua camera da letto.
+    È che tra lui e te ci sono troppi ostacoli.
+    Un po’ come la dieta a dicembre.
+  </p>
+
+  <hr>
+
+  <h2>Nota legale</h2>
+
+  <p style="font-size:0.9rem; color:#555;">
+    I contenuti presenti su Syncras.App hanno scopo puramente informativo e ironico.
+    Non forniamo consulenze professionali e non ci assumiamo responsabilità su eventuali scelte,
+    modifiche alla rete domestica o utilizzo di dispositivi.
+    Prima di cambiare posizione a modem, prese o impianti, verifica sempre le istruzioni del produttore
+    e, se hai dubbi, chiedi a un tecnico qualificato. Decidi sempre in autonomia.
+  </p>
+
+</main>
+
+<footer>
+  © 2025 Syncras.App — Tutti i diritti riservati<br>
+
+  <div style="margin-top:8px;">
+    <a href="privacy.html">Privacy Policy</a> |
+    <a href="cookie.html">Cookie Policy</a> |
+    <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
+    <a href="note-legali.html">Note Legali</a>
+  </div>
+
+  <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+      senza alcun costo aggiuntivo per l’utente.  
+      Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+      è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+    </p>
+</footer>
+
+</body>
+</html>
