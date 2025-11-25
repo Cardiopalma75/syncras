@@ -33,25 +33,97 @@
       line-height: 1.6;
     }
 
+    /* HEADER UGUALE AL SITO PRINCIPALE */
+
     .site-header {
       background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
       color: white;
       padding: 12px 14px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.15);
     }
+
     .header-inner {
       max-width: 1180px;
       margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 16px;
     }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+
     #main-nav a {
       color: white;
       text-decoration: none;
       font-weight: 600;
-      margin-left: 16px;
+      padding-bottom: 2px;
     }
+
+    #main-nav a:hover {
+      text-decoration: underline;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .menu-toggle span {
+      margin-left: 4px;
+      font-size: 1.1rem;
+    }
+
+    /* VERSIONE MOBILE: SOLO LOGO + BOTTONE MENU, NAV A TENDINA */
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        margin: 0 auto;
+        max-width: 1180px;
+        flex-direction: column;
+        background-color: var(--violet-dark);
+        padding: 10px 16px 12px 16px;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
+      }
+
+      #main-nav a {
+        padding: 6px 0;
+      }
+
+      body.nav-open #main-nav {
+        display: flex;
+      }
+
+      .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+
+    /* CONTENUTO ARTICOLO */
 
     main {
       max-width: 900px;
@@ -83,6 +155,26 @@
       font-weight: bold;
       margin-bottom: 20px;
     }
+
+    /* FOOTER BASE */
+
+    footer {
+      text-align: center;
+      padding: 20px 12px 24px;
+      font-size: 0.85rem;
+      color: #f3eaff;
+      background: #2b1840;
+      margin-top: 30px;
+    }
+
+    footer a {
+      color: #f3eaff;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 
@@ -110,166 +202,172 @@
   </div>
 </header>
 
-
 <main>
 
-<h1>Perché il telecomando sparisce sempre quando c’è qualcosa di interessante?</h1>
+  <h1>Perché il telecomando sparisce sempre quando c’è qualcosa di interessante?</h1>
 
-<button class="share-btn"
-  onclick="navigator.share({
-    title: document.title,
-    text: 'Guarda questo articolo su Syncras:',
-    url: window.location.href
-  }).catch(() => { alert('Copia questo link:\\n' + window.location.href); })">
-  🔗 Condividi questo articolo
-</button>
+  <button class="share-btn"
+    onclick="navigator.share({
+      title: document.title,
+      text: 'Guarda questo articolo su Syncras:',
+      url: window.location.href
+    }).catch(() => { alert('Copia questo link:\\n' + window.location.href); })">
+    🔗 Condividi questo articolo
+  </button>
 
-<h2>Il mistero più grande del salotto italiano</h2>
+  <h2>Il mistero più grande del salotto italiano</h2>
 
-<p>
-Il telecomando è come un parente: quando non ti serve ce l’hai sempre davanti,  
-quando ti serve davvero… <strong>sparito</strong>.
-</p>
+  <p>
+    Il telecomando è come un parente: quando non ti serve ce l’hai sempre davanti,
+    quando ti serve davvero… <strong>sparito</strong>.
+  </p>
 
-<blockquote>
-“Era qui un secondo fa, giuro!” — Tutti noi, ogni sera.
-</blockquote>
+  <blockquote>
+    “Era qui un secondo fa, giuro!” — Tutti noi, ogni sera.
+  </blockquote>
 
-<p>
-Il bello è che sparisce sempre nei momenti seri:
-</p>
+  <p>
+    Il bello è che sparisce sempre nei momenti seri:
+  </p>
 
-<ul>
-  <li>inizia il film che aspettavi da mesi;</li>
-  <li>c’è la scena clou della serie e vuoi alzare il volume;</li>
-  <li>entra in stanza qualcuno a fare domande esistenziali proprio ORA.</li>
-</ul>
+  <ul>
+    <li>inizia il film che aspettavi da mesi;</li>
+    <li>c’è la scena clou della serie e vuoi alzare il volume;</li>
+    <li>entra in stanza qualcuno a fare domande esistenziali proprio ORA.</li>
+  </ul>
 
-<p>
-E lì parte la danza del salotto:  
-<strong>alzi i cuscini, sollevi la coperta, infili la mano nei buchi del divano</strong>  
-(sperando di non trovare ossa di dinosauro o biglietti del 2004).
-</p>
+  <p>
+    E lì parte la danza del salotto:
+    <strong>alzi i cuscini, sollevi la coperta, infili la mano nei buchi del divano</strong>
+    (sperando di non trovare ossa di dinosauro o biglietti del 2004).
+  </p>
 
-<hr>
+  <hr>
 
-<h2>I principali sospettati (scientificamente provati)</h2>
+  <h2>I principali sospettati (scientificamente provati)</h2>
 
-<h3>1. Il divano</h3>
-<p>
-Il divano italiano ha una sua vita privata: mangia telecomandi.  
-Ci sono divani che potrebbero partecipare a “C’è posta per te” con tutto quello che hanno dentro.
-</p>
+  <h3>1. Il divano</h3>
+  <p>
+    Il divano italiano ha una sua vita privata: mangia telecomandi.
+    Ci sono divani che potrebbero partecipare a “C’è posta per te” con tutto quello che hanno dentro.
+  </p>
 
-<h3>2. Le pieghe delle coperte</h3>
-<p>
-Se c’è una piega, ci finisce dentro.  
-È una legge della natura, tipo la gravità ma più crudele.
-</p>
+  <h3>2. Le pieghe delle coperte</h3>
+  <p>
+    Se c’è una piega, ci finisce dentro.
+    È una legge della natura, tipo la gravità ma più crudele.
+  </p>
 
-<h3>3. La famiglia</h3>
-<p>
-Qualcuno lo prende, cambia canale, poi lo appoggia  
-nel <strong>posto più improbabile dell’universo</strong>: sul frigorifero, sul letto, nell’ingresso.  
-Ovunque, tranne dove dovrebbe stare.
-</p>
+  <h3>3. La famiglia</h3>
+  <p>
+    Qualcuno lo prende, cambia canale, poi lo appoggia
+    nel <strong>posto più improbabile dell’universo</strong>: sul frigorifero, sul letto, nell’ingresso.
+    Ovunque, tranne dove dovrebbe stare.
+  </p>
 
-<h3>4. Tu stesso</h3>
-<p>
-Sì, purtroppo succede.  
-Lo tieni in mano, ti alzi per fare una cosa, lo poggi non si sa dove, poi torni e dici:  
-<strong>“Chi l’ha preso?!”</strong>  
-E sei stato tu.
-</p>
+  <h3>4. Tu stesso</h3>
+  <p>
+    Sì, purtroppo succede.
+    Lo tieni in mano, ti alzi per fare una cosa, lo poggi non si sa dove, poi torni e dici:
+    <strong>“Chi l’ha preso?!”</strong>
+    E sei stato tu.
+  </p>
 
-<hr>
+  <hr>
 
-<h2>Perché sparisce solo nei momenti importanti?</h2>
+  <h2>Perché sparisce solo nei momenti importanti?</h2>
 
-<p>
-Per lo stesso motivo per cui:
-</p>
+  <p>
+    Per lo stesso motivo per cui:
+  </p>
 
-<ul>
-  <li>il corriere suona quando sei in bagno,</li>
-  <li>il telefono squilla quando hai le mani sporche,</li>
-  <li>la pubblicità parte quando apri la porta a qualcuno.</li>
-</ul>
+  <ul>
+    <li>il corriere suona quando sei in bagno,</li>
+    <li>il telefono squilla quando hai le mani sporche,</li>
+    <li>la pubblicità parte quando apri la porta a qualcuno.</li>
+  </ul>
 
-<p>
-È la famosa <strong>Legge dell’Imbarazzo Domestico</strong>:  
-non succede quasi mai… tranne quando è più scomodo possibile.
-</p>
+  <p>
+    È la famosa <strong>Legge dell’Imbarazzo Domestico</strong>:
+    non succede quasi mai… tranne quando è più scomodo possibile.
+  </p>
 
-<blockquote>
-Il telecomando percepisce il momento. Ha un sesto senso comico.
-</blockquote>
+  <blockquote>
+    Il telecomando percepisce il momento. Ha un sesto senso comico.
+  </blockquote>
 
-<hr>
+  <hr>
 
-<h2>Come evitarlo (soluzioni da essere umano, non da astronauta)</h2>
+  <h2>Come evitarlo (soluzioni da essere umano, non da astronauta)</h2>
 
-<h3>1. Scegli un “posto sacro”</h3>
-<p>
-Un punto preciso, deciso da tutti.  
-Se diventa un rituale, sparisce molto meno.
-</p>
+  <h3>1. Scegli un “posto sacro”</h3>
+  <p>
+    Un punto preciso, deciso da tutti.
+    Se diventa un rituale, sparisce molto meno.
+  </p>
 
-<h3>2. Niente più “lancio sul divano”</h3>
-<p>
-Il divano è un buco nero.  
-Lanciare il telecomando sopra equivale a dirgli:  
-<strong>“Vai, vivi libero!”</strong>
-</p>
+  <h3>2. Niente più “lancio sul divano”</h3>
+  <p>
+    Il divano è un buco nero.
+    Lanciare il telecomando sopra equivale a dirgli:
+    <strong>“Vai, vivi libero!”</strong>
+  </p>
 
-<h3>3. Una piccola mensola “telecomando only”</h3>
-<p>
-Funziona più di quanto pensi.  
-Il 70% dei problemi domestici sparisce con una mensolina dedicata.
-</p>
+  <h3>3. Una piccola mensola “telecomando only”</h3>
+  <p>
+    Funziona più di quanto pensi.
+    Il 70% dei problemi domestici sparisce con una mensolina dedicata.
+  </p>
 
-<hr>
+  <hr>
 
-<h2>Conclusione da bar</h2>
+  <h2>Conclusione da bar</h2>
 
-<p>
-Il telecomando non scompare per magia:  
-è il salotto italiano che è un parco giochi per gli oggetti.  
-E noi, tutte le sere, partecipiamo alla stessa scena teatrale.
-</p>
+  <p>
+    Il telecomando non scompare per magia:
+    è il salotto italiano che è un parco giochi per gli oggetti.
+    E noi, tutte le sere, partecipiamo alla stessa scena teatrale.
+  </p>
 
-<p>
-Però ammettiamolo:  
-<strong>quando finalmente lo ritrovi tra i cuscini, quel momento vale oro.</strong>
-</p>
+  <p>
+    Però ammettiamolo:
+    <strong>quando finalmente lo ritrovi tra i cuscini, quel momento vale oro.</strong>
+  </p>
 
-<hr>
+  <hr>
 
-<h2>Nota legale</h2>
-<p style="font-size:0.9rem; color:#555;">
-I contenuti presenti su Syncras.App hanno scopo informativo e ironico.
-Non sostituiscono consigli professionali, sono racconti della vita quotidiana italiana
-scritti col sorriso. Usa sempre buon senso nelle scelte domestiche.
-</p>
+  <h2>Nota legale</h2>
+  <p style="font-size:0.9rem; color:#555;">
+    I contenuti presenti su Syncras.App hanno scopo informativo e ironico.
+    Non sostituiscono consigli professionali, sono racconti della vita quotidiana italiana
+    scritti col sorriso. Usa sempre buon senso nelle scelte domestiche.
+  </p>
 
 </main>
 
 <footer>
-    © 2025 Syncras.App — Tutti i diritti riservati<br>
-    <div style="margin-top:8px;">
-      <a href="privacy.html">Privacy Policy</a> |
-      <a href="cookie.html">Cookie Policy</a> |
-      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
-      <a href="note-legali.html">Note Legali</a>
-    </div>
-    <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
-      Syncras.App partecipa al Programma Affiliazione Amazon EU.  
-      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
-      senza alcun costo aggiuntivo per l’utente.  
-      Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
-      è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
-    </p>
+  © 2025 Syncras.App — Tutti i diritti riservati<br>
+  <div style="margin-top:8px;">
+    <a href="privacy.html">Privacy Policy</a> |
+    <a href="cookie.html">Cookie Policy</a> |
+    <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
+    <a href="note-legali.html">Note Legali</a>
+  </div>
+  <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
+    Syncras.App partecipa al Programma Affiliazione Amazon EU.
+    Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+    senza alcun costo aggiuntivo per l’utente.
+    Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+    è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+  </p>
 </footer>
+
+<script>
+  function toggleMenu() {
+    document.body.classList.toggle('nav-open');
+  }
+</script>
 
 </body>
 </html>
+
