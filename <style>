@@ -91,17 +91,25 @@
 <header class="site-header">
   <div class="header-inner">
     <div class="logo">Syncras.App</div>
+
+    <button class="menu-toggle" type="button"
+            onclick="toggleMenu()"
+            aria-label="Apri o chiudi il menu di navigazione">
+      Menu <span>☰</span>
+    </button>
+
     <nav id="main-nav">
       <a href="index.html">Home</a>
       <a href="blog.html">Blog</a>
       <a href="offerte.html">Offerte Amazon</a>
       <a href="categorie.html">Categorie</a>
-      <a href="curiosita.html">Curiosità & Misteri</a>
+      <a href="curiosita.html">Curiosità &amp; Misteri</a>
       <a href="quiz.html">Test SmartShop</a>
       <a href="chi.html">Chi siamo</a>
     </nav>
   </div>
 </header>
+
 
 <main>
 
