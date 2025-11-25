@@ -387,6 +387,7 @@
         min-height: 130px;
       }
     }
+
     /* ULTIME GUIDE */
 
     .latest-section {
@@ -440,12 +441,8 @@
       text-decoration: underline;
     }
 
-/* SEZIONE: Top 10 scelte Syncras */
+    /* SEZIONE: Top 10 scelte Syncras */
 
-
-
-
-/* SEZIONE: Top 10 scelte Syncras */
     .top10-section {
       max-width: 1100px;
       margin: 28px auto 22px auto;
@@ -473,15 +470,21 @@
       margin: 0;
     }
 
+    /* QUI RIPORTO LE CARD DELLA TOP 10 */
+
     .top10-item {
       display: flex;
       gap: 12px;
-      padding: 10px 0;
-      border-bottom: 1px solid #eee;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+      background: #f6f4ff;
+      border-radius: 10px;
+      border: 1px solid #ddd7ff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
     }
 
     .top10-item:last-child {
-      border-bottom: none;
+      margin-bottom: 0;
     }
 
     .top10-rank {
@@ -699,69 +702,70 @@
     .footer-bottom p {
       margin: 4px 0;
     }
-/* SEZIONE CURISITÀ & MISTERI DALLA HOME */
 
-.discover-extra {
-  margin-top: 28px;
-  padding-top: 18px;
-  border-top: 1px solid #e5e7eb;
-}
+    /* SEZIONE CURISITÀ & MISTERI DALLA HOME */
 
-.discover-extra h3 {
-  margin-top: 0;
-  margin-bottom: 8px;
-}
+    .discover-extra {
+      margin-top: 28px;
+      padding-top: 18px;
+      border-top: 1px solid #e5e7eb;
+    }
 
-.discover-extra p.section-intro {
-  margin-top: 0;
-  margin-bottom: 14px;
-  font-size: 0.95rem;
-  color: #4b5563;
-}
+    .discover-extra h3 {
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
 
-.extra-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 14px;
-}
+    .discover-extra p.section-intro {
+      margin-top: 0;
+      margin-bottom: 14px;
+      font-size: 0.95rem;
+      color: #4b5563;
+    }
 
-.extra-card {
-  background: #f9fafb;
-  border-radius: 10px;
-  padding: 12px 14px;
-  border: 1px solid #e5e7eb;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-}
+    .extra-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 14px;
+    }
 
-.extra-tag {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: #6b7280;
-  margin-bottom: 4px;
-}
+    .extra-card {
+      background: #f9fafb;
+      border-radius: 10px;
+      padding: 12px 14px;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
 
-.extra-card h4 {
-  margin: 0 0 6px 0;
-  font-size: 1.05rem;
-  color: var(--violet-dark);
-}
+    .extra-tag {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #6b7280;
+      margin-bottom: 4px;
+    }
 
-.extra-card p {
-  margin: 0 0 6px 0;
-  font-size: 0.9rem;
-}
+    .extra-card h4 {
+      margin: 0 0 6px 0;
+      font-size: 1.05rem;
+      color: var(--violet-dark);
+    }
 
-.extra-card a {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--violet-dark);
-  text-decoration: none;
-}
+    .extra-card p {
+      margin: 0 0 6px 0;
+      font-size: 0.9rem;
+    }
 
-.extra-card a:hover {
-  text-decoration: underline;
-}
+    .extra-card a {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--violet-dark);
+      text-decoration: none;
+    }
+
+    .extra-card a:hover {
+      text-decoration: underline;
+    }
 
   </style>
 </head>
@@ -836,35 +840,36 @@
             </div>
           </div>
         </section>
-<div class="syn-box syn-calcolo" style="margin-top:15px;">
-  <div class="syn-box-title">
-    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-      <path d="M9 9a3 3 0 0 1 5.83 1c0 2-2.33 2.5-2.33 4.25" stroke-width="2" stroke-linecap="round"></path>
-      <circle cx="12" cy="18" r="1" fill="currentColor"></circle>
-      <circle cx="12" cy="12" r="9" stroke-width="2"></circle>
-    </svg>
-    <span>Fai il Test prima dell’acquisto</span>
-  </div>
-  <div class="syn-box-text">
-    Vuoi capire in 30 secondi se il tuo prossimo acquisto ha senso davvero?<br>
-    👉 <a href="#quiz-smartshop"><strong>Prova ora il Mini Test SmartShop</strong></a>
-  </div>
-</div>
-   <div class="syn-box syn-calcolo" style="margin-top:15px;">
-  <div class="syn-box-title">
-    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-      <path d="M9 9a3 3 0 0 1 5.83 1c0 2-2.33 2.5-2.33 4.25" stroke-width="2" stroke-linecap="round"></path>
-      <circle cx="12" cy="18" r="1" fill="currentColor"></circle>
-      <circle cx="12" cy="12" r="9" stroke-width="2"></circle>
-    </svg>
-    <span>Fai il Test prima dell’acquisto</span>
-  </div>
-  <div class="syn-box-text">
-    Vuoi una verifica seria sui tuoi prossimi acquisti?<br>
-    👉 <a href="quiz.html"><strong>Vai ai Test SmartShop completi</strong></a>
-  </div>
-</div>
-     
+
+        <div class="syn-box syn-calcolo" style="margin-top:15px;">
+          <div class="syn-box-title">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M9 9a3 3 0 0 1 5.83 1c0 2-2.33 2.5-2.33 4.25" stroke-width="2" stroke-linecap="round"></path>
+              <circle cx="12" cy="18" r="1" fill="currentColor"></circle>
+              <circle cx="12" cy="12" r="9" stroke-width="2"></circle>
+            </svg>
+            <span>Fai il Test prima dell’acquisto</span>
+          </div>
+          <div class="syn-box-text">
+            Vuoi capire in 30 secondi se il tuo prossimo acquisto ha senso davvero?<br>
+            👉 <a href="#quiz-smartshop"><strong>Prova ora il Mini Test SmartShop</strong></a>
+          </div>
+        </div>
+
+        <div class="syn-box syn-calcolo" style="margin-top:15px;">
+          <div class="syn-box-title">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M9 9a3 3 0 0 1 5.83 1c0 2-2.33 2.5-2.33 4.25" stroke-width="2" stroke-linecap="round"></path>
+              <circle cx="12" cy="18" r="1" fill="currentColor"></circle>
+              <circle cx="12" cy="12" r="9" stroke-width="2"></circle>
+            </svg>
+            <span>Fai il Test prima dell’acquisto</span>
+          </div>
+          <div class="syn-box-text">
+            Vuoi una verifica seria sui tuoi prossimi acquisti?<br>
+            👉 <a href="quiz.html"><strong>Vai ai Test SmartShop completi</strong></a>
+          </div>
+        </div>
 
         <!-- ARTICOLI IN EVIDENZA -->
         <section class="highlight-grid">
@@ -914,9 +919,8 @@
             </article>
           </div>
         </section>
-        
 
-               <!-- ULTIME GUIDE -->
+        <!-- ULTIME GUIDE -->
         <section class="latest-section">
           <h3>Ultime guide pubblicate</h3>
           <ul id="latest-guides" class="post-list">
@@ -924,38 +928,36 @@
           </ul>
         </section>
 
-   <!-- SEZIONE CURISITÀ & MISTERI -->
-<section class="discover-extra">
-  <h3>Curiosità & Misteri</h3>
-  <p class="section-intro">
-    Non solo guide agli acquisti: qui trovi anche <strong>curiosità</strong> e 
-    <strong>misteri moderni</strong> legati a tecnologia, energia e vita quotidiana.
-  </p>
+        <!-- SEZIONE CURISITÀ & MISTERI -->
+        <section class="discover-extra">
+          <h3>Curiosità & Misteri</h3>
+          <p class="section-intro">
+            Non solo guide agli acquisti: qui trovi anche <strong>curiosità</strong> e 
+            <strong>misteri moderni</strong> legati a tecnologia, energia e vita quotidiana.
+          </p>
 
-  <div class="extra-grid">
-    <article class="extra-card">
-      <div class="extra-tag">Curiosità</div>
-      <h4>Piccole cose che nessuno ti ha mai spiegato bene</h4>
-      <p>
-        Wi-Fi che prende solo in certi punti, batteria che crolla al 20%, consumi strani in casa:
-        qui finiscono le curiosità “da bar” ma spiegate con calma.
-      </p>
-      <a href="curiosita.html">Vai alla pagina Curiosità →</a>
-    </article>
+          <div class="extra-grid">
+            <article class="extra-card">
+              <div class="extra-tag">Curiosità</div>
+              <h4>Piccole cose che nessuno ti ha mai spiegato bene</h4>
+              <p>
+                Wi-Fi che prende solo in certi punti, batteria che crolla al 20%, consumi strani in casa:
+                qui finiscono le curiosità “da bar” ma spiegate con calma.
+              </p>
+              <a href="curiosita.html">Vai alla pagina Curiosità →</a>
+            </article>
 
-    <article class="extra-card">
-      <div class="extra-tag">Misteri</div>
-      <h4>Misteri moderni senza diventare complottisti</h4>
-      <p>
-        Alexa che sembra leggerti nel pensiero, pubblicità troppo precise, bollette che esplodono:
-        qui proviamo a capirci qualcosa senza fare drammi.
-      </p>
-      <a href="misteri.html">Vai alla pagina Misteri →</a>
-    </article>
-  </div>
-</section>
-
-
+            <article class="extra-card">
+              <div class="extra-tag">Misteri</div>
+              <h4>Misteri moderni senza diventare complottisti</h4>
+              <p>
+                Alexa che sembra leggerti nel pensiero, pubblicità troppo precise, bollette che esplodono:
+                qui proviamo a capirci qualcosa senza fare drammi.
+              </p>
+              <a href="misteri.html">Vai alla pagina Misteri →</a>
+            </article>
+          </div>
+        </section>
 
         <!-- SEZIONE: Top 10 scelte Syncras -->
         <section class="top10-section">
@@ -1141,27 +1143,26 @@
           </ol>
         </div>
 
-       <div class="syn-box syn-best">
-  <div class="syn-box-title">
-    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-      <path d="M4 19h16" stroke-width="2" stroke-linecap="round"></path>
-      <path d="M7 15V7m5 8V5m5 10V9" stroke-width="2" stroke-linecap="round"></path>
-    </svg>
-    <span>Le 3 domande più usate in USA</span>
-  </div>
-  <div class="syn-box-text">
-    I siti americani le usano per evitare acquisti inutili.<br>
-    <ul style="margin:6px 0 0 1rem; padding:0; font-size:0.85rem;">
-      <li>👉 Mi risolve un problema reale o solo un capriccio?</li>
-      <li>👉 È davvero il momento giusto per comprarlo?</li>
-      <li>👉 Esiste di meglio allo stesso prezzo (spoiler: quasi sempre sì)?</li>
-    </ul>
-    <br>
-    Vuoi vedere che voto prendi?<br>
-    👉 <a href="quiz.html"><strong>Fai il Test SmartShop</strong></a>
-  </div>
-</div>
-
+        <div class="syn-box syn-best">
+          <div class="syn-box-title">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M4 19h16" stroke-width="2" stroke-linecap="round"></path>
+              <path d="M7 15V7m5 8V5m5 10V9" stroke-width="2" stroke-linecap="round"></path>
+            </svg>
+            <span>Le 3 domande più usate in USA</span>
+          </div>
+          <div class="syn-box-text">
+            I siti americani le usano per evitare acquisti inutili.<br>
+            <ul style="margin:6px 0 0 1rem; padding:0; font-size:0.85rem;">
+              <li>👉 Mi risolve un problema reale o solo un capriccio?</li>
+              <li>👉 È davvero il momento giusto per comprarlo?</li>
+              <li>👉 Esiste di meglio allo stesso prezzo (spoiler: quasi sempre sì)?</li>
+            </ul>
+            <br>
+            Vuoi vedere che voto prendi?<br>
+            👉 <a href="quiz.html"><strong>Fai il Test SmartShop</strong></a>
+          </div>
+        </div>
 
         <div class="syn-box syn-best">
           <div class="syn-box-title">
@@ -1289,48 +1290,48 @@
       </p>
     </div>
   </footer>
-<script>
-  fetch('blog.html')
-    .then(response => response.text())
-    .then(html => {
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, 'text/html');
 
-      // Prendi i primi 3 articoli dal blog
-      const cards = Array.from(doc.querySelectorAll('.post-card')).slice(0, 3);
+  <script>
+    fetch('blog.html')
+      .then(response => response.text())
+      .then(html => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
 
-      const container = document.getElementById('latest-guides');
-      if (!container) return;
+        // Prendi i primi 3 articoli dal blog
+        const cards = Array.from(doc.querySelectorAll('.post-card')).slice(0, 3);
 
-      cards.forEach(card => {
-        const link = card.querySelector('a');
-        const title = card.querySelector('h3')?.innerText || "";
-        const meta = card.querySelector('.post-meta')?.innerText || "";
-        const desc = card.querySelector('p')?.innerText || "";
+        const container = document.getElementById('latest-guides');
+        if (!container) return;
 
-        // Ricrea la card nello stile della home
-        const li = document.createElement('li');
-        li.className = 'post-card';
+        cards.forEach(card => {
+          const link = card.querySelector('a');
+          const title = card.querySelector('h3')?.innerText || "";
+          const meta = card.querySelector('.post-meta')?.innerText || "";
+          const desc = card.querySelector('p')?.innerText || "";
 
-        li.innerHTML = `
-          <a class="post-card-link" href="${link.getAttribute('href')}">
-            <div class="post-thumb"></div>
-            <div class="post-content">
-              <h3>${title}</h3>
-              <div class="post-meta">${meta}</div>
-              <p>${desc}</p>
-            </div>
-          </a>
-        `;
+          // Ricrea la card nello stile della home
+          const li = document.createElement('li');
+          li.className = 'post-card';
 
-        container.appendChild(li);
-      });
-    })
-    .catch(error => console.error('Errore caricamento ultime guide:', error));
-</script>
+          li.innerHTML = `
+            <a class="post-card-link" href="${link.getAttribute('href')}">
+              <div class="post-thumb"></div>
+              <div class="post-content">
+                <h3>${title}</h3>
+                <div class="post-meta">${meta}</div>
+                <p>${desc}</p>
+              </div>
+            </a>
+          `;
+
+          container.appendChild(li);
+        });
+      })
+      .catch(error => console.error('Errore caricamento ultime guide:', error));
+  </script>
 </body>
 </html>
-
 
 
 
