@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">  
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Perché il telefono si scalda anche senza usarlo? La spiegazione ironica che nessuno ti dice | Syncras.App</title>
-  <meta name="description" content="Il telefono si scalda anche senza usarlo? Guida ironica e pratica per capire cosa succede davvero, cosa è normale e quando conviene farsi aiutare da un tecnico.">
+  <title>Climatizzatore d’inverno: conviene davvero? La guida ironica ma precisa | Syncras.App</title>
+  <meta name="description" content="Conviene usare il climatizzatore d’inverno? Guida ironica ma chiara: COP, consumi reali, quando ti fa risparmiare e quando invece ti rovina la bolletta.">
   <meta name="robots" content="index,follow">
 
   <!-- Google Analytics -->
@@ -131,62 +131,6 @@
       margin-left: 20px;
     }
 
-    .box {
-      background: #f6faf7;
-      border: 1px solid #d7e8dc;
-      border-radius: 10px;
-      padding: 20px;
-      margin-bottom: 20px;
-    }
-
-    .tip-box {
-      background: #F6F4FF;
-      border-left: 4px solid #6C5CE7;
-      padding: 14px;
-      margin: 25px 0;
-      border-radius: 8px;
-    }
-
-    .mini-test {
-      background: #FDFBF6;
-      border-left: 4px solid #EAB308;
-      padding: 14px;
-      margin: 25px 0;
-      border-radius: 8px;
-      font-size: 0.95rem;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 10px 14px;
-      background: var(--violet-main);
-      color: white;
-      border-radius: 6px;
-      text-decoration: none;
-      margin-top: 8px;
-      font-weight: 600;
-      font-size: 0.95rem;
-    }
-    .btn:hover {
-      background: var(--violet-dark);
-    }
-
-    a.button {
-      display:inline-block;
-      background:#6C5CE7;
-      color:white;
-      padding:10px 18px;
-      border-radius:8px;
-      text-decoration:none;
-      font-weight:bold;
-      margin-top:10px;
-       }   
-    .share-btn {
-  background-color: var(--violet-main) !important;
-  color: white !important;
-}
-
-
     .back-links {
       margin-bottom: 20px;
       font-size: 0.9rem;
@@ -200,9 +144,11 @@
       text-decoration: underline;
     }
 
-    .small {
-      font-size: 0.9rem;
+    blockquote {
+      border-left: 4px solid var(--violet-main);
+      padding-left: 12px;
       color: #555;
+      font-style: italic;
     }
 
     table {
@@ -225,7 +171,7 @@
       margin-top: 40px;
       padding: 20px;
       background: #eee;
-      font-family: Arial;
+      font-family: Arial, sans-serif;
       font-size: 0.9rem;
     }
   </style>
@@ -262,169 +208,183 @@
       <a href="categorie.html">Categorie</a>
     </div>
 
-<h1>Climatizzatore d’inverno: conviene davvero? La guida ironica (ma precisa)</h1>
+    <h1>Climatizzatore d’inverno: conviene davvero? La guida ironica (ma precisa)</h1>
 
-<button class="share-btn"
-  onclick="navigator.share({
-    title: document.title,
-    text: 'Guarda questo articolo su Syncras:',
-    url: window.location.href
-  }).catch(() => { alert('Copia questo link:\\n' + window.location.href); })">
-  🔗 Condividi questo articolo
-</button>
+    <!-- Pulsante CONDIVIDI identico agli altri articoli -->
+    <button id="shareBtn"
+      style="background: var(--violet-main); color:white; padding:10px 15px; border:none;
+             border-radius:6px; cursor:pointer; margin-bottom:20px; font-weight:600;">
+      📎 Condividi questa guida
+    </button>
 
-<h2>Il dilemma italiano: clima o termosifoni?</h2>
+    <script>
+      const shareBtn = document.getElementById('shareBtn');
+      if (navigator.share) {
+        shareBtn.addEventListener('click', () => {
+          navigator.share({
+            title: document.title,
+            text: 'Guarda questo articolo su Syncras:',
+            url: window.location.href
+          });
+        });
+      } else {
+        // Se non supportato (PC ecc.) nascondo il bottone
+        shareBtn.style.display = "none";
+      }
 
-<p>
-Ogni inverno la stessa storia: fuori fa freddo, tu guardi il climatizzatore e pensi:
-<strong>“Lo accendo o rischio una bolletta da trauma emotivo?”</strong>
-</p>
+      function toggleMenu() {
+        document.body.classList.toggle('nav-open');
+      }
+    </script>
 
-<p>
-Tra forum, cugini esperti e vicini “che conoscono un tecnico”, la confusione è totale.
-Qui invece trovi la verità, semplice e senza panico.
-</p>
+    <h2>Il dilemma italiano: clima o termosifoni?</h2>
 
-<hr>
+    <p>
+      Ogni inverno la stessa storia: fuori fa freddo, tu guardi il climatizzatore e pensi:
+      <strong>“Lo accendo o rischio una bolletta da trauma emotivo?”</strong>
+    </p>
 
-<h2>1. Il climatizzatore può convenire? Sì, eccome</h2>
+    <p>
+      Tra forum, cugini esperti e vicini “che conoscono un tecnico”, la confusione è totale.
+      Qui invece trovi la verità, semplice e senza panico.
+    </p>
 
-<p>I climatizzatori moderni sono <strong>pompe di calore</strong>. E sono efficienti sul serio.</p>
+    <hr>
 
-<p>Consumano 1 kWh di elettricità e producono:</p>
+    <h2>1. Il climatizzatore può convenire? Sì, eccome</h2>
 
-<ul>
-  <li>2,5–4 kWh di calore reale</li>
-</ul>
+    <p>I climatizzatori moderni sono <strong>pompe di calore</strong>. E sono efficienti sul serio.</p>
 
-<p>Si chiama <strong>COP</strong>: più è alto, più risparmi.</p>
+    <p>Consumano 1 kWh di elettricità e producono:</p>
 
-<h3>Valori realistici in Italia:</h3>
-<ul>
-  <li>COP 3,5–4,0 a 10°C esterni</li>
-  <li>COP 3,0 a 5°C</li>
-  <li>COP 2,5 a 0°C</li>
-</ul>
+    <ul>
+      <li>2,5–4 kWh di calore reale</li>
+    </ul>
 
-<p>Più fuori fa freddo → meno conviene. Ma spesso conviene comunque.</p>
+    <p>Si chiama <strong>COP</strong>: più è alto, più risparmi.</p>
 
-<hr>
+    <h3>Valori realistici in Italia:</h3>
+    <ul>
+      <li>COP 3,5–4,0 a 10°C esterni</li>
+      <li>COP 3,0 a 5°C</li>
+      <li>COP 2,5 a 0°C</li>
+    </ul>
 
-<h2>2. Quando il climatizzatore conviene davvero</h2>
+    <p>Più fuori fa freddo → meno conviene. Ma spesso conviene comunque.</p>
 
-<h3>✔ Hai il fotovoltaico</h3>
-<p>
-In questo caso è come scaldarsi con l’energia del sole: praticamente gratis.
-Il clima diventa la tua arma segreta.
-</p>
+    <hr>
 
-<h3>✔ L’elettricità costa poco (0,25–0,35 €/kWh)</h3>
-<p>
-In questa fascia, spesso <strong>batte il gas</strong> senza problemi.
-</p>
+    <h2>2. Quando il climatizzatore conviene davvero</h2>
 
-<h3>✔ Vivi al centro-sud o in zona mite</h3>
-<p>
-COP alto tutto l’inverno → risparmio vero.
-</p>
+    <h3>✔ Hai il fotovoltaico</h3>
+    <p>
+      In questo caso è come scaldarsi con l’energia del sole: praticamente gratis.
+      Il clima diventa la tua arma segreta.
+    </p>
 
-<hr>
+    <h3>✔ L’elettricità costa poco (0,25–0,35 €/kWh)</h3>
+    <p>
+      In questa fascia, spesso <strong>batte il gas</strong> senza problemi.
+    </p>
 
-<h2>3. Quando NON conviene usare il climatizzatore</h2>
+    <h3>✔ Vivi al centro-sud o in zona mite</h3>
+    <p>
+      COP alto tutto l’inverno → risparmio vero.
+    </p>
 
-<h3>❌ Temperatura esterna sotto zero</h3>
-<p>Il COP crolla e il consumo sale. Meglio il gas.</p>
+    <hr>
 
-<h3>❌ Casa molto grande o dispersiva</h3>
-<p>Il clima è ideale per ambienti singoli, non castelli medievali.</p>
+    <h2>3. Quando NON conviene usare il climatizzatore</h2>
 
-<h3>❌ Lo imposti a 30°C “perché ho freddo”</h3>
-<p>Errore classico: scalda male e consuma troppo.</p>
+    <h3>❌ Temperatura esterna sotto zero</h3>
+    <p>Il COP crolla e il consumo sale. Meglio il gas.</p>
 
-<hr>
+    <h3>❌ Casa molto grande o dispersiva</h3>
+    <p>Il clima è ideale per ambienti singoli, non castelli medievali.</p>
 
-<h2>4. Confronto vero: climatizzatore vs gas</h2>
+    <h3>❌ Lo imposti a 30°C “perché ho freddo”</h3>
+    <p>Errore classico: scalda male e consuma troppo.</p>
 
-<table border="1" cellpadding="8" style="border-collapse:collapse; margin:15px 0;">
-<tr><th>Tipo</th><th>Costo per 1 kWh di calore</th></tr>
-<tr><td>Climatizzatore COP 3</td><td>~0,10–0,13€</td></tr>
-<tr><td>Metano a 1,20 €/Smc</td><td>~0,16–0,18€</td></tr>
-<tr><td>GPL</td><td>Molto costoso</td></tr>
-<tr><td>Pellet 2025</td><td>~0,12–0,15€</td></tr>
-</table>
+    <hr>
 
-<p>
-Risultato semplice:  
-<strong>senza FV → il clima spesso vince.  
-Con FV → stravince.</strong>
-</p>
+    <h2>4. Confronto vero: climatizzatore vs gas</h2>
 
-<hr>
+    <table>
+      <tr><th>Tipo</th><th>Costo per 1 kWh di calore</th></tr>
+      <tr><td>Climatizzatore COP 3</td><td>~0,10–0,13€</td></tr>
+      <tr><td>Metano a 1,20 €/Smc</td><td>~0,16–0,18€</td></tr>
+      <tr><td>GPL</td><td>Molto costoso</td></tr>
+      <tr><td>Pellet 2025</td><td>~0,12–0,15€</td></tr>
+    </table>
 
-<h2>5. Errori da non fare</h2>
+    <p>
+      Risultato semplice:<br>
+      <strong>senza FV → il clima spesso vince.<br>
+      con FV → stravince.</strong>
+    </p>
 
-<h3>❌ Accendi e spegni di continuo</h3>
-<p>Meglio costante a 20–21°C.</p>
+    <hr>
 
-<h3>❌ Colpo d’aria addosso</h3>
-<p>
-Mai puntarlo sulla faccia: raffredda te invece della stanza.
-</p>
+    <h2>5. Errori da non fare</h2>
 
-<h3>❌ Filtri sporchi</h3>
-<p>
-Un climatizzatore sporco consuma molto di più.
-</p>
+    <h3>❌ Accendi e spegni di continuo</h3>
+    <p>Meglio costante a 20–21°C.</p>
 
-<h3>❌ Modalità AUTO in case vecchie</h3>
-<p>
-Meglio “HEAT” fisso. Funziona meglio.
-</p>
+    <h3>❌ Colpo d’aria addosso</h3>
+    <p>
+      Mai puntarlo sulla faccia: raffredda te invece della stanza.
+    </p>
 
-<hr>
+    <h3>❌ Filtri sporchi</h3>
+    <p>
+      Un climatizzatore sporco consuma molto di più.
+    </p>
 
-<h2>6. Strategia furba per risparmiare molto</h2>
+    <h3>❌ Modalità AUTO in case vecchie</h3>
+    <p>
+      Meglio “HEAT” fisso. Funziona meglio.
+    </p>
 
-<p>
-👉 <strong>Usa il climatizzatore nel pomeriggio</strong> quando il COP è più alto  
-👉 <strong>Usa i termosifoni solo la sera</strong>, nelle ore più fredde
-</p>
+    <hr>
 
-<p>
-È il mix più efficiente per la maggior parte delle case italiane.
-</p>
+    <h2>6. Strategia furba per risparmiare molto</h2>
 
-<hr>
+    <p>
+      👉 <strong>Usa il climatizzatore nel pomeriggio</strong> quando il COP è più alto<br>
+      👉 <strong>Usa i termosifoni solo la sera</strong>, nelle ore più fredde
+    </p>
 
-<h2>Conclusione</h2>
+    <p>
+      È il mix più efficiente per la maggior parte delle case italiane.
+    </p>
 
-<p>
-Il climatizzatore d’inverno conviene eccome…  
-<strong>se lo usi con criterio.</strong>
-</p>
+    <hr>
 
-<p>
-Se invece lo metti a 30°C con la finestra aperta,  
-allora non conviene niente, nemmeno una candela.
-</p>
+    <h2>Conclusione</h2>
 
-<hr>
+    <p>
+      Il climatizzatore d’inverno conviene eccome…  
+      <strong>se lo usi con criterio.</strong>
+    </p>
 
-<h2>Nota legale</h2>
-<p style="font-size:0.9rem; color:#555;">
-Contenuti informativi e ironici.  
-Non sostituiscono consulenze tecniche professionali.
-</p>
+    <p>
+      Se invece lo metti a 30°C con la finestra aperta,  
+      allora non conviene niente, nemmeno una candela.
+    </p>
 
-</main>
+    <hr>
 
-  <script>
-    function toggleMenu() {
-      document.body.classList.toggle('nav-open');
-    }
-  </script>
+    <h2>Nota legale</h2>
+    <p style="font-size:0.9rem; color:#555;">
+      I contenuti presenti su Syncras.App hanno scopo informativo e divulgativo.  
+      Non sostituiscono in alcun modo una consulenza tecnica professionale.  
+      Per decisioni importanti su impianti di riscaldamento, climatizzazione o interventi sull’abitazione,
+      è sempre consigliabile rivolgersi a un tecnico qualificato o a un professionista di fiducia.
+    </p>
 
-<footer>
+  </main>
+
+  <footer>
     © 2025 Syncras.App — Tutti i diritti riservati<br>
     <div style="margin-top:8px;">
       <a href="privacy.html">Privacy Policy</a> |
@@ -436,8 +396,6 @@ Non sostituiscono consulenze tecniche professionali.
       Syncras.App partecipa al Programma Affiliazione Amazon EU.  
       Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
       senza alcun costo aggiuntivo per l’utente.  
-      Per problemi o dubbi specifici relativi a sicurezza del dispositivo, batteria o componenti,
-      è sempre consigliabile rivolgersi a un tecnico qualificato o a un centro assistenza autorizzato.
       Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
       è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
     </p>
@@ -445,3 +403,4 @@ Non sostituiscono consulenze tecniche professionali.
 
 </body>
 </html>
+
