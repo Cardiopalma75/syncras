@@ -872,7 +872,7 @@
 
           <p class="hero-small-note">
             Nessuna email, nessuna registrazione: 30 secondi per salvare il portafoglio
-            (e qualche senso di colpa post-pacco Amazon).
+            (e qualche senso di colpa post).
           </p>
         </section>
 
@@ -1027,16 +1027,7 @@
     </a>
   </li>
 
-            <li class="top10-item">
-              <div class="top10-rank">#4</div>
-              <div class="top10-content">
-                <h3>Robot aspirapolvere – Pavimento sempre fatto</h3>
-                <p>Per chi preferisce trovare il pavimento pulito invece di litigare con l’aspirapolvere tradizionale.</p>
-                <a href="https://www.amazon.it/s?k=robot+aspirapolvere+offerta&tag=mywebcorner4-21" target="_blank" rel="nofollow">
-                  Guarda i robot in offerta su Amazon
-                </a>
-              </div>
-            </li>
+
 
             <!-- Aggiungi qui eventuali altri prodotti fino a #10 -->
           </ol>
