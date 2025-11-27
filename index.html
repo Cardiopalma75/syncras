@@ -179,22 +179,102 @@
       }
     }
 
-    .hero-intro {
-      margin-bottom: 15px;
-      border-bottom: 1px solid #e0e0e0;
-      padding-bottom: 10px;
+    /* HERO CARD NUOVA */
+
+    .hero-card {
+      background: linear-gradient(135deg, #4B3ACB, #6366F1);
+      color: #F9FAFB;
+      border-radius: 16px;
+      padding: 22px 20px 20px;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.25);
+      margin-bottom: 20px;
     }
 
-    .hero-intro h2 {
-      margin-top: 0;
-      margin-bottom: 6px;
+    .hero-title {
+      margin: 0 0 8px 0;
+      font-size: 1.7rem;
+      line-height: 1.25;
+    }
+
+    .hero-subtitle {
+      margin: 0 0 16px 0;
+      font-size: 0.98rem;
+      max-width: 520px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 9px 18px;
+      border-radius: 999px;
+      border: none;
+      background: #FACC15;
+      color: #1F2933;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 6px 14px rgba(15, 23, 42, 0.35);
+      transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.15s ease;
+    }
+
+    .btn-primary:hover {
+      background: #FBBF24;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.4);
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(248, 250, 252, 0.4);
+      background: transparent;
+      color: #E5E7EB;
+      font-size: 0.85rem;
+      cursor: pointer;
+      text-decoration: none;
+      gap: 6px;
+    }
+
+    .btn-ghost:hover {
+      background: rgba(15, 23, 42, 0.25);
+    }
+
+    .btn-ghost-icon {
+      font-size: 1rem;
+    }
+
+    .hero-small-note {
+      font-size: 0.8rem;
+      opacity: 0.9;
+    }
+
+    @media (max-width: 600px) {
+      .hero-title {
+        font-size: 1.4rem;
+      }
+      .hero-subtitle {
+        font-size: 0.9rem;
+      }
     }
 
     .quick-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
-      margin: 10px 0 20px 0;
+      margin: 16px 0 22px 0;
     }
 
     .quick-actions a {
@@ -218,7 +298,7 @@
 
     .smartshop-tips {
       max-width: 1100px;
-      margin: 0 auto 28px auto;
+      margin: 10px auto 28px auto;
       padding: 18px 18px 20px;
       border-radius: 16px;
       background: #f7f2ff;
@@ -238,7 +318,7 @@
 
     .tips-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
       gap: 10px;
     }
 
@@ -443,32 +523,67 @@
 
     /* SEZIONE: Top 10 scelte Syncras */
 
-    .top10-item a {
+    /* SEZIONE: Top 10 scelte Syncras */
+
+.top10-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 18px 0 0 0;
+}
+
+.top10-item {
+  margin-bottom: 12px;
+}
+
+.top10-card {
   display: flex;
   gap: 12px;
   padding: 12px 14px;
-  margin-bottom: 10px;
   background: #f6f4ff;
-  border-radius: 10px;
+  border-radius: 12px;
   border: 1px solid #ddd7ff;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.04);
   text-decoration: none;
   color: inherit;
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
 }
 
-.top10-item a:hover {
+.top10-card:hover {
   background: #e9e2ff;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+  transform: translateY(-1px);
   cursor: pointer;
 }
 
-.top10-item:last-child a {
-  margin-bottom: 0;
+.top10-rank {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #4B3ACB;
+  margin-top: 2px;
+  min-width: 32px;
 }
 
+.top10-content h3 {
+  margin: 0 0 4px 0;
+  font-size: 1rem;
+  color: #1f2933;
+}
 
-    .top10-content a:hover {
-      text-decoration: none;
-    }
+.top10-content p {
+  margin: 0 0 6px 0;
+  font-size: 0.9rem;
+}
+
+.top10-content a {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #4B3ACB;
+  text-decoration: none;
+}
+
+.top10-content a:hover {
+  text-decoration: underline;
+}
 
     /* BOX SYNCRAS (sidebar e box vari) */
 
@@ -563,39 +678,78 @@
       text-decoration: underline;
     }
 
-    /* SEZIONE QUIZ – resa più evidente */
+    /* SEZIONE CURISITÀ & MISTERI DALLA HOME */
 
-    .quiz-section {
-      margin-top: 32px;
-      padding: 18px 16px 20px;
-      border-radius: 16px;
-      background: linear-gradient(135deg, #fdf2ff, #eef2ff);
-      border: 1px solid #e5d3ff;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+    .discover-extra {
+      margin-top: 28px;
+      padding-top: 18px;
+      border-top: 1px solid #e5e7eb;
     }
 
-    .quiz-section h3 {
+    .discover-extra h3 {
       margin-top: 0;
-      margin-bottom: 6px;
-      font-size: 1.1rem;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      margin-bottom: 8px;
     }
 
-    .quiz-section h3 span.badge-quiz {
-      font-size: 0.78rem;
+    .discover-extra p.section-intro {
+      margin-top: 0;
+      margin-bottom: 14px;
+      font-size: 0.95rem;
+      color: #4b5563;
+    }
+
+    .extra-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 14px;
+    }
+
+    .extra-card {
+      background: #f9fafb;
+      border-radius: 10px;
+      padding: 12px 14px;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      cursor: pointer;
+      transition: background 0.15s,
+                  box-shadow 0.15s,
+                  transform 0.15s;
+    }
+
+    .extra-card:hover {
+      background: #eef2ff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+      transform: translateY(-1px);
+    }
+
+    .extra-tag {
+      font-size: 0.75rem;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      background: rgba(76, 81, 191, 0.12);
-      border: 1px solid rgba(76, 81, 191, 0.35);
-      color: #312e81;
-      border-radius: 999px;
-      padding: 2px 8px;
+      letter-spacing: 0.06em;
+      color: #6b7280;
+      margin-bottom: 4px;
     }
 
-    .quiz-section .syn-box {
-      margin-top: 10px;
+    .extra-card h4 {
+      margin: 0 0 6px 0;
+      font-size: 1.05rem;
+      color: var(--violet-dark);
+    }
+
+    .extra-card p {
+      margin: 0 0 6px 0;
+      font-size: 0.9rem;
+    }
+
+    .extra-card a {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--violet-dark);
+      text-decoration: none;
+    }
+
+    .extra-card a:hover {
+      text-decoration: underline;
     }
 
     /* FOOTER POTENZIATO */
@@ -660,81 +814,10 @@
       margin: 4px 0;
     }
 
-    /* SEZIONE CURISITÀ & MISTERI DALLA HOME */
-
-    .discover-extra {
-      margin-top: 28px;
-      padding-top: 18px;
-      border-top: 1px solid #e5e7eb;
-    }
-
-    .discover-extra h3 {
-      margin-top: 0;
-      margin-bottom: 8px;
-    }
-
-    .discover-extra p.section-intro {
-      margin-top: 0;
-      margin-bottom: 14px;
-      font-size: 0.95rem;
-      color: #4b5563;
-    }
-
-    .extra-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 14px;
-    }
-
-    .extra-card {
-  background: #f9fafb;
-  border-radius: 10px;
-  padding: 12px 14px;
-  border: 1px solid #e5e7eb;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-  cursor: pointer;                 /* manina */
-  transition: background 0.15s, 
-              box-shadow 0.15s, 
-              transform 0.15s;
-}
-
-.extra-card:hover {
-  background: #eef2ff;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
-  transform: translateY(-1px);
-}
-
-
-    .extra-tag {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: #6b7280;
-      margin-bottom: 4px;
-    }
-
-    .extra-card h4 {
-      margin: 0 0 6px 0;
-      font-size: 1.05rem;
-      color: var(--violet-dark);
-    }
-
-    .extra-card p {
-      margin: 0 0 6px 0;
+    .note-smartshop {
+      margin-top: 22px;
       font-size: 0.9rem;
     }
-
-    .extra-card a {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--violet-dark);
-      text-decoration: none;
-    }
-
-    .extra-card a:hover {
-      text-decoration: underline;
-    }
-
   </style>
 </head>
 
@@ -748,15 +831,14 @@
       </button>
 
       <nav id="main-nav">
-       <a href="index.html">Home</a>
-<a href="blog.html">Blog</a>
-<a href="offerte.html">Offerte Amazon</a>
-<a href="categorie.html">Categorie</a>
-<a href="curiosita.html">Curiosità</a>
-<a href="misteri.html">Misteri</a>
-<a href="quiz.html">Test SmartShop</a>
-<a href="chi.html">Chi siamo</a>
-
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="offerte.html">Offerte Amazon</a>
+        <a href="categorie.html">Categorie</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="quiz.html">Test SmartShop</a>
+        <a href="chi.html">Chi siamo</a>
       </nav>
     </div>
   </header>
@@ -767,78 +849,40 @@
       <!-- COLONNA PRINCIPALE -->
       <div class="main-content">
 
-        <div class="hero-intro">
-          <h2>Qui si compra con la testa (e con un po’ di ironia)</h2>
-          <p>
-            Syncras.App è per chi, prima di comprare, vuole capire se ha senso davvero:
-            niente recensioni “copiate”, niente tecnicismi inutili, solo
-            <strong>consigli pratici e qualche risata</strong>.
+        <!-- HERO CARD NUOVA -->
+        <section class="hero-card" id="test-anti-acquisto">
+          <h1 class="hero-title">
+            Stai per spendere altri soldi, VERO?<br>
+            Fidati: fai prima il test.
+          </h1>
+          <p class="hero-subtitle">
+            3 domande semplici per capire se è un acquisto furbo…
+            o solo l’ennesimo impulso del dito prima di cliccare “Compra ora”.
           </p>
-        </div>
 
+          <div class="hero-actions">
+            <a href="quiz.html" class="btn-primary">
+              Fai il Test Anti-Acquisto
+            </a>
+            <button type="button" class="btn-ghost" onclick="shareTest()">
+              <span class="btn-ghost-icon">📤</span>
+              <span>Condividi il test con un amico</span>
+            </button>
+          </div>
+
+          <p class="hero-small-note">
+           Nessuna email, nessuna registrazione: 30 secondi per salvare il portafoglio.
+Qui ti spiego come evitare gli acquisti impulsivi e fare scelte davvero consapevoli. 
+
+
+          </p>
+        </section>
+
+        <!-- LINK RAPIDI -->
         <div class="quick-actions">
           <a href="categorie.html#smartphone">📱 Scegli uno smartphone per prezzo</a>
           <a href="smart-tv-guida-ironica.html">📺 Guida ironica alle Smart TV</a>
           <a href="offerte.html">🔥 Vai alle offerte Amazon</a>
-        </div>
-
-        <!-- SEZIONE: Consigli veloci SmartShop -->
-        <section class="smartshop-tips">
-          <h2>Consigli veloci SmartShop</h2>
-          <p class="subtitle">5 pillole per evitare acquisti senza senso (ma sempre con un sorriso).</p>
-
-          <div class="tips-grid">
-            <div class="tip-card">
-              <span class="tip-icon">🧠</span>
-              <p>Prima di comprare, respira. Il 78% degli acquisti online è puro riflesso del dito, non del cervello.</p>
-            </div>
-            <div class="tip-card">
-              <span class="tip-icon">⏳</span>
-              <p>Offerta “solo per oggi”? Se è davvero furba, torna anche domani. Se sparisce, forse era solo marketing.</p>
-            </div>
-            <div class="tip-card">
-              <span class="tip-icon">🔍</span>
-              <p>Recensioni tutte perfette? O è il prodotto del secolo… o hanno scritto mezzo parentado del venditore.</p>
-            </div>
-            <div class="tip-card">
-              <span class="tip-icon">💶</span>
-              <p>Prezzo basso ≠ affare. Affare = qualcosa che funziona bene per almeno 3 anni senza farti bestemmiare.</p>
-            </div>
-            <div class="tip-card">
-              <span class="tip-icon">♻️</span>
-              <p>Il vero risparmio non è lo sconto: è evitare di comprare due volte la stessa cosa “perché la prima era scarsa”.</p>
-            </div>
-          </div>
-        </section>
-
-        <div class="syn-box syn-calcolo" style="margin-top:15px;">
-          <div class="syn-box-title">
-            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-              <path d="M9 9a3 3 0 0 1 5.83 1c0 2-2.33 2.5-2.33 4.25" stroke-width="2" stroke-linecap="round"></path>
-              <circle cx="12" cy="18" r="1" fill="currentColor"></circle>
-              <circle cx="12" cy="12" r="9" stroke-width="2"></circle>
-            </svg>
-            <span>Fai il Test prima dell’acquisto</span>
-          </div>
-          <div class="syn-box-text">
-            Vuoi capire in 30 secondi se il tuo prossimo acquisto ha senso davvero?<br>
-            👉 <a href="#quiz-smartshop"><strong>Prova ora il Mini Test SmartShop</strong></a>
-          </div>
-        </div>
-
-        <div class="syn-box syn-calcolo" style="margin-top:15px;">
-          <div class="syn-box-title">
-            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-              <path d="M9 9a3 3 0 0 1 5.83 1c0 2-2.33 2.5-2.33 4.25" stroke-width="2" stroke-linecap="round"></path>
-              <circle cx="12" cy="18" r="1" fill="currentColor"></circle>
-              <circle cx="12" cy="12" r="9" stroke-width="2"></circle>
-            </svg>
-            <span>Fai il Test prima dell’acquisto</span>
-          </div>
-          <div class="syn-box-text">
-            Vuoi una verifica seria sui tuoi prossimi acquisti?<br>
-            👉 <a href="quiz.html"><strong>Vai ai Test SmartShop completi</strong></a>
-          </div>
         </div>
 
         <!-- ARTICOLI IN EVIDENZA -->
@@ -898,81 +942,94 @@
           </ul>
         </section>
 
+        <!-- SEZIONE: Consigli veloci SmartShop (spostata più in basso) -->
+        <section class="smartshop-tips">
+          <h2>Consigli veloci SmartShop</h2>
+          <p class="subtitle">Piccole regole mentali per evitare acquisti senza senso (ma sempre con un sorriso).</p>
+
+          <div class="tips-grid">
+            <div class="tip-card">
+              <span class="tip-icon">🧠</span>
+              <p>Prima di comprare, respira. Il 78% degli acquisti online è puro riflesso del dito, non del cervello.</p>
+            </div>
+            <div class="tip-card">
+              <span class="tip-icon">⏳</span>
+              <p>Offerta “solo per oggi”? Se è davvero furba, torna anche domani. Se sparisce, forse era solo marketing.</p>
+            </div>
+            <div class="tip-card">
+              <span class="tip-icon">💶</span>
+              <p>Affare non è “pagare poco”: è qualcosa che funziona bene per almeno 3 anni senza farti imprecare.</p>
+            </div>
+          </div>
+        </section>
+
         <!-- SEZIONE CURISITÀ & MISTERI -->
-       <section class="discover-extra">
-  <h3>Curiosità & Misteri</h3>
-  <p class="section-intro">
-    Non solo guide agli acquisti: qui trovi anche <strong>curiosità</strong> e 
-    <strong>misteri moderni</strong> legati a tecnologia, energia e vita quotidiana.
-  </p>
+        <section class="discover-extra">
+          <h3>Curiosità & Misteri</h3>
+          <p class="section-intro">
+            Non solo guide agli acquisti: qui trovi anche <strong>curiosità</strong> e
+            <strong>misteri moderni</strong> legati a tecnologia, energia e vita quotidiana.
+          </p>
 
-  <div class="extra-grid">
-    <article class="extra-card" onclick="window.location.href='curiosita.html'">
-      <div class="extra-tag">Curiosità</div>
-      <h4>Piccole cose che nessuno ti ha mai spiegato bene</h4>
-      <p>
-        Wi-Fi che prende solo in certi punti, batteria che crolla al 20%, consumi strani in casa:
-        qui finiscono le curiosità “da bar” ma spiegate con calma.
-      </p>
-      <a href="curiosita.html">Vai alla pagina Curiosità →</a>
-    </article>
+          <div class="extra-grid">
+            <article class="extra-card" onclick="window.location.href='curiosita.html'">
+              <div class="extra-tag">Curiosità</div>
+              <h4>Piccole cose che nessuno ti ha mai spiegato bene</h4>
+              <p>
+                Wi-Fi che prende solo in certi punti, batteria che crolla al 20%, consumi strani in casa:
+                qui finiscono le curiosità “da bar” ma spiegate con calma.
+              </p>
+              <a href="curiosita.html">Vai alla pagina Curiosità →</a>
+            </article>
 
-    <article class="extra-card" onclick="window.location.href='misteri.html'">
-      <div class="extra-tag">Misteri</div>
-      <h4>Misteri moderni senza diventare complottisti</h4>
-      <p>
-        Alexa che sembra leggerti nel pensiero, pubblicità troppo precise, bollette che esplodono:
-        qui proviamo a capirci qualcosa senza fare drammi.
-      </p>
-      <a href="misteri.html">Vai alla pagina Misteri →</a>
-    </article>
-  </div>
-</section>
-
+            <article class="extra-card" onclick="window.location.href='misteri.html'">
+              <div class="extra-tag">Misteri</div>
+              <h4>Misteri moderni senza diventare complottisti</h4>
+              <p>
+                Assistenti vocali che sembrano leggerti nel pensiero, pubblicità troppo precise, bollette che esplodono:
+                qui proviamo a capirci qualcosa senza fare drammi.
+              </p>
+              <a href="misteri.html">Vai alla pagina Misteri →</a>
+            </article>
+          </div>
+        </section>
 
         <!-- SEZIONE: Top 10 scelte Syncras -->
-        <section class="top10-section">
-          <h2>Top 10 scelte Syncras</h2>
-          <p class="subtitle">Prodotti selezionati con il Metodo SmartShop: niente fronzoli, solo cose sensate e testate nella vita reale.</p>
+       <ol class="top10-list">
+  <li class="top10-item">
+    <a class="top10-card" href="https://amzn.to/49x2vV2" target="_blank" rel="nofollow">
+      <div class="top10-rank">#1</div>
+      <div class="top10-content">
+        <h3>Redmi 13C – Lo smartphone “onesto”</h3>
+        <p>Perfetto per chi vuole spendere poco ma non vuole imprecare ogni volta che apre WhatsApp o la fotocamera.</p>
+        <span>👉 Vedi Redmi 13C su Amazon</span>
+      </div>
+    </a>
+  </li>
 
-          <ol class="top10-list">
-            <li class="top10-item">
-              <div class="top10-rank">#1</div>
-              <div class="top10-content">
-                <h3>Redmi 13C – Lo smartphone “onesto”</h3>
-                <p>Perfetto per chi vuole spendere poco ma non vuole imprecare ogni volta che apre WhatsApp o la fotocamera.</p>
-                <a href="https://amzn.to/49x2vV2" target="_blank" rel="nofollow">Vedi Redmi 13C su Amazon</a>
-              </div>
-            </li>
+  <li class="top10-item">
+    <a class="top10-card" href="https://amzn.to/44lr0AU" target="_blank" rel="nofollow">
+      <div class="top10-rank">#2</div>
+      <div class="top10-content">
+        <h3>Galaxy A15 – Per chi vuole “il marchio giusto”</h3>
+        <p>Samsung entry-level: niente fuochi d’artificio, ma fa il suo mestiere senza sceneggiate e con interfaccia familiare.</p>
+        <span>👉 Vedi Galaxy A15 su Amazon</span>
+      </div>
+    </a>
+  </li>
 
-            <li class="top10-item">
-              <div class="top10-rank">#2</div>
-              <div class="top10-content">
-                <h3>Galaxy A15 – Per chi vuole “il marchio giusto”</h3>
-                <p>Samsung entry-level: niente fuochi d’artificio, ma fa il suo mestiere senza sceneggiate e con interfaccia familiare.</p>
-                <a href="https://amzn.to/44lr0AU" target="_blank" rel="nofollow">Vedi Galaxy A15 su Amazon</a>
-              </div>
-            </li>
+  <li class="top10-item">
+    <a class="top10-card" href="https://amzn.to/3McOfH8" target="_blank" rel="nofollow">
+      <div class="top10-rank">#3</div>
+      <div class="top10-content">
+        <h3>POCO M6 – L’amico smanettone</h3>
+        <p>Per chi vuole un po’ più di potenza e batteria, ma senza buttarsi sui top di gamma da 800€.</p>
+        <span>👉 Vedi POCO M6 su Amazon</span>
+      </div>
+    </a>
+  </li>
 
-            <li class="top10-item">
-              <div class="top10-rank">#3</div>
-              <div class="top10-content">
-                <h3>POCO M6 – L’amico smanettone</h3>
-                <p>Per chi vuole un po’ più di potenza e batteria, ma senza buttarsi sui top di gamma da 800€.</p>
-                <a href="https://amzn.to/3McOfH8" target="_blank" rel="nofollow">Vedi POCO M6 su Amazon</a>
-              </div>
-            </li>
 
-            <li class="top10-item">
-              <div class="top10-rank">#4</div>
-              <div class="top10-content">
-                <h3>Robot aspirapolvere – Pavimento sempre fatto</h3>
-                <p>Per chi preferisce trovare il pavimento pulito invece di litigare con l’aspirapolvere tradizionale.</p>
-                <a href="https://www.amazon.it/s?k=robot+aspirapolvere+offerta&tag=mywebcorner4-21" target="_blank" rel="nofollow">
-                  Guarda i robot in offerta su Amazon
-                </a>
-              </div>
-            </li>
 
             <!-- Aggiungi qui eventuali altri prodotti fino a #10 -->
           </ol>
@@ -1008,58 +1065,18 @@
             <span>Calcolo rapido</span>
           </div>
           <div class="syn-box-text">
-            Uno smartphone da <strong>200€</strong> usato per <strong>3 anni</strong> ti costa circa 
+            Uno smartphone da <strong>200€</strong> usato per <strong>3 anni</strong> ti costa circa
             <strong>0,18€ al giorno</strong>.<br>
             Meno di un caffè, molto meno di una bolletta sbagliata.
           </div>
         </div>
 
-        <!-- SEZIONE QUIZ – evidenziata -->
-        <section class="quiz-section" id="quiz-smartshop">
-          <h3>🧩 Quiz prima dell’acquisto <span class="badge-quiz">Mini test SmartShop</span></h3>
-          <div class="syn-box syn-calcolo" id="mini-test-smartshop">
-            <div class="syn-box-title">
-              <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M9 9a3 3 0 0 1 5.83 1c0 2-2.33 2.5-2.33 4.25" stroke-width="2" stroke-linecap="round"></path>
-                <circle cx="12" cy="18" r="1" fill="currentColor"></circle>
-                <circle cx="12" cy="12" r="9" stroke-width="2"></circle>
-              </svg>
-              <span>Mini Test SmartShop (30 secondi)</span>
-            </div>
-            <div class="syn-box-text">
-              <p>Prima di comprare qualcosa online, rispondi a queste 3 domande:</p>
-
-              <ol>
-                <li>
-                  Lo userò almeno una volta a settimana?<br>
-                  <label><input type="radio" name="q1" value="si"> Sì</label>
-                  <label><input type="radio" name="q1" value="no"> No</label>
-                </li>
-                <li>
-                  Ho già in casa qualcosa che fa una cosa simile?<br>
-                  <label><input type="radio" name="q2" value="si"> Sì</label>
-                  <label><input type="radio" name="q2" value="no"> No</label>
-                </li>
-                <li>
-                  Se domani non fosse più in offerta, lo comprerei lo stesso?<br>
-                  <label><input type="radio" name="q3" value="si"> Sì</label>
-                  <label><input type="radio" name="q3" value="no"> No</label>
-                </li>
-              </ol>
-
-              <button type="button" onclick="valutaMiniTest()" style="margin-top:6px; padding:6px 10px; border-radius:6px; border:none; background:var(--violet-main); color:#fff; cursor:pointer; font-size:0.85rem;">
-                Calcola risultato
-              </button>
-
-              <p id="mini-test-risultato" style="margin-top:8px; font-weight:bold;"></p>
-            </div>
-          </div>
-        </section>
-
         <div class="note-smartshop">
-          Vuoi capire meglio cosa c’è dietro Syncras.App e il <strong>Metodo SmartShop</strong>?  
+          Vuoi capire meglio cosa c’è dietro Syncras.App e il <strong>Metodo SmartShop</strong>?<br>
           Dai un’occhiata alla pagina <a href="chi.html"><strong>Chi siamo</strong></a>:
-          lì spiego come cerco di evitare brutte sorprese, acquisti inutili e sensi di colpa post-pacco Amazon.
+          lì spiego come evitare gli acquisti impulsivi e fare scelte davvero consapevoli.
+
+
         </div>
 
       </div>
@@ -1120,27 +1137,6 @@
               <path d="M4 19h16" stroke-width="2" stroke-linecap="round"></path>
               <path d="M7 15V7m5 8V5m5 10V9" stroke-width="2" stroke-linecap="round"></path>
             </svg>
-            <span>Le 3 domande più usate in USA</span>
-          </div>
-          <div class="syn-box-text">
-            I siti americani le usano per evitare acquisti inutili.<br>
-            <ul style="margin:6px 0 0 1rem; padding:0; font-size:0.85rem;">
-              <li>👉 Mi risolve un problema reale o solo un capriccio?</li>
-              <li>👉 È davvero il momento giusto per comprarlo?</li>
-              <li>👉 Esiste di meglio allo stesso prezzo (spoiler: quasi sempre sì)?</li>
-            </ul>
-            <br>
-            Vuoi vedere che voto prendi?<br>
-            👉 <a href="quiz.html"><strong>Fai il Test SmartShop</strong></a>
-          </div>
-        </div>
-
-        <div class="syn-box syn-best">
-          <div class="syn-box-title">
-            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-              <path d="M4 19h16" stroke-width="2" stroke-linecap="round"></path>
-              <path d="M7 15V7m5 8V5m5 10V9" stroke-width="2" stroke-linecap="round"></path>
-            </svg>
             <span>Prodotti più venduti</span>
           </div>
           <div class="syn-box-text">
@@ -1151,7 +1147,7 @@
           </div>
         </div>
 
-        <!-- BOX: Richiamo al quiz -->
+        <!-- BOX: Richiamo al test -->
         <div class="syn-box syn-calcolo">
           <div class="syn-box-title">
             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -1162,8 +1158,8 @@
             <span>Metti alla prova l’acquisto</span>
           </div>
           <div class="syn-box-text">
-            Hai un prodotto in mente? Fai il <strong>Mini Test SmartShop</strong> prima di comprare:<br>
-            👉 <a href="quiz.html#quiz-smartshop">Vai al Quiz prima dell’acquisto</a>
+            Hai un prodotto in mente? Fai il <strong>Test SmartShop</strong> prima di comprare:<br>
+            👉 <a href="quiz.html">Vai al Test decisione acquisto</a>
           </div>
         </div>
 
@@ -1177,33 +1173,23 @@
       document.body.classList.toggle('nav-open');
     }
 
-    function valutaMiniTest() {
-      const domande = ['q1', 'q2', 'q3'];
-      let si = 0;
-      let no = 0;
-
-      domande.forEach(function(nome) {
-        const selezionata = document.querySelector('input[name="' + nome + '"]:checked');
-        if (selezionata) {
-          if (selezionata.value === 'si') si++;
-          if (selezionata.value === 'no') no++;
-        }
-      });
-
-      const risultato = document.getElementById('mini-test-risultato');
-
-      if (si + no < 3) {
-        risultato.textContent = 'Rispondi a tutte le domande per vedere il risultato 😉';
-        risultato.style.color = '#F97316';
-        return;
-      }
-
-      if (no >= 2) {
-        risultato.textContent = 'Attenzione: sembra un possibile acquisto d’impulso. Meglio pensarci un attimo prima di cliccare “Compra ora”.';
-        risultato.style.color = '#DC2626';
+    function shareTest() {
+      const testUrl = 'https://syncras.app/quiz.html';
+      const text = 'Stai per spendere altri soldi, VERO? Fidati: fai prima il test. Prova il Test SmartShop Anti-Acquisto su Syncras.App.';
+      if (navigator.share) {
+        navigator.share({
+          title: 'Test Anti-Acquisto Syncras',
+          text: text,
+          url: testUrl
+        }).catch(() => {});
+      } else if (navigator.clipboard) {
+        navigator.clipboard.writeText(testUrl).then(function () {
+          alert('Link del test copiato. Incollalo in WhatsApp, Telegram o dove vuoi.');
+        }).catch(function () {
+          window.prompt('Copia il link del test:', testUrl);
+        });
       } else {
-        risultato.textContent = 'Buono! La tua scelta sembra abbastanza ragionata secondo il Metodo SmartShop.';
-        risultato.style.color = '#16A34A';
+        window.prompt('Copia il link del test:', testUrl);
       }
     }
 
@@ -1214,6 +1200,44 @@
         span.textContent = new Date().getFullYear();
       }
     });
+
+    // Caricamento ultime guide dal blog
+    fetch('blog.html')
+      .then(response => response.text())
+      .then(html => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+
+        // Prendi i primi 3 articoli dal blog
+        const cards = Array.from(doc.querySelectorAll('.post-card')).slice(0, 3);
+
+        const container = document.getElementById('latest-guides');
+        if (!container) return;
+
+        cards.forEach(card => {
+          const link = card.querySelector('a');
+          const title = card.querySelector('h3')?.innerText || "";
+          const meta = card.querySelector('.post-meta')?.innerText || "";
+          const desc = card.querySelector('p')?.innerText || "";
+
+          const li = document.createElement('li');
+          li.className = 'post-card';
+
+          li.innerHTML = `
+            <a class="post-card-link" href="${link.getAttribute('href')}">
+              <div class="post-thumb"></div>
+              <div class="post-content">
+                <h3>${title}</h3>
+                <div class="post-meta">${meta}</div>
+                <p>${desc}</p>
+              </div>
+            </a>
+          `;
+
+          container.appendChild(li);
+        });
+      })
+      .catch(error => console.error('Errore caricamento ultime guide:', error));
   </script>
 
   <!-- FOOTER POTENZIATO -->
@@ -1251,7 +1275,7 @@
     <div class="footer-bottom">
       <p>© <span id="year-span"></span> Syncras.App — Tutti i diritti riservati.</p>
       <p>
-        Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+        Syncras.App partecipa al Programma Affiliazione Amazon EU.
         Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
         senza alcun costo aggiuntivo per l’utente.
       </p>
@@ -1261,46 +1285,6 @@
       </p>
     </div>
   </footer>
-
-  <script>
-    fetch('blog.html')
-      .then(response => response.text())
-      .then(html => {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-
-        // Prendi i primi 3 articoli dal blog
-        const cards = Array.from(doc.querySelectorAll('.post-card')).slice(0, 3);
-
-        const container = document.getElementById('latest-guides');
-        if (!container) return;
-
-        cards.forEach(card => {
-          const link = card.querySelector('a');
-          const title = card.querySelector('h3')?.innerText || "";
-          const meta = card.querySelector('.post-meta')?.innerText || "";
-          const desc = card.querySelector('p')?.innerText || "";
-
-          // Ricrea la card nello stile della home
-          const li = document.createElement('li');
-          li.className = 'post-card';
-
-          li.innerHTML = `
-            <a class="post-card-link" href="${link.getAttribute('href')}">
-              <div class="post-thumb"></div>
-              <div class="post-content">
-                <h3>${title}</h3>
-                <div class="post-meta">${meta}</div>
-                <p>${desc}</p>
-              </div>
-            </a>
-          `;
-
-          container.appendChild(li);
-        });
-      })
-      .catch(error => console.error('Errore caricamento ultime guide:', error));
-  </script>
 </body>
 </html>
 
