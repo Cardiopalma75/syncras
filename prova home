@@ -523,31 +523,67 @@
 
     /* SEZIONE: Top 10 scelte Syncras */
 
-    .top10-item a {
-      display: flex;
-      gap: 12px;
-      padding: 12px 14px;
-      margin-bottom: 10px;
-      background: #f6f4ff;
-      border-radius: 10px;
-      border: 1px solid #ddd7ff;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
-      text-decoration: none;
-      color: inherit;
-    }
+    /* SEZIONE: Top 10 scelte Syncras */
 
-    .top10-item a:hover {
-      background: #e9e2ff;
-      cursor: pointer;
-    }
+.top10-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 18px 0 0 0;
+}
 
-    .top10-item:last-child a {
-      margin-bottom: 0;
-    }
+.top10-item {
+  margin-bottom: 12px;
+}
 
-    .top10-content a:hover {
-      text-decoration: none;
-    }
+.top10-card {
+  display: flex;
+  gap: 12px;
+  padding: 12px 14px;
+  background: #f6f4ff;
+  border-radius: 12px;
+  border: 1px solid #ddd7ff;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
+}
+
+.top10-card:hover {
+  background: #e9e2ff;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+  transform: translateY(-1px);
+  cursor: pointer;
+}
+
+.top10-rank {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #4B3ACB;
+  margin-top: 2px;
+  min-width: 32px;
+}
+
+.top10-content h3 {
+  margin: 0 0 4px 0;
+  font-size: 1rem;
+  color: #1f2933;
+}
+
+.top10-content p {
+  margin: 0 0 6px 0;
+  font-size: 0.9rem;
+}
+
+.top10-content a {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #4B3ACB;
+  text-decoration: none;
+}
+
+.top10-content a:hover {
+  text-decoration: underline;
+}
 
     /* BOX SYNCRAS (sidebar e box vari) */
 
@@ -957,37 +993,39 @@
         </section>
 
         <!-- SEZIONE: Top 10 scelte Syncras -->
-        <section class="top10-section">
-          <h2>Top 10 scelte Syncras</h2>
-          <p class="subtitle">Prodotti selezionati con il Metodo SmartShop: niente fronzoli, solo cose sensate e testate nella vita reale.</p>
+       <ol class="top10-list">
+  <li class="top10-item">
+    <a class="top10-card" href="https://amzn.to/49x2vV2" target="_blank" rel="nofollow">
+      <div class="top10-rank">#1</div>
+      <div class="top10-content">
+        <h3>Redmi 13C – Lo smartphone “onesto”</h3>
+        <p>Perfetto per chi vuole spendere poco ma non vuole imprecare ogni volta che apre WhatsApp o la fotocamera.</p>
+        <span>👉 Vedi Redmi 13C su Amazon</span>
+      </div>
+    </a>
+  </li>
 
-          <ol class="top10-list">
-            <li class="top10-item">
-              <div class="top10-rank">#1</div>
-              <div class="top10-content">
-                <h3>Redmi 13C – Lo smartphone “onesto”</h3>
-                <p>Perfetto per chi vuole spendere poco ma non vuole imprecare ogni volta che apre WhatsApp o la fotocamera.</p>
-                <a href="https://amzn.to/49x2vV2" target="_blank" rel="nofollow">Vedi Redmi 13C su Amazon</a>
-              </div>
-            </li>
+  <li class="top10-item">
+    <a class="top10-card" href="https://amzn.to/44lr0AU" target="_blank" rel="nofollow">
+      <div class="top10-rank">#2</div>
+      <div class="top10-content">
+        <h3>Galaxy A15 – Per chi vuole “il marchio giusto”</h3>
+        <p>Samsung entry-level: niente fuochi d’artificio, ma fa il suo mestiere senza sceneggiate e con interfaccia familiare.</p>
+        <span>👉 Vedi Galaxy A15 su Amazon</span>
+      </div>
+    </a>
+  </li>
 
-            <li class="top10-item">
-              <div class="top10-rank">#2</div>
-              <div class="top10-content">
-                <h3>Galaxy A15 – Per chi vuole “il marchio giusto”</h3>
-                <p>Samsung entry-level: niente fuochi d’artificio, ma fa il suo mestiere senza sceneggiate e con interfaccia familiare.</p>
-                <a href="https://amzn.to/44lr0AU" target="_blank" rel="nofollow">Vedi Galaxy A15 su Amazon</a>
-              </div>
-            </li>
-
-            <li class="top10-item">
-              <div class="top10-rank">#3</div>
-              <div class="top10-content">
-                <h3>POCO M6 – L’amico smanettone</h3>
-                <p>Per chi vuole un po’ più di potenza e batteria, ma senza buttarsi sui top di gamma da 800€.</p>
-                <a href="https://amzn.to/3McOfH8" target="_blank" rel="nofollow">Vedi POCO M6 su Amazon</a>
-              </div>
-            </li>
+  <li class="top10-item">
+    <a class="top10-card" href="https://amzn.to/3McOfH8" target="_blank" rel="nofollow">
+      <div class="top10-rank">#3</div>
+      <div class="top10-content">
+        <h3>POCO M6 – L’amico smanettone</h3>
+        <p>Per chi vuole un po’ più di potenza e batteria, ma senza buttarsi sui top di gamma da 800€.</p>
+        <span>👉 Vedi POCO M6 su Amazon</span>
+      </div>
+    </a>
+  </li>
 
             <li class="top10-item">
               <div class="top10-rank">#4</div>
