@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test SmartShop | Syncras.App</title>
+  <meta name="description" content="Test seri per capire se il tuo prossimo acquisto ha davvero senso: verifica impulso, budget e scopri che smartphone e TV fanno per te.">
+  <meta name="robots" content="index,follow">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-59D9XRYKF3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-59D9XRYKF3');
+  </script>
+
+  <style>
+/* BOX JUMP LINK – “Vai direttamente al test che ti interessa” */
+.jump-box {
+  background: #E9E2FF;
+  border: 2px solid #B8A4FF;
+  padding: 20px;
+  border-radius: 16px;
+  margin-bottom: 28px;
+  font-size: 1rem;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+.jump-box strong {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 1.05rem;
+  color: #3D2AB8;
+}
+
+.jump-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 14px;
+}
+
+.jump-links a {
+  background: #FFFFFF;
+  padding: 7px 12px;
+  border-radius: 10px;
+  border: 1px solid #B8A4FF;
+  font-weight: 600;
+  color: #3D2AB8;
+  text-decoration: none;
+  transition: 0.15s ease;
+}
+
+.jump-links a:hover {
+  background: #D8CCFF;
+  border-color: #957CFF;
+}
+
+:root {
+  --violet-main: #6C5CE7;
+  --violet-dark: #4B3ACB;
+  --violet-soft: #A29BFE;
+  --text-main: #403E43;
+  --bg-page: #F7F7FB;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-page);
+  color: var(--text-main);
+  line-height: 1.6;
+}
+
+/* HEADER */
+
+.site-header {
+  background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+  color: white;
+  padding: 12px 14px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+
+.header-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.logo {
+  font-size: 1.4rem;
+  font-weight: bold;
+  letter-spacing: 0.03em;
+}
+
+#main-nav {
+  display: flex;
+  gap: 18px;
+  font-size: 0.95rem;
+}
+
+#main-nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  padding-bottom: 2px;
+  border-bottom: 2px solid transparent;
+}
+
+#main-nav a:hover {
+  text-decoration: underline;
+}
+
+#main-nav a.active {
+  border-bottom-color: rgba(255,255,255,0.9);
+}
+
+.menu-toggle {
+  display: none;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 6px;
+  color: white;
+  padding: 6px 10px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.menu-toggle span {
+  margin-left: 4px;
+  font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+  #main-nav {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 56px;
+    margin: 0 auto;
+    max-width: 1180px;
+    flex-direction: column;
+    background-color: var(--violet-dark);
+    padding: 10px 16px 12px 16px;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+    z-index: 50;
+  }
+
+  #main-nav a {
+    padding: 6px 0;
+  }
+
+  body.nav-open #main-nav {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+/* MAIN */
+
+main {
+  max-width: 1180px;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.08);
+}
+
+h1, h2, h3 {
+  color: var(--violet-dark);
+  margin-top: 0;
+}
+
+.page-intro {
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 10px;
+}
+
+.badge-page {
+  display: inline-block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: rgba(108, 92, 231, 0.08);
+  border: 1px solid rgba(108, 92, 231, 0.35);
+  border-radius: 999px;
+  padding: 2px 8px;
+  color: #3730a3;
+  margin-bottom: 8px;
+}
+
+.tests-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1.1fr);
+  gap: 24px;
+  margin-top: 10px;
+}
+
+@media (max-width: 900px) {
+  .tests-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.test-card {
+  background: #fdfbff;
+  border-radius: 14px;
+  padding: 18px 18px 16px;
+  border: 1px solid #e4ddff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+  margin-bottom: 26px;
+}
+
+.test-card h2 {
+  margin-bottom: 4px;
+  font-size: 1.2rem;
+}
+
+.test-subtitle {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin-bottom: 12px;
+}
+
+.test-section-label {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #6b7280;
+  margin-bottom: 4px;
+}
+
+ol.test-questions {
+  padding-left: 1.1rem;
+  margin: 0 0 10px 0;
+  font-size: 0.92rem;
+}
+
+ol.test-questions li {
+  margin-bottom: 8px;
+}
+
+/* CARD / PULSANTI RISPOSTA */
+
+label.answer-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 4px 8px 4px 0;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid #d4d4ff;
+  background: #ffffff;
+  cursor: pointer;
+  font-size: 0.88rem;
+  transition: background 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease, transform 0.05s ease;
+}
+
+label.answer-option:hover {
+  border-color: var(--violet-main);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  transform: translateY(-1px);
+}
+
+label.answer-option input[type="radio"] {
+  accent-color: var(--violet-main);
+}
+
+button.test-btn {
+  margin-top: 8px;
+  padding: 7px 12px;
+  border-radius: 7px;
+  border: none;
+  background: var(--violet-main);
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+button.test-btn:hover {
+  background: var(--violet-dark);
+}
+
+.test-result {
+  margin-top: 10px;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.result-good   { color: #16A34A; }
+.result-medium { color: #CA8A04; }
+.result-bad    { color: #DC2626; }
+
+/* BOX AMAZON DINAMICO */
+
+.amazon-box {
+  margin-top: 8px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: #ecfeff;
+  border: 1px solid #bae6fd;
+  font-size: 0.85rem;
+}
+
+.amazon-box strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.amazon-box a {
+  font-weight: 600;
+}
+
+/* SIDEBAR INFO */
+
+.side-box {
+  background: #f4f5ff;
+  border-radius: 12px;
+  padding: 14px 14px 12px;
+  border: 1px solid #e0dbff;
+  font-size: 0.9rem;
+  margin-bottom: 14px;
+}
+
+.side-box h3 {
+  margin-top: 0;
+  margin-bottom: 6px;
+  font-size: 1rem;
+}
+
+.side-box ul {
+  padding-left: 1.1rem;
+  margin: 4px 0 0 0;
+}
+
+.side-box li {
+  margin-bottom: 4px;
+}
+
+.side-note {
+  font-size: 0.8rem;
+  opacity: 0.85;
+  margin-top: 6px;
+}
+
+a {
+  color: var(--violet-dark);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* INDEX TEST (pillole in alto) */
+.test-index-box {
+  background: #E9E2FF;
+  border-radius: 14px;
+  padding: 14px 16px 14px;
+  border: 1px solid #C7B8FF;
+  margin-bottom: 18px;
+}
+
+.test-index-title {
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.test-index-subtitle {
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+  color: #4b5563;
+}
+
+.test-index-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.test-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 1px solid #B8A4FF;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* FOOTER */
+
+.syncras-footer {
+  margin-top: 40px;
+  padding: 2.5rem 1.5rem 1.5rem;
+  background: #2b1840;
+  color: #f3eaff;
+  font-family: Arial, sans-serif;
+  font-size: 0.9rem;
+}
+
+.syncras-footer a {
+  color: #f3eaff;
+  text-decoration: none;
+}
+
+.syncras-footer a:hover {
+  text-decoration: underline;
+}
+
+.footer-inner {
+  max-width: 1180px;
+  margin: 0 auto 1.5rem auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+}
+
+.footer-column h4 {
+  margin-top: 0;
+  margin-bottom: 0.7rem;
+  font-size: 1rem;
+}
+
+.footer-column p {
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-column li {
+  margin-bottom: 0.4rem;
+  font-size: 0.85rem;
+}
+
+.footer-bottom {
+  max-width: 1180px;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 0.8rem;
+  opacity: 0.9;
+}
+
+.footer-bottom p {
+  margin: 4px 0;
+}
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
+
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
+
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="offerte.html">Offerte Amazon</a>
+        <a href="categorie.html">Categorie</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="quiz.html">Test SmartShop</a>
+        <a href="chi.html">Chi siamo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="page-intro">
+      <span class="badge-page">Area Test</span>
+      <h1>Test SmartShop: prima di comprare, prova qui</h1>
+      <p>
+        Qui non vendiamo nulla: ti facciamo solo qualche domanda scomoda prima che la carta di credito 
+        faccia danni. Rispondi con sincerità, il risultato lo vedi solo tu.
+      </p>
+    </div>
+
+    <!-- INDEX DEI TEST -->
+    <div class="test-index-box">
+      <div class="test-index-title">Scegli il tuo test SmartShop</div>
+      <div class="test-index-subtitle">
+        Vai dritto al punto: tocca il test che ti serve.
+      </div>
+
+      <div class="test-index-links">
+        <a href="#test-acquisto" class="test-pill">🟣 Test Acquisto</a>
+        <a href="#test-smartphone" class="test-pill">📱 Test Smartphone</a>
+        <a href="#test-giga-smartphone" class="test-pill">💾 Test Giga Smartphone</a>
+        <a href="#test-lavatrice" class="test-pill">🧺 Test Lavatrice</a>
+        <a href="#test-tv" class="test-pill">📺 Test TV</a>
+        <a href="#test-lavastoviglie" class="test-pill">🧼 Lavastoviglie 45 / 60 cm</a>
+      </div>
+    </div>
+
+    <div class="tests-layout">
+      <!-- COLONNA TEST -->
+      <div>
+        <!-- TEST 1: Decisione acquisto -->
+        <section class="test-card" id="test-acquisto">
+          <div class="test-section-label">Test generale</div>
+          <h2>Test decisione acquisto – versione seria</h2>
+          <p class="test-subtitle">
+            7 domande per capire se il tuo prossimo acquisto è davvero sensato o se è solo “voglia di clic”.
+          </p>
+
+          <ol class="test-questions">
+            <li>
+              Ho un motivo concreto e preciso per comprarlo (non solo “mi piace”)?<br>
+              <label class="answer-option"><input type="radio" name="a_q1" value="si"> Sì</label>
+              <label class="answer-option"><input type="radio" name="a_q1" value="no"> No</label>
+            </li>
+            <li>
+              Rientra nel mio budget di questo mese senza toccare risparmi o soldi per emergenze?<br>
+              <label class="answer-option"><input type="radio" name="a_q2" value="si"> Sì</label>
+              <label class="answer-option"><input type="radio" name="a_q2" value="no"> No</label>
+            </li>
+            <li>
+              Ho confrontato almeno 2–3 alternative serie (prezzo, recensioni, caratteristiche)?<br>
+              <label class="answer-option"><input type="radio" name="a_q3" value="si"> Sì</label>
+              <label class="answer-option"><input type="radio" name="a_q3" value="no"> No</label>
+            </li>
+            <li>
+              Sto risolvendo un problema reale che ho da tempo, non un desiderio nato negli ultimi 2–3 giorni?<br>
+              <label class="answer-option"><input type="radio" name="a_q4" value="si"> Sì</label>
+              <label class="answer-option"><input type="radio" name="a_q4" value="no"> No</label>
+            </li>
+            <li>
+              Se tra una settimana non potessi più restituirlo, sarei comunque tranquillo della scelta?<br>
+              <label class="answer-option"><input type="radio" name="a_q5" value="si"> Sì</label>
+              <label class="answer-option"><input type="radio" name="a_q5" value="no"> No</label>
+            </li>
+            <li>
+              Lo sto comprando davvero per me (o per la famiglia), e non solo per fare colpo o seguire la moda del momento?<br>
+              <label class="answer-option"><input type="radio" name="a_q6" value="si"> Sì</label>
+              <label class="answer-option"><input type="radio" name="a_q6" value="no"> No</label>
+            </li>
+            <li>
+              Se oggi non ci fosse nessuna offerta, nessuno sconto e nessun conto alla rovescia, lo comprerei comunque?<br>
+              <label class="answer-option"><input type="radio" name="a_q7" value="si"> Sì</label>
+              <label class="answer-option"><input type="radio" name="a_q7" value="no"> No</label>
+            </li>
+          </ol>
+
+          <button type="button" class="test-btn" onclick="valutaTestAcquisto()">Calcola risultato</button>
+          <p id="risultato-acquisto" class="test-result"></p>
+        </section>
+
+        <!-- TEST 2: Smartphone -->
+        <section class="test-card" id="test-smartphone">
+          <div class="test-section-label">Test specifico</div>
+          <h2>Test Smartphone 2025 – quale fa per te?</h2>
+          <p class="test-subtitle">
+            Niente sigle strane: rispondi a queste domande e ti diciamo a quale fascia di smartphone ha senso guardare.
+          </p>
+
+          <ol class="test-questions">
+            <li>
+              Qual è il budget realistico per il prossimo smartphone?<br>
+              <label class="answer-option"><input type="radio" name="s_q1" value="1">&lt; 200€</label>
+              <label class="answer-option"><input type="radio" name="s_q1" value="2">200–350€</label>
+              <label class="answer-option"><input type="radio" name="s_q1" value="3">&gt; 350€</label>
+            </li>
+            <li>
+              Come lo userai <strong>la maggior parte del tempo</strong>?<br>
+              <label class="answer-option"><input type="radio" name="s_q2" value="1">Chiamate, WhatsApp, poche app</label><br>
+              <label class="answer-option"><input type="radio" name="s_q2" value="2">Social, foto, qualche app in più</label><br>
+              <label class="answer-option"><input type="radio" name="s_q2" value="3">Gaming, video, tante app pesanti</label>
+            </li>
+            <li>
+              Cosa è più importante per te?<br>
+              <label class="answer-option"><input type="radio" name="s_q3" value="2">Batteria che duri tanto</label>
+              <label class="answer-option"><input type="radio" name="s_q3" value="2">Foto decenti in ogni situazione</label>
+              <label class="answer-option"><input type="radio" name="s_q3" value="3">Prestazioni e fluidità al top</label>
+            </li>
+            <li>
+              Quanto ti piace “smanettare” con le impostazioni?<br>
+              <label class="answer-option"><input type="radio" name="s_q4" value="1">Zero: voglio qualcosa di semplice</label><br>
+              <label class="answer-option"><input type="radio" name="s_q4" value="3">Mi piace provare funzioni e personalizzazioni</label>
+            </li>
+            <li>
+              Quanto ti pesa rinunciare a un “marchio famoso” per risparmiare?<br>
+              <label class="answer-option"><input type="radio" name="s_q5" value="2">Voglio un brand conosciuto</label>
+              <label class="answer-option"><input type="radio" name="s_q5" value="3">Se il telefono è valido, il marchio mi interessa poco</label>
+            </li>
+          </ol>
+
+          <button type="button" class="test-btn" onclick="valutaTestSmartphone()">Calcola fascia consigliata</button>
+          <p id="risultato-smartphone" class="test-result"></p>
+          <div id="amazon-smartphone" class="amazon-box"></div>
+        </section>
+
+        <!-- TEST 3: Lavastoviglie 45 o 60 cm -->
+        <section class="test-card" id="test-lavastoviglie">
+          <div class="test-section-label">Test specifico</div>
+          <h2>Test Lavastoviglie – 45 cm o 60 cm?</h2>
+          <p class="test-subtitle">
+            6 domande veloci per capire se ti basta una slim da 45 cm o se ti serve davvero una lavastoviglie da 60 cm.
+          </p>
+
+          <ol class="test-questions">
+            <li>
+              Quante persone mangiano regolarmente in casa?<br>
+              <label class="answer-option"><input type="radio" name="lv_q1" value="1"> 1–2 persone</label><br>
+              <label class="answer-option"><input type="radio" name="lv_q1" value="2"> 3–4 persone</label><br>
+              <label class="answer-option"><input type="radio" name="lv_q1" value="3"> 5 o più</label>
+            </li>
+
+            <li>
+              Quanto spesso cucinate “sul serio” (padelle, teglie, forno)?<br>
+              <label class="answer-option"><input type="radio" name="lv_q2" value="1"> Quasi mai, cose veloci</label><br>
+              <label class="answer-option"><input type="radio" name="lv_q2" value="2"> 3–4 volte a settimana</label><br>
+              <label class="answer-option"><input type="radio" name="lv_q2" value="3"> Quasi ogni giorno</label>
+            </li>
+
+            <li>
+              Quanto spazio reale hai nella colonna cucina?<br>
+              <label class="answer-option"><input type="radio" name="lv_q3" value="1"> 45 cm secchi (oltre serve rompere mobili)</label><br>
+              <label class="answer-option"><input type="radio" name="lv_q3" value="2"> 60 cm ci stanno ma tirati</label><br>
+              <label class="answer-option"><input type="radio" name="lv_q3" value="3"> 60 cm comodi, nessun problema di spazio</label>
+            </li>
+
+            <li>
+              Quanto ti dà fastidio vedere piatti nel lavello?<br>
+              <label class="answer-option"><input type="radio" name="lv_q4" value="1"> Poco: li lavo anche a mano</label><br>
+              <label class="answer-option"><input type="radio" name="lv_q4" value="2"> Mi infastidisce, ma sopravvivo</label><br>
+              <label class="answer-option"><input type="radio" name="lv_q4" value="3"> Non li sopporto: tutto dentro e via</label>
+            </li>
+
+            <li>
+              Usi spesso pentole e teglie grandi (forno, lasagne, arrosti)?<br>
+              <label class="answer-option"><input type="radio" name="lv_q5" value="1"> Quasi mai</label><br>
+              <label class="answer-option"><input type="radio" name="lv_q5" value="2"> Ogni tanto</label><br>
+              <label class="answer-option"><input type="radio" name="lv_q5" value="3"> Spesso</label>
+            </li>
+
+            <li>
+              Budget mentale per la lavastoviglie?<br>
+              <label class="answer-option"><input type="radio" name="lv_q6" value="1"> Voglio spendere il minimo possibile</label><br>
+              <label class="answer-option"><input type="radio" name="lv_q6" value="2"> Spendo il giusto se ne vale la pena</label><br>
+              <label class="answer-option"><input type="radio" name="lv_q6" value="3"> Se mi cambia la vita in cucina, investo</label>
+            </li>
+          </ol>
+
+          <button type="button" class="test-btn" onclick="valutaTestLavastoviglie()">Calcola dimensione consigliata</button>
+          <p id="risultato-lavastoviglie" class="test-result"></p>
+          <div id="amazon-lavastoviglie" class="amazon-box"></div>
+        </section>
+
+        <!-- TEST GIGA SMARTPHONE -->
+        <section class="test-card" id="test-giga-smartphone">
+          <div class="test-section-label">Test specifico</div>
+          <h2>Test Giga Smartphone – versione seria</h2>
+          <p class="test-subtitle">
+            5 domande per capire quanta memoria ti serve davvero sullo smartphone.
+            Rispondi con sincerità: non ti giudica nessuno, al massimo il tuo archivio foto.
+          </p>
+
+          <ol class="test-questions">
+            <li>
+              Quante foto fai in una settimana?<br>
+              <label class="answer-option"><input type="radio" name="giga1" value="0"> Meno di 20</label><br>
+              <label class="answer-option"><input type="radio" name="giga1" value="1"> Tra 20 e 80</label><br>
+              <label class="answer-option"><input type="radio" name="giga1" value="2"> Più di 80 (fotografi anche il caffè)</label>
+            </li>
+
+            <li>
+              Quanti video registri in un mese?<br>
+              <label class="answer-option"><input type="radio" name="giga2" value="0"> Quasi zero</label><br>
+              <label class="answer-option"><input type="radio" name="giga2" value="1"> Qualcuno per momenti speciali</label><br>
+              <label class="answer-option"><input type="radio" name="giga2" value="2"> Tanti, spesso lunghi</label>
+            </li>
+
+            <li>
+              Giochi sul telefono?<br>
+              <label class="answer-option"><input type="radio" name="giga3" value="0"> Mai o quasi</label><br>
+              <label class="answer-option"><input type="radio" name="giga3" value="1"> Qualche gioco leggero</label><br>
+              <label class="answer-option"><input type="radio" name="giga3" value="2"> Giochi pesanti, più di due installati</label>
+            </li>
+
+            <li>
+              Ogni quanto cancelli foto, video o app che non usi?<br>
+              <label class="answer-option"><input type="radio" name="giga4" value="0"> Spesso, mi piace tenere pulito</label><br>
+              <label class="answer-option"><input type="radio" name="giga4" value="1"> Ogni tanto, quando mi ricordo</label><br>
+              <label class="answer-option"><input type="radio" name="giga4" value="2"> Mai: “sono ricordi, non si tocca niente”</label>
+            </li>
+
+            <li>
+              Le chat quanto pesano sulla memoria del telefono?<br>
+              <label class="answer-option"><input type="radio" name="giga5" value="0"> Poco, cancello media e gruppi inutili</label><br>
+              <label class="answer-option"><input type="radio" name="giga5" value="1"> Abbastanza, ma non ci penso troppo</label><br>
+              <label class="answer-option"><input type="radio" name="giga5" value="2"> Tantissimo, ho paura ad aprire le impostazioni</label>
+            </li>
+          </ol>
+
+          <button type="button" class="test-btn" onclick="valutaTestGiga()">Calcola il risultato</button>
+          <p id="giga-result" class="test-result"></p>
+        </section>
+
+        <!-- TEST LAVATRICE COMPLETO -->
+        <section class="test-card" id="test-lavatrice">
+          <div class="test-section-label">Test specifico</div>
+          <h2>Test Lavatrice 2025 – Quale capacità ti serve davvero?</h2>
+          <p class="test-subtitle">
+            10 domande semplici e ironiche per capire se ti serve una 7–8 kg, una 8–9 kg, una 9–10 kg o una 10–11 kg.
+          </p>
+
+          <ol class="test-questions">
+            <li>
+              Quanti siete in casa?<br>
+              <label class="answer-option"><input type="radio" name="lav_q1" value="1"> 1 persona</label><br>
+              <label class="answer-option"><input type="radio" name="lav_q1" value="2"> 2 persone</label><br>
+              <label class="answer-option"><input type="radio" name="lav_q1" value="3"> 3 persone</label><br>
+              <label class="answer-option"><input type="radio" name="lav_q1" value="4"> 4 o più persone</label>
+            </li>
+
+            <li>
+              Quante lavatrici fai in una settimana "normale"?<br>
+              <label class="answer-option"><input type="radio" name="lav_q2" value="1"> 1–2</label><br>
+              <label class="answer-option"><input type="radio" name="lav_q2" value="2"> 3–4</label><br>
+              <label class="answer-option"><input type="radio" name="lav_q2" value="3"> 5+</label>
+            </li>
+
+            <li>
+              Lavi capi voluminosi?<br>
+              <label class="answer-option"><input type="radio" name="lav_q3" value="1"> Mai</label><br>
+              <label class="answer-option"><input type="radio" name="lav_q3" value="2"> Felpe/pile/plaid</label><br>
+              <label class="answer-option"><input type="radio" name="lav_q3" value="3"> Piumoni singoli</label><br>
+              <label class="answer-option"><input type="radio" name="lav_q3" value="4"> Piumone matrimoniale</label>
+            </li>
+
+            <li>
+              Quante separazioni fai per colore dei vestiti?<br>
+              <label class="answer-option"><input type="radio" name="lav_q4" value="1"> Nessuna, vivo pericolosamente</label><br>
+              <label class="answer-option"><input type="radio" name="lav_q4" value="2"> 2 separazioni</label><br>
+              <label class="answer-option"><input type="radio" name="lav_q4" value="3"> 3–4 separazioni</label>
+            </li>
+
+            <li>
+              Hai animali in casa?<br>
+              <label class="answer-option"><input type="radio" name="lav_q5" value="1"> No</label><br>
+              <label class="answer-option"><input type="radio" name="lav_q5" value="2"> Sì, poco pelo</label><br>
+              <label class="answer-option"><input type="radio" name="lav_q5" value="3"> Sì, parecchio pelo</label><br>
+              <label class="answer-option"><input type="radio" name="lav_q5" value="4"> Ho un Husky</label>
+            </li>
+
+            <li>
+              Quanto sei attento ai consumi?<br>
+              <label class="answer-option"><input type="radio" name="lav_q6" value="1"> Molto</label><br>
+              <label class="answer-option"><input type="radio" name="lav_q6" value="2"> Abbastanza</label><br>
+              <label class="answer-option"><input type="radio" name="lav_q6" value="3"> Poco</label>
+            </li>
+
+            <li>
+              Usi più programmi rapidi o eco?<br>
+              <label class="answer-option"><input type="radio" name="lav_q7" value="1"> Sempre rapidi</label><br>
+              <label class="answer-option"><input type="radio" name="lav_q7" value="2"> Mix 50/50</label><br>
+              <label class="answer-option"><input type="radio" name="lav_q7" value="3"> Eco quasi sempre</label>
+            </li>
+
+            <li>
+              Quanto spazio hai a disposizione?<br>
+              <label class="answer-option"><input type="radio" name="lav_q8" value="1"> Poco (45 cm)</label><br>
+              <label class="answer-option"><input type="radio" name="lav_q8" value="2"> Standard (60 cm)</label><br>
+              <label class="answer-option"><input type="radio" name="lav_q8" value="3"> Tanto</label>
+            </li>
+
+            <li>
+              Quanto deve durarti la lavatrice?<br>
+              <label class="answer-option"><input type="radio" name="lav_q9" value="1"> 3 anni</label><br>
+              <label class="answer-option"><input type="radio" name="lav_q9" value="2"> 5 anni</label><br>
+              <label class="answer-option"><input type="radio" name="lav_q9" value="3"> 8+ anni</label>
+            </li>
+
+            <li>
+              Qual è la cosa che odi di più?<br>
+              <label class="answer-option"><input type="radio" name="lav_q10" value="1"> Rumore</label><br>
+              <label class="answer-option"><input type="radio" name="lav_q10" value="2"> Vibrazioni</label><br>
+              <label class="answer-option"><input type="radio" name="lav_q10" value="3"> Fare mille lavatrici</label>
+            </li>
+          </ol>
+
+          <button type="button" class="test-btn" onclick="valutaTestLavatrice()">Calcola capacità consigliata</button>
+          <p id="risultato-lavatrice" class="test-result"></p>
+          <div id="amazon-lavatrice" class="amazon-box"></div>
+        </section>
+
+        <!-- TEST TV -->
+        <section class="test-card" id="test-tv">
+          <div class="test-section-label">Test specifico</div>
+          <h2>Test TV – Smart TV economica o TV buona?</h2>
+          <p class="test-subtitle">
+            In base a budget, stanza e uso ti suggeriamo se ha più senso una TV economica, una TV di qualità o una TV abbinata a un box esterno.
+          </p>
+
+          <ol class="test-questions">
+            <li>
+              Qual è il budget realistico per la nuova TV?<br>
+              <label class="answer-option"><input type="radio" name="t_q1" value="1">&lt; 300€</label>
+              <label class="answer-option"><input type="radio" name="t_q1" value="2">300–500€</label>
+              <label class="answer-option"><input type="radio" name="t_q1" value="3">&gt; 500€</label>
+            </li>
+            <li>
+              A che distanza guardi la TV, più o meno?<br>
+              <label class="answer-option"><input type="radio" name="t_q2" value="1">Meno di 2 metri</label>
+              <label class="answer-option"><input type="radio" name="t_q2" value="2">Tra 2 e 3 metri</label>
+              <label class="answer-option"><input type="radio" name="t_q2" value="3">Oltre 3 metri</label>
+            </li>
+            <li>
+              La stanza è di solito:<br>
+              <label class="answer-option"><input type="radio" name="t_q3" value="1">Molto luminosa</label>
+              <label class="answer-option"><input type="radio" name="t_q3" value="2">Mista, a volte luminosa, a volte no</label>
+              <label class="answer-option"><input type="radio" name="t_q3" value="3">Per lo più con luce bassa / sera</label>
+            </li>
+            <li>
+              Uso principale della TV:<br>
+              <label class="answer-option"><input type="radio" name="t_q4" value="1">Canali tradizionali</label><br>
+              <label class="answer-option"><input type="radio" name="t_q4" value="2">Film e serie in streaming</label><br>
+              <label class="answer-option"><input type="radio" name="t_q4" value="3">Sport veloci / gaming</label>
+            </li>
+            <li>
+              Quanto ti dà fastidio un’immagine non perfetta (troppo chiara, troppo scura, colori strani)?<br>
+              <label class="answer-option"><input type="radio" name="t_q5" value="1">Poco</label>
+              <label class="answer-option"><input type="radio" name="t_q5" value="2">Un po’</label>
+              <label class="answer-option"><input type="radio" name="t_q5" value="3">Molto</label>
+            </li>
+            <li>
+              Quanto ti dà fastidio un software lento quando apri le app della TV?<br>
+              <label class="answer-option"><input type="radio" name="t_q6" value="1">Poco, posso aspettare</label>
+              <label class="answer-option"><input type="radio" name="t_q6" value="2">Mi infastidisce</label>
+              <label class="answer-option"><input type="radio" name="t_q6" value="3">Mi fa venire i nervi</label>
+            </li>
+            <li>
+              Quanto vorresti che ti durasse la TV?<br>
+              <label class="answer-option"><input type="radio" name="t_q7" value="1">2–3 anni</label>
+              <label class="answer-option"><input type="radio" name="t_q7" value="2">4–5 anni</label>
+              <label class="answer-option"><input type="radio" name="t_q7" value="3">Più di 5 anni</label>
+            </li>
+          </ol>
+
+          <button type="button" class="test-btn" onclick="valutaTestTv()">Calcola tipo di TV consigliato</button>
+          <p id="risultato-tv" class="test-result"></p>
+          <div id="amazon-tv" class="amazon-box"></div>
+        </section>
+      </div>
+
+      <!-- COLONNA INFO -->
+      <aside>
+        <div class="side-box">
+          <h3>Come leggere i risultati</h3>
+          <ul>
+            <li><strong>Verde</strong>: acquisto ragionato, puoi procedere con calma.</li>
+            <li><strong>Giallo</strong>: qualcosa non torna, forse è meglio aspettare.</li>
+            <li><strong>Rosso</strong>: alto rischio di acquisto d’impulso.</li>
+          </ul>
+          <p class="side-note">
+            Nessuno dei test è un oracolo infallibile.  
+            L’idea è semplice: farti ragionare 2 minuti in più prima di spendere soldi.
+          </p>
+        </div>
+
+        <div class="side-box">
+          <h3>Dopo il test, cosa faccio?</h3>
+          <ul>
+            <li>Se il risultato è <strong>verde</strong>, vai alle nostre guide:</li>
+            <li><a href="smartphone-sotto-200-euro-2025.html">Smartphone sotto 200€</a></li>
+            <li><a href="smart-tv-guida-ironica.html">Guida Smart TV 2025</a></li>
+            <li><a href="smart-tv-economica-o-tv-buona-con-box.html">Smart TV economica o TV buona?</a></li>
+            <li><a href="fotovoltaico-4kw-accumulo-10kwh.html">Fotovoltaico: numeri reali</a></li>
+          </ul>
+        </div>
+      </aside>
+    </div> 
+    
+    <p style="font-size:0.85rem; color:#666; margin:18px 0;">
+      <strong>Nota:</strong> questo test SmartShop è pensato solo per aiutarti a riflettere
+      prima di fare un acquisto. Non ha valore scientifico, non sostituisce pareri tecnici
+      o professionali ed è realizzato con tono leggero e ironico.
+    </p>
+  </main>
+
+  <footer class="syncras-footer">
+    <div class="footer-inner">
+      <div class="footer-column">
+        <h4>Syncras.App</h4>
+        <p>
+          Metodo SmartShop per fare acquisti con la testa (e con un po’ di ironia).<br>
+          Niente tecnicismi inutili, solo esperienze reali e numeri spiegati semplice.
+        </p>
+      </div>
+
+      <div class="footer-column">
+        <h4>Link utili</h4>
+        <ul>
+          <li><a href="blog.html">Tutte le guide SmartShop</a></li>
+          <li><a href="offerte.html">Offerte Amazon selezionate</a></li>
+          <li><a href="smartphone-sotto-200-euro-2025.html">Smartphone 2025 sotto 200€</a></li>
+          <li><a href="resistenza-termosifone-fotovoltaico.html">La stanza più fredda della casa</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h4>Legale & Privacy</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="cookie.html">Cookie Policy</a></li>
+          <li><a href="disclaimer-amazon.html">Disclaimer Amazon</a></li>
+          <li><a href="note-legali.html">Note Legali</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© <span id="year-span"></span> Syncras.App — Tutti i diritti riservati.</p>
+      <p>
+        Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+        Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+        senza alcun costo aggiuntivo per l’utente.
+      </p>
+      <p>
+        Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+        è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.body.classList.toggle('nav-open');
+    }
+
+    /* ==============================
+       LINK AMAZON CONFIGURABILI
+       ============================== */
+
+    const AMAZON_LINKS = {
+      smartphone: {
+        base: {
+          text: 'Per la fascia base bastano modelli semplici sotto i 200€.',
+          url: 'https://amzn.to/48cFdRR'
+        },
+        media: {
+          text: 'Per la fascia 200–350€ hai il miglior equilibrio prezzo/qualità.',
+          url: 'https://amzn.to/3Kpt3gF'
+        },
+        alta: {
+          text: 'Per la fascia oltre 350€ ha senso puntare a modelli più completi.',
+          url: 'https://amzn.to/48yMwon'
+        }
+      },
+      lavastoviglie: {
+        slim: {
+          text: 'Per il tuo profilo va bene una slim da 45 cm: salva spazio e fa il suo lavoro.',
+          url: 'https://amzn.to/3XhF8r5'
+        },
+        mix: {
+          text: 'Se hai dubbi, guarda sia 45 cm che 60 cm e valuta offerte e spazio.',
+          url: 'https://amzn.to/4pxikjf'
+        },
+        full: {
+          text: 'Per la tua cucina una 60 cm è la scelta più pratica.',
+          url: 'https://amzn.to/4p6X97Y'
+        }
+      },
+      lavatrice: {
+        '7-8': {
+          text: 'Con il tuo profilo una 7–8 kg è più che sufficiente.',
+          url: 'https://amzn.to/4oWFa3L'
+        },
+        '8-9': {
+          text: 'La fascia 8–9 kg è quella più equilibrata per molte famiglie.',
+          url: 'https://amzn.to/3LXeCAZ'
+        },
+        '9-10': {
+          text: 'Per carichi frequenti una 9–10 kg ti dà più respiro.',
+          url: 'https://amzn.to/49AfOUJ'
+        },
+        '10-11': {
+          text: 'Per piumoni e carichi importanti, guarda le 10–11 kg.',
+          url: 'https://amzn.to/48i7Ugn'
+        }
+      },
+      tv: {
+        economica: {
+          text: 'Per il tuo uso basta una Smart TV economica, senza esagerare.',
+          url: 'https://amzn.to/3MnuWeg'
+        },
+        buona: {
+          text: 'Ha senso puntare a una TV di qualità con buon pannello.',
+          url: 'https://amzn.to/4pATAGV'
+        },
+        box: {
+          text: 'Per te è ideale una buona TV abbinata a un box esterno.',
+          url: 'https://amzn.to/4ikU5Ch'
+        },
+        media: {
+          text: 'Una TV di fascia media è un compromesso intelligente.',
+          url: 'https://amzn.to/49EtgHa'
+        }
+      }
+    };
+
+    const AMAZON_GENERIC_LINK = "https://amzn.to/4ikAX7D";
+    const AMAZON_SMARTPHONE_64_128 = "https://amzn.to/48hZzJs";
+    const AMAZON_SMARTPHONE_256    = "https://amzn.to/4ioryMm";
+
+    function updateAmazonBox(testName, key) {
+      const box = document.getElementById('amazon-' + testName);
+      if (!box) return;
+
+      if (!key || !AMAZON_LINKS[testName] || !AMAZON_LINKS[testName][key]) {
+        box.innerHTML = '';
+        return;
+      }
+
+      const info = AMAZON_LINKS[testName][key];
+      box.innerHTML = `
+        <strong>Dopo il test, se vuoi davvero comprare:</strong>
+        <span>${info.text}</span><br>
+        <a href="${info.url}" target="_blank" rel="nofollow noopener sponsored">
+          Vai a vedere le offerte su Amazon
+        </a>
+      `;
+    }
+
+    /* ==============================
+       TEST ACQUISTO
+       ============================== */
+
+    function valutaTestAcquisto() {
+      const domande = ['a_q1', 'a_q2', 'a_q3', 'a_q4', 'a_q5', 'a_q6', 'a_q7'];
+      let si = 0;
+      let risposte = 0;
+
+      domande.forEach(function(nome) {
+        const sel = document.querySelector('input[name="' + nome + '"]:checked');
+        if (sel) {
+          risposte++;
+          if (sel.value === 'si') si++;
+        }
+      });
+
+      const el = document.getElementById('risultato-acquisto');
+      el.className = 'test-result';
+
+      if (risposte < domande.length) {
+        el.textContent = 'Rispondi a tutte le domande per vedere il risultato.';
+        return;
+      }
+
+      if (si >= 5) {
+        el.textContent = 'Verde: il tuo acquisto sembra ragionato. Se il prodotto è giusto e il prezzo è onesto, puoi procedere piuttosto tranquillo.';
+        el.classList.add('result-good');
+      } else if (si >= 3) {
+        el.textContent = 'Giallo: ci sono alcuni punti deboli. Forse è meglio aspettare ancora un po’, confrontare meglio prezzi e alternative.';
+        el.classList.add('result-medium');
+      } else {
+        el.textContent = 'Rosso: qui suona forte il campanello dell’acquisto d’impulso. Meglio fermarsi e ripensarci tra qualche giorno.';
+        el.classList.add('result-bad');
+      }
+
+      el.innerHTML +=
+        '<br><br><a href="' + AMAZON_GENERIC_LINK +
+        '" target="_blank" style="color:#4B3ACB;font-weight:bold;">' +
+        '🔗 Cerca il prodotto su Amazon</a>';
+    }
+
+    /* ==============================
+       TEST SMARTPHONE
+       ============================== */
+
+    function valutaTestSmartphone() {
+      const domande = ['s_q1', 's_q2', 's_q3', 's_q4', 's_q5'];
+      let punteggio = 0;
+      let risposte = 0;
+
+      domande.forEach(function(nome) {
+        const sel = document.querySelector('input[name="' + nome + '"]:checked');
+        if (sel) {
+          risposte++;
+          punteggio += parseInt(sel.value, 10);
+        }
+      });
+
+      const el = document.getElementById('risultato-smartphone');
+      el.className = 'test-result';
+      updateAmazonBox('smartphone', null);
+
+      if (risposte < domande.length) {
+        el.textContent = 'Completa tutte le risposte per vedere la fascia consigliata.';
+        return;
+      }
+
+      const budget = document.querySelector('input[name="s_q1"]:checked').value;
+      const uso    = document.querySelector('input[name="s_q2"]:checked').value;
+
+      let fasciaKey = 'media';
+
+      if (budget === '1' && uso === '1') {
+        el.textContent = 'Per il tuo uso uno smartphone sotto i 200€ è più che sufficiente. Prima di cambiare, valuta se quello che hai ti limita davvero.';
+        el.classList.add('result-good');
+        fasciaKey = 'base';
+      } else if (punteggio <= 8) {
+        el.textContent = 'Fascia consigliata: smartphone base sotto 200–220€. Modelli semplici, batteria ok, zero fronzoli. Perfetti per chat, chiamate e qualche app.';
+        el.classList.add('result-good');
+        fasciaKey = 'base';
+      } else if (punteggio <= 12) {
+        el.textContent = 'Fascia consigliata: 200–350€. Equilibrio tra prestazioni, foto e batteria. Ottima zona per non buttare soldi ma avere un telefono completo.';
+        el.classList.add('result-medium');
+        fasciaKey = 'media';
+      } else {
+        el.textContent = 'Fascia consigliata: oltre 350€. Cerchi prestazioni alte, buon comparto foto e magari gaming. Prima di spendere così tanto, assicurati di sfruttarlo davvero.';
+        el.classList.add('result-medium');
+        fasciaKey = 'alta';
+      }
+
+      updateAmazonBox('smartphone', fasciaKey);
+    }
+
+    /* ==============================
+       TEST LAVASTOVIGLIE
+       ============================== */
+
+    function valutaTestLavastoviglie() {
+      const domande = ['lv_q1','lv_q2','lv_q3','lv_q4','lv_q5','lv_q6'];
+      let punteggio = 0;
+      let risposte  = 0;
+
+      domande.forEach(function(nome) {
+        const sel = document.querySelector('input[name="' + nome + '"]:checked');
+        if (sel) {
+          risposte++;
+          punteggio += parseInt(sel.value, 10);
+        }
+      });
+
+      const el = document.getElementById('risultato-lavastoviglie');
+      el.className = 'test-result';
+      updateAmazonBox('lavastoviglie', null);
+
+      if (risposte < domande.length) {
+        el.textContent = 'Completa tutte le domande per vedere il risultato.';
+        return;
+      }
+
+      let key = 'mix';
+
+      if (punteggio <= 9) {
+        el.textContent =
+          'Per le tue abitudini una lavastoviglie slim da 45 cm è più che sufficiente. ' +
+          'Cucina piccola, carichi moderati e meno piatti: meglio salvare spazio in cucina.';
+        el.classList.add('result-good');
+        key = 'slim';
+      } else if (punteggio <= 13) {
+        el.textContent =
+          'Se hai spazio, una 60 cm ti darebbe più respiro, ma anche una buona 45 cm può bastare. ' +
+          'Se spesso ti trovi il lavello pieno, valuta seriamente la 60 cm.';
+        el.classList.add('result-medium');
+        key = 'mix';
+      } else {
+        el.textContent =
+          'Con famiglia, pentole, teglie e spazio disponibile, la scelta naturale è una lavastoviglie da 60 cm. ' +
+          'Più capienza, meno lavaggi e lavello che respira di più.';
+        el.classList.add('result-good');
+        key = 'full';
+      }
+
+      updateAmazonBox('lavastoviglie', key);
+    }
+
+    /* ==============================
+       TEST LAVATRICE
+       ============================== */
+
+    function valutaTestLavatrice() {
+      const domande = [
+        'lav_q1','lav_q2','lav_q3','lav_q4','lav_q5',
+        'lav_q6','lav_q7','lav_q8','lav_q9','lav_q10'
+      ];
+
+      let punteggio = 0;
+      let risposte  = 0;
+
+      domande.forEach(function(nome) {
+        const sel = document.querySelector('input[name="' + nome + '"]:checked');
+        if (sel) {
+          risposte++;
+          punteggio += parseInt(sel.value, 10);
+        }
+      });
+
+      const el = document.getElementById('risultato-lavatrice');
+      el.className = 'test-result';
+      updateAmazonBox('lavatrice', null);
+
+      if (risposte < domande.length) {
+        el.textContent = 'Rispondi a tutte le domande per vedere il risultato.';
+        return;
+      }
+
+      let key = '8-9';
+
+      if (punteggio <= 12) {
+        el.textContent = '➡ Consigliata: lavatrice da 7–8 kg (uso leggero, nucleo piccolo, consumi bassi).';
+        el.classList.add('result-good');
+        key = '7-8';
+      } else if (punteggio <= 18) {
+        el.textContent = '➡ Consigliata: lavatrice da 8–9 kg (equilibrata, perfetta per la maggior parte delle famiglie).';
+        el.classList.add('result-medium');
+        key = '8-9';
+      } else if (punteggio <= 23) {
+        el.textContent = '➡ Consigliata: lavatrice da 9–10 kg (famiglie più numerose, lavaggi frequenti, capi pesanti).';
+        el.classList.add('result-medium');
+        key = '9-10';
+      } else {
+        el.textContent = '➡ Consigliata: lavatrice da 10–11 kg (piumoni matrimoniali, carichi importanti, massima praticità).';
+        el.classList.add('result-good');
+        key = '10-11';
+      }
+
+      updateAmazonBox('lavatrice', key);
+    }
+
+    /* ==============================
+       TEST TV
+       ============================== */
+
+    function valutaTestTv() {
+      const domande = ['t_q1', 't_q2', 't_q3', 't_q4', 't_q5', 't_q6', 't_q7'];
+      let risposte = 0;
+
+      domande.forEach(function(nome) {
+        const sel = document.querySelector('input[name="' + nome + '"]:checked');
+        if (sel) {
+          risposte++;
+        }
+      });
+
+      const el = document.getElementById('risultato-tv');
+      el.className = 'test-result';
+      updateAmazonBox('tv', null);
+
+      if (risposte < domande.length) {
+        el.textContent = 'Rispondi a tutte le domande per vedere il tipo di TV consigliato.';
+        return;
+      }
+
+      const budget      = parseInt(document.querySelector('input[name="t_q1"]:checked').value, 10);
+      const distanza    = parseInt(document.querySelector('input[name="t_q2"]:checked').value, 10);
+      const luce        = parseInt(document.querySelector('input[name="t_q3"]:checked').value, 10);
+      const uso         = parseInt(document.querySelector('input[name="t_q4"]:checked').value, 10);
+      const sensibilita = parseInt(document.querySelector('input[name="t_q5"]:checked').value, 10);
+      const velocita    = parseInt(document.querySelector('input[name="t_q6"]:checked').value, 10);
+      const durata      = parseInt(document.querySelector('input[name="t_q7"]:checked').value, 10);
+
+      let key = 'media';
+
+      if (budget === 1 && uso === 1 && sensibilita <= 2 && velocita <= 2) {
+        el.textContent = 'Per il tuo uso va benissimo una Smart TV economica: canali tradizionali e qualche app base. Non ha senso spendere molto di più.';
+        el.classList.add('result-good');
+        key = 'economica';
+        updateAmazonBox('tv', key);
+        return;
+      }
+
+      let punteggioQualita = 0;
+      if (uso >= 2) punteggioQualita++;
+      if (sensibilita >= 2) punteggioQualita++;
+      if (luce === 3) punteggioQualita++;
+      if (durata >= 2) punteggioQualita++;
+
+      if (punteggioQualita >= 2 && velocita <= 2 && budget >= 2) {
+        el.textContent = 'Per le tue esigenze è consigliata una TV di qualità senza per forza aggiungere un box esterno. Pannello migliore, buona resa con film e serie, software già sufficiente.';
+        el.classList.add('result-good');
+        key = 'buona';
+        updateAmazonBox('tv', key);
+        return;
+      }
+
+      if (punteggioQualita >= 3 && velocita === 3 && durata >= 2 && budget >= 2) {
+        el.textContent = 'Per come userai la TV, la scelta più intelligente è una TV di buona qualità abbinata a un box multimediale esterno. Così hai immagini migliori oggi e una parte “smart” aggiornata anche tra qualche anno.';
+        el.classList.add('result-medium');
+        key = 'box';
+        updateAmazonBox('tv', key);
+        return;
+      }
+
+      if (budget === 2 && punteggioQualita >= 2) {
+        el.textContent = 'Con il tuo budget e le tue esigenze puoi puntare a una TV di buona qualità, iniziando senza box esterno. In futuro, se il software dovesse rallentare, potrai aggiungere un box per allungarne la vita.';
+        el.classList.add('result-medium');
+        key = 'buona';
+        updateAmazonBox('tv', key);
+        return;
+      }
+
+      el.textContent = 'In base alle tue risposte, puoi orientarti su una TV di fascia media: non la più economica, ma nemmeno il top assoluto. Se in futuro la parte smart dovesse diventare lenta, potrai sempre aggiungere un box esterno.';
+      el.classList.add('result-medium');
+      key = 'media';
+      updateAmazonBox('tv', key);
+    }
+
+    /* ==============================
+       TEST GIGA
+       ============================== */
+
+    function valutaTestGiga() {
+      let punteggio = 0;
+
+      for (let i = 1; i <= 5; i++) {
+        const risposta = document.querySelector('input[name="giga' + i + '"]:checked');
+        if (!risposta) {
+          alert('Rispondi a tutte le domande del Test Giga Smartphone.');
+          return;
+        }
+        punteggio += parseInt(risposta.value, 10);
+      }
+
+      const el = document.getElementById('giga-result');
+      el.className = 'test-result';
+      let messaggio = '';
+      let linkAmazon = '';
+
+      if (punteggio <= 3) {
+        el.classList.add('result-good');
+        messaggio =
+          'Verde: usi lo smartphone in modo leggero. ' +
+          'Con 64 GB te la cavi, con 128 GB vivi ancora più sereno.';
+
+        linkAmazon =
+          '<br><br><a href="' + AMAZON_SMARTPHONE_64_128 +
+          '" target="_blank" style="color:#4B3ACB;font-weight:bold;">' +
+          '🔗 Vedi smartphone 64–128 GB su Amazon</a>';
+
+      } else if (punteggio <= 7) {
+        el.classList.add('result-medium');
+        messaggio =
+          'Giallo: fai foto, video e usi chat e app in modo “normale moderno”. ' +
+          '128 GB sono il punto di equilibrio giusto per te.';
+
+        linkAmazon =
+          '<br><br><a href="' + AMAZON_SMARTPHONE_64_128 +
+          '" target="_blank" style="color:#4B3ACB;font-weight:bold;">' +
+          '🔗 Vedi smartphone 128 GB su Amazon</a>';
+
+      } else {
+        el.classList.add('result-bad');
+        messaggio =
+          'Rosso: sei ufficialmente un mangia-giga. Video, giochi, chat infinite… ' +
+          'per evitare la guerra con il messaggio “memoria piena”, meglio puntare su 256 GB.';
+
+        linkAmazon =
+          '<br><br><a href="' + AMAZON_SMARTPHONE_256 +
+          '" target="_blank" style="color:#4B3ACB;font-weight:bold;">' +
+          '🔗 Vedi smartphone 256 GB su Amazon</a>';
+      }
+
+      el.innerHTML = messaggio + linkAmazon;
+    }
+
+    /* ==============================
+       FOOTER YEAR
+       ============================== */
+
+    document.addEventListener('DOMContentLoaded', function() {
+      var span = document.getElementById('year-span');
+      if (span) {
+        span.textContent = new Date().getFullYear();
+      }
+    });
+  </script>
+
+</body>
+</html>
