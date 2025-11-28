@@ -573,74 +573,97 @@
       <!-- COLONNA TEST -->
       <div>
         <!-- TEST 1: Decisione acquisto -->
-        <section class="test-card" id="test-acquisto">
-          <div class="test-section-label">Test generale</div>
-          <h2>Test decisione acquisto – versione seria</h2>
-          <p class="test-subtitle">
-            5 domande per capire se il tuo prossimo acquisto è davvero sensato o se è solo “voglia di clic”.
-          </p>
+       <section class="test-card" id="test-acquisto">
+  <div class="test-section-label">Test generale</div>
+  <h2>Test decisione acquisto – versione seria</h2>
+  <p class="test-subtitle">
+    7 domande per capire se il tuo prossimo acquisto è davvero sensato o se è solo “voglia di clic”.
+  </p>
 
-          <ol class="test-questions">
-            <li>
-              Ho un motivo concreto e preciso per comprarlo (non solo “mi piace”)?<br>
-              <label class="answer-option">
-                <input type="radio" name="a_q1" value="si">
-                <span>Sì</span>
-              </label>
-              <label class="answer-option">
-                <input type="radio" name="a_q1" value="no">
-                <span>No</span>
-              </label>
-            </li>
-            <li>
-              Rientra nel mio budget di questo mese senza toccare risparmi o soldi per emergenze?<br>
-              <label class="answer-option">
-                <input type="radio" name="a_q2" value="si">
-                <span>Sì</span>
-              </label>
-              <label class="answer-option">
-                <input type="radio" name="a_q2" value="no">
-                <span>No</span>
-              </label>
-            </li>
-            <li>
-              Ho confrontato almeno 2–3 alternative serie (prezzo, recensioni, caratteristiche)?<br>
-              <label class="answer-option">
-                <input type="radio" name="a_q3" value="si">
-                <span>Sì</span>
-              </label>
-              <label class="answer-option">
-                <input type="radio" name="a_q3" value="no">
-                <span>No</span>
-              </label>
-            </li>
-            <li>
-              Sto risolvendo un problema reale che ho da tempo, non un desiderio nato negli ultimi 2–3 giorni?<br>
-              <label class="answer-option">
-                <input type="radio" name="a_q4" value="si">
-                <span>Sì</span>
-              </label>
-              <label class="answer-option">
-                <input type="radio" name="a_q4" value="no">
-                <span>No</span>
-              </label>
-            </li>
-            <li>
-              Se tra una settimana non potessi più restituirlo, sarei comunque tranquillo della scelta?<br>
-              <label class="answer-option">
-                <input type="radio" name="a_q5" value="si">
-                <span>Sì</span>
-              </label>
-              <label class="answer-option">
-                <input type="radio" name="a_q5" value="no">
-                <span>No</span>
-              </label>
-            </li>
-          </ol>
+  <ol class="test-questions">
+    <li>
+      Ho un motivo concreto e preciso per comprarlo (non solo “mi piace”)?<br>
+      <label class="answer-option">
+        <input type="radio" name="a_q1" value="si">
+        <span>Sì</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="a_q1" value="no">
+        <span>No</span>
+      </label>
+    </li>
+    <li>
+      Rientra nel mio budget di questo mese senza toccare risparmi o soldi per emergenze?<br>
+      <label class="answer-option">
+        <input type="radio" name="a_q2" value="si">
+        <span>Sì</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="a_q2" value="no">
+        <span>No</span>
+      </label>
+    </li>
+    <li>
+      Ho confrontato almeno 2–3 alternative serie (prezzo, recensioni, caratteristiche)?<br>
+      <label class="answer-option">
+        <input type="radio" name="a_q3" value="si">
+        <span>Sì</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="a_q3" value="no">
+        <span>No</span>
+      </label>
+    </li>
+    <li>
+      Sto risolvendo un problema reale che ho da tempo, non un desiderio nato negli ultimi 2–3 giorni?<br>
+      <label class="answer-option">
+        <input type="radio" name="a_q4" value="si">
+        <span>Sì</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="a_q4" value="no">
+        <span>No</span>
+      </label>
+    </li>
+    <li>
+      Se tra una settimana non potessi più restituirlo, sarei comunque tranquillo della scelta?<br>
+      <label class="answer-option">
+        <input type="radio" name="a_q5" value="si">
+        <span>Sì</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="a_q5" value="no">
+        <span>No</span>
+      </label>
+    </li>
+    <li>
+      Se perdo questa offerta oggi, posso comunque permettermi l’acquisto il mese prossimo senza problemi?<br>
+      <label class="answer-option">
+        <input type="radio" name="a_q6" value="si">
+        <span>Sì</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="a_q6" value="no">
+        <span>No</span>
+      </label>
+    </li>
+    <li>
+      Tra 6 mesi penso ancora di usarlo regolarmente (almeno una volta a settimana)?<br>
+      <label class="answer-option">
+        <input type="radio" name="a_q7" value="si">
+        <span>Sì</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="a_q7" value="no">
+        <span>No</span>
+      </label>
+    </li>
+  </ol>
 
-          <button type="button" class="test-btn" onclick="valutaTestAcquisto()">Calcola risultato</button>
-          <p id="risultato-acquisto" class="test-result"></p>
-        </section>
+  <button type="button" class="test-btn" onclick="valutaTestAcquisto()">Calcola risultato</button>
+  <p id="risultato-acquisto" class="test-result"></p>
+</section>
+
 
         <!-- TEST 2: Smartphone -->
         <section class="test-card" id="test-smartphone">
@@ -1422,44 +1445,45 @@
     /* ==============================
        TEST ACQUISTO
        ============================== */
+function valutaTestAcquisto() {
+  const domande = ['a_q1', 'a_q2', 'a_q3', 'a_q4', 'a_q5', 'a_q6', 'a_q7'];
+  let si = 0;
+  let risposte = 0;
 
-    function valutaTestAcquisto() {
-      const domande = ['a_q1', 'a_q2', 'a_q3', 'a_q4', 'a_q5'];
-      let si = 0;
-      let risposte = 0;
-
-      domande.forEach(function(nome) {
-        const sel = document.querySelector('input[name="' + nome + '"]:checked');
-        if (sel) {
-          risposte++;
-          if (sel.value === 'si') si++;
-        }
-      });
-
-      const el = document.getElementById('risultato-acquisto');
-      el.className = 'test-result';
-
-      if (risposte < domande.length) {
-        el.textContent = 'Rispondi a tutte le domande per vedere il risultato.';
-        return;
-      }
-
-      if (si >= 4) {
-        el.textContent = 'Verde: il tuo acquisto sembra ragionato. Se il prodotto è giusto e il prezzo è onesto, puoi procedere piuttosto tranquillo.';
-        el.classList.add('result-good');
-      } else if (si >= 2) {
-        el.textContent = 'Giallo: ci sono alcuni punti deboli. Forse è meglio aspettare ancora un po’, confrontare meglio prezzi e alternative.';
-        el.classList.add('result-medium');
-      } else {
-        el.textContent = 'Rosso: qui suona forte il campanello dell’acquisto d’impulso. Meglio fermarsi e ripensarci tra qualche giorno.';
-        el.classList.add('result-bad');
-      }
-
-      el.innerHTML +=
-        '<br><br><a href="' + AMAZON_GENERIC_LINK +
-        '" target="_blank" style="color:#4B3ACB;font-weight:bold;">' +
-        '🔗 Cerca il prodotto su Amazon</a>';
+  domande.forEach(function(nome) {
+    const sel = document.querySelector('input[name="' + nome + '"]:checked');
+    if (sel) {
+      risposte++;
+      if (sel.value === 'si') si++;
     }
+  });
+
+  const el = document.getElementById('risultato-acquisto');
+  el.className = 'test-result';
+
+  if (risposte < domande.length) {
+    el.textContent = 'Rispondi a tutte le domande per vedere il risultato.';
+    return;
+  }
+
+  // Con 7 domande:
+  // 5-7 "Sì" = verde, 3-4 = giallo, 0-2 = rosso
+  if (si >= 5) {
+    el.textContent = 'Verde: il tuo acquisto sembra ragionato. Se il prodotto è giusto e il prezzo è onesto, puoi procedere piuttosto tranquillo.';
+    el.classList.add('result-good');
+  } else if (si >= 3) {
+    el.textContent = 'Giallo: ci sono alcuni punti deboli. Forse è meglio aspettare ancora un po’, confrontare meglio prezzi e alternative.';
+    el.classList.add('result-medium');
+  } else {
+    el.textContent = 'Rosso: qui suona forte il campanello dell’acquisto d’impulso. Meglio fermarsi e ripensarci tra qualche giorno.';
+    el.classList.add('result-bad');
+  }
+
+  el.innerHTML +=
+    '<br><br><a href="' + AMAZON_GENERIC_LINK +
+    '" target="_blank" style="color:#4B3ACB;font-weight:bold;">' +
+    '🔗 Cerca il prodotto su Amazon</a>';
+}
 
     /* ==============================
        TEST SMARTPHONE
