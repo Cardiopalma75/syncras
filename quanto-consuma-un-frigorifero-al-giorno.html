@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Perché la lavatrice puzza anche se è pulita? La spiegazione semplice (e comica) | Syncras.App</title>
-  <meta name="description" content="La lavatrice puzza anche se è pulita? Spiegazione semplice (e comica) su odori, muffa, guarnizioni e lavaggi a freddo, con consigli pratici per risolvere.">
+  <title>Quanto consuma un frigorifero al giorno? Guida alla mano | Syncras.App</title>
+  <meta name="description" content="Quanto consuma davvero un frigorifero al giorno? Numeri semplici, esempi reali e storie comiche per capire quanto incide in bolletta e quando conviene cambiarlo.">
   <meta name="robots" content="index,follow">
 
   <!-- Google Analytics -->
@@ -223,6 +223,61 @@
       font-family: Arial;
       font-size: 0.9rem;
     }
+
+    /* STILI SPECIFICI PER QUESTO ARTICOLO (FRIGO) */
+    .badge-article {
+      display: inline-block;
+      background: #F3F4FF;
+      color: var(--violet-dark);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .article-meta {
+      font-size: 0.85rem;
+      color: #6B7280;
+      margin-bottom: 20px;
+    }
+
+    .tech-box {
+      background: #F6F4FF;
+      border-left: 4px solid #6C5CE7;
+      padding: 12px 14px;
+      border-radius: 8px;
+      margin: 20px 0;
+      font-size: 0.95rem;
+    }
+
+    .related-section {
+      margin-top: 35px;
+      padding-top: 20px;
+      border-top: 1px solid #E5E7EB;
+    }
+
+    .related-section h3 {
+      margin-bottom: 12px;
+    }
+
+    .related-list {
+      list-style-type: disc;
+      margin-left: 20px;
+    }
+
+    .related-list li {
+      margin-bottom: 6px;
+    }
+
+    .related-list a {
+      color: var(--violet-dark);
+      text-decoration: none;
+    }
+
+    .related-list a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 
@@ -239,14 +294,13 @@
 
       <nav id="main-nav">
         <a href="index.html">Home</a>
-<a href="blog.html">Blog</a>
-<a href="offerte.html">Offerte Amazon</a>
-<a href="categorie.html">Categorie</a>
-<a href="curiosita.html">Curiosità</a>
-<a href="misteri.html">Misteri</a>
-<a href="quiz.html">Test SmartShop</a>
-<a href="chi.html">Chi siamo</a>
-
+        <a href="blog.html">Blog</a>
+        <a href="offerte.html">Offerte Amazon</a>
+        <a href="categorie.html">Categorie</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="quiz.html">Test SmartShop</a>
+        <a href="chi.html">Chi siamo</a>
       </nav>
     </div>
   </header>
@@ -258,331 +312,297 @@
       <a href="categorie.html">Categorie</a>
     </div>
 
-<main class="blog-main">
-    <div class="article-layout">
-      <article>
-        <span class="badge-article">Energia • Casa</span>
-        <h1>Quanto consuma un frigorifero al giorno? Guida alla mano</h1>
-        <div class="article-meta">
-          28 novembre 2025 • Vita quotidiana • Energia alla mano
-        </div>
+    <article>
+      <span class="badge-article">Energia • Casa</span>
+      <h1>Quanto consuma un frigorifero al giorno? Guida alla mano</h1>
+      <div class="article-meta">
+        28 novembre 2025 • Vita quotidiana • Energia alla mano
+      </div>
 
-    
-    <button id="shareBtn"
-      style="background: var(--violet-main); color:white; padding:10px 15px; border:none;
-             border-radius:6px; cursor:pointer; margin-bottom:20px; font-weight:600;">
-      📎 Condividi questa guida
-    </button>
+      <button id="shareBtn"
+        style="background: var(--violet-main); color:white; padding:10px 15px; border:none;
+               border-radius:6px; cursor:pointer; margin-bottom:20px; font-weight:600;">
+        📎 Condividi questa guida
+      </button>
 
+      <script>
+        const shareBtn = document.getElementById('shareBtn');
 
-       <script>
-  const shareBtn = document.getElementById('shareBtn');
+        if (shareBtn && navigator.share) {
+          shareBtn.addEventListener('click', () => {
+            navigator.share({
+              title: "Quanto consuma un frigorifero al giorno? Guida alla mano",
+              text: "Numeri semplici, esempi reali e 3 storie comiche che spiegano quanto consuma davvero un frigorifero al giorno.",
+              url: window.location.href
+            }).catch(() => {});
+          });
+        } else if (shareBtn) {
+          // Se condividere non è supportato (PC), nascondo il tasto
+          shareBtn.style.display = "none";
+        }
+      </script>
 
-  if (shareBtn && navigator.share) {
-    shareBtn.addEventListener('click', () => {
-      navigator.share({
-        title: "Quanto consuma un frigorifero al giorno? Guida alla mano",
-        text: "Numeri semplici, esempi reali e 3 storie comiche che spiegano quanto consuma davvero un frigorifero al giorno.",
-        url: window.location.href
-      }).catch(() => {});
-    });
-  } else if (shareBtn) {
-    // Se condividere non è supportato (PC), nascondo il tasto
-    shareBtn.style.display = "none";
-  }
-</script>
+      <p>
+        Domanda classica da tavola della domenica: <strong>“Ma sto frigorifero, quanto consuma al giorno?”</strong><br>
+        Di solito la risposta è una di queste tre:
+      </p>
+      <ul>
+        <li>“Poco, tanto è in classe A” (detto da chi l’ha comprato nel 2004).</li>
+        <li>“Troppo, la bolletta è impazzita” (accusa generica a caso).</li>
+        <li>“Boh, ma se non lo stacco non posso mica morire di fame” (tecnicamente vero, ma…).</li>
+      </ul>
 
-        
+      <p>
+        Vediamo invece <strong>quanto consuma davvero un frigorifero al giorno</strong>, con esempi concreti,
+        <strong>numeri alla mano</strong> e senza formule da ingegneri annoiati.
+      </p>
 
-        <p>
-          Domanda classica da tavola della domenica: <strong>“Ma sto frigorifero, quanto consuma al giorno?”</strong><br>
-          Di solito la risposta è una di queste tre:
-        </p>
-        <ul>
-          <li>“Poco, tanto è in classe A” (detto da chi l’ha comprato nel 2004).</li>
-          <li>“Troppo, la bolletta è impazzita” (accusa generica a caso).</li>
-          <li>“Boh, ma se non lo stacco non posso mica morire di fame” (tecnicamente vero, ma…).</li>
+      <h2>1. I numeri nudi e crudi: kWh al giorno</h2>
+      <p>
+        Il consumo di un frigorifero si misura in <strong>kWh all’anno</strong> (chilowattora).
+        Sull’etichetta energetica trovi un numero tipo: <strong>220 kWh/anno</strong> o <strong>310 kWh/anno</strong>.
+      </p>
+
+      <div class="tech-box">
+        <strong>Come si passa da kWh/anno a kWh/giorno?</strong>
+        <span>È più semplice di quanto sembri:</span><br>
+        <code>Consumo giornaliero ≈ Consumo annuo / 365</code><br><br>
+        Esempio: 220 kWh/anno ÷ 365 ≈ <strong>0,60 kWh al giorno</strong>.
+      </div>
+
+      <p>Ecco tre scenari tipici per farsi un’idea:</p>
+      <ul>
+        <li><strong>Frigorifero moderno efficiente</strong> (intorno ai 150–200 kWh/anno):<br>
+          ⇒ Consumo giornaliero ≈ <strong>0,4–0,6 kWh/giorno</strong>.
+        </li>
+        <li><strong>Frigorifero medio</strong> (220–280 kWh/anno):<br>
+          ⇒ Consumo giornaliero ≈ <strong>0,6–0,8 kWh/giorno</strong>.
+        </li>
+        <li><strong>Frigorifero vecchio o “messo male”</strong> (350–450 kWh/anno e oltre):<br>
+          ⇒ Consumo giornaliero ≈ <strong>1–1,3 kWh/giorno</strong>.
+        </li>
+      </ul>
+
+      <p>
+        Con un costo della corrente di circa <strong>0,25–0,30 €/kWh</strong>, parliamo di:
+      </p>
+      <ul>
+        <li>0,4 kWh → ~ <strong>0,10 € al giorno</strong>;</li>
+        <li>0,8 kWh → ~ <strong>0,20–0,25 € al giorno</strong>;</li>
+        <li>1,2 kWh → ~ <strong>0,30–0,35 € al giorno</strong>.</li>
+      </ul>
+
+      <h2>2. Storia n.1 – Il frigo anni ’90 che si mangia la bolletta</h2>
+      <p>
+        Casa di Marco. Cucina piccola, frigo bianco con sportello bombato, rumorino di
+        compressore che parte come un trattore.
+      </p>
+      <p>
+        Nessuno lo dice ad alta voce, ma quel frigo ha <strong>più anni di alcuni figli</strong>.
+        Etichetta energetica? <strong>Assente</strong>, come la voglia di cambiarlo.
+      </p>
+
+      <p>
+        Un modello così può consumare tranquillamente <strong>400 kWh/anno</strong> (se non di più):<br>
+        400 ÷ 365 ≈ <strong>1,1 kWh al giorno</strong>.
+      </p>
+
+      <p>
+        Se la corrente la paghi <strong>0,28 €/kWh</strong>, il conto è:
+      </p>
+      <ul>
+        <li><strong>~0,30 € al giorno</strong>;</li>
+        <li>circa <strong>110 € all’anno</strong> solo di frigorifero.</li>
+      </ul>
+
+      <p>
+        Il bello (si fa per dire): spesso questi frigo vecchi hanno:
+      </p>
+      <ul>
+        <li>guarnizioni rovinate → entra aria calda;</li>
+        <li>motore che lavora sempre al limite;</li>
+        <li>sbrinamento fatto “alla buona” con coltello (non fatelo!).</li>
+      </ul>
+
+      <p>
+        Risultato: <strong>consumo alto</strong>, temperatura interna non sempre stabile
+        e bolletta che borbotta da anni.
+      </p>
+
+      <h2>3. Storia n.2 – Il frigo moderno che consuma poco (se usato bene)</h2>
+      <p>
+        Casa di Sara. Frigorifero combinato moderno, inox, display davanti che fa tanto “astronave”.
+        Etichetta energetica nuova: classe <strong>D o C</strong> (con la nuova scala),
+        consumo dichiarato: <strong>190 kWh/anno</strong>.
+      </p>
+
+      <p>Facciamo i conti:</p>
+      <ul>
+        <li>190 ÷ 365 ≈ <strong>0,52 kWh al giorno</strong>;</li>
+        <li>0,52 × 0,28 € ≈ <strong>0,15 € al giorno</strong>;</li>
+        <li>In un anno: circa <strong>55 €</strong>.</li>
+      </ul>
+
+      <div class="tech-box">
+        <strong>La differenza con il frigo di Marco?</strong>
+        ~110 € – 55 € = <strong>circa 55 € di risparmio all’anno</strong> solo cambiando frigorifero.<br>
+        In 10 anni fanno più di <strong>500 €</strong>, senza contare comfort e temperatura più stabile.
+      </div>
+
+      <p>
+        Ma il trucco è questo: <strong>anche il frigo moderno, se usato male, consuma di più</strong>.
+        Per tenerlo “in forma”:
+      </p>
+      <ul>
+        <li>non impostare il frigo a 2°C “perché così è più fresco” (4–5°C di solito bastano);</li>
+        <li>non riempire tutto a Tetris: l’aria fredda deve circolare;</li>
+        <li>non mettere pentole calde direttamente dentro: aspetta che si raffreddino fuori.</li>
+      </ul>
+
+      <h2>4. Storia n.3 – Il frigo “smart” usato come vetrina del bar</h2>
+      <p>
+        Terza scena. Cucina nuova, frigo americano con display, erogatore d’acqua, ghiaccio,
+        suoneria se lo lasci aperto, forse pure Spotify (prima o poi ci arriviamo).
+      </p>
+
+      <p>
+        Sulla carta può consumare anche lui <strong>220–260 kWh/anno</strong>, 
+        quindi <strong>0,6–0,7 kWh al giorno</strong>. Niente di drammatico.
+      </p>
+
+      <p>
+        Il problema non è il frigo, ma <strong>come viene usato</strong>:
+      </p>
+      <ul>
+        <li>aperto ogni 5 minuti “solo per dare un’occhiata”;</li>
+        <li>pieno di cibi ancora tiepidi, pronti da “raffreddare in fretta”;</li>
+        <li>sportello che resta semiaperto perché qualcuno non lo chiude bene.</li>
+      </ul>
+
+      <p>
+        In questo caso il compressore lavora molto di più, il consumo reale
+        può salire tranquillamente verso <strong>1 kWh al giorno</strong> o anche oltre.
+      </p>
+
+      <h2>5. Cosa incide davvero sul consumo del frigorifero</h2>
+      <p>Al di là del modello, ci sono alcune cose che fanno la differenza:</p>
+      <ul>
+        <li><strong>Età dell’elettrodomestico</strong><br>
+          Prima del 2010 molte classi “A” oggi sarebbero tranquillamente in fondo alla nuova scala.
+        </li>
+        <li><strong>Classe energetica reale</strong><br>
+          Oggi la scala va da A a G. Un frigo in classe C moderna può consumare meno di un vecchio “A+”.
+        </li>
+        <li><strong>Posizione in casa</strong><br>
+          Se sta attaccato al forno o prende sole diretto, il compressore lavora il doppio.
+        </li>
+        <li><strong>Temperatura impostata</strong><br>
+          4–5°C per il frigo e -18°C per il freezer vanno già benissimo in moltissimi casi.
+        </li>
+        <li><strong>Guarnizioni e manutenzione</strong><br>
+          Se la guarnizione non chiude o c’è ghiaccio ovunque, il consumo sale.
+        </li>
+      </ul>
+
+      <h2>6. Come capire se il tuo frigorifero consuma troppo</h2>
+      <p>
+        Se non hai voglia di fare calcoli complicati, ci sono due vie semplici:
+      </p>
+
+      <h3>Metodo 1 – Leggere l’etichetta (versione pigra ma efficace)</h3>
+      <ul>
+        <li>Cerca sull’etichetta o sul sito del produttore il valore <strong>kWh/anno</strong>.</li>
+        <li>Dividi per 365 → hai il consumo <strong>giornaliero</strong>.</li>
+        <li>Moltiplica per il costo della tua corrente (es. 0,28 €/kWh).</li>
+      </ul>
+
+      <p>
+        Se il risultato supera abbondantemente <strong>1 kWh/giorno</strong> e il frigo non è enorme,
+        è un <strong>candidato alla pensione</strong>.
+      </p>
+
+      <h3>Metodo 2 – Presa misuratrice (per i più curiosi)</h3>
+      <p>
+        Puoi usare una <strong>presa misuratrice di consumo</strong> (quelle che misurano i kWh).
+        La metti tra presa e frigo e la lasci lì <strong>una settimana</strong>.
+      </p>
+      <ul>
+        <li>Leggi quanti kWh hai consumato in 7 giorni.</li>
+        <li>Dividi per 7 → ottieni il consumo medio giornaliero reale.</li>
+      </ul>
+
+      <p>
+        È il modo migliore per capire <strong>quanto incide il tuo frigo sulla bolletta</strong>
+        nella tua casa, con le tue abitudini.
+      </p>
+
+      <h2>7. Quando ha senso cambiare frigorifero?</h2>
+      <p>
+        Cambiare frigo <strong>solo per moda</strong> non ha senso.  
+        Ma ci sono situazioni in cui può essere una scelta <strong>economicamente intelligente</strong>:
+      </p>
+      <ul>
+        <li>
+          Il frigo ha <strong>più di 15 anni</strong> e non ha etichetta energetica moderna.
+        </li>
+        <li>
+          Le guarnizioni sono da rifare, fa ghiaccio ovunque, la temperatura è ballerina.
+        </li>
+        <li>
+          Misurando i consumi scopri che sei sopra <strong>1,2–1,3 kWh al giorno</strong> 
+          con un frigo “normale”.
+        </li>
+      </ul>
+
+      <div class="tech-box">
+        <strong>Regola alla mano:</strong>
+        se un frigo nuovo può farti risparmiare anche solo <strong>40–50 € all’anno</strong>
+        e conti di tenerlo per 10 anni, parliamo di <strong>400–500 €</strong> di risparmio nel tempo.<br>
+        Non ti cambia la vita, ma in combinazione con altri elettrodomestici efficienti sì.
+      </div>
+
+      <h2>8. In sintesi: quanto consuma un frigorifero al giorno?</h2>
+      <ul>
+        <li><strong>Frigo moderno efficiente:</strong> 0,4–0,6 kWh/giorno (~0,10–0,15 €/giorno).</li>
+        <li><strong>Frigo medio:</strong> 0,6–0,8 kWh/giorno (~0,15–0,25 €/giorno).</li>
+        <li><strong>Frigo vecchio o mal tenuto:</strong> 1–1,3 kWh/giorno (0,30–0,35 €/giorno e oltre).</li>
+      </ul>
+
+      <p>
+        La vera domanda non è solo <strong>“quanto consuma al giorno?”</strong> ma:
+        <strong>“per quello che fa e per quanti anni lo terrò, ha senso tenerlo così o cambiarlo?”</strong>
+      </p>
+
+      <p>
+        Se dopo aver letto tutto questo senti che il tuo frigo borbotta troppo…  
+        prima di comprarne uno nuovo, puoi dare un’occhiata anche agli altri articoli su
+        <a href="index.html">Syncras.App</a> per capire dove stanno davvero gli sprechi in casa.
+      </p>
+
+      <!-- ARTICOLI CORRELATI -->
+      <section class="related-section">
+        <h3>Articoli alla mano che potrebbero interessarti</h3>
+        <ul class="related-list">
+          <li><a href="perche-telefono-si-scalda-anche-senza-usarlo.html">Perché il telefono si scalda anche senza usarlo?</a></li>
+          <li><a href="perche-telefono-si-scarica-cosi-in-fretta.html">Perché il telefono si scarica così in fretta?</a></li>
+          <li><a href="resistenza-termosifone-fotovoltaico.html">La stanza più fredda della casa: conviene la resistenza elettrica?</a></li>
+          <li><a href="fotovoltaico-4kw-accumulo-10kwh.html">Fotovoltaico 4 kW + 10 kWh: quanto costa davvero nel 2025?</a></li>
         </ul>
+      </section>
+    </article>
 
-        <p>
-          Vediamo invece <strong>quanto consuma davvero un frigorifero al giorno</strong>, con esempi concreti,
-          <strong>numeri alla mano</strong> e senza formule da ingegneri annoiati.
-        </p>
-
-        <h2>1. I numeri nudi e crudi: kWh al giorno</h2>
-        <p>
-          Il consumo di un frigorifero si misura in <strong>kWh all’anno</strong> (chilowattora).
-          Sull’etichetta energetica trovi un numero tipo: <strong>220 kWh/anno</strong> o <strong>310 kWh/anno</strong>.
-        </p>
-
-        <div class="tech-box">
-          <strong>Come si passa da kWh/anno a kWh/giorno?</strong>
-          <span>È più semplice di quanto sembri:</span><br>
-          <code>Consumo giornaliero ≈ Consumo annuo / 365</code><br><br>
-          Esempio: 220 kWh/anno ÷ 365 ≈ <strong>0,60 kWh al giorno</strong>.
-        </div>
-
-        <p>Ecco tre scenari tipici per farsi un’idea:</p>
-        <ul>
-          <li><strong>Frigorifero moderno efficiente</strong> (intorno ai 150–200 kWh/anno):<br>
-            ⇒ Consumo giornaliero ≈ <strong>0,4–0,6 kWh/giorno</strong>.
-          </li>
-          <li><strong>Frigorifero medio</strong> (220–280 kWh/anno):<br>
-            ⇒ Consumo giornaliero ≈ <strong>0,6–0,8 kWh/giorno</strong>.
-          </li>
-          <li><strong>Frigorifero vecchio o “messo male”</strong> (350–450 kWh/anno e oltre):<br>
-            ⇒ Consumo giornaliero ≈ <strong>1–1,3 kWh/giorno</strong>.
-          </li>
-        </ul>
-
-        <p>
-          Con un costo della corrente di circa <strong>0,25–0,30 €/kWh</strong>, parliamo di:
-        </p>
-        <ul>
-          <li>0,4 kWh → ~ <strong>0,10 € al giorno</strong>;</li>
-          <li>0,8 kWh → ~ <strong>0,20–0,25 € al giorno</strong>;</li>
-          <li>1,2 kWh → ~ <strong>0,30–0,35 € al giorno</strong>.</li>
-        </ul>
-
-        <h2>2. Storia n.1 – Il frigo anni ’90 che si mangia la bolletta</h2>
-        <p>
-          Casa di Marco. Cucina piccola, frigo bianco con sportello bombato, rumorino di
-          compressore che parte come un trattore.
-        </p>
-        <p>
-          Nessuno lo dice ad alta voce, ma quel frigo ha <strong>più anni di alcuni figli</strong>.
-          Etichetta energetica? <strong>Assente</strong>, come la voglia di cambiarlo.
-        </p>
-
-        <p>
-          Un modello così può consumare tranquillamente <strong>400 kWh/anno</strong> (se non di più):<br>
-          400 ÷ 365 ≈ <strong>1,1 kWh al giorno</strong>.
-        </p>
-
-        <p>
-          Se la corrente la paghi <strong>0,28 €/kWh</strong>, il conto è:
-        </p>
-        <ul>
-          <li><strong>~0,30 € al giorno</strong>;</li>
-          <li>circa <strong>110 € all’anno</strong> solo di frigorifero.</li>
-        </ul>
-
-        <p>
-          Il bello (si fa per dire): spesso questi frigo vecchi hanno:
-        </p>
-        <ul>
-          <li>guarnizioni rovinate → entra aria calda;</li>
-          <li>motore che lavora sempre al limite;</li>
-          <li>sbrinamento fatto “alla buona” con coltello (non fatelo!).</li>
-        </ul>
-
-        <p>
-          Risultato: <strong>consumo alto</strong>, temperatura interna non sempre stabile
-          e bolletta che borbotta da anni.
-        </p>
-
-        <h2>3. Storia n.2 – Il frigo moderno che consuma poco (se usato bene)</h2>
-        <p>
-          Casa di Sara. Frigorifero combinato moderno, inox, display davanti che fa tanto “astronave”.
-          Etichetta energetica nuova: classe <strong>D o C</strong> (con la nuova scala),
-          consumo dichiarato: <strong>190 kWh/anno</strong>.
-        </p>
-
-        <p>Facciamo i conti:</p>
-        <ul>
-          <li>190 ÷ 365 ≈ <strong>0,52 kWh al giorno</strong>;</li>
-          <li>0,52 × 0,28 € ≈ <strong>0,15 € al giorno</strong>;</li>
-          <li>In un anno: circa <strong>55 €</strong>.</li>
-        </ul>
-
-        <div class="tech-box">
-          <strong>La differenza con il frigo di Marco?</strong>
-          ~110 € – 55 € = <strong>circa 55 € di risparmio all’anno</strong> solo cambiando frigorifero.<br>
-          In 10 anni fanno più di <strong>500 €</strong>, senza contare comfort e temperatura più stabile.
-        </div>
-
-        <p>
-          Ma il trucco è questo: <strong>anche il frigo moderno, se usato male, consuma di più</strong>.
-          Per tenerlo “in forma”:
-        </p>
-        <ul>
-          <li>non impostare il frigo a 2°C “perché così è più fresco” (4–5°C di solito bastano);</li>
-          <li>non riempire tutto a Tetris: l’aria fredda deve circolare;</li>
-          <li>non mettere pentole calde direttamente dentro: aspetta che si raffreddino fuori.</li>
-        </ul>
-
-        <h2>4. Storia n.3 – Il frigo “smart” usato come vetrina del bar</h2>
-        <p>
-          Terza scena. Cucina nuova, frigo americano con display, erogatore d’acqua, ghiaccio,
-          suoneria se lo lasci aperto, forse pure Spotify (prima o poi ci arriviamo).
-        </p>
-
-        <p>
-          Sulla carta può consumare anche lui <strong>220–260 kWh/anno</strong>, 
-          quindi <strong>0,6–0,7 kWh al giorno</strong>. Niente di drammatico.
-        </p>
-
-        <p>
-          Il problema non è il frigo, ma <strong>come viene usato</strong>:
-        </p>
-        <ul>
-          <li>aperto ogni 5 minuti “solo per dare un’occhiata”;</li>
-          <li>pieno di cibi ancora tiepidi, pronti da “raffreddare in fretta”;</li>
-          <li>sportello che resta semiaperto perché qualcuno non lo chiude bene.</li>
-        </ul>
-
-        <p>
-          In questo caso il compressore lavora molto di più, il consumo reale
-          può salire tranquillamente verso <strong>1 kWh al giorno</strong> o anche oltre.
-        </p>
-
-        <h2>5. Cosa incide davvero sul consumo del frigorifero</h2>
-        <p>Al di là del modello, ci sono alcune cose che fanno la differenza:</p>
-        <ul>
-          <li><strong>Età dell’elettrodomestico</strong>  
-            Prima del 2010 molte classi “A” oggi sarebbero tranquillamente in fondo alla nuova scala.
-          </li>
-          <li><strong>Classe energetica reale</strong>  
-            Oggi la scala va da A a G. Un frigo in classe C moderna può consumare meno di un vecchio “A+”.
-          </li>
-          <li><strong>Posizione in casa</strong>  
-            Se sta attaccato al forno o prende sole diretto, il compressore lavora il doppio.
-          </li>
-          <li><strong>Temperatura impostata</strong>  
-            4–5°C per il frigo e -18°C per il freezer vanno già benissimo in moltissimi casi.
-          </li>
-          <li><strong>Guarnizioni e manutenzione</strong>  
-            Se la guarnizione non chiude o c’è ghiaccio ovunque, il consumo sale.
-          </li>
-        </ul>
-
-        <h2>6. Come capire se il tuo frigorifero consuma troppo</h2>
-        <p>
-          Se non hai voglia di fare calcoli complicati, ci sono due vie semplici:
-        </p>
-
-        <h3>Metodo 1 – Leggere l’etichetta (versione pigra ma efficace)</h3>
-        <ul>
-          <li>Cerca sull’etichetta o sul sito del produttore il valore <strong>kWh/anno</strong>.</li>
-          <li>Dividi per 365 → hai il consumo <strong>giornaliero</strong>.</li>
-          <li>Moltiplica per il costo della tua corrente (es. 0,28 €/kWh).</li>
-        </ul>
-
-        <p>
-          Se il risultato supera abbondantemente <strong>1 kWh/giorno</strong> e il frigo non è enorme,
-          è un <strong>candidato alla pensione</strong>.
-        </p>
-
-        <h3>Metodo 2 – Presa misuratrice (per i più curiosi)</h3>
-        <p>
-          Puoi usare una <strong>presa misuratrice di consumo</strong> (quelle che misurano i kWh).
-          La metti tra presa e frigo e la lasci lì <strong>una settimana</strong>.
-        </p>
-        <ul>
-          <li>Leggi quanti kWh hai consumato in 7 giorni.</li>
-          <li>Dividi per 7 → ottieni il consumo medio giornaliero reale.</li>
-        </ul>
-
-        <p>
-          È il modo migliore per capire <strong>quanto incide il tuo frigo sulla bolletta</strong>
-          nella tua casa, con le tue abitudini.
-        </p>
-
-        <h2>7. Quando ha senso cambiare frigorifero?</h2>
-        <p>
-          Cambiare frigo <strong>solo per moda</strong> non ha senso.  
-          Ma ci sono situazioni in cui può essere una scelta <strong>economicamente intelligente</strong>:
-        </p>
-        <ul>
-          <li>
-            Il frigo ha <strong>più di 15 anni</strong> e non ha etichetta energetica moderna.
-          </li>
-          <li>
-            Le guarnizioni sono da rifare, fa ghiaccio ovunque, la temperatura è ballerina.
-          </li>
-          <li>
-            Misurando i consumi scopri che sei sopra <strong>1,2–1,3 kWh al giorno</strong> 
-            con un frigo “normale”.
-          </li>
-        </ul>
-
-        <div class="tech-box">
-          <strong>Regola alla mano:</strong>
-          se un frigo nuovo può farti risparmiare anche solo <strong>40–50 € all’anno</strong>
-          e conti di tenerlo per 10 anni, parliamo di <strong>400–500 €</strong> di risparmio nel tempo.<br>
-          Non ti cambia la vita, ma in combinazione con altri elettrodomestici efficienti sì.
-        </div>
-
-        <h2>8. In sintesi: quanto consuma un frigorifero al giorno?</h2>
-        <ul>
-          <li><strong>Frigo moderno efficiente:</strong> 0,4–0,6 kWh/giorno (~0,10–0,15 €/giorno).</li>
-          <li><strong>Frigo medio:</strong> 0,6–0,8 kWh/giorno (~0,15–0,25 €/giorno).</li>
-          <li><strong>Frigo vecchio o mal tenuto:</strong> 1–1,3 kWh/giorno (0,30–0,35 €/giorno e oltre).</li>
-        </ul>
-
-        <p>
-          La vera domanda non è solo <strong>“quanto consuma al giorno?”</strong> ma:
-          <strong>“per quello che fa e per quanti anni lo terrò, ha senso tenerlo così o cambiarlo?”</strong>
-        </p>
-
-        <p>
-          Se dopo aver letto tutto questo senti che il tuo frigo borbotta troppo…  
-          prima di comprarne uno nuovo, puoi dare un’occhiata anche agli altri articoli su
-          <a href="syncras.app">Syncras.App</a> per capire dove stanno davvero gli sprechi in casa.
-        </p>
-
-        
-
-        <!-- ARTICOLI CORRELATI -->
-        <section class="related-section">
-          <h3>Articoli alla mano che potrebbero interessarti</h3>
-          <ul class="related-list">
-            <li><a href="perche-telefono-si-scalda-anche-senza-usarlo.html">Perché il telefono si scalda anche senza usarlo?</a></li>
-            <li><a href="perche-telefono-si-scarica-cosi-in-fretta.html">Perché il telefono si scarica così in fretta?</a></li>
-            <li><a href="resistenza-termosifone-fotovoltaico.html">La stanza più fredda della casa: conviene la resistenza elettrica?</a></li>
-            <li><a href="fotovoltaico-4kw-accumulo-10kwh.html">Fotovoltaico 4 kW + 10 kWh: quanto costa davvero nel 2025?</a></li>
-          </ul>
-        </section>
-      </article>
-
-     
-    </div>
+    <p class="small">
+      <strong>Tag:</strong> consumo frigorifero, kWh frigo, quanto consuma frigo, risparmio bolletta frigorifero
+    </p>
   </main>
 
-  <footer class="syncras-footer">
-    <div class="footer-inner">
-      <div class="footer-column">
-        <h4>Syncras.App</h4>
-        <p>
-          Metodo SmartShop per fare acquisti con la testa (e con un po’ di ironia).<br>
-          Niente tecnicismi inutili, solo esperienze reali e numeri spiegati semplice.
-        </p>
-      </div>
-
-      <div class="footer-column">
-        <h4>Link utili</h4>
-        <ul>
-          <li><a href="blog.html">Tutte le guide SmartShop</a></li>
-          <li><a href="offerte.html">Offerte Amazon selezionate</a></li>
-          <li><a href="smartphone-sotto-200-euro-2025.html">Smartphone 2025 sotto 200€</a></li>
-          <li><a href="resistenza-termosifone-fotovoltaico.html">La stanza più fredda della casa</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-column">
-        <h4>Legale & Privacy</h4>
-        <ul>
-          <li><a href="privacy.html">Privacy Policy</a></li>
-          <li><a href="cookie.html">Cookie Policy</a></li>
-          <li><a href="disclaimer-amazon.html">Disclaimer Amazon</a></li>
-          <li><a href="note-legali.html">Note Legali</a></li>
-        </ul>
-      </div>
-    </div>
-
- 
+  <script>
+    function toggleMenu() {
+      document.body.classList.toggle('nav-open');
+    }
   </script>
-     <footer>
+
+  <footer>
     © 2025 Syncras.App — Tutti i diritti riservati<br>
     <div style="margin-top:8px;">
       <a href="privacy.html">Privacy Policy</a> |
@@ -600,3 +620,4 @@
   </footer>
 </body>
 </html>
+
