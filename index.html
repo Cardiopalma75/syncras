@@ -1285,6 +1285,102 @@ Qui ti spiego come evitare gli acquisti impulsivi e fare scelte davvero consapev
       </p>
     </div>
   </footer>
+<script>
+async function aggiornaInEvidenzaDaBlog() {
+  try {
+    const res = await fetch("blog.html");
+    const html = await res.text();
+
+    // Creo un DOM temporaneo per leggere i post
+    const temp = document.createElement("div");
+    temp.innerHTML = html;
+
+    // Prendo tutte le card del blog
+    const cards = Array.from(temp.querySelectorAll(".post-card"));
+    if (!cards.length) return;
+
+    // Mischio in modo random
+    cards.sort(() => Math.random() - 0.5);
+
+    // Prendo i primi 3
+    const selezionati = cards.slice(0, 3);
+
+    // --- BLOCCO PRINCIPALE IN EVIDENZA ---
+
+    const mainData = selezionati[0].querySelector("a");
+    if (mainData) {
+      const mainHref  = mainData.getAttribute("href") || "#";
+      const mainTitle = (mainData.querySelector("h3") || {}).textContent?.trim() || "";
+      const mainDesc  = (mainData.querySelector("p")  || {}).textContent?.trim() || "";
+      const mainMeta  = (mainData.querySelector(".post-meta") || {}).textContent?.trim() || "";
+
+      const mainLabelEl = document.querySelector(".highlight-main .highlight-label");
+      const mainLinkEl  = document.querySelector(".highlight-main .highlight-text a");
+      const mainTitleEl = document.querySelector(".highlight-main .highlight-text h2");
+      const mainDescEl  = document.querySelector(".highlight-main .highlight-text p");
+
+      if (mainLinkEl)  mainLinkEl.href = mainHref;
+      if (mainTitleEl) mainTitleEl.textContent = mainTitle;
+      if (mainDescEl)  mainDescEl.textContent  = mainDesc;
+
+      if (mainLabelEl && mainMeta) {
+        // meta tipo: "27 novembre 2025 • Tecnologia • Vita quotidiana"
+        const parts = mainMeta.split("•").map(s => s.trim());
+        if (parts[1]) {
+          mainLabelEl.textContent = "In evidenza • " + parts[1];
+        } else {
+          mainLabelEl.textContent = "In evidenza";
+        }
+      }
+    }
+
+    // --- DUE CARD SECONDARIE ---
+
+    const secondaryCards = document.querySelectorAll(".highlight-secondary-wrap .highlight-card");
+    for (let i = 0; i < secondaryCards.length; i++) {
+      const src = selezionati[i + 1];
+      if (!src) break;
+
+      const a = src.querySelector("a");
+      if (!a) continue;
+
+      const href  = a.getAttribute("href") || "#";
+      const title = (a.querySelector("h3") || {}).textContent?.trim() || "";
+      const desc  = (a.querySelector("p")  || {}).textContent?.trim() || "";
+      const meta  = (a.querySelector(".post-meta") || {}).textContent?.trim() || "";
+
+      const card  = secondaryCards[i];
+      const labelEl = card.querySelector(".highlight-label");
+      const linkEl  = card.querySelector("a");
+      const titleEl = card.querySelector("h3");
+      const descEl  = card.querySelector("p");
+
+      if (linkEl)  linkEl.href = href;
+      if (titleEl) titleEl.textContent = title;
+      if (descEl)  descEl.textContent  = desc;
+
+      if (labelEl && meta) {
+        const parts = meta.split("•").map(s => s.trim());
+        // Se hai meta tipo: "27 novembre 2025 • Tecnologia • Vita quotidiana"
+        if (parts[1] && parts[2]) {
+          labelEl.textContent = parts[1] + " • " + parts[2];
+        } else if (parts[1]) {
+          labelEl.textContent = parts[1];
+        }
+      }
+    }
+
+  } catch (err) {
+    console.error("Errore nel caricare gli articoli in evidenza:", err);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", aggiornaInEvidenzaDaBlog);
+</script>
+
+
+
+
 </body>
 </html>
 
