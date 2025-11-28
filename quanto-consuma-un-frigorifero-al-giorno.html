@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quanto consuma un frigorifero al giorno? Guida alla mano 2025 | Syncras.App</title>
+  <meta name="description" content="Quanti kWh consuma davvero un frigorifero al giorno? E quanto ti costa in bolletta? Ecco la spiegazione semplice con 3 casi reali, numeri alla mano e consigli pratici per non sprecare energia.">
+  <meta name="robots" content="index,follow">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-59D9XRYKF3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-59D9XRYKF3');
+  </script>
+
+  <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --violet-soft: #A29BFE;
+      --text-main: #403E43;
+      --bg-page: #F7F7FB;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    /* HEADER */
+
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color: #fff;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+
+    #main-nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      padding-bottom: 2px;
+      border-bottom: 2px solid transparent;
+    }
+
+    #main-nav a:hover {
+      text-decoration: underline;
+    }
+
+    #main-nav a.active {
+      border-bottom-color: rgba(255,255,255,0.9);
+    }
+
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .menu-toggle span {
+      margin-left: 4px;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        margin: 0 auto;
+        max-width: 1180px;
+        flex-direction: column;
+        background-color: var(--violet-dark);
+        padding: 10px 16px 12px 16px;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
+      }
+
+      #main-nav a {
+        padding: 6px 0;
+      }
+
+      body.nav-open #main-nav {
+        display: flex;
+      }
+
+      .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+
+    /* LAYOUT ARTICOLO */
+
+    main {
+      max-width: 1180px;
+      margin: 30px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.08);
+    }
+
+    .article-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 2.2fr) minmax(0, 1fr);
+      gap: 28px;
+    }
+
+    @media (max-width: 900px) {
+      .article-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    article {
+      min-width: 0;
+    }
+
+    .badge-article {
+      display: inline-block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(108, 92, 231, 0.08);
+      border: 1px solid rgba(108, 92, 231, 0.35);
+      border-radius: 999px;
+      padding: 2px 8px;
+      color: #3730a3;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      color: var(--violet-dark);
+      margin: 0 0 8px 0;
+    }
+
+    .article-meta {
+      font-size: 0.9rem;
+      color: #6b7280;
+      margin-bottom: 16px;
+    }
+
+    h2, h3 {
+      color: var(--violet-dark);
+      margin-top: 20px;
+      margin-bottom: 8px;
+    }
+
+    p {
+      margin-bottom: 12px;
+    }
+
+    ul {
+      padding-left: 1.1rem;
+      margin-bottom: 12px;
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    strong {
+      font-weight: 600;
+    }
+
+    a {
+      color: var(--violet-dark);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* SHARE BOX */
+
+    .share-box {
+      margin: 16px 0 20px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: #F4F3FF;
+      border: 1px solid #DDD7FF;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.9rem;
+    }
+
+    .share-label {
+      font-weight: 600;
+      margin-right: 6px;
+    }
+
+    .share-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .share-btn {
+      border: none;
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #ffffff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    .share-btn span {
+      font-size: 1rem;
+    }
+
+    .share-btn.whatsapp {
+      border: 1px solid #22C55E;
+    }
+
+    .share-btn.telegram {
+      border: 1px solid #0EA5E9;
+    }
+
+    .share-btn.copy {
+      border: 1px solid #A855F7;
+    }
+
+    .share-btn:hover {
+      background: #F3F4FF;
+    }
+
+    /* BOX EVIDENZA TECNICA */
+
+    .tech-box {
+      border-left: 4px solid var(--violet-main);
+      background: #F5F3FF;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      margin: 14px 0;
+    }
+
+    .tech-box strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    /* SIDEBAR */
+
+    .sidebar-box {
+      background: #F4F5FF;
+      border-radius: 12px;
+      padding: 14px 14px 12px;
+      border: 1px solid #E0DBFF;
+      font-size: 0.9rem;
+      margin-bottom: 14px;
+    }
+
+    .sidebar-box h3 {
+      margin-top: 0;
+      margin-bottom: 6px;
+      font-size: 1rem;
+      color: var(--violet-dark);
+    }
+
+    .sidebar-box ul {
+      padding-left: 1.1rem;
+      margin: 4px 0 0 0;
+    }
+
+    .sidebar-box li {
+      margin-bottom: 4px;
+    }
+
+    .side-note {
+      font-size: 0.8rem;
+      opacity: 0.85;
+      margin-top: 6px;
+    }
+
+    .related-section {
+      margin-top: 26px;
+      border-top: 1px solid #e5e7eb;
+      padding-top: 14px;
+    }
+
+    .related-section h3 {
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+
+    .related-list {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .related-list li {
+      margin-bottom: 6px;
+      font-size: 0.9rem;
+    }
+
+    /* FOOTER */
+
+    .syncras-footer {
+      margin-top: 40px;
+      padding: 2.5rem 1.5rem 1.5rem;
+      background: #2b1840;
+      color: #f3eaff;
+      font-family: Arial, sans-serif;
+      font-size: 0.9rem;
+    }
+
+    .syncras-footer a {
+      color: #f3eaff;
+      text-decoration: none;
+    }
+
+    .syncras-footer a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-inner {
+      max-width: 1180px;
+      margin: 0 auto 1.5rem auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+    }
+
+    .footer-column h4 {
+      margin-top: 0;
+      margin-bottom: 0.7rem;
+      font-size: 1rem;
+    }
+
+    .footer-column p {
+      margin: 0;
+      font-size: 0.85rem;
+    }
+
+    .footer-column ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-column li {
+      margin-bottom: 0.4rem;
+      font-size: 0.85rem;
+    }
+
+    .footer-bottom {
+      max-width: 1180px;
+      margin: 0 auto;
+      text-align: center;
+      font-size: 0.8rem;
+      opacity: 0.9;
+    }
+
+    .footer-bottom p {
+      margin: 4px 0;
+    }
+
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
+
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
+
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html" class="active">Blog</a>
+        <a href="offerte.html">Offerte Amazon</a>
+        <a href="categorie.html">Categorie</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="quiz.html">Test SmartShop</a>
+        <a href="chi.html">Chi siamo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="article-layout">
+      <article>
+        <span class="badge-article">Energia • Casa</span>
+        <h1>Quanto consuma un frigorifero al giorno? Guida alla mano</h1>
+        <div class="article-meta">
+          28 novembre 2025 • Vita quotidiana • Energia alla mano
+        </div>
+
+        <!-- SHARE TOP -->
+        <div class="share-box">
+          <span class="share-label">Condividi questo articolo:</span>
+          <div class="share-buttons">
+            <button class="share-btn whatsapp" type="button" onclick="shareWhatsApp()">
+              <span>🟢</span> <span>WhatsApp</span>
+            </button>
+            <button class="share-btn telegram" type="button" onclick="shareTelegram()">
+              <span>📨</span> <span>Telegram</span>
+            </button>
+            <button class="share-btn copy" type="button" onclick="copyLink()">
+              <span>📋</span> <span>Copia link</span>
+            </button>
+          </div>
+        </div>
+
+        <p>
+          Domanda classica da tavola della domenica: <strong>“Ma sto frigorifero, quanto consuma al giorno?”</strong><br>
+          Di solito la risposta è una di queste tre:
+        </p>
+        <ul>
+          <li>“Poco, tanto è in classe A” (detto da chi l’ha comprato nel 2004).</li>
+          <li>“Troppo, la bolletta è impazzita” (accusa generica a caso).</li>
+          <li>“Boh, ma se non lo stacco non posso mica morire di fame” (tecnicamente vero, ma…).</li>
+        </ul>
+
+        <p>
+          Vediamo invece <strong>quanto consuma davvero un frigorifero al giorno</strong>, con esempi concreti,
+          <strong>numeri alla mano</strong> e senza formule da ingegneri annoiati.
+        </p>
+
+        <h2>1. I numeri nudi e crudi: kWh al giorno</h2>
+        <p>
+          Il consumo di un frigorifero si misura in <strong>kWh all’anno</strong> (chilowattora).
+          Sull’etichetta energetica trovi un numero tipo: <strong>220 kWh/anno</strong> o <strong>310 kWh/anno</strong>.
+        </p>
+
+        <div class="tech-box">
+          <strong>Come si passa da kWh/anno a kWh/giorno?</strong>
+          <span>È più semplice di quanto sembri:</span><br>
+          <code>Consumo giornaliero ≈ Consumo annuo / 365</code><br><br>
+          Esempio: 220 kWh/anno ÷ 365 ≈ <strong>0,60 kWh al giorno</strong>.
+        </div>
+
+        <p>Ecco tre scenari tipici per farsi un’idea:</p>
+        <ul>
+          <li><strong>Frigorifero moderno efficiente</strong> (intorno ai 150–200 kWh/anno):<br>
+            ⇒ Consumo giornaliero ≈ <strong>0,4–0,6 kWh/giorno</strong>.
+          </li>
+          <li><strong>Frigorifero medio</strong> (220–280 kWh/anno):<br>
+            ⇒ Consumo giornaliero ≈ <strong>0,6–0,8 kWh/giorno</strong>.
+          </li>
+          <li><strong>Frigorifero vecchio o “messo male”</strong> (350–450 kWh/anno e oltre):<br>
+            ⇒ Consumo giornaliero ≈ <strong>1–1,3 kWh/giorno</strong>.
+          </li>
+        </ul>
+
+        <p>
+          Con un costo della corrente di circa <strong>0,25–0,30 €/kWh</strong>, parliamo di:
+        </p>
+        <ul>
+          <li>0,4 kWh → ~ <strong>0,10 € al giorno</strong>;</li>
+          <li>0,8 kWh → ~ <strong>0,20–0,25 € al giorno</strong>;</li>
+          <li>1,2 kWh → ~ <strong>0,30–0,35 € al giorno</strong>.</li>
+        </ul>
+
+        <h2>2. Storia n.1 – Il frigo anni ’90 che si mangia la bolletta</h2>
+        <p>
+          Casa di Marco. Cucina piccola, frigo bianco con sportello bombato, rumorino di
+          compressore che parte come un trattore.
+        </p>
+        <p>
+          Nessuno lo dice ad alta voce, ma quel frigo ha <strong>più anni di alcuni figli</strong>.
+          Etichetta energetica? <strong>Assente</strong>, come la voglia di cambiarlo.
+        </p>
+
+        <p>
+          Un modello così può consumare tranquillamente <strong>400 kWh/anno</strong> (se non di più):<br>
+          400 ÷ 365 ≈ <strong>1,1 kWh al giorno</strong>.
+        </p>
+
+        <p>
+          Se la corrente la paghi <strong>0,28 €/kWh</strong>, il conto è:
+        </p>
+        <ul>
+          <li><strong>~0,30 € al giorno</strong>;</li>
+          <li>circa <strong>110 € all’anno</strong> solo di frigorifero.</li>
+        </ul>
+
+        <p>
+          Il bello (si fa per dire): spesso questi frigo vecchi hanno:
+        </p>
+        <ul>
+          <li>guarnizioni rovinate → entra aria calda;</li>
+          <li>motore che lavora sempre al limite;</li>
+          <li>sbrinamento fatto “alla buona” con coltello (non fatelo!).</li>
+        </ul>
+
+        <p>
+          Risultato: <strong>consumo alto</strong>, temperatura interna non sempre stabile
+          e bolletta che borbotta da anni.
+        </p>
+
+        <h2>3. Storia n.2 – Il frigo moderno che consuma poco (se usato bene)</h2>
+        <p>
+          Casa di Sara. Frigorifero combinato moderno, inox, display davanti che fa tanto “astronave”.
+          Etichetta energetica nuova: classe <strong>D o C</strong> (con la nuova scala),
+          consumo dichiarato: <strong>190 kWh/anno</strong>.
+        </p>
+
+        <p>Facciamo i conti:</p>
+        <ul>
+          <li>190 ÷ 365 ≈ <strong>0,52 kWh al giorno</strong>;</li>
+          <li>0,52 × 0,28 € ≈ <strong>0,15 € al giorno</strong>;</li>
+          <li>In un anno: circa <strong>55 €</strong>.</li>
+        </ul>
+
+        <div class="tech-box">
+          <strong>La differenza con il frigo di Marco?</strong>
+          ~110 € – 55 € = <strong>circa 55 € di risparmio all’anno</strong> solo cambiando frigorifero.<br>
+          In 10 anni fanno più di <strong>500 €</strong>, senza contare comfort e temperatura più stabile.
+        </div>
+
+        <p>
+          Ma il trucco è questo: <strong>anche il frigo moderno, se usato male, consuma di più</strong>.
+          Per tenerlo “in forma”:
+        </p>
+        <ul>
+          <li>non impostare il frigo a 2°C “perché così è più fresco” (4–5°C di solito bastano);</li>
+          <li>non riempire tutto a Tetris: l’aria fredda deve circolare;</li>
+          <li>non mettere pentole calde direttamente dentro: aspetta che si raffreddino fuori.</li>
+        </ul>
+
+        <h2>4. Storia n.3 – Il frigo “smart” usato come vetrina del bar</h2>
+        <p>
+          Terza scena. Cucina nuova, frigo americano con display, erogatore d’acqua, ghiaccio,
+          suoneria se lo lasci aperto, forse pure Spotify (prima o poi ci arriviamo).
+        </p>
+
+        <p>
+          Sulla carta può consumare anche lui <strong>220–260 kWh/anno</strong>, 
+          quindi <strong>0,6–0,7 kWh al giorno</strong>. Niente di drammatico.
+        </p>
+
+        <p>
+          Il problema non è il frigo, ma <strong>come viene usato</strong>:
+        </p>
+        <ul>
+          <li>aperto ogni 5 minuti “solo per dare un’occhiata”;</li>
+          <li>pieno di cibi ancora tiepidi, pronti da “raffreddare in fretta”;</li>
+          <li>sportello che resta semiaperto perché qualcuno non lo chiude bene.</li>
+        </ul>
+
+        <p>
+          In questo caso il compressore lavora molto di più, il consumo reale
+          può salire tranquillamente verso <strong>1 kWh al giorno</strong> o anche oltre.
+        </p>
+
+        <h2>5. Cosa incide davvero sul consumo del frigorifero</h2>
+        <p>Al di là del modello, ci sono alcune cose che fanno la differenza:</p>
+        <ul>
+          <li><strong>Età dell’elettrodomestico</strong>  
+            Prima del 2010 molte classi “A” oggi sarebbero tranquillamente in fondo alla nuova scala.
+          </li>
+          <li><strong>Classe energetica reale</strong>  
+            Oggi la scala va da A a G. Un frigo in classe C moderna può consumare meno di un vecchio “A+”.
+          </li>
+          <li><strong>Posizione in casa</strong>  
+            Se sta attaccato al forno o prende sole diretto, il compressore lavora il doppio.
+          </li>
+          <li><strong>Temperatura impostata</strong>  
+            4–5°C per il frigo e -18°C per il freezer vanno già benissimo in moltissimi casi.
+          </li>
+          <li><strong>Guarnizioni e manutenzione</strong>  
+            Se la guarnizione non chiude o c’è ghiaccio ovunque, il consumo sale.
+          </li>
+        </ul>
+
+        <h2>6. Come capire se il tuo frigorifero consuma troppo</h2>
+        <p>
+          Se non hai voglia di fare calcoli complicati, ci sono due vie semplici:
+        </p>
+
+        <h3>Metodo 1 – Leggere l’etichetta (versione pigra ma efficace)</h3>
+        <ul>
+          <li>Cerca sull’etichetta o sul sito del produttore il valore <strong>kWh/anno</strong>.</li>
+          <li>Dividi per 365 → hai il consumo <strong>giornaliero</strong>.</li>
+          <li>Moltiplica per il costo della tua corrente (es. 0,28 €/kWh).</li>
+        </ul>
+
+        <p>
+          Se il risultato supera abbondantemente <strong>1 kWh/giorno</strong> e il frigo non è enorme,
+          è un <strong>candidato alla pensione</strong>.
+        </p>
+
+        <h3>Metodo 2 – Presa misuratrice (per i più curiosi)</h3>
+        <p>
+          Puoi usare una <strong>presa misuratrice di consumo</strong> (quelle che misurano i kWh).
+          La metti tra presa e frigo e la lasci lì <strong>una settimana</strong>.
+        </p>
+        <ul>
+          <li>Leggi quanti kWh hai consumato in 7 giorni.</li>
+          <li>Dividi per 7 → ottieni il consumo medio giornaliero reale.</li>
+        </ul>
+
+        <p>
+          È il modo migliore per capire <strong>quanto incide il tuo frigo sulla bolletta</strong>
+          nella tua casa, con le tue abitudini.
+        </p>
+
+        <h2>7. Quando ha senso cambiare frigorifero?</h2>
+        <p>
+          Cambiare frigo <strong>solo per moda</strong> non ha senso.  
+          Ma ci sono situazioni in cui può essere una scelta <strong>economicamente intelligente</strong>:
+        </p>
+        <ul>
+          <li>
+            Il frigo ha <strong>più di 15 anni</strong> e non ha etichetta energetica moderna.
+          </li>
+          <li>
+            Le guarnizioni sono da rifare, fa ghiaccio ovunque, la temperatura è ballerina.
+          </li>
+          <li>
+            Misurando i consumi scopri che sei sopra <strong>1,2–1,3 kWh al giorno</strong> 
+            con un frigo “normale”.
+          </li>
+        </ul>
+
+        <div class="tech-box">
+          <strong>Regola alla mano:</strong>
+          se un frigo nuovo può farti risparmiare anche solo <strong>40–50 € all’anno</strong>
+          e conti di tenerlo per 10 anni, parliamo di <strong>400–500 €</strong> di risparmio nel tempo.<br>
+          Non ti cambia la vita, ma in combinazione con altri elettrodomestici efficienti sì.
+        </div>
+
+        <h2>8. In sintesi: quanto consuma un frigorifero al giorno?</h2>
+        <ul>
+          <li><strong>Frigo moderno efficiente:</strong> 0,4–0,6 kWh/giorno (~0,10–0,15 €/giorno).</li>
+          <li><strong>Frigo medio:</strong> 0,6–0,8 kWh/giorno (~0,15–0,25 €/giorno).</li>
+          <li><strong>Frigo vecchio o mal tenuto:</strong> 1–1,3 kWh/giorno (0,30–0,35 €/giorno e oltre).</li>
+        </ul>
+
+        <p>
+          La vera domanda non è solo <strong>“quanto consuma al giorno?”</strong> ma:
+          <strong>“per quello che fa e per quanti anni lo terrò, ha senso tenerlo così o cambiarlo?”</strong>
+        </p>
+
+        <p>
+          Se dopo aver letto tutto questo senti che il tuo frigo borbotta troppo…  
+          prima di comprarne uno nuovo, puoi dare un’occhiata anche agli altri articoli su
+          <a href="syncras.app">Syncras.App</a> per capire dove stanno davvero gli sprechi in casa.
+        </p>
+
+        
+
+        <!-- ARTICOLI CORRELATI -->
+        <section class="related-section">
+          <h3>Articoli alla mano che potrebbero interessarti</h3>
+          <ul class="related-list">
+            <li><a href="perche-telefono-si-scalda-anche-senza-usarlo.html">Perché il telefono si scalda anche senza usarlo?</a></li>
+            <li><a href="perche-telefono-si-scarica-cosi-in-fretta.html">Perché il telefono si scarica così in fretta?</a></li>
+            <li><a href="resistenza-termosifone-fotovoltaico.html">La stanza più fredda della casa: conviene la resistenza elettrica?</a></li>
+            <li><a href="fotovoltaico-4kw-accumulo-10kwh.html">Fotovoltaico 4 kW + 10 kWh: quanto costa davvero nel 2025?</a></li>
+          </ul>
+        </section>
+      </article>
+
+      <!-- SIDEBAR -->
+      <aside>
+        <div class="sidebar-box">
+          <h3>Come leggere i numeri</h3>
+          <p>
+            In tutti gli articoli di Syncras i numeri sono <strong>semplificati</strong>:
+            servono a dare un ordine di grandezza, non a sostituire un tecnico.
+          </p>
+          <p class="side-note">
+            Per interventi importanti su impianti elettrici ed elettrodomestici
+            rivolgiti sempre a un professionista abilitato.
+          </p>
+        </div>
+
+        <div class="sidebar-box">
+          <h3>Altri “misteri” di casa</h3>
+          <ul>
+            <li><a href="perche-telefono-si-scarica-cosi-in-fretta.html">Telefono che crolla al 20%</a></li>
+            <li><a href="quanto-consuma-una-lavatrice-a-ciclo.html">Quanto consuma una lavatrice a ciclo?</a></li>
+            <li><a href="climatizzatore-vs-gas-inverno.html">Climatizzatore o gas d’inverno?</a></li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="syncras-footer">
+    <div class="footer-inner">
+      <div class="footer-column">
+        <h4>Syncras.App</h4>
+        <p>
+          Metodo SmartShop per fare acquisti con la testa (e con un po’ di ironia).<br>
+          Niente tecnicismi inutili, solo esperienze reali e numeri spiegati semplice.
+        </p>
+      </div>
+
+      <div class="footer-column">
+        <h4>Link utili</h4>
+        <ul>
+          <li><a href="blog.html">Tutte le guide SmartShop</a></li>
+          <li><a href="offerte.html">Offerte Amazon selezionate</a></li>
+          <li><a href="smartphone-sotto-200-euro-2025.html">Smartphone 2025 sotto 200€</a></li>
+          <li><a href="resistenza-termosifone-fotovoltaico.html">La stanza più fredda della casa</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h4>Legale & Privacy</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="cookie.html">Cookie Policy</a></li>
+          <li><a href="disclaimer-amazon.html">Disclaimer Amazon</a></li>
+          <li><a href="note-legali.html">Note Legali</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© <span id="year-span"></span> Syncras.App — Tutti i diritti riservati.</p>
+      <p>
+        Syncras.App partecipa al Programma Affiliazione Amazon EU.
+        Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+        senza alcun costo aggiuntivo per l’utente.
+      </p>
+      <p>
+        Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+        è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.body.classList.toggle('nav-open');
+    }
+
+    // Anno automatico nel footer
+    document.addEventListener('DOMContentLoaded', function() {
+      var span = document.getElementById('year-span');
+      if (span) {
+        span.textContent = new Date().getFullYear();
+      }
+    });
+
+    // Condivisione
+
+    function getShareData() {
+      const title = 'Quanto consuma un frigorifero al giorno? Guida alla mano';
+      const url   = window.location.href;
+      return { title, url };
+    }
+
+    function shareWhatsApp() {
+      const d = getShareData();
+      const text = encodeURIComponent(d.title + ' - ' + d.url);
+      const link = 'https://api.whatsapp.com/send?text=' + text;
+      window.open(link, '_blank');
+    }
+
+    function shareTelegram() {
+      const d = getShareData();
+      const text = encodeURIComponent(d.title);
+      const url  = encodeURIComponent(d.url);
+      const link = 'https://t.me/share/url?url=' + url + '&text=' + text;
+      window.open(link, '_blank');
+    }
+
+    function copyLink() {
+      const d = getShareData();
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(d.url)
+          .then(function() {
+            alert('Link copiato negli appunti. Puoi incollarlo dove vuoi.');
+          })
+          .catch(function() {
+            fallbackCopy(d.url);
+          });
+      } else {
+        fallbackCopy(d.url);
+      }
+    }
+
+    function fallbackCopy(text) {
+      const temp = document.createElement('input');
+      temp.value = text;
+      document.body.appendChild(temp);
+      temp.select();
+      document.execCommand('copy');
+      document.body.removeChild(temp);
+      alert('Link copiato. Se non funziona, copialo manualmente dalla barra degli indirizzi.');
+    }
+  </script>
+</body>
+</html>
