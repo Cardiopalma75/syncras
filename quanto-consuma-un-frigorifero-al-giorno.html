@@ -273,6 +273,25 @@
              border-radius:6px; cursor:pointer; margin-bottom:20px; font-weight:600;">
       📎 Condividi questa guida
     </button>
+
+
+       <script>
+  const shareBtn = document.getElementById('shareBtn');
+
+  if (shareBtn && navigator.share) {
+    shareBtn.addEventListener('click', () => {
+      navigator.share({
+        title: "Quanto consuma un frigorifero al giorno? Guida alla mano",
+        text: "Numeri semplici, esempi reali e 3 storie comiche che spiegano quanto consuma davvero un frigorifero al giorno.",
+        url: window.location.href
+      }).catch(() => {});
+    });
+  } else if (shareBtn) {
+    // Se condividere non è supportato (PC), nascondo il tasto
+    shareBtn.style.display = "none";
+  }
+</script>
+
         
 
         <p>
