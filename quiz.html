@@ -17,52 +17,46 @@
   </script>
 
   <style>
+    /* BOX JUMP LINK – vecchio, lo teniamo ma non è usato qui */
+    .jump-box {
+      background: #E9E2FF;
+      border: 2px solid #B8A4FF;
+      padding: 20px;
+      border-radius: 16px;
+      margin-bottom: 28px;
+      font-size: 1rem;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    }
 
+    .jump-box strong {
+      display: block;
+      margin-bottom: 12px;
+      font-size: 1.05rem;
+      color: #3D2AB8;
+    }
 
-    
-/* BOX JUMP LINK – “Vai direttamente al test che ti interessa” */
-.jump-box {
-  background: #E9E2FF; /* più acceso */
-  border: 2px solid #B8A4FF; /* più marcato */
-  padding: 20px;
-  border-radius: 16px;
-  margin-bottom: 28px;
-  font-size: 1rem;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.08); /* risalto */
-}
+    .jump-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 14px;
+    }
 
-.jump-box strong {
-  display: block;
-  margin-bottom: 12px;
-  font-size: 1.05rem;
-  color: #3D2AB8;
-}
+    .jump-links a {
+      background: #FFFFFF;
+      padding: 7px 12px;
+      border-radius: 10px;
+      border: 1px solid #B8A4FF;
+      font-weight: 600;
+      color: #3D2AB8;
+      text-decoration: none;
+      transition: 0.15s ease;
+    }
 
-.jump-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px 14px;
-}
+    .jump-links a:hover {
+      background: #D8CCFF;
+      border-color: #957CFF;
+    }
 
-.jump-links a {
-  background: #FFFFFF;
-  padding: 7px 12px;
-  border-radius: 10px;
-  border: 1px solid #B8A4FF;
-  font-weight: 600;
-  color: #3D2AB8;
-  text-decoration: none;
-  transition: 0.15s ease;
-}
-
-.jump-links a:hover {
-  background: #D8CCFF;
-  border-color: #957CFF;
-}
-
-
-
-    
     :root {
       --violet-main: #6C5CE7;
       --violet-dark: #4B3ACB;
@@ -221,13 +215,67 @@
       }
     }
 
+    /* INDEX TEST – pillole cliccabili */
+
+    .test-index-box {
+      background: #f4f0ff;
+      border-radius: 16px;
+      border: 1px solid #d2c5ff;
+      padding: 14px 16px 12px;
+      margin-bottom: 20px;
+    }
+
+    .test-index-title {
+      font-weight: 700;
+      margin-bottom: 4px;
+      font-size: 0.98rem;
+      color: #312e81;
+    }
+
+    .test-index-subtitle {
+      font-size: 0.85rem;
+      color: #4b5563;
+      margin-bottom: 10px;
+    }
+
+    .test-index-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .test-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid #c4b5fd;
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: #4b3acb;
+      text-decoration: none;
+      cursor: pointer;
+      transition: 0.18s ease;
+    }
+
+    .test-pill:hover {
+      background: #e5ddff;
+      border-color: #a78bfa;
+      transform: translateY(-1px);
+    }
+
+    /* CARD TEST + RISPOSTE A CARD */
+
     .test-card {
-      background: #fdfbff;
-      border-radius: 14px;
-      padding: 18px 18px 16px;
-      border: 1px solid #e4ddff;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-      margin-bottom: 26px; /* più spazio tra i test */
+      background: #f4f0ff; /* più colorata */
+      border-radius: 16px;
+      padding: 20px 20px 18px;
+      border: 1px solid #cbb8ff;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+      margin-bottom: 28px;
+      transition: 0.2s ease;
     }
 
     .test-card h2 {
@@ -256,12 +304,70 @@
     }
 
     ol.test-questions li {
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
-    label {
+    /* Risposte come CARD cliccabili */
+
+    .answer-option {
+      display: inline-block;
+      background: #ffffff;
+      padding: 6px 10px;
+      border-radius: 10px;
+      border: 1px solid #d6c8ff;
+      margin: 4px 6px 2px 0;
+      cursor: pointer;
+      transition: 0.18s ease;
       font-size: 0.88rem;
-      margin-right: 10px;
+    }
+
+    .answer-option input[type="radio"] {
+      display: none;
+    }
+
+    .answer-option span {
+      display: inline-block;
+    }
+
+    .answer-option:hover {
+      background: #ece3ff;
+      border-color: #b39aff;
+    }
+
+    .answer-option input[type="radio"]:checked + span {
+      background: transparent;
+      color: #2d1f7a;
+      font-weight: 600;
+    }
+
+    .answer-option.input-checked,
+    .answer-option input[type="radio"]:checked + span {
+      /* lasciamo solo testo marcato, il bordo della card viene gestito sotto */
+    }
+
+    /* Variante ancora più marcata per il bordo quando selezionato */
+    .answer-option input[type="radio"]:checked + span::before {
+      content: '';
+    }
+
+    .answer-option input[type="radio"]:checked + span {
+      /* per sicurezza, se vuoi più contrasto puoi rendere il fondo leggermente colorato */
+    }
+
+    /* Facciamo in modo che tutta la card si veda più marcata */
+    .answer-option input[type="radio"]:checked + span {
+      /* niente background per lo span, ma cambiamo il bordo del label via :has in browser moderni */
+    }
+
+    @supports(selector(:has(*))) {
+      .answer-option:has(input[type="radio"]:checked) {
+        background: #d9c8ff;
+        border-color: #8c6dff;
+        color: #2d1f7a;
+        font-weight: 600;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+      }
     }
 
     button.test-btn {
@@ -412,7 +518,6 @@
     .footer-bottom p {
       margin: 4px 0;
     }
-
   </style>
 </head>
 <body>
@@ -426,14 +531,13 @@
 
       <nav id="main-nav">
         <a href="index.html">Home</a>
-<a href="blog.html">Blog</a>
-<a href="offerte.html">Offerte Amazon</a>
-<a href="categorie.html">Categorie</a>
-<a href="curiosita.html">Curiosità</a>
-<a href="misteri.html">Misteri</a>
-<a href="quiz.html">Test SmartShop</a>
-<a href="chi.html">Chi siamo</a>
-
+        <a href="blog.html">Blog</a>
+        <a href="offerte.html">Offerte Amazon</a>
+        <a href="categorie.html">Categorie</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="quiz.html">Test SmartShop</a>
+        <a href="chi.html">Chi siamo</a>
       </nav>
     </div>
   </header>
@@ -448,66 +552,118 @@
       </p>
     </div>
 
-   <!-- INDEX DEI TEST (versione pro) -->
-<div class="test-index-box">
-  <div class="test-index-title">Scegli il tuo test SmartShop</div>
-  <div class="test-index-subtitle">
-    Vai dritto al punto: tocca il test che ti serve.
-  </div>
+    <!-- INDEX DEI TEST (versione pro) -->
+    <div class="test-index-box">
+      <div class="test-index-title">Scegli il tuo test SmartShop</div>
+      <div class="test-index-subtitle">
+        Vai dritto al punto: tocca il test che ti serve.
+      </div>
 
-  <div class="test-index-links">
-    <a href="#test-acquisto" class="test-pill">🟣 Test Acquisto</a>
-    <a href="#test-smartphone" class="test-pill">📱 Test Smartphone</a>
-    <a href="#test-giga-smartphone" class="test-pill">💾 Test Giga Smartphone</a>
-    <a href="#test-lavatrice" class="test-pill">🧺 Test Lavatrice</a>
-    <a href="#test-tv" class="test-pill">📺 Test TV</a>
-    <a href="#test-lavastoviglie" class="test-pill">🧼 Lavastoviglie 45 / 60 cm</a>
-  </div>
-</div>
-
+      <div class="test-index-links">
+        <a href="#test-acquisto" class="test-pill">🟣 Test Acquisto</a>
+        <a href="#test-smartphone" class="test-pill">📱 Test Smartphone</a>
+        <a href="#test-giga-smartphone" class="test-pill">💾 Test Giga Smartphone</a>
+        <a href="#test-lavatrice" class="test-pill">🧺 Test Lavatrice</a>
+        <a href="#test-tv" class="test-pill">📺 Test TV</a>
+        <a href="#test-lavastoviglie" class="test-pill">🧼 Lavastoviglie 45 / 60 cm</a>
+      </div>
+    </div>
 
     <div class="tests-layout">
       <!-- COLONNA TEST -->
       <div>
         <!-- TEST 1: Decisione acquisto -->
-        <section class="test-card" id="test-acquisto">
-          <div class="test-section-label">Test generale</div>
-          <h2>Test decisione acquisto – versione seria</h2>
-          <p class="test-subtitle">
-            5 domande per capire se il tuo prossimo acquisto è davvero sensato o se è solo “voglia di clic”.
-          </p>
+       <section class="test-card" id="test-acquisto">
+  <div class="test-section-label">Test generale</div>
+  <h2>Test decisione acquisto – versione seria</h2>
+  <p class="test-subtitle">
+    7 domande per capire se il tuo prossimo acquisto è davvero sensato o se è solo “voglia di clic”.
+  </p>
 
-          <ol class="test-questions">
-            <li>
-              Ho un motivo concreto e preciso per comprarlo (non solo “mi piace”)?<br>
-              <label><input type="radio" name="a_q1" value="si"> Sì</label>
-              <label><input type="radio" name="a_q1" value="no"> No</label>
-            </li>
-            <li>
-              Rientra nel mio budget di questo mese senza toccare risparmi o soldi per emergenze?<br>
-              <label><input type="radio" name="a_q2" value="si"> Sì</label>
-              <label><input type="radio" name="a_q2" value="no"> No</label>
-            </li>
-            <li>
-              Ho confrontato almeno 2–3 alternative serie (prezzo, recensioni, caratteristiche)?<br>
-              <label><input type="radio" name="a_q3" value="si"> Sì</label>
-              <label><input type="radio" name="a_q3" value="no"> No</label>
-            </li>
-            <li>
-              Sto risolvendo un problema reale che ho da tempo, non un desiderio nato negli ultimi 2–3 giorni?<br>
-              <label><input type="radio" name="a_q4" value="si"> Sì</label>
-              <label><input type="radio" name="a_q4" value="no"> No</label>
-            </li>
-            <li>
-              Se tra una settimana non potessi più restituirlo, sarei comunque tranquillo della scelta?<br>
-              <label><input type="radio" name="a_q5" value="si"> Sì</label>
-              <label><input type="radio" name="a_q5" value="no"> No</label>
-            </li>
-          </ol>
+  <ol class="test-questions">
+    <li>
+      Ho un motivo concreto e preciso per comprarlo (non solo “mi piace”)?<br>
+      <label class="answer-option">
+        <input type="radio" name="a_q1" value="si">
+        <span>Sì</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="a_q1" value="no">
+        <span>No</span>
+      </label>
+    </li>
+    <li>
+      Rientra nel mio budget di questo mese senza toccare risparmi o soldi per emergenze?<br>
+      <label class="answer-option">
+        <input type="radio" name="a_q2" value="si">
+        <span>Sì</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="a_q2" value="no">
+        <span>No</span>
+      </label>
+    </li>
+    <li>
+      Ho confrontato almeno 2–3 alternative serie (prezzo, recensioni, caratteristiche)?<br>
+      <label class="answer-option">
+        <input type="radio" name="a_q3" value="si">
+        <span>Sì</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="a_q3" value="no">
+        <span>No</span>
+      </label>
+    </li>
+    <li>
+      Sto risolvendo un problema reale che ho da tempo, non un desiderio nato negli ultimi 2–3 giorni?<br>
+      <label class="answer-option">
+        <input type="radio" name="a_q4" value="si">
+        <span>Sì</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="a_q4" value="no">
+        <span>No</span>
+      </label>
+    </li>
+    <li>
+      Se tra una settimana non potessi più restituirlo, sarei comunque tranquillo della scelta?<br>
+      <label class="answer-option">
+        <input type="radio" name="a_q5" value="si">
+        <span>Sì</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="a_q5" value="no">
+        <span>No</span>
+      </label>
+    </li>
+    <li>
+      Se perdo questa offerta oggi, posso comunque permettermi l’acquisto il mese prossimo senza problemi?<br>
+      <label class="answer-option">
+        <input type="radio" name="a_q6" value="si">
+        <span>Sì</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="a_q6" value="no">
+        <span>No</span>
+      </label>
+    </li>
+    <li>
+      Tra 6 mesi penso ancora di usarlo regolarmente (almeno una volta a settimana)?<br>
+      <label class="answer-option">
+        <input type="radio" name="a_q7" value="si">
+        <span>Sì</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="a_q7" value="no">
+        <span>No</span>
+      </label>
+    </li>
+  </ol>
 
-          <button type="button" class="test-btn" onclick="valutaTestAcquisto()">Calcola risultato</button>
-          <p id="risultato-acquisto" class="test-result"></p>
-        </section>
+  <button type="button" class="test-btn" onclick="valutaTestAcquisto()">Calcola risultato</button>
+  <p id="risultato-acquisto" class="test-result"></p>
+</section>
+
 
         <!-- TEST 2: Smartphone -->
         <section class="test-card" id="test-smartphone">
@@ -520,31 +676,70 @@
           <ol class="test-questions">
             <li>
               Qual è il budget realistico per il prossimo smartphone?<br>
-              <label><input type="radio" name="s_q1" value="1">&lt; 200€</label>
-              <label><input type="radio" name="s_q1" value="2">200–350€</label>
-              <label><input type="radio" name="s_q1" value="3">&gt; 350€</label>
+              <label class="answer-option">
+                <input type="radio" name="s_q1" value="1">
+                <span>&lt; 200€</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="s_q1" value="2">
+                <span>200–350€</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="s_q1" value="3">
+                <span>&gt; 350€</span>
+              </label>
             </li>
             <li>
               Come lo userai <strong>la maggior parte del tempo</strong>?<br>
-              <label><input type="radio" name="s_q2" value="1">Chiamate, WhatsApp, poche app</label><br>
-              <label><input type="radio" name="s_q2" value="2">Social, foto, qualche app in più</label><br>
-              <label><input type="radio" name="s_q2" value="3">Gaming, video, tante app pesanti</label>
+              <label class="answer-option">
+                <input type="radio" name="s_q2" value="1">
+                <span>Chiamate, WhatsApp, poche app</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="s_q2" value="2">
+                <span>Social, foto, qualche app in più</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="s_q2" value="3">
+                <span>Gaming, video, tante app pesanti</span>
+              </label>
             </li>
             <li>
               Cosa è più importante per te?<br>
-              <label><input type="radio" name="s_q3" value="2">Batteria che duri tanto</label>
-              <label><input type="radio" name="s_q3" value="2">Foto decenti in ogni situazione</label>
-              <label><input type="radio" name="s_q3" value="3">Prestazioni e fluidità al top</label>
+              <label class="answer-option">
+                <input type="radio" name="s_q3" value="2">
+                <span>Batteria che duri tanto</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="s_q3" value="2">
+                <span>Foto decenti in ogni situazione</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="s_q3" value="3">
+                <span>Prestazioni e fluidità al top</span>
+              </label>
             </li>
             <li>
               Quanto ti piace “smanettare” con le impostazioni?<br>
-              <label><input type="radio" name="s_q4" value="1">Zero: voglio qualcosa di semplice</label><br>
-              <label><input type="radio" name="s_q4" value="3">Mi piace provare funzioni e personalizzazioni</label>
+              <label class="answer-option">
+                <input type="radio" name="s_q4" value="1">
+                <span>Zero: voglio qualcosa di semplice</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="s_q4" value="3">
+                <span>Mi piace provare funzioni e personalizzazioni</span>
+              </label>
             </li>
             <li>
               Quanto ti pesa rinunciare a un “marchio famoso” per risparmiare?<br>
-              <label><input type="radio" name="s_q5" value="2">Voglio un brand conosciuto</label>
-              <label><input type="radio" name="s_q5" value="3">Se il telefono è valido, il marchio mi interessa poco</label>
+              <label class="answer-option">
+                <input type="radio" name="s_q5" value="2">
+                <span>Voglio un brand conosciuto</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="s_q5" value="3">
+                <span>Se il telefono è valido, il marchio mi interessa poco</span>
+              </label>
             </li>
           </ol>
 
@@ -564,44 +759,98 @@
           <ol class="test-questions">
             <li>
               Quante persone mangiano regolarmente in casa?<br>
-              <label><input type="radio" name="lv_q1" value="1"> 1–2 persone</label><br>
-              <label><input type="radio" name="lv_q1" value="2"> 3–4 persone</label><br>
-              <label><input type="radio" name="lv_q1" value="3"> 5 o più</label>
+              <label class="answer-option">
+                <input type="radio" name="lv_q1" value="1">
+                <span>1–2 persone</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="lv_q1" value="2">
+                <span>3–4 persone</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="lv_q1" value="3">
+                <span>5 o più</span>
+              </label>
             </li>
 
             <li>
               Quanto spesso cucinate “sul serio” (padelle, teglie, forno)?<br>
-              <label><input type="radio" name="lv_q2" value="1"> Quasi mai, cose veloci</label><br>
-              <label><input type="radio" name="lv_q2" value="2"> 3–4 volte a settimana</label><br>
-              <label><input type="radio" name="lv_q2" value="3"> Quasi ogni giorno</label>
+              <label class="answer-option">
+                <input type="radio" name="lv_q2" value="1">
+                <span>Quasi mai, cose veloci</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="lv_q2" value="2">
+                <span>3–4 volte a settimana</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="lv_q2" value="3">
+                <span>Quasi ogni giorno</span>
+              </label>
             </li>
 
             <li>
               Quanto spazio reale hai nella colonna cucina?<br>
-              <label><input type="radio" name="lv_q3" value="1"> 45 cm secchi (oltre serve rompere mobili)</label><br>
-              <label><input type="radio" name="lv_q3" value="2"> 60 cm ci stanno ma tirati</label><br>
-              <label><input type="radio" name="lv_q3" value="3"> 60 cm comodi, nessun problema di spazio</label>
+              <label class="answer-option">
+                <input type="radio" name="lv_q3" value="1">
+                <span>45 cm secchi (oltre serve rompere mobili)</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="lv_q3" value="2">
+                <span>60 cm ci stanno ma tirati</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="lv_q3" value="3">
+                <span>60 cm comodi, nessun problema di spazio</span>
+              </label>
             </li>
 
             <li>
               Quanto ti dà fastidio vedere piatti nel lavello?<br>
-              <label><input type="radio" name="lv_q4" value="1"> Poco: li lavo anche a mano</label><br>
-              <label><input type="radio" name="lv_q4" value="2"> Mi infastidisce, ma sopravvivo</label><br>
-              <label><input type="radio" name="lv_q4" value="3"> Non li sopporto: tutto dentro e via</label>
+              <label class="answer-option">
+                <input type="radio" name="lv_q4" value="1">
+                <span>Poco: li lavo anche a mano</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="lv_q4" value="2">
+                <span>Mi infastidisce, ma sopravvivo</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="lv_q4" value="3">
+                <span>Non li sopporto: tutto dentro e via</span>
+              </label>
             </li>
 
             <li>
               Usi spesso pentole e teglie grandi (forno, lasagne, arrosti)?<br>
-              <label><input type="radio" name="lv_q5" value="1"> Quasi mai</label><br>
-              <label><input type="radio" name="lv_q5" value="2"> Ogni tanto</label><br>
-              <label><input type="radio" name="lv_q5" value="3"> Spesso</label>
+              <label class="answer-option">
+                <input type="radio" name="lv_q5" value="1">
+                <span>Quasi mai</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="lv_q5" value="2">
+                <span>Ogni tanto</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="lv_q5" value="3">
+                <span>Spesso</span>
+              </label>
             </li>
 
             <li>
               Budget mentale per la lavastoviglie?<br>
-              <label><input type="radio" name="lv_q6" value="1"> Voglio spendere il minimo possibile</label><br>
-              <label><input type="radio" name="lv_q6" value="2"> Spendo il giusto se ne vale la pena</label><br>
-              <label><input type="radio" name="lv_q6" value="3"> Se mi cambia la vita in cucina, investo</label>
+              <label class="answer-option">
+                <input type="radio" name="lv_q6" value="1">
+                <span>Voglio spendere il minimo possibile</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="lv_q6" value="2">
+                <span>Spendo il giusto se ne vale la pena</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="lv_q6" value="3">
+                <span>Se mi cambia la vita in cucina, investo</span>
+              </label>
             </li>
           </ol>
 
@@ -622,37 +871,82 @@
           <ol class="test-questions">
             <li>
               Quante foto fai in una settimana?<br>
-              <label><input type="radio" name="giga1" value="0"> Meno di 20</label><br>
-              <label><input type="radio" name="giga1" value="1"> Tra 20 e 80</label><br>
-              <label><input type="radio" name="giga1" value="2"> Più di 80 (fotografi anche il caffè)</label>
+              <label class="answer-option">
+                <input type="radio" name="giga1" value="0">
+                <span>Meno di 20</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="giga1" value="1">
+                <span>Tra 20 e 80</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="giga1" value="2">
+                <span>Più di 80 (fotografi anche il caffè)</span>
+              </label>
             </li>
 
             <li>
               Quanti video registri in un mese?<br>
-              <label><input type="radio" name="giga2" value="0"> Quasi zero</label><br>
-              <label><input type="radio" name="giga2" value="1"> Qualcuno per momenti speciali</label><br>
-              <label><input type="radio" name="giga2" value="2"> Tanti, spesso lunghi</label>
+              <label class="answer-option">
+                <input type="radio" name="giga2" value="0">
+                <span>Quasi zero</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="giga2" value="1">
+                <span>Qualcuno per momenti speciali</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="giga2" value="2">
+                <span>Tanti, spesso lunghi</span>
+              </label>
             </li>
 
             <li>
               Giochi sul telefono?<br>
-              <label><input type="radio" name="giga3" value="0"> Mai o quasi</label><br>
-              <label><input type="radio" name="giga3" value="1"> Qualche gioco leggero</label><br>
-              <label><input type="radio" name="giga3" value="2"> Giochi pesanti, più di due installati</label>
+              <label class="answer-option">
+                <input type="radio" name="giga3" value="0">
+                <span>Mai o quasi</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="giga3" value="1">
+                <span>Qualche gioco leggero</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="giga3" value="2">
+                <span>Giochi pesanti, più di due installati</span>
+              </label>
             </li>
 
             <li>
               Ogni quanto cancelli foto, video o app che non usi?<br>
-              <label><input type="radio" name="giga4" value="0"> Spesso, mi piace tenere pulito</label><br>
-              <label><input type="radio" name="giga4" value="1"> Ogni tanto, quando mi ricordo</label><br>
-              <label><input type="radio" name="giga4" value="2"> Mai: “sono ricordi, non si tocca niente”</label>
+              <label class="answer-option">
+                <input type="radio" name="giga4" value="0">
+                <span>Spesso, mi piace tenere pulito</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="giga4" value="1">
+                <span>Ogni tanto, quando mi ricordo</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="giga4" value="2">
+                <span>Mai: “sono ricordi, non si tocca niente”</span>
+              </label>
             </li>
 
             <li>
               Le chat quanto pesano sulla memoria del telefono?<br>
-              <label><input type="radio" name="giga5" value="0"> Poco, cancello media e gruppi inutili</label><br>
-              <label><input type="radio" name="giga5" value="1"> Abbastanza, ma non ci penso troppo</label><br>
-              <label><input type="radio" name="giga5" value="2"> Tantissimo, ho paura ad aprire le impostazioni</label>
+              <label class="answer-option">
+                <input type="radio" name="giga5" value="0">
+                <span>Poco, cancello media e gruppi inutili</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="giga5" value="1">
+                <span>Abbastanza, ma non ci penso troppo</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="giga5" value="2">
+                <span>Tantissimo, ho paura ad aprire le impostazioni</span>
+              </label>
             </li>
           </ol>
 
@@ -669,78 +963,176 @@
           </p>
 
           <ol class="test-questions">
-
             <li>
               Quanti siete in casa?<br>
-              <label><input type="radio" name="lav_q1" value="1"> 1 persona</label><br>
-              <label><input type="radio" name="lav_q1" value="2"> 2 persone</label><br>
-              <label><input type="radio" name="lav_q1" value="3"> 3 persone</label><br>
-              <label><input type="radio" name="lav_q1" value="4"> 4 o più persone</label>
+              <label class="answer-option">
+                <input type="radio" name="lav_q1" value="1">
+                <span>1 persona</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="lav_q1" value="2">
+                <span>2 persone</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="lav_q1" value="3">
+                <span>3 persone</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="lav_q1" value="4">
+                <span>4 o più persone</span>
+              </label>
             </li>
 
             <li>
               Quante lavatrici fai in una settimana "normale"?<br>
-              <label><input type="radio" name="lav_q2" value="1"> 1–2</label><br>
-              <label><input type="radio" name="lav_q2" value="2"> 3–4</label><br>
-              <label><input type="radio" name="lav_q2" value="3"> 5+</label>
+              <label class="answer-option">
+                <input type="radio" name="lav_q2" value="1">
+                <span>1–2</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="lav_q2" value="2">
+                <span>3–4</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="lav_q2" value="3">
+                <span>5+</span>
+              </label>
             </li>
 
             <li>
               Lavi capi voluminosi?<br>
-              <label><input type="radio" name="lav_q3" value="1"> Mai</label><br>
-              <label><input type="radio" name="lav_q3" value="2"> Felpe/pile/plaid</label><br>
-              <label><input type="radio" name="lav_q3" value="3"> Piumoni singoli</label><br>
-              <label><input type="radio" name="lav_q3" value="4"> Piumone matrimoniale</label>
+              <label class="answer-option">
+                <input type="radio" name="lav_q3" value="1">
+                <span>Mai</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="lav_q3" value="2">
+                <span>Felpe/pile/plaid</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="lav_q3" value="3">
+                <span>Piumoni singoli</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="lav_q3" value="4">
+                <span>Piumone matrimoniale</span>
+              </label>
             </li>
 
             <li>
               Quante separazioni fai per colore dei vestiti?<br>
-              <label><input type="radio" name="lav_q4" value="1"> Nessuna, vivo pericolosamente</label><br>
-              <label><input type="radio" name="lav_q4" value="2"> 2 separazioni</label><br>
-              <label><input type="radio" name="lav_q4" value="3"> 3–4 separazioni</label>
+              <label class="answer-option">
+                <input type="radio" name="lav_q4" value="1">
+                <span>Nessuna, vivo pericolosamente</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="lav_q4" value="2">
+                <span>2 separazioni</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="lav_q4" value="3">
+                <span>3–4 separazioni</span>
+              </label>
             </li>
 
             <li>
               Hai animali in casa?<br>
-              <label><input type="radio" name="lav_q5" value="1"> No</label><br>
-              <label><input type="radio" name="lav_q5" value="2"> Sì, poco pelo</label><br>
-              <label><input type="radio" name="lav_q5" value="3"> Sì, parecchio pelo</label><br>
-              <label><input type="radio" name="lav_q5" value="4"> Ho un Husky</label>
+              <label class="answer-option">
+                <input type="radio" name="lav_q5" value="1">
+                <span>No</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="lav_q5" value="2">
+                <span>Sì, poco pelo</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="lav_q5" value="3">
+                <span>Sì, parecchio pelo</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="lav_q5" value="4">
+                <span>Ho un Husky</span>
+              </label>
             </li>
 
             <li>
               Quanto sei attento ai consumi?<br>
-              <label><input type="radio" name="lav_q6" value="1"> Molto</label><br>
-              <label><input type="radio" name="lav_q6" value="2"> Abbastanza</label><br>
-              <label><input type="radio" name="lav_q6" value="3"> Poco</label>
+              <label class="answer-option">
+                <input type="radio" name="lav_q6" value="1">
+                <span>Molto</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="lav_q6" value="2">
+                <span>Abbastanza</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="lav_q6" value="3">
+                <span>Poco</span>
+              </label>
             </li>
 
             <li>
               Usi più programmi rapidi o eco?<br>
-              <label><input type="radio" name="lav_q7" value="1"> Sempre rapidi</label><br>
-              <label><input type="radio" name="lav_q7" value="2"> Mix 50/50</label><br>
-              <label><input type="radio" name="lav_q7" value="3"> Eco quasi sempre</label>
+              <label class="answer-option">
+                <input type="radio" name="lav_q7" value="1">
+                <span>Sempre rapidi</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="lav_q7" value="2">
+                <span>Mix 50/50</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="lav_q7" value="3">
+                <span>Eco quasi sempre</span>
+              </label>
             </li>
 
             <li>
               Quanto spazio hai a disposizione?<br>
-              <label><input type="radio" name="lav_q8" value="1"> Poco (45 cm)</label><br>
-              <label><input type="radio" name="lav_q8" value="2"> Standard (60 cm)</label><br>
-              <label><input type="radio" name="lav_q8" value="3"> Tanto</label>
+              <label class="answer-option">
+                <input type="radio" name="lav_q8" value="1">
+                <span>Poco (45 cm)</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="lav_q8" value="2">
+                <span>Standard (60 cm)</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="lav_q8" value="3">
+                <span>Tanto</span>
+              </label>
             </li>
 
             <li>
               Quanto deve durarti la lavatrice?<br>
-              <label><input type="radio" name="lav_q9" value="1"> 3 anni</label><br>
-              <label><input type="radio" name="lav_q9" value="2"> 5 anni</label><br>
-              <label><input type="radio" name="lav_q9" value="3"> 8+ anni</label>
+              <label class="answer-option">
+                <input type="radio" name="lav_q9" value="1">
+                <span>3 anni</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="lav_q9" value="2">
+                <span>5 anni</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="lav_q9" value="3">
+                <span>8+ anni</span>
+              </label>
             </li>
 
             <li>
               Qual è la cosa che odi di più?<br>
-              <label><input type="radio" name="lav_q10" value="1"> Rumore</label><br>
-              <label><input type="radio" name="lav_q10" value="2"> Vibrazioni</label><br>
-              <label><input type="radio" name="lav_q10" value="3"> Fare mille lavatrici</label>
+              <label class="answer-option">
+                <input type="radio" name="lav_q10" value="1">
+                <span>Rumore</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="lav_q10" value="2">
+                <span>Vibrazioni</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="lav_q10" value="3">
+                <span>Fare mille lavatrici</span>
+              </label>
             </li>
           </ol>
 
@@ -760,45 +1152,108 @@
           <ol class="test-questions">
             <li>
               Qual è il budget realistico per la nuova TV?<br>
-              <label><input type="radio" name="t_q1" value="1">&lt; 300€</label>
-              <label><input type="radio" name="t_q1" value="2">300–500€</label>
-              <label><input type="radio" name="t_q1" value="3">&gt; 500€</label>
+              <label class="answer-option">
+                <input type="radio" name="t_q1" value="1">
+                <span>&lt; 300€</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="t_q1" value="2">
+                <span>300–500€</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="t_q1" value="3">
+                <span>&gt; 500€</span>
+              </label>
             </li>
             <li>
               A che distanza guardi la TV, più o meno?<br>
-              <label><input type="radio" name="t_q2" value="1">Meno di 2 metri</label>
-              <label><input type="radio" name="t_q2" value="2">Tra 2 e 3 metri</label>
-              <label><input type="radio" name="t_q2" value="3">Oltre 3 metri</label>
+              <label class="answer-option">
+                <input type="radio" name="t_q2" value="1">
+                <span>Meno di 2 metri</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="t_q2" value="2">
+                <span>Tra 2 e 3 metri</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="t_q2" value="3">
+                <span>Oltre 3 metri</span>
+              </label>
             </li>
             <li>
               La stanza è di solito:<br>
-              <label><input type="radio" name="t_q3" value="1">Molto luminosa</label>
-              <label><input type="radio" name="t_q3" value="2">Mista, a volte luminosa, a volte no</label>
-              <label><input type="radio" name="t_q3" value="3">Per lo più con luce bassa / sera</label>
+              <label class="answer-option">
+                <input type="radio" name="t_q3" value="1">
+                <span>Molto luminosa</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="t_q3" value="2">
+                <span>Mista, a volte luminosa, a volte no</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="t_q3" value="3">
+                <span>Per lo più con luce bassa / sera</span>
+              </label>
             </li>
             <li>
               Uso principale della TV:<br>
-              <label><input type="radio" name="t_q4" value="1">Canali tradizionali</label><br>
-              <label><input type="radio" name="t_q4" value="2">Film e serie in streaming</label><br>
-              <label><input type="radio" name="t_q4" value="3">Sport veloci / gaming</label>
+              <label class="answer-option">
+                <input type="radio" name="t_q4" value="1">
+                <span>Canali tradizionali</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="t_q4" value="2">
+                <span>Film e serie in streaming</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="t_q4" value="3">
+                <span>Sport veloci / gaming</span>
+              </label>
             </li>
             <li>
               Quanto ti dà fastidio un’immagine non perfetta (troppo chiara, troppo scura, colori strani)?<br>
-              <label><input type="radio" name="t_q5" value="1">Poco</label>
-              <label><input type="radio" name="t_q5" value="2">Un po’</label>
-              <label><input type="radio" name="t_q5" value="3">Molto</label>
+              <label class="answer-option">
+                <input type="radio" name="t_q5" value="1">
+                <span>Poco</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="t_q5" value="2">
+                <span>Un po’</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="t_q5" value="3">
+                <span>Molto</span>
+              </label>
             </li>
             <li>
               Quanto ti dà fastidio un software lento quando apri le app della TV?<br>
-              <label><input type="radio" name="t_q6" value="1">Poco, posso aspettare</label>
-              <label><input type="radio" name="t_q6" value="2">Mi infastidisce</label>
-              <label><input type="radio" name="t_q6" value="3">Mi fa venire i nervi</label>
+              <label class="answer-option">
+                <input type="radio" name="t_q6" value="1">
+                <span>Poco, posso aspettare</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="t_q6" value="2">
+                <span>Mi infastidisce</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="t_q6" value="3">
+                <span>Mi fa venire i nervi</span>
+              </label>
             </li>
             <li>
               Quanto vorresti che ti durasse la TV?<br>
-              <label><input type="radio" name="t_q7" value="1">2–3 anni</label>
-              <label><input type="radio" name="t_q7" value="2">4–5 anni</label>
-              <label><input type="radio" name="t_q7" value="3">Più di 5 anni</label>
+              <label class="answer-option">
+                <input type="radio" name="t_q7" value="1">
+                <span>2–3 anni</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="t_q7" value="2">
+                <span>4–5 anni</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="t_q7" value="3">
+                <span>Più di 5 anni</span>
+              </label>
             </li>
           </ol>
 
@@ -830,19 +1285,17 @@
             <li><a href="smartphone-sotto-200-euro-2025.html">Smartphone sotto 200€</a></li>
             <li><a href="smart-tv-guida-ironica.html">Guida Smart TV 2025</a></li>
             <li><a href="smart-tv-economica-o-tv-buona-con-box.html">Smart TV economica o TV buona?</a></li>
-            <li><a href="fotovoltaico-4kw-accumulo-10kwh.html">Fotovoltaico: numeri reali</a></li>
+            <li><a href="fotovoltaico-4kw-accumulo-10kwh.html">Fotovoltaico: numeri alla mano</a></li>
           </ul>
         </div>
       </aside>
     </div> 
     
-<p style="font-size:0.85rem; color:#666; margin:18px 0;">
-  <strong>Nota:</strong> questo test SmartShop è pensato solo per aiutarti a riflettere
-  prima di fare un acquisto. Non ha valore scientifico, non sostituisce pareri tecnici
-  o professionali ed è realizzato con tono leggero e ironico.
-</p>
-
-    
+    <p style="font-size:0.85rem; color:#666; margin:18px 0;">
+      <strong>Nota:</strong> questo test SmartShop è pensato solo per aiutarti a riflettere
+      prima di fare un acquisto. Non ha valore scientifico, non sostituisce pareri tecnici
+      o professionali ed è realizzato con tono leggero e ironico.
+    </p>
   </main>
 
   <footer class="syncras-footer">
@@ -890,7 +1343,7 @@
     </div>
   </footer>
 
-   <script>
+  <script>
     function toggleMenu() {
       document.body.classList.toggle('nav-open');
     }
@@ -900,7 +1353,6 @@
        ============================== */
 
     const AMAZON_LINKS = {
-      // SOSTITUISCI GLI URL CON I TUOI LINK AFFILIATI
       smartphone: {
         base: {
           text: 'Per la fascia base bastano modelli semplici sotto i 200€.',
@@ -967,7 +1419,6 @@
       }
     };
 
-    // 🔗 Link generici usati nei test
     const AMAZON_GENERIC_LINK = "https://amzn.to/4ikAX7D";
     const AMAZON_SMARTPHONE_64_128 = "https://amzn.to/48hZzJs";
     const AMAZON_SMARTPHONE_256    = "https://amzn.to/4ioryMm";
@@ -994,45 +1445,45 @@
     /* ==============================
        TEST ACQUISTO
        ============================== */
+function valutaTestAcquisto() {
+  const domande = ['a_q1', 'a_q2', 'a_q3', 'a_q4', 'a_q5', 'a_q6', 'a_q7'];
+  let si = 0;
+  let risposte = 0;
 
-    function valutaTestAcquisto() {
-      const domande = ['a_q1', 'a_q2', 'a_q3', 'a_q4', 'a_q5'];
-      let si = 0;
-      let risposte = 0;
-
-      domande.forEach(function(nome) {
-        const sel = document.querySelector('input[name="' + nome + '"]:checked');
-        if (sel) {
-          risposte++;
-          if (sel.value === 'si') si++;
-        }
-      });
-
-      const el = document.getElementById('risultato-acquisto');
-      el.className = 'test-result';
-
-      if (risposte < domande.length) {
-        el.textContent = 'Rispondi a tutte le domande per vedere il risultato.';
-        return;
-      }
-
-      if (si >= 4) {
-        el.textContent = 'Verde: il tuo acquisto sembra ragionato. Se il prodotto è giusto e il prezzo è onesto, puoi procedere piuttosto tranquillo.';
-        el.classList.add('result-good');
-      } else if (si >= 2) {
-        el.textContent = 'Giallo: ci sono alcuni punti deboli. Forse è meglio aspettare ancora un po’, confrontare meglio prezzi e alternative.';
-        el.classList.add('result-medium');
-      } else {
-        el.textContent = 'Rosso: qui suona forte il campanello dell’acquisto d’impulso. Meglio fermarsi e ripensarci tra qualche giorno.';
-        el.classList.add('result-bad');
-      }
-
-      // 🔗 link Amazon generico dopo il risultato
-      el.innerHTML +=
-        '<br><br><a href="' + AMAZON_GENERIC_LINK +
-        '" target="_blank" style="color:#4B3ACB;font-weight:bold;">' +
-        '🔗 Cerca il prodotto su Amazon</a>';
+  domande.forEach(function(nome) {
+    const sel = document.querySelector('input[name="' + nome + '"]:checked');
+    if (sel) {
+      risposte++;
+      if (sel.value === 'si') si++;
     }
+  });
+
+  const el = document.getElementById('risultato-acquisto');
+  el.className = 'test-result';
+
+  if (risposte < domande.length) {
+    el.textContent = 'Rispondi a tutte le domande per vedere il risultato.';
+    return;
+  }
+
+  // Con 7 domande:
+  // 5-7 "Sì" = verde, 3-4 = giallo, 0-2 = rosso
+  if (si >= 5) {
+    el.textContent = 'Verde: il tuo acquisto sembra ragionato. Se il prodotto è giusto e il prezzo è onesto, puoi procedere piuttosto tranquillo.';
+    el.classList.add('result-good');
+  } else if (si >= 3) {
+    el.textContent = 'Giallo: ci sono alcuni punti deboli. Forse è meglio aspettare ancora un po’, confrontare meglio prezzi e alternative.';
+    el.classList.add('result-medium');
+  } else {
+    el.textContent = 'Rosso: qui suona forte il campanello dell’acquisto d’impulso. Meglio fermarsi e ripensarci tra qualche giorno.';
+    el.classList.add('result-bad');
+  }
+
+  el.innerHTML +=
+    '<br><br><a href="' + AMAZON_GENERIC_LINK +
+    '" target="_blank" style="color:#4B3ACB;font-weight:bold;">' +
+    '🔗 Cerca il prodotto su Amazon</a>';
+}
 
     /* ==============================
        TEST SMARTPHONE
@@ -1224,7 +1675,6 @@
 
       let key = 'media';
 
-      // Caso 1: budget basso, uso semplice, poca sensibilità -> Smart TV economica
       if (budget === 1 && uso === 1 && sensibilita <= 2 && velocita <= 2) {
         el.textContent = 'Per il tuo uso va benissimo una Smart TV economica: canali tradizionali e qualche app base. Non ha senso spendere molto di più.';
         el.classList.add('result-good');
@@ -1233,14 +1683,12 @@
         return;
       }
 
-      // Calcolo ricerca qualità generale
       let punteggioQualita = 0;
       if (uso >= 2) punteggioQualita++;
       if (sensibilita >= 2) punteggioQualita++;
       if (luce === 3) punteggioQualita++;
       if (durata >= 2) punteggioQualita++;
 
-      // Caso 2: vuole qualità ma poca pretesa di software
       if (punteggioQualita >= 2 && velocita <= 2 && budget >= 2) {
         el.textContent = 'Per le tue esigenze è consigliata una TV di qualità senza per forza aggiungere un box esterno. Pannello migliore, buona resa con film e serie, software già sufficiente.';
         el.classList.add('result-good');
@@ -1249,7 +1697,6 @@
         return;
       }
 
-      // Caso 3: vuole qualità alta + durata + software fluido
       if (punteggioQualita >= 3 && velocita === 3 && durata >= 2 && budget >= 2) {
         el.textContent = 'Per come userai la TV, la scelta più intelligente è una TV di buona qualità abbinata a un box multimediale esterno. Così hai immagini migliori oggi e una parte “smart” aggiornata anche tra qualche anno.';
         el.classList.add('result-medium');
@@ -1258,7 +1705,6 @@
         return;
       }
 
-      // Caso 4: budget medio ma esigenze contrastanti
       if (budget === 2 && punteggioQualita >= 2) {
         el.textContent = 'Con il tuo budget e le tue esigenze puoi puntare a una TV di buona qualità, iniziando senza box esterno. In futuro, se il software dovesse rallentare, potrai aggiungere un box per allungarne la vita.';
         el.classList.add('result-medium');
@@ -1267,7 +1713,6 @@
         return;
       }
 
-      // Fallback: soluzione prudente
       el.textContent = 'In base alle tue risposte, puoi orientarti su una TV di fascia media: non la più economica, ma nemmeno il top assoluto. Se in futuro la parte smart dovesse diventare lenta, potrai sempre aggiungere un box esterno.';
       el.classList.add('result-medium');
       key = 'media';
@@ -1343,7 +1788,7 @@
       }
     });
   </script>
-
 </body>
 </html>
+
 
