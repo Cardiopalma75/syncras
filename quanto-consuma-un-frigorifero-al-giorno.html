@@ -580,7 +580,9 @@
       </div>
     </div>
 
-   <footer>
+ 
+  </script>
+     <footer>
     © 2025 Syncras.App — Tutti i diritti riservati<br>
     <div style="margin-top:8px;">
       <a href="privacy.html">Privacy Policy</a> |
@@ -596,67 +598,5 @@
       è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
     </p>
   </footer>
-
-  <script>
-    function toggleMenu() {
-      document.body.classList.toggle('nav-open');
-    }
-
-    // Anno automatico nel footer
-    document.addEventListener('DOMContentLoaded', function() {
-      var span = document.getElementById('year-span');
-      if (span) {
-        span.textContent = new Date().getFullYear();
-      }
-    });
-
-    // Condivisione
-
-    function getShareData() {
-      const title = 'Quanto consuma un frigorifero al giorno? Guida alla mano';
-      const url   = window.location.href;
-      return { title, url };
-    }
-
-    function shareWhatsApp() {
-      const d = getShareData();
-      const text = encodeURIComponent(d.title + ' - ' + d.url);
-      const link = 'https://api.whatsapp.com/send?text=' + text;
-      window.open(link, '_blank');
-    }
-
-    function shareTelegram() {
-      const d = getShareData();
-      const text = encodeURIComponent(d.title);
-      const url  = encodeURIComponent(d.url);
-      const link = 'https://t.me/share/url?url=' + url + '&text=' + text;
-      window.open(link, '_blank');
-    }
-
-    function copyLink() {
-      const d = getShareData();
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(d.url)
-          .then(function() {
-            alert('Link copiato negli appunti. Puoi incollarlo dove vuoi.');
-          })
-          .catch(function() {
-            fallbackCopy(d.url);
-          });
-      } else {
-        fallbackCopy(d.url);
-      }
-    }
-
-    function fallbackCopy(text) {
-      const temp = document.createElement('input');
-      temp.value = text;
-      document.body.appendChild(temp);
-      temp.select();
-      document.execCommand('copy');
-      document.body.removeChild(temp);
-      alert('Link copiato. Se non funziona, copialo manualmente dalla barra degli indirizzi.');
-    }
-  </script>
 </body>
 </html>
