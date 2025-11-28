@@ -268,14 +268,11 @@
         </div>
 
     
-  <button class="share-btn"
-    onclick="if(navigator.share){navigator.share({
-      title: document.title,
-      text: 'Guarda questo articolo su Syncras:',
-      url: window.location.href
-    }).catch(()=>{});}else{prompt('Copia questo link:', window.location.href);}">
-    🔗 Condividi questo articolo
-  </button>
+    <button id="shareBtn"
+      style="background: var(--violet-main); color:white; padding:10px 15px; border:none;
+             border-radius:6px; cursor:pointer; margin-bottom:20px; font-weight:600;">
+      📎 Condividi questa guida
+    </button>
         
 
         <p>
