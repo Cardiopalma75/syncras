@@ -436,21 +436,16 @@
           28 novembre 2025 • Vita quotidiana • Energia alla mano
         </div>
 
-        <!-- SHARE TOP -->
-        <div class="share-box">
-          <span class="share-label">Condividi questo articolo:</span>
-          <div class="share-buttons">
-            <button class="share-btn whatsapp" type="button" onclick="shareWhatsApp()">
-              <span>🟢</span> <span>WhatsApp</span>
-            </button>
-            <button class="share-btn telegram" type="button" onclick="shareTelegram()">
-              <span>📨</span> <span>Telegram</span>
-            </button>
-            <button class="share-btn copy" type="button" onclick="copyLink()">
-              <span>📋</span> <span>Copia link</span>
-            </button>
-          </div>
-        </div>
+    
+  <button class="share-btn"
+    onclick="if(navigator.share){navigator.share({
+      title: document.title,
+      text: 'Guarda questo articolo su Syncras:',
+      url: window.location.href
+    }).catch(()=>{});}else{prompt('Copia questo link:', window.location.href);}">
+    🔗 Condividi questo articolo
+  </button>
+        
 
         <p>
           Domanda classica da tavola della domenica: <strong>“Ma sto frigorifero, quanto consuma al giorno?”</strong><br>
