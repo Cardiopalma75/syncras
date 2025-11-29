@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quanti kWh consuma una lavatrice? Tabella costi e risparmio | Syncras.App</title>
+  <meta name="description" content="Quanti kWh consuma davvero una lavatrice a ciclo? Tabella dei costi, differenze tra 30°, 40°, 60° e 90° e consigli pratici per risparmiare in bolletta senza impazzire.">
+  <meta name="robots" content="index,follow">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-59D9XRYKF3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-59D9XRYKF3');
+  </script>
+
+  <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --bg-page: #F7F7FB;
+      --text-main: #403E43;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg-page);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      color: var(--text-main);
+    }
+
+    /* HEADER VIOLA UNIFICATO */
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color: white;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+    #main-nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding-bottom: 2px;
+    }
+    #main-nav a:hover {
+      text-decoration: underline;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .menu-toggle span {
+      margin-left: 4px;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        margin: 0 auto;
+        max-width: 1180px;
+        flex-direction: column;
+        background-color: var(--violet-dark);
+        padding: 10px 16px 12px 16px;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
+      }
+      #main-nav a {
+        padding: 6px 0;
+      }
+      body.nav-open #main-nav {
+        display: flex;
+      }
+      .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+
+    main {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    h1, h2, h3 {
+      color: var(--violet-dark);
+    }
+    p {
+      margin-bottom: 15px;
+    }
+    ul {
+      margin-left: 20px;
+    }
+
+    .box {
+      background: #f6faf7;
+      border: 1px solid #d7e8dc;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .tip-box {
+      background: #F6F4FF;
+      border-left: 4px solid #6C5CE7;
+      padding: 14px;
+      margin: 25px 0;
+      border-radius: 8px;
+    }
+
+    .mini-test {
+      background: #FDFBF6;
+      border-left: 4px solid #EAB308;
+      padding: 14px;
+      margin: 25px 0;
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+
+    .back-links {
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+    .back-links a {
+      color: var(--violet-dark);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .back-links a:hover {
+      text-decoration: underline;
+    }
+
+    .small {
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 0.95rem;
+    }
+    th, td {
+      border: 1px solid #E5E7EB;
+      padding: 8px 10px;
+      text-align: left;
+    }
+    th {
+      background: #F3F4FF;
+    }
+
+    /* Box prodotto Amazon */
+    .product-box {
+      background: #f6f0ff;
+      border: 1px solid #dccff8;
+      border-radius: 10px;
+      padding: 18px 16px;
+      margin: 25px 0;
+      font-size: 0.95rem;
+    }
+    .product-box a {
+      display: inline-block;
+      margin-top: 8px;
+      color: #ffffff;
+      background: var(--violet-main);
+      padding: 8px 14px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .product-box a:hover {
+      background: var(--violet-dark);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      background: #eee;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER UNIFICATO -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
+
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
+
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="offerte.html">Offerte Amazon</a>
+        <a href="categorie.html">Categorie</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="quiz.html">Test SmartShop</a>
+        <a href="chi.html">Chi siamo</a>
+      </nav>
+    </div>
+  </header>
+
+
+
+
+
+<main>
+  <div class="back-links">
+    ← <a href="index.html">Torna alla Home</a> |
+    <a href="blog.html">Vai al Blog</a> |
+    <a href="categorie.html">Categorie</a>
+  </div>
+
+  <h1>Perché una stanza è sempre più fredda (e come riscaldarla): Cause, Termosifoni e Soluzioni</h1>
+
+  <button id="shareBtnTop"
+    style="background: var(--violet-main); color:white; padding:10px 15px; border:none;
+           border-radius:6px; cursor:pointer; margin-bottom:20px; font-weight:600;">
+    📎 Condividi questo articolo
+  </button>
+
+  <p>
+    In quasi tutte le case c’è <strong>una stanza ufficialmente più fredda del resto della casa</strong>.
+    Il corridoio è ok, il salotto è caldo, la cucina è un forno… poi apri quella porta e
+    ti arriva in faccia <strong>l’Alaska domestico</strong>.
+  </p>
+
+  <p>
+    Nel caso di Marco, è la <strong>stanza degli ospiti</strong>.  
+    Lui passa davanti alla porta socchiusa, sente quel colpo di freddo sul collo e pensa:
+    <em>“Qui o c’è uno spirito, o c’è qualcosa che non va con il riscaldamento…”</em>
+  </p>
+
+  <div class="tip-box">
+    <strong>Sintesi veloce: i 4 colpevoli del freddo domestico</strong>
+    <ul>
+      <li><strong>Muro ed esposizione:</strong> la stanza è rivolta a nord e non riceve sole.</li>
+      <li><strong>Pavimento:</strong> sotto c’è un locale non riscaldato (garage o cantina).</li>
+      <li><strong>Aria:</strong> spifferi causati da infissi vecchi o guarnizioni usurate.</li>
+      <li><strong>Riscaldamento:</strong> il termosifone è l’ultimo della linea o non funziona bene (aria all’interno).</li>
+    </ul>
+  </div>
+
+  <p>
+    Una sera prende coraggio, apre piano piano, entra con il telefono in mano stile film horror.
+    Dentro non c’è niente: nessun fantasma, nessun ladro, nessun mostro.
+    Solo una cosa evidente: <strong>il termosifone è tiepido, la finestra è fredda come un muro di ghiaccio</strong>
+    e il pavimento sembra quello di un garage.
+  </p>
+
+  <p>
+    Il giorno dopo chiama il tecnico, pronto a sentirsi dire
+    che la casa è costruita sopra un antico cimitero…  
+    Invece la diagnosi è molto meno mistica e molto più tecnica:
+    <em>“È normale che questa stanza sia più fredda. È fatta proprio così.”</em>
+  </p>
+
+  <h2>1. Perché proprio quella stanza è più fredda? (Le cause reali)</h2>
+
+  <p>
+    Di solito una stanza è sempre più fredda del resto della casa non perché è “sfigata”,
+    ma perché combina <strong>più cause tecniche insieme</strong>.
+  </p>
+
+  <ul>
+    <li>
+      <strong>Esposizione a nord o zero sole diretto</strong><br>
+      Se la stanza è rivolta a nord, verso cortili ombreggiati o vicoli stretti,
+      prende <strong>poco o nessun sole</strong> durante il giorno.
+      Il muro esterno resta freddo e ruba calore continuamente.
+    </li>
+    <li>
+      <strong>È sopra il garage, la cantina o un locale non riscaldato</strong><br>
+      Se sotto c’è un ambiente freddo, il pavimento disperde.
+      Risultato: piedi congelati e sensazione di gelo “che viene da sotto”.
+    </li>
+    <li>
+      <strong>Infissi vecchi o che spifferano</strong><br>
+      Finestre con vetro singolo, guarnizioni secche o telai storti
+      lasciano entrare aria fredda. Anche con termosifone acceso,
+      la stanza non riesce mai a “tenere” il calore.
+    </li>
+    <li>
+      <strong>Termosifone sottodimensionato o ultimo della linea</strong><br>
+      Se il radiatore è piccolo per la stanza, o è l’ultimo della linea,
+      arriva acqua più <strong>tiepida</strong> rispetto agli altri.
+      A volte dentro c’è anche aria nell’impianto: il termosifone scalda solo in alto.
+    </li>
+    <li>
+      <strong>Pareti perimetrali o angolo esterno</strong><br>
+      Le stanze d’angolo hanno due pareti esterne invece di una: disperdono più calore.
+      E se il muro non è isolato, la differenza con le stanze interne si sente subito.
+    </li>
+  </ul>
+
+  <div class="tip-box">
+    <strong>Idea chiave:</strong> la stanza “sempre più fredda” di solito non ha un solo problema,
+    ma una combinazione di fattori: <strong>esposizione + infissi + termosifone + isolamento</strong>.
+  </div>
+
+  <h2>2. Le cause principali riassunte in una tabella</h2>
+
+  <table>
+    <tr>
+      <th>Causa principale</th>
+      <th>Cosa succede</th>
+      <th>Segnale tipico</th>
+    </tr>
+    <tr>
+      <td>Esposizione a nord / poco sole</td>
+      <td>Il muro esterno resta freddo tutto il giorno</td>
+      <td>Stanza fredda anche con termosifone caldo</td>
+    </tr>
+    <tr>
+      <td>Locale freddo sotto (garage, cantina)</td>
+      <td>Il pavimento disperde calore verso il basso</td>
+      <td>Piedi gelidi, tappeto sempre freddo</td>
+    </tr>
+    <tr>
+      <td>Infissi datati o che spifferano</td>
+      <td>Entra aria fredda, esce aria calda</td>
+      <td>Spifferi vicino alla finestra, tende che si muovono</td>
+    </tr>
+    <tr>
+      <td>Termosifone sottodimensionato / ultimo circuito</td>
+      <td>Arriva poca potenza termica alla stanza</td>
+      <td>Radiatore appena tiepido rispetto agli altri</td>
+    </tr>
+    <tr>
+      <td>Pareti d’angolo non isolate</td>
+      <td>Maggiore dispersione verso l’esterno</td>
+      <td>Angoli più freddi, condensa o macchie</td>
+    </tr>
+  </table>
+
+  <h2>3. Cosa puoi fare per riscaldare la stanza (da zero euro a interventi seri)</h2>
+
+  <h3>Soluzioni a Costo Zero (Consigli di Gestione del Calore)</h3>
+  <ul>
+    <li>
+      <strong>Tieni la porta chiusa quando il riscaldamento è spento</strong><br>
+      Eviti che la stanza “ciucci” calore dal corridoio e dalle altre stanze.
+    </li>
+    <li>
+      <strong>Non spegnere del tutto il termosifone</strong><br>
+      Tenerlo sempre spento la rende un frigorifero che poi è difficile da riportare a temperatura.
+      Meglio un minimo di calore costante.
+    </li>
+    <li>
+      <strong>Apri le tende quando c’è sole</strong><br>
+      Anche un po’ di irraggiamento aiuta, se la stanza prende luce in qualche ora del giorno.
+    </li>
+  </ul>
+
+  <h3>Migliorare l'Isolamento e il Riscaldamento con Piccoli Interventi</h3>
+  <ul>
+    <li>
+      <strong>Paraspifferi e guarnizioni nuove</strong><br>
+      Mettere un paraspifferi sotto la porta e rinnovare le guarnizioni delle finestre
+      riduce subito l’ingresso di aria fredda.
+    </li>
+    <li>
+      <strong>Sfiatare il termosifone</strong><br>
+      Se il radiatore è caldo solo in basso e freddo in alto, c’è aria nell’impianto.
+      Sfiatarlo (o farlo fare a un tecnico) aiuta a ripristinare una distribuzione corretta del calore.
+    </li>
+    <li>
+      <strong>Tende più pesanti o doppie</strong><br>
+      Una tenda termica davanti alla finestra crea una barriera semplice ma efficace.
+    </li>
+    <li>
+      <strong>Pannello riflettente dietro al termosifone</strong><br>
+      Riduce la dispersione verso il muro esterno e rimanda più calore nella stanza.
+    </li>
+    <li>
+      <strong>Bilanciamento dell’impianto</strong><br>
+      Un tecnico può regolare le valvole dei termosifoni in modo che alla stanza più fredda
+      arrivi più acqua calda rispetto alle altre.
+    </li>
+  </ul>
+
+  <h3>Interventi strutturali (quando la stanza è proprio estrema)</h3>
+  <ul>
+    <li><strong>Sostituzione degli infissi</strong> con finestre a doppi o tripli vetri.</li>
+    <li><strong>Isolamento del solaio</strong> se sotto c’è un garage o un locale freddo.</li>
+    <li><strong>Cappotto esterno o interno</strong> sulle pareti perimetrali più fredde.</li>
+    <li><strong>Radiatore più grande</strong> o integrazione con altro punto di calore.</li>
+  </ul>
+
+  <div class="tip-box">
+    <strong>Consiglio da amico:</strong> prima di pensare a lavori grossi,
+    prova a <strong>misurare la temperatura</strong> della stanza rispetto al resto della casa
+    e a sistemare spifferi, guarnizioni e termosifone. A volte la differenza si riduce
+    molto già con interventi semplici.
+  </div>
+
+  <div class="product-box">
+    <strong>Vuoi capire davvero quanto è più fredda quella stanza?</strong>
+    <p>
+      Un piccolo <strong>termometro/igrometro da interno</strong> ti permette di confrontare
+      in modo preciso la temperatura tra la stanza “gelida” e il resto della casa.
+      Così puoi valutare meglio se bastano piccoli interventi o serve qualcosa di più serio.
+    </p>
+    <a href="https://amzn.to/48aTH64" target="_blank" rel="nofollow noopener">
+      🔗 Vedi un termometro ambiente consigliato su Amazon
+    </a>
+  </div>
+
+  <p class="small">
+    <strong>Tag:</strong> stanza fredda, stanza più fredda del resto della casa, termosifone non scalda,
+    dispersione termica, infissi che spifferano, isolamento casa, stanza sopra garage, come riscaldare stanza fredda
+  </p>
+
+  <div style="text-align:center; margin:30px 0 10px;">
+    <button id="shareBtnBottom"
+      style="background: var(--violet-main); color:white; padding:10px 18px; border:none;
+             border-radius:6px; cursor:pointer; font-weight:600; font-size:1rem;">
+      📎 Condividi questo articolo
+    </button>
+  </div>
+</main>
+
+<script>
+  // Dati per condivisione
+  const shareDataStanza = {
+    title: "Perché una stanza è sempre più fredda (e come riscaldarla)",
+    text: "Storia comica e spiegazione semplice delle stanze più fredde della casa: cause reali, tabella e soluzioni pratiche.",
+    url: window.location.href
+  };
+
+  function setupShareButton(id) {
+    const btn = document.getElementById(id);
+    if (!btn) return;
+    if (navigator.share) {
+      btn.addEventListener('click', () => {
+        navigator.share(shareDataStanza).catch(() => {});
+      });
+    } else {
+      btn.style.display = "none";
+    }
+  }
+
+  setupShareButton('shareBtnTop');
+  setupShareButton('shareBtnBottom');
+
+  // Menu mobile (richiamato dal bottone in header)
+  function toggleMenu() {
+    document.body.classList.toggle('nav-open');
+  }
+</script>
+
+<footer>
+  © 2025 Syncras.App — Tutti i diritti riservati<br>
+  <div style="margin-top:8px;">
+    <a href="privacy.html">Privacy Policy</a> |
+    <a href="cookie.html">Cookie Policy</a> |
+    <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
+    <a href="note-legali.html">Note Legali</a>
+  </div>
+  <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
+    Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+    Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+    senza alcun costo aggiuntivo per l’utente.  
+    Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+    è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+  </p>
+</footer>
+</body>
+</html>
+
+
+  
+  
