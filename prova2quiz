@@ -661,7 +661,8 @@
   </ol>
 
   <button type="button" class="test-btn" onclick="valutaTestAcquisto()">Calcola risultato</button>
-  <p id="risultato-acquisto" class="test-result"></p>
+ <p id="risultato-acquisto" class="test-result"></p>
+<div id="amazon-acquisto" class="amazon-box"></div>
 </section>
 
 
@@ -1459,30 +1460,59 @@ function valutaTestAcquisto() {
   });
 
   const el = document.getElementById('risultato-acquisto');
+  const boxAmazon = document.getElementById('amazon-acquisto');
+
+  // reset classi e box Amazon
   el.className = 'test-result';
+  if (boxAmazon) {
+    boxAmazon.innerHTML = '';
+  }
 
   if (risposte < domande.length) {
     el.textContent = 'Rispondi a tutte le domande per vedere il risultato.';
     return;
   }
 
-  // Con 7 domande:
-  // 5-7 "Sì" = verde, 3-4 = giallo, 0-2 = rosso
+  // 5–7 "Sì" = verde, 3–4 = giallo, 0–2 = rosso
   if (si >= 5) {
-    el.textContent = 'Verde: il tuo acquisto sembra ragionato. Se il prodotto è giusto e il prezzo è onesto, puoi procedere piuttosto tranquillo.';
+    // VERDE → mostra link Amazon
+    el.textContent =
+      'Verde: il tuo acquisto sembra ragionato. Se il prodotto è giusto e il prezzo è onesto, puoi procedere piuttosto tranquillo.';
     el.classList.add('result-good');
-  } else if (si >= 3) {
-    el.textContent = 'Giallo: ci sono alcuni punti deboli. Forse è meglio aspettare ancora un po’, confrontare meglio prezzi e alternative.';
-    el.classList.add('result-medium');
-  } else {
-    el.textContent = 'Rosso: qui suona forte il campanello dell’acquisto d’impulso. Meglio fermarsi e ripensarci tra qualche giorno.';
-    el.classList.add('result-bad');
-  }
 
-  el.innerHTML +=
-    '<br><br><a href="' + AMAZON_GENERIC_LINK +
-    '" target="_blank" style="color:#4B3ACB;font-weight:bold;">' +
-    '🔗 Cerca il prodotto su Amazon</a>';
+    if (boxAmazon) {
+      boxAmazon.innerHTML = `
+        <strong>Se dopo il test vuoi davvero comprare:</strong>
+        <span>Ora ha senso guardare le offerte con calma, confrontando modelli e recensioni.</span><br>
+        <a href="${AMAZON_GENERIC_LINK}" target="_blank" rel="nofollow noopener sponsored">
+          Vai a vedere le offerte su Amazon
+        </a>
+      `;
+    }
+
+  } else if (si >= 3) {
+    // GIALLO → mostra link Amazon ma con messaggio più prudente
+    el.textContent =
+      'Giallo: ci sono alcuni punti deboli. Prima di comprare, valuta alternative e chiediti se ti serve davvero proprio adesso.';
+    el.classList.add('result-medium');
+
+    if (boxAmazon) {
+      boxAmazon.innerHTML = `
+        <strong>Vuoi comunque dare un’occhiata?</strong>
+        <span>Se sei ancora indeciso, puoi confrontare prezzi e modelli senza fretta.</span><br>
+        <a href="${AMAZON_GENERIC_LINK}" target="_blank" rel="nofollow noopener sponsored">
+          Guarda le offerte su Amazon (solo se ha davvero senso)
+        </a>
+      `;
+    }
+
+  } else {
+    // ROSSO → NESSUN link Amazon
+    el.textContent =
+      'Rosso: qui suona forte il campanello dell’acquisto d’impulso. Meglio fermarsi, chiudere le schede e ripensarci tra qualche giorno.';
+    el.classList.add('result-bad');
+    // boxAmazon resta vuoto
+  }
 }
 
     /* ==============================
