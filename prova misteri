@@ -454,6 +454,19 @@
       </div>
     </section>
 
+
+<!-- SEZIONE AUTOMATICA MISTERI DA BLOG -->
+<h2>Misteri dal Blog</h2>
+<p class="section-sub">Articoli reali pescati automaticamente dal Blog Syncras.</p>
+
+<ul id="lista-misteri-auto" class="post-list">
+  <li>Caricamento misteri in corso…</li>
+</ul>
+<!-- FINE SEZIONE AUTOMATICA -->
+
+
+
+
     <div class="mini-tip">
       🧩 <strong>Morale della storia:</strong> nella maggior parte dei casi non c’è nessun “grande piano segreto”.
       Ci sono abitudini, algoritmi, abitudini sbagliate e un po’ di caso. Se riusciamo a ridere dei misteri
@@ -472,6 +485,41 @@
       document.body.classList.toggle('nav-open');
     }
   </script>
+
+
+<script>
+async function caricaMisteriDalBlog() {
+  const container = document.getElementById('lista-misteri-auto');
+  try {
+    const response = await fetch('blog-test.html'); 
+    if (!response.ok) throw new Error('Non riesco a leggere il blog.');
+
+    const html = await response.text();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+
+    const cards = doc.querySelectorAll('.post-card[data-cat="misteri"]');
+    container.innerHTML = '';
+
+    if (cards.length === 0) {
+      container.innerHTML = '<li>Nessun mistero trovato.</li>';
+      return;
+    }
+
+    cards.forEach(card => {
+      container.appendChild(card.cloneNode(true));
+    });
+
+  } catch (err) {
+    console.error(err);
+    container.innerHTML = '<li>Errore nel caricamento dei misteri.</li>';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', caricaMisteriDalBlog);
+</script>
+
+
 
   <footer>
     © 2025 Syncras.App — Tutti i diritti riservati<br>
