@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conviene spegnere il modem di notte? Storia comica e risposta semplice | Syncras.App</title>
+  <meta name="description" content="Conviene spegnere il modem di notte? Scopri quanto risparmi davvero, se fa male lasciarlo acceso e cosa succede in una famiglia italiana tipo. Storia comica, numeri semplici e risposta chiara.">
+  <meta name="robots" content="index,follow">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-59D9XRYKF3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-59D9XRYKF3');
+  </script>
+
+  <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --bg-page: #F7F7FB;
+      --text-main: #403E43;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg-page);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      color: var(--text-main);
+    }
+
+    /* HEADER VIOLA UNIFICATO */
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color: white;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+    #main-nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding-bottom: 2px;
+    }
+    #main-nav a:hover {
+      text-decoration: underline;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .menu-toggle span {
+      margin-left: 4px;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        margin: 0 auto;
+        max-width: 1180px;
+        flex-direction: column;
+        background-color: var(--violet-dark);
+        padding: 10px 16px 12px 16px;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
+      }
+      #main-nav a {
+        padding: 6px 0;
+      }
+      body.nav-open #main-nav {
+        display: flex;
+      }
+      .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+
+    main {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    h1, h2, h3 {
+      color: var(--violet-dark);
+    }
+    p {
+      margin-bottom: 15px;
+    }
+    ul {
+      margin-left: 20px;
+    }
+
+    .back-links {
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+    .back-links a {
+      color: var(--violet-dark);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .back-links a:hover {
+      text-decoration: underline;
+    }
+
+    .tip-box {
+      background: #F6F4FF;
+      border-left: 4px solid #6C5CE7;
+      padding: 14px;
+      margin: 25px 0;
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+
+    .info-note {
+      background: #F9FAFB;
+      border-left: 4px solid #E5E7EB;
+      padding: 12px;
+      margin: 20px 0;
+      border-radius: 8px;
+      font-size: 0.9rem;
+    }
+
+    .product-box {
+      background: #FDFBF6;
+      border: 1px solid #E5E7EB;
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin: 28px 0;
+      font-size: 0.95rem;
+    }
+    .product-box strong {
+      color: var(--violet-dark);
+    }
+    .product-box a {
+      display: inline-block;
+      margin-top: 10px;
+      background: var(--violet-main);
+      color: white;
+      text-decoration: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .product-box a:hover {
+      background: var(--violet-dark);
+    }
+
+    .small {
+      font-size: 0.85rem;
+      color: #555;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      background: #eee;
+      font-family: Arial, sans-serif;
+      font-size: 0.9rem;
+    }
+    footer a {
+      color: #333;
+      text-decoration: none;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
+
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu">
+        Menu <span>☰</span>
+      </button>
+
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="offerte.html">Offerte Amazon</a>
+        <a href="categorie.html">Categorie</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="quiz.html">Test SmartShop</a>
+        <a href="chi.html">Chi siamo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="back-links">
+      ← <a href="index.html">Torna alla Home</a> |
+      <a href="blog.html">Vai al Blog</a> |
+      <a href="categorie.html">Categorie</a>
+    </div>
+
+    <h1>Conviene spegnere il modem di notte? Storia comica e risposta semplice</h1>
+
+    <!-- SHARE IN ALTO -->
+    <button id="shareBtnTop"
+      style="background: var(--violet-main); color:white; padding:10px 15px; border:none;
+             border-radius:6px; cursor:pointer; margin-bottom:20px; font-weight:600;">
+      📎 Condividi questo articolo
+    </button>
+
+    <script>
+      const shareBtnTop = document.getElementById('shareBtnTop');
+      if (navigator.share) {
+        shareBtnTop.addEventListener('click', () => {
+          navigator.share({
+            title: "Conviene spegnere il modem di notte?",
+            text: "Storia comica e risposta semplice su modem, consumi e vita reale.",
+            url: window.location.href
+          });
+        });
+      } else {
+        shareBtnTop.style.display = "none";
+      }
+    </script>
+
+    <p>
+      È mezzanotte. La casa è finalmente silenziosa.  
+      C’è chi dorme, chi scrolla il telefono, chi guarda l’ultima puntata della serie.
+      E poi c’è lui, l’eroe fra le bollette: <strong>il papà che guarda il modem acceso</strong> e pensa:
+      <em>“Lo spengo o non lo spengo?”</em>
+    </p>
+
+    <p>
+      Per capire se conviene davvero spegnere il modem di notte, seguiamo la storia
+      di una famiglia italiana qualunque. Talmente qualunque che potresti essere tu.
+    </p>
+
+    <h2>1. Papà Marco, paladino del risparmio energetico</h2>
+
+    <p>
+      Marco ogni sera fa il giro della casa come una guardia giurata:
+    </p>
+    <ul>
+      <li>spegne le luci delle stanze vuote,</li>
+      <li>chiude il gas “che non si sa mai”,</li>
+      <li>stacca le ciabatte con 12 spine attaccate,</li>
+      <li>controlla il frigo in modalità “eco” (anche se non sa cosa significhi).</li>
+    </ul>
+
+    <p>
+      Poi lo vede: <strong>il modem</strong>, con tutte quelle lucine che lampeggiano.
+      E nella sua testa parte la voce:
+      <em>“Consuma. Sicuro che consuma. Se lo spengo ogni notte, risparmio un sacco…”</em>
+    </p>
+
+    <p>
+      Nella sua fantasia:
+    </p>
+    <ul>
+      <li>risparmia 50€ l’anno,</li>
+      <li>gli arriva una lettera di ringraziamento dal fornitore di energia,</li>
+      <li>lo intervistano in TV come “l’uomo che ha sconfitto il router”.</li>
+    </ul>
+
+    <p>
+      Così, un po’ emozionato, <strong>spegnere il modem</strong> gli sembra una missione eroica.
+      E lo fa. Click.
+    </p>
+
+    <h2>2. Laura e l’ultima puntata sacra su Netflix</h2>
+
+    <p>
+      Sono le 00:17. Laura, sua moglie, riappare in salotto.
+      Aveva dimenticato una cosa fondamentale:
+      <em>“Devo finire l’ultima puntata PRIMA di dormire, sennò non chiudo occhio.”</em>
+    </p>
+
+    <p>
+      Accende la TV, apre Netflix.  
+      Schermo nero.  
+      Messaggio inesorabile:
+      <strong>“Nessuna connessione a Internet.”</strong>
+    </p>
+
+    <p>
+      In quell’istante, tutte le energie cosmiche si concentrano in una sola frase:
+      <em>“MA CHI È CHE HA SPENTO TUTTO?!”</em>
+    </p>
+
+    <p>
+      Marco entra, già sapendo di aver perso:
+      <em>“Era per risparmiare…”</em>
+    </p>
+
+    <p>
+      Il modem viene riacceso. Le lucine tornano. Internet torna.
+      E con lui, anche la pace… più o meno.
+    </p>
+
+    <h2>3. Il figlio gamer e l’Apocalisse digitale</h2>
+
+    <p>
+      Ore 02:13.  
+      Il figlio Andrea è ancora sveglio. Sta giocando online:
+    </p>
+    <ul>
+      <li>deve uccidere un drago,</li>
+      <li>salvare tre regni,</li>
+      <li>costruire una casa,</li>
+      <li>e cucinare pozioni magiche. Tutto insieme.</li>
+    </ul>
+
+    <p>
+      Proprio mentre sta per completare la missione più importante della sua vita…
+      il modem decide di fare un <strong>riavvio automatico notturno</strong>.
+    </p>
+
+    <p>
+      Connessione persa.  
+      Il drago lo guarda e se ne va indignato.
+    </p>
+
+    <p>
+      Andrea lancia le cuffie sul tavolo:
+      <em>“NOOO! CHE È SUCCESSO?!”</em>
+    </p>
+
+    <p>
+      Trova Marco in cucina:
+      <em>“Papà, hai fatto partire l’Apocalisse digitale?!”</em><br>
+      Marcos sconfitto: <em>“Era per risparmiare…”</em>
+    </p>
+
+    <div class="tip-box">
+      <strong>Piccola verità:</strong> a volte il modem si riavvia da solo di notte
+      per aggiornarsi. Spegnerlo e riaccenderlo a caso non aiuta nessuno, tranne
+      il caos familiare.
+    </div>
+
+    <h2>4. La nonna e le onde del Wi-Fi che “girano per casa”</h2>
+
+    <p>
+      Il giorno dopo, Laura si sfoga con la madre:
+      <em>“Mamma, tuo genero vuole spegnere il modem tutte le notti.”</em>
+    </p>
+
+    <p>
+      La nonna nemmeno ci pensa:
+      <em>“FA BENISSIMO! Non hai letto? La notte il Wi-Fi gira per casa!”</em>
+    </p>
+
+    <p>
+      Laura, confusa:
+      <em>“Come… gira?”</em>
+    </p>
+
+    <p>
+      Nonna:
+      <em>“Eh! Le onde! Io il modem lo copro col canovaccio, così non scappa niente.”</em>
+    </p>
+
+    <p>
+      In quel momento, Laura capisce che la nonna è passata dal telegiornale
+      alla fisica quantistica senza fermate intermedie.
+    </p>
+
+    <div class="info-note">
+      💡 <strong>Nota seria:</strong> le onde del Wi-Fi sono a bassissima potenza.
+      Se hai dubbi sulla salute, è sempre meglio informarsi da fonti mediche e scientifiche
+      affidabili. Qui ne parliamo in chiave ironica, non medica.
+    </div>
+
+    <h2>5. Ma quindi, quanto consuma davvero un modem?</h2>
+
+    <p>
+      Basta drammi. Passiamo ai numeri semplici:
+    </p>
+
+    <ul>
+      <li>Un modem di solito consuma circa <strong>6–10 Watt</strong>.</li>
+      <li>Tradotto: circa <strong>0,15–0,25 kWh al giorno</strong>.</li>
+      <li>Su un anno, siamo intorno a <strong>20–30 kWh</strong>.</li>
+    </ul>
+
+    <p>
+      Se la corrente costa, ad esempio, <strong>0,30 €/kWh</strong>:
+    </p>
+    <ul>
+      <li>30 kWh × 0,30 € ≈ <strong>9 € all’anno</strong>.</li>
+    </ul>
+
+    <p>
+      E spegnendolo di notte?
+    </p>
+    <ul>
+      <li>mettiamo che lo spegni 8 ore su 24,</li>
+      <li>risparmi circa un terzo,</li>
+      <li>quindi <strong>3–4 € all’anno</strong>.</li>
+    </ul>
+
+    <div class="tip-box">
+      <strong>Traduzione:</strong> spegnere il modem di notte non ti paga la vacanza.
+      Ti paga, forse, un caffè con cornetto. Una volta all’anno.
+    </div>
+
+    <h2>6. Ci sono problemi a spegnerlo ogni notte?</h2>
+
+    <p>
+      Dal punto di vista tecnico, il modem non è un criceto:  
+      <strong>non soffre se lo spegni</strong>. Ma ci sono alcuni aspetti da considerare:
+    </p>
+
+    <ul>
+      <li>
+        <strong>Aggiornamenti automatici:</strong><br>
+        molti modem si aggiornano di notte. Se è sempre spento,
+        potrebbe non ricevere mai gli aggiornamenti.
+      </li>
+      <li>
+        <strong>Dispositivi collegati:</strong><br>
+        backup del telefono, assistenti vocali, videocamere, domotica:
+        tutto si aspetta che il Wi-Fi funzioni anche mentre dormi.
+      </li>
+      <li>
+        <strong>Stabilità:</strong><br>
+        spegnere e riaccendere ogni giorno non è un problema enorme,
+        ma se il modem è vecchio e stanco, può cominciare a fare i capricci.
+      </li>
+    </ul>
+
+    <h2>7. E la questione “fa male lasciarlo acceso”?</h2>
+
+    <p>
+      Qui bisogna essere chiari:  
+      <strong>il Wi-Fi usa potenze molto basse</strong>, inferiori a tanti altri dispositivi
+      che usiamo ogni giorno (come lo smartphone appiccicato all’orecchio).
+    </p>
+
+    <p>
+      Se per tranquillità personale preferisci spegnerlo nella stanza da letto o
+      spostarlo, è una scelta tua. Ma spegnerlo ogni notte solo per “sicurezza”
+      non è una prescrizione medica, è più una sensazione.
+    </p>
+
+    <div class="info-note">
+      🔎 <strong>In pratica:</strong> se hai dubbi legati alla salute, parlane con un medico
+      o consulta enti scientifici ufficiali. Qui ci concentriamo su consumi, comfort
+      e vita quotidiana, non su diagnosi.
+    </div>
+
+    <h2>8. Alla fine: conviene o no spegnere il modem di notte?</h2>
+
+    <p>
+      Se guardiamo solo ai numeri, la risposta onesta è:
+      <strong>no, non conviene più di tanto</strong>.
+    </p>
+
+    <ul>
+      <li>Il risparmio è di pochi euro l’anno.</li>
+      <li>I fastidi (litigi, dispositivi offline, aggiornamenti mancati) possono essere tanti.</li>
+      <li>Il vero peso in bolletta arriva da altro: riscaldamento, elettrodomestici, acqua calda.</li>
+    </ul>
+
+    <p>
+      Ha senso spegnerlo solo se:
+    </p>
+    <ul>
+      <li>stai via per giorni,</li>
+      <li>non hai dispositivi che dipendono dal Wi-Fi,</li>
+      <li>e ti dà fastidio vedere lucine accese a vuoto.</li>
+    </ul>
+
+    <div class="tip-box">
+      <strong>Scelta intelligente:</strong> se vuoi davvero tagliare i consumi,
+      ha più senso ottimizzare riscaldamento, elettrodomestici energivori
+      e abitudini giornaliere. Il modem è una briciola nel totale.
+    </div>
+
+    <!-- BOX PRODOTTO ROUTER / MODEM -->
+    <div class="product-box">
+      <strong>Se il modem è vecchio, il problema non è spegnerlo ma cambiare modello.</strong>
+      <p>
+        I modem/router moderni consumano poco, sono più stabili e gestiscono meglio
+        connessioni multiple (smart TV, smartphone, console, domotica).
+        Se il tuo si blocca spesso o ha più anni del tuo telefono, forse è il caso
+        di guardare un modello nuovo.
+      </p>
+      <a href="TUO_LINK_AMAZON_ROUTER" target="_blank" rel="nofollow noopener">
+        🔗 Vedi un modem/router consigliato su Amazon
+      </a>
+    </div>
+
+    <p class="small">
+      <strong>Tag:</strong> modem, spegnere modem notte, consumi modem, Wi-Fi di notte, risparmio bolletta
+    </p>
+
+    <!-- SHARE FINALE CENTRALE -->
+    <div style="text-align:center; margin:30px 0 10px;">
+      <button id="shareBtnBottom"
+        style="background: var(--violet-main); color:white; padding:10px 18px; border:none;
+               border-radius:6px; cursor:pointer; font-weight:600; font-size:1rem;">
+        📎 Condividi questo articolo
+      </button>
+    </div>
+
+    <script>
+      const shareBtnBottom = document.getElementById('shareBtnBottom');
+      if (navigator.share) {
+        shareBtnBottom.addEventListener('click', () => {
+          navigator.share({
+            title: "Conviene spegnere il modem di notte?",
+            text: "Storia comica e risposta semplice su modem, consumi e vita reale.",
+            url: window.location.href
+          });
+        });
+      } else {
+        shareBtnBottom.style.display = "none";
+      }
+    </script>
+
+  </main>
+
+  <script>
+    function toggleMenu() {
+      document.body.classList.toggle('nav-open');
+    }
+  </script>
+
+  <footer>
+    © 2025 Syncras.App — Tutti i diritti riservati<br>
+    <div style="margin-top:8px;">
+      <a href="privacy.html">Privacy Policy</a> |
+      <a href="cookie.html">Cookie Policy</a> |
+      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
+      <a href="note-legali.html">Note Legali</a>
+    </div>
+    <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+      senza alcun costo aggiuntivo per l’utente.  
+      Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+      è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+    </p>
+  </footer>
+
+</body>
+</html>
