@@ -517,7 +517,12 @@
     </div>
   </main>
 
-  <script>
+    <script>
+    // Toggle menu mobile
+    function toggleMenu() {
+      document.body.classList.toggle('nav-open');
+    }
+
     // Condivisione articolo (top e bottom)
     (function() {
       const shareTop = document.getElementById('shareBtnTop');
@@ -542,6 +547,7 @@
       attachShare(shareBottom);
     })();
   </script>
+
 
 <footer>
   © 2025 Syncras.App — Tutti i diritti riservati<br>
