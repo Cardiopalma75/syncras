@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Misteri | Cose che sembrano strane ma hanno una spiegazione | Syncras.App</title>
+  <meta name="description" content="Misteri moderni su tecnologia, energia e vita quotidiana spiegati senza complotti e con molta ironia. Quando succede qualcosa di strano, qui proviamo a capirci qualcosa.">
+  <meta name="robots" content="index,follow">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-59D9XRYKF3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-59D9XRYKF3');
+  </script>
+
+  <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --bg-page: #F7F7FB;
+      --text-main: #403E43;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color: white;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+    #main-nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding-bottom: 2px;
+    }
+    #main-nav a:hover {
+      text-decoration: underline;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .menu-toggle span {
+      margin-left: 4px;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        margin: 0 auto;
+        max-width: 1180px;
+        flex-direction: column;
+        background-color: var(--violet-dark);
+        padding: 10px 16px 12px 16px;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
+      }
+      #main-nav a {
+        padding: 6px 0;
+      }
+      body.nav-open #main-nav {
+        display: flex;
+      }
+      .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+
+    main {
+      max-width: 980px;
+      margin: 30px auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    h1, h2, h3 {
+      color: var(--violet-dark);
+    }
+
+    .back-links {
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+    .back-links a {
+      color: var(--violet-dark);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .back-links a:hover {
+      text-decoration: underline;
+    }
+
+    .page-intro {
+      margin-bottom: 20px;
+      font-size: 0.98rem;
+    }
+
+    .page-intro-quote {
+      background: #FEF3C7;
+      border-left: 4px solid #F59E0B;
+      padding: 10px 12px;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      margin-bottom: 22px;
+    }
+
+    .section-block {
+      margin-top: 26px;
+    }
+
+    .section-block h2 {
+      margin-bottom: 6px;
+    }
+
+    .section-sub {
+      font-size: 0.9rem;
+      color: #4b5563;
+      margin-top: 0;
+      margin-bottom: 14px;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 14px;
+    }
+
+    .mistery-card {
+      background: #F9FAFB;
+      border-radius: 10px;
+      padding: 12px 14px;
+      border: 1px solid #E5E7EB;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      font-size: 0.94rem;
+      transition: background-color 0.15s ease;
+      }
+.mistery-card:hover {
+      background-color: #EEF2FF; /* viola chiarissimo, appena accennato */
+      cursor: pointer;
+}
+
+    
+    
+
+    .mistery-tag {
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #6b7280;
+      margin-bottom: 4px;
+    }
+
+    .mistery-card h3 {
+      margin-top: 0;
+      margin-bottom: 6px;
+      font-size: 1.02rem;
+    }
+
+    .mistery-card p {
+      margin: 0 0 6px 0;
+    }
+
+    .mistery-note {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    .soon-label {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--violet-dark);
+      background: #EDE9FE;
+      padding: 2px 8px;
+      border-radius: 999px;
+      margin-top: 4px;
+    }
+
+    .mini-tip {
+      margin-top: 22px;
+      font-size: 0.9rem;
+      background: #FEF9C3;
+      border-radius: 8px;
+      padding: 10px 12px;
+      border: 1px solid #FBBF24;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #eee;
+      margin-top: 40px;
+      font-family: Arial;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
+
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
+
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+<a href="blog.html">Blog</a>
+<a href="offerte.html">Offerte Amazon</a>
+<a href="categorie.html">Categorie</a>
+<a href="curiosita.html">Curiosità</a>
+<a href="misteri.html">Misteri</a>
+<a href="quiz.html">Test SmartShop</a>
+<a href="chi.html">Chi siamo</a>
+
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="back-links">
+      ← <a href="index.html">Torna alla Home</a> |
+      <a href="curiosita.html">Vai alla pagina Curiosità</a>
+    </div>
+
+    <h1>Misteri</h1>
+    <p class="page-intro">
+      Qui non parliamo di fantasmi né di luci nel cielo. Parliamo dei <strong>misteri moderni</strong>:
+      quelli che ti fanno dire “ma ti sembra normale?” guardando la bolletta, il telefono o il traffico
+      proprio quando sei in ritardo.
+    </p>
+
+    <div class="page-intro-quote">
+      🕵️ <strong>Regola della casa:</strong> niente complotti, niente panico.
+      Se qualcosa sembra strano, prima di dare la colpa all’universo proviamo a capire se non sia solo
+      organizzazione, tecnologia o pura statistica che si diverte.
+    </div>
+
+    <!-- SEZIONE 1: TECNOLOGIA TROPPO "INTELLIGENTE" -->
+    <section class="section-block">
+      <h2>Tecnologia che sembra leggerti nel pensiero</h2>
+      <p class="section-sub">
+        Dispositivi che si attivano da soli, suggerimenti fin troppo precisi, notifiche puntuali come
+        il vicino curioso: a volte sembra tutto studiato per farti impressionare.
+      </p>
+
+      <div class="card-grid">
+        
+      <a href="perche-frigorifero-fa-rumori-strani-di-notte-spiegazione-ironica-ma-scientifica.html" style="text-decoration:none; color:inherit;">
+  <article class="mistery-card">
+    <div class="mistery-tag">Mistero #1</div>
+    <h3>Perché il frigorifero fa rumori strani di notte?</h3>
+    <p>
+      Gorgoglii, tic, vibrazioni e scricchiolii improvvisi: il frigorifero di notte
+      sembra comunicare con l’aldilà. Una guida ironica ma scientifica per capire
+      cosa succede davvero e quando preoccuparsi.
+    </p>
+    <p class="mistery-note">
+      Clicca per leggere l’articolo completo.
+    </p>
+  </article>
+</a>
+
+
+        <article class="mistery-card">
+          <div class="mistery-tag">Mistero #2</div>
+          <h3>Perché ti arrivano annunci sulle cose di cui hai appena parlato?</h3>
+          <p>
+            Sembra che qualcuno ascolti le conversazioni, in realtà di solito è più semplice:
+            ricerche, siti visitati, posizione, abitudini d’acquisto… tutto contribuisce a creare il tuo “profilo”.
+          </p>
+          <p class="mistery-note">
+            Analizzeremo come funzionano questi profili pubblicitari e cosa puoi fare per limitarli un minimo.
+          </p>
+          <span class="soon-label">Articolo in arrivo</span>
+        </article>
+
+        <article class="mistery-card">
+          <div class="mistery-tag">Mistero #3</div>
+          <h3>Perché certi video sembrano fatti apposta per te?</h3>
+          <p>
+            Non è magia, è algoritmo: se resti a guardare certi contenuti più di altri, il sistema pensa che ti piacciano.
+            E ti riempie la bacheca di copie. Come un amico che ha capito male la battuta e continua a ripeterla.
+          </p>
+          <p class="mistery-note">
+            Più avanti vedremo come “raddrizzare” i suggerimenti quando iniziano a diventare tutti uguali.
+          </p>
+          <span class="soon-label">Articolo in arrivo</span>
+        </article>
+      </div>
+    </section>
+
+    <!-- SEZIONE 2: ENERGIA & BOLLETTE -->
+    <section class="section-block">
+      <h2>Misteri di energia, bollette e contatori</h2>
+      <p class="section-sub">
+        Perché la bolletta è più alta del previsto? Perché il contatore scatta proprio quando cucini?
+        Perché di notte qualcosa consuma comunque? Non è complotto, è spesso cattiva organizzazione.
+      </p>
+
+      <div class="card-grid">
+        <article class="mistery-card">
+          <div class="mistery-tag">Mistero #4</div>
+          <h3>Perché la bolletta sale anche se “non hai acceso quasi niente”?</h3>
+          <p>
+            Frigorifero, caldaia, pompe, stand-by, caricabatterie… tutti fanno finta di niente,
+            ma intanto divorano kWh giorno dopo giorno. È la versione energetica delle briciole che
+            diventano pagnotta.
+          </p>
+          <p class="mistery-note">
+            Stiamo preparando un articolo con esempi numerici reali per capire chi consuma cosa, senza formula shock.
+          </p>
+          <span class="soon-label">Articolo in arrivo</span>
+        </article>
+
+        <article class="mistery-card">
+          <div class="mistery-tag">Mistero #5</div>
+          <h3>Perché il contatore salta sempre “quando hai ospiti”?</h3>
+          <p>
+            Non è sfortuna, è statistica: più persone, più luci, più forno, più phon, più tutto.
+            Il contatore non ce l’ha con tua suocera, è solo che quel giorno va al massimo.
+          </p>
+          <p class="mistery-note">
+            Più avanti vedremo come distribuire i carichi in modo furbo, senza trasformare la casa in una centrale.
+          </p>
+          <span class="soon-label">Articolo in arrivo</span>
+        </article>
+
+        <article class="mistery-card">
+          <div class="mistery-tag">Mistero #6</div>
+          <h3>Perché alcuni apparecchi consumano anche da spenti?</h3>
+          <p>
+            La lucina che resta accesa non è solo decorazione: spesso indica che dentro c’è ancora
+            qualcosa in funzione. È il famoso “consumo di stand-by”, quello che nessuno considera ma
+            alla fine dell’anno presenta il conto.
+          </p>
+          <p class="mistery-note">
+            In un prossimo articolo parleremo di quanto incide davvero e quando conviene usare prese con interruttore.
+          </p>
+          <span class="soon-label">Articolo in arrivo</span>
+        </article>
+      </div>
+    </section>
+
+    <!-- SEZIONE 3: MISTERI DELLA VITA QUOTIDIANA -->
+    <section class="section-block">
+      <h2>Misteri spicci della vita di tutti i giorni</h2>
+      <p class="section-sub">
+        Non tutto si spiega con la fisica: alcune cose sono proprio leggi non scritte dell’universo domestico.
+        Qui ci ridiamo sopra, ma ogni tanto una soluzione pratica salta fuori.
+      </p>
+
+      <div class="card-grid">
+        <article class="mistery-card">
+          <div class="mistery-tag">Mistero #7</div>
+          <h3>Perché il corriere suona sempre quando sei in bagno?</h3>
+          <p>
+            È una delle grandi leggi dell’universo: se hai aspettato tutto il giorno, suonerà
+            esattamente nei trenta secondi in cui non puoi aprire. Non c’è spiegazione scientifica,
+            ma una cosa è certa: non è mai quando sei tranquillo sul divano.
+          </p>
+          <p class="mistery-note">
+            Articolo semi-serio in arrivo su tempi di consegna, notifiche e come organizzarsi per non impazzire.
+          </p>
+          <span class="soon-label">Articolo in arrivo</span>
+        </article>
+
+        
+<a href="perche-telecomando-sparisce-proprio-quando-serve.html" style="text-decoration:none; color:inherit;">
+  <article class="mistery-card">
+    <div class="mistery-tag">Mistero #8</div>
+    <h3>Perché il telecomando sparisce sempre quando serve?</h3>
+
+    <p>
+      In giornate normali è sempre lì. Quando finalmente trasmettono qualcosa che ti piace,
+      si volatilizza tra cuscini, plaid e dimensioni parallele. Alla fine è solo disordine,
+      ma intanto fai più movimento che in palestra.
+    </p>
+
+    <p class="mistery-note">
+      Clicca per leggere l’articolo completo.
+    </p>
+  </article>
+</a>
+
+
+        <a href="perche-telefono-si-scalda-anche-senza-usarlo-guida-ironica-che-nessuno-ti-dice.html" style="text-decoration:none; color:inherit;">
+  <article class="mistery-card">
+    <div class="mistery-tag">Mistero #9</div>
+    <h3>Perché il telefono si scalda anche senza usarlo?</h3>
+
+    <p>
+      Lui è lì sul tavolo, tu non lo stai nemmeno usando… eppure diventa caldo come una
+      brioche appena sfornata. Una spiegazione ironica per capire quando è normale e quando
+      conviene farlo controllare.
+    </p>
+
+    <p class="mistery-note">
+      Clicca per leggere l’articolo completo.
+    </p>
+  </article>
+</a>
+
+        
+      </div>
+    </section>
+
+    <div class="mini-tip">
+      🧩 <strong>Morale della storia:</strong> nella maggior parte dei casi non c’è nessun “grande piano segreto”.
+      Ci sono abitudini, algoritmi, abitudini sbagliate e un po’ di caso. Se riusciamo a ridere dei misteri
+      quotidiani, abbiamo già fatto metà del lavoro per viverli meglio.
+    </div>
+
+    <p style="font-size:0.85rem; color:#666; margin-top:30px;">
+      <strong>Nota:</strong> i contenuti di questa pagina sono volutamente ironici e semplificati.
+      Non sostituiscono analisi tecniche, legali o professionali. Per problemi seri legati a sicurezza,
+      impianti o contratti, rivolgiti sempre a professionisti qualificati e a fonti ufficiali.
+    </p>
+  </main>
+
+  <script>
+    function toggleMenu() {
+      document.body.classList.toggle('nav-open');
+    }
+  </script>
+
+  <footer>
+    © 2025 Syncras.App — Tutti i diritti riservati<br>
+
+    <div style="margin-top:8px;">
+      <a href="privacy.html">Privacy Policy</a> |
+      <a href="cookie.html">Cookie Policy</a> |
+      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
+      <a href="note-legali.html">Note Legali</a>
+    </div>
+
+    <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+      senza alcun costo aggiuntivo per l’utente.  
+      Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+      è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+    </p>
+  </footer>
+
+</body>
+</html>
