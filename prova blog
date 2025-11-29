@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog Syncras.App | Guide SmartShop per acquisti intelligenti</title>
+  <meta name="description" content="Articoli e guide di Syncras.App per scegliere meglio: tecnologia, casa, energia, elettrodomestici e molto altro, spiegati in modo semplice e ironico.">
+  <meta name="robots" content="index,follow">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-59D9XRYKF3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-59D9XRYKF3');
+  </script>
+  
+  <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --bg-page: #F7F7FB;
+      --text-main: #403E43;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    /* HEADER identico alla home */
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color: white;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+    #main-nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding-bottom: 2px;
+    }
+    #main-nav a:hover {
+      text-decoration: underline;
+    }
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .menu-toggle span {
+      margin-left: 4px;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        margin: 0 auto;
+        max-width: 1180px;
+        flex-direction: column;
+        background-color: var(--violet-dark);
+        padding: 10px 16px 12px 16px;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
+      }
+      #main-nav a {
+        padding: 6px 0;
+      }
+      body.nav-open #main-nav {
+        display: flex;
+      }
+      .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+
+    main {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.08);
+    }
+
+    h2, h3 {
+      color: var(--violet-dark);
+    }
+
+    .intro {
+      margin-bottom: 20px;
+      border-bottom: 1px solid #E5E7EB;
+      padding-bottom: 10px;
+    }
+
+    .post-list {
+      list-style: none;
+      padding-left: 0;
+      margin: 20px 0 0 0;
+    }
+    .post-card {
+      background: #F6F4FF;
+      border-radius: 10px;
+      border: 1px solid #DDD7FF;
+      padding: 15px;
+      margin-bottom: 15px;
+    }
+    .post-card h3 {
+      margin-top: 0;
+      margin-bottom: 5px;
+    }
+    .post-meta {
+      font-size: 0.85rem;
+      color: #6B7280;
+      margin-bottom: 8px;
+    }
+    .post-card a {
+      text-decoration: none;
+      color: inherit;
+    }
+    .post-card a:hover h3 {
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background:#eee;
+      font-family:Arial;
+      font-size:0.9rem;
+      margin-top:40px;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
+
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
+
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="offerte.html">Offerte Amazon</a>
+        <a href="categorie.html">Categorie</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="quiz.html">Test SmartShop</a>
+        <a href="chi.html">Chi siamo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="intro">
+      <h2>Articoli e guide SmartShop</h2>
+      <p>
+        Qui trovi gli articoli in cui metto in pratica il <strong>Metodo SmartShop</strong>:
+        ragionamenti, confronti e scelte spiegate come a un amico.
+      </p>
+    </section>
+
+    <ul class="post-list">
+
+      <li class="post-card" data-cat="energia">
+        <a href="stufa-elettrica-gas-o-climatizzatore.html">
+          <h3>Riscaldamento: stufa elettrica, gas o climatizzatore? Differenze e costi reali</h3>
+          <div class="post-meta">29 novembre 2025 • Casa & Risparmio Energetico • Vita Reale</div>
+          <p>
+            Marco, il divano, tre sistemi di riscaldamento e una bolletta che fa paura:
+            quale conviene davvero tra stufa elettrica, stufa a gas e climatizzatore?
+            Storia comica e confronto dei consumi.
+          </p>
+        </a>
+      </li>
+
+      <li class="post-card" data-cat="casa">
+        <a href="perche-stanza-piu-fredda-del-resto-della-casa.html">
+          <h3>Perché una stanza è sempre più fredda del resto della casa? Cause e soluzioni spiegate semplice</h3>
+          <div class="post-meta">29 novembre 2025 • Casa & Risparmio Energetico • Vita reale</div>
+          <p>
+            La storia comica della “stanza polare” e le vere cause tecniche: esposizione, termosifoni,
+            spifferi, isolamento e consigli pratici per riscaldarla davvero.
+          </p>
+        </a>
+      </li>
+
+      <li class="post-card" data-cat="elettrodomestici">
+        <a href="quanti-kwh-consuma-davvero-una-lavatrice.html">
+          <h3>Quanti kWh consuma una lavatrice? La guida semplice, comica e con tabella</h3>
+          <div class="post-meta">29 novembre 2025 • Casa & Elettrodomestici • Risparmio Energetico</div>
+          <p>
+            La verità sui consumi reali della lavatrice: storia comica, tabella dei kWh,
+            costi per temperatura e consigli per risparmiare davvero.
+          </p>
+        </a>
+      </li>
+
+      <li class="post-card" data-cat="energia">
+        <a href="conviene-spegnere-il-modem-di-notte.html">
+          <h3>Conviene spegnere il modem di notte? La storia comica che svela la verità</h3>
+          <div class="post-meta">29 novembre 2025 • Casa & Risparmio Energetico • Vita reale</div>
+          <p>
+            Una famiglia italiana alle prese con il dilemma del modem acceso: risparmio,
+            litigi notturni, falsi miti e la verità sui consumi reali del router.
+          </p>
+        </a>
+      </li>
+
+      <li class="post-card" data-cat="casa">
+        <a href="meglio-stendino-o-asciugatrice-d-inverno.html">
+          <h3>Meglio stendino o asciugatrice d’inverno? La storia comica che vivi anche tu</h3>
+          <div class="post-meta">29 novembre 2025 • Casa & Risparmio • Vita quotidiana</div>
+          <p>
+            D’inverno i panni non asciugano mai. Asciugatrice o stendino?
+            La storia comica (ma vera) che mostra chi vince davvero tra umidità, consumi e vita reale.
+          </p>
+        </a>
+      </li>
+
+      <li class="post-card" data-cat="auto">
+        <a href="perche-pneumatici-larghi-consumano-di-piu.html">
+          <h3>Perché i pneumatici larghi consumano di più? Spiegazione semplice (e ironica)</h3>
+          <div class="post-meta">28 novembre 2025 • Auto & Consumi • Vita quotidiana</div>
+          <p>
+            Gomme più larghe = consumi più alti. Ma perché succede davvero?  
+            Spiegazione semplice, comica e con esempi reali che viviamo tutti.
+          </p>
+        </a>
+      </li>
+
+      <li class="post-card" data-cat="elettrodomestici">
+        <a href="quanto-consuma-un-frigorifero-al-giorno.html">
+          <h3>Quanto consuma un frigorifero al giorno? Guida alla mano</h3>
+          <div class="post-meta">28 novembre 2025 • Energia & Casa • Vita quotidiana</div>
+          <p>
+            Numeri semplici, esempi reali e 3 storie comiche per capire quanto consuma davvero
+            un frigorifero al giorno e quanto pesa in bolletta.
+          </p>
+        </a>
+      </li>
+
+      <li class="post-card" data-cat="elettrodomestici">
+        <a href="perche-lavatrice-vibra-come-un-trattore.html">
+          <h3>Perché la lavatrice vibra come un trattore? La storia comica che viviamo tutti</h3>
+          <div class="post-meta">27 novembre 2025 • Casa & Elettrodomestici • Vita quotidiana</div>
+          <p>
+            La scena tipica italiana: silenzio totale... e la lavatrice decide di trasformarsi in un trattore.
+            Una storia divertente e le vere cause spiegate semplice.
+          </p>
+        </a>
+      </li>
+
+      <li class="post-card" data-cat="smartphone">
+        <a href="perche-telefono-si-scarica-cosi-in-fretta.html">
+          <h3>Perché il telefono si scarica così in fretta? Guida ironica e davvero utile</h3>
+          <div class="post-meta">27 novembre 2025 • Tecnologia • Vita quotidiana</div>
+          <p>
+            La batteria crolla proprio quando ti serve? Una guida ironica per capire perché succede davvero
+            e i trucchi pratici per farla durare molto, molto di più.
+          </p>
+        </a>
+      </li>
+
+      <li class="post-card" data-cat="energia">
+        <a href="climatizzatore-inverno-conviene-davvero.html">
+          <h3>Climatizzatore d’inverno: conviene davvero? Guida ironica ma precisa</h3>
+          <div class="post-meta">27 novembre 2025 • Casa • Energia</div>
+          <p>
+            Conviene davvero usare il climatizzatore in inverno? Una guida ironica 
+            ma chiara che spiega COP, consumi reali, quando ti fa risparmiare 
+            e quando invece è meglio lasciar perdere.
+          </p>
+        </a>
+      </li>
+
+      <li class="post-card" data-cat="smartphone">
+        <a href="perche-telefono-si-scalda-anche-senza-usarlo-guida-ironica-che-nessuno-ti-dice.html">
+          <h3>Perché il telefono si scalda anche senza usarlo? La spiegazione ironica che nessuno ti dice</h3>
+          <div class="post-meta">26 novembre 2025 • Tecnologia • Vita quotidiana</div>
+          <p>
+            Il telefono è lì fermo sul tavolo… eppure si scalda da solo. Una guida ironica e sorprendentemente utile
+            per capire perché succede, quando è normale e quando conviene farlo controllare.
+          </p>
+        </a>
+      </li>
+
+      <li class="post-card" data-cat="elettrodomestici">
+        <a href="perche-frigorifero-fa-rumori-strani-di-notte-spiegazione-ironica-ma-scientifica.html">
+          <h3>Perché il frigorifero fa rumori strani di notte? Spiegazione ironica ma scientifica</h3>
+          <div class="post-meta">26 novembre 2025 • Casa • Elettrodomestici</div>
+          <p>
+            Rumori, tic, gorgoglii e vibrazioni nel cuore della notte: perché il frigorifero 
+            fa questi suoni strani proprio quando tutto è silenzioso? Una guida ironica ma 
+            scientifica per capirli e sapere quando preoccuparsi davvero.
+          </p>
+        </a>
+      </li>
+
+      <li class="post-card" data-cat="energia">
+        <a href="come-risparmiare-in-bolletta.html">
+          <h3>Come risparmiare in bolletta senza vivere al buio: guida ironica</h3>
+          <div class="post-meta">26 novembre 2025 • Casa • Risparmio energetico</div>
+          <p>
+            Apri la bolletta, fai il segno della croce e ti chiedi se hai acceso la Torre Eiffel:
+            ecco una guida semplice, pratica e ironica per tagliare davvero i consumi quotidiani
+            senza trasformare casa in una grotta medievale.
+          </p>
+        </a>
+      </li>
+
+      <li class="post-card" data-cat="elettrodomestici">
+        <a href="perche-la-lavatrice-puzza-anche-se-e-pulita-la-spiegazione-semplice-e-comica.html">
+          <h3>Perché la lavatrice puzza anche se è pulita? La spiegazione semplice (e comica)</h3>
+          <div class="post-meta">26 novembre 2025 • Casa • Vita quotidiana</div>
+          <p>
+            Apri lo sportello e invece del profumo di bucato senti odore di palude? 
+            Una guida semplice e comica per capire perché la lavatrice puzza anche se la pulisci 
+            e cosa fare davvero per eliminare i cattivi odori.
+          </p>
+        </a>
+      </li>
+
+      <li class="post-card" data-cat="smartphone">
+        <a href="perche-telefono-si-scarica-quando-serve-di-piu.html">
+          <h3>Perché lo smartphone si scarica quando serve di più? Guida teatrale e irresistibile</h3>
+          <div class="post-meta">25 novembre 2025 • Tecnologia • Vita quotidiana</div>
+          <p>
+            Lo smartphone è pieno di batteria per tutto il giorno… finché ti serve davvero. 
+            Una guida teatrale, comica e sorprendentemente utile su perché si scarica nei 
+            momenti peggiori e come evitarlo.
+          </p>
+        </a>
+      </li>
+
+      <li class="post-card" data-cat="tecnologia">
+        <a href="perche-wifi-va-lento-quando-serve.html">
+          <h3>Perché il Wi-Fi va lento proprio quando serve davvero? Guida teatrale (ma utile)</h3>
+          <div class="post-meta">25 novembre 2025 • Tecnologia • Vita quotidiana</div>
+          <p>
+            Il Wi-Fi corre tutto il giorno… finché ti serve per qualcosa di importante. Una guida teatrale e ironica per 
+            capire perché rallenta proprio nei momenti decisivi e come sistemarlo davvero.
+          </p>
+        </a>
+      </li>
+
+      <li class="post-card" data-cat="misteri">
+        <a href="perche-telecomando-sparisce-proprio-quando-serve.html">
+          <h3>Perché il telecomando sparisce proprio quando serve? Guida ironica al mistero del salotto</h3>
+          <div class="post-meta">25 novembre 2025 • Curiosità • Misteri domestici</div>
+          <p>
+            Il telecomando è sempre lì… finché inizia il film più bello della settimana. E allora scompare nel nulla:
+            divani affamati, coperte malefiche e tempismo comico. Ecco perché succede davvero.
+          </p>
+        </a>
+      </li>
+
+      <li class="post-card" data-cat="curiosita">
+        <a href="perche-wifi-prende-in-salotto-e-non-in-camera.html">
+          <h3>Perché il Wi-Fi prende bene in salotto e non in camera? La spiegazione ironica definitiva</h3>
+          <div class="post-meta">25 novembre 2025 • Curiosità • Vita in casa</div>
+          <p>
+            In salotto vola, in camera muore come un modem degli anni ’90. Ecco perché succede davvero
+            e cosa puoi fare senza diventare ingegnere.
+          </p>
+        </a>
+      </li>
+
+      <li class="post-card" data-cat="elettrodomestici">
+        <a href="lavastoviglie-45-o-60-cm.html">
+          <h3>Lavastoviglie 45 o 60 cm? La guida ironica per non sbagliare</h3>
+          <div class="post-meta">24 novembre 2025 • Casa • Elettrodomestici</div>
+          <p>
+            Cucina piccola o famiglia numerosa? Ecco la guida semplice e ironica per capire
+            se ti conviene una lavastoviglie slim da 45 cm o una full size da 60 cm.
+          </p>
+        </a>
+      </li>
+
+      <li class="post-card" data-cat="smartphone">
+        <a href="quanti-giga-di-memoria-servono-davvero.html">
+          <h3>Quanti giga di memoria servono davvero a una persona normale?</h3>
+          <div class="post-meta">24 novembre 2025 • Smartphone • Guida pratica</div>
+          <p>
+            Foto, video, chat e app: quanti GB servono davvero per non ritrovarsi con
+            “memoria piena” nel momento peggiore? Guida ironica e utile per scegliere il taglio giusto.
+          </p>
+        </a>
+      </li>
+
+      <ul class="post-list">
+        <li class="post-card" data-cat="elettrodomestici">
+          <a href="lavare-a-mano-o-lavastoviglie-guida.html">
+            <h3>Meglio lavare i piatti a mano o usare la lavastoviglie?</h3>
+            <div class="post-meta">24 novembre 2025 • Casa • Elettrodomestici</div>
+            <p>
+              Consuma meno lavare a mano o usare la lavastoviglie? Guida pratica e ironica che
+              smonta miti, fa i conti reali e racconta scene che viviamo tutti in cucina.
+            </p>
+          </a>
+        </li>
+
+        <li class="post-card" data-cat="smartphone">
+          <a href="batteria-5000-mah-quanto-dura-davvero.html">
+            <h3>Batteria 5000 mAh: quanto dura davvero nella vita reale?</h3>
+            <div class="post-meta">25 novembre 2025 • Smartphone • Batteria</div>
+            <p>
+              Tutti parlano di batteria da 5000 mAh, ma quanto dura davvero nella vita reale?
+              Una guida ironica e sincera per capire se arrivi a sera... o alla presa.
+            </p>
+          </a>
+        </li>
+
+        <li class="post-card" data-cat="tv">
+          <a href="smart-tv-economica-o-tv-buona-con-box.html">
+            <h3>Smart TV economica o TV buona + box esterno? La scelta furba nel 2025</h3>
+            <div class="post-meta">23 novembre 2025 • TV • Tecnologia</div>
+            <p>
+              Conviene prendere una Smart TV economica o una TV di qualità e affidarci a un Fire Stick o Google TV?
+              La risposta sincera, semplice e un po’ Zalone in stile Syncras.
+            </p>
+          </a>
+        </li>
+
+        <li class="post-card" data-cat="smartphone">
+          <a href="smartphone-spendere-tanto-o-cambiarlo.html">
+            <h3>Meglio spendere tanto per il telefono o cambiarlo più spesso?</h3>
+            <div class="post-meta">23 novembre 2025 • Smartphone • Tecnologia</div>
+            <p>
+              Conviene prendere un telefono da 900€ sperando che duri anni, oppure puntare su un modello onesto da 250–300€ e cambiarlo più spesso? Risposta ironica e numerica in stile Syncras.
+            </p>
+          </a>
+        </li>
+
+        <li class="post-card" data-cat="elettrodomestici">
+          <a href="lavatrice-quanti-kg-servono-davvero.html">
+            <h3>Lavatrice: quanti kg servono davvero? Guida ironica e pratica 2025</h3>
+            <div class="post-meta">23 novembre 2025 • Casa • Elettrodomestici</div>
+            <p>
+              7 kg? 8 kg? 10 kg? Ecco quando serve davvero un cestello grande
+              e quando stai solo regalando soldi al negozio.
+            </p>
+          </a>
+        </li>
+
+        <li class="post-card" data-cat="tv">
+          <a href="smart-tv-guida-ironica.html">
+            <h3>Guida Smart TV 2025 (versione ironica)</h3>
+            <div class="post-meta">20 novembre 2025 • TV • Tecnologia</div>
+            <p>
+              Una guida divertente e pratica per scegliere la TV giusta in base al budget.
+            </p>
+          </a>
+        </li>
+
+        <li class="post-card" data-cat="fotovoltaico">
+          <a href="fotovoltaico-4kw-accumulo-10kwh.html">
+            <h3>Fotovoltaico 4 kW con accumulo 10 kWh: quanto costa davvero nel 2025?</h3>
+            <div class="post-meta">18 novembre 2025 • Energia • Fotovoltaico</div>
+            <p>
+              Impianto reale, numeri veri, pro e contro spiegati senza marketing. Quanto spendi,
+              quanto recuperi e in quanti anni ti rientra l’investimento.
+            </p>
+          </a>
+        </li>
+
+        <li class="post-card" data-cat="fotovoltaico">
+          <a href="resistenza-termosifone-fotovoltaico.html">
+            <h3>Come ho migliorato il comfort con una resistenza sul termosifone (e il fotovoltaico)</h3>
+            <div class="post-meta">18 novembre 2025 • Clima & comfort • Casa</div>
+            <p>
+              Termosifone, resistenza elettrica, fotovoltaico e un po’ di buon senso: cosa ha funzionato,
+              quanto consuma davvero e quando ha senso farlo.
+            </p>
+          </a>
+        </li>
+
+        <li class="post-card" data-cat="cucina">
+          <a href="robot-cucina-economici-2025.html">
+            <h3>I robot da cucina economici nel 2025: quando hanno senso davvero</h3>
+            <div class="post-meta">18 novembre 2025 • Cucina • Elettrodomestici</div>
+            <p>
+              Non ti serve uno chef in casa, ma un aiuto furbo sì: come scegliere un robot economico
+              senza farti portare via lo stipendio.
+            </p>
+          </a>
+        </li>
+
+        <li class="post-card" data-cat="smartphone">
+          <a href="smartphone-sotto-200-euro-2025.html">
+            <h3>I migliori smartphone sotto i 200€ – guida amichevole e ironica 2025</h3>
+            <div class="post-meta">18 novembre 2025 • Tecnologia • Smartphone</div>
+            <p>
+              Una guida semplice, ironica e senza tecnicismi per scegliere lo smartphone giusto sotto i 200€.
+              Quattro modelli validi spiegati come a un amico al bar.
+            </p>
+          </a>
+        </li>
+
+        <li class="post-card" data-cat="audio">
+          <a href="cuffie-wireless-sotto-50-euro-2025.html">
+            <h3>Cuffie wireless sotto 50€ (2025) – guida amichevole, pratica e un po’ ironica</h3>
+            <div class="post-meta">18 novembre 2025 • Audio • Cuffie</div>
+            <p>
+              Le migliori cuffie bluetooth economiche spiegate senza paroloni: autonomia, comfort,
+              quando bastano 50€ e quando è meglio non esagerare con il risparmio.
+            </p>
+          </a>
+        </li>
+      </ul>
+    </ul>
+  </main>
+
+  <script>
+    function toggleMenu() {
+      document.body.classList.toggle('nav-open');
+    }
+  </script>
+
+  <h2>Articoli consigliati</h2>
+  <ul>
+    <li><a href="smart-tv-sotto-700.html">Smart TV sotto 700€</a></li>
+    <li><a href="smartphone-sotto-200.html">Smartphone sotto 200€</a></li>
+    <li><a href="cuffie-sotto-50.html">Cuffie wireless sotto 50€</a></li>
+    <li><a href="robot-cucina-sotto-150.html">Robot da cucina sotto 150€</a></li>
+    <li><a href="stanza-fredda.html">Come ho scaldato la stanza più fredda</a></li>
+    <li><a href="fotovoltaico-4kw-batteria-10kwh.html">Fotovoltaico 4kW + batteria 10kWh</a></li>
+  </ul>
+
+  <footer>
+    © 2025 Syncras.App — Tutti i diritti riservati<br>
+    <div style="margin-top:8px;">
+      <a href="privacy.html">Privacy Policy</a> |
+      <a href="cookie.html">Cookie Policy</a> |
+      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
+      <a href="note-legali.html">Note Legali</a>
+    </div>
+    <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+      senza alcun costo aggiuntivo per l’utente.  
+      Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+      è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+    </p>
+  </footer>
+</body>
+</html>
