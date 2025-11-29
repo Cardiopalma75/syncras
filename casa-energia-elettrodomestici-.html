@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Casa / Energia / Elettrodomestici – Syncras.App</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      background:#f7f7fb;
+      margin:0;
+      padding:20px;
+    }
+    h1 {
+      color:#4B3ACB;
+      margin-bottom:8px;
+    }
+    h2 {
+      color:#4B3ACB;
+      margin-top:40px;
+      margin-bottom:8px;
+    }
+    .post-list {
+      list-style:none;
+      padding:0;
+    }
+    .post-card {
+      background:#F6F4FF;
+      border:1px solid #DDD7FF;
+      padding:16px;
+      border-radius:10px;
+      margin-bottom:12px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>TEST – Casa / Energia / Elettrodomestici</h1>
+  <p>Questa pagina pesca automaticamente dal BLOG gli articoli con categoria assegnata.</p>
+
+  <!-- CASA -->
+  <h2>Articoli CASA</h2>
+  <ul id="lista-casa" class="post-list">
+      <li>Caricamento articoli casa...</li>
+  </ul>
+
+  <!-- ENERGIA -->
+  <h2>Articoli ENERGIA</h2>
+  <ul id="lista-energia" class="post-list">
+      <li>Caricamento articoli energia...</li>
+  </ul>
+
+  <!-- ELETTRODOMESTICI -->
+  <h2>Articoli ELETTRODOMESTICI</h2>
+  <ul id="lista-elettro" class="post-list">
+      <li>Caricamento articoli elettrodomestici...</li>
+  </ul>
+
+
+<script>
+async function caricaCategoria(idLista, categoria) {
+  const container = document.getElementById(idLista);
+
+  try {
+    const response = await fetch('blog-test.html'); 
+    const html = await response.text();
+
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+
+    const cards = doc.querySelectorAll('.post-card[data-cat="'+categoria+'"]');
+
+    container.innerHTML = '';
+
+    if (cards.length === 0) {
+      container.innerHTML = '<li>Nessun articolo per questa categoria.</li>';
+      return;
+    }
+
+    cards.forEach(card => {
+      container.appendChild(card.cloneNode(true));
+    });
+
+  } catch (e) {
+    container.innerHTML = '<li>Errore nel caricamento.</li>';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  caricaCategoria('lista-casa', 'casa');
+  caricaCategoria('lista-energia', 'energia');
+  caricaCategoria('lista-elettro', 'elettrodomestici');
+});
+</script>
+
+</body>
+</html>
