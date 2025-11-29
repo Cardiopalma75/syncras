@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quanti kWh consuma una lavatrice? Tabella costi e risparmio | Syncras.App</title>
+  <meta name="description" content="Quanti kWh consuma davvero una lavatrice a ciclo? Tabella dei costi, differenze tra 30°, 40°, 60° e 90° e consigli pratici per risparmiare in bolletta senza impazzire.">
+  <meta name="robots" content="index,follow">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-59D9XRYKF3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-59D9XRYKF3');
+  </script>
+
+  <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --bg-page: #F7F7FB;
+      --text-main: #403E43;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg-page);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      color: var(--text-main);
+    }
+
+    /* HEADER VIOLA UNIFICATO */
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color: white;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+    #main-nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding-bottom: 2px;
+    }
+    #main-nav a:hover {
+      text-decoration: underline;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .menu-toggle span {
+      margin-left: 4px;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        margin: 0 auto;
+        max-width: 1180px;
+        flex-direction: column;
+        background-color: var(--violet-dark);
+        padding: 10px 16px 12px 16px;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
+      }
+      #main-nav a {
+        padding: 6px 0;
+      }
+      body.nav-open #main-nav {
+        display: flex;
+      }
+      .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+
+    main {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    h1, h2, h3 {
+      color: var(--violet-dark);
+    }
+    p {
+      margin-bottom: 15px;
+    }
+    ul {
+      margin-left: 20px;
+    }
+
+    .box {
+      background: #f6faf7;
+      border: 1px solid #d7e8dc;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .tip-box {
+      background: #F6F4FF;
+      border-left: 4px solid #6C5CE7;
+      padding: 14px;
+      margin: 25px 0;
+      border-radius: 8px;
+    }
+
+    .mini-test {
+      background: #FDFBF6;
+      border-left: 4px solid #EAB308;
+      padding: 14px;
+      margin: 25px 0;
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+
+    .back-links {
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+    .back-links a {
+      color: var(--violet-dark);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .back-links a:hover {
+      text-decoration: underline;
+    }
+
+    .small {
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 0.95rem;
+    }
+    th, td {
+      border: 1px solid #E5E7EB;
+      padding: 8px 10px;
+      text-align: left;
+    }
+    th {
+      background: #F3F4FF;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      background: #eee;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER UNIFICATO -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
+
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
+
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="offerte.html">Offerte Amazon</a>
+        <a href="categorie.html">Categorie</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="quiz.html">Test SmartShop</a>
+        <a href="chi.html">Chi siamo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="back-links">
+      ← <a href="index.html">Torna alla Home</a> |
+      <a href="blog.html">Vai al Blog</a> |
+      <a href="categorie.html">Categorie</a>
+    </div>
+
+    <h1>Quanti kWh consuma una lavatrice? Tabella dei costi, differenze di temperatura e risparmio in bolletta</h1>
+
+    <!-- SHARE IN ALTO -->
+    <button id="shareBtnTop"
+      style="background: var(--violet-main); color:white; padding:10px 15px; border:none;
+             border-radius:6px; cursor:pointer; margin-bottom:20px; font-weight:600;">
+      📎 Condividi questo articolo
+    </button>
+
+    <script>
+      const shareBtnTop = document.getElementById('shareBtnTop');
+      if (navigator.share) {
+        shareBtnTop.addEventListener('click', () => {
+          navigator.share({
+            title: "Quanti kWh consuma una lavatrice?",
+            text: "Guida semplice con tabella dei costi e consigli per risparmiare in bolletta.",
+            url: window.location.href
+          });
+        });
+      } else {
+        shareBtnTop.style.display = "none";
+      }
+    </script>
+
+    <p>
+      È domenica mattina. La casa è silenziosa, i bambini dormono, qualcuno si gode il caffè…
+      e tu guardi la lavatrice che gira.
+    </p>
+    <p>
+      Gira. Gira. Gira ancora.
+    </p>
+    <p>
+      E nella tua testa arriva la domanda universale:
+      <strong>“Ma quanti kWh consuma davvero ‘sta benedetta lavatrice?”</strong>
+    </p>
+    <p>
+      In quel momento tutti diventiamo esperti energetici: controlliamo l’etichetta,
+      cerchiamo su Internet, chiediamo al vicino che risponde sempre “dipende dal motore”.
+      (<em>Dipende da che, Franco? Da cosa?!</em>)
+    </p>
+
+    <h2>1. Entra in scena la protagonista: la Lavatrice Lucia</h2>
+
+    <p>
+      La chiameremo <strong>Lucia</strong>, perché ormai in casa è un membro della famiglia.
+    </p>
+    <p>
+      Lucia ha vari umori:
+    </p>
+    <ul>
+      <li><strong>Programma Eco</strong> → consuma poco ma dura quanto una trilogia al cinema.</li>
+      <li><strong>Rapido 15’</strong> → dura poco ma a volte succhia più di quello che sembra.</li>
+      <li><strong>Cotone 60°</strong> → modalità “lavaggio serio”, energia a manetta.</li>
+      <li><strong>Centrifuga 1200–1400 giri</strong> → parte come un aereo pronto al decollo.</li>
+    </ul>
+
+    <p>
+      Marco, l’eroe del risparmio, la guarda e pensa:
+      <em>“Se capisco quanto consuma, magari risparmio almeno 2 euro al mese.”</em>
+    </p>
+
+    <h2>2. Prima verità: una lavatrice moderna non consuma così tanto</h2>
+
+    <p>
+      Online trovi mille numeri, ma se guardiamo le <strong>lavatrici moderne</strong> (classe A, B, C con la nuova etichetta),
+      i consumi per ciclo sono più semplici di quanto sembri.
+    </p>
+
+    <div class="box">
+      <strong>Consumo medio di una lavatrice moderna:</strong>
+      <ul>
+        <li><strong>0,45 – 1,1 kWh per ciclo</strong> a seconda del programma e della temperatura.</li>
+      </ul>
+      <p>
+        Con una tariffa di circa <strong>0,30 €/kWh</strong>, un lavaggio ti costa in media tra
+        <strong>0,15 € e 0,33 €</strong>. Meno di un caffè al bar.
+      </p>
+    </div>
+
+    <h2>3. Il vero colpevole: l’acqua calda, non la centrifuga</h2>
+
+    <p>
+      Molti pensano che sia la <strong>centrifuga</strong> a consumare di più.  
+      In realtà, quello che “beve” energia è <strong>scaldare l’acqua</strong>.
+    </p>
+
+    <p>
+      A parità di carico, passando da 30° a 60° non raddoppi solo la temperatura:
+      aumenti sensibilmente il consumo energetico.
+    </p>
+
+    <div class="tip-box">
+      <h3 style="margin-top:0;">In pratica cosa succede?</h3>
+      <ul>
+        <li>Programmi a <strong>20–30°</strong> → consumi bassi.</li>
+        <li>Programmi a <strong>40°</strong> → consumi più alti, ma ancora gestibili.</li>
+        <li>Programmi a <strong>60°</strong> → il consumo può quasi raddoppiare.</li>
+        <li><strong>90°</strong> → modalità “emergenza sanitaria”: da usare davvero solo quando serve.</li>
+      </ul>
+    </div>
+
+    <h2>4. Tabella rapida: consumi in kWh della lavatrice per temperatura</h2>
+
+    <table>
+      <tr>
+        <th>Temperatura/Programma</th>
+        <th style="text-align:right;">Consumo medio (kWh/ciclo)</th>
+        <th style="text-align:right;">Costo stimato per ciclo*</th>
+      </tr>
+      <tr>
+        <td>Rapido / Bassa Temp (20–30°)</td>
+        <td style="text-align:right;">0,3 – 0,5 kWh</td>
+        <td style="text-align:right;">~0,09 – 0,15 €</td>
+      </tr>
+      <tr>
+        <td>Eco / Media Temp (40°)</td>
+        <td style="text-align:right;">0,5 – 0,7 kWh</td>
+        <td style="text-align:right;">~0,15 – 0,21 €</td>
+      </tr>
+      <tr>
+        <td>Cotone 60°</td>
+        <td style="text-align:right;">0,9 – 1,2 kWh</td>
+        <td style="text-align:right;">~0,27 – 0,36 €</td>
+      </tr>
+      <tr>
+        <td>Massima Temp (90° Igienizzante)</td>
+        <td style="text-align:right;">1,5 – 2,1 kWh</td>
+        <td style="text-align:right;">~0,45 – 0,63 €</td>
+      </tr>
+    </table>
+
+    <p class="small">
+      *Valori indicativi, calcolati con una tariffa di <strong>0,30 €/kWh</strong>.  
+      I consumi reali dipendono da modello, carico, temperatura e durata.
+    </p>
+
+    <h2>5. “Però la bolletta è alta”: la lavatrice non è il mostro della casa</h2>
+
+    <p>
+      Se guardi la bolletta e ti sembra di pagare come un centro commerciale,
+      la lavatrice è raramente la principale sospettata.
+    </p>
+
+    <p>
+      A pesare di più sono altri apparecchi:
+    </p>
+    <ul>
+      <li>asciugatrice,</li>
+      <li>forno elettrico,</li>
+      <li>boiler elettrico o scaldabagno,</li>
+      <li>climatizzatori usati per riscaldare,</li>
+      <li>stufette e resistenze varie.</li>
+    </ul>
+
+    <div class="box">
+      <strong>Traduzione:</strong> la lavatrice è una “zanzara energetica” in mezzo a elefanti che bevono molta più corrente.
+    </div>
+
+    <h2>6. Come risparmiare davvero con la lavatrice (senza diventare estremisti)</h2>
+
+    <p>Ecco le mosse semplici che funzionano davvero:</p>
+
+    <ul>
+      <li>
+        <strong>Usa 30–40° quando possibile</strong>  
+        Per la maggior parte dei vestiti di tutti i giorni, è più che sufficiente.
+      </li>
+      <li>
+        <strong>Fai lavaggi a pieno carico</strong>  
+        Due magliette e un paio di calzini → spreco. Meglio aspettare il cestello pieno (senza esagerare).
+      </li>
+      <li>
+        <strong>Sfrutta i programmi Eco</strong>  
+        Durano di più, ma spesso consumano meno perché lavorano a temperature più basse.
+      </li>
+      <li>
+        <strong>Riserva i 60° e i 90° a casi speciali</strong>  
+        Lenzuola dopo influenza, asciugamani molto sporchi, panni da igienizzare.
+      </li>
+      <li>
+        <strong>Controlla l’etichetta energetica</strong>  
+        Se la lavatrice è molto vecchia, potrebbe consumare più del dovuto rispetto ai modelli moderni.
+      </li>
+    </ul>
+
+    <div class="tip-box">
+      <h3 style="margin-top:0;">Consiglio da amico</h3>
+      <p>
+        Se vuoi davvero tagliare la bolletta, non ha senso fissarsi solo sulla lavatrice:
+        lavora su temperatura dei lavaggi, asciugatrice, riscaldamento e abitudini quotidiane.
+        Lì c’è il vero margine di risparmio.
+      </p>
+    </div>
+
+    <h2>7. La lavatrice è innocente (quasi sempre)</h2>
+
+    <p>
+      La domanda <strong>“Quanti kWh consuma una lavatrice?”</strong> ha una risposta semplice:
+    </p>
+    <ul>
+      <li>in media <strong>tra 0,4 e 1,1 kWh per ciclo</strong>,</li>
+      <li>cioè <strong>tra 15 e 30 centesimi</strong> a lavaggio, con una tariffa standard.</li>
+    </ul>
+
+    <p>
+      Il grosso della bolletta se ne va altrove.  
+      Lucia, la lavatrice, tutto sommato fa il suo lavoro con dignità.
+    </p>
+
+    <div class="box">
+      <strong>Il vero problema?</strong>  
+      Non è la lavatrice: è chi fa la doccia da 40 minuti, lascia luci accese in tutta la casa
+      e poi dà la colpa agli elettrodomestici.
+    </div>
+
+    <p class="small">
+      <strong>Tag:</strong> consumi lavatrice, kWh lavatrice a ciclo, quanto consuma lavatrice, costo lavaggio, riscaldamento acqua lavatrice, risparmio bolletta, lavaggi 30 gradi, lavaggi 60 gradi
+    </p>
+
+    <!-- SHARE FINALE CENTRALE -->
+    <div style="text-align:center; margin:30px 0 10px;">
+      <button id="shareBtnBottom"
+        style="background: var(--violet-main); color:white; padding:10px 18px; border:none;
+               border-radius:6px; cursor:pointer; font-weight:600; font-size:1rem;">
+        📎 Condividi questo articolo
+      </button>
+    </div>
+
+    <script>
+      const shareBtnBottom = document.getElementById('shareBtnBottom');
+      if (navigator.share) {
+        shareBtnBottom.addEventListener('click', () => {
+          navigator.share({
+            title: "Quanti kWh consuma una lavatrice?",
+            text: "Tabella consumi per temperatura e consigli pratici per risparmiare in bolletta.",
+            url: window.location.href
+          });
+        });
+      } else {
+        shareBtnBottom.style.display = "none";
+      }
+    </script>
+
+  </main>
+
+  <script>
+    function toggleMenu() {
+      document.body.classList.toggle('nav-open');
+    }
+  </script>
+
+  <footer>
+    © 2025 Syncras.App — Tutti i diritti riservati<br>
+    <div style="margin-top:8px;">
+      <a href="privacy.html">Privacy Policy</a> |
+      <a href="cookie.html">Cookie Policy</a> |
+      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
+      <a href="note-legali.html">Note Legali</a>
+    </div>
+    <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+      senza alcun costo aggiuntivo per l’utente.  
+      Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+      è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+    </p>
+  </footer>
+
+</body>
+</html>
