@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quanti kWh consuma una lavatrice? Tabella costi e risparmio | Syncras.App</title>
+  <meta name="description" content="Quanti kWh consuma davvero una lavatrice a ciclo? Tabella dei costi, differenze tra 30°, 40°, 60° e 90° e consigli pratici per risparmiare in bolletta senza impazzire.">
+  <meta name="robots" content="index,follow">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-59D9XRYKF3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-59D9XRYKF3');
+  </script>
+
+  <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --bg-page: #F7F7FB;
+      --text-main: #403E43;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg-page);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      color: var(--text-main);
+    }
+
+    /* HEADER VIOLA UNIFICATO */
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color: white;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+    #main-nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding-bottom: 2px;
+    }
+    #main-nav a:hover {
+      text-decoration: underline;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .menu-toggle span {
+      margin-left: 4px;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        margin: 0 auto;
+        max-width: 1180px;
+        flex-direction: column;
+        background-color: var(--violet-dark);
+        padding: 10px 16px 12px 16px;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
+      }
+      #main-nav a {
+        padding: 6px 0;
+      }
+      body.nav-open #main-nav {
+        display: flex;
+      }
+      .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+
+    main {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    h1, h2, h3 {
+      color: var(--violet-dark);
+    }
+    p {
+      margin-bottom: 15px;
+    }
+    ul {
+      margin-left: 20px;
+    }
+
+    .box {
+      background: #f6faf7;
+      border: 1px solid #d7e8dc;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .tip-box {
+      background: #F6F4FF;
+      border-left: 4px solid #6C5CE7;
+      padding: 14px;
+      margin: 25px 0;
+      border-radius: 8px;
+    }
+
+    .mini-test {
+      background: #FDFBF6;
+      border-left: 4px solid #EAB308;
+      padding: 14px;
+      margin: 25px 0;
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+
+    .back-links {
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+    .back-links a {
+      color: var(--violet-dark);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .back-links a:hover {
+      text-decoration: underline;
+    }
+
+    .small {
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 0.95rem;
+    }
+    th, td {
+      border: 1px solid #E5E7EB;
+      padding: 8px 10px;
+      text-align: left;
+    }
+    th {
+      background: #F3F4FF;
+    }
+
+    /* Box prodotto Amazon */
+    .product-box {
+      background: #f6f0ff;
+      border: 1px solid #dccff8;
+      border-radius: 10px;
+      padding: 18px 16px;
+      margin: 25px 0;
+      font-size: 0.95rem;
+    }
+    .product-box a {
+      display: inline-block;
+      margin-top: 8px;
+      color: #ffffff;
+      background: var(--violet-main);
+      padding: 8px 14px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .product-box a:hover {
+      background: var(--violet-dark);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      background: #eee;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER UNIFICATO -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
+
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
+
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="offerte.html">Offerte Amazon</a>
+        <a href="categorie.html">Categorie</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="quiz.html">Test SmartShop</a>
+        <a href="chi.html">Chi siamo</a>
+      </nav>
+    </div>
+  </header>
+
+
+
+
+
+
+  <main>
+    <div class="back-links">
+      ← <a href="index.html">Torna alla Home</a> |
+      <a href="blog.html">Vai al Blog</a> |
+      <a href="categorie.html">Categorie</a>
+    </div>
+
+    <h1>Riscaldamento: stufa elettrica, gas o climatizzatore? Differenze, consumi e costi reali</h1>
+
+    <button id="shareBtnTop"
+      style="background: var(--violet-main); color:white; padding:10px 15px; border:none;
+             border-radius:6px; cursor:pointer; margin-bottom:20px; font-weight:600;">
+      📎 Condividi questo articolo
+    </button>
+
+    <p>
+      È sera, fuori ci sono 3 gradi, dentro casa “dovrebbero” essercene 20…  
+      ma in salotto c’è quella temperatura strana: né freddo da cappotto, né caldo da maglietta.  
+      Il famoso clima <strong>“ho freddo ma non so dove mettere le mani”</strong>.
+    </p>
+
+    <p>
+      Marco è sul divano con la coperta sulle gambe, controlla la bolletta luce/gas sul telefono
+      e si fa la domanda che unisce l’Italia più del cenone:
+      <strong>“Meglio accendere la stufa elettrica, la stufa a gas o il climatizzatore in pompa di calore?”</strong>
+    </p>
+
+    <div class="tip-box" style="background:#FFFBEA; border-left-color:#FBBF24;">
+      <strong>Spoiler veloce (senza formule):</strong>
+      <ul>
+        <li><strong>Stufa elettrica</strong>: scalda subito ma consuma tanta corrente.</li>
+        <li><strong>Stufa a gas</strong>: scalda forte, conviene solo in certi casi e va usata con attenzione.</li>
+        <li><strong>Climatizzatore in pompa di calore</strong>: di solito è il più efficiente sulla carta.</li>
+      </ul>
+      <p style="margin-top:8px; font-size:0.9rem;">
+        Qui non facciamo progettazione impianti: sono <strong>conti semplici e indicativi</strong> per farti ragionare,
+        non sostituiscono il parere di un tecnico abilitato.
+      </p>
+    </div>
+
+    <h2>1. La scena in casa: tre soluzioni, una bolletta</h2>
+
+    <p>
+      Sul tavolo del salotto di Marco ci sono:
+    </p>
+    <ul>
+      <li>la <strong>stufetta elettrica da 2000 Watt</strong> che fa un caldo infernale in 5 minuti,</li>
+      <li>una <strong>stufa a gas con bombola</strong>, “che mio cognato dice che non consuma niente”,</li>
+      <li>il <strong>climatizzatore</strong> montato l’estate scorsa, che però può fare anche aria calda.</li>
+    </ul>
+
+    <p>
+      Marco guarda la bolletta, guarda le tre opzioni e pensa:
+      <em>“Se accendo quella sbagliata, a fine mese mi arriva la raccomandata dal fornitore…”</em>
+    </p>
+
+    <h2>2. Quanto consumano davvero? (con numeri semplici)</h2>
+
+    <p>
+      Facciamo i conti con una tariffa elettrica media di <strong>0,30 €/kWh</strong> e un costo gas indicativo,
+      giusto per capire le differenze. Sono valori medi, il tuo contratto può avere cifre diverse.
+    </p>
+
+    <table style="width:100%; border-collapse:collapse; margin:20px 0;">
+      <thead>
+        <tr style="background-color: var(--violet-dark); color:white;">
+          <th style="padding:10px; border:1px solid white;">Sistema</th>
+          <th style="padding:10px; border:1px solid white;">Potenza / Uso tipico</th>
+          <th style="padding:10px; border:1px solid white; text-align:right;">Consumo / Ora</th>
+          <th style="padding:10px; border:1px solid white; text-align:right;">Costo stimato / Ora*</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background-color:#f5f5ff;">
+          <td style="padding:10px; border:1px solid #ddd;">Stufa elettrica classica</td>
+          <td style="padding:10px; border:1px solid #ddd;">2000 W (2 kW) sempre alla massima potenza</td>
+          <td style="padding:10px; border:1px solid #ddd; text-align:right;">2 kWh</td>
+          <td style="padding:10px; border:1px solid #ddd; text-align:right;">~0,60 € / ora</td>
+        </tr>
+        <tr>
+          <td style="padding:10px; border:1px solid #ddd;">Climatizzatore in pompa di calore</td>
+          <td style="padding:10px; border:1px solid #ddd;">
+            ~<strong>700 W medi</strong> per tenere la stanza calda  
+            (in <strong>avvio può salire a 1000–1200 W</strong> per pochi minuti)
+          </td>
+          <td style="padding:10px; border:1px solid #ddd; text-align:right;">0,7 kWh (medio)</td>
+          <td style="padding:10px; border:1px solid #ddd; text-align:right;">~0,21 € / ora</td>
+        </tr>
+        <tr style="background-color:#f5f5ff;">
+          <td style="padding:10px; border:1px solid #ddd;">Stufa a gas con bombola</td>
+          <td style="padding:10px; border:1px solid #ddd;">
+            2000–3000 W equivalenti (dipende dal modello e dalla regolazione)
+          </td>
+          <td style="padding:10px; border:1px solid #ddd; text-align:right;">~0,20–0,30 kg gas</td>
+          <td style="padding:10px; border:1px solid #ddd; text-align:right;">~0,35–0,60 € / ora**</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="small">
+      * Calcolato con 0,30 €/kWh solo per avere un ordine di grandezza.  
+      ** Dipende dal prezzo della bombola, dal tipo di stufa e dall’efficienza reale.
+    </p>
+
+    <div class="tip-box">
+      <strong>Traduzione in italiano semplice:</strong><br>
+      se confrontiamo solo i numeri, a parità di calore erogato:
+      <ul>
+        <li>la <strong>stufa elettrica</strong> è in genere la più costosa da tenere accesa a lungo,</li>
+        <li>il <strong>climatizzatore</strong> (pompa di calore) è spesso il più conveniente in bolletta,</li>
+        <li>la <strong>stufa a gas</strong> dipende tantissimo da quanto paghi il gas e da come è usata.</li>
+      </ul>
+    </div>
+
+    <h2>3. Quando ha senso usare la stufa elettrica</h2>
+
+    <p>
+      La stufetta elettrica è come il caffè ristretto: <strong>ti tira su in fretta</strong>, ma non è una soluzione
+      da usare ogni ora del giorno.
+    </p>
+
+    <ul>
+      <li>Perfetta per <strong>20–30 minuti</strong> quando sei fermo alla scrivania.</li>
+      <li>Utile se devi scaldare <strong>un punto preciso</strong> (piedi, gambe, postazione lavoro).</li>
+      <li>Comoda in bagni piccoli, giusto il tempo della doccia.</li>
+    </ul>
+
+    <p>
+      Dove non è il massimo:
+    </p>
+    <ul>
+      <li>salotti grandi da tenere caldi per <strong>ore</strong>;</li>
+      <li>stanze con <strong>isolamento scarso</strong> (il calore scappa subito);</li>
+      <li>case dove la luce costa già parecchio.</li>
+    </ul>
+
+    <h2>4. Quando può avere senso la stufa a gas</h2>
+
+    <p>
+      La stufa a gas con bombola è la classica soluzione da:
+      <em>“la usano tutti al mare/in montagna, vuoi che non vada bene?”</em>.
+    </p>
+
+    <p>
+      Pro:
+    </p>
+    <ul>
+      <li>Scalda tanto e abbastanza in fretta.</li>
+      <li>Non pesa sulla bolletta elettrica.</li>
+      <li>Può avere senso dove la corrente è limitata o costosa.</li>
+    </ul>
+
+    <p>
+      Contro (da non sottovalutare):
+    </p>
+    <ul>
+      <li>Va usata <strong>solo in ambienti ben aerati</strong>, seguendo tutte le norme di sicurezza.</li>
+      <li>Richiede attenzione per <strong>ventilazione e ricambio d’aria</strong>.</li>
+      <li>Il costo reale dipende dal <strong>prezzo della bombola</strong> e da quanto la tieni accesa.</li>
+    </ul>
+
+    <div class="tip-box">
+      <strong>Nota importante:</strong> in caso di stufe a gas è sempre bene seguire scrupolosamente
+      le istruzioni del produttore e, in caso di dubbi, chiedere a un tecnico abilitato.  
+      Questo articolo non sostituisce in nessun modo le norme di sicurezza.
+    </div>
+
+    <h2>5. Climatizzatore in pompa di calore: il “secchione” dei consumi</h2>
+
+    <p>
+      Il climatizzatore moderno con pompa di calore è il campione di efficienza:
+      a grandi linee, con <strong>700 Watt di assorbimento medio</strong>
+      può mandare in stanza calore equivalente a 1800–2200 Watt.
+    </p>
+
+    <p>
+      Tuttavia:
+    </p>
+    <ul>
+      <li>
+        <strong>Nella fase iniziale</strong> spesso assorbe di più (anche <strong>1000–1200 Watt</strong>)
+        per portare la stanza a temperatura; poi <strong>scende</strong> e si stabilizza.
+      </li>
+      <li>
+        Funziona meglio in case almeno un po’ isolate: se apri e chiudi la porta ogni 2 minuti,
+        lavora di più e consuma di più.
+      </li>
+      <li>
+        È ideale per tenerlo acceso <strong>a lungo</strong> (es. sera intera) con temperatura fissa.
+      </li>
+    </ul>
+
+    <div class="box">
+      <strong>Riassunto veloce:</strong> se devi scaldare spesso la stessa stanza (salotto, camera, open space),
+      un climatizzatore in pompa di calore <strong>ben dimensionato</strong> di solito batte la stufa elettrica
+      sui consumi. Soprattutto se in casa hai già un buon contratto luce e magari anche il fotovoltaico.
+    </div>
+
+    <h2>6. Confronto pratico: quale usare in quale situazione?</h2>
+
+    <table style="width:100%; border-collapse:collapse; margin:20px 0;">
+      <thead>
+        <tr style="background-color:#F3F4FF;">
+          <th style="padding:8px; border:1px solid #ddd;">Situazione</th>
+          <th style="padding:8px; border:1px solid #ddd;">Soluzione più sensata (in generale)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="padding:8px; border:1px solid #ddd;">Mezz’ora alla scrivania, piede ghiacciato</td>
+          <td style="padding:8px; border:1px solid #ddd;"><strong>Stufa elettrica</strong> piccola, mirata</td>
+        </tr>
+        <tr>
+          <td style="padding:8px; border:1px solid #ddd;">Serata intera in salotto</td>
+          <td style="padding:8px; border:1px solid #ddd;"><strong>Climatizzatore in pompa di calore</strong></td>
+        </tr>
+        <tr>
+          <td style="padding:8px; border:1px solid #ddd;">Casa al mare con impianto elettrico debole</td>
+          <td style="padding:8px; border:1px solid #ddd;"><strong>Stufa a gas</strong> (solo se usata in sicurezza)</td>
+        </tr>
+        <tr>
+          <td style="padding:8px; border:1px solid #ddd;">Bagno piccolo per 10 minuti</td>
+          <td style="padding:8px; border:1px solid #ddd;">Piccola <strong>stufetta elettrica</strong> o termoventilatore</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>7. Questo sito non è un manuale tecnico (ma ti fa ragionare)</h2>
+
+    <p>
+      Tutti i numeri che vedi qui sopra sono <strong>stimate indicative</strong>, arrotondate per
+      rendere i ragionamenti semplici. Ogni casa è diversa, ogni contratto è diverso, ogni impianto è una storia a sé.
+    </p>
+
+    <p>
+      Syncras non sostituisce <strong>termotecnici, elettricisti o progettisti</strong>:
+      ti aiuta solo a farti un’idea prima di comprare o prima di lasciare una stufa accesa tutta la sera
+      senza pensarci.
+    </p>
+
+    <div class="product-box">
+      <strong>Vuoi tenere sotto controllo i consumi in tempo reale?</strong>
+      <p>
+        Un <strong>misuratore di consumi</strong> da presa (wattmetro) ti mostra quanti Watt sta
+        realmente assorbendo una stufa, un clima, o qualsiasi altro apparecchio.
+      </p>
+      <a href="TUO_LINK_AMAZON_WATTMETRO" target="_blank" rel="nofollow noopener sponsored">
+        🔌 Vedi un misuratore di consumi consigliato su Amazon
+      </a>
+    </div>
+
+    <p class="small">
+      <strong>Tag:</strong> stufa elettrica, stufa a gas, climatizzatore pompa di calore, riscaldamento casa,
+      consumi riscaldamento, costi stufa elettrica, costi climatizzatore, confronto stufa elettrica gas clima
+    </p>
+
+    <div style="text-align:center; margin:30px 0 10px;">
+      <button id="shareBtnBottom"
+        style="background: var(--violet-main); color:white; padding:10px 18px; border:none;
+               border-radius:6px; cursor:pointer; font-weight:600; font-size:1rem;">
+        📎 Condividi questo articolo
+      </button>
+    </div>
+  </main>
+
+  <script>
+    // Condivisione articolo (top e bottom)
+    (function() {
+      const shareTop = document.getElementById('shareBtnTop');
+      const shareBottom = document.getElementById('shareBtnBottom');
+
+      function attachShare(btn) {
+        if (!btn) return;
+        if (navigator.share) {
+          btn.addEventListener('click', () => {
+            navigator.share({
+              title: 'Riscaldamento: stufa elettrica, gas o climatizzatore?',
+              text: 'Differenze, consumi e costi spiegati semplice (e con un pizzico di ironia).',
+              url: window.location.href
+            });
+          });
+        } else {
+          btn.style.display = 'none';
+        }
+      }
+
+      attachShare(shareTop);
+      attachShare(shareBottom);
+    })();
+  </script>
+
+  <footer class="syncras-footer">
+    <div class="footer-inner">
+      <div class="footer-column">
+        <h4>Syncras.App</h4>
+        <p>
+          Metodo SmartShop per fare acquisti con la testa (e con un po’ di ironia).<br>
+          Niente tecnicismi inutili, solo esperienze reali e numeri spiegati semplice.
+        </p>
+      </div>
+
+      <div class="footer-column">
+        <h4>Link utili</h4>
+        <ul>
+          <li><a href="blog.html">Tutte le guide SmartShop</a></li>
+          <li><a href="offerte.html">Offerte Amazon selezionate</a></li>
+          <li><a href="smartphone-sotto-200-euro-2025.html">Smartphone 2025 sotto 200€</a></li>
+          <li><a href="resistenza-termosifone-fotovoltaico.html">La stanza più fredda della casa</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h4>Legale & Privacy</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="cookie.html">Cookie Policy</a></li>
+          <li><a href="disclaimer-amazon.html">Disclaimer Amazon</a></li>
+          <li><a href="note-legali.html">Note Legali</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© <span id="year-span"></span> Syncras.App — Tutti i diritti riservati.</p>
+      <p>
+        Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+        Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+        senza alcun costo aggiuntivo per l’utente.
+      </p>
+      <p>
+        Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+        è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+      </p>
+    
+  </footer>
+</body>
+</html>
+
+  
