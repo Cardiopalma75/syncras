@@ -397,19 +397,59 @@
       </div>
     </section>
 
-    <!-- BLOCCO STUFETTA - V1 SENZA CALCOLATORE (ANCORA IN ARRIVO) -->
-    <section class="calc-box" id="calcolatore-stufetta">
-      <h2>🔥 Calcolatore consumo stufetta elettrica (in arrivo)</h2>
-      <p>
-        Stiamo preparando un calcolatore dedicato alla <strong>stufetta elettrica</strong>:
-        potrai inserire potenza (Watt), minuti di utilizzo e prezzo dell’energia per stimare il costo
-        di 10 minuti, un’ora o una serata intera di riscaldamento “di emergenza”.
-      </p>
+    <!-- CALCOLATORE STUFETTA -->
+<section class="calc-box" id="calcolatore-stufetta">
+  <h2>🔥 Calcolatore consumo stufetta elettrica</h2>
+  <p>
+    La <strong>stufetta elettrica</strong> è fantastica per scaldarsi in fretta…  
+    meno per la bolletta, se la tieni accesa troppo a lungo.  
+    Inserisci i dati qui sotto per capire quanto ti costa davvero.
+  </p>
+
+  <div class="calc-grid">
+    <div>
+      <label for="stufaWatt"><strong>Potenza stufetta (Watt)</strong></label>
+      <input id="stufaWatt" type="number" min="200" max="3000" value="2000">
+      <p class="small">Le stufette classiche stanno spesso tra 1500 e 2200 Watt.</p>
+    </div>
+
+    <div>
+      <label for="stufaMinutes"><strong>Minuti di utilizzo al giorno</strong></label>
+      <input id="stufaMinutes" type="number" min="5" max="600" value="60">
+      <p class="small">Es. 15, 30, 60 minuti, oppure 120 min per 2 ore.</p>
+    </div>
+
+    <div>
+      <label for="stufaPrice"><strong>Prezzo energia (€/kWh)</strong></label>
+      <input id="stufaPrice" type="number" step="0.01" min="0.10" max="1" value="0.30">
+      <p class="small">Usa il prezzo indicato in bolletta per un calcolo più realistico.</p>
+    </div>
+
+    <div>
+      <label for="stufaType"><strong>Tipo di stufetta</strong></label>
+      <select id="stufaType">
+        <option value="1">Ventilata classica</option>
+        <option value="0.9">Ceramica / PTC</option>
+        <option value="0.85">A olio / radiatore</option>
+      </select>
       <p class="small">
-        Nel frattempo puoi già farti un’idea leggendo l’articolo dedicato:
-        <a href="quanto-costa-stufetta-elettrica-1-ora.html">Quanto costa tenere accesa una stufetta elettrica per 1 ora?</a>
+        Le stufette a olio e ceramiche sono spesso un po’ più efficienti sull’uso prolungato.
       </p>
-    </section>
+    </div>
+  </div>
+
+  <button class="calc-button" onclick="calcolaStufetta()">
+    🔍 Calcola consumi stufetta
+  </button>
+
+  <div id="stufaResult" class="calc-result" style="display:none;"></div>
+
+  <div class="link-box">
+    Vuoi vedere un esempio con storia comica e conti già fatti?
+    <a href="quanto-costa-stufetta-elettrica-1-ora.html">Leggi l’articolo sulla stufetta elettrica</a>.
+  </div>
+</section>
+
 
     <!-- SEZIONE PROSSIMAMENTE -->
     <section class="coming-soon">
