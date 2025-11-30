@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calcolatore Consumi Elettrodomestici Online (Gratis) – TV, Stufetta, Lavatrice | Syncras.App</title>
-  <meta name="description" content="Calcolatore consumi elettrodomestici online: TV, stufetta elettrica, lavatrice e altri apparecchi. Inserisci Watt, ore di utilizzo e prezzo €/kWh per stimare i costi in bolletta in modo semplice.">
+  <title>Calcolatore Consumi Elettrodomestici Online (Gratis) | Syncras.App</title>
+  <meta name="description" content="Calcolatore consumi elettrici di TV, stufetta elettrica, lavatrice, lavastoviglie e condizionatore. Inserisci i dati e scopri quanto spendi davvero in bolletta.">
   <meta name="robots" content="index,follow">
 
   <!-- Google Analytics -->
@@ -113,7 +113,7 @@
     }
 
     main {
-      max-width: 960px;
+      max-width: 1000px;
       margin: 30px auto;
       padding: 20px;
       background: white;
@@ -149,9 +149,10 @@
       color: #555;
     }
 
+    /* BOX CALCOLATORE */
     .calc-box {
-      margin: 25px 0;
-      padding: 20px;
+      margin: 30px 0;
+      padding: 20px 18px;
       border-radius: 12px;
       background: #F6F4FF;
       border: 1px solid #E0E7FF;
@@ -168,19 +169,19 @@
       flex: 1 1 220px;
     }
 
-    .calc-grid label {
-      font-size: 0.9rem;
-      font-weight: 600;
+    label {
+      font-size: 0.95rem;
     }
 
-    .calc-grid input,
-    .calc-grid select {
+    input[type="number"],
+    select {
       width: 100%;
       padding: 8px;
       margin-top: 4px;
-      border: 1px solid #D1D5DB;
       border-radius: 6px;
+      border: 1px solid #D1D5DB;
       font-size: 0.95rem;
+      box-sizing: border-box;
     }
 
     .calc-button {
@@ -203,16 +204,13 @@
       padding: 15px;
       background: white;
       border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.08);
       font-size: 0.95rem;
     }
 
     .link-box {
-      margin-top: 10px;
+      margin-top: 12px;
       font-size: 0.9rem;
-      background: #EEF2FF;
-      padding: 10px 12px;
-      border-radius: 8px;
     }
     .link-box a {
       color: var(--violet-dark);
@@ -223,64 +221,36 @@
       text-decoration: underline;
     }
 
-    .coming-soon {
-      margin: 30px 0;
-      padding: 20px;
-      border-radius: 12px;
-      background: #F9FAFB;
-      border: 1px solid #E5E7EB;
-    }
-
-    .coming-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      margin-top: 10px;
-    }
-
-    .coming-card {
-      flex: 1 1 220px;
-      background: white;
-      border-radius: 10px;
-      padding: 14px;
-      box-shadow: 0 2px 4px rgba(15,23,42,0.06);
-      font-size: 0.9rem;
-    }
-
-    .coming-card h3 {
-      margin-top: 0;
-      font-size: 1rem;
-    }
-
-    .related-articles {
+    /* CARDS ARTICOLI CORRELATI */
+    .related-section {
       margin: 30px 0;
       padding: 20px;
       border-radius: 12px;
       background: #F3F4FF;
     }
-
-    .related-list {
+    .related-grid {
       display: flex;
       flex-wrap: wrap;
       gap: 16px;
       margin-top: 10px;
     }
-
     .related-card {
       flex: 1 1 260px;
+      text-decoration: none;
       background: white;
       border-radius: 10px;
       padding: 14px;
-      box-shadow: 0 2px 4px rgba(15,23,42,0.06);
-      text-decoration: none;
-      color: #111827;
-      font-size: 0.9rem;
+      box-shadow: 0 2px 4px rgba(15,23,42,0.08);
+      color: #1F2933;
     }
-
     .related-card h3 {
       margin-top: 0;
       font-size: 1rem;
       color: var(--violet-dark);
+    }
+    .related-card p {
+      font-size: 0.9rem;
+      margin: 4px 0 0;
     }
 
     footer {
@@ -289,16 +259,6 @@
       padding: 20px;
       background: #eee;
       font-size: 0.9rem;
-    }
-
-    .like-box {
-      margin: 25px 0;
-      padding: 16px;
-      border-radius: 10px;
-      background: #FDF2FF;
-      border: 1px solid #FBCFE8;
-      font-size: 0.95rem;
-      text-align: center;
     }
   </style>
 </head>
@@ -334,56 +294,50 @@
       <a href="categorie.html">Categorie</a>
     </div>
 
-    <h1>⚡ Calcolatore Consumi Elettrici: scopri quanto spendono i tuoi elettrodomestici in bolletta</h1>
+    <h1>⚡ Calcolatore Consumi Elettrici: scopri quanto spendono i tuoi elettrodomestici</h1>
 
     <p>
-      Qui puoi <strong>stimare il consumo in kWh e il costo in euro</strong> di alcuni elettrodomestici tipici di casa:
-      TV, stufetta elettrica, lavatrice e molti altri.  
-      Inserisci il <strong>prezzo dell’energia</strong> del tuo contratto (€/kWh) e le ore di utilizzo:
-      i conti vengono fatti in automatico.
+      Qui puoi <strong>simulare i consumi in kWh e i costi in euro</strong> di alcuni tra gli elettrodomestici
+      più usati in casa: TV, stufetta elettrica, lavatrice, lavastoviglie e condizionatore.
     </p>
 
     <p class="small">
-      I risultati sono <strong>indicativi</strong> e servono per ragionare sui consumi.
-      Ogni casa, contratto e dispositivo reale può avere valori diversi.
+      I calcoli sono indicativi, pensati per farti ragionare in modo semplice.  
+      Per impianti complessi o situazioni particolari, meglio sentire un tecnico abilitato.
     </p>
 
     <!-- CALCOLATORE TV -->
     <section class="calc-box" id="calcolatore-tv">
-      <h2>📺 Calcolatore consumo TV (LED, OLED, plasma, tubo catodico)</h2>
+      <h2>📺 Calcolatore consumo TV</h2>
       <p>
-        Inserisci una potenza di riferimento (in Watt), le ore al giorno in cui la TV resta accesa
-        e il prezzo dell’energia. Puoi scegliere anche il <strong>tipo/età della TV</strong> per
-        stimare meglio il consumo reale.
+        Inserisci i dati della tua TV per stimare quanto ti costa tenerla accesa ogni giorno.
       </p>
 
       <div class="calc-grid">
         <div>
           <label for="tvWatt"><strong>Potenza TV (Watt)</strong></label>
           <input id="tvWatt" type="number" min="10" max="500" value="100">
-          <p class="small">Se non sai il valore esatto, 80–120 W sono tipici per una TV 50–55".</p>
+          <p class="small">Puoi leggere il valore sull’etichetta o sul manuale.</p>
         </div>
 
         <div>
-          <label for="tvHours"><strong>Ore al giorno</strong></label>
+          <label for="tvHours"><strong>Ore di utilizzo al giorno</strong></label>
           <input id="tvHours" type="number" min="1" max="24" value="3">
         </div>
 
         <div>
           <label for="tvPrice"><strong>Prezzo energia (€/kWh)</strong></label>
           <input id="tvPrice" type="number" step="0.01" min="0.10" max="1" value="0.30">
-          <p class="small">Controlla in bolletta la voce “prezzo energia” per un dato più preciso.</p>
         </div>
 
         <div>
-          <label for="tvType"><strong>Tipo di TV / Età</strong></label>
+          <label for="tvType"><strong>Tipo / Età TV</strong></label>
           <select id="tvType">
             <option value="1">LED/LCD moderno (2015–oggi)</option>
             <option value="1.1">OLED moderno (2017–oggi)</option>
             <option value="2.5">Plasma (2005–2013)</option>
             <option value="3">CRT / Tubo catodico (fino al 2005)</option>
           </select>
-          <p class="small">Le TV più vecchie e al plasma consumano molto di più a parità di pollici.</p>
         </div>
       </div>
 
@@ -392,162 +346,218 @@
       <div id="tvResult" class="calc-result" style="display:none;"></div>
 
       <div class="link-box">
-        Vuoi vedere un esempio completo con storia comica e tabella dei consumi?
-        <a href="la-tv-consuma-piu-di-quanto-pensi.html">Leggi l’articolo sulla TV e la bolletta</a>.
+        Vuoi vedere un esempio con storia comica e numeri già pronti?
+        <a href="la-tv-consuma-piu-di-quanto-pensi.html">Leggi l’articolo dedicato alla TV</a>.
       </div>
     </section>
 
     <!-- CALCOLATORE STUFETTA -->
-<section class="calc-box" id="calcolatore-stufetta">
-  <h2>🔥 Calcolatore consumo stufetta elettrica</h2>
-  <p>
-    La <strong>stufetta elettrica</strong> è fantastica per scaldarsi in fretta…  
-    meno per la bolletta, se la tieni accesa troppo a lungo.  
-    Inserisci i dati qui sotto per capire quanto ti costa davvero.
-  </p>
-
-  <div class="calc-grid">
-    <div>
-      <label for="stufaWatt"><strong>Potenza stufetta (Watt)</strong></label>
-      <input id="stufaWatt" type="number" min="200" max="3000" value="2000">
-      <p class="small">Le stufette classiche stanno spesso tra 1500 e 2200 Watt.</p>
-    </div>
-
-    <div>
-      <label for="stufaMinutes"><strong>Minuti di utilizzo al giorno</strong></label>
-      <input id="stufaMinutes" type="number" min="5" max="600" value="60">
-      <p class="small">Es. 15, 30, 60 minuti, oppure 120 min per 2 ore.</p>
-    </div>
-
-    <div>
-      <label for="stufaPrice"><strong>Prezzo energia (€/kWh)</strong></label>
-      <input id="stufaPrice" type="number" step="0.01" min="0.10" max="1" value="0.30">
-      <p class="small">Usa il prezzo indicato in bolletta per un calcolo più realistico.</p>
-    </div>
-
-    <div>
-      <label for="stufaType"><strong>Tipo di stufetta</strong></label>
-      <select id="stufaType">
-        <option value="1">Ventilata classica</option>
-        <option value="0.9">Ceramica / PTC</option>
-        <option value="0.85">A olio / radiatore</option>
-      </select>
-      <p class="small">
-        Le stufette a olio e ceramiche sono spesso un po’ più efficienti sull’uso prolungato.
-      </p>
-    </div>
-  </div>
-
-  <button class="calc-button" onclick="calcolaStufetta()">
-    🔍 Calcola consumi stufetta
-  </button>
-
-  <div id="stufaResult" class="calc-result" style="display:none;"></div>
-
-  <div class="link-box">
-    Vuoi vedere un esempio con storia comica e conti già fatti?
-    <a href="quanto-costa-stufetta-elettrica-1-ora.html">Leggi l’articolo sulla stufetta elettrica</a>.
-  </div>
-</section>
-
-
-    <!-- SEZIONE PROSSIMAMENTE -->
-    <section class="coming-soon">
-      <h2>🔧 Prossimamente: altri calcolatori Syncras</h2>
+    <section class="calc-box" id="calcolatore-stufetta">
+      <h2>🔥 Calcolatore consumo stufetta elettrica</h2>
       <p>
-        Questa pagina crescerà nel tempo: aggiungeremo altri calcolatori per aiutarti a capire facilmente
-        quanto incidono davvero gli elettrodomestici sulla <strong>bolletta luce</strong>.
+        La stufetta è perfetta per scaldarsi in fretta… un po’ meno per la bolletta se resta accesa troppo.
+        Qui puoi stimare il costo di 10 minuti, un’ora, un mese o un inverno di utilizzo.
       </p>
 
-      <div class="coming-grid">
-        <div class="coming-card">
-          <h3>🧺 Calcolatore consumo lavatrice</h3>
-          <p>
-            Stima del costo per ciclo e all’anno in base a kWh/ciclo, numero di lavaggi settimanali
-            e temperatura (30°, 40°, 60°, 90°).
-          </p>
-          <p class="small">
-            Intanto puoi leggere:
-            <br>
-            <a href="quanti-kwh-consuma-davvero-una-lavatrice.html">Quanti kWh consuma una lavatrice?</a>
-          </p>
+      <div class="calc-grid">
+        <div>
+          <label for="stufaWatt"><strong>Potenza stufetta (Watt)</strong></label>
+          <input id="stufaWatt" type="number" min="200" max="3000" value="2000">
+          <p class="small">Molte stufette stanno tra 1500 e 2200 Watt.</p>
         </div>
 
-        <div class="coming-card">
-          <h3>🍽️ Calcolatore consumo lavastoviglie</h3>
-          <p>
-            Confronto tra programmi Eco, Rapido e Intensivo per capire quanto costa davvero ogni lavaggio
-            e quanto incide a fine mese.
-          </p>
+        <div>
+          <label for="stufaMinutes"><strong>Minuti di utilizzo al giorno</strong></label>
+          <input id="stufaMinutes" type="number" min="5" max="600" value="60">
+          <p class="small">Es. 15, 30, 60 minuti, oppure 120 min (2 ore).</p>
         </div>
 
-        <div class="coming-card">
-          <h3>🔥 Calcolatore consumo forno elettrico</h3>
-          <p>
-            Stima del costo per un’ora di forno, per la “classica lasagna della domenica” e per l’utilizzo
-            medio settimanale.
-          </p>
+        <div>
+          <label for="stufaPrice"><strong>Prezzo energia (€/kWh)</strong></label>
+          <input id="stufaPrice" type="number" step="0.01" min="0.10" max="1" value="0.30">
         </div>
 
-        <div class="coming-card">
-          <h3>👖 Calcolatore consumo asciugatrice</h3>
-          <p>
-            Differenza tra asciugatrice a resistenza e a pompa di calore: costo per ciclo, mese e anno,
-            in base ai tuoi utilizzi.
-          </p>
+        <div>
+          <label for="stufaType"><strong>Tipo di stufetta</strong></label>
+          <select id="stufaType">
+            <option value="1">Ventilata classica</option>
+            <option value="0.9">Ceramica / PTC</option>
+            <option value="0.85">A olio / radiatore</option>
+          </select>
         </div>
+      </div>
 
-        <div class="coming-card">
-          <h3>🧊 Calcolatore consumo frigorifero</h3>
-          <p>
-            Inserendo i kWh/anno dell’etichetta energetica e il costo della luce vedrai quanto ti costa
-            davvero tenerlo acceso 24/7.
-          </p>
-        </div>
+      <button class="calc-button" onclick="calcolaStufetta()">🔍 Calcola consumi stufetta</button>
+
+      <div id="stufaResult" class="calc-result" style="display:none;"></div>
+
+      <div class="link-box">
+        Vuoi la storia comica completa?
+        <a href="quanto-costa-stufetta-elettrica-1-ora.html">Quanto costa tenere accesa una stufetta per 1 ora</a>.
       </div>
     </section>
 
+    <!-- CALCOLATORE LAVATRICE -->
+    <section class="calc-box" id="calcolatore-lavatrice">
+      <h2>🧺 Calcolatore consumo lavatrice</h2>
+      <p>
+        Qui puoi stimare quanto ti costa fare la lavatrice in base al numero di cicli a settimana
+        e alla temperatura media che usi.
+      </p>
+
+      <div class="calc-grid">
+        <div>
+          <label for="lavaKwh"><strong>Consumo medio per ciclo (kWh)</strong></label>
+          <input id="lavaKwh" type="number" step="0.1" min="0.2" max="3" value="0.8">
+          <p class="small">Un ciclo eco a 30–40° può stare intorno a 0,6–0,9 kWh.</p>
+        </div>
+
+        <div>
+          <label for="lavaCycles"><strong>Cicli a settimana</strong></label>
+          <input id="lavaCycles" type="number" min="1" max="30" value="5">
+        </div>
+
+        <div>
+          <label for="lavaTemp"><strong>Temperatura prevalente</strong></label>
+          <select id="lavaTemp">
+            <option value="1">30–40° (basso consumo)</option>
+            <option value="1.3">60° (medio-alto)</option>
+            <option value="1.6">90° (molto alto)</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="lavaPrice"><strong>Prezzo energia (€/kWh)</strong></label>
+          <input id="lavaPrice" type="number" step="0.01" min="0.10" max="1" value="0.30">
+        </div>
+      </div>
+
+      <button class="calc-button" onclick="calcolaLavatrice()">🔍 Calcola consumi lavatrice</button>
+
+      <div id="lavaResult" class="calc-result" style="display:none;"></div>
+
+      <div class="link-box">
+        Vuoi una tabella completa e una storia ironica?
+        <a href="quanti-kwh-consuma-davvero-una-lavatrice.html">Leggi l’articolo sulla lavatrice</a>.
+      </div>
+    </section>
+
+    <!-- CALCOLATORE LAVASTOVIGLIE -->
+    <section class="calc-box" id="calcolatore-lavastoviglie">
+      <h2>🍽️ Calcolatore consumo lavastoviglie</h2>
+      <p>
+        La lavastoviglie può essere un’alleata del risparmio se usata bene.  
+        Qui puoi stimare il costo in base ai cicli e al tipo di programma.
+      </p>
+
+      <div class="calc-grid">
+        <div>
+          <label for="lavaStoKwh"><strong>Consumo medio per ciclo (kWh)</strong></label>
+          <input id="lavaStoKwh" type="number" step="0.1" min="0.5" max="3" value="1.0">
+          <p class="small">Un ciclo eco può stare attorno a 0,8–1,1 kWh.</p>
+        </div>
+
+        <div>
+          <label for="lavaStoCycles"><strong>Cicli a settimana</strong></label>
+          <input id="lavaStoCycles" type="number" min="1" max="30" value="5">
+        </div>
+
+        <div>
+          <label for="lavaStoProg"><strong>Programma usato più spesso</strong></label>
+          <select id="lavaStoProg">
+            <option value="1">Eco / 50–55°</option>
+            <option value="1.2">Intensivo / 65°</option>
+            <option value="0.9">Rapido / Basso consumo</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="lavaStoPrice"><strong>Prezzo energia (€/kWh)</strong></label>
+          <input id="lavaStoPrice" type="number" step="0.01" min="0.10" max="1" value="0.30">
+        </div>
+      </div>
+
+      <button class="calc-button" onclick="calcolaLavastoviglie()">🔍 Calcola consumi lavastoviglie</button>
+
+      <div id="lavaStoResult" class="calc-result" style="display:none;"></div>
+    </section>
+
+    <!-- CALCOLATORE CONDIZIONATORE -->
+    <section class="calc-box" id="calcolatore-condizionatore">
+      <h2>❄️🔥 Calcolatore consumo condizionatore (freddo / caldo)</h2>
+      <p>
+        Qui puoi simulare il consumo del condizionatore in modalità <strong>freddo</strong> o
+        <strong>pompa di calore</strong>, in base alla potenza, alle ore di utilizzo e ai metri quadri.
+      </p>
+
+      <div class="calc-grid">
+        <div>
+          <label for="climaMode"><strong>Modalità</strong></label>
+          <select id="climaMode">
+            <option value="1">Freddo</option>
+            <option value="1.1">Caldo (pompa di calore)</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="climaWatt"><strong>Potenza assorbita (Watt)</strong></label>
+          <input id="climaWatt" type="number" min="300" max="3000" value="900">
+          <p class="small">Valore medio in uso (non la potenza termica in BTU).</p>
+        </div>
+
+        <div>
+          <label for="climaMq"><strong>Metri quadri da raffrescare/scaldare</strong></label>
+          <input id="climaMq" type="number" min="5" max="60" value="20">
+        </div>
+
+        <div>
+          <label for="climaHours"><strong>Ore di utilizzo al giorno</strong></label>
+          <input id="climaHours" type="number" min="1" max="24" value="4">
+        </div>
+
+        <div>
+          <label for="climaPrice"><strong>Prezzo energia (€/kWh)</strong></label>
+          <input id="climaPrice" type="number" step="0.01" min="0.10" max="1" value="0.30">
+        </div>
+      </div>
+
+      <button class="calc-button" onclick="calcolaCondizionatore()">🔍 Calcola consumi condizionatore</button>
+
+      <div id="climaResult" class="calc-result" style="display:none;"></div>
+    </section>
+
     <!-- ARTICOLI CORRELATI -->
-    <section class="related-articles">
-      <h2>📚 Articoli correlati sul risparmio energetico</h2>
-      <div class="related-list">
+    <section class="related-section">
+      <h2 style="margin-top:0;">Articoli consigliati sul risparmio energetico</h2>
+      <div class="related-grid">
         <a class="related-card" href="la-tv-consuma-piu-di-quanto-pensi.html">
           <h3>La TV consuma più di quanto pensi?</h3>
           <p>
-            Storia comica di una famiglia italiana e numeri reali su consumi, standby e costi in bolletta
-            di una TV moderna.
+            Storia comica di una famiglia italiana e numeri reali sui consumi della TV.
           </p>
         </a>
 
         <a class="related-card" href="quanto-costa-stufetta-elettrica-1-ora.html">
-          <h3>Quanto costa tenere accesa una stufetta elettrica per 1 ora?</h3>
+          <h3>Quanto costa la stufetta elettrica per 1 ora</h3>
           <p>
-            Racconto alla “vita vera” e conti semplici per capire se la stufetta è amica del comfort
-            o nemica del portafoglio.
+            Racconto alla “vita reale”, conti semplici e consigli pratici per non esagerare col calore.
           </p>
         </a>
 
-        <a class="related-card" href="stufa-elettrica-gas-o-climatizzatore.html">
-          <h3>Stufa elettrica, gas o climatizzatore?</h3>
+        <a class="related-card" href="quanti-kwh-consuma-davvero-una-lavatrice.html">
+          <h3>Quanti kWh consuma una lavatrice?</h3>
           <p>
-            Confronto pratico tra i tre sistemi più usati per scaldare casa, con esempi di consumo orario
-            e costi stimati.
+            Tabella dei consumi per temperatura, esempi di costo per ciclo e consigli anti-spreco.
           </p>
         </a>
       </div>
     </section>
 
-    <div class="like-box">
-      Ti è stato utile uno di questi calcolatori?  
-      Se vuoi supportare il progetto Syncras.App, condividi la pagina con un amico o
-      aggiungila ai preferiti: più persone ragionano sui consumi, meno sorprese arrivano in bolletta.
-    </div>
-
     <div style="text-align:center; margin:30px 0 10px;">
-      <button id="shareBtnBottom"
+      <button id="shareBtnTop"
         style="background: var(--violet-main); color:white; padding:10px 18px; border:none;
                border-radius:6px; cursor:pointer; font-weight:600; font-size:1rem;">
-        📎 Condividi questa pagina
+        📎 Condividi questa pagina di calcolatori
       </button>
     </div>
   </main>
@@ -565,14 +575,13 @@
       const prezzo = parseFloat(document.getElementById('tvPrice').value);
       const tipo = parseFloat(document.getElementById('tvType').value);
 
-      if (isNaN(wattBase) || isNaN(ore) || isNaN(prezzo) || isNaN(tipo) || wattBase <= 0 || ore <= 0 || prezzo <= 0) {
-        alert('Per favore inserisci valori validi per tutti i campi.');
+      if (isNaN(wattBase) || isNaN(ore) || isNaN(prezzo) ||
+          wattBase <= 0 || ore <= 0 || prezzo <= 0) {
+        alert('Per favore inserisci valori validi per tutti i campi della TV.');
         return;
       }
 
-      // Watt reali in base al tipo/età della TV
       const wattReali = wattBase * tipo;
-
       const kWhOra = wattReali / 1000;
       const costoOra = kWhOra * prezzo;
       const costoGiorno = costoOra * ore;
@@ -581,85 +590,203 @@
 
       const result = `
         <h3 style="margin-top:0; color:var(--violet-dark);">Risultato</h3>
-        <p><strong>Potenza reale stimata:</strong> ${wattReali.toFixed(0)} W</p>
-        <p><strong>Consumo orario:</strong> ${kWhOra.toFixed(3)} kWh</p>
-        <p><strong>Costo per 1 ora di TV:</strong> ${costoOra.toFixed(3)} €</p>
-        <p><strong>Costo mensile</strong> (TV accesa ${ore} h/giorno): <strong>${costoMese.toFixed(2)} €</strong></p>
-        <p><strong>Costo annuale</strong> (TV accesa ${ore} h/giorno): <strong>${costoAnno.toFixed(2)} €</strong></p>
+        <p><strong>Potenza reale stimata:</strong> ${wattReali.toFixed(0)} W (${(wattReali/1000).toFixed(2)} kW)</p>
+        <p><strong>Costo per 1 ora:</strong> ${costoOra.toFixed(3)} €</p>
+        <p><strong>Costo giornaliero (${ore} h):</strong> ${costoGiorno.toFixed(2)} €</p>
+        <p><strong>Costo mensile (30 giorni):</strong> ${costoMese.toFixed(2)} €</p>
+        <p><strong>Costo annuale:</strong> ${costoAnno.toFixed(2)} €</p>
         <p class="small">
           Valori indicativi basati sui dati inseriti.  
           Se cambi contratto luce o abitudini di utilizzo, cambiano anche i risultati.
         </p>
       `;
 
-
-
-      // Calcolatore STUFETTA
-function calcolaStufetta() {
-  const wattBase = parseFloat(document.getElementById('stufaWatt').value);
-  const minuti = parseFloat(document.getElementById('stufaMinutes').value);
-  const prezzo = parseFloat(document.getElementById('stufaPrice').value);
-  const tipo = parseFloat(document.getElementById('stufaType').value);
-
-  if (isNaN(wattBase) || isNaN(minuti) || isNaN(prezzo) ||
-      wattBase <= 0 || minuti <= 0 || prezzo <= 0) {
-    alert('Per favore inserisci valori validi per tutti i campi della stufetta.');
-    return;
-  }
-
-  const wattReali = wattBase * tipo;
-
-  const oreGiorno = minuti / 60;
-  const kWhOra = wattReali / 1000;
-  const costoOra = kWhOra * prezzo;
-
-  const costoGiorno = costoOra * oreGiorno;
-  const costoMese = costoGiorno * 30;
-  const costoInverno = costoGiorno * 90; // 3 mesi
-
-  const costo10Min = costoOra * (10 / 60);
-
-  const result = `
-    <h3 style="margin-top:0; color:var(--violet-dark);">Risultato</h3>
-    <p><strong>Potenza reale stimata:</strong> ${wattReali.toFixed(0)} W (${(wattReali / 1000).toFixed(2)} kW)</p>
-    <p><strong>Costo per 10 minuti:</strong> ${costo10Min.toFixed(3)} €</p>
-    <p><strong>Costo per 1 ora:</strong> ${costoOra.toFixed(3)} €</p>
-    <p><strong>Costo giornaliero (${minuti} min):</strong> ${costoGiorno.toFixed(2)} €</p>
-    <p><strong>Costo mensile (30 giorni):</strong> ${costoMese.toFixed(2)} €</p>
-    <p><strong>Costo per un inverno (3 mesi):</strong> ${costoInverno.toFixed(2)} €</p>
-    <p class="small">
-      Valori indicativi basati sui dati inseriti.  
-      Se cambi minuti di utilizzo, tipo di stufetta o prezzo dell’energia cambiano anche i risultati.
-    </p>
-  `;
-
-  const box = document.getElementById('stufaResult');
-  box.innerHTML = result;
-  box.style.display = 'block';
-}
-
-
-
-      
-
-
-      
       const box = document.getElementById('tvResult');
       box.innerHTML = result;
       box.style.display = 'block';
     }
 
-    // Condivisione pagina (solo bottom per questa pagina)
+    // Calcolatore STUFETTA
+    function calcolaStufetta() {
+      const wattBase = parseFloat(document.getElementById('stufaWatt').value);
+      const minuti = parseFloat(document.getElementById('stufaMinutes').value);
+      const prezzo = parseFloat(document.getElementById('stufaPrice').value);
+      const tipo = parseFloat(document.getElementById('stufaType').value);
+
+      if (isNaN(wattBase) || isNaN(minuti) || isNaN(prezzo) ||
+          wattBase <= 0 || minuti <= 0 || prezzo <= 0) {
+        alert('Per favore inserisci valori validi per tutti i campi della stufetta.');
+        return;
+      }
+
+      const wattReali = wattBase * tipo;
+      const oreGiorno = minuti / 60;
+      const kWhOra = wattReali / 1000;
+      const costoOra = kWhOra * prezzo;
+
+      const costo10Min = costoOra * (10/60);
+      const costoGiorno = costoOra * oreGiorno;
+      const costoMese = costoGiorno * 30;
+      const costoInverno = costoGiorno * 90; // 3 mesi
+
+      const result = `
+        <h3 style="margin-top:0; color:var(--violet-dark);">Risultato</h3>
+        <p><strong>Potenza reale stimata:</strong> ${wattReali.toFixed(0)} W (${(wattReali/1000).toFixed(2)} kW)</p>
+        <p><strong>Costo per 10 minuti:</strong> ${costo10Min.toFixed(3)} €</p>
+        <p><strong>Costo per 1 ora:</strong> ${costoOra.toFixed(3)} €</p>
+        <p><strong>Costo giornaliero (${minuti} min):</strong> ${costoGiorno.toFixed(2)} €</p>
+        <p><strong>Costo mensile (30 giorni):</strong> ${costoMese.toFixed(2)} €</p>
+        <p><strong>Costo per un inverno (3 mesi):</strong> ${costoInverno.toFixed(2)} €</p>
+        <p class="small">
+          Valori indicativi basati sui dati inseriti.  
+          Se cambi minuti di utilizzo, tipo di stufetta o prezzo dell’energia cambiano anche i risultati.
+        </p>
+      `;
+
+      const box = document.getElementById('stufaResult');
+      box.innerHTML = result;
+      box.style.display = 'block';
+    }
+
+    // Calcolatore LAVATRICE
+    function calcolaLavatrice() {
+      const kWhBase = parseFloat(document.getElementById('lavaKwh').value);
+      const cicli = parseFloat(document.getElementById('lavaCycles').value);
+      const fattoreTemp = parseFloat(document.getElementById('lavaTemp').value);
+      const prezzo = parseFloat(document.getElementById('lavaPrice').value);
+
+      if (isNaN(kWhBase) || isNaN(cicli) || isNaN(prezzo) ||
+          kWhBase <= 0 || cicli <= 0 || prezzo <= 0) {
+        alert('Inserisci valori validi per tutti i campi della lavatrice.');
+        return;
+      }
+
+      const kWhCicloReale = kWhBase * fattoreTemp;
+      const kWhSettimana = kWhCicloReale * cicli;
+      const kWhMese = kWhSettimana * 4;
+      const kWhAnno = kWhSettimana * 52;
+
+      const costoCiclo = kWhCicloReale * prezzo;
+      const costoMese = kWhMese * prezzo;
+      const costoAnno = kWhAnno * prezzo;
+
+      const result = `
+        <h3 style="margin-top:0; color:var(--violet-dark);">Risultato</h3>
+        <p><strong>Consumo stimato per ciclo:</strong> ${kWhCicloReale.toFixed(2)} kWh</p>
+        <p><strong>Costo per 1 ciclo:</strong> ${costoCiclo.toFixed(2)} €</p>
+        <p><strong>Costo mensile</strong> (~${(cicli*4).toFixed(0)} cicli): ${costoMese.toFixed(2)} €</p>
+        <p><strong>Costo annuale</strong> (~${(cicli*52).toFixed(0)} cicli): ${costoAnno.toFixed(2)} €</p>
+        <p class="small">
+          I valori cambiano molto in base al programma scelto e al carico reale del cestello.
+        </p>
+      `;
+
+      const box = document.getElementById('lavaResult');
+      box.innerHTML = result;
+      box.style.display = 'block';
+    }
+
+    // Calcolatore LAVASTOVIGLIE
+    function calcolaLavastoviglie() {
+      const kWhBase = parseFloat(document.getElementById('lavaStoKwh').value);
+      const cicli = parseFloat(document.getElementById('lavaStoCycles').value);
+      const fattoreProg = parseFloat(document.getElementById('lavaStoProg').value);
+      const prezzo = parseFloat(document.getElementById('lavaStoPrice').value);
+
+      if (isNaN(kWhBase) || isNaN(cicli) || isNaN(prezzo) ||
+          kWhBase <= 0 || cicli <= 0 || prezzo <= 0) {
+        alert('Inserisci valori validi per tutti i campi della lavastoviglie.');
+        return;
+      }
+
+      const kWhCicloReale = kWhBase * fattoreProg;
+      const kWhSettimana = kWhCicloReale * cicli;
+      const kWhMese = kWhSettimana * 4;
+      const kWhAnno = kWhSettimana * 52;
+
+      const costoCiclo = kWhCicloReale * prezzo;
+      const costoMese = kWhMese * prezzo;
+      const costoAnno = kWhAnno * prezzo;
+
+      const result = `
+        <h3 style="margin-top:0; color:var(--violet-dark);">Risultato</h3>
+        <p><strong>Consumo stimato per ciclo:</strong> ${kWhCicloReale.toFixed(2)} kWh</p>
+        <p><strong>Costo per 1 ciclo:</strong> ${costoCiclo.toFixed(2)} €</p>
+        <p><strong>Costo mensile</strong> (~${(cicli*4).toFixed(0)} cicli): ${costoMese.toFixed(2)} €</p>
+        <p><strong>Costo annuale</strong> (~${(cicli*52).toFixed(0)} cicli): ${costoAnno.toFixed(2)} €</p>
+        <p class="small">
+          I risultati cambiano in base al carico, alla temperatura e all’uso del programma Eco.
+        </p>
+      `;
+
+      const box = document.getElementById('lavaStoResult');
+      box.innerHTML = result;
+      box.style.display = 'block';
+    }
+
+    // Calcolatore CONDIZIONATORE
+    function calcolaCondizionatore() {
+      const mode = parseFloat(document.getElementById('climaMode').value);
+      const wattBase = parseFloat(document.getElementById('climaWatt').value);
+      const mq = parseFloat(document.getElementById('climaMq').value);
+      const ore = parseFloat(document.getElementById('climaHours').value);
+      const prezzo = parseFloat(document.getElementById('climaPrice').value);
+
+      if (isNaN(wattBase) || isNaN(mq) || isNaN(ore) || isNaN(prezzo) ||
+          wattBase <= 0 || mq <= 0 || ore <= 0 || prezzo <= 0) {
+        alert('Inserisci valori validi per tutti i campi del condizionatore.');
+        return;
+      }
+
+      const wattReali = wattBase * mode;
+      const kWhOra = wattReali / 1000;
+      const costoOra = kWhOra * prezzo;
+      const costoGiorno = costoOra * ore;
+      const costoMese = costoGiorno * 30;
+
+      // Stima molto semplificata: 80–100 W per m²
+      let messaggioMq = '';
+      const wattPerMq = wattReali / mq;
+      if (wattPerMq < 60) {
+        messaggioMq = 'Per la metratura inserita la potenza sembra piuttosto bassa: il clima potrebbe fare fatica.';
+      } else if (wattPerMq > 130) {
+        messaggioMq = 'Per la metratura inserita la potenza sembra alta: potresti raffrescare/scaldare più metri quadri.';
+      } else {
+        messaggioMq = 'La potenza sembra adatta alla metratura indicata (stima molto indicativa).';
+      }
+
+      const modeLabel = (mode > 1) ? 'caldo (pompa di calore)' : 'freddo';
+
+      const result = `
+        <h3 style="margin-top:0; color:var(--violet-dark);">Risultato</h3>
+        <p><strong>Modalità:</strong> ${modeLabel}</p>
+        <p><strong>Potenza reale stimata:</strong> ${wattReali.toFixed(0)} W (${(wattReali/1000).toFixed(2)} kW)</p>
+        <p><strong>Costo per 1 ora:</strong> ${costoOra.toFixed(3)} €</p>
+        <p><strong>Costo giornaliero (${ore} h):</strong> ${costoGiorno.toFixed(2)} €</p>
+        <p><strong>Costo mensile (30 giorni):</strong> ${costoMese.toFixed(2)} €</p>
+        <p class="small">${messaggioMq}</p>
+        <p class="small">
+          Stima semplificata: i consumi reali dipendono da isolamento, temperatura impostata,
+          classe energetica e utilizzo effettivo.
+        </p>
+      `;
+
+      const box = document.getElementById('climaResult');
+      box.innerHTML = result;
+      box.style.display = 'block';
+    }
+
+    // Condivisione pagina calcolatori
     (function() {
-      const shareBottom = document.getElementById('shareBtnBottom');
+      const shareTop = document.getElementById('shareBtnTop');
 
       function attachShare(btn) {
         if (!btn) return;
         if (navigator.share) {
           btn.addEventListener('click', () => {
             navigator.share({
-              title: 'Calcolatore Consumi Elettrodomestici – Syncras.App',
-              text: 'Scopri quanto consumano davvero TV, stufetta e altri elettrodomestici con i calcolatori Syncras.',
+              title: 'Calcolatore Consumi Elettrodomestici | Syncras.App',
+              text: 'Scopri quanto consumano TV, stufetta, lavatrice, lavastoviglie e condizionatore.',
               url: window.location.href
             });
           });
@@ -668,7 +795,7 @@ function calcolaStufetta() {
         }
       }
 
-      attachShare(shareBottom);
+      attachShare(shareTop);
     })();
   </script>
 
