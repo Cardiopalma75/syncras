@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calcolatore Consumi Auto: confronto benzina, diesel, GPL, metano ed elettrico | Syncras.App</title>
+  <meta name="description" content="Confronta il costo per 100 km e all'anno tra due auto con alimentazioni diverse: benzina, diesel, GPL, metano o elettrico. Inserisci consumi, km e prezzo carburante.">
+  <meta name="robots" content="index,follow">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-59D9XRYKF3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-59D9XRYKF3');
+  </script>
+
+  <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --violet-soft: #A29BFE;
+      --text-main: #403E43;
+      --bg-page: #F7F7FB;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    /* HEADER */
+
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color: white;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+
+    #main-nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding-bottom: 2px;
+      border-bottom: 2px solid transparent;
+    }
+
+    #main-nav a:hover {
+      text-decoration: underline;
+    }
+
+    #main-nav a.active {
+      border-bottom-color: rgba(255,255,255,0.9);
+    }
+
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .menu-toggle span {
+      margin-left: 4px;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        margin: 0 auto;
+        max-width: 1180px;
+        flex-direction: column;
+        background-color: var(--violet-dark);
+        padding: 10px 16px 12px 16px;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
+      }
+
+      #main-nav a {
+        padding: 6px 0;
+      }
+
+      body.nav-open #main-nav {
+        display: flex;
+      }
+
+      .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+
+    /* MAIN */
+
+    main {
+      max-width: 1180px;
+      margin: 30px auto;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.08);
+    }
+
+    h1, h2, h3 {
+      color: var(--violet-dark);
+      margin-top: 0;
+    }
+
+    .page-intro {
+      margin-bottom: 20px;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 10px;
+    }
+
+    .badge-page {
+      display: inline-block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(108, 92, 231, 0.08);
+      border: 1px solid rgba(108, 92, 231, 0.35);
+      border-radius: 999px;
+      padding: 2px 8px;
+      color: #3730a3;
+      margin-bottom: 8px;
+    }
+
+    .intro-text {
+      font-size: 0.95rem;
+      color: #4b5563;
+    }
+
+    /* GRIGLIA CARD (come i calcolatori) */
+
+    .calc-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin: 18px 0 26px;
+    }
+
+    .calc-card {
+      background: #f4f5ff;
+      border-radius: 16px;
+      padding: 16px 18px 14px;
+      border: 1px solid #d4d7ff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .calc-card-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #6b7280;
+      margin-bottom: 4px;
+    }
+
+    .calc-card h3 {
+      margin: 0 0 6px;
+      font-size: 1rem;
+      color: #1f2937;
+    }
+
+    .calc-card p {
+      margin: 0 0 10px;
+      font-size: 0.9rem;
+      color: #4b5563;
+    }
+
+    .calc-card-link {
+      display: inline-block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--violet-dark);
+      text-decoration: none;
+      padding-bottom: 1px;
+      border-bottom: 1px solid rgba(75, 58, 203, 0.4);
+    }
+
+    .calc-card-link:hover {
+      text-decoration: none;
+      border-bottom-color: rgba(75, 58, 203, 0.9);
+    }
+
+    @media (max-width: 800px) {
+      .calc-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* SEZIONE CALCOLATORE AUTO */
+
+    .calc-section {
+      margin: 32px 0;
+      padding: 20px;
+      border-radius: 16px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+
+    .calc-section h2 {
+      margin-top: 0;
+      margin-bottom: 6px;
+      font-size: 1.25rem;
+    }
+
+    .calc-section p {
+      font-size: 0.95rem;
+      color: #4b5563;
+    }
+
+    .calc-grid-inputs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 14px;
+    }
+
+    .calc-field {
+      flex: 1 1 220px;
+    }
+
+    .calc-field label {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .calc-field input,
+    .calc-field select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 4px;
+      border-radius: 6px;
+      border: 1px solid #d1d5db;
+      font-size: 0.95rem;
+    }
+
+    .calc-btn {
+      margin-top: 18px;
+      background: var(--violet-main);
+      color: #fff;
+      padding: 9px 16px;
+      border-radius: 7px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .calc-btn:hover {
+      background: var(--violet-dark);
+    }
+
+    .calc-result {
+      margin-top: 16px;
+      padding: 14px;
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.06);
+      display: none;
+      font-size: 0.95rem;
+    }
+
+    .small-note {
+      font-size: 0.8rem;
+      color: #6b7280;
+      margin-top: 8px;
+    }
+
+    /* FOOTER */
+
+    .syncras-footer {
+      margin-top: 40px;
+      padding: 2.5rem 1.5rem 1.5rem;
+      background: #2b1840;
+      color: #f3eaff;
+      font-family: Arial, sans-serif;
+      font-size: 0.9rem;
+    }
+
+    .syncras-footer a {
+      color: #f3eaff;
+      text-decoration: none;
+    }
+
+    .syncras-footer a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-inner {
+      max-width: 1180px;
+      margin: 0 auto 1.5rem auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+    }
+
+    .footer-column h4 {
+      margin-top: 0;
+      margin-bottom: 0.7rem;
+      font-size: 1rem;
+    }
+
+    .footer-column p {
+      margin: 0;
+      font-size: 0.85rem;
+    }
+
+    .footer-column ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-column li {
+      margin-bottom: 0.4rem;
+      font-size: 0.85rem;
+    }
+
+    .footer-bottom {
+      max-width: 1180px;
+      margin: 0 auto;
+      text-align: center;
+      font-size: 0.8rem;
+      opacity: 0.9;
+    }
+
+    .footer-bottom p {
+      margin: 4px 0;
+    }
+
+    a {
+      color: var(--violet-dark);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
+
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
+
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="offerte.html">Offerte Amazon</a>
+        <a href="categorie.html">Categorie</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="quiz.html">Test SmartShop</a>
+        <a href="calcolatore-consumi-elettrodomestici.html">Calcolatori</a>
+        <a href="chi.html">Chi siamo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="page-intro">
+      <span class="badge-page">Area strumenti</span>
+      <h1>🚗 Calcolatore Consumi Auto: confronto tra due alimentazioni</h1>
+      <p class="intro-text">
+        Inserisci i dati di due auto (o due versioni della stessa auto) con alimentazione diversa  
+        – benzina, diesel, GPL, metano o elettrica – e confronta il costo per 100 km e per i km che percorri ogni anno.
+      </p>
+    </div>
+
+    <!-- CARD RIASSUNTO / MINI INTRO -->
+    <section aria-label="Panoramica calcolatore">
+      <div class="calc-grid">
+        <article class="calc-card">
+          <div class="calc-card-label">STRUMENTO #1</div>
+          <h3>Confronta due auto</h3>
+          <p>
+            Ideale per vedere se ti conviene davvero passare a diesel, GPL, metano o elettrico  
+            rispetto alla tua attuale auto a benzina.
+          </p>
+          <a href="#calc-auto" class="calc-card-link">Vai al calcolatore</a>
+        </article>
+
+        <article class="calc-card">
+          <div class="calc-card-label">TIP</div>
+          <h3>Cosa ti serve sapere</h3>
+          <p>
+            Ti bastano: consumo medio (l/100 km o kWh/100 km), prezzo carburante/energia e i km che fai in un anno.
+          </p>
+          <span style="font-size:0.85rem; color:#6b7280;">Il resto lo calcola Syncras.</span>
+        </article>
+      </div>
+    </section>
+
+    <!-- CALCOLATORE AUTO -->
+    <section class="calc-section" id="calc-auto">
+      <h2>Calcolatore confronto consumi auto</h2>
+      <p>
+        Compila i campi per <strong>Auto A</strong> e <strong>Auto B</strong> usando gli stessi km percorsi.  
+        Il calcolatore ti mostra il costo per 100 km, il costo annuo e quanto risparmi (o perdi) passando da una all’altra.
+      </p>
+
+      <div class="calc-grid-inputs">
+        <div class="calc-field">
+          <label>Km considerati (ad es. km annui)</label>
+          <input id="autoKm" type="number" min="100" max="100000" value="10000">
+        </div>
+      </div>
+
+      <h3 style="margin-top:20px;">Auto A</h3>
+      <div class="calc-grid-inputs">
+        <div class="calc-field">
+          <label>Alimentazione Auto A</label>
+          <select id="autoAFuel">
+            <option value="benzina">Benzina</option>
+            <option value="diesel">Diesel</option>
+            <option value="gpl">GPL</option>
+            <option value="metano">Metano</option>
+            <option value="elettrica">Elettrica</option>
+          </select>
+        </div>
+
+        <div class="calc-field">
+          <label>Consumo Auto A (l/100 km o kWh/100 km)</label>
+          <input id="autoACons" type="number" step="0.1" min="1" max="40" value="6.5">
+        </div>
+
+        <div class="calc-field">
+          <label>Prezzo carburante/energia Auto A (€/litro o €/kWh)</label>
+          <input id="autoAPrice" type="number" step="0.01" min="0.10" max="5" value="1.90">
+        </div>
+      </div>
+
+      <h3 style="margin-top:20px;">Auto B</h3>
+      <div class="calc-grid-inputs">
+        <div class="calc-field">
+          <label>Alimentazione Auto B</label>
+          <select id="autoBFuel">
+            <option value="benzina">Benzina</option>
+            <option value="diesel" selected>Diesel</option>
+            <option value="gpl">GPL</option>
+            <option value="metano">Metano</option>
+            <option value="elettrica">Elettrica</option>
+          </select>
+        </div>
+
+        <div class="calc-field">
+          <label>Consumo Auto B (l/100 km o kWh/100 km)</label>
+          <input id="autoBCons" type="number" step="0.1" min="1" max="40" value="5.0">
+        </div>
+
+        <div class="calc-field">
+          <label>Prezzo carburante/energia Auto B (€/litro o €/kWh)</label>
+          <input id="autoBPrice" type="number" step="0.01" min="0.10" max="5" value="1.80">
+        </div>
+      </div>
+
+      <button class="calc-btn" type="button" onclick="calcolaAuto()">Confronta consumi Auto A vs Auto B</button>
+
+      <div id="autoResult" class="calc-result"></div>
+
+      <p class="small-note">
+        Il calcolo è semplificato e considera solo carburante/energia. Non tiene conto di bollo, assicurazione, manutenzione,
+        pedaggi, parcheggi o eventuali incentivi fiscali.
+      </p>
+    </section>
+  </main>
+
+  <footer class="syncras-footer">
+    <div class="footer-inner">
+      <div class="footer-column">
+        <h4>Syncras.App</h4>
+        <p>
+          Metodo SmartShop per fare acquisti con la testa (e con un po’ di ironia).<br>
+          Niente tecnicismi inutili, solo esperienze reali e numeri spiegati semplice.
+        </p>
+      </div>
+
+      <div class="footer-column">
+        <h4>Link utili</h4>
+        <ul>
+          <li><a href="blog.html">Tutte le guide SmartShop</a></li>
+          <li><a href="offerte.html">Offerte Amazon selezionate</a></li>
+          <li><a href="smart-tv-economica-o-tv-buona-con-box.html">Guida Smart TV</a></li>
+          <li><a href="fotovoltaico-4kw-accumulo-10kwh-quanto-costa-davvero-nel-2025.html">Guida fotovoltaico</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h4>Legale & Privacy</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="cookie.html">Cookie Policy</a></li>
+          <li><a href="disclaimer-amazon.html">Disclaimer Amazon</a></li>
+          <li><a href="note-legali.html">Note Legali</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© <span id="year-span"></span> Syncras.App — Tutti i diritti riservati.</p>
+      <p>
+        Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+        Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+        senza alcun costo aggiuntivo per l’utente.
+      </p>
+      <p>
+        Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+        è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.body.classList.toggle('nav-open');
+    }
+
+    // FORMATTATORE EURO
+    function euro(val) {
+      return val.toFixed(2).replace('.', ',');
+    }
+
+    function nomeAlimentazione(codice) {
+      switch (codice) {
+        case 'benzina': return 'benzina';
+        case 'diesel': return 'diesel';
+        case 'gpl': return 'GPL';
+        case 'metano': return 'metano';
+        case 'elettrica': return 'elettrica';
+        default: return codice;
+      }
+    }
+
+    /* ===== CALCOLATORE AUTO ===== */
+    function calcolaAuto() {
+      const km = parseFloat(document.getElementById('autoKm').value) || 0;
+
+      const fuelA = document.getElementById('autoAFuel').value;
+      const consA = parseFloat(document.getElementById('autoACons').value) || 0;
+      const priceA = parseFloat(document.getElementById('autoAPrice').value) || 0;
+
+      const fuelB = document.getElementById('autoBFuel').value;
+      const consB = parseFloat(document.getElementById('autoBCons').value) || 0;
+      const priceB = parseFloat(document.getElementById('autoBPrice').value) || 0;
+
+      if (km <= 0 || consA <= 0 || consB <= 0 || priceA <= 0 || priceB <= 0) {
+        alert('Controlla che tutti i valori siano maggiori di zero.');
+        return;
+      }
+
+      // costo per 100 km
+      const cost100A = (consA / 100) * priceA;
+      const cost100B = (consB / 100) * priceB;
+
+      // costo per i km indicati
+      const costTotA = (consA / 100) * priceA * km;
+      const costTotB = (consB / 100) * priceB * km;
+
+      const diff100 = cost100B - cost100A;   // positivo = B più caro
+      const diffTot = costTotB - costTotA;
+
+      const labelA = nomeAlimentazione(fuelA);
+      const labelB = nomeAlimentazione(fuelB);
+
+      let fraseDiff100 = '';
+      let fraseDiffTot = '';
+
+      if (Math.abs(diff100) < 0.005) {
+        fraseDiff100 = 'Su 100 km il costo è praticamente identico tra le due auto.';
+      } else if (diff100 > 0) {
+        fraseDiff100 = `Auto A (${labelA}) è più economica di circa <strong>${euro(diff100)} €</strong> ogni 100 km rispetto a Auto B (${labelB}).`;
+      } else {
+        fraseDiff100 = `Auto B (${labelB}) è più economica di circa <strong>${euro(-diff100)} €</strong> ogni 100 km rispetto a Auto A (${labelA}).`;
+      }
+
+      if (Math.abs(diffTot) < 0.5) {
+        fraseDiffTot = `Su ${km.toFixed(0)} km in un anno la spesa è praticamente la stessa.`;
+      } else if (diffTot > 0) {
+        fraseDiffTot = `Su <strong>${km.toFixed(0)} km</strong> Auto A (${labelA}) ti farebbe risparmiare circa <strong>${euro(diffTot)} €</strong> rispetto a Auto B (${labelB}).`;
+      } else {
+        fraseDiffTot = `Su <strong>${km.toFixed(0)} km</strong> Auto B (${labelB}) ti farebbe risparmiare circa <strong>${euro(-diffTot)} €</strong> rispetto a Auto A (${labelA}).`;
+      }
+
+      const box = document.getElementById('autoResult');
+      box.innerHTML = `
+        <strong>Risultato del confronto:</strong>
+        <p>
+          <u>Auto A (${labelA})</u><br>
+          – Costo per 100 km: <strong>${euro(cost100A)} €</strong><br>
+          – Costo per ${km.toFixed(0)} km: <strong>${euro(costTotA)} €</strong>
+        </p>
+        <p>
+          <u>Auto B (${labelB})</u><br>
+          – Costo per 100 km: <strong>${euro(cost100B)} €</strong><br>
+          – Costo per ${km.toFixed(0)} km: <strong>${euro(costTotB)} €</strong>
+        </p>
+        <p>${fraseDiff100}</p>
+        <p>${fraseDiffTot}</p>
+        <p class="small-note">
+          Ricorda che i consumi reali dipendono da stile di guida, percorsi (città/autostrada), clima,
+          pressione gomme e carichi. Questo calcolo ti serve per avere un ordine di grandezza chiaro, non un valore assoluto al centesimo.
+        </p>
+      `;
+      box.style.display = 'block';
+    }
+
+    // FOOTER YEAR
+    document.addEventListener('DOMContentLoaded', function() {
+      var span = document.getElementById('year-span');
+      if (span) {
+        span.textContent = new Date().getFullYear();
+      }
+    });
+  </script>
+</body>
+</html>
