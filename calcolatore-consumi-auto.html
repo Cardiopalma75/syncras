@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Confronto costi auto: benzina, diesel, GPL, metano, elettrica | Syncras.App</title>
-  <meta name="description" content="Calcola e confronta quanto ti costa davvero un'auto a benzina, diesel, GPL, metano o elettrica. Inserisci consumi, prezzi carburante e km annui.">
+  <title>Confronto costi auto 2025: benzina, diesel, GPL, metano, elettrica (Calcolatore) | Syncras.App</title>
+  <meta name="description" content="👉 Calcola e confronta in pochi secondi il COSTO REALE per 100 km e su base annua della tua auto (benzina, diesel, GPL, metano) con un'auto elettrica o ibrida. Lo strumento definitivo per capire la convenienza.">
   <meta name="robots" content="index,follow">
 
   <!-- Google Analytics -->
@@ -404,6 +404,7 @@
 
     <!-- CARD DI SPIEGAZIONE -->
     <section aria-label="Informazioni sul confronto">
+      <h2>Come funziona il confronto dei costi auto</h2>
       <div class="calc-grid">
         <article class="calc-card">
           <div class="calc-card-label">AUTO A</div>
@@ -427,7 +428,7 @@
 
     <!-- CALCOLATORE CONFRONTO AUTO -->
     <section class="calc-section" id="calc-auto">
-      <h2>Calcolatore confronto costi Auto A vs Auto B</h2>
+      <h2>Calcolatore confronto costi carburante/energia Auto A vs Auto B</h2>
       <p>
         I campi “Consumo” si intendono <strong>ogni 100 km</strong>.  
         Puoi usare litri/100 km (benzina, diesel, GPL, metano) oppure kWh/100 km (elettrica).
@@ -454,12 +455,12 @@
         </div>
 
         <div class="calc-field">
-          <label>Consumo Auto A (litri o kWh / 100 km)</label>
+          <label for="consA">Consumo Auto A (litri o kWh / 100 km)</label>
           <input id="consA" type="number" step="0.1" min="1" max="40" value="8">
         </div>
 
         <div class="calc-field">
-          <label>Prezzo carburante/energia Auto A (€/litro o €/kWh)</label>
+          <label for="prezzoA">Prezzo carburante/energia Auto A (€/litro o €/kWh)</label>
           <input id="prezzoA" type="number" step="0.01" min="0.1" max="5" value="0.90">
         </div>
       </div>
@@ -478,12 +479,12 @@
         </div>
 
         <div class="calc-field">
-          <label>Consumo Auto B (litri o kWh / 100 km)</label>
+          <label for="consB">Consumo Auto B (litri o kWh / 100 km)</label>
           <input id="consB" type="number" step="0.1" min="1" max="40" value="15">
         </div>
 
         <div class="calc-field">
-          <label>Prezzo carburante/energia Auto B (€/litro o €/kWh)</label>
+          <label for="prezzoB">Prezzo carburante/energia Auto B (€/litro o €/kWh)</label>
           <input id="prezzoB" type="number" step="0.01" min="0.1" max="5" value="0.20">
         </div>
       </div>
@@ -563,6 +564,22 @@
       return val.toFixed(2).replace('.', ',');
     }
 
+    // LABEL DINAMICHE in base al tipo (Gemini)
+    function updateLabels(suffix) {
+      const tipo = document.getElementById(`tipo${suffix}`).value;
+      const consLabel = document.querySelector(`label[for="cons${suffix}"]`);
+      const prezzoLabel = document.querySelector(`label[for="prezzo${suffix}"]`);
+      if (!consLabel || !prezzoLabel) return;
+
+      if (tipo === 'Elettrica') {
+        consLabel.textContent = `Consumo Auto ${suffix} (kWh / 100 km)`;
+        prezzoLabel.textContent = `Prezzo energia Auto ${suffix} (€/kWh)`;
+      } else {
+        consLabel.textContent = `Consumo Auto ${suffix} (litri / 100 km)`;
+        prezzoLabel.textContent = `Prezzo carburante Auto ${suffix} (€/litro)`;
+      }
+    }
+
     // CALCOLO CONFRONTO AUTO
     function calcolaAuto() {
       const kmTot = parseFloat(document.getElementById('kmTot').value) || 0;
@@ -580,11 +597,7 @@
         return;
       }
 
-      // COSTO CORRETTO:
       // costo per 100 km = consumo(100km) * prezzo unitario
-      // costo per km      = costo/100
-      // costo totale      = costo per km * kmTot
-
       const costo100A = consA * prezzoA;
       const costoKmA = costo100A / 100;
       const costoTotA = costoKmA * kmTot;
@@ -593,7 +606,7 @@
       const costoKmB = costo100B / 100;
       const costoTotB = costoKmB * kmTot;
 
-      const diffPer100 = costo100A - costo100B;   // positivo = A più cara
+      const diffPer100 = costo100A - costo100B;   // positivo = A più cara (non usato ma lasciato)
       const diffTot = costoTotA - costoTotB;
 
       let piuEconomica, testoDiff;
@@ -631,11 +644,29 @@
       box.style.display = 'block';
     }
 
-    // FOOTER YEAR
+    // FOOTER YEAR + label iniziali
     document.addEventListener('DOMContentLoaded', function() {
       var span = document.getElementById('year-span');
       if (span) {
         span.textContent = new Date().getFullYear();
+      }
+
+      // inizializza le label in base ai default (GPL + Elettrica)
+      updateLabels('A');
+      updateLabels('B');
+
+      // listener sui select per aggiornare al cambio
+      const tipoASelect = document.getElementById('tipoA');
+      const tipoBSelect = document.getElementById('tipoB');
+      if (tipoASelect) {
+        tipoASelect.addEventListener('change', function() {
+          updateLabels('A');
+        });
+      }
+      if (tipoBSelect) {
+        tipoBSelect.addEventListener('change', function() {
+          updateLabels('B');
+        });
       }
     });
 
