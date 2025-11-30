@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calcolatore Consumi Elettrodomestici Online (Gratis) | Syncras.App</title>
-  <meta name="description" content="Calcola quanto consumano davvero TV, stufetta elettrica, climatizzatore, lavatrice e fotovoltaico. Inserisci i dati e scopri il costo in bolletta in modo semplice.">
+  <title>Calcolatore consumi elettrodomestici | Syncras.App</title>
+  <meta name="description" content="Calcola quanto consumano davvero TV, stufetta, climatizzatore, lavatrice, forno, asciugatrice, lavastoviglie e fotovoltaico in kWh e in euro. Strumenti semplici e gratuiti.">
   <meta name="robots" content="index,follow">
 
   <!-- Google Analytics -->
@@ -20,29 +20,28 @@
     :root {
       --violet-main: #6C5CE7;
       --violet-dark: #4B3ACB;
-      --violet-soft: #A29BFE;
-      --text-main: #403E43;
       --bg-page: #F7F7FB;
+      --text-main: #403E43;
+      --card-bg: #ffffff;
+      --card-border: #E5E7EB;
     }
 
     body {
       font-family: Arial, sans-serif;
+      background: var(--bg-page);
       margin: 0;
       padding: 0;
-      background-color: var(--bg-page);
-      color: var(--text-main);
       line-height: 1.6;
+      color: var(--text-main);
     }
 
-    /* HEADER */
-
+    /* HEADER VIOLA UNIFICATO */
     .site-header {
       background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
       color: white;
       padding: 12px 14px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.15);
     }
-
     .header-inner {
       max-width: 1180px;
       margin: 0 auto;
@@ -51,19 +50,16 @@
       justify-content: space-between;
       gap: 16px;
     }
-
     .logo {
       font-size: 1.4rem;
       font-weight: bold;
       letter-spacing: 0.03em;
     }
-
     #main-nav {
       display: flex;
       gap: 18px;
       font-size: 0.95rem;
     }
-
     #main-nav a {
       color: white;
       text-decoration: none;
@@ -71,15 +67,12 @@
       padding-bottom: 2px;
       border-bottom: 2px solid transparent;
     }
-
     #main-nav a:hover {
       text-decoration: underline;
     }
-
     #main-nav a.active {
       border-bottom-color: rgba(255,255,255,0.9);
     }
-
     .menu-toggle {
       display: none;
       background: rgba(255,255,255,0.12);
@@ -90,12 +83,10 @@
       font-size: 0.9rem;
       cursor: pointer;
     }
-
     .menu-toggle span {
       margin-left: 4px;
       font-size: 1.1rem;
     }
-
     @media (max-width: 768px) {
       #main-nav {
         display: none;
@@ -112,28 +103,23 @@
         box-shadow: 0 3px 6px rgba(0,0,0,0.25);
         z-index: 50;
       }
-
       #main-nav a {
         padding: 6px 0;
       }
-
       body.nav-open #main-nav {
         display: flex;
       }
-
       .menu-toggle {
         display: inline-flex;
         align-items: center;
       }
     }
 
-    /* MAIN */
-
     main {
       max-width: 1180px;
       margin: 30px auto;
       padding: 20px;
-      background-color: #ffffff;
+      background: white;
       border-radius: 10px;
       box-shadow: 0 4px 6px rgba(0,0,0,0.08);
     }
@@ -143,151 +129,119 @@
       margin-top: 0;
     }
 
+    .back-links {
+      margin-bottom: 18px;
+      font-size: 0.9rem;
+    }
+    .back-links a {
+      color: var(--violet-dark);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .back-links a:hover {
+      text-decoration: underline;
+    }
+
     .page-intro {
-      margin-bottom: 20px;
-      border-bottom: 1px solid #e5e7eb;
-      padding-bottom: 10px;
+      margin-bottom: 18px;
+      border-bottom: 1px solid #E5E7EB;
+      padding-bottom: 12px;
     }
 
-    .badge-page {
-      display: inline-block;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      background: rgba(108, 92, 231, 0.08);
-      border: 1px solid rgba(108, 92, 231, 0.35);
-      border-radius: 999px;
-      padding: 2px 8px;
-      color: #3730a3;
-      margin-bottom: 8px;
-    }
-
-    .intro-text {
+    .toc-calcs {
+      background: #F3F4FF;
+      border: 1px solid #D4D4FF;
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-bottom: 24px;
       font-size: 0.95rem;
-      color: #4b5563;
+    }
+    .toc-calcs strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+    .toc-calcs a {
+      display: inline-block;
+      margin: 3px 6px 3px 0;
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px solid #C7D2FE;
+      background: #FFFFFF;
+      text-decoration: none;
+      color: var(--violet-dark);
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .toc-calcs a:hover {
+      background: #E0E7FF;
     }
 
-    /* GRIGLIA CARD CALCOLATORI (stile quiz) */
-
+    /* GRIGLIA CALCOLATORI */
     .calc-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
-      margin: 18px 0 26px;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
     }
 
     .calc-card {
-      background: #f4f5ff;
-      border-radius: 16px;
-      padding: 16px 18px 14px;
-      border: 1px solid #d4d7ff;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+      background: var(--card-bg);
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+      padding: 16px 18px 18px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
     }
 
-    .calc-card-label {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.09em;
-      color: #6b7280;
+    .calc-card h2 {
+      font-size: 1.15rem;
       margin-bottom: 4px;
     }
 
-    .calc-card h3 {
-      margin: 0 0 6px;
-      font-size: 1rem;
-      color: #1f2937;
-    }
-
     .calc-card p {
-      margin: 0 0 10px;
-      font-size: 0.9rem;
-      color: #4b5563;
+      font-size: 0.92rem;
+      margin-bottom: 10px;
+      color: #4B5563;
     }
 
-    .calc-card-link {
-      display: inline-block;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--violet-dark);
-      text-decoration: none;
-      padding-bottom: 1px;
-      border-bottom: 1px solid rgba(75, 58, 203, 0.4);
-    }
-
-    .calc-card-link:hover {
-      text-decoration: none;
-      border-bottom-color: rgba(75, 58, 203, 0.9);
-    }
-
-    @media (max-width: 1024px) {
-      .calc-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 640px) {
-      .calc-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* SEZIONI CALCOLATORI */
-
-    .calc-section {
-      margin: 32px 0;
-      padding: 20px;
-      border-radius: 16px;
-      background: #f9fafb;
-      border: 1px solid #e5e7eb;
-    }
-
-    .calc-section h2 {
-      margin-top: 0;
-      margin-bottom: 6px;
-      font-size: 1.25rem;
-    }
-
-    .calc-section p {
-      font-size: 0.95rem;
-      color: #4b5563;
-    }
-
-    .calc-grid-inputs {
+    .calc-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 16px;
-      margin-top: 14px;
+      gap: 10px 14px;
+      margin-top: 8px;
+      margin-bottom: 10px;
     }
 
     .calc-field {
-      flex: 1 1 220px;
+      flex: 1 1 140px;
+      min-width: 140px;
+      font-size: 0.88rem;
     }
 
     .calc-field label {
-      font-size: 0.9rem;
       font-weight: 600;
+      display: block;
+      margin-bottom: 3px;
     }
 
     .calc-field input,
     .calc-field select {
       width: 100%;
-      padding: 8px;
-      margin-top: 4px;
+      padding: 7px 8px;
       border-radius: 6px;
-      border: 1px solid #d1d5db;
-      font-size: 0.95rem;
+      border: 1px solid #D1D5DB;
+      font-size: 0.9rem;
+      box-sizing: border-box;
     }
 
     .calc-btn {
-      margin-top: 18px;
+      margin-top: 6px;
       background: var(--violet-main);
-      color: #fff;
-      padding: 9px 16px;
-      border-radius: 7px;
+      color: white;
       border: none;
-      cursor: pointer;
-      font-size: 0.95rem;
+      border-radius: 6px;
+      padding: 8px 14px;
+      font-size: 0.9rem;
       font-weight: 600;
+      cursor: pointer;
     }
 
     .calc-btn:hover {
@@ -295,72 +249,20 @@
     }
 
     .calc-result {
-      margin-top: 16px;
-      padding: 14px;
-      background: #ffffff;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.06);
-      display: none;
-      font-size: 0.95rem;
+      margin-top: 10px;
+      padding: 10px 12px;
+      background: #F9FAFB;
+      border-radius: 8px;
+      font-size: 0.9rem;
     }
 
     .small-note {
       font-size: 0.8rem;
-      color: #6b7280;
-      margin-top: 8px;
+      color: #6B7280;
+      margin-top: 6px;
     }
 
-    /* BOX ARTICOLI CORRELATI */
-
-    .related-articles {
-      margin-top: 30px;
-      padding: 18px;
-      border-radius: 14px;
-      background: #F3F4FF;
-    }
-
-    .related-articles h2 {
-      margin-top: 0;
-      font-size: 1.2rem;
-    }
-
-    .related-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      margin-top: 10px;
-    }
-
-    .related-card {
-      flex: 1 1 220px;
-      background: #ffffff;
-      border-radius: 10px;
-      padding: 10px 12px;
-      box-shadow: 0 2px 4px rgba(15,23,42,0.08);
-      font-size: 0.9rem;
-    }
-
-    .related-card a {
-      color: var(--violet-dark);
-      font-weight: 600;
-      text-decoration: none;
-    }
-
-    .related-card a:hover {
-      text-decoration: underline;
-    }
-
-    a {
-      color: var(--violet-dark);
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    /* FOOTER */
-
+    /* FOOTER SEMPLICE (se vuoi puoi sostituirlo con quello lungo standard) */
     .syncras-footer {
       margin-top: 40px;
       padding: 2.5rem 1.5rem 1.5rem;
@@ -369,16 +271,13 @@
       font-family: Arial, sans-serif;
       font-size: 0.9rem;
     }
-
     .syncras-footer a {
       color: #f3eaff;
       text-decoration: none;
     }
-
     .syncras-footer a:hover {
       text-decoration: underline;
     }
-
     .footer-inner {
       max-width: 1180px;
       margin: 0 auto 1.5rem auto;
@@ -386,29 +285,20 @@
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 2rem;
     }
-
     .footer-column h4 {
       margin-top: 0;
       margin-bottom: 0.7rem;
       font-size: 1rem;
     }
-
-    .footer-column p {
-      margin: 0;
-      font-size: 0.85rem;
-    }
-
     .footer-column ul {
       list-style: none;
-      padding: 0;
       margin: 0;
+      padding: 0;
     }
-
     .footer-column li {
       margin-bottom: 0.4rem;
       font-size: 0.85rem;
     }
-
     .footer-bottom {
       max-width: 1180px;
       margin: 0 auto;
@@ -416,597 +306,631 @@
       font-size: 0.8rem;
       opacity: 0.9;
     }
-
     .footer-bottom p {
       margin: 4px 0;
     }
   </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="header-inner">
-      <div class="logo">Syncras.App</div>
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo">Syncras.App</div>
+    <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+      Menu <span>☰</span>
+    </button>
+    <nav id="main-nav">
+      <a href="index.html">Home</a>
+      <a href="blog.html">Blog</a>
+      <a href="offerte.html">Offerte Amazon</a>
+      <a href="categorie.html">Categorie</a>
+      <a href="quiz.html">Test SmartShop</a>
+      <a href="calcolatore-consumi-elettrodomestici.html" class="active">Calcolatori</a>
+      <a href="chi.html">Chi siamo</a>
+    </nav>
+  </div>
+</header>
 
-      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
-        Menu <span>☰</span>
-      </button>
+<main>
+  <div class="back-links">
+    ← <a href="index.html">Torna alla Home</a> |
+    <a href="blog.html">Vai al Blog</a>
+  </div>
 
-      <nav id="main-nav">
-        <a href="index.html">Home</a>
-        <a href="blog.html">Blog</a>
-        <a href="offerte.html">Offerte Amazon</a>
-        <a href="categorie.html">Categorie</a>
-        <a href="curiosita.html">Curiosità</a>
-        <a href="misteri.html">Misteri</a>
-        <a href="quiz.html">Test SmartShop</a>
-        <a href="calcolatore-consumi-elettrodomestici.html" class="active">Calcolatori</a>
-        <a href="chi.html">Chi siamo</a>
-      </nav>
-    </div>
-  </header>
+  <div class="page-intro">
+    <h1>Calcolatore consumi elettrodomestici (in kWh e in euro)</h1>
+    <p>
+      Qui puoi stimare quanto ti costano davvero TV, stufetta, climatizzatore, lavatrice, forno, lavastoviglie,
+      asciugatrice e perfino un impianto fotovoltaico.  
+      Inserisci i tuoi dati, premi calcola e guarda la spesa in bolletta.
+    </p>
+  </div>
 
-  <main>
-    <div class="page-intro">
-      <span class="badge-page">Area strumenti</span>
-      <h1>⚡ Calcolatore Consumi Elettrici: scopri quanto spendono i tuoi elettrodomestici</h1>
-      <p class="intro-text">
-        Qui puoi simulare il consumo in kWh e il costo in bolletta di TV, stufetta, climatizzatore, lavatrice e perfino dell’impianto fotovoltaico.
-        Inserisci i dati e guarda cosa succede alla bolletta.
-      </p>
-    </div>
+  <div class="toc-calcs">
+    <strong>Scegli il calcolatore:</strong>
+    <a href="#calc-tv">TV</a>
+    <a href="#calc-stufetta">Stufetta elettrica</a>
+    <a href="#calc-clima">Climatizzatore</a>
+    <a href="#calc-lavatrice">Lavatrice</a>
+    <a href="#calc-lavastoviglie">Lavastoviglie</a>
+    <a href="#calc-asciugatrice">Asciugatrice</a>
+    <a href="#calc-forno">Forno elettrico</a>
+    <a href="#calc-fotovoltaico">Fotovoltaico</a>
+  </div>
 
-    <!-- GRIGLIA CARD / LINK AI CALCOLATORI -->
-    <section aria-label="Elenco calcolatori Syncras">
-      <div class="calc-grid">
-        <article class="calc-card">
-          <div class="calc-card-label">CALCOLATORE #1</div>
-          <h3>Consumo TV</h3>
-          <p>Calcola quanto consuma la tua TV per ora, al mese e in un anno, in base a Watt, ore e tipo di schermo.</p>
-          <a href="#calc-tv" class="calc-card-link">Apri il calcolatore</a>
-        </article>
+  <section class="calc-grid">
 
-        <article class="calc-card">
-          <div class="calc-card-label">CALCOLATORE #2</div>
-          <h3>Stufetta elettrica</h3>
-          <p>Stima quanto ti costa tenerla accesa per 1 ora, una serata o per tutto il mese.</p>
-          <a href="#calc-stufetta" class="calc-card-link">Apri il calcolatore</a>
-        </article>
-
-        <article class="calc-card">
-          <div class="calc-card-label">CALCOLATORE #3</div>
-          <h3>Climatizzatore caldo/freddo</h3>
-          <p>Inserisci potenza, ore e metri quadri per vedere il costo di raffrescamento o riscaldamento.</p>
-          <a href="#calc-clima" class="calc-card-link">Apri il calcolatore</a>
-        </article>
-
-        <article class="calc-card">
-          <div class="calc-card-label">CALCOLATORE #4</div>
-          <h3>Lavatrice</h3>
-          <p>Calcola il costo di un ciclo in base a kWh, temperatura e numero di lavaggi al mese.</p>
-          <a href="#calc-lavatrice" class="calc-card-link">Apri il calcolatore</a>
-        </article>
-
-        <article class="calc-card">
-          <div class="calc-card-label">CALCOLATORE #5</div>
-          <h3>Fotovoltaico + Auto elettrica</h3>
-          <p>Simula produzione annua, autoconsumo, risparmio e tempo di rientro dell’impianto.</p>
-          <a href="#calc-fotovoltaico" class="calc-card-link">Apri il calcolatore</a>
-        </article>
-
-        <article class="calc-card">
-          <div class="calc-card-label">IN ARRIVO</div>
-          <h3>Altri elettrodomestici</h3>
-          <p>Forno, lavastoviglie, asciugatrice e frigorifero: saranno aggiunti gradualmente a questa pagina.</p>
-          <span style="font-size:0.85rem; color:#6b7280;">Prossimamente…</span>
-        </article>
-      </div>
-    </section>
-
-    <!-- CALCOLATORE TV -->
-    <section class="calc-section" id="calc-tv">
+    <!-- TV -->
+    <article class="calc-card" id="calc-tv">
       <h2>Calcolatore consumo TV</h2>
       <p>
-        Inserisci potenza, ore e tipo di TV per stimare consumi e costi.  
-        Se non conosci i Watt precisi, puoi leggere l’etichetta energetica o usare un valore indicativo.
+        Inserisci la potenza indicata sulla scheda tecnica, il numero di ore al giorno e il prezzo della luce.
       </p>
 
-      <div class="calc-grid-inputs">
+      <div class="calc-row">
         <div class="calc-field">
-          <label>Potenza TV (Watt)</label>
-          <input id="tvWatt" type="number" min="10" max="500" value="100">
+          <label for="tvWatt">Potenza TV (W)</label>
+          <input id="tvWatt" type="number" min="20" max="500" value="100">
         </div>
-
         <div class="calc-field">
-          <label>Ore al giorno</label>
+          <label for="tvHours">Ore al giorno</label>
           <input id="tvHours" type="number" min="1" max="24" value="3">
         </div>
-
         <div class="calc-field">
-          <label>Prezzo energia (€/kWh)</label>
+          <label for="tvPrice">Prezzo energia (€/kWh)</label>
           <input id="tvPrice" type="number" step="0.01" min="0.10" max="1" value="0.30">
         </div>
-
         <div class="calc-field">
-          <label>Tipo / Età TV</label>
+          <label for="tvType">Tipo / Età TV</label>
           <select id="tvType">
             <option value="1">LED/LCD moderno (2015–oggi)</option>
-            <option value="1.1">OLED moderno (2017–oggi)</option>
-            <option value="2.5">Plasma (2005–2013)</option>
-            <option value="3">CRT / Tubo catodico (fino al 2005)</option>
+            <option value="1.1">OLED moderno</option>
+            <option value="2.5">Plasma (vecchi modelli)</option>
+            <option value="3">CRT / Tubo catodico</option>
           </select>
         </div>
       </div>
 
-      <button class="calc-btn" type="button" onclick="calcolaTV()">Calcola consumi TV</button>
-
-      <div id="tvResult" class="calc-result"></div>
-
+      <button class="calc-btn" onclick="calcolaTV()">Calcola consumi TV</button>
+      <div id="tvResult" class="calc-result" style="display:none;"></div>
       <p class="small-note">
-        Valori indicativi: il consumo reale dipende da luminosità, impostazioni immagine e contenuti visualizzati.
+        Per i vecchi plasma/CRT la potenza reale può essere molto più alta rispetto ai TV moderni.
       </p>
-    </section>
+    </article>
 
-    <!-- CALCOLATORE STUFETTA -->
-    <section class="calc-section" id="calc-stufetta">
+    <!-- STUFETTA -->
+    <article class="calc-card" id="calc-stufetta">
       <h2>Calcolatore consumo stufetta elettrica</h2>
       <p>
-        Qui puoi stimare quanto costa tenere accesa la stufetta per una singola ora, una serata tipica
-        e un intero mese di utilizzo.
+        Utile per capire quanto costa davvero “un’oretta di stufetta” in bagno o in camera.
       </p>
 
-      <div class="calc-grid-inputs">
+      <div class="calc-row">
         <div class="calc-field">
-          <label>Potenza stufetta (Watt)</label>
-          <input id="stufaWatt" type="number" min="500" max="3000" value="2000">
+          <label for="stufettaWatt">Potenza stufetta (W)</label>
+          <input id="stufettaWatt" type="number" min="500" max="3000" value="2000">
         </div>
-
         <div class="calc-field">
-          <label>Ore al giorno</label>
-          <input id="stufaHours" type="number" min="0.5" max="24" step="0.5" value="3">
+          <label for="stufettaHours">Ore al giorno</label>
+          <input id="stufettaHours" type="number" min="0.5" step="0.5" max="10" value="1">
         </div>
-
         <div class="calc-field">
-          <label>Giorni al mese</label>
-          <input id="stufaDays" type="number" min="1" max="31" value="20">
+          <label for="stufettaPrice">Prezzo energia (€/kWh)</label>
+          <input id="stufettaPrice" type="number" step="0.01" min="0.10" max="1" value="0.30">
         </div>
-
         <div class="calc-field">
-          <label>Prezzo energia (€/kWh)</label>
-          <input id="stufaPrice" type="number" step="0.01" min="0.10" max="1" value="0.30">
-        </div>
-
-        <div class="calc-field">
-          <label>Tipo stufetta (indicativo)</label>
-          <select id="stufaType">
-            <option value="1">Ventilata / resistenza classica</option>
-            <option value="0.9">A olio (più lenta ma più costante)</option>
-            <option value="0.8">Ceramica / PTC efficiente</option>
+          <label for="stufettaMode">Tipo stufetta</label>
+          <select id="stufettaMode">
+            <option value="1.0">Ventilata / classica</option>
+            <option value="0.9">Ceramica PTC</option>
+            <option value="0.8">A olio / radiatore</option>
           </select>
         </div>
       </div>
 
-      <button class="calc-btn" type="button" onclick="calcolaStufetta()">Calcola consumi stufetta</button>
-
-      <div id="stufaResult" class="calc-result"></div>
-
+      <button class="calc-btn" onclick="calcolaStufetta()">Calcola consumi stufetta</button>
+      <div id="stufettaResult" class="calc-result" style="display:none;"></div>
       <p class="small-note">
-        Anche qui i valori sono indicativi: la dispersione della stanza e l’uso reale cambiano molto il risultato.
+        Valori semplificati: conta anche l’isolamento della stanza e la temperatura di partenza.
       </p>
-    </section>
+    </article>
 
-    <!-- CALCOLATORE CLIMATIZZATORE -->
-    <section class="calc-section" id="calc-clima">
-      <h2>Calcolatore consumo climatizzatore (freddo/caldo)</h2>
+    <!-- CLIMATIZZATORE -->
+    <article class="calc-card" id="calc-clima">
+      <h2>Calcolatore consumo climatizzatore (caldo/freddo)</h2>
       <p>
-        Questo calcolatore ti dà un’idea del costo orario, giornaliero e mensile del climatizzatore.
-        I metri quadri servono per vedere anche il costo per m².
+        Stima il costo giornaliero e mensile in base ai m² della stanza e alle ore di utilizzo.
       </p>
 
-      <div class="calc-grid-inputs">
+      <div class="calc-row">
         <div class="calc-field">
-          <label>Modalità</label>
-          <select id="climaMode">
-            <option value="freddo">Raffrescamento</option>
-            <option value="caldo">Riscaldamento (pompa di calore)</option>
-          </select>
+          <label for="climaMq">Metri quadri stanza</label>
+          <input id="climaMq" type="number" min="8" max="60" value="20">
         </div>
-
         <div class="calc-field">
-          <label>Potenza assorbita (Watt)</label>
-          <input id="climaWatt" type="number" min="300" max="3000" value="800">
+          <label for="climaBaseWatt">Potenza base per 20 m² (W assorbiti)</label>
+          <input id="climaBaseWatt" type="number" min="400" max="1500" value="800">
         </div>
-
         <div class="calc-field">
-          <label>Ore al giorno</label>
-          <input id="climaHours" type="number" min="0.5" max="24" step="0.5" value="4">
+          <label for="climaHours">Ore al giorno</label>
+          <input id="climaHours" type="number" min="1" max="24" value="4">
         </div>
-
         <div class="calc-field">
-          <label>Giorni al mese</label>
-          <input id="climaDays" type="number" min="1" max="31" value="25">
-        </div>
-
-        <div class="calc-field">
-          <label>Metri quadri della stanza</label>
-          <input id="climaMq" type="number" min="5" max="80" value="20">
-        </div>
-
-        <div class="calc-field">
-          <label>Prezzo energia (€/kWh)</label>
+          <label for="climaPrice">Prezzo energia (€/kWh)</label>
           <input id="climaPrice" type="number" step="0.01" min="0.10" max="1" value="0.30">
         </div>
+        <div class="calc-field">
+          <label for="climaMode">Modalità</label>
+          <select id="climaMode">
+            <option value="1.0">Freddo (estate)</option>
+            <option value="1.2">Caldo (pompa di calore)</option>
+          </select>
+        </div>
       </div>
 
-      <button class="calc-btn" type="button" onclick="calcolaClima()">Calcola consumi climatizzatore</button>
-
-      <div id="climaResult" class="calc-result"></div>
-
+      <button class="calc-btn" onclick="calcolaClima()">Calcola consumi climatizzatore</button>
+      <div id="climaResult" class="calc-result" style="display:none;"></div>
       <p class="small-note">
-        Il calcolo considera la potenza impostata: in realtà una pompa di calore lavora spesso a potenza variabile,
-        quindi i consumi reali possono essere più bassi di quelli stimati qui.
+        Semplificazione: il consumo reale varia anche da classe energetica, impostazioni e isolamento.
       </p>
-    </section>
+    </article>
 
-    <!-- CALCOLATORE LAVATRICE -->
-    <section class="calc-section" id="calc-lavatrice">
+    <!-- LAVATRICE -->
+    <article class="calc-card" id="calc-lavatrice">
       <h2>Calcolatore consumo lavatrice</h2>
       <p>
-        Puoi stimare il costo di un singolo ciclo e di tutti i lavaggi del mese in base al programma usato.
+        Puoi stimare il costo di un singolo ciclo e di tutti i lavaggi del mese.
       </p>
 
-      <div class="calc-grid-inputs">
+      <div class="calc-row">
         <div class="calc-field">
-          <label>Consumo ciclo (kWh)</label>
-          <input id="lavKwh" type="number" step="0.1" min="0.2" max="3" value="1.0">
+          <label for="lavaKwh">Consumo per ciclo (kWh)</label>
+          <input id="lavaKwh" type="number" step="0.1" min="0.3" max="3" value="1.0">
         </div>
-
         <div class="calc-field">
-          <label>Temperatura media</label>
-          <select id="lavTemp">
-            <option value="1">30° / Eco</option>
-            <option value="1.2">40°</option>
-            <option value="1.5">60°</option>
-            <option value="1.8">90° / intensivo</option>
+          <label for="lavaTemp">Temperatura media</label>
+          <select id="lavaTemp">
+            <option>30° / Eco</option>
+            <option>40°</option>
+            <option>60°</option>
+            <option>90°</option>
           </select>
         </div>
-
         <div class="calc-field">
-          <label>Lavaggi a settimana</label>
-          <input id="lavWeek" type="number" min="1" max="20" value="5">
+          <label for="lavaWeek">Lavaggi a settimana</label>
+          <input id="lavaWeek" type="number" min="1" max="20" value="5">
         </div>
-
         <div class="calc-field">
-          <label>Prezzo energia (€/kWh)</label>
-          <input id="lavPrice" type="number" step="0.01" min="0.10" max="1" value="0.30">
+          <label for="lavaPrice">Prezzo energia (€/kWh)</label>
+          <input id="lavaPrice" type="number" step="0.01" min="0.10" max="1" value="0.30">
         </div>
       </div>
 
-      <button class="calc-btn" type="button" onclick="calcolaLavatrice()">Calcola consumi lavatrice</button>
-
-      <div id="lavResult" class="calc-result"></div>
-
+      <button class="calc-btn" onclick="calcolaLavatrice()">Calcola consumi lavatrice</button>
+      <div id="lavaResult" class="calc-result" style="display:none;"></div>
       <p class="small-note">
-        Se non conosci i kWh del ciclo, puoi prendere i valori indicativi dalla tabella dell’articolo sulla lavatrice
-        oppure dalla scheda tecnica del tuo modello.
+        Se non conosci i kWh del ciclo, puoi usare i valori della tabella nell’articolo sulla lavatrice.
       </p>
-    </section>
+    </article>
 
-    <!-- CALCOLATORE FOTOVOLTAICO + AUTO ELETTRICA -->
-    <section class="calc-section" id="calc-fotovoltaico">
+    <!-- LAVASTOVIGLIE -->
+    <article class="calc-card" id="calc-lavastoviglie">
+      <h2>Calcolatore consumo lavastoviglie</h2>
+      <p>
+        Stima costo per ciclo e spesa mensile in base al programma usato.
+      </p>
+
+      <div class="calc-row">
+        <div class="calc-field">
+          <label for="lavaPiattiKwh">Consumo per ciclo (kWh)</label>
+          <input id="lavaPiattiKwh" type="number" step="0.1" min="0.6" max="2.5" value="1.0">
+        </div>
+        <div class="calc-field">
+          <label for="lavaPiattiProg">Programma</label>
+          <select id="lavaPiattiProg">
+            <option value="0.9">Eco</option>
+            <option value="1.0">Normale</option>
+            <option value="1.2">Intensivo</option>
+          </select>
+        </div>
+        <div class="calc-field">
+          <label for="lavaPiattiWeek">Cicli a settimana</label>
+          <input id="lavaPiattiWeek" type="number" min="1" max="21" value="7">
+        </div>
+        <div class="calc-field">
+          <label for="lavaPiattiPrice">Prezzo energia (€/kWh)</label>
+          <input id="lavaPiattiPrice" type="number" step="0.01" min="0.10" max="1" value="0.30">
+        </div>
+      </div>
+
+      <button class="calc-btn" onclick="calcolaLavastoviglie()">Calcola consumi lavastoviglie</button>
+      <div id="lavaPiattiResult" class="calc-result" style="display:none;"></div>
+    </article>
+
+    <!-- ASCIUGATRICE -->
+    <article class="calc-card" id="calc-asciugatrice">
+      <h2>Calcolatore consumo asciugatrice</h2>
+      <p>
+        Vedi quanto pesa in bolletta un ciclo di asciugatura con resistenza o pompa di calore.
+      </p>
+
+      <div class="calc-row">
+        <div class="calc-field">
+          <label for="asciugaKwh">Consumo per ciclo base (kWh)</label>
+          <input id="asciugaKwh" type="number" step="0.1" min="1" max="6" value="2.5">
+        </div>
+        <div class="calc-field">
+          <label for="asciugaType">Tipo asciugatrice</label>
+          <select id="asciugaType">
+            <option value="1.0">Resistenza tradizionale</option>
+            <option value="0.6">Pompa di calore</option>
+          </select>
+        </div>
+        <div class="calc-field">
+          <label for="asciugaWeek">Cicli a settimana</label>
+          <input id="asciugaWeek" type="number" min="1" max="20" value="3">
+        </div>
+        <div class="calc-field">
+          <label for="asciugaPrice">Prezzo energia (€/kWh)</label>
+          <input id="asciugaPrice" type="number" step="0.01" min="0.10" max="1" value="0.30">
+        </div>
+      </div>
+
+      <button class="calc-btn" onclick="calcolaAsciugatrice()">Calcola consumi asciugatrice</button>
+      <div id="asciugaResult" class="calc-result" style="display:none;"></div>
+    </article>
+
+    <!-- FORNO -->
+    <article class="calc-card" id="calc-forno">
+      <h2>Calcolatore consumo forno elettrico</h2>
+      <p>
+        Inserisci la potenza del forno, le ore di utilizzo settimanali e il prezzo della luce.
+      </p>
+
+      <div class="calc-row">
+        <div class="calc-field">
+          <label for="fornoWatt">Potenza forno (W)</label>
+          <input id="fornoWatt" type="number" min="1200" max="3000" value="2000">
+        </div>
+        <div class="calc-field">
+          <label for="fornoOreWeek">Ore a settimana</label>
+          <input id="fornoOreWeek" type="number" min="0.5" step="0.5" max="20" value="3">
+        </div>
+        <div class="calc-field">
+          <label for="fornoPrice">Prezzo energia (€/kWh)</label>
+          <input id="fornoPrice" type="number" step="0.01" min="0.10" max="1" value="0.30">
+        </div>
+        <div class="calc-field">
+          <label for="fornoUso">Tipo uso</label>
+          <select id="fornoUso">
+            <option value="1.0">Uso misto normale</option>
+            <option value="0.9">Riscalda / surgelati veloci</option>
+            <option value="1.1">Lievitati / arrosti lunghi</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="calc-btn" onclick="calcolaForno()">Calcola consumi forno</button>
+      <div id="fornoResult" class="calc-result" style="display:none;"></div>
+    </article>
+
+    <!-- FOTOVOLTAICO + AUTO -->
+    <article class="calc-card" id="calc-fotovoltaico">
       <h2>Calcolatore fotovoltaico (con auto elettrica opzionale)</h2>
       <p>
-        Qui puoi farti un’idea della produzione annua, del risparmio in bolletta e del tempo di rientro dell’impianto.
-        I numeri sono volutamente semplificati per ragionare in modo rapido.
+        Stima la produzione annua, il risparmio e una prima idea dei tempi di rientro dell’impianto.
       </p>
 
-      <div class="calc-grid-inputs">
+      <div class="calc-row">
         <div class="calc-field">
-          <label>Potenza impianto (kW)</label>
-          <input id="pvKw" type="number" step="0.1" min="1" max="20" value="4">
+          <label for="fvKw">Potenza impianto (kW)</label>
+          <input id="fvKw" type="number" step="0.1" min="1" max="20" value="4">
         </div>
-
         <div class="calc-field">
-          <label>Zona geografica</label>
-          <select id="pvZona">
-            <option value="1100">Nord Italia (≈1100 kWh/kW anno)</option>
-            <option value="1300" selected>Centro Italia (≈1300 kWh/kW anno)</option>
-            <option value="1500">Sud / Isole (≈1500 kWh/kW anno)</option>
+          <label for="fvZona">Zona geografica</label>
+          <select id="fvZona">
+            <option value="1100">Nord Italia (~1100 kWh/kW anno)</option>
+            <option value="1300" selected>Centro Italia (~1300 kWh/kW anno)</option>
+            <option value="1500">Sud Italia (~1500 kWh/kW anno)</option>
           </select>
         </div>
-
         <div class="calc-field">
-          <label>Autoconsumo stimato (%)</label>
-          <input id="pvAutoconsumo" type="number" min="10" max="100" value="50">
+          <label for="fvAutoconsumo">Autoconsumo stimato (%)</label>
+          <input id="fvAutoconsumo" type="number" min="10" max="100" value="50">
         </div>
-
         <div class="calc-field">
-          <label>Prezzo energia (€/kWh)</label>
-          <input id="pvPrice" type="number" step="0.01" min="0.10" max="1" value="0.30">
+          <label for="fvCosto">Costo impianto (€)</label>
+          <input id="fvCosto" type="number" min="1000" max="40000" value="9000">
         </div>
-
         <div class="calc-field">
-          <label>Costo impianto (€)</label>
-          <input id="pvCosto" type="number" min="1000" max="40000" value="8000">
-        </div>
-
-        <div class="calc-field">
-          <label>Hai un'auto elettrica?</label>
-          <select id="pvEv">
-            <option value="no">No</option>
-            <option value="si">Sì</option>
-          </select>
+          <label for="fvPrezzo">Prezzo energia (€/kWh)</label>
+          <input id="fvPrezzo" type="number" step="0.01" min="0.10" max="1" value="0.30">
         </div>
       </div>
 
-      <div id="pvEvExtra" class="calc-grid-inputs" style="margin-top:10px; display:none;">
+      <h3 style="font-size:0.98rem; margin-top:10px;">Hai un'auto elettrica?</h3>
+      <div class="calc-row">
         <div class="calc-field">
-          <label>Km annui con l'auto elettrica</label>
-          <input id="pvKmAnno" type="number" min="1000" max="40000" value="10000">
+          <label for="evKmAnno">Km/anno percorsi in elettrico</label>
+          <input id="evKmAnno" type="number" min="0" max="60000" value="10000">
         </div>
-
         <div class="calc-field">
-          <label>Consumo auto (kWh/100 km)</label>
-          <input id="pvConsumoEv" type="number" step="0.1" min="10" max="25" value="15">
+          <label for="evKwh100">Consumo auto (kWh/100 km)</label>
+          <input id="evKwh100" type="number" step="0.1" min="10" max="25" value="15">
         </div>
-
         <div class="calc-field">
-          <label>Quota ricarica da FV (%)</label>
-          <input id="pvQuotaEv" type="number" min="10" max="100" value="50">
+          <label for="evQuotaFV">% ricarica da fotovoltaico</label>
+          <input id="evQuotaFV" type="number" min="0" max="100" value="50">
         </div>
       </div>
 
-      <button class="calc-btn" type="button" onclick="calcolaFotovoltaico()">Calcola risparmio fotovoltaico</button>
-
-      <div id="pvResult" class="calc-result"></div>
-
+      <button class="calc-btn" onclick="calcolaFotovoltaico()">Calcola fotovoltaico</button>
+      <div id="fvResult" class="calc-result" style="display:none;"></div>
       <p class="small-note">
-        I valori sono stime semplificate e non sostituiscono un progetto dettagliato con dati reali su produzione,
-        incentivi fiscali e contratti di scambio sul posto o ritiro dedicato.
+        Calcolo molto semplificato: non considera incentivi, tasse, costi di manutenzione e variazioni di prezzo.
       </p>
-    </section>
+    </article>
 
-    <!-- ARTICOLI CORRELATI -->
-    <section class="related-articles">
-      <h2>Articoli consigliati per approfondire</h2>
-      <div class="related-list">
-        <div class="related-card">
-          <a href="la-tv-consuma-piu-di-quanto-pensi.html">Quanto consuma davvero una TV 55 pollici?</a>
-          <p>Tabella consumi, calcoli orari e consigli pratici per non lasciare la TV accesa “per compagnia”.</p>
-        </div>
-        <div class="related-card">
-          <a href="quanto-costa-stufetta-elettrica-1-ora.html">Quanto costa tenere accesa una stufetta 1 ora?</a>
-          <p>Confronto tra potenze, costi orari e trucchi per non trasformare il bagno in un bancomat.</p>
-        </div>
-        <div class="related-card">
-          <a href="temperatura-ideale-per-risparmiare-in-casa.html">Temperatura ideale in casa per risparmiare</a>
-          <p>Perché 19–20 gradi sono spesso la scelta più intelligente secondo tecnici ed esperti.</p>
-        </div>
-        <div class="related-card">
-          <a href="fotovoltaico-4kw-accumulo-10kwh-quanto-costa-davvero-nel-2025.html">Fotovoltaico 4 kW + accumulo 10 kWh</a>
-          <p>Impianto reale, numeri veri: quanto spendi, quanto recuperi e in quanti anni rientri.</p>
-        </div>
-      </div>
-    </section>
-  </main>
+  </section>
+</main>
 
-  <footer class="syncras-footer">
-    <div class="footer-inner">
-      <div class="footer-column">
-        <h4>Syncras.App</h4>
-        <p>
-          Metodo SmartShop per fare acquisti con la testa (e con un po’ di ironia).<br>
-          Niente tecnicismi inutili, solo esperienze reali e numeri spiegati semplice.
-        </p>
-      </div>
-
-      <div class="footer-column">
-        <h4>Link utili</h4>
-        <ul>
-          <li><a href="blog.html">Tutte le guide SmartShop</a></li>
-          <li><a href="offerte.html">Offerte Amazon selezionate</a></li>
-          <li><a href="smart-tv-economica-o-tv-buona-con-box.html">Guida Smart TV</a></li>
-          <li><a href="resistenza-termosifone-fotovoltaico.html">La stanza più fredda della casa</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-column">
-        <h4>Legale & Privacy</h4>
-        <ul>
-          <li><a href="privacy.html">Privacy Policy</a></li>
-          <li><a href="cookie.html">Cookie Policy</a></li>
-          <li><a href="disclaimer-amazon.html">Disclaimer Amazon</a></li>
-          <li><a href="note-legali.html">Note Legali</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="footer-bottom">
-      <p>© <span id="year-span"></span> Syncras.App — Tutti i diritti riservati.</p>
+<footer class="syncras-footer">
+  <div class="footer-inner">
+    <div class="footer-column">
+      <h4>Syncras.App</h4>
       <p>
-        Syncras.App partecipa al Programma Affiliazione Amazon EU.  
-        Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
-        senza alcun costo aggiuntivo per l’utente.
-      </p>
-      <p>
-        Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
-        è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+        Metodo SmartShop per fare acquisti con la testa (e con un po’ di ironia).  
+        Niente tecnicismi inutili, solo numeri spiegati semplice.
       </p>
     </div>
-  </footer>
+    <div class="footer-column">
+      <h4>Link utili</h4>
+      <ul>
+        <li><a href="blog.html">Tutte le guide SmartShop</a></li>
+        <li><a href="quanto-costa-stufetta-elettrica-1-ora.html">Quanto costa la stufetta per 1 ora?</a></li>
+        <li><a href="la-tv-consuma-piu-di-quanto-pensi.html">Quanto consuma la TV 55 pollici?</a></li>
+        <li><a href="fotovoltaico-4kw-accumulo-10kwh.html">Fotovoltaico 4 kW + 10 kWh</a></li>
+      </ul>
+    </div>
+    <div class="footer-column">
+      <h4>Legale & Privacy</h4>
+      <ul>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="cookie.html">Cookie Policy</a></li>
+        <li><a href="disclaimer-amazon.html">Disclaimer Amazon</a></li>
+        <li><a href="note-legali.html">Note Legali</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© <span id="year-span"></span> Syncras.App — Tutti i diritti riservati.</p>
+    <p>
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+      senza alcun costo aggiuntivo per l’utente.
+    </p>
+  </div>
+</footer>
 
-  <script>
-    function toggleMenu() {
-      document.body.classList.toggle('nav-open');
+<script>
+  function toggleMenu() {
+    document.body.classList.toggle('nav-open');
+  }
+
+  // TV
+  function calcolaTV() {
+    const wattBase = parseFloat(document.getElementById('tvWatt').value) || 0;
+    const ore = parseFloat(document.getElementById('tvHours').value) || 0;
+    const prezzo = parseFloat(document.getElementById('tvPrice').value) || 0;
+    const tipo = parseFloat(document.getElementById('tvType').value) || 1;
+
+    const wattReali = wattBase * tipo;
+    const kWhOra = wattReali / 1000;
+    const costoOra = kWhOra * prezzo;
+    const costoGiorno = costoOra * ore;
+    const costoMese = costoGiorno * 30;
+    const costoAnno = costoGiorno * 365;
+
+    const box = document.getElementById('tvResult');
+    box.innerHTML = `
+      <strong>Potenza stimata:</strong> ${wattReali.toFixed(0)} W<br>
+      <strong>Costo 1 ora:</strong> ${costoOra.toFixed(3)} €<br>
+      <strong>Costo al mese (${ore} h/giorno):</strong> ${costoMese.toFixed(2)} €<br>
+      <strong>Costo annuale:</strong> ${costoAnno.toFixed(2)} €
+    `;
+    box.style.display = 'block';
+  }
+
+  // STUFETTA
+  function calcolaStufetta() {
+    const watt = parseFloat(document.getElementById('stufettaWatt').value) || 0;
+    const ore = parseFloat(document.getElementById('stufettaHours').value) || 0;
+    const prezzo = parseFloat(document.getElementById('stufettaPrice').value) || 0;
+    const mode = parseFloat(document.getElementById('stufettaMode').value) || 1;
+
+    const wattReali = watt * mode;
+    const kWhOra = wattReali / 1000;
+    const costoOra = kWhOra * prezzo;
+    const costoGiorno = costoOra * ore;
+    const costoMese = costoGiorno * 30;
+    const costoAnno = costoGiorno * 180; // ipotizziamo 6 mesi l'anno
+
+    const box = document.getElementById('stufettaResult');
+    box.innerHTML = `
+      <strong>Potenza stimata:</strong> ${wattReali.toFixed(0)} W<br>
+      <strong>Costo 1 ora:</strong> ${costoOra.toFixed(3)} €<br>
+      <strong>Costo giornaliero (${ore} h):</strong> ${costoGiorno.toFixed(2)} €<br>
+      <strong>Costo mensile (30 gg):</strong> ${costoMese.toFixed(2)} €<br>
+      <strong>Costo per stagione (6 mesi):</strong> ${costoAnno.toFixed(2)} €
+    `;
+    box.style.display = 'block';
+  }
+
+  // CLIMA
+  function calcolaClima() {
+    const mq = parseFloat(document.getElementById('climaMq').value) || 0;
+    const baseWatt20 = parseFloat(document.getElementById('climaBaseWatt').value) || 0;
+    const ore = parseFloat(document.getElementById('climaHours').value) || 0;
+    const prezzo = parseFloat(document.getElementById('climaPrice').value) || 0;
+    const mode = parseFloat(document.getElementById('climaMode').value) || 1;
+
+    // stimiamo il fabbisogno proporzionale ai m² (base su 20 m²)
+    const wattReali = baseWatt20 * (mq / 20) * mode;
+    const kWhOra = wattReali / 1000;
+    const costoOra = kWhOra * prezzo;
+    const costoGiorno = costoOra * ore;
+    const costoMese = costoGiorno * 30;
+
+    const box = document.getElementById('climaResult');
+    box.innerHTML = `
+      <strong>Potenza media stimata:</strong> ${wattReali.toFixed(0)} W<br>
+      <strong>Costo 1 ora:</strong> ${costoOra.toFixed(3)} €<br>
+      <strong>Costo giornaliero (${ore} h):</strong> ${costoGiorno.toFixed(2)} €<br>
+      <strong>Costo mensile (30 gg):</strong> ${costoMese.toFixed(2)} €
+    `;
+    box.style.display = 'block';
+  }
+
+  // LAVATRICE
+  function calcolaLavatrice() {
+    const kwh = parseFloat(document.getElementById('lavaKwh').value) || 0;
+    const week = parseFloat(document.getElementById('lavaWeek').value) || 0;
+    const prezzo = parseFloat(document.getElementById('lavaPrice').value) || 0;
+
+    const costoCiclo = kwh * prezzo;
+    const cicliMese = week * 4.3;
+    const costoMese = costoCiclo * cicliMese;
+    const costoAnno = costoMese * 12;
+
+    const box = document.getElementById('lavaResult');
+    box.innerHTML = `
+      <strong>Costo per ciclo:</strong> ${costoCiclo.toFixed(2)} €<br>
+      <strong>Cicli al mese (≈4,3 sett.):</strong> ${cicliMese.toFixed(1)}<br>
+      <strong>Costo mensile:</strong> ${costoMese.toFixed(2)} €<br>
+      <strong>Costo annuale:</strong> ${costoAnno.toFixed(2)} €
+    `;
+    box.style.display = 'block';
+  }
+
+  // LAVASTOVIGLIE
+  function calcolaLavastoviglie() {
+    const kwhBase = parseFloat(document.getElementById('lavaPiattiKwh').value) || 0;
+    const progFactor = parseFloat(document.getElementById('lavaPiattiProg').value) || 1;
+    const week = parseFloat(document.getElementById('lavaPiattiWeek').value) || 0;
+    const prezzo = parseFloat(document.getElementById('lavaPiattiPrice').value) || 0;
+
+    const kwhReali = kwhBase * progFactor;
+    const costoCiclo = kwhReali * prezzo;
+    const cicliMese = week * 4.3;
+    const costoMese = costoCiclo * cicliMese;
+    const costoAnno = costoMese * 12;
+
+    const box = document.getElementById('lavaPiattiResult');
+    box.innerHTML = `
+      <strong>Consumo stimato per ciclo:</strong> ${kwhReali.toFixed(2)} kWh<br>
+      <strong>Costo per ciclo:</strong> ${costoCiclo.toFixed(2)} €<br>
+      <strong>Costo mensile:</strong> ${costoMese.toFixed(2)} €<br>
+      <strong>Costo annuale:</strong> ${costoAnno.toFixed(2)} €
+    `;
+    box.style.display = 'block';
+  }
+
+  // ASCIUGATRICE
+  function calcolaAsciugatrice() {
+    const kwhBase = parseFloat(document.getElementById('asciugaKwh').value) || 0;
+    const typeFactor = parseFloat(document.getElementById('asciugaType').value) || 1;
+    const week = parseFloat(document.getElementById('asciugaWeek').value) || 0;
+    const prezzo = parseFloat(document.getElementById('asciugaPrice').value) || 0;
+
+    const kwhReali = kwhBase * typeFactor;
+    const costoCiclo = kwhReali * prezzo;
+    const cicliMese = week * 4.3;
+    const costoMese = costoCiclo * cicliMese;
+    const costoAnno = costoMese * 12;
+
+    const box = document.getElementById('asciugaResult');
+    box.innerHTML = `
+      <strong>Consumo stimato per ciclo:</strong> ${kwhReali.toFixed(2)} kWh<br>
+      <strong>Costo per ciclo:</strong> ${costoCiclo.toFixed(2)} €<br>
+      <strong>Costo mensile:</strong> ${costoMese.toFixed(2)} €<br>
+      <strong>Costo annuale:</strong> ${costoAnno.toFixed(2)} €
+    `;
+    box.style.display = 'block';
+  }
+
+  // FORNO
+  function calcolaForno() {
+    const watt = parseFloat(document.getElementById('fornoWatt').value) || 0;
+    const oreWeek = parseFloat(document.getElementById('fornoOreWeek').value) || 0;
+    const prezzo = parseFloat(document.getElementById('fornoPrice').value) || 0;
+    const uso = parseFloat(document.getElementById('fornoUso').value) || 1;
+
+    const wattReali = watt * uso;
+    const kwhOra = wattReali / 1000;
+    const costoOra = kwhOra * prezzo;
+    const costoWeek = costoOra * oreWeek;
+    const oreMese = oreWeek * 4.3;
+    const costoMese = costoOra * oreMese;
+    const costoAnno = costoMese * 12;
+
+    const box = document.getElementById('fornoResult');
+    box.innerHTML = `
+      <strong>Potenza media stimata:</strong> ${wattReali.toFixed(0)} W<br>
+      <strong>Costo 1 ora:</strong> ${costoOra.toFixed(3)} €<br>
+      <strong>Costo settimanale (${oreWeek} h):</strong> ${costoWeek.toFixed(2)} €<br>
+      <strong>Costo mensile:</strong> ${costoMese.toFixed(2)} €<br>
+      <strong>Costo annuale:</strong> ${costoAnno.toFixed(2)} €
+    `;
+    box.style.display = 'block';
+  }
+
+  // FOTOVOLTAICO
+  function calcolaFotovoltaico() {
+    const kW = parseFloat(document.getElementById('fvKw').value) || 0;
+    const fattoreZona = parseFloat(document.getElementById('fvZona').value) || 0;
+    const autoPerc = (parseFloat(document.getElementById('fvAutoconsumo').value) || 0) / 100;
+    const costoImpianto = parseFloat(document.getElementById('fvCosto').value) || 0;
+    const prezzo = parseFloat(document.getElementById('fvPrezzo').value) || 0;
+
+    // produzione annua stimata
+    const produzioneAnnua = kW * fattoreZona; // kWh/anno
+    const autoconsumoKwh = produzioneAnnua * autoPerc;
+    const risparmioAnnuale = autoconsumoKwh * prezzo;
+    const payback = risparmioAnnuale > 0 ? (costoImpianto / risparmioAnnuale) : 0;
+
+    // auto elettrica (opzionale)
+    const kmAnno = parseFloat(document.getElementById('evKmAnno').value) || 0;
+    const kwh100 = parseFloat(document.getElementById('evKwh100').value) || 0;
+    const quotaFV = (parseFloat(document.getElementById('evQuotaFV').value) || 0) / 100;
+
+    let testoAuto = '';
+    if (kmAnno > 0 && kwh100 > 0) {
+      const kwhAutoTot = kmAnno * kwh100 / 100;
+      const kwhDaFV = kwhAutoTot * quotaFV;
+      const risparmioAuto = kwhDaFV * prezzo;
+      testoAuto =
+        `<br><br><strong>Auto elettrica:</strong> consumo annuo stimato ${kwhAutoTot.toFixed(0)} kWh, ` +
+        `${(quotaFV*100).toFixed(0)}% da FV ≈ ${kwhDaFV.toFixed(0)} kWh coperti, ` +
+        `risparmio annuo extra ≈ ${risparmioAuto.toFixed(0)} €.`;
     }
 
-    // FORMATTATORE EURO
-    function euro(val) {
-      return val.toFixed(2).replace('.', ',');
-    }
+    const box = document.getElementById('fvResult');
+    box.innerHTML = `
+      <strong>Produzione annua stimata:</strong> ${produzioneAnnua.toFixed(0)} kWh<br>
+      <strong>Autoconsumo (${(autoPerc*100).toFixed(0)}%):</strong> ${autoconsumoKwh.toFixed(0)} kWh/anno<br>
+      <strong>Risparmio annuo in bolletta:</strong> ${risparmioAnnuale.toFixed(0)} €<br>
+      <strong>Tempo di rientro indicativo:</strong> ${payback > 0 ? payback.toFixed(1) + ' anni' : 'n.d.'}
+      ${testoAuto}
+    `;
+    box.style.display = 'block';
+  }
 
-    /* ===== TV ===== */
-    function calcolaTV() {
-      const wattBase = parseFloat(document.getElementById('tvWatt').value) || 0;
-      const ore = parseFloat(document.getElementById('tvHours').value) || 0;
-      const prezzo = parseFloat(document.getElementById('tvPrice').value) || 0;
-      const tipo = parseFloat(document.getElementById('tvType').value) || 1;
-
-      const wattReali = wattBase * tipo;
-      const kWhOra = wattReali / 1000;
-      const costoOra = kWhOra * prezzo;
-      const costoGiorno = costoOra * ore;
-      const costoMese = costoGiorno * 30;
-      const costoAnno = costoGiorno * 365;
-
-      const box = document.getElementById('tvResult');
-      box.innerHTML = `
-        <strong>Risultato stimato:</strong>
-        <p>Potenza reale stimata: <strong>${wattReali.toFixed(0)} W</strong></p>
-        <p>Costo per <strong>1 ora</strong>: circa <strong>${euro(costoOra)} €</strong></p>
-        <p>Costo per <strong>${ore} h al giorno</strong>: ~<strong>${euro(costoMese)} € / mese</strong> e <strong>${euro(costoAnno)} € / anno</strong>.</p>
-        <p class="small-note">Se la TV resta accesa “di compagnia” diverse ore al giorno, nel tempo inizia a farsi sentire.</p>
-      `;
-      box.style.display = 'block';
-    }
-
-    /* ===== STUFETTA ===== */
-    function calcolaStufetta() {
-      const wattBase = parseFloat(document.getElementById('stufaWatt').value) || 0;
-      const ore = parseFloat(document.getElementById('stufaHours').value) || 0;
-      const giorni = parseFloat(document.getElementById('stufaDays').value) || 0;
-      const prezzo = parseFloat(document.getElementById('stufaPrice').value) || 0;
-      const tipo = parseFloat(document.getElementById('stufaType').value) || 1;
-
-      const wattReali = wattBase * tipo;
-      const kWhOra = wattReali / 1000;
-      const costoOra = kWhOra * prezzo;
-      const costoGiorno = costoOra * ore;
-      const costoMese = costoGiorno * giorni;
-
-      const box = document.getElementById('stufaResult');
-      box.innerHTML = `
-        <strong>Risultato stimato:</strong>
-        <p>Costo per <strong>1 ora</strong>: circa <strong>${euro(costoOra)} €</strong></p>
-        <p>Costo per una giornata tipo (<strong>${ore} h</strong>): ~<strong>${euro(costoGiorno)} €</strong></p>
-        <p>Costo per <strong>${giorni} giorni al mese</strong>: ~<strong>${euro(costoMese)} €</strong></p>
-        <p class="small-note">La stufetta consuma molto più di una TV: meglio usarla a mirino (bagno, camera prima di dormire) e non come riscaldamento fisso.</p>
-      `;
-      box.style.display = 'block';
-    }
-
-    /* ===== CLIMATIZZATORE ===== */
-    function calcolaClima() {
-      const mode = document.getElementById('climaMode').value;
-      const watt = parseFloat(document.getElementById('climaWatt').value) || 0;
-      const ore = parseFloat(document.getElementById('climaHours').value) || 0;
-      const giorni = parseFloat(document.getElementById('climaDays').value) || 0;
-      const mq = parseFloat(document.getElementById('climaMq').value) || 1;
-      const prezzo = parseFloat(document.getElementById('climaPrice').value) || 0;
-
-      const kWhOra = watt / 1000;
-      const costoOra = kWhOra * prezzo;
-      const costoGiorno = costoOra * ore;
-      const costoMese = costoGiorno * giorni;
-      const costoOraMq = costoOra / mq;
-
-      const descrMode = (mode === 'freddo') ? 'raffrescamento' : 'riscaldamento';
-
-      const box = document.getElementById('climaResult');
-      box.innerHTML = `
-        <strong>Risultato stimato (${descrMode}):</strong>
-        <p>Costo per <strong>1 ora</strong>: ~<strong>${euro(costoOra)} €</strong> (≈ <strong>${euro(costoOraMq)} €</strong> per m²)</p>
-        <p>Costo per una giornata tipo (<strong>${ore} h</strong>): ~<strong>${euro(costoGiorno)} €</strong></p>
-        <p>Costo per <strong>${giorni} giorni al mese</strong>: ~<strong>${euro(costoMese)} €</strong></p>
-        <p class="small-note">Con una pompa di calore moderna modulante, i consumi reali tendono spesso ad essere un po’ inferiori alla potenza nominale che hai inserito.</p>
-      `;
-      box.style.display = 'block';
-    }
-
-    /* ===== LAVATRICE ===== */
-    function calcolaLavatrice() {
-      const kwhBase = parseFloat(document.getElementById('lavKwh').value) || 0;
-      const tempFactor = parseFloat(document.getElementById('lavTemp').value) || 1;
-      const lavWeek = parseFloat(document.getElementById('lavWeek').value) || 0;
-      const prezzo = parseFloat(document.getElementById('lavPrice').value) || 0;
-
-      const kwhCiclo = kwhBase * tempFactor;
-      const costoCiclo = kwhCiclo * prezzo;
-
-      const lavMese = lavWeek * 4;
-      const kwhMese = kwhCiclo * lavMese;
-      const costoMese = kwhMese * prezzo;
-
-      const box = document.getElementById('lavResult');
-      box.innerHTML = `
-        <strong>Risultato stimato:</strong>
-        <p>Consumo per ciclo: ~<strong>${kwhCiclo.toFixed(2)} kWh</strong></p>
-        <p>Costo di <strong>1 lavaggio</strong>: circa <strong>${euro(costoCiclo)} €</strong></p>
-        <p>Con <strong>${lavWeek} lavaggi a settimana</strong> (~${lavMese} al mese):</p>
-        <p>consumo mensile ~<strong>${kwhMese.toFixed(1)} kWh</strong> e costo ~<strong>${euro(costoMese)} €</strong></p>
-        <p class="small-note">Aumentare temperatura e numero di lavaggi incide più di quanto sembri: i cicli Eco a 30–40° aiutano molto.</p>
-      `;
-      box.style.display = 'block';
-    }
-
-    /* ===== FOTOVOLTAICO + EV ===== */
-    function calcolaFotovoltaico() {
-      const kw = parseFloat(document.getElementById('pvKw').value) || 0;
-      const fattoreZona = parseFloat(document.getElementById('pvZona').value) || 0;
-      const autoconsumoPerc = parseFloat(document.getElementById('pvAutoconsumo').value) || 0;
-      const prezzo = parseFloat(document.getElementById('pvPrice').value) || 0;
-      const costoImpianto = parseFloat(document.getElementById('pvCosto').value) || 0;
-      const haEv = document.getElementById('pvEv').value === 'si';
-
-      const produzioneAnnua = kw * fattoreZona; // kWh/anno
-      let kwhAutoconsumo = produzioneAnnua * (autoconsumoPerc / 100);
-
-      let dettaglioEv = '';
-      if (haEv) {
-        const kmAnno = parseFloat(document.getElementById('pvKmAnno').value) || 0;
-        const consumoEv = parseFloat(document.getElementById('pvConsumoEv').value) || 0;
-        const quotaEv = parseFloat(document.getElementById('pvQuotaEv').value) || 0;
-
-        const kwhEvAnnui = (kmAnno * consumoEv / 100) * (quotaEv / 100);
-        kwhAutoconsumo += kwhEvAnnui;
-
-        dettaglioEv = `
-          <p>Auto elettrica: ipotizzando <strong>${kmAnno} km/anno</strong>, consumo medio
-          <strong>${consumoEv} kWh/100 km</strong> e ricarica da FV per il <strong>${quotaEv}%</strong>,
-          aggiungi circa <strong>${kwhEvAnnui.toFixed(0)} kWh/anno</strong> di autoconsumo.</p>
-        `;
-      }
-
-      const risparmioAnnuale = kwhAutoconsumo * prezzo;
-      const payback = risparmioAnnuale > 0 ? (costoImpianto / risparmioAnnuale) : null;
-
-      const box = document.getElementById('pvResult');
-      box.innerHTML = `
-        <strong>Risultato stimato:</strong>
-        <p>Produzione annua stimata: ~<strong>${produzioneAnnua.toFixed(0)} kWh/anno</strong></p>
-        <p>Autoconsumo complessivo considerato: ~<strong>${kwhAutoconsumo.toFixed(0)} kWh/anno</strong></p>
-        ${dettaglioEv}
-        <p>Risparmio annuo in bolletta (solo energia non comprata): ~<strong>${euro(risparmioAnnuale)} € / anno</strong></p>
-        <p>Con un costo impianto di <strong>${euro(costoImpianto)} €</strong>, il tempo di rientro puro è di circa
-        <strong>${payback ? payback.toFixed(1) : '-'} anni</strong>.</p>
-        <p class="small-note">Nel conteggio non sono inclusi eventuali incentivi fiscali o contributi, che possono ridurre ulteriormente i tempi di rientro.</p>
-      `;
-      box.style.display = 'block';
-    }
-
-    // Mostra/nasconde i campi extra se si seleziona "Sì" all'auto elettrica
-    document.getElementById('pvEv').addEventListener('change', function() {
-      const extra = document.getElementById('pvEvExtra');
-      extra.style.display = this.value === 'si' ? 'flex' : 'none';
-    });
-
-    // FOOTER YEAR
-    document.addEventListener('DOMContentLoaded', function() {
-      var span = document.getElementById('year-span');
-      if (span) {
-        span.textContent = new Date().getFullYear();
-      }
-    });
-  </script>
+  // Anno footer
+  document.addEventListener('DOMContentLoaded', function(){
+    var span = document.getElementById('year-span');
+    if (span) span.textContent = new Date().getFullYear();
+  });
+</script>
 </body>
 </html>
+
 
