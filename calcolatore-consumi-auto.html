@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Calcolatore Consumi Auto: confronto benzina, diesel, GPL, metano ed elettrico | Syncras.App</title>
-  <meta name="description" content="Confronta il costo per 100 km e all'anno tra due auto con alimentazioni diverse: benzina, diesel, GPL, metano o elettrico. Inserisci consumi, km e prezzo carburante.">
+  <title>Confronto costi auto: benzina, diesel, GPL, metano, elettrica | Syncras.App</title>
+  <meta name="description" content="Calcola e confronta quanto ti costa davvero un'auto a benzina, diesel, GPL, metano o elettrica. Inserisci consumi, prezzi carburante e km annui.">
   <meta name="robots" content="index,follow">
 
   <!-- Google Analytics -->
@@ -167,7 +167,7 @@
       color: #4b5563;
     }
 
-    /* GRIGLIA CARD (come i calcolatori) */
+    /* GRIGLIA CARD INFO */
 
     .calc-grid {
       display: grid;
@@ -204,28 +204,13 @@
       color: #4b5563;
     }
 
-    .calc-card-link {
-      display: inline-block;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--violet-dark);
-      text-decoration: none;
-      padding-bottom: 1px;
-      border-bottom: 1px solid rgba(75, 58, 203, 0.4);
-    }
-
-    .calc-card-link:hover {
-      text-decoration: none;
-      border-bottom-color: rgba(75, 58, 203, 0.9);
-    }
-
-    @media (max-width: 800px) {
+    @media (max-width: 768px) {
       .calc-grid {
         grid-template-columns: 1fr;
       }
     }
 
-    /* SEZIONE CALCOLATORE AUTO */
+    /* SEZIONE CALCOLATORE */
 
     .calc-section {
       margin: 32px 0;
@@ -304,6 +289,15 @@
       margin-top: 8px;
     }
 
+    a {
+      color: var(--violet-dark);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
     /* FOOTER */
 
     .syncras-footer {
@@ -365,15 +359,6 @@
     .footer-bottom p {
       margin: 4px 0;
     }
-
-    a {
-      color: var(--violet-dark);
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
   </style>
 </head>
 <body>
@@ -394,6 +379,7 @@
         <a href="misteri.html">Misteri</a>
         <a href="quiz.html">Test SmartShop</a>
         <a href="calcolatore-consumi-elettrodomestici.html">Calcolatori</a>
+        <a href="calcolatore-confronto-auto.html" class="active">Confronto auto</a>
         <a href="chi.html">Chi siamo</a>
       </nav>
     </div>
@@ -402,107 +388,122 @@
   <main>
     <div class="page-intro">
       <span class="badge-page">Area strumenti</span>
-      <h1>🚗 Calcolatore Consumi Auto: confronto tra due alimentazioni</h1>
+      <h1>🚗 Confronto costi auto: benzina, diesel, GPL, metano o elettrica?</h1>
       <p class="intro-text">
-        Inserisci i dati di due auto (o due versioni della stessa auto) con alimentazione diversa  
-        – benzina, diesel, GPL, metano o elettrica – e confronta il costo per 100 km e per i km che percorri ogni anno.
+        Inserisci consumi, prezzi dei carburanti e chilometri annui.  
+        Il calcolatore ti mostra il costo per 100 km e per tutta la distanza scelta, confrontando due auto (A e B).
       </p>
     </div>
 
-    <!-- CARD RIASSUNTO / MINI INTRO -->
-    <section aria-label="Panoramica calcolatore">
+    <!-- Pulsante CONDIVIDI in alto -->
+    <button id="shareBtnTop"
+      style="background: var(--violet-main); color:white; padding:10px 15px; border:none;
+             border-radius:6px; cursor:pointer; margin-bottom:20px; font-weight:600;">
+      📎 Condividi questa pagina
+    </button>
+
+    <!-- CARD DI SPIEGAZIONE -->
+    <section aria-label="Informazioni sul confronto">
       <div class="calc-grid">
         <article class="calc-card">
-          <div class="calc-card-label">STRUMENTO #1</div>
-          <h3>Confronta due auto</h3>
+          <div class="calc-card-label">AUTO A</div>
+          <h3>Auto A (qualsiasi alimentazione)</h3>
           <p>
-            Ideale per vedere se ti conviene davvero passare a diesel, GPL, metano o elettrico  
-            rispetto alla tua attuale auto a benzina.
+            Puoi impostare un’auto a benzina, diesel, GPL, metano o elettrica.  
+            Inserisci i consumi in <strong>litri/100 km</strong> o <strong>kWh/100 km</strong> e il relativo prezzo.
           </p>
-          <a href="#calc-auto" class="calc-card-link">Vai al calcolatore</a>
         </article>
 
         <article class="calc-card">
-          <div class="calc-card-label">TIP</div>
-          <h3>Cosa ti serve sapere</h3>
+          <div class="calc-card-label">AUTO B</div>
+          <h3>Auto B (di solito il “nuovo acquisto”)</h3>
           <p>
-            Ti bastano: consumo medio (l/100 km o kWh/100 km), prezzo carburante/energia e i km che fai in un anno.
+            Qui spesso si mette l’auto che vorresti comprare (es. elettrica) per capire se ti conviene davvero  
+            rispetto a quella attuale.
           </p>
-          <span style="font-size:0.85rem; color:#6b7280;">Il resto lo calcola Syncras.</span>
         </article>
       </div>
     </section>
 
-    <!-- CALCOLATORE AUTO -->
+    <!-- CALCOLATORE CONFRONTO AUTO -->
     <section class="calc-section" id="calc-auto">
-      <h2>Calcolatore confronto consumi auto</h2>
+      <h2>Calcolatore confronto costi Auto A vs Auto B</h2>
       <p>
-        Compila i campi per <strong>Auto A</strong> e <strong>Auto B</strong> usando gli stessi km percorsi.  
-        Il calcolatore ti mostra il costo per 100 km, il costo annuo e quanto risparmi (o perdi) passando da una all’altra.
+        I campi “Consumo” si intendono <strong>ogni 100 km</strong>.  
+        Puoi usare litri/100 km (benzina, diesel, GPL, metano) oppure kWh/100 km (elettrica).
       </p>
 
       <div class="calc-grid-inputs">
         <div class="calc-field">
-          <label>Km considerati (ad es. km annui)</label>
-          <input id="autoKm" type="number" min="100" max="100000" value="10000">
+          <label>Chilometri considerati (es. 20000 km/anno)</label>
+          <input id="kmTot" type="number" min="1000" max="100000" value="20000">
         </div>
       </div>
 
-      <h3 style="margin-top:20px;">Auto A</h3>
+      <h3>Auto A</h3>
       <div class="calc-grid-inputs">
         <div class="calc-field">
           <label>Alimentazione Auto A</label>
-          <select id="autoAFuel">
-            <option value="benzina">Benzina</option>
-            <option value="diesel">Diesel</option>
-            <option value="gpl">GPL</option>
-            <option value="metano">Metano</option>
-            <option value="elettrica">Elettrica</option>
+          <select id="tipoA">
+            <option value="Benzina">Benzina</option>
+            <option value="Diesel">Diesel</option>
+            <option value="GPL" selected>GPL</option>
+            <option value="Metano">Metano</option>
+            <option value="Elettrica">Elettrica</option>
           </select>
         </div>
 
         <div class="calc-field">
-          <label>Consumo Auto A (l/100 km o kWh/100 km)</label>
-          <input id="autoACons" type="number" step="0.1" min="1" max="40" value="6.5">
+          <label>Consumo Auto A (litri o kWh / 100 km)</label>
+          <input id="consA" type="number" step="0.1" min="1" max="40" value="8">
         </div>
 
         <div class="calc-field">
           <label>Prezzo carburante/energia Auto A (€/litro o €/kWh)</label>
-          <input id="autoAPrice" type="number" step="0.01" min="0.10" max="5" value="1.90">
+          <input id="prezzoA" type="number" step="0.01" min="0.1" max="5" value="0.90">
         </div>
       </div>
 
-      <h3 style="margin-top:20px;">Auto B</h3>
+      <h3>Auto B</h3>
       <div class="calc-grid-inputs">
         <div class="calc-field">
           <label>Alimentazione Auto B</label>
-          <select id="autoBFuel">
-            <option value="benzina">Benzina</option>
-            <option value="diesel" selected>Diesel</option>
-            <option value="gpl">GPL</option>
-            <option value="metano">Metano</option>
-            <option value="elettrica">Elettrica</option>
+          <select id="tipoB">
+            <option value="Benzina">Benzina</option>
+            <option value="Diesel">Diesel</option>
+            <option value="GPL">GPL</option>
+            <option value="Metano">Metano</option>
+            <option value="Elettrica" selected>Elettrica</option>
           </select>
         </div>
 
         <div class="calc-field">
-          <label>Consumo Auto B (l/100 km o kWh/100 km)</label>
-          <input id="autoBCons" type="number" step="0.1" min="1" max="40" value="5.0">
+          <label>Consumo Auto B (litri o kWh / 100 km)</label>
+          <input id="consB" type="number" step="0.1" min="1" max="40" value="15">
         </div>
 
         <div class="calc-field">
           <label>Prezzo carburante/energia Auto B (€/litro o €/kWh)</label>
-          <input id="autoBPrice" type="number" step="0.01" min="0.10" max="5" value="1.80">
+          <input id="prezzoB" type="number" step="0.01" min="0.1" max="5" value="0.20">
         </div>
       </div>
 
-      <button class="calc-btn" type="button" onclick="calcolaAuto()">Confronta consumi Auto A vs Auto B</button>
+      <button class="calc-btn" type="button" onclick="calcolaAuto()">Calcola confronto auto</button>
 
       <div id="autoResult" class="calc-result"></div>
 
+      <!-- Pulsante CONDIVIDI in basso -->
+      <div style="text-align:center; margin:20px 0;">
+        <button id="shareBtnBottom"
+          style="background: var(--violet-main); color:white; padding:10px 18px; border:none;
+                 border-radius:6px; cursor:pointer; font-weight:600; font-size:1rem;">
+          📎 Condividi il risultato
+        </button>
+      </div>
+
       <p class="small-note">
-        Il calcolo è semplificato e considera solo carburante/energia. Non tiene conto di bollo, assicurazione, manutenzione,
-        pedaggi, parcheggi o eventuali incentivi fiscali.
+        Il calcolatore considera solo il costo “carburante/energia”.  
+        Non tiene conto di assicurazione, bollo, manutenzione, pedaggi, parcheggi, ecc.
       </p>
     </section>
   </main>
@@ -523,7 +524,7 @@
           <li><a href="blog.html">Tutte le guide SmartShop</a></li>
           <li><a href="offerte.html">Offerte Amazon selezionate</a></li>
           <li><a href="smart-tv-economica-o-tv-buona-con-box.html">Guida Smart TV</a></li>
-          <li><a href="fotovoltaico-4kw-accumulo-10kwh-quanto-costa-davvero-nel-2025.html">Guida fotovoltaico</a></li>
+          <li><a href="fotovoltaico-4kw-accumulo-10kwh-quanto-costa-davvero-nel-2025.html">Guida fotovoltaico 4 kW</a></li>
         </ul>
       </div>
 
@@ -557,90 +558,74 @@
       document.body.classList.toggle('nav-open');
     }
 
-    // FORMATTATORE EURO
+    // FORMATTAZIONE EURO
     function euro(val) {
       return val.toFixed(2).replace('.', ',');
     }
 
-    function nomeAlimentazione(codice) {
-      switch (codice) {
-        case 'benzina': return 'benzina';
-        case 'diesel': return 'diesel';
-        case 'gpl': return 'GPL';
-        case 'metano': return 'metano';
-        case 'elettrica': return 'elettrica';
-        default: return codice;
-      }
-    }
-
-    /* ===== CALCOLATORE AUTO ===== */
+    // CALCOLO CONFRONTO AUTO
     function calcolaAuto() {
-      const km = parseFloat(document.getElementById('autoKm').value) || 0;
+      const kmTot = parseFloat(document.getElementById('kmTot').value) || 0;
 
-      const fuelA = document.getElementById('autoAFuel').value;
-      const consA = parseFloat(document.getElementById('autoACons').value) || 0;
-      const priceA = parseFloat(document.getElementById('autoAPrice').value) || 0;
+      const tipoA = document.getElementById('tipoA').value;
+      const consA = parseFloat(document.getElementById('consA').value) || 0;      // litri o kWh /100 km
+      const prezzoA = parseFloat(document.getElementById('prezzoA').value) || 0;  // €/litro o €/kWh
 
-      const fuelB = document.getElementById('autoBFuel').value;
-      const consB = parseFloat(document.getElementById('autoBCons').value) || 0;
-      const priceB = parseFloat(document.getElementById('autoBPrice').value) || 0;
+      const tipoB = document.getElementById('tipoB').value;
+      const consB = parseFloat(document.getElementById('consB').value) || 0;
+      const prezzoB = parseFloat(document.getElementById('prezzoB').value) || 0;
 
-      if (km <= 0 || consA <= 0 || consB <= 0 || priceA <= 0 || priceB <= 0) {
-        alert('Controlla che tutti i valori siano maggiori di zero.');
+      if (kmTot <= 0 || consA <= 0 || consB <= 0 || prezzoA <= 0 || prezzoB <= 0) {
+        alert('Controlla di aver inserito tutti i valori maggiori di zero.');
         return;
       }
 
-      // costo per 100 km
-      const cost100A = (consA / 100) * priceA;
-      const cost100B = (consB / 100) * priceB;
+      // COSTO CORRETTO:
+      // costo per 100 km = consumo(100km) * prezzo unitario
+      // costo per km      = costo/100
+      // costo totale      = costo per km * kmTot
 
-      // costo per i km indicati
-      const costTotA = (consA / 100) * priceA * km;
-      const costTotB = (consB / 100) * priceB * km;
+      const costo100A = consA * prezzoA;
+      const costoKmA = costo100A / 100;
+      const costoTotA = costoKmA * kmTot;
 
-      const diff100 = cost100B - cost100A;   // positivo = B più caro
-      const diffTot = costTotB - costTotA;
+      const costo100B = consB * prezzoB;
+      const costoKmB = costo100B / 100;
+      const costoTotB = costoKmB * kmTot;
 
-      const labelA = nomeAlimentazione(fuelA);
-      const labelB = nomeAlimentazione(fuelB);
+      const diffPer100 = costo100A - costo100B;   // positivo = A più cara
+      const diffTot = costoTotA - costoTotB;
 
-      let fraseDiff100 = '';
-      let fraseDiffTot = '';
-
-      if (Math.abs(diff100) < 0.005) {
-        fraseDiff100 = 'Su 100 km il costo è praticamente identico tra le due auto.';
-      } else if (diff100 > 0) {
-        fraseDiff100 = `Auto A (${labelA}) è più economica di circa <strong>${euro(diff100)} €</strong> ogni 100 km rispetto a Auto B (${labelB}).`;
-      } else {
-        fraseDiff100 = `Auto B (${labelB}) è più economica di circa <strong>${euro(-diff100)} €</strong> ogni 100 km rispetto a Auto A (${labelA}).`;
-      }
-
-      if (Math.abs(diffTot) < 0.5) {
-        fraseDiffTot = `Su ${km.toFixed(0)} km in un anno la spesa è praticamente la stessa.`;
+      let piuEconomica, testoDiff;
+      if (Math.abs(diffTot) < 0.01) {
+        piuEconomica = 'Le due auto hanno un costo molto simile sui chilometri inseriti.';
+        testoDiff = '';
       } else if (diffTot > 0) {
-        fraseDiffTot = `Su <strong>${km.toFixed(0)} km</strong> Auto A (${labelA}) ti farebbe risparmiare circa <strong>${euro(diffTot)} €</strong> rispetto a Auto B (${labelB}).`;
+        piuEconomica = `Auto B (${tipoB}) è più economica.`;
+        testoDiff = `Su <strong>${kmTot.toLocaleString('it-IT')} km</strong> Auto B (${tipoB}) ti farebbe risparmiare circa <strong>${euro(diffTot)} €</strong> solo di "pieno".`;
       } else {
-        fraseDiffTot = `Su <strong>${km.toFixed(0)} km</strong> Auto B (${labelB}) ti farebbe risparmiare circa <strong>${euro(-diffTot)} €</strong> rispetto a Auto A (${labelA}).`;
+        piuEconomica = `Auto A (${tipoA}) è più economica.`;
+        testoDiff = `Su <strong>${kmTot.toLocaleString('it-IT')} km</strong> Auto A (${tipoA}) ti farebbe risparmiare circa <strong>${euro(-diffTot)} €</strong> solo di "pieno".`;
       }
 
       const box = document.getElementById('autoResult');
       box.innerHTML = `
         <strong>Risultato del confronto:</strong>
-        <p>
-          <u>Auto A (${labelA})</u><br>
-          – Costo per 100 km: <strong>${euro(cost100A)} €</strong><br>
-          – Costo per ${km.toFixed(0)} km: <strong>${euro(costTotA)} €</strong>
-        </p>
-        <p>
-          <u>Auto B (${labelB})</u><br>
-          – Costo per 100 km: <strong>${euro(cost100B)} €</strong><br>
-          – Costo per ${km.toFixed(0)} km: <strong>${euro(costTotB)} €</strong>
-        </p>
-        <p>${fraseDiff100}</p>
-        <p>${fraseDiffTot}</p>
+
+        <p><u>Auto A (${tipoA})</u><br>
+        – Costo per 100 km: <strong>${euro(costo100A)} €</strong><br>
+        – Costo per ${kmTot.toLocaleString('it-IT')} km: <strong>${euro(costoTotA)} €</strong></p>
+
+        <p><u>Auto B (${tipoB})</u><br>
+        – Costo per 100 km: <strong>${euro(costo100B)} €</strong><br>
+        – Costo per ${kmTot.toLocaleString('it-IT')} km: <strong>${euro(costoTotB)} €</strong></p>
+
+        <p>${piuEconomica}</p>
+        <p>${testoDiff}</p>
+
         <p class="small-note">
-          Ricorda che i consumi reali dipendono da stile di guida, percorsi (città/autostrada), clima,
-          pressione gomme e carichi. Questo calcolo ti serve per avere un ordine di grandezza chiaro, non un valore assoluto al centesimo.
+          Si tratta solo di un confronto "a parità di chilometri" sui costi di carburante/energia.
+          Nella realtà vanno considerati anche altri fattori (prezzo d'acquisto, manutenzione, tasse, assicurazione, ecc.).
         </p>
       `;
       box.style.display = 'block';
@@ -653,6 +638,31 @@
         span.textContent = new Date().getFullYear();
       }
     });
+
+    // CONDIVISIONE (top + bottom)
+    (function() {
+      const shareTop = document.getElementById('shareBtnTop');
+      const shareBottom = document.getElementById('shareBtnBottom');
+
+      function attachShare(btn) {
+        if (!btn) return;
+        if (navigator.share) {
+          btn.addEventListener('click', () => {
+            navigator.share({
+              title: 'Confronto consumi e costi auto – Syncras.App',
+              text: 'Ho confrontato i costi tra due auto (benzina, diesel, GPL, metano o elettrica). Guarda il risultato qui:',
+              url: window.location.href
+            });
+          });
+        } else {
+          btn.style.display = 'none';
+        }
+      }
+
+      attachShare(shareTop);
+      attachShare(shareBottom);
+    })();
   </script>
 </body>
 </html>
+
