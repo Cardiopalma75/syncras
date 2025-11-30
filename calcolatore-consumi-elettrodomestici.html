@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calcolatore Consumi Elettrodomestici Online (Gratis) – TV, Stufetta, Lavatrice | Syncras.App</title>
+  <meta name="description" content="Calcolatore consumi elettrodomestici online: TV, stufetta elettrica, lavatrice e altri apparecchi. Inserisci Watt, ore di utilizzo e prezzo €/kWh per stimare i costi in bolletta in modo semplice.">
+  <meta name="robots" content="index,follow">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-59D9XRYKF3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-59D9XRYKF3');
+  </script>
+
+  <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --bg-page: #F7F7FB;
+      --text-main: #403E43;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg-page);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      color: var(--text-main);
+    }
+
+    /* HEADER VIOLA UNIFICATO */
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color: white;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+    #main-nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding-bottom: 2px;
+    }
+    #main-nav a:hover {
+      text-decoration: underline;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .menu-toggle span {
+      margin-left: 4px;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        margin: 0 auto;
+        max-width: 1180px;
+        flex-direction: column;
+        background-color: var(--violet-dark);
+        padding: 10px 16px 12px 16px;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
+      }
+      #main-nav a {
+        padding: 6px 0;
+      }
+      body.nav-open #main-nav {
+        display: flex;
+      }
+      .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+
+    main {
+      max-width: 960px;
+      margin: 30px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    h1, h2, h3 {
+      color: var(--violet-dark);
+    }
+    p {
+      margin-bottom: 15px;
+    }
+    ul {
+      margin-left: 20px;
+    }
+
+    .back-links {
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+    .back-links a {
+      color: var(--violet-dark);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .back-links a:hover {
+      text-decoration: underline;
+    }
+
+    .small {
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    .calc-box {
+      margin: 25px 0;
+      padding: 20px;
+      border-radius: 12px;
+      background: #F6F4FF;
+      border: 1px solid #E0E7FF;
+    }
+
+    .calc-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 10px;
+    }
+
+    .calc-grid > div {
+      flex: 1 1 220px;
+    }
+
+    .calc-grid label {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .calc-grid input,
+    .calc-grid select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 4px;
+      border: 1px solid #D1D5DB;
+      border-radius: 6px;
+      font-size: 0.95rem;
+    }
+
+    .calc-button {
+      margin-top: 18px;
+      background: var(--violet-main);
+      color: white;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    .calc-button:hover {
+      background: var(--violet-dark);
+    }
+
+    .calc-result {
+      margin-top: 18px;
+      padding: 15px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+      font-size: 0.95rem;
+    }
+
+    .link-box {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      background: #EEF2FF;
+      padding: 10px 12px;
+      border-radius: 8px;
+    }
+    .link-box a {
+      color: var(--violet-dark);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .link-box a:hover {
+      text-decoration: underline;
+    }
+
+    .coming-soon {
+      margin: 30px 0;
+      padding: 20px;
+      border-radius: 12px;
+      background: #F9FAFB;
+      border: 1px solid #E5E7EB;
+    }
+
+    .coming-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 10px;
+    }
+
+    .coming-card {
+      flex: 1 1 220px;
+      background: white;
+      border-radius: 10px;
+      padding: 14px;
+      box-shadow: 0 2px 4px rgba(15,23,42,0.06);
+      font-size: 0.9rem;
+    }
+
+    .coming-card h3 {
+      margin-top: 0;
+      font-size: 1rem;
+    }
+
+    .related-articles {
+      margin: 30px 0;
+      padding: 20px;
+      border-radius: 12px;
+      background: #F3F4FF;
+    }
+
+    .related-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 10px;
+    }
+
+    .related-card {
+      flex: 1 1 260px;
+      background: white;
+      border-radius: 10px;
+      padding: 14px;
+      box-shadow: 0 2px 4px rgba(15,23,42,0.06);
+      text-decoration: none;
+      color: #111827;
+      font-size: 0.9rem;
+    }
+
+    .related-card h3 {
+      margin-top: 0;
+      font-size: 1rem;
+      color: var(--violet-dark);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      background: #eee;
+      font-size: 0.9rem;
+    }
+
+    .like-box {
+      margin: 25px 0;
+      padding: 16px;
+      border-radius: 10px;
+      background: #FDF2FF;
+      border: 1px solid #FBCFE8;
+      font-size: 0.95rem;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER UNIFICATO -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
+
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
+
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="offerte.html">Offerte Amazon</a>
+        <a href="categorie.html">Categorie</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="quiz.html">Test SmartShop</a>
+        <a href="chi.html">Chi siamo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="back-links">
+      ← <a href="index.html">Torna alla Home</a> |
+      <a href="blog.html">Vai al Blog</a> |
+      <a href="categorie.html">Categorie</a>
+    </div>
+
+    <h1>⚡ Calcolatore Consumi Elettrici: scopri quanto spendono i tuoi elettrodomestici in bolletta</h1>
+
+    <p>
+      Qui puoi <strong>stimare il consumo in kWh e il costo in euro</strong> di alcuni elettrodomestici tipici di casa:
+      TV, stufetta elettrica, lavatrice e molti altri.  
+      Inserisci il <strong>prezzo dell’energia</strong> del tuo contratto (€/kWh) e le ore di utilizzo:
+      i conti vengono fatti in automatico.
+    </p>
+
+    <p class="small">
+      I risultati sono <strong>indicativi</strong> e servono per ragionare sui consumi.
+      Ogni casa, contratto e dispositivo reale può avere valori diversi.
+    </p>
+
+    <!-- CALCOLATORE TV -->
+    <section class="calc-box" id="calcolatore-tv">
+      <h2>📺 Calcolatore consumo TV (LED, OLED, plasma, tubo catodico)</h2>
+      <p>
+        Inserisci una potenza di riferimento (in Watt), le ore al giorno in cui la TV resta accesa
+        e il prezzo dell’energia. Puoi scegliere anche il <strong>tipo/età della TV</strong> per
+        stimare meglio il consumo reale.
+      </p>
+
+      <div class="calc-grid">
+        <div>
+          <label for="tvWatt"><strong>Potenza TV (Watt)</strong></label>
+          <input id="tvWatt" type="number" min="10" max="500" value="100">
+          <p class="small">Se non sai il valore esatto, 80–120 W sono tipici per una TV 50–55".</p>
+        </div>
+
+        <div>
+          <label for="tvHours"><strong>Ore al giorno</strong></label>
+          <input id="tvHours" type="number" min="1" max="24" value="3">
+        </div>
+
+        <div>
+          <label for="tvPrice"><strong>Prezzo energia (€/kWh)</strong></label>
+          <input id="tvPrice" type="number" step="0.01" min="0.10" max="1" value="0.30">
+          <p class="small">Controlla in bolletta la voce “prezzo energia” per un dato più preciso.</p>
+        </div>
+
+        <div>
+          <label for="tvType"><strong>Tipo di TV / Età</strong></label>
+          <select id="tvType">
+            <option value="1">LED/LCD moderno (2015–oggi)</option>
+            <option value="1.1">OLED moderno (2017–oggi)</option>
+            <option value="2.5">Plasma (2005–2013)</option>
+            <option value="3">CRT / Tubo catodico (fino al 2005)</option>
+          </select>
+          <p class="small">Le TV più vecchie e al plasma consumano molto di più a parità di pollici.</p>
+        </div>
+      </div>
+
+      <button class="calc-button" onclick="calcolaTV()">🔍 Calcola consumi TV</button>
+
+      <div id="tvResult" class="calc-result" style="display:none;"></div>
+
+      <div class="link-box">
+        Vuoi vedere un esempio completo con storia comica e tabella dei consumi?
+        <a href="la-tv-consuma-piu-di-quanto-pensi.html">Leggi l’articolo sulla TV e la bolletta</a>.
+      </div>
+    </section>
+
+    <!-- BLOCCO STUFETTA - V1 SENZA CALCOLATORE (ANCORA IN ARRIVO) -->
+    <section class="calc-box" id="calcolatore-stufetta">
+      <h2>🔥 Calcolatore consumo stufetta elettrica (in arrivo)</h2>
+      <p>
+        Stiamo preparando un calcolatore dedicato alla <strong>stufetta elettrica</strong>:
+        potrai inserire potenza (Watt), minuti di utilizzo e prezzo dell’energia per stimare il costo
+        di 10 minuti, un’ora o una serata intera di riscaldamento “di emergenza”.
+      </p>
+      <p class="small">
+        Nel frattempo puoi già farti un’idea leggendo l’articolo dedicato:
+        <a href="quanto-costa-stufetta-elettrica-1-ora.html">Quanto costa tenere accesa una stufetta elettrica per 1 ora?</a>
+      </p>
+    </section>
+
+    <!-- SEZIONE PROSSIMAMENTE -->
+    <section class="coming-soon">
+      <h2>🔧 Prossimamente: altri calcolatori Syncras</h2>
+      <p>
+        Questa pagina crescerà nel tempo: aggiungeremo altri calcolatori per aiutarti a capire facilmente
+        quanto incidono davvero gli elettrodomestici sulla <strong>bolletta luce</strong>.
+      </p>
+
+      <div class="coming-grid">
+        <div class="coming-card">
+          <h3>🧺 Calcolatore consumo lavatrice</h3>
+          <p>
+            Stima del costo per ciclo e all’anno in base a kWh/ciclo, numero di lavaggi settimanali
+            e temperatura (30°, 40°, 60°, 90°).
+          </p>
+          <p class="small">
+            Intanto puoi leggere:
+            <br>
+            <a href="quanti-kwh-consuma-davvero-una-lavatrice.html">Quanti kWh consuma una lavatrice?</a>
+          </p>
+        </div>
+
+        <div class="coming-card">
+          <h3>🍽️ Calcolatore consumo lavastoviglie</h3>
+          <p>
+            Confronto tra programmi Eco, Rapido e Intensivo per capire quanto costa davvero ogni lavaggio
+            e quanto incide a fine mese.
+          </p>
+        </div>
+
+        <div class="coming-card">
+          <h3>🔥 Calcolatore consumo forno elettrico</h3>
+          <p>
+            Stima del costo per un’ora di forno, per la “classica lasagna della domenica” e per l’utilizzo
+            medio settimanale.
+          </p>
+        </div>
+
+        <div class="coming-card">
+          <h3>👖 Calcolatore consumo asciugatrice</h3>
+          <p>
+            Differenza tra asciugatrice a resistenza e a pompa di calore: costo per ciclo, mese e anno,
+            in base ai tuoi utilizzi.
+          </p>
+        </div>
+
+        <div class="coming-card">
+          <h3>🧊 Calcolatore consumo frigorifero</h3>
+          <p>
+            Inserendo i kWh/anno dell’etichetta energetica e il costo della luce vedrai quanto ti costa
+            davvero tenerlo acceso 24/7.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ARTICOLI CORRELATI -->
+    <section class="related-articles">
+      <h2>📚 Articoli correlati sul risparmio energetico</h2>
+      <div class="related-list">
+        <a class="related-card" href="la-tv-consuma-piu-di-quanto-pensi.html">
+          <h3>La TV consuma più di quanto pensi?</h3>
+          <p>
+            Storia comica di una famiglia italiana e numeri reali su consumi, standby e costi in bolletta
+            di una TV moderna.
+          </p>
+        </a>
+
+        <a class="related-card" href="quanto-costa-stufetta-elettrica-1-ora.html">
+          <h3>Quanto costa tenere accesa una stufetta elettrica per 1 ora?</h3>
+          <p>
+            Racconto alla “vita vera” e conti semplici per capire se la stufetta è amica del comfort
+            o nemica del portafoglio.
+          </p>
+        </a>
+
+        <a class="related-card" href="stufa-elettrica-gas-o-climatizzatore.html">
+          <h3>Stufa elettrica, gas o climatizzatore?</h3>
+          <p>
+            Confronto pratico tra i tre sistemi più usati per scaldare casa, con esempi di consumo orario
+            e costi stimati.
+          </p>
+        </a>
+      </div>
+    </section>
+
+    <div class="like-box">
+      Ti è stato utile uno di questi calcolatori?  
+      Se vuoi supportare il progetto Syncras.App, condividi la pagina con un amico o
+      aggiungila ai preferiti: più persone ragionano sui consumi, meno sorprese arrivano in bolletta.
+    </div>
+
+    <div style="text-align:center; margin:30px 0 10px;">
+      <button id="shareBtnBottom"
+        style="background: var(--violet-main); color:white; padding:10px 18px; border:none;
+               border-radius:6px; cursor:pointer; font-weight:600; font-size:1rem;">
+        📎 Condividi questa pagina
+      </button>
+    </div>
+  </main>
+
+  <script>
+    // Toggle menu mobile
+    function toggleMenu() {
+      document.body.classList.toggle('nav-open');
+    }
+
+    // Calcolatore TV
+    function calcolaTV() {
+      const wattBase = parseFloat(document.getElementById('tvWatt').value);
+      const ore = parseFloat(document.getElementById('tvHours').value);
+      const prezzo = parseFloat(document.getElementById('tvPrice').value);
+      const tipo = parseFloat(document.getElementById('tvType').value);
+
+      if (isNaN(wattBase) || isNaN(ore) || isNaN(prezzo) || isNaN(tipo) || wattBase <= 0 || ore <= 0 || prezzo <= 0) {
+        alert('Per favore inserisci valori validi per tutti i campi.');
+        return;
+      }
+
+      // Watt reali in base al tipo/età della TV
+      const wattReali = wattBase * tipo;
+
+      const kWhOra = wattReali / 1000;
+      const costoOra = kWhOra * prezzo;
+      const costoGiorno = costoOra * ore;
+      const costoMese = costoGiorno * 30;
+      const costoAnno = costoGiorno * 365;
+
+      const result = `
+        <h3 style="margin-top:0; color:var(--violet-dark);">Risultato</h3>
+        <p><strong>Potenza reale stimata:</strong> ${wattReali.toFixed(0)} W</p>
+        <p><strong>Consumo orario:</strong> ${kWhOra.toFixed(3)} kWh</p>
+        <p><strong>Costo per 1 ora di TV:</strong> ${costoOra.toFixed(3)} €</p>
+        <p><strong>Costo mensile</strong> (TV accesa ${ore} h/giorno): <strong>${costoMese.toFixed(2)} €</strong></p>
+        <p><strong>Costo annuale</strong> (TV accesa ${ore} h/giorno): <strong>${costoAnno.toFixed(2)} €</strong></p>
+        <p class="small">
+          Valori indicativi basati sui dati inseriti.  
+          Se cambi contratto luce o abitudini di utilizzo, cambiano anche i risultati.
+        </p>
+      `;
+
+      const box = document.getElementById('tvResult');
+      box.innerHTML = result;
+      box.style.display = 'block';
+    }
+
+    // Condivisione pagina (solo bottom per questa pagina)
+    (function() {
+      const shareBottom = document.getElementById('shareBtnBottom');
+
+      function attachShare(btn) {
+        if (!btn) return;
+        if (navigator.share) {
+          btn.addEventListener('click', () => {
+            navigator.share({
+              title: 'Calcolatore Consumi Elettrodomestici – Syncras.App',
+              text: 'Scopri quanto consumano davvero TV, stufetta e altri elettrodomestici con i calcolatori Syncras.',
+              url: window.location.href
+            });
+          });
+        } else {
+          btn.style.display = 'none';
+        }
+      }
+
+      attachShare(shareBottom);
+    })();
+  </script>
+
+  <footer>
+    © 2025 Syncras.App — Tutti i diritti riservati<br>
+    <div style="margin-top:8px;">
+      <a href="privacy.html">Privacy Policy</a> |
+      <a href="cookie.html">Cookie Policy</a> |
+      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
+      <a href="note-legali.html">Note Legali</a>
+    </div>
+    <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+      senza alcun costo aggiuntivo per l’utente.  
+      Per informazioni su ordini, resi o gestione dati relativi agli acquisti,
+      rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+    </p>
+  </footer>
+</body>
+</html>
