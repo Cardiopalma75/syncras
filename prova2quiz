@@ -202,6 +202,78 @@
       margin-bottom: 8px;
     }
 
+    /* ====== NUOVA GRIGLIA QUIZ (stile tipo Misteri) ====== */
+
+    .quiz-intro-text {
+      font-size: 0.95rem;
+      color: #4b5563;
+      margin: 6px 0 14px;
+    }
+
+    .quiz-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin: 14px 0 26px;
+    }
+
+    .quiz-card {
+      background: #f4f5ff;
+      border-radius: 16px;
+      padding: 16px 18px 14px;
+      border: 1px solid #d4d7ff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .quiz-card-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #6b7280;
+      margin-bottom: 4px;
+    }
+
+    .quiz-card h3 {
+      margin: 0 0 6px;
+      font-size: 1rem;
+      color: #1f2937;
+    }
+
+    .quiz-card p {
+      margin: 0 0 10px;
+      font-size: 0.9rem;
+      color: #4b5563;
+    }
+
+    .quiz-card-link {
+      display: inline-block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--violet-dark);
+      text-decoration: none;
+      padding-bottom: 1px;
+      border-bottom: 1px solid rgba(75, 58, 203, 0.4);
+    }
+
+    .quiz-card-link:hover {
+      text-decoration: none;
+      border-bottom-color: rgba(75, 58, 203, 0.9);
+    }
+
+    @media (max-width: 1024px) {
+      .quiz-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .quiz-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ====== LAYOUT TEST SOTTO (uguale a prima) ====== */
+
     .tests-layout {
       display: grid;
       grid-template-columns: minmax(0, 2fr) minmax(0, 1.1fr);
@@ -215,7 +287,7 @@
       }
     }
 
-    /* INDEX TEST – pillole cliccabili */
+    /* INDEX TEST – pillole cliccabili (non usato ora ma tenuto per futuro) */
 
     .test-index-box {
       background: #f4f0ff;
@@ -345,18 +417,8 @@
       /* lasciamo solo testo marcato, il bordo della card viene gestito sotto */
     }
 
-    /* Variante ancora più marcata per il bordo quando selezionato */
     .answer-option input[type="radio"]:checked + span::before {
       content: '';
-    }
-
-    .answer-option input[type="radio"]:checked + span {
-      /* per sicurezza, se vuoi più contrasto puoi rendere il fondo leggermente colorato */
-    }
-
-    /* Facciamo in modo che tutta la card si veda più marcata */
-    .answer-option input[type="radio"]:checked + span {
-      /* niente background per lo span, ma cambiamo il bordo del label via :has in browser moderni */
     }
 
     @supports(selector(:has(*))) {
@@ -536,7 +598,7 @@
         <a href="categorie.html">Categorie</a>
         <a href="curiosita.html">Curiosità</a>
         <a href="misteri.html">Misteri</a>
-        <a href="quiz.html">Test SmartShop</a>
+        <a href="quiz.html" class="active">Test SmartShop</a>
         <a href="chi.html">Chi siamo</a>
       </nav>
     </div>
@@ -552,119 +614,170 @@
       </p>
     </div>
 
-    <!-- INDEX DEI TEST (versione pro) -->
-    <div class="test-index-box">
-      <div class="test-index-title">Scegli il tuo test SmartShop</div>
-      <div class="test-index-subtitle">
-        Vai dritto al punto: tocca il test che ti serve.
-      </div>
+    <!-- NUOVA SEZIONE TIPO "MISTERI": GRIGLIA DI QUIZ -->
+    <section aria-label="Elenco dei test SmartShop disponibili">
+      <p class="quiz-intro-text">
+        Scegli da qui il test che ti assomiglia di più. Ogni box ti porta direttamente al quiz.
+      </p>
 
-      <div class="test-index-links">
-        <a href="#test-acquisto" class="test-pill">🟣 Test Acquisto</a>
-        <a href="#test-smartphone" class="test-pill">📱 Test Smartphone</a>
-        <a href="#test-giga-smartphone" class="test-pill">💾 Test Giga Smartphone</a>
-        <a href="#test-lavatrice" class="test-pill">🧺 Test Lavatrice</a>
-        <a href="#test-tv" class="test-pill">📺 Test TV</a>
-        <a href="#test-lavastoviglie" class="test-pill">🧼 Lavastoviglie 45 / 60 cm</a>
+      <div class="quiz-grid">
+        <article class="quiz-card">
+          <div class="quiz-card-label">TEST #1</div>
+          <h3>Test decisione acquisto</h3>
+          <p>
+            7 domande serie (ma non troppo) per capire se stai facendo un acquisto ragionato
+            o solo perché “ti prudono le dita”.
+          </p>
+          <a href="#test-acquisto" class="quiz-card-link">Vai al test</a>
+        </article>
+
+        <article class="quiz-card">
+          <div class="quiz-card-label">TEST #2</div>
+          <h3>Test Smartphone 2025</h3>
+          <p>
+            Budget, uso reale e pazienza per la tecnologia: ti diciamo su quale fascia di smartphone
+            ha senso guardare davvero.
+          </p>
+          <a href="#test-smartphone" class="quiz-card-link">Vai al test</a>
+        </article>
+
+        <article class="quiz-card">
+          <div class="quiz-card-label">TEST #3</div>
+          <h3>Test Giga Smartphone</h3>
+          <p>
+            Foto, video, chat e giochi: scoprilo una volta per tutte se ti bastano 128 GB
+            o se sei da 256 GB minimo sindacale.
+          </p>
+          <a href="#test-giga-smartphone" class="quiz-card-link">Vai al test</a>
+        </article>
+
+        <article class="quiz-card">
+          <div class="quiz-card-label">TEST #4</div>
+          <h3>Lavastoviglie 45 o 60 cm?</h3>
+          <p>
+            Persone in casa, teglie e spazio in cucina: 6 domande per capire se ti basta una slim
+            o se ti serve una 60 cm “da grandi”.
+          </p>
+          <a href="#test-lavastoviglie" class="quiz-card-link">Vai al test</a>
+        </article>
+
+        <article class="quiz-card">
+          <div class="quiz-card-label">TEST #5</div>
+          <h3>Test Lavatrice 2025</h3>
+          <p>
+            Quanti kg ti servono davvero? Dalle felpe all’husky che perde pelo, ti aiutiamo a scegliere
+            la capacità giusta.
+          </p>
+          <a href="#test-lavatrice" class="quiz-card-link">Vai al test</a>
+        </article>
+
+        <article class="quiz-card">
+          <div class="quiz-card-label">TEST #6</div>
+          <h3>Test TV: economica o buona?</h3>
+          <p>
+            Budget, distanza, luce e pazienza per i software lenti: scopri se ti basta una TV economica
+            o se è meglio puntare più in alto.
+          </p>
+          <a href="#test-tv" class="quiz-card-link">Vai al test</a>
+        </article>
       </div>
-    </div>
+    </section>
 
     <div class="tests-layout">
       <!-- COLONNA TEST -->
       <div>
         <!-- TEST 1: Decisione acquisto -->
-       <section class="test-card" id="test-acquisto">
-  <div class="test-section-label">Test generale</div>
-  <h2>Test decisione acquisto – versione seria</h2>
-  <p class="test-subtitle">
-    7 domande per capire se il tuo prossimo acquisto è davvero sensato o se è solo “voglia di clic”.
-  </p>
+        <section class="test-card" id="test-acquisto">
+          <div class="test-section-label">Test generale</div>
+          <h2>Test decisione acquisto – versione seria</h2>
+          <p class="test-subtitle">
+            7 domande per capire se il tuo prossimo acquisto è davvero sensato o se è solo “voglia di clic”.
+          </p>
 
-  <ol class="test-questions">
-    <li>
-      Ho un motivo concreto e preciso per comprarlo (non solo “mi piace”)?<br>
-      <label class="answer-option">
-        <input type="radio" name="a_q1" value="si">
-        <span>Sì</span>
-      </label>
-      <label class="answer-option">
-        <input type="radio" name="a_q1" value="no">
-        <span>No</span>
-      </label>
-    </li>
-    <li>
-      Rientra nel mio budget di questo mese senza toccare risparmi o soldi per emergenze?<br>
-      <label class="answer-option">
-        <input type="radio" name="a_q2" value="si">
-        <span>Sì</span>
-      </label>
-      <label class="answer-option">
-        <input type="radio" name="a_q2" value="no">
-        <span>No</span>
-      </label>
-    </li>
-    <li>
-      Ho confrontato almeno 2–3 alternative serie (prezzo, recensioni, caratteristiche)?<br>
-      <label class="answer-option">
-        <input type="radio" name="a_q3" value="si">
-        <span>Sì</span>
-      </label>
-      <label class="answer-option">
-        <input type="radio" name="a_q3" value="no">
-        <span>No</span>
-      </label>
-    </li>
-    <li>
-      Sto risolvendo un problema reale che ho da tempo, non un desiderio nato negli ultimi 2–3 giorni?<br>
-      <label class="answer-option">
-        <input type="radio" name="a_q4" value="si">
-        <span>Sì</span>
-      </label>
-      <label class="answer-option">
-        <input type="radio" name="a_q4" value="no">
-        <span>No</span>
-      </label>
-    </li>
-    <li>
-      Se tra una settimana non potessi più restituirlo, sarei comunque tranquillo della scelta?<br>
-      <label class="answer-option">
-        <input type="radio" name="a_q5" value="si">
-        <span>Sì</span>
-      </label>
-      <label class="answer-option">
-        <input type="radio" name="a_q5" value="no">
-        <span>No</span>
-      </label>
-    </li>
-    <li>
-      Se perdo questa offerta oggi, posso comunque permettermi l’acquisto il mese prossimo senza problemi?<br>
-      <label class="answer-option">
-        <input type="radio" name="a_q6" value="si">
-        <span>Sì</span>
-      </label>
-      <label class="answer-option">
-        <input type="radio" name="a_q6" value="no">
-        <span>No</span>
-      </label>
-    </li>
-    <li>
-      Tra 6 mesi penso ancora di usarlo regolarmente (almeno una volta a settimana)?<br>
-      <label class="answer-option">
-        <input type="radio" name="a_q7" value="si">
-        <span>Sì</span>
-      </label>
-      <label class="answer-option">
-        <input type="radio" name="a_q7" value="no">
-        <span>No</span>
-      </label>
-    </li>
-  </ol>
+          <ol class="test-questions">
+            <li>
+              Ho un motivo concreto e preciso per comprarlo (non solo “mi piace”)?<br>
+              <label class="answer-option">
+                <input type="radio" name="a_q1" value="si">
+                <span>Sì</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="a_q1" value="no">
+                <span>No</span>
+              </label>
+            </li>
+            <li>
+              Rientra nel mio budget di questo mese senza toccare risparmi o soldi per emergenze?<br>
+              <label class="answer-option">
+                <input type="radio" name="a_q2" value="si">
+                <span>Sì</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="a_q2" value="no">
+                <span>No</span>
+              </label>
+            </li>
+            <li>
+              Ho confrontato almeno 2–3 alternative serie (prezzo, recensioni, caratteristiche)?<br>
+              <label class="answer-option">
+                <input type="radio" name="a_q3" value="si">
+                <span>Sì</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="a_q3" value="no">
+                <span>No</span>
+              </label>
+            </li>
+            <li>
+              Sto risolvendo un problema reale che ho da tempo, non un desiderio nato negli ultimi 2–3 giorni?<br>
+              <label class="answer-option">
+                <input type="radio" name="a_q4" value="si">
+                <span>Sì</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="a_q4" value="no">
+                <span>No</span>
+              </label>
+            </li>
+            <li>
+              Se tra una settimana non potessi più restituirlo, sarei comunque tranquillo della scelta?<br>
+              <label class="answer-option">
+                <input type="radio" name="a_q5" value="si">
+                <span>Sì</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="a_q5" value="no">
+                <span>No</span>
+              </label>
+            </li>
+            <li>
+              Se perdo questa offerta oggi, posso comunque permettermi l’acquisto il mese prossimo senza problemi?<br>
+              <label class="answer-option">
+                <input type="radio" name="a_q6" value="si">
+                <span>Sì</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="a_q6" value="no">
+                <span>No</span>
+              </label>
+            </li>
+            <li>
+              Tra 6 mesi penso ancora di usarlo regolarmente (almeno una volta a settimana)?<br>
+              <label class="answer-option">
+                <input type="radio" name="a_q7" value="si">
+                <span>Sì</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="a_q7" value="no">
+                <span>No</span>
+              </label>
+            </li>
+          </ol>
 
-  <button type="button" class="test-btn" onclick="valutaTestAcquisto()">Calcola risultato</button>
- <p id="risultato-acquisto" class="test-result"></p>
-<div id="amazon-acquisto" class="amazon-box"></div>
-</section>
-
+          <button type="button" class="test-btn" onclick="valutaTestAcquisto()">Calcola risultato</button>
+          <p id="risultato-acquisto" class="test-result"></p>
+          <div id="amazon-acquisto" class="amazon-box"></div>
+        </section>
 
         <!-- TEST 2: Smartphone -->
         <section class="test-card" id="test-smartphone">
@@ -1446,74 +1559,74 @@
     /* ==============================
        TEST ACQUISTO
        ============================== */
-function valutaTestAcquisto() {
-  const domande = ['a_q1', 'a_q2', 'a_q3', 'a_q4', 'a_q5', 'a_q6', 'a_q7'];
-  let si = 0;
-  let risposte = 0;
+    function valutaTestAcquisto() {
+      const domande = ['a_q1', 'a_q2', 'a_q3', 'a_q4', 'a_q5', 'a_q6', 'a_q7'];
+      let si = 0;
+      let risposte = 0;
 
-  domande.forEach(function(nome) {
-    const sel = document.querySelector('input[name="' + nome + '"]:checked');
-    if (sel) {
-      risposte++;
-      if (sel.value === 'si') si++;
+      domande.forEach(function(nome) {
+        const sel = document.querySelector('input[name="' + nome + '"]:checked');
+        if (sel) {
+          risposte++;
+          if (sel.value === 'si') si++;
+        }
+      });
+
+      const el = document.getElementById('risultato-acquisto');
+      const boxAmazon = document.getElementById('amazon-acquisto');
+
+      // reset classi e box Amazon
+      el.className = 'test-result';
+      if (boxAmazon) {
+        boxAmazon.innerHTML = '';
+      }
+
+      if (risposte < domande.length) {
+        el.textContent = 'Rispondi a tutte le domande per vedere il risultato.';
+        return;
+      }
+
+      // 5–7 "Sì" = verde, 3–4 = giallo, 0–2 = rosso
+      if (si >= 5) {
+        // VERDE → mostra link Amazon
+        el.textContent =
+          'Verde: il tuo acquisto sembra ragionato. Se il prodotto è giusto e il prezzo è onesto, puoi procedere piuttosto tranquillo.';
+        el.classList.add('result-good');
+
+        if (boxAmazon) {
+          boxAmazon.innerHTML = `
+            <strong>Se dopo il test vuoi davvero comprare:</strong>
+            <span>Ora ha senso guardare le offerte con calma, confrontando modelli e recensioni.</span><br>
+            <a href="${AMAZON_GENERIC_LINK}" target="_blank" rel="nofollow noopener sponsored">
+              Vai a vedere le offerte su Amazon
+            </a>
+          `;
+        }
+
+      } else if (si >= 3) {
+        // GIALLO → mostra link Amazon ma con messaggio più prudente
+        el.textContent =
+          'Giallo: ci sono alcuni punti deboli. Prima di comprare, valuta alternative e chiediti se ti serve davvero proprio adesso.';
+        el.classList.add('result-medium');
+
+        if (boxAmazon) {
+          boxAmazon.innerHTML = `
+            <strong>Vuoi comunque dare un’occhiata?</strong>
+            <span>Se sei ancora indeciso, puoi confrontare prezzi e modelli senza fretta.</span><br>
+            <a href="${AMAZON_GENERIC_LINK}" target="_blank" rel="nofollow noopener sponsored">
+              Guarda le offerte su Amazon (solo se ha davvero senso)
+            </a>
+          `;
+        }
+
+      } else {
+        // ROSSO → NESSUN link Amazon
+        el.textContent =
+          'Rosso: qui suona forte il campanello dell’acquisto d’impulso. Meglio fermarsi, chiudere le schede e ripensarci tra qualche giorno.';
+        el.classList.add('result-bad');
+        // boxAmazon resta vuoto
+      }
     }
-  });
-
-  const el = document.getElementById('risultato-acquisto');
-  const boxAmazon = document.getElementById('amazon-acquisto');
-
-  // reset classi e box Amazon
-  el.className = 'test-result';
-  if (boxAmazon) {
-    boxAmazon.innerHTML = '';
-  }
-
-  if (risposte < domande.length) {
-    el.textContent = 'Rispondi a tutte le domande per vedere il risultato.';
-    return;
-  }
-
-  // 5–7 "Sì" = verde, 3–4 = giallo, 0–2 = rosso
-  if (si >= 5) {
-    // VERDE → mostra link Amazon
-    el.textContent =
-      'Verde: il tuo acquisto sembra ragionato. Se il prodotto è giusto e il prezzo è onesto, puoi procedere piuttosto tranquillo.';
-    el.classList.add('result-good');
-
-    if (boxAmazon) {
-      boxAmazon.innerHTML = `
-        <strong>Se dopo il test vuoi davvero comprare:</strong>
-        <span>Ora ha senso guardare le offerte con calma, confrontando modelli e recensioni.</span><br>
-        <a href="${AMAZON_GENERIC_LINK}" target="_blank" rel="nofollow noopener sponsored">
-          Vai a vedere le offerte su Amazon
-        </a>
-      `;
-    }
-
-  } else if (si >= 3) {
-    // GIALLO → mostra link Amazon ma con messaggio più prudente
-    el.textContent =
-      'Giallo: ci sono alcuni punti deboli. Prima di comprare, valuta alternative e chiediti se ti serve davvero proprio adesso.';
-    el.classList.add('result-medium');
-
-    if (boxAmazon) {
-      boxAmazon.innerHTML = `
-        <strong>Vuoi comunque dare un’occhiata?</strong>
-        <span>Se sei ancora indeciso, puoi confrontare prezzi e modelli senza fretta.</span><br>
-        <a href="${AMAZON_GENERIC_LINK}" target="_blank" rel="nofollow noopener sponsored">
-          Guarda le offerte su Amazon (solo se ha davvero senso)
-        </a>
-      `;
-    }
-
-  } else {
-    // ROSSO → NESSUN link Amazon
-    el.textContent =
-      'Rosso: qui suona forte il campanello dell’acquisto d’impulso. Meglio fermarsi, chiudere le schede e ripensarci tra qualche giorno.';
-    el.classList.add('result-bad');
-    // boxAmazon resta vuoto
-  }
-}
 
     /* ==============================
        TEST SMARTPHONE
@@ -1820,4 +1933,5 @@ function valutaTestAcquisto() {
   </script>
 </body>
 </html>
+
 
