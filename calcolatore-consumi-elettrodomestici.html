@@ -592,6 +592,58 @@
         </p>
       `;
 
+
+
+      // Calcolatore STUFETTA
+function calcolaStufetta() {
+  const wattBase = parseFloat(document.getElementById('stufaWatt').value);
+  const minuti = parseFloat(document.getElementById('stufaMinutes').value);
+  const prezzo = parseFloat(document.getElementById('stufaPrice').value);
+  const tipo = parseFloat(document.getElementById('stufaType').value);
+
+  if (isNaN(wattBase) || isNaN(minuti) || isNaN(prezzo) ||
+      wattBase <= 0 || minuti <= 0 || prezzo <= 0) {
+    alert('Per favore inserisci valori validi per tutti i campi della stufetta.');
+    return;
+  }
+
+  const wattReali = wattBase * tipo;
+
+  const oreGiorno = minuti / 60;
+  const kWhOra = wattReali / 1000;
+  const costoOra = kWhOra * prezzo;
+
+  const costoGiorno = costoOra * oreGiorno;
+  const costoMese = costoGiorno * 30;
+  const costoInverno = costoGiorno * 90; // 3 mesi
+
+  const costo10Min = costoOra * (10 / 60);
+
+  const result = `
+    <h3 style="margin-top:0; color:var(--violet-dark);">Risultato</h3>
+    <p><strong>Potenza reale stimata:</strong> ${wattReali.toFixed(0)} W (${(wattReali / 1000).toFixed(2)} kW)</p>
+    <p><strong>Costo per 10 minuti:</strong> ${costo10Min.toFixed(3)} €</p>
+    <p><strong>Costo per 1 ora:</strong> ${costoOra.toFixed(3)} €</p>
+    <p><strong>Costo giornaliero (${minuti} min):</strong> ${costoGiorno.toFixed(2)} €</p>
+    <p><strong>Costo mensile (30 giorni):</strong> ${costoMese.toFixed(2)} €</p>
+    <p><strong>Costo per un inverno (3 mesi):</strong> ${costoInverno.toFixed(2)} €</p>
+    <p class="small">
+      Valori indicativi basati sui dati inseriti.  
+      Se cambi minuti di utilizzo, tipo di stufetta o prezzo dell’energia cambiano anche i risultati.
+    </p>
+  `;
+
+  const box = document.getElementById('stufaResult');
+  box.innerHTML = result;
+  box.style.display = 'block';
+}
+
+
+
+      
+
+
+      
       const box = document.getElementById('tvResult');
       box.innerHTML = result;
       box.style.display = 'block';
