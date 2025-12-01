@@ -131,6 +131,7 @@
             }
         }
 
+        /* Il colore del link principale <a> deve essere gestito localmente in questo file */
         a {
             color: var(--violet-dark);
             text-decoration: none;
@@ -220,12 +221,13 @@
             }
         }
 
-        .calc-card-link { /* NUOVA CLASSE WRAPPER PER RENDERE TUTTA LA CARD CLICCABILE */
-            text-decoration: none; /* Rimuove sottolineatura sul testo della card */
-            color: inherit; /* Mantiene il colore del testo come definito in body/calc-card */
-            display: block; /* Essenziale per coprire tutta l'area del link */
+        /* NUOVA CLASSE WRAPPER PER RENDERE TUTTA LA CARD CLICCABILE */
+        .calc-card-link { 
+            text-decoration: none; 
+            color: inherit; 
+            display: block; 
         }
-        
+
         .calc-card {
             background: #f8f9ff;
             border-radius: 14px;
@@ -233,7 +235,7 @@
             border: 1px solid #e0e7ff;
             box-shadow: 0 4px 10px rgba(15,23,42,0.06);
             transition: transform 0.15s ease, box-shadow 0.15s ease;
-            position: relative; /* Necessario per il pseudo-elemento ::after */
+            position: relative; 
         }
 
         .calc-card:hover {
@@ -241,9 +243,8 @@
             box-shadow: 0 6px 18px rgba(15,23,42,0.15);
         }
 
-        /* Stile del CTA (ora usato come elemento secondario visivo) */
+        /* Stile del CTA */
         .calc-card-btn {
-            /* MANTENUTO: ma ora ha solo una funzione visiva/di testo */
             display: inline-block;
             margin-top: 4px;
             padding: 8px 14px;
@@ -254,10 +255,14 @@
             font-size: 0.9rem;
             text-decoration: none;
             box-shadow: 0 2px 7px rgba(15,23,42,0.25);
-            pointer-events: none; /* Impedisce che questo link venga cliccato, dato che l'intera card è un link */
         }
 
-        /* Stile per gli elenchi dentro le card (senza icone da bambino) */
+        .calc-card-btn:hover {
+            opacity: 0.96;
+            transform: translateY(-1px);
+        }
+
+        /* Stile per gli elenchi dentro le card */
         .calc-card ul {
             list-style: none;
             padding-left: 0;
