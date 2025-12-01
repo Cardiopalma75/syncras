@@ -131,7 +131,6 @@
             }
         }
 
-        /* Il colore del link principale <a> deve essere gestito localmente in questo file */
         a {
             color: var(--violet-dark);
             text-decoration: none;
@@ -221,7 +220,7 @@
             }
         }
 
-        /* NUOVA CLASSE WRAPPER PER RENDERE TUTTA LA CARD CLICCABILE */
+        /* CLASSE WRAPPER PER RENDERE TUTTA LA CARD CLICCABILE */
         .calc-card-link { 
             text-decoration: none; 
             color: inherit; 
@@ -231,8 +230,12 @@
         .calc-card {
             background: #f8f9ff;
             border-radius: 14px;
-            padding: 16px 18px 14px;
+            /* Modifica i bordi e il padding per l'accento colore laterale */
             border: 1px solid #e0e7ff;
+            border-left: 6px solid var(--violet-main); /* Bordo di accento a sinistra */
+            padding: 16px 18px 14px;
+            padding-left: 12px; /* Adattiamo il padding per via del bordo spesso */
+
             box-shadow: 0 4px 10px rgba(15,23,42,0.06);
             transition: transform 0.15s ease, box-shadow 0.15s ease;
             position: relative; 
@@ -419,96 +422,140 @@
         </div>
     </header>
 
-   <main>
-  <section class="page-intro">
-    <span class="badge-page">Strumenti pratici</span>
-    <h1>Calcolatori Syncras.App</h1>
-    <p class="intro-text">
-      Qui trovi tutti i calcolatori in un’unica pagina.  
-      Ti aiutano a capire <strong>quanto spendi davvero</strong> con elettrodomestici, auto,
-      mutui/finanziamenti e fotovoltaico, prima di tirare fuori i soldi.
-    </p>
-  </section>
-
-  <section aria-label="Elenco calcolatori disponibili">
-    <div class="calc-grid-tools">
-
-      <!-- 1. Calcolatore consumi elettrodomestici -->
-      <a href="calcolatore-consumi-elettrodomestici.html" class="calc-card">
-        <div class="calc-card-inner">
-          <span class="calc-card-tag">Casa & bollette</span>
-          <h2>Calcolatore consumi elettrodomestici</h2>
-          <p>
-            Stufetta elettrica, TV, lavatrice, forno, lavastoviglie, asciugatrice
-            e fotovoltaico base: inserisci i tuoi dati e scopri il costo reale in bolletta.
-          </p>
-          <ul>
-            <li>Stima kWh e €/mese</li>
-            <li>Confronto tra diversi elettrodomestici</li>
-            <li>Utile per capire dove “scappa” la corrente</li>
-          </ul>
-          <span class="calc-card-cta">Apri il calcolatore ▶</span>
+    <main>
+        <div class="back-links">
+            ← <a href="index.html">Torna alla Home</a> |
+            <a href="blog.html">Vai al Blog</a>
         </div>
-      </a>
 
-      <!-- 2. Calcolatore confronto costi auto -->
-      <a href="calcolatore-consumi-auto.html" class="calc-card">
-        <div class="calc-card-inner">
-          <span class="calc-card-tag">Auto & spostamenti</span>
-          <h2>Calcolatore confronto costi auto</h2>
-          <p>
-            Confronta i costi di due auto diverse (benzina, diesel, GPL, metano, elettrica)
-            in base a consumi, prezzo carburante/energia e chilometri annui.
-          </p>
-          <ul>
-            <li>Costo per 100 km e per i tuoi km annui</li>
-            <li>Confronto diretto Auto A vs Auto B</li>
-            <li>Perfetto per valutare se cambiare auto conviene davvero</li>
-          </ul>
-          <span class="calc-card-cta">Confronta le auto ▶</span>
+        <div class="page-intro">
+            <span class="badge-page">Area Calcoli</span>
+            <h1>I Calcolatori Essenziali per i Tuoi Acquisti Consapevoli</h1>
+            <p class="intro-text">
+                La spesa per **impianti, veicoli, elettrodomestici o finanziamenti** richiede chiarezza. Qui trovi gli strumenti Syncras.App: calcolatori basati su dati reali e formule trasparenti. **Ti supportiamo nella tua valutazione**, offrendoti tutti i numeri necessari per prendere una decisione informata e consapevole.
+            </p>
         </div>
-      </a>
 
-      <!-- 3. Calcolatore finanziamenti e mutui -->
-      <a href="calcolatore-finanziamenti-mutui.html" class="calc-card">
-        <div class="calc-card-inner">
-          <span class="calc-card-tag">Soldi & debiti</span>
-          <h2>Calcolatore rata mutui e finanziamenti</h2>
-          <p>
-            Inserisci importo, tasso e durata: il calcolatore ti mostra la rata,
-            gli interessi totali e come cambia la quota capitale/interest nel tempo.
-          </p>
-          <ul>
-            <li>Rata mensile stimata</li>
-            <li>Interessi pagati complessivi</li>
-            <li>Tabella di ammortamento semplificata</li>
-          </ul>
-          <span class="calc-card-cta">Simula la rata ▶</span>
-        </div>
-      </a>
+        <section aria-label="Elenco calcolatori Syncras.App">
+            <div class="calc-grid">
+                
+                <a href="calcolatore-fotovoltaico-ammortamento.html" class="calc-card-link">
+                    <article class="calc-card">
+                        <div class="calc-card-label">Rientro Economico & Risparmio</div>
+                        <h2>Calcolatore fotovoltaico: rientro, risparmio e auto elettrica</h2>
+                        <p>
+                            Simula la **produzione annua** del tuo impianto, l’**autoconsumo**,
+                            il **risparmio in bolletta** e il **tempo di rientro** dell’investimento.
+                        </p>
+                        <ul>
+                            <li>Stima del rientro con e senza detrazioni fiscali.</li>
+                            <li>Vista **anno per anno** del recupero economico.</li>
+                            <li>Opzione per includere la ricarica dell’auto elettrica.</li>
+                        </ul>
+                        <span class="calc-card-btn">
+                            Apri calcolatore fotovoltaico ▶
+                        </span>
+                    </article>
+                </a>
 
-      <!-- 4. Calcolatore fotovoltaico avanzato -->
-      <a href="calcolatore-fotovoltaico-ammortamento.html" class="calc-card">
-        <div class="calc-card-inner">
-          <span class="calc-card-tag">Fotovoltaico & risparmio</span>
-          <h2>Calcolatore fotovoltaico avanzato</h2>
-          <p>
-            Stima produzione annua, risparmio in bolletta e anni di rientro
-            dell’impianto. Include anche l’impatto di un’eventuale auto elettrica.
-          </p>
-          <ul>
-            <li>Produzione kWh/anno per zona</li>
-            <li>Risparmio annuo e rientro con/ senza detrazioni</li>
-            <li>Quota dei km dell’auto elettrica coperta dal FV</li>
-          </ul>
-          <span class="calc-card-cta">Calcola il rientro ▶</span>
-        </div>
-      </a>
+                <a href="calcolatore-consumi-elettrodomestici.html" class="calc-card-link">
+                    <article class="calc-card">
+                        <div class="calc-card-label">Energia & Bollette</div>
+                        <h2>Calcolatore consumi elettrodomestici</h2>
+                        <p>
+                            Scopri quanto ti costa tenere accesa **stufetta, TV, lavatrice, forno,
+                            lavastoviglie, asciugatrice**. Inserisci potenza, ore di utilizzo e prezzo dell’energia.
+                        </p>
+                        <ul>
+                            <li>Perfetto per trovare i veri “mangia-corrente” di casa.</li>
+                            <li>Confronta scenari diversi (meno ore, fascia horaria, ecc.).</li>
+                            <li>Ideale per capire se cambiare elettrodomestico ha senso.</li>
+                        </ul>
+                        <span class="calc-card-btn">
+                            Calcola consumi elettrodomestici ▶
+                        </span>
+                    </article>
+                </a>
 
-    </div>
-  </section>
-</main>
+                <a href="calcolatore-consumi-auto.html" class="calc-card-link">
+                    <article class="calc-card">
+                        <div class="calc-card-label">Auto & Spostamenti</div>
+                        <h2>Calcolatore confronto costi auto (carburante/energia)</h2>
+                        <p>
+                            Confronta i **costi di utilizzo** tra due auto (A e B) in base a **consumo** e **prezzo di carburante/energia** (benzina, diesel, GPL, metano o elettrica).
+                        </p>
+                        <ul>
+                            <li>Confronto costo per **100 km** e sul totale dei km annui.</li>
+                            <li>Ideale per capire se passare a **GPL/metano/elettrica** ti conviene davvero.</li>
+                            <li>Puoi usare i dati reali del tuo utilizzo (km/anno).</li>
+                        </ul>
+                        <span class="calc-card-btn">
+                            Confronta costi auto ▶
+                        </span>
+                    </article>
+                </a>
 
+                <a href="calcolatore-finanziamenti-mutui.html" class="calc-card-link">
+                    <article class="calc-card">
+                        <div class="calc-card-label">Soldi & Debiti</div>
+                        <h2>Calcolatore finanziamenti e mutui</h2>
+                        <p>
+                            Simula la **rata mensile**, gli **interessi totali** e come cambia il peso della rata
+                            se vari durata o tasso. Utile sia per piccoli acquisti che per la casa.
+                        </p>
+                        <ul>
+                            <li>Calcola rata, quota interessi e capitale nel tempo.</li>
+                            <li>Confronta scenari: durata più breve vs più lunga.</li>
+                            <li>Perfetto da stampare o salvare prima di andare in banca.</li>
+                        </ul>
+                        <span class="calc-card-btn">
+                            Simula rata mutuo/finanziamento ▶
+                        </span>
+                    </article>
+                </a>
+            </div>
+        </section>
+
+        <section class="faq-section">
+            <h2>Come usare al meglio i calcolatori Syncras.App</h2>
+            <p>
+                I calcolatori non sono preventivi ufficiali, ma strumenti per ragionare in modo
+                più lucido prima di spendere. Ti permettono di collegare numeri, abitudini e
+                decisioni d’acquisto, senza farti guidare solo da offerte a tempo e slogan.
+            </p>
+
+            <h3>Devo inserire dati precisi o vanno bene valori indicativi?</h3>
+            <p>
+                Più i dati sono realistici (consumi in kWh, km annui, tassi di interesse, ecc.),
+                più il risultato sarà vicino alla tua situazione.
+                Se non conosci il valore esatto, usa etichette energetiche, contratti luce
+                o gli esempi indicati negli articoli collegati ai calcolatori.
+            </p>
+
+            <h3>I risultati sono affidabili?</h3>
+            <p>
+                I calcoli usano formule semplici e trasparenti:
+                potenza × ore × prezzo per l’energia,
+                consumo × prezzo per i carburanti,
+                e formule standard per la rata dei finanziamenti.
+                Nella realtà ci possono essere costi aggiuntivi (manutenzione, tasse, spese accessorie):
+                i calcolatori servono per avere un ordine di grandezza chiaro, non un contratto firmato.
+            </p>
+
+            <h3>Posso usare questi calcolatori per decidere un acquisto importante?</h3>
+            <p>
+                Puoi usarli come base di partenza per capire se un’idea ha senso (nuova auto,
+                elettrodomestico, mutuo). Per decisioni importanti è sempre consigliabile confrontare
+                più preventivi reali e, quando serve, parlare con un tecnico o un consulente qualificato.
+            </p>
+        </section>
+
+        <p class="tags">
+            <strong>Tag:</strong> calcolatori online, calcolatore consumi elettrodomestici, confronto costi auto,
+            calcolatore benzina diesel GPL metano elettrica, calcolatore rata mutuo, calcolatore finanziamento,
+            calcolatore ammortamento fotovoltaico, risparmio bolletta, risparmio carburante, scelte di acquisto consapevoli.
+        </p>
+    </main>
 
     <footer class="syncras-footer">
         <div class="footer-inner">
