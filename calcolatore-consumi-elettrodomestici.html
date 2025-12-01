@@ -918,107 +918,44 @@
     </section>
 
     <!-- =========================
-         CALCOLATORE FOTOVOLTAICO
-         ========================= -->
-    <section class="calc-section" id="calc-fotovoltaico">
-      <div class="calc-header">
-        <h2>Calcolatore fotovoltaico (con auto elettrica opzionale)</h2>
-        <small>Numeri semplici per capire produzione, risparmio e tempi di rientro</small>
-      </div>
+     LINK AL NUOVO CALCOLATORE FOTOVOLTAICO
+     ========================= -->
+<section class="calc-section" id="calc-fotovoltaico">
+  <div class="calc-header">
+    <h2>Hai un impianto fotovoltaico? Fai il calcolo completo qui</h2>
+    <small>Ora il fotovoltaico ha un simulatore dedicato con tabella di rientro anno per anno.</small>
+  </div>
 
-      <p style="font-size:0.9rem;">
-        Qui puoi farti un’idea della produzione annua di un impianto fotovoltaico,
-        del risparmio in bolletta e del tempo di rientro.  
-        I numeri sono volutamente semplificati per ragionare in modo rapido.
-      </p>
+  <p style="font-size:0.9rem;">
+    In questa pagina ti concentriamo sui consumi degli elettrodomestici singoli
+    (stufetta, TV, lavatrice, forno, lavastoviglie, asciugatrice).<br>
+    Per il <strong>fotovoltaico</strong> abbiamo creato un calcolatore a parte
+    che ti permette di vedere:
+  </p>
 
-      <!-- BLOCCO A: IMPIANTO -->
-      <div class="pv-subsection">
-        <h3>Blocco A – Impianto fotovoltaico</h3>
-        <div class="pv-grid">
-          <div class="calc-field">
-            <label>Potenza impianto (kW)</label>
-            <input type="number" id="pvKw" min="1" max="20" step="0.1" value="4">
-          </div>
-          <div class="calc-field">
-            <label>Zona geografica</label>
-            <select id="pvZona">
-              <option value="1100">Nord Italia (≈1100 kWh/kW anno)</option>
-              <option value="1300" selected>Centro Italia (≈1300 kWh/kW anno)</option>
-              <option value="1500">Sud / Isole (≈1500 kWh/kW anno)</option>
-            </select>
-          </div>
-          <div class="calc-field">
-            <label>Autoconsumo stimato (%)</label>
-            <input type="number" id="pvAutoconsumo" min="10" max="100" value="50">
-          </div>
-          <div class="calc-field">
-            <label>Prezzo energia (€/kWh)</label>
-            <input type="number" id="pvPrezzo" min="0.1" max="1" step="0.01" value="0.30">
-          </div>
-          <div class="calc-field">
-            <label>Costo impianto (€)</label>
-            <input type="number" id="pvCosto" min="1000" max="40000" step="100" value="10000">
-          </div>
-          <div class="calc-field">
-            <label>Anni di incentivo / detrazione</label>
-            <input type="number" id="pvAnniDetrazione" min="0" max="20" value="10">
-          </div>
-          <div class="calc-field">
-            <label>Quota costo detraibile (%)</label>
-            <input type="number" id="pvQuotaDetrazione" min="0" max="100" value="50">
-          </div>
-        </div>
+  <ul style="font-size:0.9rem; margin-top:6px; padding-left:18px;">
+    <li>produzione annua stimata dell’impianto;</li>
+    <li>risparmio annuo in bolletta;</li>
+    <li>impatto di una eventuale <strong>auto elettrica</strong> sui conti;</li>
+    <li><strong>tabella di ammortamento anno per anno</strong> con rientro dell’investimento.</li>
+  </ul>
 
-        <button class="calc-button" onclick="calcolaFotovoltaicoImpianto()">Calcola impianto fotovoltaico</button>
-        <div id="pvResultImpianto" class="calc-result"></div>
-      </div>
+  <p style="font-size:0.9rem; margin-top:8px;">
+    Se vuoi fare il discorso “investimento / rientro economico”, usa direttamente il nuovo simulatore.
+  </p>
 
-      <!-- BLOCCO B: AUTO ELETTRICA -->
-      <div class="pv-subsection" style="margin-top:16px;">
-        <h3>Blocco B – Se hai (o avrai) un’auto elettrica</h3>
-        <p style="font-size:0.85rem; margin-top:0;">
-          Qui stimiamo quanta parte dei km annui dell’auto può essere coperta dal tuo fotovoltaico.
-        </p>
-        <div class="pv-grid">
-          <div class="calc-field">
-            <label>Km annui con l’auto elettrica</label>
-            <input type="number" id="evKm" min="1000" max="60000" step="500" value="12000">
-          </div>
-          <div class="calc-field">
-            <label>Consumo auto (kWh/100 km)</label>
-            <input type="number" id="evConsumo" min="10" max="25" step="0.5" value="16">
-          </div>
-          <div class="calc-field">
-            <label>% ricarica da fotovoltaico</label>
-            <input type="number" id="evQuotaPv" min="0" max="100" value="50">
-          </div>
-          <div class="calc-field">
-            <label>Prezzo energia (€/kWh)</label>
-            <input type="number" id="evPrezzo" min="0.1" max="1" step="0.01" value="0.30">
-          </div>
-        </div>
+  <a href="calcolatore-fotovoltaico-ammortamento.html"
+     class="calc-button"
+     style="display:inline-block; text-decoration:none; margin-top:10px;">
+    Apri il calcolatore fotovoltaico completo →
+  </a>
 
-        <button class="calc-button" onclick="calcolaFotovoltaicoAuto()">Calcola copertura auto elettrica</button>
-        <div id="pvResultAuto" class="calc-result"></div>
-      </div>
+  <div class="calc-note">
+    Consiglio pratico: puoi stampare il risultato in PDF e usarlo come base
+    per confrontare i preventivi delle ditte.
+  </div>
+</section>
 
-      <p class="calc-note">
-        I risultati non sono preventivi ufficiali ma strumenti per ragionare:
-        per decisioni reali serve sempre un tecnico abilitato.
-      </p>
-
-      <div class="calc-links">
-        🔗 Vuoi vedere un esempio con numeri alla mamo?  
-        <a href="fotovoltaico-4-kw-con-accumulo-10-kwh-quanto-costa-davvero-nel-2025.html">
-          Fotovoltaico 4 kW con accumulo 10 kWh: costi reali, rientro e bollette
-        </a>.
-        <div class="amazon-box">
-          <strong>Per il fotovoltaico rivolgetevi al vostro tecnico installatore:</strong>
-          <span>Qui meglio confrontare 2–3 preventivi reali.</span>
-        </div>
-      </div>
-    </section>
 
     <!-- =========================
          SEZIONE FAQ / APPROFONDIMENTO SEO
