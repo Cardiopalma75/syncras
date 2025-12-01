@@ -227,23 +227,24 @@
             display: block; 
         }
 
+        /* STILE CARD AGGIORNATO PER COERENZA */
         .calc-card {
-            background: #f8f9ff;
-            border-radius: 14px;
-            /* Modifica i bordi e il padding per l'accento colore laterale */
-            border: 1px solid #e0e7ff;
-            border-left: 6px solid var(--violet-main); /* Bordo di accento a sinistra */
+            background: #ffffff; /* Sfondo bianco puro */
+            border-radius: 16px; /* Arrotondamento come nelle tue immagini */
+            
+            /* Bordi e ombre sottili per definire il contenitore in modo pulito */
+            border: 1px solid #d1d5db; /* Bordo grigio molto chiaro e sottile */
             padding: 16px 18px 14px;
-            padding-left: 12px; /* Adattiamo il padding per via del bordo spesso */
-
-            box-shadow: 0 4px 10px rgba(15,23,42,0.06);
+            
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05); /* Ombra più leggera */
             transition: transform 0.15s ease, box-shadow 0.15s ease;
             position: relative; 
         }
 
         .calc-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 18px rgba(15,23,42,0.15);
+            /* Ombra più accentuata all'hover per dare l'effetto 3D/cliccabile */
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
         }
 
         /* Stile del CTA */
@@ -300,7 +301,8 @@
         .calc-card h2 {
             margin: 0 0 6px;
             font-size: 1.1rem;
-            color: #1f2937;
+            /* Ho scurito l'h2 come nelle tue immagini */
+            color: #1f2937; 
         }
 
         .calc-card p {
