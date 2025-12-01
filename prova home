@@ -3,9 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Syncras.App | Penso ergo… prima di comprare</title>
-  <meta name="description" content="Syncras.App: test anti-acquisto, calcolatori smart e guide ironiche per pensare prima di spendere. Penso ergo… prima di cliccare compra.">
-  <meta name="robots" content="noindex,follow"><!-- È una versione di prova -->
+  <title>Syncras.App | Scelte furbe e guide ironiche agli acquisti</title>
+  <meta name="description" content="Syncras.App ti aiuta a scegliere cosa comprare: calcolatori per consumi e costi reali, Test Anti-Acquisto e guide leggere ma concrete su energia, tecnologia e offerte.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://syncras.app/">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-59D9XRYKF3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-59D9XRYKF3');
+  </script>
 
   <style>
     :root {
@@ -13,8 +23,10 @@
       --violet-dark: #4B3ACB;
       --violet-soft: #A29BFE;
       --bg-page: #F7F7FB;
-      --text-main: #403E43;
-      --accent-yellow: #FFD85A;
+      --text-main: #111827;
+      --text-muted: #4B5563;
+      --card-bg: #FFFFFF;
+      --border-soft: #E5E7EB;
     }
 
     * { box-sizing: border-box; }
@@ -28,16 +40,23 @@
       line-height: 1.6;
     }
 
+    a {
+      color: var(--violet-dark);
+      text-decoration: none;
+    }
+    a:hover { text-decoration: underline; }
+
     /* HEADER */
     .site-header {
       background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
       color: #fff;
-      padding: 12px 14px;
+      padding: 12px 16px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.15);
       position: sticky;
       top: 0;
       z-index: 50;
     }
+
     .header-inner {
       max-width: 1100px;
       margin: 0 auto;
@@ -46,17 +65,19 @@
       justify-content: space-between;
       gap: 16px;
     }
-    .logo-text {
-      font-size: 1.3rem;
-      font-weight: 700;
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
       letter-spacing: 0.03em;
     }
 
     #main-nav {
       display: flex;
-      gap: 14px;
+      gap: 18px;
       font-size: 0.95rem;
     }
+
     #main-nav a {
       color: #fff;
       text-decoration: none;
@@ -64,8 +85,13 @@
       padding-bottom: 2px;
       border-bottom: 2px solid transparent;
     }
+
     #main-nav a:hover {
       text-decoration: underline;
+    }
+
+    #main-nav a.active {
+      border-bottom-color: rgba(255,255,255,0.9);
     }
 
     .menu-toggle {
@@ -73,7 +99,7 @@
       background: rgba(255,255,255,0.12);
       border: 1px solid rgba(255,255,255,0.4);
       border-radius: 6px;
-      color: #fff;
+      color: white;
       padding: 6px 10px;
       font-size: 0.9rem;
       cursor: pointer;
@@ -93,534 +119,685 @@
         margin: 0 auto;
         max-width: 1100px;
         flex-direction: column;
-        background: var(--violet-dark);
-        padding: 10px 16px 12px;
+        background-color: var(--violet-dark);
+        padding: 10px 16px 12px 16px;
         border-radius: 0 0 8px 8px;
         box-shadow: 0 3px 6px rgba(0,0,0,0.25);
       }
       #main-nav a { padding: 6px 0; }
       body.nav-open #main-nav { display: flex; }
-
       .menu-toggle {
         display: inline-flex;
         align-items: center;
       }
     }
 
-    a { color: var(--violet-dark); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-
-    /* MAIN WRAPPER */
     main {
       max-width: 1100px;
-      margin: 0 auto 40px;
-      padding: 18px 12px 32px;
+      margin: 24px auto 40px;
+      padding: 0 16px 0;
     }
 
-    /* HERO CON LOGO */
+    /* HERO */
     .hero {
-      margin-top: 24px;
-      padding: 28px 20px;
-      border-radius: 16px;
-      background: radial-gradient(circle at top left, var(--violet-soft), var(--violet-dark));
-      color: #fff;
+      background: radial-gradient(circle at top left, #A29BFE 0, #4B3ACB 30%, #2D1B69 80%);
+      border-radius: 18px;
+      padding: 26px 22px 26px;
+      color: #F9FAFB;
+      box-shadow: 0 15px 35px rgba(15,23,42,0.35);
+      margin-bottom: 26px;
+    }
+
+    .hero-inner {
       display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-      gap: 24px;
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.2fr);
+      gap: 28px;
       align-items: center;
-      box-shadow: 0 10px 25px rgba(15,23,42,0.45);
     }
 
-    .hero-left {
-      text-align: left;
+    @media (max-width: 880px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+      }
     }
 
-    .hero-logo-wrap {
+    .hero-logo-pill {
       display: flex;
       align-items: center;
-      gap: 16px;
-      margin-bottom: 12px;
+      gap: 12px;
+      background: rgba(15,23,42,0.15);
+      border-radius: 16px;
+      padding: 8px 12px;
+      margin-bottom: 10px;
+      backdrop-filter: blur(8px);
     }
 
-    .hero-logo {
-      width: 80px;
-      height: 80px;
-      border-radius: 20px;
-      background: #fff;
+    .hero-logo-img {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      background: #F9FAFB;
+      object-fit: contain;
+    }
+
+    .hero-pill-lines {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 10px;
-    }
-    .hero-logo img {
-      max-width: 100%;
-      max-height: 100%;
-      display: block;
+      flex-direction: column;
+      font-size: 0.85rem;
     }
 
-    .hero-tagline {
-      font-size: 1.2rem;
+    .hero-pill-title {
       font-weight: 700;
     }
 
-    .hero h1 {
-      margin: 8px 0 6px;
-      font-size: 1.8rem;
-    }
-
-    .hero p {
-      margin: 6px 0 14px;
-      font-size: 0.98rem;
+    .hero-pill-sub {
+      opacity: 0.95;
     }
 
     .hero-badge {
       display: inline-block;
+      margin-top: 4px;
+      margin-bottom: 8px;
       font-size: 0.75rem;
-      letter-spacing: 0.08em;
       text-transform: uppercase;
+      letter-spacing: 0.09em;
       padding: 3px 9px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.16);
-      border: 1px solid rgba(255,255,255,0.35);
-      margin-bottom: 6px;
+      border: 1px solid rgba(248,250,252,0.6);
+      background: rgba(15,23,42,0.18);
     }
 
-    .hero-cta {
+    .hero-title {
+      font-size: 1.9rem;
+      line-height: 1.25;
+      margin: 6px 0 10px;
+    }
+
+    .hero-sub {
+      font-size: 0.97rem;
+      max-width: 540px;
+      opacity: 0.96;
+      margin: 0 0 14px;
+    }
+
+    .hero-cta-row {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-top: 6px;
+      margin-bottom: 8px;
     }
+
     .btn-primary {
-      background: var(--accent-yellow);
-      color: #1f2933;
-      padding: 10px 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 18px;
       border-radius: 999px;
+      background: #FACC15;
+      color: #1F2937;
       font-weight: 700;
       font-size: 0.95rem;
-      border: none;
+      box-shadow: 0 8px 18px rgba(15,23,42,0.4);
+    }
+
+    .btn-primary:hover {
+      text-decoration: none;
+      filter: brightness(0.97);
+      transform: translateY(1px);
+    }
+
+    .btn-secondary {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      box-shadow: 0 4px 10px rgba(15,23,42,0.35);
-    }
-    .btn-secondary {
-      background: rgba(255,255,255,0.08);
-      color: #fff;
-      padding: 9px 14px;
+      justify-content: center;
+      padding: 9px 16px;
       border-radius: 999px;
+      border: 1px solid rgba(248,250,252,0.8);
+      color: #F9FAFB;
       font-weight: 600;
       font-size: 0.9rem;
-      border: 1px solid rgba(255,255,255,0.35);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+      background: transparent;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(15,23,42,0.18);
+      text-decoration: none;
+    }
+
+    .hero-note {
+      font-size: 0.8rem;
+      opacity: 0.9;
+      margin: 6px 0 0;
     }
 
     .hero-right {
-      background: rgba(15,23,42,0.16);
-      border-radius: 14px;
-      padding: 14px 16px;
-      font-size: 0.9rem;
-      backdrop-filter: blur(4px);
+      background: rgba(15,23,42,0.28);
+      border-radius: 16px;
+      padding: 14px 16px 16px;
+      border: 1px solid rgba(248,250,252,0.12);
     }
 
     .hero-right h2 {
-      font-size: 1rem;
       margin-top: 0;
-    }
-
-    .hero-list {
-      padding-left: 17px;
-      margin: 8px 0 0;
-    }
-    .hero-list li { margin-bottom: 4px; }
-
-    @media (max-width: 860px) {
-      .hero {
-        grid-template-columns: 1fr;
-      }
-      .hero-left { text-align: left; }
-    }
-
-    /* SEZIONE “COSA TROVI SU SYNCRAS” */
-    .section {
-      margin-top: 30px;
-    }
-    .section h2 {
-      font-size: 1.4rem;
       margin-bottom: 8px;
-      color: var(--violet-dark);
-    }
-    .section p.section-sub {
-      font-size: 0.95rem;
-      color: #4b5563;
-      margin-top: 0;
-      margin-bottom: 14px;
+      font-size: 1.1rem;
     }
 
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
-    }
-    .feature-card {
-      background: #fff;
-      border-radius: 14px;
-      padding: 14px 14px 13px;
-      box-shadow: 0 4px 10px rgba(15,23,42,0.08);
-      font-size: 0.92rem;
-    }
-    .feature-card span.icon {
-      font-size: 1.4rem;
-      display: inline-block;
-      margin-bottom: 6px;
-    }
-    .feature-card h3 {
-      margin: 0 0 4px;
-      font-size: 1rem;
-      color: var(--violet-dark);
-    }
-    .feature-card p {
-      margin: 0;
-      color: #4b5563;
-    }
-
-    @media (max-width: 820px) {
-      .features-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* SEZIONE CALCOLATORI IN EVIDENZA */
-    .calc-grid-home {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
-      margin-top: 14px;
-    }
-    .calc-card-home {
-      background: #fff;
-      border-radius: 16px;
-      padding: 14px 14px 13px;
-      border: 1px solid #e5e7eb;
-      box-shadow: 0 4px 10px rgba(15,23,42,0.06);
-      font-size: 0.92rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-    .calc-card-home h3 {
-      margin: 2px 0 4px;
-      font-size: 1rem;
-      color: #111827;
-    }
-    .calc-card-home p {
+    .hero-points {
+      list-style: none;
+      padding-left: 0;
       margin: 0 0 8px;
-      color: #4b5563;
-    }
-    .calc-chip {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #6b7280;
-    }
-    .calc-card-home a.btn-mini {
-      align-self: flex-start;
-      margin-top: 6px;
-      padding: 7px 12px;
-      border-radius: 999px;
-      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
-      color: #fff;
-      font-size: 0.85rem;
-      font-weight: 600;
-      text-decoration: none;
-      box-shadow: 0 2px 7px rgba(15,23,42,0.25);
-    }
-    .calc-card-home a.btn-mini:hover {
-      opacity: 0.96;
-      transform: translateY(-1px);
-    }
-
-    @media (max-width: 900px) {
-      .calc-grid-home {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* SEZIONE ARTICOLI */
-    .articles-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
-      margin-top: 14px;
-    }
-    .article-card {
-      background: #fff;
-      border-radius: 14px;
-      padding: 13px 14px;
-      box-shadow: 0 4px 9px rgba(15,23,42,0.06);
       font-size: 0.9rem;
     }
-    .article-card h3 {
-      margin: 0 0 5px;
-      font-size: 1rem;
-      color: var(--violet-dark);
+
+    .hero-points li {
+      margin-bottom: 6px;
+      padding-left: 18px;
+      position: relative;
     }
-    .article-card p { margin: 0; color: #4b5563; }
-    .article-card span.badge {
-      display: inline-block;
+
+    .hero-points li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: #FACC15;
+      font-size: 1.2rem;
+      line-height: 1;
+    }
+
+    .hero-small {
+      font-size: 0.8rem;
+      opacity: 0.92;
+      margin: 4px 0 0;
+    }
+
+    /* SECTIONS GENERALI */
+    .section {
+      margin-top: 32px;
+    }
+
+    .section h2 {
+      margin: 0 0 6px;
+      font-size: 1.3rem;
+      color: #111827;
+    }
+
+    .section-sub {
+      margin: 0 0 16px;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    /* CARDS 3 COLONNE */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 16px;
+    }
+
+    @media (max-width: 880px) {
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 14px;
+      padding: 14px 14px 16px;
+      box-shadow: 0 3px 8px rgba(15,23,42,0.06);
+      border: 1px solid rgba(148,163,184,0.25);
+    }
+
+    .card-label {
       font-size: 0.75rem;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #6b7280;
+      letter-spacing: 0.09em;
+      color: #6B7280;
       margin-bottom: 4px;
     }
 
-    @media (max-width: 900px) {
-      .articles-grid {
-        grid-template-columns: 1fr;
-      }
+    .card h3 {
+      margin: 0 0 6px;
+      font-size: 1rem;
+      color: #111827;
     }
 
-    /* FOOTER DI PROVA SEMPLICE */
-    footer {
+    .card p {
+      margin: 0 0 10px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.87rem;
+      font-weight: 600;
+      color: var(--violet-dark);
+    }
+
+    .card-link span.arrow {
+      font-size: 1rem;
+    }
+
+    /* CALCOLATORI IN EVIDENZA */
+    .calc-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 16px;
+    }
+
+    @media (max-width: 880px) {
+      .calc-grid { grid-template-columns: 1fr; }
+    }
+
+    .calc-card {
+      background: #FFFFFF;
+      border-radius: 14px;
+      padding: 14px 14px 16px;
+      border: 1px solid rgba(148,163,184,0.35);
+      box-shadow: 0 4px 10px rgba(15,23,42,0.06);
+    }
+
+    .calc-card h3 {
+      margin: 2px 0 6px;
+      font-size: 1rem;
+      color: #111827;
+    }
+
+    .calc-pill {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #6B7280;
+      margin-bottom: 4px;
+    }
+
+    .calc-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 8px;
+      padding: 8px 13px;
+      border-radius: 999px;
+      border: none;
+      background: var(--violet-main);
+      color: #F9FAFB;
+      font-size: 0.9rem;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(88,80,236,0.5);
+    }
+
+    .calc-btn:hover {
+      text-decoration: none;
+      filter: brightness(0.97);
+    }
+
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 16px;
+    }
+
+    @media (max-width: 880px) {
+      .guide-grid { grid-template-columns: 1fr; }
+    }
+
+    .guide-card {
+      background: #FFFFFF;
+      border-radius: 14px;
+      padding: 14px 14px 16px;
+      border: 1px solid rgba(148,163,184,0.35);
+      box-shadow: 0 3px 8px rgba(15,23,42,0.06);
+    }
+
+    .guide-tag {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #6B7280;
+      margin-bottom: 4px;
+    }
+
+    .guide-card h3 {
+      margin: 0 0 6px;
+      font-size: 1rem;
+      color: #111827;
+    }
+
+    .guide-card p {
+      margin: 0 0 8px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .guide-link {
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: var(--violet-dark);
+    }
+
+    /* FOOTER */
+    .syncras-footer {
+      margin-top: 40px;
+      padding: 2.5rem 1.5rem 1.5rem;
       background: #2b1840;
       color: #f3eaff;
-      padding: 20px 14px 26px;
       font-size: 0.9rem;
-      margin-top: 20px;
     }
-    .footer-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-    footer a {
+
+    .syncras-footer a {
       color: #f3eaff;
       text-decoration: none;
     }
-    footer a:hover { text-decoration: underline; }
-    footer p { margin: 4px 0; }
+    .syncras-footer a:hover { text-decoration: underline; }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto 1.5rem auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+    }
+
+    .footer-column h4 {
+      margin-top: 0;
+      margin-bottom: 0.7rem;
+      font-size: 1rem;
+    }
+
+    .footer-column p {
+      margin: 0;
+      font-size: 0.85rem;
+    }
+
+    .footer-column ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-column li {
+      margin-bottom: 0.4rem;
+      font-size: 0.85rem;
+    }
+
+    .footer-bottom {
+      max-width: 1100px;
+      margin: 0 auto;
+      text-align: center;
+      font-size: 0.8rem;
+      opacity: 0.9;
+    }
+
+    .footer-bottom p {
+      margin: 4px 0;
+    }
+
   </style>
 </head>
 <body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
 
-<header class="site-header">
-  <div class="header-inner">
-    <div class="logo-text">Syncras.App</div>
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu">
+        Menu <span>☰</span>
+      </button>
 
-    <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu">
-      Menu <span>☰</span>
-    </button>
+      <nav id="main-nav">
+        <a href="index.html" class="active">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="quiz.html">Test Anti-Acquisto</a>
+        <a href="calcolatori.html">Calcolatori</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="offerte.html">Prodotti Consapevoli</a>
+        <a href="chi.html">Chi siamo</a>
+      </nav>
+    </div>
+  </header>
 
-    <nav id="main-nav">
-      <a href="index.html">Home</a>
-      <a href="blog.html">Blog</a>
-      <a href="quiz.html">Test Anti-Acquisto</a>
-      <a href="calcolatori.html">Calcolatori</a>
-      <a href="curiosita.html">Curiosità</a>
-      <a href="misteri.html">Misteri</a>
-      <a href="offerte.html">Prodotti Consapevoli</a>
-      <a href="chi.html">Chi siamo</a>
-    </nav>
-  </div>
-</header>
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="hero-left">
+          <div class="hero-logo-pill">
+            <!-- QUI metti il file del logo senza scritta -->
+            <img src="penso-ergo-logo.png" alt="Penso ergo..." class="hero-logo-img">
+            <div class="hero-pill-lines">
+              <span class="hero-pill-title">Penso ergo…</span>
+              <span class="hero-pill-sub">prima di cliccare “Compra ora”.</span>
+            </div>
+          </div>
 
-<main>
+          <span class="hero-badge">Metodo SmartShop</span>
 
-  <!-- HERO CON LOGO "PENSO ERGO..." -->
-  <section class="hero">
-    <div class="hero-left">
-      <div class="hero-logo-wrap">
-        <div class="hero-logo">
-          <!-- Cambia il percorso del logo con il tuo file reale -->
-          <img src="img/penso-ergo-logo.png" alt="Penso ergo - logo Syncras">
+          <h1 class="hero-title">Il tuo alleato contro gli acquisti impulsivi.</h1>
+          <p class="hero-sub">
+            Qui non ti diciamo cosa comprare, ma ti aiutiamo a fare i conti, capire se ti serve davvero
+            e solo alla fine – forse – cliccare “aggiungi al carrello”.
+          </p>
+
+          <div class="hero-cta-row">
+            <a href="quiz.html" class="btn-primary">🧠 Fai il Test Anti-Acquisto</a>
+            <a href="calcolatori.html" class="btn-secondary">📊 Vai ai calcolatori</a>
+          </div>
+
+          <p class="hero-note">
+            Nessuna email, nessuna registrazione: 30 secondi per salvare il portafoglio.
+          </p>
         </div>
-        <div class="hero-text-small">
-          <div class="hero-tagline">Penso ergo…</div>
-          <div style="font-size:0.9rem; opacity:0.9;">prima di cliccare “Compra ora”.</div>
+
+        <div class="hero-right">
+          <h2>Penso ergo… come funziona Syncras?</h2>
+          <ul class="hero-points">
+            <li>Calcoli quanto consuma e quanto ti costa davvero un’auto, un impianto o un elettrodomestico.</li>
+            <li>Metti alla prova il tuo acquisto con il Test Anti-Acquisto.</li>
+            <li>Leggi le guide ironiche per non lasciarti convincere solo da offerte e slogan.</li>
+          </ul>
+          <p class="hero-small">
+            Nessun account, nessuna email obbligatoria. Solo numeri spiegati in modo semplice.
+          </p>
         </div>
       </div>
+    </section>
 
-      <span class="hero-badge">Metodo SmartShop</span>
-      <h1>Il tuo alleato contro gli acquisti impulsivi.</h1>
-      <p>
-        Qui non ti diciamo cosa comprare, ma <strong>ti aiutiamo a fare i conti</strong>,  
-        capire se ti serve davvero e solo alla fine – forse – cliccare “aggiungi al carrello”.
+    <!-- COSA TROVI -->
+    <section class="section">
+      <h2>Cosa trovi su Syncras.App</h2>
+      <p class="section-sub">
+        Tre strumenti per far lavorare il cervello prima del portafoglio.
       </p>
 
-      <div class="hero-cta">
-        <a href="quiz.html" class="btn-primary">
-          🧠 Fai il Test Anti-Acquisto
-        </a>
-        <a href="calcolatori.html" class="btn-secondary">
-          🔢 Vai ai calcolatori
-        </a>
-      </div>
-    </div>
+      <div class="grid-3">
+        <article class="card">
+          <div class="card-label">Strumento n.1</div>
+          <h3>Calcolatori smart</h3>
+          <p>
+            Scopri i costi reali: consumi elettrici, rientro del fotovoltaico,
+            confronto fra auto e rate dei finanziamenti.
+          </p>
+          <a href="calcolatori.html" class="card-link">
+            Vai alla pagina dei calcolatori <span class="arrow">→</span>
+          </a>
+        </article>
 
-    <div class="hero-right">
-      <h2>Penso ergo… come funziona Syncras?</h2>
-      <ul class="hero-list">
-        <li><strong>Calcoli</strong> quanto ti costa davvero un’auto, un impianto o un elettrodomestico.</li>
-        <li><strong>Metti alla prova</strong> il tuo acquisto con il Test Anti-Acquisto.</li>
-        <li><strong>Leggi le guide</strong> ironiche per non farti fregare da offerte e slogan.</li>
-      </ul>
-      <p style="margin-top:10px; font-size:0.85rem; opacity:0.9;">
-        Nessun account, nessuna email obbligatoria. Solo numeri spiegati semplice.
+        <article class="card">
+          <div class="card-label">Strumento n.2</div>
+          <h3>Test Anti-Acquisto</h3>
+          <p>
+            Tre domande secche per capire se è un acquisto furbo
+            o solo l’ennesimo colpo di shopping emotivo.
+          </p>
+          <a href="quiz.html" class="card-link">
+            Fai il test adesso <span class="arrow">→</span>
+          </a>
+        </article>
+
+        <article class="card">
+          <div class="card-label">Strumento n.3</div>
+          <h3>Guide ironiche</h3>
+          <p>
+            Articoli leggeri ma concreti su energia, tecnologia e risparmio.
+            Si ride, ma i conti sono seri.
+          </p>
+          <a href="blog.html" class="card-link">
+            Vai alle guide <span class="arrow">→</span>
+          </a>
+        </article>
+      </div>
+    </section>
+
+    <!-- CALCOLATORI IN EVIDENZA -->
+    <section class="section">
+      <h2>Calcolatori in evidenza</h2>
+      <p class="section-sub">
+        Parti dai numeri: scegli uno strumento e fai subito i conti.
       </p>
-    </div>
-  </section>
 
-  <!-- COSA TROVI SU SYNCRAS -->
-  <section class="section">
-    <h2>Cosa trovi su Syncras.App</h2>
-    <p class="section-sub">
-      Tre strumenti per far lavorare il cervello prima del portafoglio.
-    </p>
-
-    <div class="features-grid">
-      <div class="feature-card">
-        <span class="icon">🧮</span>
-        <h3>Calcolatori smart</h3>
-        <p>
-          Scopri i costi reali: consumi elettrici, rientro del fotovoltaico,  
-          confronto tra auto e rate dei finanziamenti.
-        </p>
-      </div>
-
-      <div class="feature-card">
-        <span class="icon">🧠</span>
-        <h3>Test Anti-Acquisto</h3>
-        <p>
-          Tre domande secche per capire se è un acquisto furbo o solo l’ennesimo colpo di shopping emotivo.
-        </p>
-      </div>
-
-      <div class="feature-card">
-        <span class="icon">📚</span>
-        <h3>Guide ironiche</h3>
-        <p>
-          Articoli leggeri ma concreti su energia, tecnologia e risparmio.  
-          Ridiamo, ma i conti sono seri.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- CALCOLATORI IN EVIDENZA -->
-  <section class="section">
-    <h2>Calcolatori in evidenza</h2>
-    <p class="section-sub">
-      Parti dai numeri: scegli uno strumento e fai subito i conti.
-    </p>
-
-    <div class="calc-grid-home">
-      <article class="calc-card-home">
-        <div>
-          <div class="calc-chip">Fotovoltaico & Auto elettrica</div>
+      <div class="calc-grid">
+        <article class="calc-card">
+          <div class="calc-pill">Fotovoltaico &amp; Auto elettrica</div>
           <h3>Calcolatore fotovoltaico con ammortamento</h3>
           <p>
-            Produzione annua, risparmio in bolletta, rientro dell’investimento  
+            Produzione annua, risparmio in bolletta, rientro dell’investimento
             e impatto della ricarica dell’auto elettrica, anno per anno.
           </p>
-        </div>
-        <a href="calcolatore-fotovoltaico-ammortamento.html" class="btn-mini">
-          🌞 Apri il calcolatore fotovoltaico
-        </a>
-      </article>
+          <a href="calcolatore-fotovoltaico-ammortamento.html" class="calc-btn">
+            ☀️ Apri il calcolatore fotovoltaico
+          </a>
+        </article>
 
-      <article class="calc-card-home">
-        <div>
-          <div class="calc-chip">Casa & Bollette</div>
+        <article class="calc-card">
+          <div class="calc-pill">Casa &amp; elettrodomestici</div>
           <h3>Consumi elettrodomestici</h3>
           <p>
-            Calcola quanto ti costa davvero usare stufetta, TV, forno, lavatrice e  
-            asciugatrice, con costo orario, mensile e annuale.
+            TV, forno, lavatrice e asciugatrice, con costo orario, mensile e annuale.
+            Perfetto per trovare i veri “mangia-corrente” di casa.
           </p>
-        </div>
-        <a href="calcolatore-consumi-elettrodomestici.html" class="btn-mini">
-          🔌 Calcola i consumi in casa
-        </a>
-      </article>
+          <a href="calcolatore-consumi-elettrodomestici.html" class="calc-btn">
+            🔌 Calcola i consumi in casa
+          </a>
+        </article>
 
-      <article class="calc-card-home">
-        <div>
-          <div class="calc-chip">Mobiltà</div>
+        <article class="calc-card">
+          <div class="calc-pill">Mobilità</div>
           <h3>Confronto costi auto</h3>
           <p>
-            Confronta due auto (benzina, diesel, GPL, metano, elettrica) e scopri  
+            Confronta due auto (benzina, diesel, GPL, metano, elettrica) e scopri
             quanto spendi per 100 km e in un anno.
           </p>
-        </div>
-        <a href="calcolatore-consumi-auto.html" class="btn-mini">
-          🚗 Confronta i costi di viaggio
-        </a>
-      </article>
+          <a href="calcolatore-consumi-auto.html" class="calc-btn">
+            🚗 Confronta i costi di viaggio
+          </a>
+        </article>
+      </div>
+    </section>
+
+    <!-- GUIDE IN EVIDENZA -->
+    <section class="section">
+      <h2>Guide che piacciono a chi pensa prima di comprare</h2>
+      <p class="section-sub">
+        Storie comiche, esempi reali e consigli pratici per non buttare via soldi e bollette.
+      </p>
+
+      <div class="guide-grid">
+        <article class="guide-card">
+          <div class="guide-tag">Energia &amp; casa</div>
+          <h3><a href="smart-tv-700-1200.html">Quanto consuma una TV 55 pollici?</a></h3>
+          <p>
+            Storia comica da salotto, tabella consumi reali e mini calcolatore
+            per capire quanto pesa davvero la TV in bolletta.
+          </p>
+          <a href="smart-tv-700-1200.html" class="guide-link">Leggi l’articolo →</a>
+        </article>
+
+        <article class="guide-card">
+          <div class="guide-tag">Riscaldamento</div>
+          <h3><a href="temperatura-economica-casa.html">Qual è la temperatura più economica in casa?</a></h3>
+          <p>
+            Zia tirchia, termotecnici e pinguini: guida ironica ai 19–20°C,
+            con consigli pratici per non sprecare gas e corrente.
+          </p>
+          <a href="temperatura-economica-casa.html" class="guide-link">Scopri i 19–20°C furbi →</a>
+        </article>
+
+        <article class="guide-card">
+          <div class="guide-tag">SmartShop</div>
+          <h3><a href="guida-metodo-smartshop.html">Come scegliere in modo intelligente</a></h3>
+          <p>
+            La guida al Metodo SmartShop: essenziale, valore, timing.
+            Per comprare solo ciò che migliora davvero la tua vita.
+          </p>
+          <a href="guida-metodo-smartshop.html" class="guide-link">Vai alla guida completa →</a>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="syncras-footer">
+    <div class="footer-inner">
+      <div class="footer-column">
+        <h4>Syncras.App</h4>
+        <p>
+          Metodo SmartShop per fare acquisti con la testa (e con un po’ d’ironia).<br>
+          Niente tecnicismi inutili, solo esperienze reali e numeri spiegati semplice.
+        </p>
+      </div>
+
+      <div class="footer-column">
+        <h4>Link utili</h4>
+        <ul>
+          <li><a href="blog.html">Tutte le guide SmartShop</a></li>
+          <li><a href="offerte.html">Prodotti Consapevoli &amp; offerte Amazon</a></li>
+          <li><a href="calcolatori.html">Pagina dei calcolatori</a></li>
+          <li><a href="fotovoltaico-4-kw-con-accumulo-10-kwh-quanto-costa-davvero-nel-2025.html">Caso reale fotovoltaico</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h4>Legale &amp; Privacy</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="cookie.html">Cookie Policy</a></li>
+          <li><a href="disclaimer-amazon.html">Disclaimer Amazon</a></li>
+          <li><a href="note-legali.html">Note Legali</a></li>
+        </ul>
+      </div>
     </div>
-  </section>
 
-  <!-- ARTICOLI IN EVIDENZA (ESEMPIO) -->
-  <section class="section">
-    <h2>Guide che piacciono a chi pensa prima di comprare</h2>
-
-    <div class="articles-grid">
-      <article class="article-card">
-        <span class="badge">Energia & Casa</span>
-        <h3>Quanto consuma una TV 55 pollici?</h3>
-        <p>
-          Storia comica da salotto, tabella consumi reali e mini calcolatore per capire
-          quanto pesa davvero la TV in bolletta.
-        </p>
-        <p style="margin-top:8px;">
-          <a href="quanto-consuma-tv-55-pollici.html">Leggi l’articolo →</a>
-        </p>
-      </article>
-
-      <article class="article-card">
-        <span class="badge">Riscaldamento</span>
-        <h3>Qual è la temperatura più economica in casa?</h3>
-        <p>
-          Zia tirchia, termotecnici e pinguini: guida ironica ai 19–20°C,  
-          con consigli pratici per non buttare via gas e corrente.
-        </p>
-        <p style="margin-top:8px;">
-          <a href="temperatura-economica-in-casa.html">Scopri i 19–20°C furbi →</a>
-        </p>
-      </article>
-
-      <article class="article-card">
-        <span class="badge">SmartShop</span>
-        <h3>Come scegliere in modo intelligente</h3>
-        <p>
-          La guida al Metodo SmartShop: essenziale, valore, timing.  
-          Per comprare solo ciò che migliora davvero la tua vita.
-        </p>
-        <p style="margin-top:8px;">
-          <a href="guida-metodo-smartshop.html">Vai alla guida completa →</a>
-        </p>
-      </article>
+    <div class="footer-bottom">
+      <p>© <span id="year-span"></span> Syncras.App — Tutti i diritti riservati.</p>
+      <p>
+        Syncras.App partecipa al Programma Affiliazione Amazon EU.
+        Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+        senza alcun costo aggiuntivo per l’utente.
+      </p>
+      <p>
+        Per ordini, resi, spedizioni o dati relativi agli acquisti, è necessario rivolgersi
+        direttamente al servizio clienti Amazon tramite il proprio account.
+      </p>
     </div>
-  </section>
+  </footer>
 
-</main>
+  <script>
+    function toggleMenu() {
+      document.body.classList.toggle('nav-open');
+    }
 
-<footer>
-  <div class="footer-inner">
-    <p>© 2025 Syncras.App — Versione di prova “Penso ergo…”.</p>
-    <p style="font-size:0.82rem; opacity:0.9;">
-      Questa è una index di test locale: quando la userai online potrai togliere il meta
-      <code>noindex</code> in cima e aggiungere i link legali (Privacy, Cookie, Disclaimer Amazon, Note legali).
-    </p>
-  </div>
-</footer>
-
-<script>
-  function toggleMenu() {
-    document.body.classList.toggle('nav-open');
-  }
-</script>
-
+    // Footer year
+    document.addEventListener('DOMContentLoaded', function() {
+      var span = document.getElementById('year-span');
+      if (span) span.textContent = new Date().getFullYear();
+    });
+  </script>
 </body>
 </html>
+
 
