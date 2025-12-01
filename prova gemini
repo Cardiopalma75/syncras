@@ -1,386 +1,671 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Perché la Lavatrice Vibra (Come un Trattore): Cause e Soluzioni Utili | Syncras.App</title>
-  <meta name="description" content="La lavatrice vibra come un trattore? Ecco la storia comica che viviamo tutti e le vere cause spiegate in modo semplice, senza ansia.">
-  <meta name="robots" content="index,follow">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcolatori per Acquisti Consapevoli | Syncras.App (Auto, Casa, Prestiti)</title>
+    <meta name="description" content="Fai conti veri e consapevoli prima di comprare. Usa i calcolatori gratuiti di Syncras.App per stimare il costo reale del carburante auto (benzina, diesel, elettrica), dei tuoi elettrodomestici, del fotovoltaico e delle rate di mutui/finanziamenti.">
+    <meta name="robots" content="index,follow">
+    <link rel="canonical" href="https://syncras.app/calcolatori.html">
 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-59D9XRYKF3"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-59D9XRYKF3');
-  </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-59D9XRYKF3"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-59D9XRYKF3');
+    </script>
 
-  <style>
-    :root {
-      --violet-main: #6C5CE7;
-      --violet-dark: #4B3ACB;
-      --bg-page: #F7F7FB;
-      --text-main: #403E43;
-      /* Nuovo colore per le Soluzioni */
-      --green-solution: #E6F7E6;
-      --green-border: #4CAF50;
-    }
+    <style>
+        :root {
+            --violet-main: #6C5CE7;
+            --violet-dark: #4B3ACB;
+            --violet-soft: #A29BFE;
+            --bg-page: #F7F7FB;
+            --text-main: #403E43;
+        }
 
-    body {
-      font-family: Arial, sans-serif;
-      background: var(--bg-page);
-      margin: 0;
-      padding: 0;
-      color: var(--text-main);
-      line-height: 1.6;
-    }
+        * {
+            box-sizing: border-box;
+        }
 
-    /* HEADER (Non modificato) */
-    .site-header {
-      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
-      color: white;
-      padding: 12px 14px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-    }
-    .header-inner {
-      max-width: 1180px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .logo {
-      font-size: 1.4rem;
-      font-weight: bold;
-    }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: var(--bg-page);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
 
-    #main-nav {
-      display: flex;
-      gap: 16px;
-    }
-    #main-nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: 600;
-    }
-    #main-nav a:hover { text-decoration: underline; }
+        /* HEADER */
+        .site-header {
+            background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+            color: #fff;
+            padding: 12px 14px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+        }
 
-    .menu-toggle {
-      display: none;
-      background: rgba(255,255,255,0.2);
-      border-radius: 6px;
-      padding: 6px 10px;
-      color: white;
-      cursor: pointer;
-    }
+        .header-inner {
+            max-width: 980px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
 
-    @media(max-width:768px){
-      .menu-toggle { display: inline-block; }
-      #main-nav {
-        display: none;
-        flex-direction: column;
-        background: var(--violet-dark);
-        padding: 10px;
-        border-radius: 0 0 8px 8px;
-        margin-top: 10px;
-      }
-      body.nav-open #main-nav { display: flex; }
-    }
+        .logo {
+            font-size: 1.4rem;
+            font-weight: bold;
+            letter-spacing: 0.03em;
+        }
 
-    /* MAIN */
-    main {
-      max-width: 900px;
-      margin: 30px auto;
-      background: white;
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
+        #main-nav {
+            display: flex;
+            gap: 14px;
+            font-size: 0.95rem;
+        }
 
-    h1,h2,h3 { color: var(--violet-dark); }
-    .back-links a { color: var(--violet-dark); font-weight:600; text-decoration:none; }
+        #main-nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            padding-bottom: 2px;
+            border-bottom: 2px solid transparent;
+        }
 
-    .tip-box {
-      background: #F6F4FF;
-      border-left: 4px solid var(--violet-main);
-      padding: 14px;
-      border-radius: 8px;
-      margin: 25px 0;
-    }
+        #main-nav a:hover {
+            text-decoration: underline;
+        }
 
-    .solution-box { /* NUOVO STILE: Soluzioni Pratiche */
-      background: var(--green-solution);
-      border-left: 4px solid var(--green-border);
-      padding: 20px;
-      border-radius: 8px;
-      margin: 30px 0;
-    }
-    .solution-box h3 { color: var(--green-border); margin-top: 0; }
-    .solution-box ul { padding-left: 20px; }
+        #main-nav a.active {
+            border-bottom-color: rgba(255,255,255,0.9);
+        }
 
+        .menu-toggle {
+            display: none;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.4);
+            border-radius: 6px;
+            color: white;
+            padding: 6px 10px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
 
-    .box {
-      background: #f6faf7;
-      border: 1px solid #d7e8dc;
-      padding: 20px;
-      border-radius: 10px;
-    }
+        .menu-toggle span {
+            margin-left: 4px;
+            font-size: 1.1rem;
+        }
 
-    footer {
-      margin-top: 40px;
-      background: #eee;
-      padding: 20px;
-      text-align: center;
-    }
-    .share-button {
-      background:var(--violet-main);
-      color:white;
-      padding:10px 15px;
-      border:none;
-      border-radius:6px;
-      font-weight:600;
-      margin-bottom:20px;
-      cursor:pointer;
-    }
-  </style>
+        @media (max-width: 768px) {
+            #main-nav {
+                display: none;
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 56px;
+                margin: 0 auto;
+                max-width: 980px;
+                flex-direction: column;
+                background-color: var(--violet-dark);
+                padding: 10px 16px 12px 16px;
+                border-radius: 0 0 8px 8px;
+                box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+                z-index: 50;
+            }
+
+            #main-nav a {
+                padding: 6px 0;
+            }
+
+            body.nav-open #main-nav {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: inline-flex;
+                align-items: center;
+            }
+        }
+
+        a {
+            color: var(--violet-dark);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* MAIN LAYOUT */
+        main {
+            max-width: 980px;
+            margin: 24px auto 32px;
+            padding: 18px 16px 24px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+        }
+
+        h1, h2, h3 {
+            color: var(--violet-dark);
+            margin-top: 0;
+        }
+
+        .back-links {
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .back-links a {
+            color: var(--violet-dark);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .back-links a:hover {
+            text-decoration: underline;
+        }
+
+        .page-intro {
+            margin-bottom: 18px;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 12px;
+        }
+
+        .badge-page {
+            display: inline-block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            background: rgba(108,92,231,0.08);
+            border: 1px solid rgba(108,92,231,0.35);
+            border-radius: 999px;
+            padding: 2px 8px;
+            color: #3730a3;
+            margin-bottom: 6px;
+        }
+
+        .intro-text {
+            font-size: 0.95rem;
+            color: #4b5563;
+            margin-top: 6px;
+        }
+
+        /* GRID CALCOLATORI */
+        .calc-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr)); 
+            gap: 18px;
+            margin-top: 18px;
+            align-items: stretch; /* tutte le card stessa altezza */
+        }
+        
+        @media (min-width: 901px) {
+             .calc-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+             }
+        }
+
+        @media (max-width: 768px) {
+            main {
+                margin: 16px auto 24px;
+                padding: 14px 10px 20px;
+            }
+
+            .calc-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* LINK WRAPPER PER CARD CLICCABILI */
+        .calc-card-link { 
+            text-decoration: none; 
+            color: inherit; 
+            display: block; 
+        }
+
+        /* CARD – STILE UNIFICATO / TIPO CURIOSITÀ */
+        .calc-card {
+            background: #F7F7FF; /* viola chiarissimo */
+            border-radius: 18px;
+            border: 1px solid #E0E7FF;
+            padding: 16px 18px 14px;
+            box-shadow: 0 4px 12px rgba(15,23,42,0.06);
+            transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+            position: relative;
+            display: flex;           /* per allineare il bottone in basso */
+            flex-direction: column;
+            min-height: 100%;
+        }
+
+        .calc-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 24px rgba(15,23,42,0.18);
+            background: #FFFFFF;
+        }
+
+        /* Etichetta in alto (badge) */
+        .calc-card-label {
+            display: inline-block;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #3730a3;
+            margin-bottom: 6px;
+            padding: 2px 8px;
+            border-radius: 999px;
+            background: rgba(108,92,231,0.06);
+            border: 1px solid rgba(108,92,231,0.18);
+        }
+
+        .calc-card h2 {
+            margin: 0 0 6px;
+            font-size: 1.1rem;
+            color: #1f2937;
+        }
+
+        .calc-card p {
+            margin: 0 0 10px;
+            font-size: 0.9rem;
+            color: #4b5563;
+        }
+
+        /* Elenchi nelle card */
+        .calc-card ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 10px 0 16px 0;
+            font-size: 0.85rem;
+        }
+
+        .calc-card li {
+            margin-bottom: 5px;
+            padding-left: 15px;
+            position: relative;
+            color: #4b5563;
+        }
+
+        .calc-card li:before {
+            content: '•'; 
+            position: absolute;
+            left: 0;
+            color: var(--violet-main);
+            font-weight: bold;
+        }
+
+        /* Pulsante CTA – UNIFORME E ALLINEATO IN BASSO */
+        .calc-card-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: auto;           /* spinge il bottone in basso nella card */
+            padding: 10px 16px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            box-shadow: 0 3px 10px rgba(15,23,42,0.25);
+            min-height: 44px;           /* altezza minima uguale per tutti */
+            white-space: nowrap;        /* evita che il testo vada a capo in modo strano */
+        }
+
+        .calc-card-btn:hover {
+            opacity: 0.96;
+            transform: translateY(-1px);
+        }
+
+        /* FAQ, TAG, FOOTER */
+        .faq-section {
+            margin-top: 28px;
+            padding-top: 16px;
+            border-top: 1px solid #e5e7eb;
+            font-size: 0.95rem;
+        }
+
+        .faq-section h2 {
+            font-size: 1.15rem;
+            margin-bottom: 8px;
+        }
+
+        .faq-section h3 {
+            font-size: 1rem;
+            margin-top: 14px;
+            margin-bottom: 4px;
+        }
+
+        .faq-section p {
+            margin: 0 0 8px;
+            color: #4b5563;
+        }
+
+        .tags {
+            font-size: 0.8rem;
+            color: #6b7280;
+            margin-top: 18px;
+        }
+
+        .syncras-footer {
+            margin-top: 32px;
+            padding: 2.5rem 1.5rem 1.5rem;
+            background: #2b1840;
+            color: #f3eaff;
+            font-size: 0.9rem;
+        }
+
+        .syncras-footer a {
+            color: #f3eaff;
+            text-decoration: none;
+        }
+
+        .syncras-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-inner {
+            max-width: 980px;
+            margin: 0 auto 1.5rem auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-column h4 {
+            margin-top: 0;
+            margin-bottom: 0.7rem;
+            font-size: 1rem;
+        }
+
+        .footer-column p {
+            margin: 0;
+            font-size: 0.85rem;
+        }
+
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-column li {
+            margin-bottom: 0.4rem;
+            font-size: 0.85rem;
+        }
+
+        .footer-bottom {
+            max-width: 980px;
+            margin: 0 auto;
+            text-align: center;
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        .footer-bottom p {
+            margin: 4px 0;
+        }
+    </style>
 </head>
-
 <body>
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="logo">Syncras.App</div>
 
-<header class="site-header">
-  <div class="header-inner">
-    <div class="logo">Syncras.App</div>
+            <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+                Menu <span>☰</span>
+            </button>
 
-    <button class="menu-toggle" onclick="toggleMenu()">Menu ☰</button>
+            <nav id="main-nav">
+                <a href="index.html">Home</a>
+                <a href="blog.html">Blog</a>
+                <a href="quiz.html">Test Anti-Acquisto</a>
+                <a href="calcolatori.html">Calcolatori</a>
+                <a href="curiosita.html">Curiosità</a>
+                <a href="misteri.html">Misteri</a>
+                <a href="offerte.html">Prodotti Consapevoli</a>
+                <a href="chi.html">Chi siamo</a>
+            </nav>
+        </div>
+    </header>
 
-    <nav id="main-nav">
-      <a href="index.html">Home</a>
-      <a href="blog.html">Blog</a>
-      <a href="offerte.html">Offerte Amazon</a>
-      <a href="categorie.html">Categorie</a>
-      <a href="curiosita.html">Curiosità</a>
-      <a href="misteri.html">Misteri</a>
-      <a href="quiz.html">Test SmartShop</a>
-      <a href="chi.html">Chi siamo</a>
-    </nav>
-  </div>
-</header>
+    <main>
+        <div class="back-links">
+            ← <a href="index.html">Torna alla Home</a> |
+            <a href="blog.html">Vai al Blog</a>
+        </div>
 
-<main>
+        <div class="page-intro">
+            <span class="badge-page">Area Calcoli</span>
+            <h1>I Calcolatori Essenziali per i Tuoi Acquisti Consapevoli</h1>
+            <p class="intro-text">
+                La spesa per <strong>impianti, veicoli, elettrodomestici o finanziamenti</strong> richiede chiarezza.
+                Qui trovi gli strumenti Syncras.App: calcolatori basati su dati semplici e formule trasparenti.
+                Ti aiutano a vedere i numeri prima di spendere.
+            </p>
+        </div>
 
-  <div class="back-links">
-    ← <a href="index.html">Home</a> |
-    <a href="blog.html">Blog</a> |
-    <a href="categorie.html">Categorie</a>
-  </div>
+        <section aria-label="Elenco calcolatori Syncras.App">
+            <div class="calc-grid">
+                
+                <a href="calcolatore-fotovoltaico-ammortamento.html" class="calc-card-link">
+                    <article class="calc-card">
+                        <div class="calc-card-label">Rientro economico &amp; risparmio</div>
+                        <h2>Calcolatore fotovoltaico: rientro, risparmio e auto elettrica</h2>
+                        <p>
+                            Simula la produzione annua del tuo impianto, l’autoconsumo,
+                            il risparmio in bolletta e il tempo di rientro dell’investimento.
+                        </p>
+                        <ul>
+                            <li>Stima del rientro con e senza detrazioni fiscali.</li>
+                            <li>Vista anno per anno del recupero economico.</li>
+                            <li>Opzione per includere la ricarica dell’auto elettrica.</li>
+                        </ul>
+                        <span class="calc-card-btn">
+                            Apri calcolatore fotovoltaico ▶
+                        </span>
+                    </article>
+                </a>
 
-  <h1>Perché la Lavatrice Vibra (Come un Trattore): Cause e Soluzioni Utili</h1>
+                <a href="calcolatore-consumi-elettrodomestici.html" class="calc-card-link">
+                    <article class="calc-card">
+                        <div class="calc-card-label">Energia &amp; bollette</div>
+                        <h2>Calcolatore consumi elettrodomestici</h2>
+                        <p>
+                            Scopri quanto ti costa tenere accesa stufetta, TV, lavatrice, forno,
+                            lavastoviglie e asciugatrice. Inserisci potenza, ore di utilizzo e prezzo dell’energia.
+                        </p>
+                        <ul>
+                            <li>Perfetto per trovare i veri “mangia-corrente” di casa.</li>
+                            <li>Confronta scenari diversi (meno ore, fasce orarie, ecc.).</li>
+                            <li>Utile per capire se cambiare elettrodomestico ha senso.</li>
+                        </ul>
+                        <span class="calc-card-btn">
+                            Calcola consumi elettrodomestici ▶
+                        </span>
+                    </article>
+                </a>
 
-  <p>
-    Se la tua lavatrice sta tentando un'evasione forzata dalla lavanderia, prima di chiamare il tecnico (e il vicino) è fondamentale capire il perché. Ecco la guida ironica ma seria che ti svelerà le **6 vere cause** della vibrazione eccessiva e, soprattutto, le **soluzioni pratiche** che puoi applicare subito.
-  </p>
+                <a href="calcolatore-consumi-auto.html" class="calc-card-link">
+                    <article class="calc-card">
+                        <div class="calc-card-label">Auto &amp; spostamenti</div>
+                        <h2>Calcolatore confronto costi auto</h2>
+                        <p>
+                            Confronta i costi di utilizzo tra due auto (A e B) in base a consumo
+                            e prezzo di carburante/energia (benzina, diesel, GPL, metano, elettrica).
+                        </p>
+                        <ul>
+                            <li>Confronto costo per 100 km e sui tuoi km annui.</li>
+                            <li>Capisci se passare a GPL/metano/elettrica ti conviene davvero.</li>
+                            <li>Usa i tuoi dati reali di utilizzo.</li>
+                        </ul>
+                        <span class="calc-card-btn">
+                            Confronta costi auto ▶
+                        </span>
+                    </article>
+                </a>
 
-  <button id="shareBtnTop" class="share-button">
-    📎 Condividi questa guida
-  </button>
+                <a href="calcolatore-finanziamenti-mutui.html" class="calc-card-link">
+                    <article class="calc-card">
+                        <div class="calc-card-label">Soldi &amp; debiti</div>
+                        <h2>Calcolatore finanziamenti e mutui</h2>
+                        <p>
+                            Simula la rata mensile, gli interessi totali e come cambia il peso della rata
+                            se modifichi durata o tasso. Utile per piccoli finanziamenti e per la casa.
+                        </p>
+                        <ul>
+                            <li>Calcola rata, quota interessi e capitale nel tempo.</li>
+                            <li>Confronta scenari: durata più breve vs più lunga.</li>
+                            <li>Perfetto da stampare o salvare prima di andare in banca.</li>
+                        </ul>
+                        <span class="calc-card-btn">
+                            Simula rata mutuo/finanziamento ▶
+                        </span>
+                    </article>
+                </a>
+            </div>
+        </section>
 
-  <script>
-    function toggleMenu(){ document.body.classList.toggle('nav-open'); }
+        <section class="faq-section">
+            <h2>Come usare al meglio i calcolatori Syncras.App</h2>
+            <p>
+                I calcolatori non sono preventivi ufficiali, ma strumenti per ragionare in modo
+                più lucido prima di spendere. Ti permettono di collegare numeri, abitudini e
+                decisioni d’acquisto, senza farti guidare solo da offerte a tempo e slogan.
+            </p>
 
-    const shareBtnTop = document.getElementById("shareBtnTop");
-    const shareBtnBottom = document.getElementById("shareBtnBottom"); // Riferimento al pulsante in fondo
-    const sharePayload = {
-      title:"Perché la lavatrice vibra come un trattore?",
-      text:"Guida ironica Syncras per capire perché vibra e cosa fare davvero.",
-      url:window.location.href
-    };
+            <h3>Devo inserire dati precisi o vanno bene valori indicativi?</h3>
+            <p>
+                Più i dati sono realistici (consumi in kWh, km annui, tassi di interesse, ecc.),
+                più il risultato sarà vicino alla tua situazione.
+                Se non conosci il valore esatto, usa etichette energetiche, contratti luce
+                o gli esempi indicati negli articoli collegati ai calcolatori.
+            </p>
 
-    if(navigator.share){
-      shareBtnTop.addEventListener("click", ()=> navigator.share(sharePayload));
-      // Assicurati che il bottone in fondo venga nascosto se la funzione non è supportata
-      document.addEventListener('DOMContentLoaded', () => {
-        if (shareBtnBottom) shareBtnBottom.addEventListener("click", ()=> navigator.share(sharePayload));
-      });
-    } else {
-      shareBtnTop.style.display="none";
-      document.addEventListener('DOMContentLoaded', () => {
-        if (shareBtnBottom) shareBtnBottom.style.display="none";
-      });
-    }
-  </script>
+            <h3>I risultati sono affidabili?</h3>
+            <p>
+                I calcoli usano formule semplici e trasparenti:
+                potenza × ore × prezzo per l’energia,
+                consumo × prezzo per i carburanti,
+                e formule standard per la rata dei finanziamenti.
+                Nella realtà ci possono essere costi aggiuntivi (manutenzione, tasse, spese accessorie):
+                i calcolatori servono per avere un ordine di grandezza chiaro, non un contratto firmato.
+            </p>
 
-    <h2>😂 La Storia Vera: Quando la Lavatrice Decide di Fare il Trattore</h2>
+            <h3>Posso usare questi calcolatori per decidere un acquisto importante?</h3>
+            <p>
+                Puoi usarli come base di partenza per capire se un’idea ha senso (nuova auto,
+                elettrodomestico, mutuo). Per decisioni importanti è sempre consigliabile confrontare
+                più preventivi reali e, quando serve, parlare con un tecnico o un consulente qualificato.
+            </p>
+        </section>
 
-  <p>
-    È sera. Finalmente tutti sul divano. Silenzio, pace, TV accesa su un programma che nessuno vuole vedere
-    ma nessuno vuole alzarsi per cambiare.
-  </p>
+        <p class="tags">
+            <strong>Tag:</strong> calcolatori online, calcolatore consumi elettrodomestici, confronto costi auto,
+            calcolatore benzina diesel GPL metano elettrica, calcolatore rata mutuo, calcolatore finanziamento,
+            calcolatore ammortamento fotovoltaico, risparmio bolletta, risparmio carburante, scelte di acquisto consapevoli.
+        </p>
+    </main>
 
-  <p>
-    E proprio in quel momento… parte lei.
-    <strong>LA LAVATRICE.</strong>
-    Prima un ronzio leggero, poi un <em>“tum-tum-tum”</em>,
-    e infine un <strong>“BOOM-BOOM-BOOM”</strong> che fa vibrare il pavimento
-    più delle scosse del 2016.
-  </p>
+    <footer class="syncras-footer">
+        <div class="footer-inner">
+            <div class="footer-column">
+                <h4>Syncras.App</h4>
+                <p>
+                    Metodo SmartShop per fare acquisti con la testa (e con un po’ di ironia).<br>
+                    Niente tecnicismi inutili, solo esperienze reali e numeri spiegati semplice.
+                </p>
+            </div>
 
-  <p>
-    Il gatto scompare sotto il letto.
-    La mensola del detersivo si sposta di tre centimetri.
-    Tua moglie urla: “È scoppiata!”.
-    Tu, come ogni eroe italiano del fai-da-te, rispondi:
-    <strong>“Calma amore… è normale.”</strong>
-  </p>
+            <div class="footer-column">
+                <h4>Link utili</h4>
+                <ul>
+                    <li><a href="blog.html">Tutte le guide SmartShop</a></li>
+                    <li><a href="offerte.html">Offerte Amazon selezionate</a></li>
+                    <li><a href="calcolatore-consumi-elettrodomestici.html">Calcolatore consumi elettrodomestici</a></li>
+                    <li><a href="fotovoltaico-4-kw-con-accumulo-10-kwh-quanto-costa-davvero-nel-2025.html">Caso reale fotovoltaico</a></li>
+                </ul>
+            </div>
 
-  <p>
-    Spoiler: <strong>non è mai normale.</strong>
-  </p>
+            <div class="footer-column">
+                <h4>Legale &amp; Privacy</h4>
+                <ul>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="cookie.html">Cookie Policy</a></li>
+                    <li><a href="disclaimer-amazon.html">Disclaimer Amazon</a></li>
+                    <li><a href="note-legali.html">Note Legali</a></li>
+                </ul>
+            </div>
+        </div>
 
-  <h3>Il vicino? Sempre presente.</h3>
+        <div class="footer-bottom">
+            <p>© <span id="year-span"></span> Syncras.App — Tutti i diritti riservati.</p>
+            <p>
+                Syncras.App partecipa al Programma Affiliazione Amazon EU.
+                Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+                senza alcun costo aggiuntivo per l’utente.
+            </p>
+            <p>
+                Per ordini, resi, spedizioni o dati relativi agli acquisti, è necessario rivolgersi
+                direttamente al servizio clienti Amazon tramite il proprio account.
+            </p>
+        </div>
+    </footer>
 
-  <p>
-    Puntuale come il bollo auto:
-    <em>TOC TOC TOC</em> – bussa al muro.
-  </p>
+    <script>
+        function toggleMenu() {
+            document.body.classList.toggle('nav-open');
+        }
 
-  <p>
-    “Oh! Tutto bene? Sembra che stiate arando il terreno!”
-  </p>
+        // FOOTER YEAR
+        document.addEventListener('DOMContentLoaded', function() {
+            var span = document.getElementById('year-span');
+            if (span) {
+                span.textContent = new Date().getFullYear();
+            }
+        });
+    </script>
 
-  <p>
-    Tu: “No, no… stiamo provando un nuovo programma!”
-    (Si chiama: <strong>Programma Terremoto Intensità 6.2</strong>).
-  </p>
-
-  <h3>La diagnosi da tecnico improvvisato</h3>
-
-  <p>
-    Tu ti avvicini alla lavatrice fingendo sicurezza.
-    Dai piccoli colpi, spingi a destra, spingi a sinistra,
-    guardi il tamburo come se capissi qualcosa.
-    Poi dici la frase che salva la faccia:
-  </p>
-
-  <p>
-    <strong>“Secondo me è sbilanciata.”</strong>
-  </p>
-
-  <p>
-    Traduzione:
-    <em>“Non ne ho idea, ma se parlo sicuro forse mi credono.”</em>
-  </p>
-
-  <div class="tip-box">
-    <p>
-      💡 <strong>Nella maggior parte dei casi la lavatrice non sta per esplodere.</strong>
-      Sta solo protestando perché qualcosa non è in equilibrio.
-    </p>
-  </div>
-
-    <h2>🛠 Le 6 Vere Cause del "Terremoto in Lavanderia"</h2>
-
-    <h3>1. Dimenticanza Fatale: I Bulloni di Trasporto</h3>
-  <p>
-    Se la lavatrice è nuova e vibra tantissimo fin dal primo giorno: **hai dimenticato di rimuovere i bulloni di trasporto!** Sono grandi viti sul retro che bloccano il cestello durante il trasporto. Vanno rimossi assolutamente.
-  </p>
-
-    <h3>2. Il Carico è Sbilanciato (La Causa più Comune)</h3>
-  <p>
-    Un jeans bagnato pesa come un bambino di 4 anni.
-    Se finisce tutto da un lato del tamburo durante la centrifuga… inizia la discoteca. La macchina cerca di "riequilibrare" ma crea solo più casino.
-  </p>
-
-    <h3>3. I Piedini Non Sono in Bolla (Serve la Livella)</h3>
-  <p>
-    Bastano 3 millimetri di dislivello per trasformare una lavatrice civile
-    in un <strong>martello pneumatico da cantiere</strong>. La lavatrice deve essere perfettamente orizzontale, bilanciata su tutti e quattro i piedini regolabili.
-  </p>
-  
-    [Immagine: Diagramma di come regolare i piedini con una livella]
-
-    <h3>4. La Superficie Scivola o è Cedevole</h3>
-  <p>
-    Se la lavatrice è poggiata su un tappetino liscio o su un pavimento molto vecchio/flessibile, non ha presa e durante la centrifuga ti fa vedere cosa significa
-    “camminare per la casa”.
-  </p>
-
-    <h3>5. Ammortizzatori o Cuscinetti Usurati (Problemi Interni)</h3>
-  <p>
-    Non vibra: **protesta.**
-    È il suo modo di dirti: “Sono stanca. Chiamate qualcuno.” Se senti un rumore metallico sordo e costante, anche con carico bilanciato, potrebbe essere un problema meccanico interno.
-  </p>
-
-    <h3>6. Troppo Carico (Il Classico Errore Italiano)</h3>
-  <p>
-    “Ho messo solo due asciugamani”.
-    Sì, e il piumone matrimoniale nascosto sotto. Un carico eccessivo impedisce alla biancheria di distribuirsi uniformemente, replicando il problema del carico sbilanciato.
-  </p>
-
-  <div class="solution-box">
-    <h3>✅ Soluzione Pratica Immediata (Cosa fare subito)</h3>
-    <ul>
-      <li>**Stop e Riavvia:** Metti in pausa, apri l'oblò, ridistribuisci uniformemente la biancheria nel cestello e riavvia la centrifuga.</li>
-      <li>**Verifica la Bolla:** Controlla che la lavatrice sia perfettamente livellata. Regola i piedini avvitandoli o svitandoli finché la lavatrice non è stabile e non dondola.</li>
-      <li>**Leva i Bulloni (solo se è nuova):** Se l'hai appena installata e il rumore è spaventoso, spegni, e controlla subito i bulloni di trasporto sul retro!</li>
-    </ul>
-  </div>
-
-  <h2>🚨 Quando Devi Davvero Preoccuparti? (I Segnali d'Allarme)</h2>
-  <p>Questi segnali non sono più risolvibili con un semplice riequilibrio del carico:</p>
-  <ul>
-    <li>Rumori **metallici forti e continui** (come metallo contro metallo).</li>
-    <li>Odori strani o di bruciato.</li>
-    <li>La lavatrice che “cammina” anche **senza centrifuga** (durante il lavaggio).</li>
-    <li>Vibrazioni eccessive anche dopo averla regolata e aver bilanciato il carico.</li>
-  </ul>
-
-  <p>
-    In quel caso → <strong>chiama un tecnico specializzato</strong>.
-  </p>
-
-  <h2>Finale Realistico e 100% Italiano</h2>
-  <p>
-    La lavatrice smette, tu torni sul divano.
-    Fai finta di essere stato tu a risolvere il mistero.
-    Tua moglie dice: “Domani controlliamo su Google.”
-    E tu: “Amore, domani te lo spiego io.”
-  </p>
-
-  <p>
-    Poi apri il telefono e cerchi:
-    <strong>“Perché la lavatrice vibra così tanto?”</strong>
-  </p>
-
-  <p>Ed eccoci qui. Su Syncras.</p>
-
-  <button id="shareBtnBottom" class="share-button">
-    📎 Condividi questa guida
-  </button>
-
-  <p class="small">
-    <strong>Tag:</strong> lavatrice vibra, lavatrice si muove, centrifuga rumorosa, bulloni trasporto, piedini, ammortizzatori, problema lavatrice, elettrodomestici casa
-  </p>
-
-</main>
-
-  <footer>
-    © 2025 Syncras.App — Tutti i diritti riservati<br>
-
-    <div style="margin-top:8px;">
-      <a href="privacy.html">Privacy Policy</a> |
-      <a href="cookie.html">Cookie Policy</a> |
-      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
-      <a href="note-legali.html">Note Legali</a>
-    </div>
-
-    <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
-      Syncras.App partecipa al Programma Affiliazione Amazon EU.
-      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
-      senza alcun costo aggiuntivo per l’utente.
-      Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
-      è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
-    </p>
-  </footer>
-
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Calcolatori online Syncras.App: consumi, auto, fotovoltaico e mutui",
+      "description": "Hub dei calcolatori Syncras.App per stimare i costi e l'ammortamento di elettrodomestici, auto, impianti fotovoltaici e per calcolare la rata di finanziamenti e mutui.",
+      "url": "https://syncras.app/calcolatori.html",
+      "mainEntity": {
+        "@type": "ItemList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Calcolatore fotovoltaico: rientro, risparmio e auto elettrica",
+            "url": "https://syncras.app/calcolatore-fotovoltaico-ammortamento.html"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Calcolatore consumi elettrodomestici",
+            "url": "https://syncras.app/calcolatore-consumi-elettrodomestici.html"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Calcolatore confronto costi di utilizzo auto",
+            "url": "https://syncras.app/calcolatore-consumi-auto.html"
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "name": "Calcolatore finanziamenti e mutui",
+            "url": "https://syncras.app/calcolatore-finanziamenti-mutui.html"
+          }
+        ]
+      }
+    }
+    </script>
 </body>
 </html>
+
