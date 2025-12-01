@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="it">
 <head>
     <meta charset="UTF-8">
@@ -220,53 +220,56 @@
             }
         }
 
-        /* CLASSE WRAPPER PER RENDERE TUTTA LA CARD CLICCABILE */
+        /* LINK WRAPPER PER CARD CLICCABILI */
         .calc-card-link { 
             text-decoration: none; 
             color: inherit; 
             display: block; 
         }
 
-        /* STILE CARD AGGIORNATO PER COERENZA */
+        /* CARD – STILE UNIFICATO */
         .calc-card {
-            background: #ffffff; /* Sfondo bianco puro */
-            border-radius: 16px; /* Arrotondamento come nelle tue immagini */
-            
-            /* Bordi e ombre sottili per definire il contenitore in modo pulito */
-            border: 1px solid #d1d5db; /* Bordo grigio molto chiaro e sottile */
+            background: #f8f9ff; /* viola chiarissimo, uguale per tutte */
+            border-radius: 16px;
+            border: 1px solid #e0e7ff;
             padding: 16px 18px 14px;
-            
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05); /* Ombra più leggera */
+            box-shadow: 0 3px 10px rgba(15,23,42,0.06);
             transition: transform 0.15s ease, box-shadow 0.15s ease;
             position: relative; 
         }
 
         .calc-card:hover {
             transform: translateY(-2px);
-            /* Ombra più accentuata all'hover per dare l'effetto 3D/cliccabile */
-            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+            box-shadow: 0 8px 20px rgba(15,23,42,0.16);
         }
 
-        /* Stile del CTA */
-        .calc-card-btn {
+        /* Etichetta in alto (badge) */
+        .calc-card-label {
             display: inline-block;
-            margin-top: 4px;
-            padding: 8px 14px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #3730a3;
+            margin-bottom: 6px;
+            padding: 2px 8px;
             border-radius: 999px;
-            background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
-            color: #ffffff;
-            font-weight: 600;
+            background: rgba(108,92,231,0.06);
+            border: 1px solid rgba(108,92,231,0.18);
+        }
+
+        .calc-card h2 {
+            margin: 0 0 6px;
+            font-size: 1.1rem;
+            color: #1f2937;
+        }
+
+        .calc-card p {
+            margin: 0 0 10px;
             font-size: 0.9rem;
-            text-decoration: none;
-            box-shadow: 0 2px 7px rgba(15,23,42,0.25);
+            color: #4b5563;
         }
 
-        .calc-card-btn:hover {
-            opacity: 0.96;
-            transform: translateY(-1px);
-        }
-
-        /* Stile per gli elenchi dentro le card */
+        /* Elenchi nelle card */
         .calc-card ul {
             list-style: none;
             padding-left: 0;
@@ -288,30 +291,27 @@
             color: var(--violet-main);
             font-weight: bold;
         }
-        
-        /* Contenuti di testo */
-        .calc-card-label {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.09em;
-            color: #6b7280;
-            margin-bottom: 4px;
-        }
 
-        .calc-card h2 {
-            margin: 0 0 6px;
-            font-size: 1.1rem;
-            /* Ho scurito l'h2 come nelle tue immagini */
-            color: #1f2937; 
-        }
-
-        .calc-card p {
-            margin: 0 0 10px;
+        /* Pulsante CTA */
+        .calc-card-btn {
+            display: inline-block;
+            margin-top: 4px;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+            color: #ffffff;
+            font-weight: 600;
             font-size: 0.9rem;
-            color: #4b5563;
+            text-decoration: none;
+            box-shadow: 0 2px 7px rgba(15,23,42,0.25);
         }
-        
-        /* FOOTER E SEZIONI FAQ (Non toccati) */
+
+        .calc-card-btn:hover {
+            opacity: 0.96;
+            transform: translateY(-1px);
+        }
+
+        /* FAQ, TAG, FOOTER */
         .faq-section {
             margin-top: 28px;
             padding-top: 16px;
@@ -434,7 +434,9 @@
             <span class="badge-page">Area Calcoli</span>
             <h1>I Calcolatori Essenziali per i Tuoi Acquisti Consapevoli</h1>
             <p class="intro-text">
-                La spesa per **impianti, veicoli, elettrodomestici o finanziamenti** richiede chiarezza. Qui trovi gli strumenti Syncras.App: calcolatori basati su dati reali e formule trasparenti. **Ti supportiamo nella tua valutazione**, offrendoti tutti i numeri necessari per prendere una decisione informata e consapevole.
+                La spesa per <strong>impianti, veicoli, elettrodomestici o finanziamenti</strong> richiede chiarezza.
+                Qui trovi gli strumenti Syncras.App: calcolatori basati su dati semplici e formule trasparenti.
+                Ti aiutano a vedere i numeri prima di spendere.
             </p>
         </div>
 
@@ -443,15 +445,15 @@
                 
                 <a href="calcolatore-fotovoltaico-ammortamento.html" class="calc-card-link">
                     <article class="calc-card">
-                        <div class="calc-card-label">Rientro Economico & Risparmio</div>
+                        <div class="calc-card-label">Rientro economico & risparmio</div>
                         <h2>Calcolatore fotovoltaico: rientro, risparmio e auto elettrica</h2>
                         <p>
-                            Simula la **produzione annua** del tuo impianto, l’**autoconsumo**,
-                            il **risparmio in bolletta** e il **tempo di rientro** dell’investimento.
+                            Simula la produzione annua del tuo impianto, l’autoconsumo,
+                            il risparmio in bolletta e il tempo di rientro dell’investimento.
                         </p>
                         <ul>
                             <li>Stima del rientro con e senza detrazioni fiscali.</li>
-                            <li>Vista **anno per anno** del recupero economico.</li>
+                            <li>Vista anno per anno del recupero economico.</li>
                             <li>Opzione per includere la ricarica dell’auto elettrica.</li>
                         </ul>
                         <span class="calc-card-btn">
@@ -462,16 +464,16 @@
 
                 <a href="calcolatore-consumi-elettrodomestici.html" class="calc-card-link">
                     <article class="calc-card">
-                        <div class="calc-card-label">Energia & Bollette</div>
+                        <div class="calc-card-label">Energia & bollette</div>
                         <h2>Calcolatore consumi elettrodomestici</h2>
                         <p>
-                            Scopri quanto ti costa tenere accesa **stufetta, TV, lavatrice, forno,
-                            lavastoviglie, asciugatrice**. Inserisci potenza, ore di utilizzo e prezzo dell’energia.
+                            Scopri quanto ti costa tenere accesa stufetta, TV, lavatrice, forno,
+                            lavastoviglie e asciugatrice. Inserisci potenza, ore di utilizzo e prezzo dell’energia.
                         </p>
                         <ul>
                             <li>Perfetto per trovare i veri “mangia-corrente” di casa.</li>
-                            <li>Confronta scenari diversi (meno ore, fascia horaria, ecc.).</li>
-                            <li>Ideale per capire se cambiare elettrodomestico ha senso.</li>
+                            <li>Confronta scenari diversi (meno ore, fasce orarie, ecc.).</li>
+                            <li>Utile per capire se cambiare elettrodomestico ha senso.</li>
                         </ul>
                         <span class="calc-card-btn">
                             Calcola consumi elettrodomestici ▶
@@ -481,15 +483,16 @@
 
                 <a href="calcolatore-consumi-auto.html" class="calc-card-link">
                     <article class="calc-card">
-                        <div class="calc-card-label">Auto & Spostamenti</div>
-                        <h2>Calcolatore confronto costi auto (carburante/energia)</h2>
+                        <div class="calc-card-label">Auto & spostamenti</div>
+                        <h2>Calcolatore confronto costi auto</h2>
                         <p>
-                            Confronta i **costi di utilizzo** tra due auto (A e B) in base a **consumo** e **prezzo di carburante/energia** (benzina, diesel, GPL, metano o elettrica).
+                            Confronta i costi di utilizzo tra due auto (A e B) in base a consumo
+                            e prezzo di carburante/energia (benzina, diesel, GPL, metano, elettrica).
                         </p>
                         <ul>
-                            <li>Confronto costo per **100 km** e sul totale dei km annui.</li>
-                            <li>Ideale per capire se passare a **GPL/metano/elettrica** ti conviene davvero.</li>
-                            <li>Puoi usare i dati reali del tuo utilizzo (km/anno).</li>
+                            <li>Confronto costo per 100 km e sui tuoi km annui.</li>
+                            <li>Capisci se passare a GPL/metano/elettrica ti conviene davvero.</li>
+                            <li>Usa i tuoi dati reali di utilizzo.</li>
                         </ul>
                         <span class="calc-card-btn">
                             Confronta costi auto ▶
@@ -499,11 +502,11 @@
 
                 <a href="calcolatore-finanziamenti-mutui.html" class="calc-card-link">
                     <article class="calc-card">
-                        <div class="calc-card-label">Soldi & Debiti</div>
+                        <div class="calc-card-label">Soldi & debiti</div>
                         <h2>Calcolatore finanziamenti e mutui</h2>
                         <p>
-                            Simula la **rata mensile**, gli **interessi totali** e come cambia il peso della rata
-                            se vari durata o tasso. Utile sia per piccoli acquisti che per la casa.
+                            Simula la rata mensile, gli interessi totali e come cambia il peso della rata
+                            se modifichi durata o tasso. Utile per piccoli finanziamenti e per la casa.
                         </p>
                         <ul>
                             <li>Calcola rata, quota interessi e capitale nel tempo.</li>
