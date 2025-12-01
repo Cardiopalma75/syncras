@@ -200,7 +200,7 @@
             grid-template-columns: repeat(2, minmax(0, 1fr)); 
             gap: 18px;
             margin-top: 18px;
-            align-items: stretch; /* tutte le card stessa altezza */
+            align-items: stretch;
         }
         
         @media (min-width: 901px) {
@@ -227,16 +227,16 @@
             display: block; 
         }
 
-        /* CARD – STILE UNIFICATO / TIPO CURIOSITÀ */
+        /* CARD – STILE TIPO CURIOSITÀ */
         .calc-card {
-            background: #F7F7FF; /* viola chiarissimo */
+            background: #F7F7FF;
             border-radius: 18px;
             border: 1px solid #E0E7FF;
             padding: 16px 18px 14px;
             box-shadow: 0 4px 12px rgba(15,23,42,0.06);
             transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
             position: relative;
-            display: flex;           /* per allineare il bottone in basso */
+            display: flex;
             flex-direction: column;
             min-height: 100%;
         }
@@ -245,6 +245,14 @@
             transform: translateY(-3px);
             box-shadow: 0 10px 24px rgba(15,23,42,0.18);
             background: #FFFFFF;
+        }
+
+        /* NIENTE SOTTOLINEATURE DENTRO LE CARD */
+        .calc-card a,
+        .calc-card a:hover,
+        .calc-card a:focus,
+        .calc-card a:active {
+            text-decoration: none !important;
         }
 
         /* Etichetta in alto (badge) */
@@ -301,7 +309,7 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            margin-top: auto;           /* spinge il bottone in basso nella card */
+            margin-top: auto;
             padding: 10px 16px;
             border-radius: 999px;
             background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
@@ -310,8 +318,8 @@
             font-size: 0.9rem;
             text-decoration: none;
             box-shadow: 0 3px 10px rgba(15,23,42,0.25);
-            min-height: 44px;           /* altezza minima uguale per tutti */
-            white-space: nowrap;        /* evita che il testo vada a capo in modo strano */
+            min-height: 44px;
+            white-space: nowrap;
         }
 
         .calc-card-btn:hover {
@@ -668,4 +676,5 @@
     </script>
 </body>
 </html>
+
 
