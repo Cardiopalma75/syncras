@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calcolatori per Acquisti Consapevoli | Syncras.App (Auto, Casa, Prestiti)</title>
+
+  <meta name="description" content="Fai conti veri e consapevoli prima di comprare. Usa i calcolatori gratuiti di Syncras.App per stimare il costo reale di auto (benzina, elettrica), elettrodomestici e la rata di mutui/finanziamenti.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://syncras.app/calcolatori.html">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-59D9XRYKF3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-59D9XRYKF3');
+  </script>
+
+  <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --violet-soft: #A29BFE;
+      --bg-page: #F7F7FB;
+      --text-main: #403E43;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    /* HEADER */
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color: #fff;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+
+    .header-inner {
+      max-width: 980px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+
+    #main-nav {
+      display: flex;
+      gap: 14px;
+      font-size: 0.95rem;
+    }
+
+    #main-nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      padding-bottom: 2px;
+      border-bottom: 2px solid transparent;
+    }
+
+    #main-nav a:hover {
+      text-decoration: underline;
+    }
+
+    #main-nav a.active {
+      border-bottom-color: rgba(255,255,255,0.9);
+    }
+
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .menu-toggle span {
+      margin-left: 4px;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        margin: 0 auto;
+        max-width: 980px;
+        flex-direction: column;
+        background-color: var(--violet-dark);
+        padding: 10px 16px 12px 16px;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
+      }
+
+      #main-nav a {
+        padding: 6px 0;
+      }
+
+      body.nav-open #main-nav {
+        display: flex;
+      }
+
+      .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+
+    a {
+      color: var(--violet-dark);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* MAIN LAYOUT */
+    main {
+      max-width: 980px;
+      margin: 24px auto 32px;
+      padding: 18px 16px 24px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+    }
+
+    h1, h2, h3 {
+      color: var(--violet-dark);
+      margin-top: 0;
+    }
+
+    .back-links {
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+    }
+
+    .back-links a {
+      color: var(--violet-dark);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .back-links a:hover {
+      text-decoration: underline;
+    }
+
+    .page-intro {
+      margin-bottom: 18px;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 12px;
+    }
+
+    .badge-page {
+      display: inline-block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(108,92,231,0.08);
+      border: 1px solid rgba(108,92,231,0.35);
+      border-radius: 999px;
+      padding: 2px 8px;
+      color: #3730a3;
+      margin-bottom: 6px;
+    }
+
+    .intro-text {
+      font-size: 0.95rem;
+      color: #4b5563;
+      margin-top: 6px;
+    }
+
+    /* GRID CALCOLATORI */
+    .calc-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    @media (max-width: 900px) {
+      .calc-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 768px) {
+      main {
+        margin: 16px auto 24px;
+        padding: 14px 10px 20px;
+      }
+
+      .calc-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .calc-card {
+      background: #f8f9ff;
+      border-radius: 14px;
+      padding: 16px 18px 14px;
+      border: 1px solid #e0e7ff;
+      box-shadow: 0 4px 10px rgba(15,23,42,0.06);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .calc-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(15,23,42,0.15);
+    }
+
+    .calc-card-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #6b7280;
+      margin-bottom: 4px;
+    }
+
+    .calc-card h2 {
+      margin: 0 0 6px;
+      font-size: 1.1rem;
+      color: #1f2937;
+    }
+
+    .calc-card p {
+      margin: 0 0 10px;
+      font-size: 0.9rem;
+      color: #4b5563;
+    }
+
+    .calc-card-btn {
+      display: inline-block;
+      margin-top: 4px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      box-shadow: 0 2px 7px rgba(15,23,42,0.25);
+    }
+
+    .calc-card-btn:hover {
+      opacity: 0.96;
+      transform: translateY(-1px);
+    }
+
+    /* SEZIONE FAQ / TESTO EXTRA */
+    .faq-section {
+      margin-top: 28px;
+      padding-top: 16px;
+      border-top: 1px solid #e5e7eb;
+      font-size: 0.95rem;
+    }
+
+    .faq-section h2 {
+      font-size: 1.15rem;
+      margin-bottom: 8px;
+    }
+
+    .faq-section h3 {
+      font-size: 1rem;
+      margin-top: 14px;
+      margin-bottom: 4px;
+    }
+
+    .faq-section p {
+      margin: 0 0 8px;
+      color: #4b5563;
+    }
+
+    .tags {
+      font-size: 0.8rem;
+      color: #6b7280;
+      margin-top: 18px;
+    }
+
+    /* FOOTER (uguale agli altri) */
+    .syncras-footer {
+      margin-top: 32px;
+      padding: 2.5rem 1.5rem 1.5rem;
+      background: #2b1840;
+      color: #f3eaff;
+      font-size: 0.9rem;
+    }
+
+    .syncras-footer a {
+      color: #f3eaff;
+      text-decoration: none;
+    }
+
+    .syncras-footer a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-inner {
+      max-width: 980px;
+      margin: 0 auto 1.5rem auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+    }
+
+    .footer-column h4 {
+      margin-top: 0;
+      margin-bottom: 0.7rem;
+      font-size: 1rem;
+    }
+
+    .footer-column p {
+      margin: 0;
+      font-size: 0.85rem;
+    }
+
+    .footer-column ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-column li {
+      margin-bottom: 0.4rem;
+      font-size: 0.85rem;
+    }
+
+    .footer-bottom {
+      max-width: 980px;
+      margin: 0 auto;
+      text-align: center;
+      font-size: 0.8rem;
+      opacity: 0.9;
+    }
+
+    .footer-bottom p {
+      margin: 4px 0;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
+
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
+
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="offerte.html">Offerte Amazon</a>
+        <a href="categorie.html">Categorie</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="quiz.html">Test SmartShop</a>
+        <a href="calcolatori.html" class="active">Calcolatori</a>
+        <a href="chi.html">Chi siamo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="back-links">
+      ← <a href="index.html">Torna alla Home</a> |
+      <a href="blog.html">Vai al Blog</a>
+    </div>
+
+    <div class="page-intro">
+      <span class="badge-page">Area Calcoli</span>
+      <h1>I Calcolatori Essenziali per i Tuoi Acquisti Consapevoli</h1>
+      <p class="intro-text">
+        Smettila di fidarti solo di etichette e pubblicità.  
+        Qui trovi gli strumenti gratuiti e concreti di Syncras.App per stimare il
+        <strong>costo reale</strong> di un elettrodomestico, confrontare le spese di utilizzo tra due auto
+        o capire quanto pesa davvero un finanziamento in bolletta e nel tuo budget.
+        Fai i conti, poi decidi.
+      </p>
+    </div>
+
+    <div class="calc-grid">
+      <!-- CALCOLATORE 1: ELETTRODOMESTICI -->
+      <article class="calc-card">
+        <div class="calc-card-label">⚡️ Energia & Bollette</div>
+        <h2>Calcolatore consumi elettrodomestici</h2>
+        <p>
+          Stufetta elettrica, TV, lavatrice, forno, lavastoviglie, asciugatrice e perfino fotovoltaico:
+          scopri quanti kWh consumano e quanto ti costano davvero in bolletta ogni mese e ogni anno.
+        </p>
+        <a href="calcolatore-consumi-elettrodomestici.html" class="calc-card-btn">
+          Calcola i consumi ora ▶
+        </a>
+      </article>
+
+      <!-- CALCOLATORE 2: AUTO (SOLO COSTI/CONSUMI, NON ACQUISTO) -->
+      <article class="calc-card">
+        <div class="calc-card-label">🚗 Auto & Spostamenti</div>
+        <h2>Calcolatore confronto costi di utilizzo auto</h2>
+        <p>
+          Confronta il <strong>costo di utilizzo</strong> tra due auto (A e B),
+          a benzina, diesel, GPL, metano o elettrica.
+          Inserisci consumi, prezzo del carburante/energia e chilometri annui:
+          il calcolatore ti mostra quanto spendi in “pieno” per 100 km e per i km inseriti,
+          e quale delle due ti fa consumare di più.
+        </p>
+        <a href="calcolatore-consumi-auto.html" class="calc-card-btn">
+          Confronta i costi ora ▶
+        </a>
+      </article>
+
+      <!-- CALCOLATORE 3: FINANZIAMENTI & MUTUI -->
+      <article class="calc-card">
+        <div class="calc-card-label">🏦 Soldi & Debiti</div>
+        <h2>Calcolatore finanziamenti e mutui</h2>
+        <p>
+          Inserisci importo, tasso di interesse e durata:
+          ottieni subito la rata mensile, il totale degli interessi pagati e il costo finale
+          del prestito o del mutuo. Utile per capire se la rata “ti sta davvero in piedi”
+          senza rovinare il resto del budget.
+        </p>
+        <a href="calcolatore-finanziamenti-mutui.html" class="calc-card-btn">
+          Simula la rata ora ▶
+        </a>
+      </article>
+    </div>
+
+    <section class="faq-section">
+      <h2>Come usare al meglio i calcolatori Syncras.App</h2>
+      <p>
+        I calcolatori non sono preventivi ufficiali, ma strumenti per ragionare in modo
+        più lucido prima di spendere. Ti permettono di collegare numeri, abitudini e
+        decisioni d’acquisto, senza farti guidare solo da offerte a tempo e slogan.
+      </p>
+
+      <h3>Devo inserire dati precisi o vanno bene valori indicativi?</h3>
+      <p>
+        Più i dati sono realistici (consumi in kWh, km annui, tassi di interesse, ecc.),
+        più il risultato sarà vicino alla tua situazione.  
+        Se non conosci il valore esatto, usa etichette energetiche, contratti luce
+        o gli esempi indicati negli articoli collegati ai calcolatori.
+      </p>
+
+      <h3>I risultati sono affidabili?</h3>
+      <p>
+        I calcoli usano formule semplici e trasparenti:
+        potenza × ore × prezzo per l’energia,  
+        consumo × prezzo per i carburanti,  
+        e formule standard per la rata dei finanziamenti.  
+        Nella realtà ci possono essere costi aggiuntivi (manutenzione, tasse, spese accessorie):
+        i calcolatori servono per avere un ordine di grandezza chiaro, non un contratto firmato.
+      </p>
+
+      <h3>Posso usare questi calcolatori per decidere un acquisto importante?</h3>
+      <p>
+        Puoi usarli come base di partenza per capire se un’idea ha senso (nuova auto,
+        elettrodomestico, mutuo). Per decisioni importanti è sempre consigliabile confrontare
+        più preventivi reali e, quando serve, parlare con un tecnico o un consulente qualificato.
+      </p>
+    </section>
+
+    <p class="tags">
+      <strong>Tag:</strong> calcolatori online, calcolatore consumi elettrodomestici, confronto costi auto,
+      calcolatore benzina diesel GPL metano elettrica, calcolatore rata mutuo, calcolatore finanziamento,
+      risparmio bolletta, risparmio carburante, scelte di acquisto consapevoli.
+    </p>
+  </main>
+
+  <footer class="syncras-footer">
+    <div class="footer-inner">
+      <div class="footer-column">
+        <h4>Syncras.App</h4>
+        <p>
+          Metodo SmartShop per fare acquisti con la testa (e con un po’ di ironia).<br>
+          Niente tecnicismi inutili, solo esperienze reali e numeri spiegati semplice.
+        </p>
+      </div>
+
+      <div class="footer-column">
+        <h4>Link utili</h4>
+        <ul>
+          <li><a href="blog.html">Tutte le guide SmartShop</a></li>
+          <li><a href="offerte.html">Offerte Amazon selezionate</a></li>
+          <li><a href="calcolatore-consumi-elettrodomestici.html">Calcolatore consumi elettrodomestici</a></li>
+          <li><a href="fotovoltaico-4-kw-con-accumulo-10-kwh-quanto-costa-davvero-nel-2025.html">Caso reale fotovoltaico</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h4>Legale & Privacy</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="cookie.html">Cookie Policy</a></li>
+          <li><a href="disclaimer-amazon.html">Disclaimer Amazon</a></li>
+          <li><a href="note-legali.html">Note Legali</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© <span id="year-span"></span> Syncras.App — Tutti i diritti riservati.</p>
+      <p>
+        Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+        Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+        senza alcun costo aggiuntivo per l’utente.
+      </p>
+      <p>
+        Per ordini, resi, spedizioni o dati relativi agli acquisti, è necessario rivolgersi
+        direttamente al servizio clienti Amazon tramite il proprio account.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.body.classList.toggle('nav-open');
+    }
+
+    // FOOTER YEAR
+    document.addEventListener('DOMContentLoaded', function() {
+      var span = document.getElementById('year-span');
+      if (span) {
+        span.textContent = new Date().getFullYear();
+      }
+    });
+  </script>
+
+  <!-- Schema.org: pagina hub calcolatori -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Calcolatori online Syncras.App: consumi, auto e mutui",
+    "description": "Hub dei calcolatori Syncras.App per stimare consumi elettrodomestici, confrontare i costi di utilizzo auto e calcolare la rata di finanziamenti e mutui.",
+    "url": "https://syncras.app/calcolatori.html",
+    "mainEntity": {
+      "@type": "ItemList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Calcolatore consumi elettrodomestici",
+          "url": "https://syncras.app/calcolatore-consumi-elettrodomestici.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Calcolatore confronto costi di utilizzo auto",
+          "url": "https://syncras.app/calcolatore-consumi-auto.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Calcolatore finanziamenti e mutui",
+          "url": "https://syncras.app/calcolatore-finanziamenti-mutui.html"
+        }
+      ]
+    }
+  }
+  </script>
+</body>
+</html>
+
