@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acquisto Consapevole & Prodotti Scelti | Syncras.App</title>
+  <meta name="description" content="La guida Syncras all’acquisto consapevole su Amazon: solo categorie essenziali, utili e con buon rapporto qualità/prezzo. Idee per spendere meglio, non per comprare di più.">
+  <meta name="robots" content="index,follow">
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-59D9XRYKF3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-59D9XRYKF3');
+  </script>
+
+  <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --bg-page: #F7F7FB;
+      --text-main: #403E43;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    /* HEADER */
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color: white;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+    #main-nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding-bottom: 2px;
+    }
+    #main-nav a:hover {
+      text-decoration: underline;
+    }
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .menu-toggle span {
+      margin-left: 4px;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        margin: 0 auto;
+        max-width: 1180px;
+        flex-direction: column;
+        background-color: var(--violet-dark);
+        padding: 10px 16px 12px 16px;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
+      }
+      #main-nav a {
+        padding: 6px 0;
+      }
+      body.nav-open #main-nav {
+        display: flex;
+      }
+      .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+
+    /* MAIN */
+    main {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.08);
+    }
+
+    h2, h3 {
+      color: var(--violet-dark);
+    }
+
+    /* GRID CARD */
+    .offers-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 25px;
+    }
+    .offer-card {
+      flex: 1 1 calc(33% - 20px);
+      background: #F6F4FF;
+      padding: 16px;
+      border-radius: 12px;
+      border: 1px solid #DDD7FF;
+      transition: transform 0.18s, box-shadow 0.18s;
+    }
+    .offer-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      background: #ffffff;
+    }
+    .offer-card h3 {
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+
+    /* BUTTON */
+    .button-primary {
+      background-color: var(--violet-main);
+      color: white;
+      padding: 9px 14px;
+      border-radius: 6px;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    .button-primary:hover {
+      background-color: var(--violet-dark);
+    }
+
+    /* SMALL TEXT */
+    .note-legale {
+      font-size: 0.9rem;
+      margin-top: 20px;
+      color: #555;
+    }
+
+    @media (max-width: 768px) {
+      .offer-card {
+        flex: 1 1 100%;
+      }
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background:#eee;
+      font-family:Arial;
+      font-size:0.9rem;
+      margin-top:40px;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
+
+      <button class="menu-toggle" type="button" onclick="toggleMenu()">
+        Menu <span>☰</span>
+      </button>
+
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="quiz.html">Test Anti-Acquisto</a>
+        <a href="calcolatori.html">Calcolatori</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="offerte.html">Prodotti Consapevoli</a>
+        <a href="chi.html">Chi siamo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <h2>🛒 La guida Syncras all’acquisto consapevole</h2>
+
+    <p>
+      Syncras non ti invita a comprare di più, ma a <strong>comprare meglio</strong>.<br>
+      Qui troverai solo categorie essenziali di prodotti Amazon che hanno <strong>più senso nella vita quotidiana</strong>.<br>
+      Naviga tra le offerte aggiornate e ricordati sempre il nostro principio:<br>
+      <strong>“Se non ti serve davvero… lascialo nel carrello.”</strong>
+    </p>
+
+    <div class="offers-grid">
+
+      <div class="offer-card">
+        <h3>🎧 Audio funzionale</h3>
+        <p>Cuffie, auricolari e accessori audio pensati per l’uso quotidiano.</p>
+        <a class="button-primary" href="https://www.amazon.it/s?k=cuffie+bluetooth&tag=mywebcorner4-21" target="_blank" rel="nofollow">
+          Vedi audio selezionato
+        </a>
+      </div>
+
+      <div class="offer-card">
+        <h3>📱 Strumenti tech essenziali</h3>
+        <p>Gadget utili, smartphone, powerbank e tecnologia che migliora la vita.</p>
+        <a class="button-primary" href="https://amzn.to/3KtvgYt" target="_blank" rel="nofollow">
+          Vedi tech essenziale
+        </a>
+      </div>
+
+      <div class="offer-card">
+        <h3>🏡 Soluzioni per la casa (zero sprechi)</h3>
+        <p>Prodotti intelligenti per comodità, pulizia e risparmio in casa.</p>
+        <a class="button-primary" href="https://www.amazon.it/s?k=casa+comfort+prodotti&tag=mywebcorner4-21" target="_blank" rel="nofollow">
+          Vedi soluzioni casa
+        </a>
+      </div>
+
+      <div class="offer-card">
+        <h3>💡 Illuminazione smart & risparmio</h3>
+        <p>Lampadine LED e soluzioni per illuminare meglio consumando meno.</p>
+        <a class="button-primary" href="https://www.amazon.it/s?k=lampadine+led&tag=mywebcorner4-21" target="_blank" rel="nofollow">
+          Vedi offerte luce
+        </a>
+      </div>
+
+    </div>
+
+    <h3 style="margin-top:40px;">🔥 Le selezioni Amazon che contano subito</h3>
+
+    <ul>
+      <li><a href="https://www.amazon.it/gp/goldbox?tag=mywebcorner4-21" target="_blank" rel="nofollow">⭐ Offerte del giorno e lampo</a></li>
+      <li><a href="https://www.amazon.it/gp/bestsellers?tag=mywebcorner4-21" target="_blank" rel="nofollow">🥇 I prodotti più cliccati e utili del momento</a></li>
+      <li><a href="https://www.amazon.it/s?k=robot+aspirapolvere+offerta&tag=mywebcorner4-21" target="_blank" rel="nofollow">🤖 Robot aspirapolvere & pulizia smart</a></li>
+      <li><a href="https://www.amazon.it/s?k=cucina+piccoli+elettrodomestici&tag=mywebcorner4-21" target="_blank" rel="nofollow">🍳 Piccoli elettrodomestici per la cucina funzionale</a></li>
+    </ul>
+
+    <p class="note-legale">
+      Nota: alcuni link possono essere di affiliazione Amazon. Questo non comporta costi aggiuntivi per te, ma aiuta Syncras a crescere.
+    </p>
+
+    <p style="margin-top:25px; font-size:0.9rem; color:#555;">
+      In alternativa, se vuoi migliorare davvero il tuo rapporto con gli acquisti, dai un’occhiata anche al 
+      <a href="quiz.html"><strong>Test Anti-Acquisto di Syncras</strong></a>: lo stiamo aggiornando per allinearlo al 100% al nuovo stile e al principio
+      <strong>“Se non ti serve davvero… lascialo nel carrello.”</strong>
+    </p>
+
+  </main>
+
+  <script>
+    function toggleMenu() {
+      document.body.classList.toggle('nav-open');
+    }
+  </script>
+
+  <footer>
+    © 2025 Syncras.App — Tutti i diritti riservati<br>
+    <div style="margin-top:8px;">
+      <a href="privacy.html">Privacy Policy</a> |
+      <a href="cookie.html">Cookie Policy</a> |
+      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
+      <a href="note-legali.html">Note Legali</a>
+    </div>
+
+    <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.
+      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+      senza alcun costo aggiuntivo per l’utente.
+      Per ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+      è necessario rivolgersi al servizio clienti Amazon tramite il proprio account.
+    </p>
+  </footer>
+
+</body>
+</html>
