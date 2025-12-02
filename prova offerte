@@ -165,6 +165,19 @@
       background-color: var(--violet-dark);
     }
 
+    /* LISTA LINK IN BASSO COME BOTTONI */
+    .offers-links {
+      list-style: none;
+      padding-left: 0;
+      margin: 16px 0 0 0;
+    }
+    .offers-links li {
+      margin-bottom: 10px;
+    }
+    .offers-links .button-primary {
+      display: inline-block;
+    }
+
     /* SMALL TEXT */
     .note-legale {
       font-size: 0.9rem;
@@ -248,7 +261,7 @@
       </div>
 
       <div class="offer-card">
-        <h3>💡 Illuminazione smart & risparmio</h3>
+        <h3>💡 Illuminazione smart &amp; risparmio</h3>
         <p>Lampadine LED e soluzioni per illuminare meglio consumando meno.</p>
         <a class="button-primary" href="https://www.amazon.it/s?k=lampadine+led&tag=mywebcorner4-21" target="_blank" rel="nofollow">
           Vedi offerte luce
@@ -259,21 +272,36 @@
 
     <h3 style="margin-top:40px;">🔥 Le selezioni Amazon che contano subito</h3>
 
-    <ul>
-      <li><a href="https://www.amazon.it/gp/goldbox?tag=mywebcorner4-21" target="_blank" rel="nofollow">⭐ Offerte del giorno e lampo</a></li>
-      <li><a href="https://www.amazon.it/gp/bestsellers?tag=mywebcorner4-21" target="_blank" rel="nofollow">🥇 I prodotti più cliccati e utili del momento</a></li>
-      <li><a href="https://www.amazon.it/s?k=robot+aspirapolvere+offerta&tag=mywebcorner4-21" target="_blank" rel="nofollow">🤖 Robot aspirapolvere & pulizia smart</a></li>
-      <li><a href="https://www.amazon.it/s?k=cucina+piccoli+elettrodomestici&tag=mywebcorner4-21" target="_blank" rel="nofollow">🍳 Piccoli elettrodomestici per la cucina funzionale</a></li>
+    <ul class="offers-links">
+      <li>
+        <a class="button-primary" href="https://www.amazon.it/gp/goldbox?tag=mywebcorner4-21" target="_blank" rel="nofollow">
+          ⭐ Offerte del giorno e lampo
+        </a>
+      </li>
+      <li>
+        <a class="button-primary" href="https://www.amazon.it/gp/bestsellers?tag=mywebcorner4-21" target="_blank" rel="nofollow">
+          🥇 I prodotti più cliccati e utili del momento
+        </a>
+      </li>
+      <li>
+        <a class="button-primary" href="https://www.amazon.it/s?k=robot+aspirapolvere+offerta&tag=mywebcorner4-21" target="_blank" rel="nofollow">
+          🤖 Robot aspirapolvere &amp; pulizia smart
+        </a>
+      </li>
+      <li>
+        <a class="button-primary" href="https://www.amazon.it/s?k=cucina+piccoli+elettrodomestici&tag=mywebcorner4-21" target="_blank" rel="nofollow">
+          🍳 Piccoli elettrodomestici per la cucina funzionale
+        </a>
+      </li>
     </ul>
 
     <p class="note-legale">
-      Nota: alcuni link possono essere di affiliazione Amazon. Questo non comporta costi aggiuntivi per te, ma aiuta Syncras a crescere.
+      Tutti i link presenti in questa pagina sono link di affiliazione Amazon. Non comportano costi aggiuntivi per te, ma aiutano Syncras a crescere.
     </p>
 
     <p style="margin-top:25px; font-size:0.9rem; color:#555;">
-      In alternativa, se vuoi migliorare davvero il tuo rapporto con gli acquisti, dai un’occhiata anche al 
-      <a href="quiz.html"><strong>Test Anti-Acquisto di Syncras</strong></a>: lo stiamo aggiornando per allinearlo al 100% al nuovo stile e al principio
-      <strong>“Se non ti serve davvero… lascialo nel carrello.”</strong>
+      Se vuoi migliorare davvero il tuo rapporto con gli acquisti, dai un’occhiata anche al
+      <a href="quiz.html"><strong>Test Anti-Acquisto di Syncras</strong></a>: un modo semplice per capire se ciò che stai per comprare ti serve davvero.
     </p>
 
   </main>
@@ -304,3 +332,4 @@
 
 </body>
 </html>
+
