@@ -4,12 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Guida Smart TV 2025 – Versione ironica | Syncras.App</title>
-<link rel="canonical" href="https://syncras.app/smart-tv-guida-ironica.html">
-
-
-
-  
- 
+  <link rel="canonical" href="https://syncras.app/smart-tv-guida-ironica.html">
+  <meta name="description" content="Guida ironica alle Smart TV 2025: scegli la TV giusta in base al budget e a quello che succede davvero in salotto, tra partite, serie e nonni sul divano.">
+  <meta name="robots" content="index,follow">
 
   <style>
     :root {
@@ -191,14 +188,13 @@
 
       <nav id="main-nav">
         <a href="index.html">Home</a>
-<a href="blog.html">Blog</a>
-<a href="quiz.html">Test Anti-Acquisto</a>
-<a href="calcolatori.html">Calcolatori</a>
-<a href="curiosita.html">Curiosità</a>
-<a href="misteri.html">Misteri</a>
-<a href="offerte.html">Prodotti Consapevoli</a>
-<a href="chi.html">Chi siamo</a>
-
+        <a href="blog.html">Blog</a>
+        <a href="quiz.html">Test Anti-Acquisto</a>
+        <a href="calcolatori.html">Calcolatori</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="offerte.html">Prodotti Consapevoli</a>
+        <a href="chi.html">Chi siamo</a>
       </nav>
     </div>
   </header>
@@ -229,7 +225,6 @@
           });
         });
       } else {
-        // se non supportato (PC ecc.) nascondo il bottone
         shareBtn.style.display = "none";
       }
     </script>
@@ -299,7 +294,7 @@
         questa fascia è perfetta. Nessuna mania di grandezza, solo buon senso.
       </p>
 
-      <a class="btn" href="https://www.amazon.it/s?k=smart+tv&rh=p_36:0-70000&tag=mywebcorner4-21" target="_blank">
+      <a class="btn" href="https://www.amazon.it/s?k=smart+tv&rh=p_36:0-70000&tag=mywebcorner4-21" target="_blank" rel="nofollow noopener noreferrer">
         Smart TV sotto 700€
       </a>
     </div>
@@ -345,7 +340,7 @@
         <i>“mi vendo un rene”</i>, è qui che devi guardare.
       </p>
 
-      <a class="btn" href="https://www.amazon.it/s?k=smart+tv&rh=p_36:70000-120000&tag=mywebcorner4-21" target="_blank">
+      <a class="btn" href="https://www.amazon.it/s?k=smart+tv&rh=p_36:70000-120000&tag=mywebcorner4-21" target="_blank" rel="nofollow noopener noreferrer">
         Smart TV 700–1200€
       </a>
     </div>
@@ -393,7 +388,7 @@
         Se non hai il budget… va benissimo anche solo guardare le specifiche tecniche e sognare.
       </p>
 
-      <a class="btn" href="https://www.amazon.it/s?k=smart+tv&rh=p_36:120000-&tag=mywebcorner4-21" target="_blank">
+      <a class="btn" href="https://www.amazon.it/s?k=smart+tv&rh=p_36:120000-&tag=mywebcorner4-21" target="_blank" rel="nofollow noopener noreferrer">
         Smart TV oltre 1200€
       </a>
     </div>
@@ -435,36 +430,30 @@
       scelte personali o utilizzo dei prodotti suggeriti. Decidi sempre in autonomia.
     </p>
 
+    <!-- SHARE BUTTON FINALE -->
+    <div style="text-align:center; margin:30px 0;">
+      <button id="shareBtnBottom"
+        style="background: var(--violet-main); color:white; padding:10px 18px; border:none;
+               border-radius:6px; cursor:pointer; font-weight:600; font-size:1rem;">
+        📎 Condividi questo articolo
+      </button>
+    </div>
 
-   <!-- SHARE BUTTON FINALE -->
-<div style="text-align:center; margin:30px 0;">
-  <button id="shareBtnBottom"
-    style="background: var(--violet-main); color:white; padding:10px 18px; border:none;
-           border-radius:6px; cursor:pointer; font-weight:600; font-size:1rem;">
+    <script>
+      const shareBtnBottom = document.getElementById('shareBtnBottom');
+      if (navigator.share) {
+        shareBtnBottom.addEventListener('click', () => {
+          navigator.share({
+            title: document.title,
+            text: "Leggi questa guida di Syncras.App:",
+            url: window.location.href
+          });
+        });
+      } else {
+        shareBtnBottom.style.display = "none";
+      }
+    </script>
 
-    
-    📎 Condividi questo articolo
-  </button>
-</div>
-
-<script>
-  const shareBtnBottom = document.getElementById('shareBtnBottom');
-  if (navigator.share) {
-    shareBtnBottom.addEventListener('click', () => {
-      navigator.share({
-        title: document.title,
-        text: "Leggi questa guida di Syncras.App:",
-        url: window.location.href
-      });
-    });
-  } else {
-    shareBtnBottom.style.display = "none";
-  }
-</script>
-
-    
-
-    
   </main>
 
   <script>
@@ -492,165 +481,7 @@
     </p>
   </footer>
 
-<!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
-  <div id="cookie-banner">
-    <p>
-      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
-      (Google Analytics). Alcuni link potrebbero essere di affiliazione.
-      Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
-      <a href="privacy.html">Privacy Policy</a>.
-    </p>
-    <div style="display:flex; gap:10px; margin-top:8px;">
-      <button type="button" onclick="rejectCookies()">
-        Rifiuta
-      </button>
-      <button id="cookie-btn" type="button" onclick="acceptCookies()">
-        Accetta e continua
-      </button>
-    </div>
-  </div>
-
-  <style>
-    #cookie-banner {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      max-width: 90%;
-      width: 420px;
-      background: #ffffff;
-      border: 2px solid #6C5CE7;
-      border-radius: 10px;
-      padding: 16px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-      z-index: 9999;
-      font-family: Arial, sans-serif;
-      display: none;
-    }
-
-    #cookie-banner p {
-      margin: 0 0 12px 0;
-      font-size: 0.95rem;
-      color: #333;
-      line-height: 1.4;
-    }
-
-    #cookie-banner a {
-      color: #6C5CE7;
-      font-weight: bold;
-      text-decoration: none;
-    }
-
-    /* Pulsante RIFIUTA – pari importanza al pulsante ACCETTA */
-    #cookie-banner button[onclick="rejectCookies()"] {
-      flex: 1;
-      background: white !important;
-      color: #111827 !important;
-      border: 2px solid #6C5CE7 !important;
-      padding: 10px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-
-    /* Pulsante ACCETTA */
-    #cookie-btn {
-      flex: 1;
-      background: #6C5CE7;
-      color: white;
-      border: 2px solid #6C5CE7;
-      padding: 10px 16px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 700;
-    }
-
-    #cookie-btn:hover {
-      background: #4B3ACB;
-    }
-  </style>
-
-  <script>
-    (function () {
-      // 👉 ID Google Analytics di Tiziana
-      const GA_ID = 'G-CFTTCYDZ2P';
-
-      // 👉 Chiave locale per memorizzare la scelta
-      const CONSENT_KEY = 'tiziana_cookie_ok';
-
-      function loadGoogleAnalytics() {
-        if (window.__tizianaGaLoaded) return;
-        window.__tizianaGaLoaded = true;
-
-        const gaScript = document.createElement('script');
-        gaScript.async = true;
-        gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
-        document.head.appendChild(gaScript);
-
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){ dataLayer.push(arguments); }
-        window.gtag = gtag;
-        gtag('js', new Date());
-        gtag('config', GA_ID, { anonymize_ip: true });
-      }
-
-      function showBanner() {
-        const banner = document.getElementById('cookie-banner');
-        if (banner) banner.style.display = 'block';
-      }
-
-      function hideBanner() {
-        const banner = document.getElementById('cookie-banner');
-        if (banner) banner.style.display = 'none';
-      }
-
-      window.acceptCookies = function () {
-        localStorage.setItem(CONSENT_KEY, 'yes');
-        hideBanner();
-        loadGoogleAnalytics();
-      };
-
-      window.rejectCookies = function () {
-        localStorage.setItem(CONSENT_KEY, 'no');
-        hideBanner();
-      };
-
-      document.addEventListener('DOMContentLoaded', function () {
-        const consent = localStorage.getItem(CONSENT_KEY);
-
-        if (consent === 'yes') {
-          loadGoogleAnalytics();
-        } else if (consent === 'no') {
-          // niente GA, niente banner
-        } else {
-          showBanner();
-        }
-      });
-    })();
-  </script>
-
-</body>
-</html>
-Ora:
-
-c’è un solo #cookie-banner
-
-niente HTML dentro <script>
-
-GA parte solo dopo “Accetta”
-
-pulsanti “Accetta” e “Rifiuta” sono trattati allo stesso livello
-
-Se vuoi, il prossimo file lo sistemi tu con lo stesso blocco in fondo, me lo incolli e ti faccio solo un check veloce finale.
-
-
-
-
-
-
-
-Hai detto:
-scuaa echo per accellerare dopo il footer incollo questo e rimuovo i miei codici di analitics in alto. giusto? <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
+  <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
   <div id="cookie-banner">
     <p>
       Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
@@ -790,45 +621,4 @@ scuaa echo per accellerare dopo il footer incollo questo e rimuovo i miei codici
 </body>
 </html>
 
-
-ChatGPT ha detto:
-Esatto Michele, l’idea è giusta 👇
-
-✅ DA FARE IN OGNI PAGINA:
-
-In alto nel <head>:
-
-RIMUOVI tutto il vecchio blocco di Analytics, cioè questo pezzo (o simili):
-
-html
-Copia codice
-<!-- Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-59D9XRYKF3"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-59D9XRYKF3');
-</script>
-In basso, DOPO il <footer> e PRIMA di </body>:
-
-Incolla esattamente questo blocco (banner + style + script),
-ma senza aggiungere un secondo </body></html> se sono già presenti nel file.
-
-Cioè, la struttura finale deve essere:
-
-html
-Copia codice
-...
-</footer>
-
-<!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
-<div id="cookie-banner"> ... </div>
-
-<style> ... </style>
-
-<script> ... </script>
-
-</body>
-</html>
 
