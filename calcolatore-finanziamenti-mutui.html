@@ -6,18 +6,7 @@
     <title>Calcolatore Rata Finanziamento & Piano Ammortamento Mutuo (Francese/Italiana) | Syncras.App</title>
     <meta name="description" content="Calcola la rata di un finanziamento, il piano di ammortamento di un mutuo (francese o italiana) e la rata massima sostenibile in base al tuo reddito. Strumenti gratuiti e semplici.">
     <meta name="robots" content="index,follow">
-   <link rel="canonical" href="https://syncras.app/calcolatore-finanziamenti-mutui.html">
-
-    
-    <link rel="preload" href="https://www.googletagmanager.com/gtag/js?id=G-59D9XRYKF3" as="script">
-
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-59D9XRYKF3"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-59D9XRYKF3');
-    </script>
+    <link rel="canonical" href="https://syncras.app/calcolatore-finanziamenti-mutui.html">
 
     <style>
       :root {
@@ -26,7 +15,7 @@
         --violet-soft: #A29BFE;
         --text-main: #403E43;
         --bg-page: #F7F7FB;
-        --color-shadow: rgba(0,0,0,0.08); /* Aggiunto per uniformità */
+        --color-shadow: rgba(0,0,0,0.08);
       }
 
       body {
@@ -36,7 +25,7 @@
         background-color: var(--bg-page);
         color: var(--text-main);
         line-height: 1.6;
-        transition: padding-top 0.3s; /* Per transizione menu */
+        transition: padding-top 0.3s;
       }
 
       /* HEADER */
@@ -46,7 +35,7 @@
         color: white;
         padding: 12px 14px;
         box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-        position: sticky; /* Rende l'header fisso in cima */
+        position: sticky;
         top: 0;
         z-index: 100;
       }
@@ -116,7 +105,7 @@
           position: absolute;
           left: 0;
           right: 0;
-          top: 56px; /* Altezza header */
+          top: 56px;
           margin: 0;
           max-width: 100%;
           flex-direction: column;
@@ -165,8 +154,8 @@
         border-bottom: 1px solid #e5e7eb;
         padding-bottom: 10px;
       }
-      
-      /* ... (Stili esistenti per badge-page, intro-text) ... */
+
+      /* Badge, intro, ecc. (se già definiti altrove puoi riusare gli stessi stili) */
 
       .calc-grid {
         display: grid;
@@ -187,8 +176,6 @@
           transform: translateY(-2px);
           box-shadow: 0 6px 16px rgba(0,0,0,0.1);
       }
-      
-      /* ... (Stili esistenti per calc-card-label, h3, p, link) ... */
 
       @media (max-width: 1024px) {
         .calc-grid {
@@ -202,8 +189,6 @@
         }
       }
 
-      /* SEZIONI CALCOLATORI */
-
       .calc-section {
         margin: 32px 0;
         padding: 20px;
@@ -211,8 +196,6 @@
         background: #f9fafb;
         border: 1px solid #e5e7eb;
       }
-      
-      /* ... (Stili esistenti per h2, p, calc-grid-inputs, calc-field) ... */
 
       .calc-btn {
         margin-top: 18px;
@@ -233,7 +216,7 @@
 
       .calc-result {
         margin-top: 16px;
-        padding: 18px; /* Aumentato il padding per maggiore respiro */
+        padding: 18px;
         background: #ffffff;
         border-radius: 10px;
         box-shadow: 0 2px 5px rgba(0,0,0,0.06);
@@ -241,11 +224,11 @@
         font-size: 0.95rem;
         overflow-x: auto;
       }
-      
+
       .calc-result strong {
           color: var(--violet-dark);
       }
-      
+
       .calc-result h4 {
           margin-top: 0;
           margin-bottom: 10px;
@@ -254,7 +237,7 @@
           border-bottom: 1px solid #eee;
           padding-bottom: 5px;
       }
-      
+
       .calc-result p {
           margin: 6px 0;
       }
@@ -265,13 +248,31 @@
         margin-top: 8px;
       }
 
-      /* TABLE STYLES - Ottimizzati per chiarezza */
+      /* BOX LEGALE MOLTO EVIDENTE */
+      .legal-disclaimer {
+        margin-top: 18px;
+        padding: 14px 16px;
+        border-radius: 10px;
+        background: #FEF3C7; /* giallo chiaro */
+        border: 1px solid #F59E0B; /* arancione */
+        color: #7C2D12;
+        font-size: 0.9rem;
+      }
+
+      .legal-disclaimer strong {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 0.95rem;
+      }
+
+      /* TABLE STYLES */
+
       table {
         border-collapse: collapse;
         width: 100%;
         margin-top: 15px;
         font-size: 0.85rem;
-        min-width: 500px; /* Evita che la tabella diventi illeggibile su mobile */
+        min-width: 500px;
       }
 
       th, td {
@@ -286,7 +287,7 @@
         text-align: center;
         font-weight: 600;
       }
-      
+
       tbody tr:nth-child(even) {
           background-color: #fcfdff;
       }
@@ -302,14 +303,11 @@
         font-size: 0.9rem;
       }
 
-      /* ... (Stili esistenti per footer a, footer-inner, ecc.) ... */
-      
-      /* Ottimizzazione Grid Footer */
       .footer-inner {
         max-width: 1180px;
         margin: 0 auto 1.5rem auto;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Ottimizzato min-width */
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         gap: 2rem;
       }
 
@@ -323,14 +321,24 @@
         padding-top: 1rem;
       }
 
-      /* Stile Pulsante Condividi - Unificato */
+      .syncras-footer a {
+        color: #f3eaff;
+        text-decoration: none;
+      }
+
+      .syncras-footer a:hover {
+        text-decoration: underline;
+      }
+
+      /* Pulsante Condividi */
+
       .share-btn {
-          background: var(--violet-main); 
-          color:white; 
-          padding:10px 15px; 
+          background: var(--violet-main);
+          color:white;
+          padding:10px 15px;
           border:none;
-          border-radius:6px; 
-          cursor:pointer; 
+          border-radius:6px;
+          cursor:pointer;
           font-weight:600;
           font-size: 0.95rem;
           transition: background 0.2s;
@@ -339,18 +347,19 @@
           background: var(--violet-dark);
       }
     </style>
+
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "CalculationTool",
       "name": "Calcolatore Rata Finanziamento e Mutuo",
       "description": "Strumento per calcolare rate mensili, piano di ammortamento alla francese o all’italiana e la rata massima sostenibile in base al reddito.",
-      "url": "https://www.tuosito.it/calcolatore-finanziamenti-mutui.html",
+      "url": "https://syncras.app/calcolatore-finanziamenti-mutui.html",
       "potentialAction": {
         "@type": "CalculateAction",
         "target": {
           "@type": "EntryPoint",
-          "urlTemplate": "https://www.tuosito.it/calcolatore-finanziamenti-mutui.html"
+          "urlTemplate": "https://syncras.app/calcolatore-finanziamenti-mutui.html"
         },
         "description": "Calcola la rata di mutui e finanziamenti."
       }
@@ -361,39 +370,47 @@
     <header class="site-header">
       <div class="header-inner">
         <div class="logo">Syncras.App</div>
-  
+
         <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="main-nav">
           Menu <span>☰</span>
         </button>
-  
+
         <nav id="main-nav" aria-labelledby="menuToggle">
           <a href="index.html">Home</a>
-<a href="blog.html">Blog</a>
-<a href="quiz.html">Test Anti-Acquisto</a>
-<a href="calcolatori.html">Calcolatori</a>
-<a href="curiosita.html">Curiosità</a>
-<a href="misteri.html">Misteri</a>
-<a href="offerte.html">Prodotti Consapevoli</a>
-<a href="chi.html">Chi siamo</a>
+          <a href="blog.html">Blog</a>
+          <a href="quiz.html">Test Anti-Acquisto</a>
+          <a href="calcolatori.html">Calcolatori</a>
+          <a href="curiosita.html">Curiosità</a>
+          <a href="misteri.html">Misteri</a>
+          <a href="offerte.html">Prodotti Consapevoli</a>
+          <a href="chi.html">Chi siamo</a>
         </nav>
       </div>
     </header>
-  
+
     <main>
       <div class="page-intro">
         <span class="badge-page">Area strumenti</span>
         <h1>💶 Calcolatore Rata Finanziamento e Mutuo Online</h1>
         <p class="intro-text">
-          Inserisci importo, tasso e anni: il calcolatore ti aiuta a capire rata, interessi e differenze tra 
-          **mutuo alla francese (rata costante)** e **all’italiana (quota capitale costante)**.  
-          In più puoi vedere qual è la **rata massima sostenibile** in base al reddito.
+          Inserisci importo, tasso e anni: il calcolatore ti aiuta a capire rata, interessi e differenze tra
+          <strong>mutuo alla francese (rata costante)</strong> e <strong>all’italiana (quota capitale costante)</strong>.
+          In più puoi vedere qual è la <strong>rata massima sostenibile</strong> in base al reddito.
         </p>
       </div>
-  
+
       <button id="shareBtnTop" class="share-btn" type="button">
         📎 Condividi questa pagina
       </button>
-  
+
+      <!-- AVVISO LEGALE MOLTO EVIDENTE -->
+      <div class="legal-disclaimer" role="status" aria-label="Avviso legale importante">
+        <strong>⚠️ ATTENZIONE – Questo è solo un simulatore orientativo.</strong>
+        I risultati hanno scopo informativo e didattico: <u>non</u> costituiscono consulenza finanziaria,
+        offerta di credito o indicazione personalizzata. Per decisioni reali su mutui o finanziamenti
+        è sempre necessario rivolgersi a banca, finanziaria o consulente abilitato.
+      </div>
+
       <section aria-label="Elenco calcolatori finanziari">
         <div class="calc-grid">
           <article class="calc-card">
@@ -405,7 +422,7 @@
             </p>
             <a href="#calc-finanziamento" class="calc-card-link">Vai al calcolatore</a>
           </article>
-  
+
           <article class="calc-card">
             <div class="calc-card-label">CALCOLATORE #2</div>
             <h3>Mutuo con piano di ammortamento</h3>
@@ -415,7 +432,7 @@
             </p>
             <a href="#calc-mutuo" class="calc-card-link">Vai al calcolatore</a>
           </article>
-  
+
           <article class="calc-card">
             <div class="calc-card-label">CALCOLATORE #3</div>
             <h3>Rata massima sostenibile</h3>
@@ -427,104 +444,103 @@
           </article>
         </div>
       </section>
-  
+
       <section class="calc-section" id="calc-finanziamento">
         <h2>Calcolatore finanziamento semplice</h2>
         <p>
-          Ipotizziamo un piano con rate mensili costanti.  
+          Ipotizziamo un piano con rate mensili costanti.
           Inserisci l’importo che ti serve, il tasso annuo nominale (TAN) e la durata in anni.
         </p>
-  
+
         <div class="calc-grid-inputs">
           <div class="calc-field">
             <label for="finImporto">Importo da finanziare (€)</label>
             <input id="finImporto" type="number" min="500" max="200000" value="10000">
           </div>
-  
+
           <div class="calc-field">
             <label for="finTasso">Tasso annuo (%)</label>
             <input id="finTasso" type="number" step="0.01" min="0" max="30" value="6">
           </div>
-  
+
           <div class="calc-field">
             <label for="finAnni">Durata (anni)</label>
             <input id="finAnni" type="number" min="1" max="20" value="5">
           </div>
         </div>
-  
+
         <button class="calc-btn" type="button" onclick="calcolaFinanziamento()">Calcola rata finanziamento</button>
-  
-        <div id="finResult" class="calc-result"></div>
-  
+
+        <div id="finResult" class="calc-result" role="status" aria-live="polite"></div>
+
         <p class="small-note">
           Il calcolo è indicativo e non tiene conto di spese accessorie, imposte, assicurazioni o eventuali commissioni.
         </p>
       </section>
-  
+
       <section class="calc-section" id="calc-budget">
         <h2>Calcolatore rata massima sostenibile</h2>
         <p>
           Partendo dal reddito mensile, puoi stimare una rata “prudente” (ad esempio il 30% del reddito)
           e vedere a quale importo di finanziamento o mutuo potrebbe corrispondere.
         </p>
-  
+
         <div class="calc-grid-inputs">
           <div class="calc-field">
             <label for="budReddito">Reddito mensile netto (€)</label>
             <input id="budReddito" type="number" min="500" max="20000" value="1800">
           </div>
-  
+
           <div class="calc-field">
             <label for="budPercent">Quota massima rata (% del reddito)</label>
             <input id="budPercent" type="number" min="10" max="60" value="30">
           </div>
-  
+
           <div class="calc-field">
             <label for="budTasso">Tasso annuo ipotizzato (%)</label>
             <input id="budTasso" type="number" step="0.01" min="0" max="20" value="4">
           </div>
-  
+
           <div class="calc-field">
             <label for="budAnni">Durata (anni)</label>
             <input id="budAnni" type="number" min="1" max="40" value="20">
           </div>
         </div>
-  
+
         <button class="calc-btn" type="button" onclick="calcolaBudgetRata()">Calcola rata sostenibile</button>
-  
-        <div id="budResult" class="calc-result"></div>
-  
+
+        <div id="budResult" class="calc-result" role="status" aria-live="polite"></div>
+
         <p class="small-note">
           È una simulazione semplificata basata sul modello a rata costante.
           Nella realtà banche e finanziarie valutano anche altre rate, spese fisse, numero di componenti in famiglia, ecc.
         </p>
       </section>
-  
+
       <section class="calc-section" id="calc-mutuo">
         <h2>Calcolatore mutuo con piano di ammortamento</h2>
         <p>
           Puoi scegliere tra:
           <strong>ammortamento alla francese</strong> (rata costante, molto usato dalle banche)
           e <strong>ammortamento all’italiana</strong> (quota capitale costante e rata decrescente).
-          
         </p>
-  
+
         <div class="calc-grid-inputs">
           <div class="calc-field">
             <label for="mutImporto">Importo mutuo (€)</label>
             <input id="mutImporto" type="number" min="10000" max="1000000" value="150000">
           </div>
-  
+
           <div class="calc-field">
             <label for="mutTasso">Tasso annuo (%)</label>
             <input id="mutTasso" type="number" step="0.01" min="0" max="20" value="3">
           </div>
-  
+
           <div class="calc-field">
             <label for="mutAnni">Durata (anni)</label>
             <input id="mutAnni" type="number" min="5" max="40" value="25">
           </div>
-  
+
           <div class="calc-field">
             <label for="mutTipo">Tipo di piano</label>
             <select id="mutTipo">
@@ -533,31 +549,32 @@
             </select>
           </div>
         </div>
-  
+
         <button class="calc-btn" type="button" onclick="calcolaMutuo()">Calcola piano mutuo</button>
-  
-        <div id="mutResult" class="calc-result"></div>
-  
+
+        <div id="mutResult" class="calc-result" role="status" aria-live="polite"></div>
+
         <div style="text-align:center; margin:20px 0;">
           <button id="shareBtnBottom" class="share-btn" type="button" style="font-size:1rem;">
             📎 Condividi questa pagina
           </button>
         </div>
-  
+
         <p class="small-note">
           Il piano è semplificato a scopo informativo. Per un preventivo ufficiale e completo di tutte le spese
           è sempre necessario rivolgersi a banca o consulente finanziario.
         </p>
       </section>
     </main>
-  
-  <div class="small-note" style="margin-top:20px; text-align: center; max-width: 1180px; margin-left: auto; margin-right: auto; padding: 0 20px;">
-    I calcolatori presenti su questa pagina offrono stime orientative e non costituiscono
-    consulenza finanziaria o offerta di credito. Per informazioni ufficiali rivolgersi
-    all’istituto finanziario di riferimento.
-  </div>
-  
-  
+
+    <!-- DISCLAIMER FINALE MOLTO VISIBILE -->
+    <div class="legal-disclaimer" style="max-width:1180px; margin:20px auto; padding-left:20px; padding-right:20px;">
+      <strong>ℹ️ Importante:</strong>
+      I calcolatori presenti su questa pagina offrono <strong>stime orientative</strong> e non costituiscono
+      consulenza finanziaria, offerta di mutuo o di credito al consumo. Prima di sottoscrivere un contratto
+      è sempre necessario verificare condizioni, tassi e costi reali con la propria banca o con un intermediario abilitato.
+    </div>
+
     <footer class="syncras-footer">
       <div class="footer-inner">
         <div class="footer-column">
@@ -567,7 +584,7 @@
             Niente tecnicismi inutili, solo esperienze reali e numeri spiegati semplice.
           </p>
         </div>
-  
+
         <div class="footer-column">
           <h4>Link utili</h4>
           <ul>
@@ -577,7 +594,7 @@
             <li><a href="calcolatore-confronto-auto.html">Calcolatore confronto auto</a></li>
           </ul>
         </div>
-  
+
         <div class="footer-column">
           <h4>Legale & Privacy</h4>
           <ul>
@@ -588,11 +605,11 @@
           </ul>
         </div>
       </div>
-  
+
       <div class="footer-bottom">
         <p>© <span id="year-span"></span> Syncras.App — Tutti i diritti riservati.</p>
         <p>
-          Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+          Syncras.App partecipa al Programma Affiliazione Amazon EU.
           Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
           senza alcun costo aggiuntivo per l’utente.
         </p>
@@ -602,27 +619,19 @@
         </p>
       </div>
     </footer>
-  
+
     <script>
-      // Funzione per mostrare/nascondere il menu mobile (Aggiornata per accessibilità)
+      // MENU MOBILE
       function toggleMenu() {
         const body = document.body;
-        const nav = document.getElementById('main-nav');
         const button = document.getElementById('menuToggle');
         const isExpanded = button.getAttribute('aria-expanded') === 'true' || false;
 
         body.classList.toggle('nav-open');
         button.setAttribute('aria-expanded', !isExpanded);
-        
-        // Blocca lo scroll del body quando il menu è aperto su mobile (opzionale)
-        // if (!isExpanded) {
-        //   body.style.overflow = 'hidden';
-        // } else {
-        //   body.style.overflow = '';
-        // }
       }
-      
-      // Funzione di condivisione unificata
+
+      // Condivisione pagina
       function handleShare(event) {
           event.preventDefault();
           if (navigator.share) {
@@ -632,7 +641,6 @@
                   url: window.location.href
               }).catch(error => console.log('Errore nella condivisione', error));
           } else {
-              // Fallback per browser desktop
               alert("Copia il link per condividere: " + window.location.href);
           }
       }
@@ -645,44 +653,43 @@
         const n = parseFloat(raw);
         return isNaN(n) ? 0 : n;
       }
-  
+
       // FORMATTAZIONE EURO
       function euro(val) {
         return val.toFixed(2).replace('.', ',');
       }
-      
-      // Funzione di arrotondamento (per evitare errori di virgola mobile)
+
+      // Arrotondamento
       function round(num, precision = 6) {
           const factor = Math.pow(10, precision);
           return Math.round(num * factor) / factor;
       }
-  
-      // === FINANZIAMENTO SEMPLICE (rate mensili costanti) ===
+
+      // FINANZIAMENTO SEMPLICE
       function calcolaFinanziamento() {
         const importo = numFromInput('finImporto');
-        const tassoAnn = numFromInput('finTasso'); // %
+        const tassoAnn = numFromInput('finTasso');
         const anni = numFromInput('finAnni');
-  
+
         if (importo <= 0 || anni <= 0) {
           alert('Inserisci un importo e una durata maggiori di zero.');
           return;
         }
-  
-        const n = anni * 12; // numero rate
-        const r = tassoAnn > 0 ? (tassoAnn / 100) / 12 : 0; // tasso mensile
-  
+
+        const n = anni * 12;
+        const r = tassoAnn > 0 ? (tassoAnn / 100) / 12 : 0;
+
         let rata;
         if (r === 0) {
           rata = importo / n;
         } else {
-          // formula rata ammortamento alla francese
           const pow = Math.pow(1 + r, n);
           rata = importo * r * pow / (pow - 1);
         }
-  
+
         const totalePagato = rata * n;
         const interessi = totalePagato - importo;
-  
+
         const box = document.getElementById('finResult');
         box.innerHTML = `
           <h4>Riepilogo Finanziamento</h4>
@@ -699,35 +706,34 @@
         `;
         box.style.display = 'block';
       }
-  
-      // === BUDGET RATA SOSTENIBILE ===
+
+      // BUDGET RATA SOSTENIBILE
       function calcolaBudgetRata() {
         const reddito = numFromInput('budReddito');
-        const perc = numFromInput('budPercent'); // %
+        const perc = numFromInput('budPercent');
         const tassoAnn = numFromInput('budTasso');
         const anni = numFromInput('budAnni');
-  
+
         if (reddito <= 0 || anni <= 0 || perc <= 0) {
           alert('Inserisci reddito, percentuale e durata maggiori di zero.');
           return;
         }
-  
-        const rataMax = reddito * (perc / 100); // rata mensile consigliata
+
+        const rataMax = reddito * (perc / 100);
         const n = anni * 12;
         const r = tassoAnn > 0 ? (tassoAnn / 100) / 12 : 0;
-  
+
         let capitaleMax;
         if (r === 0) {
           capitaleMax = rataMax * n;
         } else {
-          // formula inversa della rata francese: P = R * ((1+r)^n - 1) / (r * (1+r)^n)
           const pow = Math.pow(1 + r, n);
           capitaleMax = rataMax * (pow - 1) / (r * pow);
         }
-  
+
         const totalePagato = rataMax * n;
         const interessi = totalePagato - capitaleMax;
-  
+
         const box = document.getElementById('budResult');
         box.innerHTML = `
           <h4>Riepilogo Budget Rata</h4>
@@ -749,51 +755,49 @@
         `;
         box.style.display = 'block';
       }
-  
-      // === MUTUO CON PIANO DI AMMORTAMENTO ===
+
+      // MUTUO CON PIANO DI AMMORTAMENTO
       function calcolaMutuo() {
         const importo = numFromInput('mutImporto');
         const tassoAnn = numFromInput('mutTasso');
         const anni = numFromInput('mutAnni');
         const tipo = document.getElementById('mutTipo').value;
-  
+
         if (importo <= 0 || anni <= 0) {
           alert('Inserisci un importo e una durata maggiori di zero.');
           return;
         }
-  
-        const n = anni * 12; // numero rate
-        const r = tassoAnn > 0 ? (tassoAnn / 100) / 12 : 0; // tasso mensile
-  
+
+        const n = anni * 12;
+        const r = tassoAnn > 0 ? (tassoAnn / 100) / 12 : 0;
+
         let rows = '';
         let totaleInteressi = 0;
         let rataIniziale = 0;
-  
+
         let capitaleResiduo = importo;
         let quotaCapitaleCostante = 0;
-  
+
         if (tipo === 'francese') {
-          // 1. Calcolo rata costante
           if (r === 0) {
             rataIniziale = importo / n;
           } else {
             const pow = Math.pow(1 + r, n);
             rataIniziale = round(importo * r * pow / (pow - 1));
           }
-          
+
           for (let k = 1; k <= n; k++) {
             const interesse = round(r * capitaleResiduo);
             let quotaCapitale = round(rataIniziale - interesse);
 
-            // Regola della differenza per l'ultima rata
             if (k === n) {
                 quotaCapitale = capitaleResiduo;
-                rataIniziale = round(quotaCapitale + interesse); // L'ultima rata si adegua
+                rataIniziale = round(quotaCapitale + interesse);
             }
-            
+
             capitaleResiduo -= quotaCapitale;
             totaleInteressi += interesse;
-  
+
             rows += `
               <tr>
                 <td>${k}</td>
@@ -805,25 +809,24 @@
             `;
           }
         } else {
-          // all’italiana: quota capitale costante
           quotaCapitaleCostante = round(importo / n);
-          
+
           for (let k = 1; k <= n; k++) {
             const interesse = round(r * capitaleResiduo);
-            const rata = round(quotaCapitaleCostante + interesse);
-            
-            // Regola della differenza per l'ultima rata
+            let rata = round(quotaCapitaleCostante + interesse);
+
             if (k === n) {
                 quotaCapitaleCostante = capitaleResiduo;
+                rata = round(quotaCapitaleCostante + interesse);
             }
-            
+
             if (k === 1) {
-              rataIniziale = rata; // Prima rata (la più alta)
+              rataIniziale = rata;
             }
-            
+
             capitaleResiduo -= quotaCapitaleCostante;
             totaleInteressi += interesse;
-  
+
             rows += `
               <tr>
                 <td>${k}</td>
@@ -835,13 +838,13 @@
             `;
           }
         }
-  
+
         const totalePagato = importo + totaleInteressi;
-  
+
         const titoloPiano = (tipo === 'francese')
           ? 'Piano di ammortamento alla francese (Rata costante)'
           : 'Piano di ammortamento all’italiana (Quota capitale costante)';
-  
+
         const box = document.getElementById('mutResult');
         box.innerHTML = `
           <h4>${titoloPiano}</h4>
@@ -860,7 +863,7 @@
           <p style="font-size: 1.1rem; color: var(--violet-dark); font-weight: bold;">
              Totale complessivo rimborsato: ~${euro(totalePagato)} €
           </p>
-  
+
           <table>
             <thead>
               <tr>
@@ -875,7 +878,7 @@
               ${rows}
             </tbody>
           </table>
-  
+
           <p class="small-note">
             Piano calcolato in modo mensile e puramente didattico: non considera eventuali arrotondamenti bancari,
             variazioni di tasso (mutui variabili), spese accessorie o imposte.
@@ -883,19 +886,148 @@
         `;
         box.style.display = 'block';
       }
-  
+
       document.addEventListener('DOMContentLoaded', function() {
-        // FOOTER YEAR
         document.getElementById('year-span').textContent = new Date().getFullYear();
-        
-        // CONDIVISIONE (collegamento)
         document.getElementById('shareBtnTop').addEventListener('click', handleShare);
         document.getElementById('shareBtnBottom').addEventListener('click', handleShare);
-        
-        // MENU MOBILE
         document.getElementById('menuToggle').addEventListener('click', toggleMenu);
       });
     </script>
+
+    <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
+    <div id="cookie-banner">
+      <p>
+        Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
+        (Google Analytics). Alcuni link potrebbero essere di affiliazione.
+        Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
+        <a href="privacy.html">Privacy Policy</a>.
+      </p>
+      <div style="display:flex; gap:10px; margin-top:8px;">
+        <button type="button" onclick="rejectCookies()">
+          Rifiuta
+        </button>
+        <button id="cookie-btn" type="button" onclick="acceptCookies()">
+          Accetta e continua
+        </button>
+      </div>
+    </div>
+
+    <style>
+      #cookie-banner {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        max-width: 90%;
+        width: 420px;
+        background: #ffffff;
+        border: 2px solid #6C5CE7;
+        border-radius: 10px;
+        padding: 16px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        z-index: 9999;
+        font-family: Arial, sans-serif;
+        display: none;
+      }
+
+      #cookie-banner p {
+        margin: 0 0 12px 0;
+        font-size: 0.95rem;
+        color: #333;
+        line-height: 1.4;
+      }
+
+      #cookie-banner a {
+        color: #6C5CE7;
+        font-weight: bold;
+        text-decoration: none;
+      }
+
+      #cookie-banner button[onclick="rejectCookies()"] {
+        flex: 1;
+        background: white !important;
+        color: #111827 !important;
+        border: 2px solid #6C5CE7 !important;
+        padding: 10px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+      }
+
+      #cookie-btn {
+        flex: 1;
+        background: #6C5CE7;
+        color: white;
+        border: 2px solid #6C5CE7;
+        padding: 10px 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 700;
+      }
+
+      #cookie-btn:hover {
+        background: #4B3ACB;
+      }
+    </style>
+
+    <script>
+      (function () {
+        const GA_ID = 'G-CFTTCYDZ2P';
+        const CONSENT_KEY = 'tiziana_cookie_ok';
+
+        function loadGoogleAnalytics() {
+          if (window.__tizianaGaLoaded) return;
+          window.__tizianaGaLoaded = true;
+
+          const gaScript = document.createElement('script');
+          gaScript.async = true;
+          gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+          document.head.appendChild(gaScript);
+
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){ dataLayer.push(arguments); }
+          window.gtag = gtag;
+          gtag('js', new Date());
+          gtag('config', GA_ID, { anonymize_ip: true });
+        }
+
+        function showBanner() {
+          const banner = document.getElementById('cookie-banner');
+          if (banner) banner.style.display = 'block';
+        }
+
+        function hideBanner() {
+          const banner = document.getElementById('cookie-banner');
+          if (banner) banner.style.display = 'none';
+        }
+
+        window.acceptCookies = function () {
+          localStorage.setItem(CONSENT_KEY, 'yes');
+          hideBanner();
+          loadGoogleAnalytics();
+        };
+
+        window.rejectCookies = function () {
+          localStorage.setItem(CONSENT_KEY, 'no');
+          hideBanner();
+        };
+
+        document.addEventListener('DOMContentLoaded', function () {
+          const consent = localStorage.getItem(CONSENT_KEY);
+
+          if (consent === 'yes') {
+            loadGoogleAnalytics();
+          } else if (consent === 'no') {
+            // niente GA
+          } else {
+            showBanner();
+          }
+        });
+      })();
+    </script>
+
 </body>
 </html>
+
 
