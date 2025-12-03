@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cookie Policy | Syncras.App</title>
-  <meta name="description" content="Cookie Policy di Syncras.App: informazioni su cookie tecnici, analisi del traffico anonima e link di affiliazione Amazon.">
+  <meta name="description" content="Cookie Policy di Syncras.App: informazioni su cookie tecnici, analisi anonima del traffico e link di affiliazione Amazon.">
   <meta name="robots" content="noindex,follow">
 
   <style>
@@ -41,6 +40,14 @@
   <main>
     <h2>Cookie Policy</h2>
 
+    <h3>Titolare del Sito</h3>
+    <p>
+      Il sito Syncras.App è gestito da <strong>Arnòne Tiziana</strong>.
+      Per informazioni sull’uso dei cookie o sul trattamento dei dati tecnici,
+      è possibile contattare il Titolare a:
+      <strong><a href="mailto:info@syncras.app">info@syncras.app</a></strong>.
+    </p>
+
     <p>
       Syncras.App è un sito informativo che non utilizza cookie di profilazione
       per mostrare pubblicità personalizzata.
@@ -49,36 +56,64 @@
     <h3>Cookie tecnici</h3>
     <p>
       Possono essere utilizzati cookie tecnici necessari al corretto funzionamento
-      delle pagine (ad esempio per una visualizzazione ottimale dei contenuti).
+      delle pagine (per esempio, per una visualizzazione ottimale dei contenuti).
       Questi cookie non memorizzano informazioni personali e non richiedono consenso.
     </p>
 
     <h3>Analisi del traffico (Google Analytics anonimo)</h3>
     <p>
-      Il sito può utilizzare strumenti di analisi del traffico, come Google Analytics
-      configurato in modalità anonima. In questo caso vengono raccolte informazioni
-      aggregate e non riconducibili al singolo utente (pagine visitate, tempo di
-      permanenza, tipo di dispositivo).
-    </p>
-    <p>
-      Questi dati servono solo a capire quali contenuti interessano di più e a migliorare
-      il sito. Non viene effettuata alcuna profilazione individuale.
+      Il sito può utilizzare Google Analytics configurato in modalità <strong>anonima</strong>.
+      I dati raccolti sono aggregati e non permettono l’identificazione del visitatore.
+      Comprendono:
     </p>
 
-    <h3>Cookie di terze parti (es. Amazon)</h3>
+    <ul>
+      <li>pagine visitate</li>
+      <li>tempo di permanenza</li>
+      <li>tipo di dispositivo</li>
+      <li>area geografica approssimativa</li>
+    </ul>
+
     <p>
-      Cliccando sui link di affiliazione presenti su Syncras.App, l’utente viene
-      reindirizzato su Amazon.it. Amazon può utilizzare propri cookie per il corretto
-      funzionamento del sito e per l’attribuzione delle eventuali commissioni.
+      Google Analytics viene attivato <strong>solo dopo il consenso dell’utente</strong>
+      tramite il banner cookie presente sul sito.
+    </p>
+
+    <h3>Cookie di terze parti (Amazon)</h3>
+    <p>
+      I link di affiliazione presenti su Syncras.App reindirizzano l’utente su Amazon.it.
+      Amazon può utilizzare propri cookie per attribuire correttamente le commissioni
+      e per il funzionamento del suo sito.
     </p>
     <p>
-      Syncras.App non ha accesso a questi cookie né ai dati che Amazon raccoglie.
-      Per maggiori informazioni è necessario consultare direttamente le
+      Syncras.App non ha accesso ai cookie né ai dati raccolti da Amazon.
+      Per maggiori informazioni consultare:
       <a href="https://www.amazon.it/gp/help/customer/display.html?nodeId=201909010" target="_blank" rel="noopener noreferrer">
-        pagine di supporto e privacy di Amazon
+        Informativa Privacy di Amazon
       </a>.
     </p>
+
+    <h3>Come disattivare i cookie dal browser</h3>
+    <p>
+      L’utente può gestire o eliminare i cookie dalle impostazioni del proprio browser.
+    </p>
+
+    <ul>
+      <li><a href="https://support.google.com/chrome/answer/95647" target="_blank">Google Chrome</a></li>
+      <li><a href="https://support.mozilla.org/it/kb/gestione-dei-cookie" target="_blank">Mozilla Firefox</a></li>
+      <li><a href="https://support.apple.com/it-it/guide/safari/sfri11471/mac" target="_blank">Safari</a></li>
+      <li><a href="https://support.microsoft.com/it-it/help/17442/windows-internet-explorer-delete-manage-cookies" target="_blank">Internet Explorer</a></li>
+      <li><a href="https://support.microsoft.com/it-it/microsoft-edge" target="_blank">Microsoft Edge</a></li>
+    </ul>
+
+    <p>
+      È possibile inoltre impedire a Google Analytics di raccogliere dati
+      installando il componente ufficiale:
+      <br>
+      <a href="https://tools.google.com/dlpage/gaoptout/" target="_blank">Componente di opt-out per Google Analytics</a>.
+    </p>
   </main>
+
 
   <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
   <div id="cookie-banner">
@@ -89,12 +124,8 @@
       <a href="privacy.html">Privacy Policy</a>.
     </p>
     <div style="display:flex; gap:10px; margin-top:8px;">
-      <button type="button" onclick="rejectCookies()">
-        Rifiuta
-      </button>
-      <button id="cookie-btn" type="button" onclick="acceptCookies()">
-        Accetta e continua
-      </button>
+      <button type="button" onclick="rejectCookies()">Rifiuta</button>
+      <button id="cookie-btn" type="button" onclick="acceptCookies()">Accetta e continua</button>
     </div>
   </div>
 
@@ -129,7 +160,6 @@
       text-decoration: none;
     }
 
-    /* Pulsante RIFIUTA – pari importanza al pulsante ACCETTA */
     #cookie-banner button[onclick="rejectCookies()"] {
       flex: 1;
       background: white !important;
@@ -141,7 +171,6 @@
       font-weight: 600;
     }
 
-    /* Pulsante ACCETTA */
     #cookie-btn {
       flex: 1;
       background: #6C5CE7;
@@ -160,10 +189,7 @@
 
   <script>
     (function () {
-      // 👉 ID Google Analytics di Tiziana
       const GA_ID = 'G-CFTTCYDZ2P';
-
-      // 👉 Chiave locale per memorizzare la scelta
       const CONSENT_KEY = 'tiziana_cookie_ok';
 
       function loadGoogleAnalytics() {
@@ -209,7 +235,7 @@
         if (consent === 'yes') {
           loadGoogleAnalytics();
         } else if (consent === 'no') {
-          // niente GA, niente banner
+
         } else {
           showBanner();
         }
@@ -219,3 +245,4 @@
 
 </body>
 </html>
+
