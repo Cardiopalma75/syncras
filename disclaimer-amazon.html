@@ -35,170 +35,184 @@
 
 <body>
 
- <main>
-  <h2>Disclaimer Amazon</h2>
+  <main>
+    <h2>Disclaimer Amazon</h2>
 
-  <p>
-    Syncras.App partecipa al Programma Affiliazione Amazon EU.
-    Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
-    senza alcun costo aggiuntivo per l’utente.
-  </p>
+    <p>
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.
+      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+      senza alcun costo aggiuntivo per l’utente.
+    </p>
 
-  <!-- 🔥 Aggiunta obbligatoria Amazon -->
-  <p>
-    In qualità di Affiliato Amazon, Syncras.App riceve un guadagno dagli acquisti idonei.
-  </p>
+    <!-- 🔥 Aggiunta obbligatoria Amazon -->
+    <p>
+      In qualità di Affiliato Amazon, Syncras.App riceve un guadagno dagli acquisti idonei.
+    </p>
 
-  <p>
-    Le informazioni relative a prodotti, caratteristiche, prezzi e disponibilità sono fornite direttamente da Amazon
-    e possono variare nel tempo. Syncras.App non ha controllo su tali dati e non è responsabile per eventuali
-    modifiche o aggiornamenti non ancora riportati nelle pagine del sito.
-  </p>
+    <p>
+      Le informazioni relative a prodotti, caratteristiche, prezzi e disponibilità sono fornite direttamente da Amazon
+      e possono variare nel tempo. Syncras.App non ha controllo su tali dati e non è responsabile per eventuali
+      modifiche o aggiornamenti non ancora riportati nelle pagine del sito.
+    </p>
 
-  <!-- 🔥 Aggiunta consigliata per protezione legale -->
-  <p>
-    Le descrizioni e le informazioni presenti nelle pagine non sostituiscono le specifiche tecniche ufficiali.
-    Si raccomanda di verificare sempre dettagli, compatibilità e condizioni direttamente sulla pagina Amazon del prodotto.
-  </p>
+    <!-- 🔥 Aggiunta consigliata per protezione legale -->
+    <p>
+      Le descrizioni e le informazioni presenti nelle pagine non sostituiscono le specifiche tecniche ufficiali.
+      Si raccomanda di verificare sempre dettagli, compatibilità e condizioni direttamente sulla pagina Amazon del prodotto.
+    </p>
 
-  <p>
-    Per domande o problematiche riguardanti ordini, spedizioni, resi o assistenza sui prodotti acquistati,
-    si invita a contattare direttamente il servizio clienti Amazon tramite il proprio account ufficiale.
-  </p>
-</main>
+    <p>
+      Per domande o problematiche riguardanti ordini, spedizioni, resi o assistenza sui prodotti acquistati,
+      si invita a contattare direttamente il servizio clienti Amazon tramite il proprio account ufficiale.
+    </p>
+  </main>
 
+  <!-- ============================= -->
+  <!--  COOKIE BANNER + GA GDPR OK   -->
+  <!-- ============================= -->
 
-
-<!-- ============================= -->
-<!--  COOKIE BANNER + GA GDPR OK   -->
-<!-- ============================= -->
-
-<div id="cookie-banner">
-  <p>
-    Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
-    (Google Analytics). Alcuni link potrebbero essere di affiliazione.
-    Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
-    <a href="privacy.html">Privacy Policy</a>.
-  </p>
-  <div style="display:flex; gap:10px; margin-top:8px;">
-    <button type="button" onclick="rejectCookies()">Rifiuta</button>
-    <button id="cookie-btn" type="button" onclick="acceptCookies()">Accetta e continua</button>
+  <div id="cookie-banner">
+    <p>
+      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
+      (Google Analytics). Alcuni link potrebbero essere di affiliazione.
+      Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
+      <a href="privacy.html">Privacy Policy</a>.
+    </p>
+    <div style="display:flex; gap:10px; margin-top:8px;">
+      <button type="button" onclick="rejectCookies()">Rifiuta</button>
+      <button id="cookie-btn" type="button" onclick="acceptCookies()">Accetta e continua</button>
+    </div>
   </div>
-</div>
 
-<style>
-  #cookie-banner {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    max-width: 90%;
-    width: 420px;
-    background: #ffffff;
-    border: 2px solid #6C5CE7;
-    border-radius: 10px;
-    padding: 16px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-    z-index: 9999;
-    font-family: Arial, sans-serif;
-    display: none;
-  }
-
-  #cookie-banner p {
-    margin: 0 0 12px 0;
-    font-size: 0.95rem;
-    color: #333;
-    line-height: 1.4;
-  }
-
-  #cookie-banner a {
-    color: #6C5CE7;
-    font-weight: bold;
-    text-decoration: none;
-  }
-
-  #cookie-banner button[onclick="rejectCookies()"] {
-    flex: 1;
-    background: white !important;
-    color: #111827 !important;
-    border: 2px solid #6C5CE7 !important;
-    padding: 10px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-  }
-
-  #cookie-btn {
-    flex: 1;
-    background: #6C5CE7;
-    color: white;
-    border: 2px solid #6C5CE7;
-    padding: 10px 16px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 700;
-  }
-
-  #cookie-btn:hover {
-    background: #4B3ACB;
-  }
-</style>
-
-<script>
-  (function () {
-    const GA_ID = 'G-CFTTCYDZ2P';
-    const CONSENT_KEY = 'tiziana_cookie_ok';
-
-    function loadGoogleAnalytics() {
-      if (window.__tizianaGaLoaded) return;
-      window.__tizianaGaLoaded = true;
-
-      const gaScript = document.createElement('script');
-      gaScript.async = true;
-      gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
-      document.head.appendChild(gaScript);
-
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){ dataLayer.push(arguments); }
-      window.gtag = gtag;
-      gtag('js', new Date());
-      gtag('config', GA_ID, { anonymize_ip: true });
+  <style>
+    #cookie-banner {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 90%;
+      width: 420px;
+      background: #ffffff;
+      border: 2px solid #6C5CE7;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      z-index: 9999;
+      font-family: Arial, sans-serif;
+      display: none;
     }
 
-    function showBanner() {
-      const banner = document.getElementById('cookie-banner');
-      if (banner) banner.style.display = 'block';
+    #cookie-banner p {
+      margin: 0 0 12px 0;
+      font-size: 0.95rem;
+      color: #333;
+      line-height: 1.4;
     }
 
-    function hideBanner() {
-      const banner = document.getElementById('cookie-banner');
-      if (banner) banner.style.display = 'none';
+    #cookie-banner a {
+      color: #6C5CE7;
+      font-weight: bold;
+      text-decoration: none;
     }
 
-    window.acceptCookies = function () {
-      localStorage.setItem(CONSENT_KEY, 'yes');
-      hideBanner();
-      loadGoogleAnalytics();
-    };
+    #cookie-banner button[onclick="rejectCookies()"] {
+      flex: 1;
+      background: white !important;
+      color: #111827 !important;
+      border: 2px solid #6C5CE7 !important;
+      padding: 10px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
 
-    window.rejectCookies = function () {
-      localStorage.setItem(CONSENT_KEY, 'no');
-      hideBanner();
-    };
+    #cookie-btn {
+      flex: 1;
+      background: #6C5CE7;
+      color: white;
+      border: 2px solid #6C5CE7;
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+    }
 
-    document.addEventListener('DOMContentLoaded', function () {
-      const consent = localStorage.getItem(CONSENT_KEY);
+    #cookie-btn:hover {
+      background: #4B3ACB;
+    }
+  </style>
 
-      if (consent === 'yes') {
-        loadGoogleAnalytics();
-      } else if (consent === 'no') {
-        // niente GA
-      } else {
-        showBanner();
+  <script>
+    (function () {
+      const GA_ID = 'G-CFTTCYDZ2P';
+      const CONSENT_KEY = 'syncras_cookie_consent';
+
+      // Disabilita GA di default finché non c'è consenso
+      window['ga-disable-' + GA_ID] = true;
+
+      function loadGoogleAnalytics() {
+        if (window.__syncrasGaLoaded) return;
+        window.__syncrasGaLoaded = true;
+
+        // Riabilita GA solo dopo consenso
+        window['ga-disable-' + GA_ID] = false;
+
+        const gaScript = document.createElement('script');
+        gaScript.async = true;
+        gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+        document.head.appendChild(gaScript);
+
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){ dataLayer.push(arguments); }
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', GA_ID, { anonymize_ip: true });
       }
-    });
-  })();
-</script>
+
+      function showBanner() {
+        const banner = document.getElementById('cookie-banner');
+        if (banner) banner.style.display = 'block';
+      }
+
+      function hideBanner() {
+        const banner = document.getElementById('cookie-banner');
+        if (banner) banner.style.display = 'none';
+      }
+
+      window.acceptCookies = function () {
+        localStorage.setItem(CONSENT_KEY, 'yes');
+        hideBanner();
+        loadGoogleAnalytics();
+      };
+
+      window.rejectCookies = function () {
+        localStorage.setItem(CONSENT_KEY, 'no');
+        hideBanner();
+        // GA resta disabilitato
+        window['ga-disable-' + GA_ID] = true;
+      };
+
+      // Funzione per futura revoca/modifica preferenze
+      window.revokeCookies = function () {
+        localStorage.removeItem(CONSENT_KEY);
+        window['ga-disable-' + GA_ID] = true;
+        showBanner();
+      };
+
+      document.addEventListener('DOMContentLoaded', function () {
+        const consent = localStorage.getItem(CONSENT_KEY);
+
+        if (consent === 'yes') {
+          loadGoogleAnalytics();
+        } else if (consent === 'no') {
+          window['ga-disable-' + GA_ID] = true;
+        } else {
+          showBanner();
+        }
+      });
+    })();
+  </script>
 
 </body>
 </html>
+
