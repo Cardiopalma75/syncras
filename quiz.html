@@ -7,8 +7,6 @@
   <meta name="description" content="Test seri per capire se il tuo prossimo acquisto ha davvero senso: verifica impulso, budget e scopri che smartphone e TV fanno per te.">
   <meta name="robots" content="index,follow">
 
-  
-
   <style>
     /* BOX JUMP LINK – vecchio, lo teniamo ma non è usato qui */
     .jump-box {
@@ -195,6 +193,35 @@
       margin-bottom: 8px;
     }
 
+    /* BOX CONSENSO NOTE LEGALI */
+
+    .legal-consent-box {
+      background: #FFF7D6;
+      border-left: 4px solid #EAB308;
+      border-radius: 8px;
+      padding: 12px 14px;
+      margin: 18px 0 20px;
+      font-size: 0.9rem;
+    }
+
+    .legal-consent-box label {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .legal-consent-box input[type="checkbox"] {
+      margin-top: 2px;
+      transform: scale(1.05);
+    }
+
+    .legal-consent-note {
+      margin: 8px 0 0;
+      font-size: 0.83rem;
+      color: #4b5563;
+    }
+
     /* ====== NUOVA GRIGLIA QUIZ (stile tipo Misteri) ====== */
 
     .quiz-intro-text {
@@ -265,7 +292,7 @@
       }
     }
 
-    /* ====== LAYOUT TEST SOTTO (uguale a prima) ====== */
+    /* ====== LAYOUT TEST SOTTO ====== */
 
     .tests-layout {
       display: grid;
@@ -334,7 +361,7 @@
     /* CARD TEST + RISPOSTE A CARD */
 
     .test-card {
-      background: #f4f0ff; /* più colorata */
+      background: #f4f0ff;
       border-radius: 16px;
       padding: 20px 20px 18px;
       border: 1px solid #cbb8ff;
@@ -407,7 +434,6 @@
 
     .answer-option.input-checked,
     .answer-option input[type="radio"]:checked + span {
-      /* lasciamo solo testo marcato, il bordo della card viene gestito sotto */
     }
 
     .answer-option input[type="radio"]:checked + span::before {
@@ -586,13 +612,13 @@
 
       <nav id="main-nav">
         <a href="index.html">Home</a>
-<a href="blog.html">Blog</a>
-<a href="quiz.html">Test Anti-Acquisto</a>
-<a href="calcolatori.html">Calcolatori</a>
-<a href="curiosita.html">Curiosità</a>
-<a href="misteri.html">Misteri</a>
-<a href="offerte.html">Prodotti Consapevoli</a>
-<a href="chi.html">Chi siamo</a>
+        <a href="blog.html">Blog</a>
+        <a href="quiz.html">Test Anti-Acquisto</a>
+        <a href="calcolatori.html">Calcolatori</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="offerte.html">Prodotti Consapevoli</a>
+        <a href="chi.html">Chi siamo</a>
       </nav>
     </div>
   </header>
@@ -604,6 +630,22 @@
       <p>
         Qui non vendiamo nulla: ti facciamo solo qualche domanda scomoda prima che la carta di credito 
         faccia danni. Rispondi con sincerità, il risultato lo vedi solo tu.
+      </p>
+    </div>
+
+    <!-- BOX CONSENSO NOTE LEGALI OBBLIGATORIO -->
+    <div class="legal-consent-box">
+      <label for="legal-consent-checkbox">
+        <input type="checkbox" id="legal-consent-checkbox">
+        <span>
+          ✅ <strong>Dichiaro di aver letto e accettato le <a href="note-legali.html" target="_blank">Note Legali</a>, 
+          inclusa la Limitazione di Responsabilità e la clausola di Manleva e Indennizzo relative all’uso di questi test SmartShop.</strong>
+        </span>
+      </label>
+      <p class="legal-consent-note">
+        I test e i risultati sono puramente indicativi e basati sulle risposte fornite. Non costituiscono consulenza professionale
+        né sostituiscono valutazioni tecniche, fiscali o finanziarie personalizzate. In caso di dubbi, confronta sempre più fonti
+        e valuta di rivolgerti a un professionista qualificato.
       </p>
     </div>
 
@@ -684,11 +726,12 @@
           <div class="test-section-label">Test generale</div>
           <h2>Test decisione acquisto</h2>
 
-<div style="background:#FFF7D6; border-left:4px solid #EAB308; padding:12px 14px; border-radius:8px; margin:20px 0; font-size:0.9rem;">
-  💡 <strong>Avviso Importante:</strong> I risultati di questo test sono puramente indicativi e basati sulle risposte fornite. Non costituiscono consulenza professionale, non garantiscono la correttezza dell’acquisto e non tengono conto di tutti i fattori tecnici, personali o economici. Valuta sempre il tuo budget reale o, in caso di dubbi, chiedi un parere qualificato.
-</div>
+          <div style="background:#FFF7D6; border-left:4px solid #EAB308; padding:12px 14px; border-radius:8px; margin:20px 0; font-size:0.9rem;">
+            💡 <strong>Avviso Importante:</strong> I risultati di questo test sono puramente indicativi e basati sulle risposte fornite.
+            Non costituiscono consulenza professionale, non garantiscono la correttezza dell’acquisto e non tengono conto di tutti i fattori
+            tecnici, personali o economici. Valuta sempre il tuo budget reale o, in caso di dubbi, chiedi un parere qualificato.
+          </div>
 
-          
           <p class="test-subtitle">
             7 domande per capire se il tuo prossimo acquisto è davvero sensato o se è solo “voglia di clic”.
           </p>
@@ -1409,6 +1452,13 @@
       prima di fare un acquisto. Non ha valore scientifico, non sostituisce pareri tecnici
       o professionali ed è realizzato con tono leggero e ironico.
     </p>
+
+    <!-- AVVISO FINALE BEN EVIDENTE -->
+    <div style="background:#FFF7D6; border-left:4px solid #EAB308; padding:12px 14px; border-radius:8px; margin:25px 0; font-size:0.9rem;">
+      💡 <strong>Nota Finale:</strong> Il risultato dei test SmartShop è indicativo e non rappresenta una consulenza professionale
+      o una valutazione tecnica personalizzata. Le tue necessità, il tuo budget e le caratteristiche reali dei prodotti possono variare.
+      Prima di acquistare, confronta sempre più modelli e, in caso di dubbi, chiedi un parere qualificato.
+    </div>
   </main>
 
   <footer class="syncras-footer">
@@ -1459,6 +1509,21 @@
   <script>
     function toggleMenu() {
       document.body.classList.toggle('nav-open');
+    }
+
+    /* ==============================
+       FUNZIONE CONTROLLO CONSENSO LEGALE
+       ============================== */
+    function hasAcceptedLegal() {
+      var checkbox = document.getElementById('legal-consent-checkbox');
+      if (!checkbox) return true; // in caso estremo non blocchiamo
+      if (!checkbox.checked) {
+        alert('Per utilizzare i test devi prima dichiarare di aver letto e accettato le Note Legali.');
+        checkbox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        checkbox.focus();
+        return false;
+      }
+      return true;
     }
 
     /* ==============================
@@ -1559,6 +1624,8 @@
        TEST ACQUISTO
        ============================== */
     function valutaTestAcquisto() {
+      if (!hasAcceptedLegal()) return;
+
       const domande = ['a_q1', 'a_q2', 'a_q3', 'a_q4', 'a_q5', 'a_q6', 'a_q7'];
       let si = 0;
       let risposte = 0;
@@ -1632,6 +1699,8 @@
        ============================== */
 
     function valutaTestSmartphone() {
+      if (!hasAcceptedLegal()) return;
+
       const domande = ['s_q1', 's_q2', 's_q3', 's_q4', 's_q5'];
       let punteggio = 0;
       let risposte = 0;
@@ -1684,6 +1753,8 @@
        ============================== */
 
     function valutaTestLavastoviglie() {
+      if (!hasAcceptedLegal()) return;
+
       const domande = ['lv_q1','lv_q2','lv_q3','lv_q4','lv_q5','lv_q6'];
       let punteggio = 0;
       let risposte  = 0;
@@ -1735,6 +1806,8 @@
        ============================== */
 
     function valutaTestLavatrice() {
+      if (!hasAcceptedLegal()) return;
+
       const domande = [
         'lav_q1','lav_q2','lav_q3','lav_q4','lav_q5',
         'lav_q6','lav_q7','lav_q8','lav_q9','lav_q10'
@@ -1788,6 +1861,8 @@
        ============================== */
 
     function valutaTestTv() {
+      if (!hasAcceptedLegal()) return;
+
       const domande = ['t_q1', 't_q2', 't_q3', 't_q4', 't_q5', 't_q6', 't_q7'];
       let risposte = 0;
 
@@ -1866,6 +1941,8 @@
        ============================== */
 
     function valutaTestGiga() {
+      if (!hasAcceptedLegal()) return;
+
       let punteggio = 0;
 
       for (let i = 1; i <= 5; i++) {
@@ -1919,15 +1996,6 @@
       el.innerHTML = messaggio + linkAmazon;
     }
 
-<div style="background:#FFF7D6; border-left:4px solid #EAB308; padding:12px 14px; border-radius:8px; margin:25px 0; font-size:0.9rem;">
-  💡 <strong>Nota Finale:</strong> Il risultato di questo test è indicativo e non rappresenta una consulenza professionale o una valutazione tecnica personalizzata. Le tue necessità, il tuo budget e le caratteristiche reali del prodotto possono variare. Prima di acquistare, confronta almeno 2–3 modelli e, in caso di dubbi, chiedi un parere qualificato.
-</div>
-
-    
-
-
-
-    
     /* ==============================
        FOOTER YEAR
        ============================== */
@@ -1939,7 +2007,8 @@
       }
     });
   </script>
-<!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
+
+  <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
   <div id="cookie-banner">
     <p>
       Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
@@ -2017,7 +2086,7 @@
     }
   </style>
 
- <script>
+  <script>
   (function () {
     const GA_ID = 'G-CFTTCYDZ2P';
     const CONSENT_KEY = 'syncras_cookie_consent'; // chiave unica per tutto il sito
@@ -2086,8 +2155,7 @@
       }
     });
   })();
-</script>
-
+  </script>
 
 </body>
 </html>
