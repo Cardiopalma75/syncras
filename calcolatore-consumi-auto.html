@@ -6,9 +6,7 @@
   <title>Confronto costi auto 2025: benzina, diesel, GPL, metano, elettrica (Calcolatore) | Syncras.App</title>
   <meta name="description" content="👉 Calcola e confronta in pochi secondi il COSTO REALE per 100 km e su base annua della tua auto (benzina, diesel, GPL, metano) con un'auto elettrica o ibrida. Lo strumento definitivo per capire la convenienza.">
   <meta name="robots" content="index,follow">
-<link rel="canonical" href="https://syncras.app/calcolatore-consumi-auto.html">
-
- 
+  <link rel="canonical" href="https://syncras.app/calcolatore-consumi-auto.html">
 
   <style>
     :root {
@@ -283,6 +281,30 @@
       margin-top: 8px;
     }
 
+    /* 🔹 Blocco accettazione Note Legali per il calcolatore */
+    .legal-box-avviso {
+      margin-top: 18px;
+      margin-bottom: 10px;
+      padding: 12px 14px;
+      background: #ffffff;
+      border-radius: 8px;
+      border: 1px solid #e5e7eb;
+      font-size: 0.9rem;
+      color: #374151;
+    }
+
+    .legal-box-avviso a {
+      color: var(--violet-main);
+      text-decoration: underline;
+      font-weight: 600;
+    }
+
+    .legal-note-small {
+      margin: 6px 0 0;
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
     a {
       color: var(--violet-dark);
       text-decoration: none;
@@ -366,13 +388,13 @@
 
       <nav id="main-nav">
         <a href="index.html">Home</a>
-<a href="blog.html">Blog</a>
-<a href="quiz.html">Test Anti-Acquisto</a>
-<a href="calcolatori.html">Calcolatori</a>
-<a href="curiosita.html">Curiosità</a>
-<a href="misteri.html">Misteri</a>
-<a href="offerte.html">Prodotti Consapevoli</a>
-<a href="chi.html">Chi siamo</a>
+        <a href="blog.html">Blog</a>
+        <a href="quiz.html">Test Anti-Acquisto</a>
+        <a href="calcolatori.html">Calcolatori</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="offerte.html">Prodotti Consapevoli</a>
+        <a href="chi.html">Chi siamo</a>
       </nav>
     </div>
   </header>
@@ -381,13 +403,12 @@
     <div class="page-intro">
       <span class="badge-page">Area strumenti</span>
       <h1>🚗 Confronto costi auto: benzina, diesel, GPL, metano o elettrica?</h1>
-<div style="background:#FEF6D8; padding:10px 14px; border-left:4px solid #EAB308; border-radius:6px; margin:15px 0; font-size:0.9rem;">
-⚠️ <strong>Avviso importante:</strong> le simulazioni di questo calcolatore auto sono <strong>stime orientative</strong> basate sui dati inseriti.  
-Non tengono conto di tutte le variabili economiche, tecniche, fiscali, regionali o assicurative.  
-Per valutazioni precise sui costi reali, rientri economici, tasse o scelte di mobilità, è sempre opportuno rivolgersi a un <strong>professionista o consulente competente</strong>.
-</div>
+      <div style="background:#FEF6D8; padding:10px 14px; border-left:4px solid #EAB308; border-radius:6px; margin:15px 0; font-size:0.9rem;">
+        ⚠️ <strong>Avviso importante:</strong> le simulazioni di questo calcolatore auto sono <strong>stime orientative</strong> basate sui dati inseriti.  
+        Non tengono conto di tutte le variabili economiche, tecniche, fiscali, regionali o assicurative.  
+        Per valutazioni precise sui costi reali, rientri economici, tasse o scelte di mobilità, è sempre opportuno rivolgersi a un <strong>professionista o consulente competente</strong>.
+      </div>
 
-      
       <p class="intro-text">
         Inserisci consumi, prezzi dei carburanti e chilometri annui.  
         Il calcolatore ti mostra il costo per 100 km e per tutta la distanza scelta, confrontando due auto (A e B).
@@ -488,6 +509,22 @@ Per valutazioni precise sui costi reali, rientri economici, tasse o scelte di mo
         </div>
       </div>
 
+      <!-- 🔹 BLOCCO ACCETTAZIONE NOTE LEGALI PRIMA DEL BOTTONE -->
+      <div class="legal-box-avviso">
+        <label>
+          <input type="checkbox" id="legalAccept">
+          Dichiaro di aver letto e accettato le
+          <a href="note-legali.html" target="_blank">Note Legali</a>, inclusa la
+          <strong>Limitazione di Responsabilità</strong> e la clausola di
+          <strong>Manleva e Indennizzo</strong>.
+        </label>
+        <p class="legal-note-small">
+          I risultati di questo calcolatore sono indicativi e non costituiscono consulenza professionale.
+          Per decisioni economiche, fiscali o tecniche fai sempre riferimento a un professionista qualificato.
+        </p>
+      </div>
+      <!-- 🔹 FINE BLOCCO ACCETTAZIONE -->
+
       <button class="calc-btn" type="button" onclick="calcolaAuto()">Calcola confronto auto</button>
 
       <div id="autoResult" class="calc-result"></div>
@@ -581,6 +618,13 @@ Per valutazioni precise sui costi reali, rientri economici, tasse o scelte di mo
 
     // CALCOLO CONFRONTO AUTO
     function calcolaAuto() {
+      // ✅ Controllo accettazione Note Legali
+      const legalCheckbox = document.getElementById('legalAccept');
+      if (legalCheckbox && !legalCheckbox.checked) {
+        alert('Per usare il calcolatore devi dichiarare di aver letto e accettato le Note Legali.');
+        return;
+      }
+
       const kmTot = parseFloat(document.getElementById('kmTot').value) || 0;
 
       const tipoA = document.getElementById('tipoA').value;
@@ -605,7 +649,6 @@ Per valutazioni precise sui costi reali, rientri economici, tasse o scelte di mo
       const costoKmB = costo100B / 100;
       const costoTotB = costoKmB * kmTot;
 
-      const diffPer100 = costo100A - costo100B;   // positivo = A più cara (non usato ma lasciato)
       const diffTot = costoTotA - costoTotB;
 
       let piuEconomica, testoDiff;
@@ -693,7 +736,8 @@ Per valutazioni precise sui costi reali, rientri economici, tasse o scelte di mo
       attachShare(shareBottom);
     })();
   </script>
-<!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
+
+  <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
   <div id="cookie-banner">
     <p>
       Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
@@ -779,7 +823,6 @@ Per valutazioni precise sui costi reali, rientri economici, tasse o scelte di mo
       // 👉 Chiave locale per memorizzare la scelta
       const CONSENT_KEY = "syncras_cookie_consent";
 
-
       function loadGoogleAnalytics() {
         if (window.__tizianaGaLoaded) return;
         window.__tizianaGaLoaded = true;
@@ -833,175 +876,5 @@ Per valutazioni precise sui costi reali, rientri economici, tasse o scelte di mo
 
 </body>
 </html>
-Ora:
 
-c’è un solo #cookie-banner
-
-niente HTML dentro <script>
-
-GA parte solo dopo “Accetta”
-
-pulsanti “Accetta” e “Rifiuta” sono trattati allo stesso livello
-
-Se vuoi, il prossimo file lo sistemi tu con lo stesso blocco in fondo, me lo incolli e ti faccio solo un check veloce finale.
-
-
-
-
-
-
-
-Hai detto:
-scuaa echo per accellerare dopo il footer incollo questo e rimuovo i miei codici di analitics in alto. giusto? <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
-  <div id="cookie-banner">
-    <p>
-      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
-      (Google Analytics). Alcuni link potrebbero essere di affiliazione.
-      Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
-      <a href="privacy.html">Privacy Policy</a>.
-    </p>
-    <div style="display:flex; gap:10px; margin-top:8px;">
-      <button type="button" onclick="rejectCookies()">
-        Rifiuta
-      </button>
-      <button id="cookie-btn" type="button" onclick="acceptCookies()">
-        Accetta e continua
-      </button>
-    </div>
-  </div>
-
-  <style>
-    #cookie-banner {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      max-width: 90%;
-      width: 420px;
-      background: #ffffff;
-      border: 2px solid #6C5CE7;
-      border-radius: 10px;
-      padding: 16px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-      z-index: 9999;
-      font-family: Arial, sans-serif;
-      display: none;
-    }
-
-    #cookie-banner p {
-      margin: 0 0 12px 0;
-      font-size: 0.95rem;
-      color: #333;
-      line-height: 1.4;
-    }
-
-    #cookie-banner a {
-      color: #6C5CE7;
-      font-weight: bold;
-      text-decoration: none;
-    }
-
-    /* Pulsante RIFIUTA – pari importanza al pulsante ACCETTA */
-    #cookie-banner button[onclick="rejectCookies()"] {
-      flex: 1;
-      background: white !important;
-      color: #111827 !important;
-      border: 2px solid #6C5CE7 !important;
-      padding: 10px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-
-    /* Pulsante ACCETTA */
-    #cookie-btn {
-      flex: 1;
-      background: #6C5CE7;
-      color: white;
-      border: 2px solid #6C5CE7;
-      padding: 10px 16px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 700;
-    }
-
-    #cookie-btn:hover {
-      background: #4B3ACB;
-    }
-  </style>
-
- <script>
-  (function () {
-    const GA_ID = 'G-CFTTCYDZ2P';
-    const CONSENT_KEY = 'syncras_cookie_consent'; // chiave unica per tutto il sito
-
-    // 1️⃣ BLOCCO PREVENTIVO: GA disabilitato finché non c'è consenso
-    window['ga-disable-' + GA_ID] = true;
-
-    function loadGoogleAnalytics() {
-      if (window.__syncrasGaLoaded) return;
-      window.__syncrasGaLoaded = true;
-
-      // Riabilita GA solo dopo il consenso
-      window['ga-disable-' + GA_ID] = false;
-
-      const gaScript = document.createElement('script');
-      gaScript.async = true;
-      gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
-      document.head.appendChild(gaScript);
-
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){ dataLayer.push(arguments); }
-      window.gtag = gtag;
-      gtag('js', new Date());
-      gtag('config', GA_ID, { anonymize_ip: true });
-    }
-
-    function showBanner() {
-      const banner = document.getElementById('cookie-banner');
-      if (banner) banner.style.display = 'block';
-    }
-
-    function hideBanner() {
-      const banner = document.getElementById('cookie-banner');
-      if (banner) banner.style.display = 'none';
-    }
-
-    window.acceptCookies = function () {
-      localStorage.setItem(CONSENT_KEY, 'yes');
-      hideBanner();
-      loadGoogleAnalytics();
-    };
-
-    window.rejectCookies = function () {
-      localStorage.setItem(CONSENT_KEY, 'no');
-      hideBanner();
-      // GA resta bloccato
-      window['ga-disable-' + GA_ID] = true;
-    };
-
-    // 2️⃣ FUNZIONE DI REVOCA – per cambiare idea dopo
-    window.revokeCookies = function () {
-      localStorage.removeItem(CONSENT_KEY);
-      window['ga-disable-' + GA_ID] = true;   // blocca subito GA
-      showBanner();                           // ri-mostra il banner
-    };
-
-    document.addEventListener('DOMContentLoaded', function () {
-      const consent = localStorage.getItem(CONSENT_KEY);
-
-      if (consent === 'yes') {
-        loadGoogleAnalytics();
-      } else if (consent === 'no') {
-        window['ga-disable-' + GA_ID] = true;
-      } else {
-        showBanner();
-      }
-    });
-  })();
-</script>
-
-
-</body>
-</html>
 
