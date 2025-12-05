@@ -547,66 +547,78 @@
     }
   </style>
 
-  <script>
-    (function () {
-      // 👉 ID Google Analytics di Tiziana
-      const GA_ID = 'G-CFTTCYDZ2P';
+<script>
+  (function () {
+    const GA_ID = 'G-CFTTCYDZ2P';
+    const CONSENT_KEY = 'syncras_cookie_consent'; // chiave unica per tutto il sito
 
-      // 👉 Chiave locale per memorizzare la scelta
-      const CONSENT_KEY = "syncras_cookie_consent";
+    // 1️⃣ BLOCCO PREVENTIVO: GA disabilitato finché non c'è consenso
+    window['ga-disable-' + GA_ID] = true;
 
+    function loadGoogleAnalytics() {
+      if (window.__syncrasGaLoaded) return;
+      window.__syncrasGaLoaded = true;
 
-      function loadGoogleAnalytics() {
-        if (window.__tizianaGaLoaded) return;
-        window.__tizianaGaLoaded = true;
+      // Riabilita GA solo dopo il consenso
+      window['ga-disable-' + GA_ID] = false;
 
-        const gaScript = document.createElement('script');
-        gaScript.async = true;
-        gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
-        document.head.appendChild(gaScript);
+      const gaScript = document.createElement('script');
+      gaScript.async = true;
+      gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+      document.head.appendChild(gaScript);
 
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){ dataLayer.push(arguments); }
-        window.gtag = gtag;
-        gtag('js', new Date());
-        gtag('config', GA_ID, { anonymize_ip: true });
-      }
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', GA_ID, { anonymize_ip: true });
+    }
 
-      function showBanner() {
-        const banner = document.getElementById('cookie-banner');
-        if (banner) banner.style.display = 'block';
-      }
+    function showBanner() {
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.style.display = 'block';
+    }
 
-      function hideBanner() {
-        const banner = document.getElementById('cookie-banner');
-        if (banner) banner.style.display = 'none';
-      }
+    function hideBanner() {
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.style.display = 'none';
+    }
 
-      window.acceptCookies = function () {
-        localStorage.setItem(CONSENT_KEY, 'yes');
-        hideBanner();
+    window.acceptCookies = function () {
+      localStorage.setItem(CONSENT_KEY, 'yes');
+      hideBanner();
+      loadGoogleAnalytics();
+    };
+
+    window.rejectCookies = function () {
+      localStorage.setItem(CONSENT_KEY, 'no');
+      hideBanner();
+      // GA resta bloccato
+      window['ga-disable-' + GA_ID] = true;
+    };
+
+    // 2️⃣ FUNZIONE DI REVOCA – per cambiare idea dopo
+    window.revokeCookies = function () {
+      localStorage.removeItem(CONSENT_KEY);
+      window['ga-disable-' + GA_ID] = true;   // blocca subito GA
+      showBanner();                           // ri-mostra il banner
+    };
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const consent = localStorage.getItem(CONSENT_KEY);
+
+      if (consent === 'yes') {
         loadGoogleAnalytics();
-      };
+      } else if (consent === 'no') {
+        window['ga-disable-' + GA_ID] = true;
+      } else {
+        showBanner();
+      }
+    });
+  })();
+</script>
 
-      window.rejectCookies = function () {
-        localStorage.setItem(CONSENT_KEY, 'no');
-        hideBanner();
-      };
-
-      document.addEventListener('DOMContentLoaded', function () {
-        const consent = localStorage.getItem(CONSENT_KEY);
-
-        if (consent === 'yes') {
-          loadGoogleAnalytics();
-        } else if (consent === 'no') {
-          // niente GA, niente banner
-        } else {
-          showBanner();
-        }
-      });
-    })();
-  </script>
 
 </body>
 </html>
- 
+
