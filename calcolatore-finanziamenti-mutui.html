@@ -155,8 +155,6 @@
         padding-bottom: 10px;
       }
 
-      /* Badge, intro, ecc. (se già definiti altrove puoi riusare gli stessi stili) */
-
       .calc-grid {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -263,6 +261,30 @@
         display: block;
         margin-bottom: 4px;
         font-size: 0.95rem;
+      }
+
+      /* 🔹 BLOCCO ACCETTAZIONE NOTE LEGALI PER TUTTI I CALCOLATORI */
+      .legal-box-avviso {
+        margin-top: 18px;
+        margin-bottom: 10px;
+        padding: 12px 14px;
+        background: #ffffff;
+        border-radius: 8px;
+        border: 1px solid #e5e7eb;
+        font-size: 0.9rem;
+        color: #374151;
+      }
+
+      .legal-box-avviso a {
+        color: var(--violet-main);
+        text-decoration: underline;
+        font-weight: 600;
+      }
+
+      .legal-note-small {
+        margin: 6px 0 0;
+        font-size: 0.8rem;
+        color: #6b7280;
       }
 
       /* TABLE STYLES */
@@ -410,6 +432,23 @@
         offerta di credito o indicazione personalizzata. Per decisioni reali su mutui o finanziamenti
         è sempre necessario rivolgersi a banca, finanziaria o consulente abilitato.
       </div>
+
+      <!-- 🔹 BLOCCO ACCETTAZIONE NOTE LEGALI (valido per tutti i calcolatori) -->
+      <div class="legal-box-avviso">
+        <label>
+          <input type="checkbox" id="legalAccept">
+          Dichiaro di aver letto e accettato le
+          <a href="note-legali.html" target="_blank">Note Legali</a>, inclusa la
+          <strong>Limitazione di Responsabilità</strong> e la clausola di
+          <strong>Manleva e Indennizzo</strong>.
+        </label>
+        <p class="legal-note-small">
+          I risultati dei calcolatori presenti in questa pagina sono indicativi e non costituiscono
+          consulenza finanziaria o offerta di mutuo/credito. Per decisioni reali rivolgiti sempre a
+          una banca o a un consulente abilitato.
+        </p>
+      </div>
+      <!-- 🔹 FINE BLOCCO ACCETTAZIONE -->
 
       <section aria-label="Elenco calcolatori finanziari">
         <div class="calc-grid">
@@ -631,6 +670,16 @@
         button.setAttribute('aria-expanded', !isExpanded);
       }
 
+      // Controllo spunta Note Legali (unico per tutti i calcolatori)
+      function checkLegalAccept() {
+        const legalCheckbox = document.getElementById('legalAccept');
+        if (legalCheckbox && !legalCheckbox.checked) {
+          alert('Per usare i calcolatori devi dichiarare di aver letto e accettato le Note Legali.');
+          return false;
+        }
+        return true;
+      }
+
       // Condivisione pagina
       function handleShare(event) {
           event.preventDefault();
@@ -667,6 +716,9 @@
 
       // FINANZIAMENTO SEMPLICE
       function calcolaFinanziamento() {
+        // ✅ Controllo accettazione Note Legali
+        if (!checkLegalAccept()) return;
+
         const importo = numFromInput('finImporto');
         const tassoAnn = numFromInput('finTasso');
         const anni = numFromInput('finAnni');
@@ -709,6 +761,9 @@
 
       // BUDGET RATA SOSTENIBILE
       function calcolaBudgetRata() {
+        // ✅ Controllo accettazione Note Legali
+        if (!checkLegalAccept()) return;
+
         const reddito = numFromInput('budReddito');
         const perc = numFromInput('budPercent');
         const tassoAnn = numFromInput('budTasso');
@@ -758,6 +813,9 @@
 
       // MUTUO CON PIANO DI AMMORTAMENTO
       function calcolaMutuo() {
+        // ✅ Controllo accettazione Note Legali
+        if (!checkLegalAccept()) return;
+
         const importo = numFromInput('mutImporto');
         const tassoAnn = numFromInput('mutTasso');
         const anni = numFromInput('mutAnni');
@@ -1045,3 +1103,4 @@
 
 </body>
 </html>
+
