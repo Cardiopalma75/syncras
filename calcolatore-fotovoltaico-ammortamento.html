@@ -8,8 +8,6 @@
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://syncras.app/calcolatore-fotovoltaico-ammortamento.html">
 
-  
-
   <style>
     :root {
       --violet-main: #6C5CE7;
@@ -176,7 +174,7 @@
       margin-top: 6px;
     }
 
-    /* Share buttons (stesso stile degli altri calcolatori) */
+    /* Share buttons */
     .share-btn-new {
       display: inline-flex;
       align-items: center;
@@ -327,6 +325,29 @@
       font-size: 0.8rem;
       color: #6b7280;
       margin-top: 18px;
+    }
+
+    /* 🔹 BLOCCO ACCETTAZIONE NOTE LEGALI PER QUESTO CALCOLATORE */
+    .legal-box-avviso {
+      margin-top: 14px;
+      padding: 10px 12px;
+      background: #ffffff;
+      border-radius: 8px;
+      border: 1px solid #e5e7eb;
+      font-size: 0.9rem;
+      color: #374151;
+    }
+
+    .legal-box-avviso a {
+      color: var(--violet-main);
+      text-decoration: underline;
+      font-weight: 600;
+    }
+
+    .legal-note-small {
+      margin: 6px 0 0;
+      font-size: 0.8rem;
+      color: #6b7280;
     }
 
     /* Tabella ammortamento */
@@ -549,13 +570,13 @@
 
       <nav id="main-nav">
         <a href="index.html">Home</a>
-<a href="blog.html">Blog</a>
-<a href="quiz.html">Test Anti-Acquisto</a>
-<a href="calcolatori.html">Calcolatori</a>
-<a href="curiosita.html">Curiosità</a>
-<a href="misteri.html">Misteri</a>
-<a href="offerte.html">Prodotti Consapevoli</a>
-<a href="chi.html">Chi siamo</a>
+        <a href="blog.html">Blog</a>
+        <a href="quiz.html">Test Anti-Acquisto</a>
+        <a href="calcolatori.html">Calcolatori</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="offerte.html">Prodotti Consapevoli</a>
+        <a href="chi.html">Chi siamo</a>
       </nav>
     </div>
   </header>
@@ -570,10 +591,10 @@
       <span class="badge-page">Area Calcoli – Fotovoltaico</span>
       <h1>Calcolatore Fotovoltaico con Ammortamento: rientro anno per anno</h1>
       <div style="background:#FFF4D6; padding:10px 14px; border-left:4px solid #F59E0B; border-radius:6px; margin:10px 0; font-size:0.9rem;">
-💡 <strong>Avviso:</strong> Questo calcolo rappresenta una <strong>stima indicativa</strong> basata sui dati inseriti dall’utente e su ipotesi semplificate.
-Non costituisce consulenza professionale e non tiene conto di tutti i fattori fiscali, tecnici, energetici o climatici reali.
-Per approfondire l’argomento, valutare incentivi, costi, impianti o normative specifiche, è sempre opportuno rivolgersi a un <strong>professionista competente</strong> o a un tecnico abilitato.
-</div>
+        💡 <strong>Avviso:</strong> Questo calcolo rappresenta una <strong>stima indicativa</strong> basata sui dati inseriti dall’utente e su ipotesi semplificate.
+        Non costituisce consulenza professionale e non tiene conto di tutti i fattori fiscali, tecnici, energetici o climatici reali.
+        Per approfondire l’argomento, valutare incentivi, costi, impianti o normative specifiche, è sempre opportuno rivolgersi a un <strong>professionista competente</strong> o a un tecnico abilitato.
+      </div>
 
       <p class="intro-text">
         Questo strumento ti permette di stimare la <strong>produzione annua</strong> del tuo impianto fotovoltaico,
@@ -582,6 +603,22 @@ Per approfondire l’argomento, valutare incentivi, costi, impianti o normative 
         Alla fine puoi <strong>stampare o salvare in PDF</strong> il risultato per mostrarlo a clienti o familiari.
       </p>
     </div>
+
+    <!-- 🔹 BLOCCO ACCETTAZIONE NOTE LEGALI (valido per tutti i calcoli FV di questa pagina) -->
+    <div class="legal-box-avviso">
+      <label>
+        <input type="checkbox" id="legalAccept">
+        Dichiaro di aver letto e accettato le
+        <a href="note-legali.html" target="_blank">Note Legali</a>, inclusa la
+        <strong>Limitazione di Responsabilità</strong> e la clausola di
+        <strong>Manleva e Indennizzo</strong> relative all’uso di questo calcolatore.
+      </label>
+      <p class="legal-note-small">
+        I risultati sono <strong>stime orientative</strong> basate sui dati inseriti e su ipotesi semplificate.
+        Non costituiscono consulenza tecnica, energetica, fiscale o finanziaria, né un preventivo ufficiale.
+      </p>
+    </div>
+    <!-- 🔹 FINE BLOCCO ACCETTAZIONE -->
 
     <button id="shareTop" class="share-btn-new">
       <span>📤</span> Condividi questo calcolatore
@@ -812,8 +849,21 @@ Per approfondire l’argomento, valutare incentivi, costi, impianti o normative 
       return val.toFixed(0).replace('.', ',');
     }
 
+    // ✅ Controllo accettazione Note Legali (unico per tutti i calcoli di questa pagina)
+    function checkLegalAccept() {
+      const legalCheckbox = document.getElementById('legalAccept');
+      if (legalCheckbox && !legalCheckbox.checked) {
+        alert('Per usare questo calcolatore devi dichiarare di aver letto e accettato le Note Legali.');
+        return false;
+      }
+      return true;
+    }
+
     // ======== FOTOVOLTAICO – IMPIANTO (Blocco A) ========
     function calcolaFotovoltaicoImpianto() {
+      // Controllo Note Legali
+      if (!checkLegalAccept()) return;
+
       const kw = parseFloat(document.getElementById('pvKw').value) || 0;
       const prodPerKw = parseFloat(document.getElementById('pvZona').value) || 0;
       const autoconsumoPerc = parseFloat(document.getElementById('pvAutoconsumo').value) || 0;
@@ -871,6 +921,9 @@ Per approfondire l’argomento, valutare incentivi, costi, impianti o normative 
 
     // ======== FOTOVOLTAICO – AUTO ELETTRICA (Blocco B) ========
     function calcolaFotovoltaicoAuto() {
+      // Controllo Note Legali
+      if (!checkLegalAccept()) return;
+
       const km = parseFloat(document.getElementById('evKm').value) || 0;
       const consumo100 = parseFloat(document.getElementById('evConsumo').value) || 0;
       const quotaPvPerc = parseFloat(document.getElementById('evQuotaPv').value) || 0;
@@ -901,6 +954,9 @@ Per approfondire l’argomento, valutare incentivi, costi, impianti o normative 
 
     // ======== AMMORTAMENTO (Blocco C) ========
     function calcolaAmmortamento() {
+      // Controllo Note Legali
+      if (!checkLegalAccept()) return;
+
       const kw = parseFloat(document.getElementById('pvKw').value) || 0;
       const prodPerKw = parseFloat(document.getElementById('pvZona').value) || 0;
       const autoconsumoPerc = parseFloat(document.getElementById('pvAutoconsumo').value) || 0;
@@ -1028,7 +1084,8 @@ Per approfondire l’argomento, valutare incentivi, costi, impianti o normative 
       }
     });
   </script>
-<!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
+
+  <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
   <div id="cookie-banner">
     <p>
       Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
@@ -1106,78 +1163,78 @@ Per approfondire l’argomento, valutare incentivi, costi, impianti o normative 
     }
   </style>
 
- <script>
-  (function () {
-    const GA_ID = 'G-CFTTCYDZ2P';
-    const CONSENT_KEY = 'syncras_cookie_consent'; // chiave unica per tutto il sito
+  <script>
+    (function () {
+      const GA_ID = 'G-CFTTCYDZ2P';
+      const CONSENT_KEY = 'syncras_cookie_consent'; // chiave unica per tutto il sito
 
-    // 1️⃣ BLOCCO PREVENTIVO: GA disabilitato finché non c'è consenso
-    window['ga-disable-' + GA_ID] = true;
-
-    function loadGoogleAnalytics() {
-      if (window.__syncrasGaLoaded) return;
-      window.__syncrasGaLoaded = true;
-
-      // Riabilita GA solo dopo il consenso
-      window['ga-disable-' + GA_ID] = false;
-
-      const gaScript = document.createElement('script');
-      gaScript.async = true;
-      gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
-      document.head.appendChild(gaScript);
-
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){ dataLayer.push(arguments); }
-      window.gtag = gtag;
-      gtag('js', new Date());
-      gtag('config', GA_ID, { anonymize_ip: true });
-    }
-
-    function showBanner() {
-      const banner = document.getElementById('cookie-banner');
-      if (banner) banner.style.display = 'block';
-    }
-
-    function hideBanner() {
-      const banner = document.getElementById('cookie-banner');
-      if (banner) banner.style.display = 'none';
-    }
-
-    window.acceptCookies = function () {
-      localStorage.setItem(CONSENT_KEY, 'yes');
-      hideBanner();
-      loadGoogleAnalytics();
-    };
-
-    window.rejectCookies = function () {
-      localStorage.setItem(CONSENT_KEY, 'no');
-      hideBanner();
-      // GA resta bloccato
+      // 1️⃣ BLOCCO PREVENTIVO: GA disabilitato finché non c'è consenso
       window['ga-disable-' + GA_ID] = true;
-    };
 
-    // 2️⃣ FUNZIONE DI REVOCA – per cambiare idea dopo
-    window.revokeCookies = function () {
-      localStorage.removeItem(CONSENT_KEY);
-      window['ga-disable-' + GA_ID] = true;   // blocca subito GA
-      showBanner();                           // ri-mostra il banner
-    };
+      function loadGoogleAnalytics() {
+        if (window.__syncrasGaLoaded) return;
+        window.__syncrasGaLoaded = true;
 
-    document.addEventListener('DOMContentLoaded', function () {
-      const consent = localStorage.getItem(CONSENT_KEY);
+        // Riabilita GA solo dopo il consenso
+        window['ga-disable-' + GA_ID] = false;
 
-      if (consent === 'yes') {
-        loadGoogleAnalytics();
-      } else if (consent === 'no') {
-        window['ga-disable-' + GA_ID] = true;
-      } else {
-        showBanner();
+        const gaScript = document.createElement('script');
+        gaScript.async = true;
+        gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+        document.head.appendChild(gaScript);
+
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){ dataLayer.push(arguments); }
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', GA_ID, { anonymize_ip: true });
       }
-    });
-  })();
-</script>
 
+      function showBanner() {
+        const banner = document.getElementById('cookie-banner');
+        if (banner) banner.style.display = 'block';
+      }
+
+      function hideBanner() {
+        const banner = document.getElementById('cookie-banner');
+        if (banner) banner.style.display = 'none';
+      }
+
+      window.acceptCookies = function () {
+        localStorage.setItem(CONSENT_KEY, 'yes');
+        hideBanner();
+        loadGoogleAnalytics();
+      };
+
+      window.rejectCookies = function () {
+        localStorage.setItem(CONSENT_KEY, 'no');
+        hideBanner();
+        // GA resta bloccato
+        window['ga-disable-' + GA_ID] = true;
+      };
+
+      // 2️⃣ FUNZIONE DI REVOCA – per cambiare idea dopo
+      window.revokeCookies = function () {
+        localStorage.removeItem(CONSENT_KEY);
+        window['ga-disable-' + GA_ID] = true;   // blocca subito GA
+        showBanner();                           // ri-mostra il banner
+      };
+
+      document.addEventListener('DOMContentLoaded', function () {
+        const consent = localStorage.getItem(CONSENT_KEY);
+
+        if (consent === 'yes') {
+          loadGoogleAnalytics();
+        } else if (consent === 'no') {
+          window['ga-disable-' + GA_ID] = true;
+        } else {
+          showBanner();
+        }
+      });
+    })();
+  </script>
 
 </body>
 </html>
+
 
