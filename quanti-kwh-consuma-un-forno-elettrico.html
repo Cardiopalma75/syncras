@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quanti kWh consuma un forno elettrico? Guida semplice ai consumi reali | Syncras.App</title>
+  <meta name="description" content="Scopri quanti kWh consuma davvero un forno elettrico, quanto ti costa in bolletta e come ridurre i consumi senza rinunciare a torte, pizze e lasagne.">
+  <meta name="robots" content="index,follow">
+
+  <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --bg-page: #F7F7FB;
+      --text-main: #403E43;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg-page);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      color: var(--text-main);
+    }
+
+    /* HEADER VIOLA UNIFICATO */
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color: white;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+    #main-nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding-bottom: 2px;
+    }
+    #main-nav a:hover {
+      text-decoration: underline;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .menu-toggle span {
+      margin-left: 4px;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        margin: 0 auto;
+        max-width: 1180px;
+        flex-direction: column;
+        background-color: var(--violet-dark);
+        padding: 10px 16px 12px 16px;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
+      }
+      #main-nav a {
+        padding: 6px 0;
+      }
+      body.nav-open #main-nav {
+        display: flex;
+      }
+      .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+
+    main {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    h1, h2, h3 {
+      color: var(--violet-dark);
+    }
+    p {
+      margin-bottom: 15px;
+    }
+    ul {
+      margin-left: 20px;
+    }
+
+    .box {
+      background: #f6faf7;
+      border: 1px solid #d7e8dc;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .tip-box {
+      background: #F6F4FF;
+      border-left: 4px solid #6C5CE7;
+      padding: 14px;
+      margin: 25px 0;
+      border-radius: 8px;
+    }
+
+    .mini-test {
+      background: #FDFBF6;
+      border-left: 4px solid #EAB308;
+      padding: 14px;
+      margin: 25px 0;
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+
+    .back-links {
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+    .back-links a {
+      color: var(--violet-dark);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .back-links a:hover {
+      text-decoration: underline;
+    }
+
+    .small {
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 0.95rem;
+    }
+    th, td {
+      border: 1px solid #E5E7EB;
+      padding: 8px 10px;
+      text-align: left;
+    }
+    th {
+      background: #F3F4FF;
+    }
+
+    /* Box prodotto Amazon */
+    .product-box {
+      background: #f6f0ff;
+      border: 1px solid #dccff8;
+      border-radius: 10px;
+      padding: 18px 16px;
+      margin: 25px 0;
+      font-size: 0.95rem;
+    }
+    .product-box a {
+      display: inline-block;
+      margin-top: 8px;
+      color: #ffffff;
+      background: var(--violet-main);
+      padding: 8px 14px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .product-box a:hover {
+      background: var(--violet-dark);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      background: #eee;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER UNIFICATO -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
+
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
+
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="quiz.html">Test Anti-Acquisto</a>
+        <a href="calcolatori.html">Calcolatori</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="offerte.html">Prodotti Consapevoli</a>
+        <a href="chi.html">Chi siamo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="back-links">
+      ← <a href="index.html">Torna alla Home</a> |
+      <a href="blog.html">Vai al Blog</a> |
+      <a href="categorie.html">Categorie</a>
+    </div>
+
+    <h1>Quanti kWh consuma un forno elettrico? (Versione con la zia che ama le torte)</h1>
+
+    <button id="shareBtnTop"
+      style="background: var(--violet-main); color:white; padding:10px 15px; border:none;
+             border-radius:6px; cursor:pointer; margin-bottom:20px; font-weight:600;">
+      📎 Condividi questo articolo
+    </button>
+
+    <p>
+      Il forno elettrico è uno di quegli elettrodomestici che associamo alla parte bella della vita:
+      <strong>torte, pizze, lasagne</strong>. Poi arriva la <strong>bolletta</strong> e qualcuno
+      in casa chiede: <em>“Sì ma… quanti kWh consuma un forno elettrico ogni volta che lo accendiamo?”</em>.
+    </p>
+
+    <p>
+      Questo articolo è pensato proprio per questo: capire, con conti semplici, 
+      <strong>quanti kWh consuma il forno</strong>, quanto ti costa in euro e come ridurre gli sprechi
+      senza rinunciare alla teglia della domenica.
+    </p>
+
+    <div class="tip-box" style="background:#FFFBEA; border-left-color:#FBBF24;">
+      <strong>Riassunto veloce (senza formule complicate):</strong>
+      <ul>
+        <li>Un forno elettrico domestico consuma di solito tra <strong>1,8 kW e 2,5 kW</strong> alla massima potenza.</li>
+        <li>Se tieni acceso un forno da <strong>2 kW</strong> per <strong>1 ora</strong>, consumi circa <strong>2 kWh</strong>.</li>
+        <li>Con un costo indicativo di <strong>0,25 €/kWh</strong>, quella cottura ti costa circa <strong>0,50 €</strong>.</li>
+      </ul>
+      <p style="margin-top:8px; font-size:0.9rem;">
+        I numeri qui sono semplificati e solo indicativi. Per valori precisi, verifica sempre la potenza del tuo forno
+        e il prezzo del kWh indicato nel tuo contratto di fornitura elettrica.
+      </p>
+    </div>
+
+    <h2>1. La storia del forno di zia Armida (versione breve)</h2>
+
+    <p>
+      Zia Armida è famosa nel palazzo per una cosa sola: <strong>le sue torte</strong>.
+      Ogni domenica il forno lavora a pieno regime, e il profumo si sente già sulle scale.
+    </p>
+
+    <p>
+      Quando le chiedono se non ha paura della bolletta, lei risponde serena:
+      <em>“Se una torta fatta bene costa mezzo euro di corrente, è l’investimento più buono della settimana.”</em>
+    </p>
+
+    <p>
+      E in effetti, vista così, il problema non è tanto <strong>accendere il forno</strong>, ma 
+      <strong>farlo con un minimo di consapevolezza</strong>: sapere
+      quanti kWh consuma e come ridurre gli sprechi inutili.
+    </p>
+
+    <h2>2. Quanta potenza ha un forno elettrico di casa?</h2>
+
+    <p>
+      La maggior parte dei forni elettrici domestici ha una potenza dichiarata, di solito, compresa fra:
+    </p>
+
+    <ul>
+      <li><strong>1,5 kW</strong> → modelli compatti / piccoli forni;</li>
+      <li><strong>1,8–2,0 kW</strong> → tanti forni da incasso “standard” di fascia media;</li>
+      <li><strong>2,2–2,5 kW</strong> → forni più grandi o con funzioni avanzate.</li>
+    </ul>
+
+    <p>
+      Puoi trovare il valore preciso:
+    </p>
+
+    <ul>
+      <li>sulla <strong>targhetta tecnica</strong> del forno (di solito sul bordo interno della porta);</li>
+      <li>sul <strong>manuale di istruzioni</strong>;</li>
+      <li>oppure sulla scheda prodotto online, se il modello è recente.</li>
+    </ul>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Potenza forno</th>
+          <th>Consumo in 1 ora</th>
+          <th>Consumo in 90 minuti</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1,8 kW</td>
+          <td>≈ 1,8 kWh</td>
+          <td>≈ 2,7 kWh</td>
+        </tr>
+        <tr>
+          <td>2,0 kW</td>
+          <td>≈ 2,0 kWh</td>
+          <td>≈ 3,0 kWh</td>
+        </tr>
+        <tr>
+          <td>2,5 kW</td>
+          <td>≈ 2,5 kWh</td>
+          <td>≈ 3,75 kWh</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="small">
+      Valori indicativi, basati sul forno che lavora alla potenza nominale per tutta la durata di utilizzo.
+      Nella realtà la resistenza si accende e spegne a cicli, quindi il consumo effettivo può essere leggermente inferiore.
+    </p>
+
+    <h2>3. Come si calcola il consumo del forno in kWh</h2>
+
+    <p>
+      La formula base è semplice e vale per tutti gli elettrodomestici:
+    </p>
+
+    <p style="background:#f0eefc; padding:10px; border-radius:6px;">
+      <strong>kWh consumati = Potenza (kW) × Tempo di utilizzo (ore)</strong>
+    </p>
+
+    <p>
+      Esempio pratico con un forno da <strong>2 kW</strong>:
+    </p>
+
+    <ul>
+      <li><strong>1 ora</strong> di cottura → 2 kW × 1 h = <strong>2 kWh</strong>;</li>
+      <li><strong>1,5 ore</strong> (90 minuti) → 2 kW × 1,5 h = <strong>3 kWh</strong>;</li>
+      <li><strong>30 minuti</strong> → 2 kW × 0,5 h = <strong>1 kWh</strong>.</li>
+    </ul>
+
+    <p>
+      Per trasformare i kWh in <strong>euro</strong> devi moltiplicare per il costo del kWh
+      indicato nel tuo contratto (esempio puramente indicativo: <strong>0,25 €/kWh</strong>).
+    </p>
+
+    <p style="background:#f0eefc; padding:10px; border-radius:6px;">
+      2 kWh × 0,25 € ≈ <strong>0,50 €</strong> di energia elettrica per 1 ora di forno da 2 kW.
+    </p>
+
+    <p class="small">
+      I valori di costo sono esempi semplificati. Le tariffe reali variano in base a contratto, fasce orarie,
+      offerte e aggiornamenti del mercato. Per i calcoli economici seri, fai sempre riferimento ai dati ufficiali
+      del tuo fornitore.
+    </p>
+
+    <div class="mini-test">
+      <strong>Mini test mentale:</strong><br>
+      Se accendi il forno 3 volte a settimana per 1 ora, con un consumo medio di 2 kWh a volta, fai circa:
+      <ul>
+        <li>2 kWh × 3 volte = <strong>6 kWh a settimana</strong>;</li>
+        <li>circa <strong>24–26 kWh al mese</strong> solo per il forno.</li>
+      </ul>
+      Non è la fine del mondo, ma se usi il forno come la TV… forse vale la pena ottimizzare un po’.
+    </div>
+
+    <h2>4. Come ridurre i consumi del forno senza rinunciare alle torte</h2>
+
+    <p>
+      La buona notizia è che puoi <strong>tagliare i kWh</strong> senza tagliare le fette di torta.
+      Ecco alcune strategie semplici:
+    </p>
+
+    <h3>1️⃣ Evita il preriscaldamento infinito</h3>
+
+    <p>
+      Molte ricette chiedono il preriscaldamento, ma questo non significa lasciarlo acceso mezz’ora a vuoto.
+      Di solito <strong>10–15 minuti</strong> sono sufficienti per raggiungere la temperatura.
+    </p>
+
+    <h3>2️⃣ Cuoci più cose insieme</h3>
+
+    <p>
+      Se devi fare la torta e poi il pollo al forno, valuta di organizzarti per
+      <strong>cuocere in sequenza o sfruttare più teglie</strong> nella stessa accensione.
+      Accendere il forno due volte per singole cotture brevi è quasi sempre meno efficiente.
+    </p>
+
+    <h3>3️⃣ Sfrutta la modalità ventilata</h3>
+
+    <p>
+      La funzione ventilata distribuisce meglio il calore e, spesso, permette di:
+    </p>
+
+    <ul>
+      <li>abbassare leggermente la temperatura impostata;</li>
+      <li>ridurre i tempi di cottura.</li>
+    </ul>
+
+    <p>
+      Risultato: <strong>meno tempo acceso = meno kWh consumati</strong>.
+    </p>
+
+    <h3>4️⃣ Non aprire lo sportello ogni 3 minuti</h3>
+
+    <p>
+      Ogni volta che apri il forno “solo un secondo per vedere”, fai uscire una parte del calore.
+      Il forno deve lavorare di nuovo per recuperare la temperatura persa,
+      e questo significa <strong>più energia sprecata</strong>.
+    </p>
+
+    <h3>5️⃣ Usa teglie e contenitori adatti</h3>
+
+    <p>
+      Teglie scure e materiali che conducono bene il calore (ad esempio alcune teglie metalliche)
+      possono aiutare a ridurre i tempi di cottura rispetto a contenitori troppo spessi o non adatti al forno.
+    </p>
+
+    <h2>5. Vuoi il numero preciso? Usa il Calcolatore Consumi Elettrodomestici</h2>
+
+    <p>
+      Se non ti bastano le stime e vuoi sapere <strong>esattamente quanti kWh consuma il tuo forno</strong>
+      per una specifica ricetta, puoi usare il
+      <strong>Calcolatore Consumi Elettrodomestici di Syncras</strong>.
+    </p>
+
+    <p>
+      Ti basta inserire:
+    </p>
+
+    <ul>
+      <li>la <strong>potenza del forno</strong> (in kW),</li>
+      <li>il <strong>tempo di cottura</strong>,</li>
+      <li>il <strong>costo del kWh</strong> indicato in bolletta.</li>
+    </ul>
+
+    <p>
+      In pochi secondi vedrai:
+    </p>
+
+    <ul>
+      <li>i <strong>kWh consumati</strong> da quella cottura;</li>
+      <li>il <strong>costo in euro</strong> della singola accensione;</li>
+      <li>quanto potresti risparmiare riducendo tempi o temperatura.</li>
+    </ul>
+
+    <p style="text-align:center; margin:25px 0;">
+      <a href="calcolatore-consumi-elettrodomestici.html"
+         style="display:inline-block; padding:12px 18px; border-radius:8px;
+                background:var(--violet-main); color:white; text-decoration:none; font-weight:600;">
+        🔢 Vai al Calcolatore Consumi Elettrodomestici
+      </a>
+    </p>
+
+    <p class="small">
+      Questo articolo e il calcolatore hanno solo scopo informativo e semplificato.
+      Non sostituiscono una consulenza tecnica o energetica professionale.  
+      Per decisioni importanti su impianti, consumi o contratti luce, affidati sempre a un tecnico abilitato
+      o al tuo fornitore di energia.
+    </p>
+
+    <h2>6. Conclusione: il forno è davvero un “mostro di consumi”?</h2>
+
+    <p>
+      In molti casi il forno elettrico non è il vero “mostro della bolletta”, ma un
+      <strong>elettrodomestico energivoro da usare con criterio</strong>.
+    </p>
+
+    <p>
+      Se lo accendi ogni tanto, per cuocere in modo intelligente e magari facendo più pietanze insieme,
+      il suo impatto sui consumi è <strong>assolutamente gestibile</strong>.
+    </p>
+
+    <p>
+      Se invece lo usi come scalda-salone “perché tanto è acceso” o lo tieni inutilmente a 250°C per due ore,
+      allora sì, i kWh iniziano a pesare.
+    </p>
+
+    <p>
+      La filosofia Syncras è semplice:
+    </p>
+
+    <ul>
+      <li><strong>Capire quanto consuma</strong> (niente panico, solo numeri);</li>
+      <li><strong>Usarlo con buon senso</strong> (meno sprechi, stessa bontà);</li>
+      <li><strong>Tenere le torte e tagliare gli sprechi</strong>, non il contrario.</li>
+    </ul>
+
+    <p class="small">
+      <strong>Tag:</strong> quanti kWh consuma un forno elettrico, consumo forno elettrico, kWh forno, bolletta forno,
+      risparmiare con il forno, consumo elettrodomestici, calcolo kWh forno, costo accensione forno elettrico
+    </p>
+
+    <!-- RICHIAMO AD ALTRI ARTICOLI CORRELATI -->
+    <section style="margin-top:30px; padding:16px; border-radius:10px; background:#F7F7FB; border:1px solid #E5E7EB;">
+      <h2 style="margin-top:0;">Ti possono interessare anche:</h2>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-top:10px;">
+        <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
+          <h3 style="margin-top:0; font-size:1rem;">
+            <a href="quanto-consuma-un-frigorifero-al-giorno.html" style="text-decoration:none; color:var(--violet-dark);">
+              Quanto consuma un frigorifero al giorno?
+            </a>
+          </h3>
+          <p style="font-size:0.9rem; margin:0;">
+            Conti semplici per capire quanti kWh mangia il frigo ogni 24 ore e come ridurre i consumi senza fare digiuno.
+          </p>
+        </article>
+
+        <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
+          <h3 style="margin-top:0; font-size:1rem;">
+            <a href="quanti-kwh-consuma-davvero-una-lavatrice.html" style="text-decoration:none; color:var(--violet-dark);">
+              Quanti kWh consuma davvero una lavatrice?
+            </a>
+          </h3>
+          <p style="font-size:0.9rem; margin:0;">
+            Dati, esempi e consigli per lavare i panni sporchi risparmiando energia (e nervi).
+          </p>
+        </article>
+
+        <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
+          <h3 style="margin-top:0; font-size:1rem;">
+            <a href="calcolatore-consumi-elettrodomestici.html" style="text-decoration:none; color:var(--violet-dark);">
+              Calcolatore Consumi Elettrodomestici
+            </a>
+          </h3>
+          <p style="font-size:0.9rem; margin:0;">
+            Inserisci potenza, tempo di utilizzo e costo del kWh: scopri in pochi secondi quanto ti costa usare ogni elettrodomestico.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <div style="text-align:center; margin:30px 0 10px;">
+      <button id="shareBtnBottom"
+        style="background: var(--violet-main); color:white; padding:10px 18px; border:none;
+               border-radius:6px; cursor:pointer; font-weight:600; font-size:1rem;">
+        📎 Condividi questo articolo
+      </button>
+    </div>
+  </main>
+
+  <script>
+    // Toggle menu mobile
+    function toggleMenu() {
+      document.body.classList.toggle('nav-open');
+    }
+
+    // Condivisione articolo (top e bottom)
+    (function() {
+      const shareTop = document.getElementById('shareBtnTop');
+      const shareBottom = document.getElementById('shareBtnBottom');
+
+      function attachShare(btn) {
+        if (!btn) return;
+        if (navigator.share) {
+          btn.addEventListener('click', () => {
+            navigator.share({
+              title: 'Quanti kWh consuma un forno elettrico?',
+              text: 'Guida semplice (e un po’ ironica) per capire quanto consuma davvero il forno elettrico e quanto ti costa accenderlo.',
+              url: window.location.href
+            });
+          });
+        } else {
+          btn.style.display = 'none';
+        }
+      }
+
+      attachShare(shareTop);
+      attachShare(shareBottom);
+    })();
+  </script>
+
+  <footer>
+    © 2025 Syncras.App — Tutti i diritti riservati<br>
+    <div style="margin-top:8px;">
+      <a href="privacy.html">Privacy Policy</a> |
+      <a href="cookie.html">Cookie Policy</a> |
+      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
+      <a href="note-legali.html">Note Legali</a>
+    </div>
+    <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+      senza alcun costo aggiuntivo per l’utente.  
+      Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+      è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+    </p>
+  </footer>
+
+  <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
+  <div id="cookie-banner">
+    <p>
+      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
+      (Google Analytics). Alcuni link potrebbero essere di affiliazione.
+      Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
+      <a href="privacy.html">Privacy Policy</a>.
+    </p>
+    <div style="display:flex; gap:10px; margin-top:8px;">
+      <button type="button" onclick="rejectCookies()">
+        Rifiuta
+      </button>
+      <button id="cookie-btn" type="button" onclick="acceptCookies()">
+        Accetta e continua
+      </button>
+    </div>
+  </div>
+
+  <style>
+    #cookie-banner {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 90%;
+      width: 420px;
+      background: #ffffff;
+      border: 2px solid #6C5CE7;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      z-index: 9999;
+      font-family: Arial, sans-serif;
+      display: none;
+    }
+
+    #cookie-banner p {
+      margin: 0 0 12px 0;
+      font-size: 0.95rem;
+      color: #333;
+      line-height: 1.4;
+    }
+
+    #cookie-banner a {
+      color: #6C5CE7;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    /* Pulsante RIFIUTA – pari importanza al pulsante ACCETTA */
+    #cookie-banner button[onclick="rejectCookies()"] {
+      flex: 1;
+      background: white !important;
+      color: #111827 !important;
+      border: 2px solid #6C5CE7 !important;
+      padding: 10px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    /* Pulsante ACCETTA */
+    #cookie-btn {
+      flex: 1;
+      background: #6C5CE7;
+      color: white;
+      border: 2px solid #6C5CE7;
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    #cookie-btn:hover {
+      background: #4B3ACB;
+    }
+  </style>
+
+  <script>
+  (function () {
+    const GA_ID = 'G-CFTTCYDZ2P';
+    const CONSENT_KEY = 'syncras_cookie_consent'; // chiave unica per tutto il sito
+
+    // 1️⃣ BLOCCO PREVENTIVO: GA disabilitato finché non c'è consenso
+    window['ga-disable-' + GA_ID] = true;
+
+    function loadGoogleAnalytics() {
+      if (window.__syncrasGaLoaded) return;
+      window.__syncrasGaLoaded = true;
+
+      // Riabilita GA solo dopo il consenso
+      window['ga-disable-' + GA_ID] = false;
+
+      const gaScript = document.createElement('script');
+      gaScript.async = true;
+      gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+      document.head.appendChild(gaScript);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', GA_ID, { anonymize_ip: true });
+    }
+
+    function showBanner() {
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.style.display = 'block';
+    }
+
+    function hideBanner() {
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.style.display = 'none';
+    }
+
+    window.acceptCookies = function () {
+      localStorage.setItem(CONSENT_KEY, 'yes');
+      hideBanner();
+      loadGoogleAnalytics();
+    };
+
+    window.rejectCookies = function () {
+      localStorage.setItem(CONSENT_KEY, 'no');
+      hideBanner();
+      // GA resta bloccato
+      window['ga-disable-' + GA_ID] = true;
+    };
+
+    // 2️⃣ FUNZIONE DI REVOCA – per cambiare idea dopo
+    window.revokeCookies = function () {
+      localStorage.removeItem(CONSENT_KEY);
+      window['ga-disable-' + GA_ID] = true;   // blocca subito GA
+      showBanner();                           // ri-mostra il banner
+    };
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const consent = localStorage.getItem(CONSENT_KEY);
+
+      if (consent === 'yes') {
+        loadGoogleAnalytics();
+      } else if (consent === 'no') {
+        window['ga-disable-' + GA_ID] = true;
+      } else {
+        showBanner();
+      }
+    });
+  })();
+  </script>
+
+</body>
+</html>
