@@ -35,11 +35,7 @@
     <changefreq>monthly</changefreq>
     <priority>0.60</priority>
   </url>
-  <url>
-    <loc>https://syncras.app/chi-siamo.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.60</priority>
-  </url>
+  
   <url>
     <loc>https://syncras.app/quiz.html</loc>
     <changefreq>weekly</changefreq>
@@ -196,11 +192,7 @@
     <priority>0.70</priority>
   </url>
 
-  <url>
-    <loc>https://syncras.app/quiz.html</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.70</priority>
-  </url>
+  
 
   <url>
     <loc>https://syncras.app/quanto-costa-stufetta-elettrica-1-ora.html</loc>
@@ -337,11 +329,7 @@
     <priority>0.85</priority>
   </url>
 
-  <url>
-    <loc>https://syncras.app/casa-energia-elettrodomestici-.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.70</priority>
-  </url>
+  
 
 
 
