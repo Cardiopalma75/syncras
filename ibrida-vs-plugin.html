@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="it">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ibrida o Plug-in? Differenza spiegata facile e comica | Syncras.App</title>
-  <meta name="description" content="Qual è la differenza tra auto ibrida e plug-in? Spiegazione chiara, facile e ironica firmata Syncras. Capisci quale conviene davvero in base ai tuoi km.">
+  <title>Ibrida o Plug-in? Differenza spiegata facile (versione comica) | Syncras.App</title>
+  <meta name="description" content="Non ti è chiara la differenza tra auto ibrida e plug-in? Guida semplice, pratica e un po’ comica per capire quale ti conviene davvero in base ai tuoi km e alle tue abitudini.">
   <meta name="robots" content="index,follow">
 
   <style>
@@ -13,231 +13,534 @@
       --violet-dark: #4B3ACB;
       --bg-page: #F7F7FB;
       --text-main: #403E43;
-      --violet-soft: #A29BFE;
     }
 
     body {
-      margin: 0;
       font-family: Arial, sans-serif;
       background: var(--bg-page);
-      color: var(--text-main);
+      margin: 0;
+      padding: 0;
       line-height: 1.6;
+      color: var(--text-main);
     }
 
-    /* HEADER UNIFICATO */
+    /* HEADER VIOLA UNIFICATO */
     .site-header {
-      background: var(--violet-main);
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
       color: white;
-      padding: 12px 15px;
-      font-size: 20px;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+    #main-nav a {
+      color: white;
+      text-decoration: none;
       font-weight: 600;
+      padding-bottom: 2px;
+    }
+    #main-nav a:hover {
+      text-decoration: underline;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .menu-toggle span {
+      margin-left: 4px;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        margin: 0 auto;
+        max-width: 1180px;
+        flex-direction: column;
+        background-color: var(--violet-dark);
+        padding: 10px 16px 12px 16px;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
+      }
+      #main-nav a {
+        padding: 6px 0;
+      }
+      body.nav-open #main-nav {
+        display: flex;
+      }
+      .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+      }
     }
 
     main {
-      max-width: 850px;
-      margin: auto;
+      max-width: 900px;
+      margin: 30px auto;
       padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    h1, h2, h3 {
+      color: var(--violet-dark);
+    }
+    p {
+      margin-bottom: 15px;
+    }
+    ul {
+      margin-left: 20px;
+    }
+
+    .box {
+      background: #f6faf7;
+      border: 1px solid #d7e8dc;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .tip-box {
+      background: #F6F4FF;
+      border-left: 4px solid #6C5CE7;
+      padding: 14px;
+      margin: 25px 0;
+      border-radius: 8px;
+    }
+
+    .mini-test {
+      background: #FDFBF6;
+      border-left: 4px solid #EAB308;
+      padding: 14px;
+      margin: 25px 0;
+      border-radius: 8px;
+      font-size: 0.95rem;
     }
 
     .back-links {
-      font-size: 14px;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
     }
-
     .back-links a {
       color: var(--violet-dark);
       text-decoration: none;
       font-weight: 600;
     }
-
-    h1, h2 {
-      color: var(--violet-dark);
+    .back-links a:hover {
+      text-decoration: underline;
     }
 
-    .share-btn {
-      background: var(--violet-main);
-      color: white;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-      margin: 15px 0;
+    .small {
+      font-size: 0.9rem;
+      color: #555;
     }
 
     table {
       width: 100%;
-      background: white;
       border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 0.95rem;
+    }
+    th, td {
+      border: 1px solid #E5E7EB;
+      padding: 8px 10px;
+      text-align: left;
+    }
+    th {
+      background: #F3F4FF;
+    }
+
+    /* Box prodotto Amazon */
+    .product-box {
+      background: #f6f0ff;
+      border: 1px solid #dccff8;
+      border-radius: 10px;
+      padding: 18px 16px;
       margin: 25px 0;
+      font-size: 0.95rem;
     }
-
-    table th, table td {
-      border: 1px solid #ddd;
-      padding: 10px;
-      text-align: center;
-    }
-
-    table th {
-      background: var(--violet-soft);
-      font-weight: 700;
-    }
-
-    /* BOX IMPORTANTI */
-    .box-info {
-      background: white;
-      padding: 15px;
-      margin-top: 25px;
-      border-left: 5px solid var(--violet-dark);
+    .product-box a {
+      display: inline-block;
+      margin-top: 8px;
+      color: #ffffff;
+      background: var(--violet-main);
+      padding: 8px 14px;
       border-radius: 6px;
-    }
-
-    /* FOOTER */
-    .footer {
-      background: #eee;
-      padding: 25px;
-      margin-top: 40px;
-      text-align: center;
-      font-size: 13px;
-    }
-
-    .footer a {
-      color: var(--violet-dark);
       text-decoration: none;
       font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .product-box a:hover {
+      background: var(--violet-dark);
     }
 
-    /* GDPR (identico al blog) */
-    #cookie-banner {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: #ffffff;
-      border-top: 2px solid var(--violet-main);
-      padding: 15px;
-      font-size: 14px;
-      display: none;
-      z-index: 9999;
-    }
-
-    #cookie-banner button {
-      background: var(--violet-main);
-      border: none;
-      color: white;
-      padding: 6px 10px;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-left: 10px;
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      background: #eee;
+      font-size: 0.9rem;
     }
   </style>
 </head>
 
 <body>
 
-<header class="site-header">
-  Syncras.App – SmartShop
-</header>
+  <!-- HEADER UNIFICATO -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
 
-<main>
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
 
-  <div class="back-links">
-    ← <a href="index.html">Home</a> |
-    <a href="blog.html">Blog</a> |
-    <a href="categorie.html">Categorie</a>
-  </div>
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="quiz.html">Test Anti-Acquisto</a>
+        <a href="calcolatori.html">Calcolatori</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="offerte.html">Prodotti Consapevoli</a>
+        <a href="chi.html">Chi siamo</a>
+      </nav>
+    </div>
+  </header>
 
-  <h1>Ibrida o Plug-in? Differenza spiegata in modo facile e comico</h1>
+  <main>
+    <div class="back-links">
+      ← <a href="index.html">Torna alla Home</a> |
+      <a href="blog.html">Vai al Blog</a> |
+      <a href="categorie.html">Categorie</a>
+    </div>
 
-  <button id="shareBtnTop" class="share-btn">
-    📎 Condividi questa pagina
-  </button>
+    <h1>Ibrida o Plug-in? Differenza spiegata (versione con la zia che confonde la presa col caricabatterie del telefono)</h1>
 
-  <p>
-    Se ti confondi tra <strong>ibrida classica</strong> e <strong>plug-in</strong>,
-    non sei solo: la maggior parte delle persone capisce la differenza solo quando gliela spieghi
-    con ironia. Preparati: sarà la versione più facile dell’universo.
-  </p>
+    <button id="shareBtnTop"
+      style="background: var(--violet-main); color:white; padding:10px 15px; border:none;
+             border-radius:6px; cursor:pointer; margin-bottom:20px; font-weight:600;">
+      📎 Condividi questo articolo
+    </button>
 
-  <h2>🚗 Ibrida classica</h2>
-  <p>
-    È un’auto con un motore a benzina e un piccolo motore elettrico.
-    Nessuna presa, nessuna ansia: <strong>si ricarica da sola</strong>
-    usando il freno e il motore termico.  
-    L’autonomia elettrica? 2–5 km reali: sufficiente per entrare in garage senza fare rumore
-    e sembrare elegante.
-  </p>
+    <p>
+      Quando senti parlare di <strong>auto ibride</strong> e <strong>plug-in</strong>, spesso finisce così:
+      annuisci, fai finta di aver capito, poi torni a casa e chiedi a internet.  
+      Questo articolo è la versione “spiegata alla zia”, con esempi pratici
+      e un po’ di ironia in stile Syncras.
+    </p>
 
-  <h2>🔌 Plug-in (PHEV)</h2>
-  <p>
-    È come una ibrida “con spina”: la ricarichi a casa o alla colonnina,
-    e puoi fare <strong>20–80 km solo in elettrico</strong> tutti i giorni.
-  </p>
+    <p>
+      L’obiettivo è semplice: capire, senza formule e senza brochure da concessionario,
+      <strong>che differenza c’è tra ibrida e plug-in</strong>, quanto puoi davvero usare l’elettrico
+      e in quali casi una delle due ha più senso dell’altra.
+    </p>
 
-  <p>
-    Se fai tragitti brevi quotidiani, è come avere una bicicletta con super-poteri
-    ma senza pedalare: consumi quasi zero.
-  </p>
+    <div class="tip-box" style="background:#FFFBEA; border-left-color:#FBBF24;">
+      <strong>Riassunto veloce (senza meccanica avanzata):</strong>
+      <ul>
+        <li><strong>Ibrida classica</strong> → non si attacca alla presa, fa tutto da sola.</li>
+        <li><strong>Plug-in (PHEV)</strong> → ha la presa, la ricarichi a casa o alla colonnina.</li>
+        <li>Se puoi ricaricare spesso e fai pochi km al giorno, la plug-in può farti risparmiare davvero.</li>
+        <li>Se non vuoi pensieri e fai tanta strada, l’ibrida classica è più semplice da gestire.</li>
+      </ul>
+      <p style="margin-top:8px; font-size:0.9rem;">
+        Tutto il resto (termini inglesi, sigle e grafici complicati) sono solo dettagli.
+        Qui restiamo sulla vita reale.
+      </p>
+    </div>
 
-  <h2>⚡ Differenza riassunta</h2>
+    <h2>1. L’ibrida classica: la macchina che “si arrangia da sola”</h2>
 
-  <table>
-    <tr>
-      <th>Tipo</th>
-      <th>Ricarica</th>
-      <th>Km elettrico</th>
-      <th>Personalità</th>
-    </tr>
-    <tr>
-      <td>Ibrida</td>
-      <td>❌ No presa</td>
-      <td>2–5 km</td>
-      <td>“Non mi scoccio, fai tutto tu”</td>
-    </tr>
-    <tr>
-      <td>Plug-in</td>
-      <td>✅ Sì presa</td>
-      <td>20–80 km</td>
-      <td>“Sono eco, se mi ricordi di attaccarmi”</td>
-    </tr>
-  </table>
+    <p>
+      Una <strong>ibrida classica</strong> ha:
+    </p>
 
-  <h2>🤣 Nella vita reale</h2>
+    <ul>
+      <li>un <strong>motore a benzina</strong> (o diesel in pochi casi),</li>
+      <li>uno o più <strong>motori elettrici di supporto</strong>,</li>
+      <li>una batteria <strong>che NON puoi ricaricare alla presa</strong>.</li>
+    </ul>
 
-  <p>
-    Con l’ibrida nessuno chiede niente: freni → si ricarica da sola → consumi bassi.
-  </p>
+    <p>
+      Come si ricarica allora?
+    </p>
 
-  <p>
-    Con la plug-in, ogni sera:
-    <br>
-    “Amore, hai attaccato l’auto?”  
-    “No, pensavo tu!”  
-    Risultato? Domani consumi come un trattore.
-  </p>
+    <ul>
+      <li>quando freni (recupero di energia in frenata),</li>
+      <li>quando il motore termico ha un po’ di “forza in più” e ne approfitta per caricare la batteria.</li>
+    </ul>
 
-  <div class="box-info">
-    <strong>Consiglio pratico:</strong><br>
-    Scegli <strong>plug-in</strong> se puoi ricaricare a casa e fai meno di 50 km al giorno.<br>
-    Scegli <strong>ibrida</strong> se non vuoi pensieri, fai autostrada e non hai prese.
-  </div>
+    <p>
+      L’autonomia in elettrico puro è bassa (pochi km), ma il vantaggio è che:
+      <strong>consumi meno benzina soprattutto in città</strong> senza cambiare abitudini.
+    </p>
 
-  <!-- 🔗 COLLEGAMENTI INTERNI (SEO + UX) -->
-  <h2>🔗 Ti possono servire anche:</h2>
-  <ul>
-    <li><a href="calcolatore-consumi-elettrodomestici.html">Calcolatore Consumi Elettrodomestici</a></li>
-    <li><a href="quanto-conviene-il-fotovoltaico.html">Quanto conviene il fotovoltaico?</a></li>
-    <li><a href="temperatura-piu-economica-in-casa.html">Temperatura più economica in casa</a></li>
-  </ul>
+    <div class="mini-test">
+      <strong>Mini test mentale (versione sincera):</strong><br>
+      Se già ora ti dimentichi di attaccare il telefono al caricabatterie,
+      quante possibilità hai di ricordarti l’auto ogni sera?<br>
+      Se la risposta è “poche”, mentalmente sei più da <strong>ibrida classica</strong>.
+    </div>
 
-  <div class="note-legale">
-    Tutti i link presenti in questa pagina possono essere link di affiliazione Amazon.
-    Non comportano costi aggiuntivi per te, ma aiutano Syncras a crescere.
-  </div>
+    <h2>2. La plug-in: l’ibrida con la spina (davvero)</h2>
 
-</main>
+    <p>
+      Una <strong>plug-in</strong> è sempre un’ibrida, ma con alcune differenze importanti:
+    </p>
 
- <script>
+    <ul>
+      <li>il motore elettrico è più potente,</li>
+      <li>la batteria è molto più grande,</li>
+      <li>hai una <strong>presa di ricarica esterna</strong>, come un’auto elettrica pura.</li>
+    </ul>
+
+    <p>
+      Cosa significa nella pratica?
+    </p>
+
+    <ul>
+      <li>Puoi fare <strong>20–80 km solo in elettrico</strong> (dipende dal modello).</li>
+      <li>Casa–lavoro–spesa, spesso, li fai quasi senza usare benzina.</li>
+      <li>Quando la batteria è scarica, l’auto si comporta come una ibrida normale.</li>
+    </ul>
+
+    <p>
+      Usata bene (ricariche regolari e tragitti brevi), può far scendere parecchio
+      la colonnina dei rifornimenti… quella del distributore, non quella della corrente.
+    </p>
+
+    <h2>3. Tabella “da frigo” per ricordare la differenza</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Tipo di auto</th>
+          <th>Come si ricarica</th>
+          <th>Km in elettrico</th>
+          <th>Profilo ideale</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Ibrida classica</td>
+          <td>Da sola (frenate + motore)</td>
+          <td>Pochi km</td>
+          <td>Chi non vuole pensieri e fa tanta città</td>
+        </tr>
+        <tr>
+          <td>Plug-in (PHEV)</td>
+          <td>Alla presa + in marcia</td>
+          <td>20–80 km</td>
+          <td>Chi può ricaricare a casa e fa tragitti brevi</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="small">
+      I valori di autonomia sono indicativi. Nella realtà dipendono da stile di guida, velocità, temperatura esterna,
+      clima acceso, carico dell’auto e modello specifico.  
+      Prima di un acquisto serio controlla sempre i dati ufficiali del costruttore e prove indipendenti.
+    </p>
+
+    <h2>4. Vita reale: discussioni di famiglia</h2>
+
+    <p>
+      Con l’<strong>ibrida classica</strong> nessuno ti chiede niente:
+      tu guidi, lei decide quando usare il motore elettrico e quando quello termico.
+      In città i consumi scendono senza che tu ti accorga di nulla.
+    </p>
+
+    <p>
+      Con la <strong>plug-in</strong>, invece, entra in scena una nuova domanda serale:
+    </p>
+
+    <p>
+      <em>“Amore, hai attaccato l’auto alla presa?”</em><br>
+      <em>“No, pensavo tu…”</em>
+    </p>
+
+    <p>
+      Il giorno dopo vai a benzina quasi come con un’auto normale e ti chiedi
+      perché hai pagato di più per una plug-in che nessuno ricarica.
+    </p>
+
+    <div class="mini-test">
+      <strong>Mini test pratico:</strong><br>
+      Negli ultimi 7 giorni, quante volte hai:
+      <ul>
+        <li>dimenticato di caricare il telefono,</li>
+        <li>dimenticato di spegnere le luci,</li>
+        <li>dimenticato qualcosa sul fuoco?</li>
+      </ul>
+      Se il punteggio è alto, valuta con sincerità quanto davvero useresti la presa della plug-in.
+    </div>
+
+    <h2>5. Come scegliere: qualche criterio concreto</h2>
+
+    <p>
+      Ecco qualche linea guida semplice per non farti ipnotizzare solo dalle pubblicità.
+    </p>
+
+    <h3>✅ Meglio una ibrida classica se:</h3>
+
+    <ul>
+      <li>non hai un <strong>posto auto con presa</strong> (box, cortile, posto fisso),</li>
+      <li>fai molti <strong>km in extraurbano o autostrada</strong>,</li>
+      <li>vuoi ridurre un po’ i consumi senza cambiare abitudini,</li>
+      <li>non hai voglia di pensare a cavi, tempi di ricarica e colonnine.</li>
+    </ul>
+
+    <h3>✅ Meglio una plug-in (PHEV) se:</h3>
+
+    <ul>
+      <li>hai un <strong>posto auto dedicato</strong> e puoi ricaricare comodamente,</li>
+      <li>fai molti <strong>tragitti brevi</strong> (entro 30–40 km al giorno),</li>
+      <li>sei disposto a <strong>ricaricare spesso</strong> per sfruttare davvero l’elettrico,</li>
+      <li>magari hai già un <strong>impianto fotovoltaico</strong> e vuoi usare la tua energia per muoverti.</li>
+    </ul>
+
+    <p>
+      In tutti gli altri casi, la scelta non è mai solo “elettrico vs benzina”, ma
+      <strong>abitudini di vita vs realtà dei fatti</strong>.
+    </p>
+
+    <h2>6. E i costi? Qui entra in gioco anche la bolletta</h2>
+
+    <p>
+      Un pieno di benzina lo conosci già.  
+      Un “pieno” elettrico, invece, dipende da:
+    </p>
+
+    <ul>
+      <li>quanti <strong>kWh</strong> ha la batteria della plug-in,</li>
+      <li>quanto paghi il <strong>kWh</strong> nel tuo contratto luce,</li>
+      <li>quanta parte dei tuoi consumi copri magari con il <strong>fotovoltaico sul tetto</strong>.</li>
+    </ul>
+
+    <p>
+      Se vuoi farti un’idea di massima su consumi e costi dell’energia elettrica in casa,
+      puoi usare il:
+    </p>
+
+    <p style="text-align:center; margin:25px 0;">
+      <a href="calcolatore-consumi-elettrodomestici.html"
+         style="display:inline-block; padding:12px 18px; border-radius:8px;
+                background:var(--violet-main); color:white; text-decoration:none; font-weight:600;">
+        🔢 Vai al Calcolatore Consumi Elettrodomestici
+      </a>
+    </p>
+
+    <p class="small">
+      Questo articolo ha solo scopo informativo e semplificato.
+      Non è una consulenza finanziaria, tecnica o fiscale.  
+      Per decisioni importanti su acquisto auto, impianti di ricarica o incentivi, rivolgiti sempre
+      a un professionista, al concessionario e ai siti ufficiali dello Stato.
+    </p>
+
+    <h2>7. Conclusione: cosa dire alla famosa zia</h2>
+
+    <p>
+      Se dovessi riassumere tutto in una frase da usare a tavola, sarebbe più o meno questa:
+    </p>
+
+    <p style="background:#f0eefc; padding:10px; border-radius:6px;">
+      <strong>
+        “L’ibrida è quella che fa tutto da sola e ti fa consumare meno senza che tu faccia nulla.
+        La plug-in è quella con la presa: se la ricarichi spesso e fai pochi km al giorno,
+        usi quasi solo elettrico e risparmi di più.”
+      </strong>
+    </p>
+
+    <p>
+      Poi, se qualcuno ti chiede: <em>“Ma conviene di più l’ibrida, la plug-in o il fotovoltaico sul tetto?”</em>,
+      puoi sempre rispondere: <strong>“Dipende dalla tua vita reale… e su Syncras trovi qualche conto in più.”</strong>
+    </p>
+
+    <p class="small">
+      <strong>Tag:</strong> differenza ibrida plug-in, auto ibrida, auto plug-in, PHEV, consumi auto ibride,
+      risparmio carburante, guida semplice auto ibride, auto elettrificate
+    </p>
+
+    <!-- RICHIAMO AD ALTRI ARTICOLI CORRELATI -->
+    <section style="margin-top:30px; padding:16px; border-radius:10px; background:#F7F7FB; border:1px solid #E5E7EB;">
+      <h2 style="margin-top:0;">Ti possono interessare anche:</h2>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-top:10px;">
+        <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
+          <h3 style="margin-top:0; font-size:1rem;">
+            <a href="quanto-conviene-il-fotovoltaico.html" style="text-decoration:none; color:var(--violet-dark);">
+              Quanto conviene davvero il fotovoltaico?
+            </a>
+          </h3>
+          <p style="font-size:0.9rem; margin:0;">
+            Conti semplici per capire se ti conviene più mettere i pannelli sul tetto o continuare a litigare con la bolletta.
+          </p>
+        </article>
+
+        <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
+          <h3 style="margin-top:0; font-size:1rem;">
+            <a href="temperatura-piu-economica-in-casa.html" style="text-decoration:none; color:var(--violet-dark);">
+              Qual è la temperatura più economica in casa?
+            </a>
+          </h3>
+          <p style="font-size:0.9rem; margin:0;">
+            Una guida pratica (e un po’ comica) per non litigare più col termostato e con la zia freddolosa.
+          </p>
+        </article>
+
+        <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
+          <h3 style="margin-top:0; font-size:1rem;">
+            <a href="calcolatore-consumi-elettrodomestici.html" style="text-decoration:none; color:var(--violet-dark);">
+              Calcolatore Consumi Elettrodomestici
+            </a>
+          </h3>
+          <p style="font-size:0.9rem; margin:0;">
+            Inserisci potenza, tempo di utilizzo e costo del kWh: scopri in pochi secondi quanto ti costa usare ogni apparecchio di casa.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <div style="text-align:center; margin:30px 0 10px;">
+      <button id="shareBtnBottom"
+        style="background: var(--violet-main); color:white; padding:10px 18px; border:none;
+               border-radius:6px; cursor:pointer; font-weight:600; font-size:1rem;">
+        📎 Condividi questo articolo
+      </button>
+    </div>
+  </main>
+
+  <script>
     // Toggle menu mobile
     function toggleMenu() {
       document.body.classList.toggle('nav-open');
@@ -253,8 +556,8 @@
         if (navigator.share) {
           btn.addEventListener('click', () => {
             navigator.share({
-              title: 'Quanti kWh consuma un forno elettrico?',
-              text: 'Guida semplice (e un po’ ironica) per capire quanto consuma davvero il forno elettrico e quanto ti costa accenderlo.',
+              title: 'Ibrida o Plug-in? Differenza spiegata facile (versione comica)',
+              text: 'Guida semplice (e un po’ ironica) per capire la differenza tra auto ibride e plug-in e quale può convenire davvero in base ai tuoi km.',
               url: window.location.href
             });
           });
@@ -436,3 +739,4 @@
 
 </body>
 </html>
+
