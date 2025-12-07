@@ -7,8 +7,6 @@
   <meta name="description" content="Articoli e guide di Syncras.App per scegliere meglio: tecnologia, casa, energia, elettrodomestici e molto altro, spiegati in modo semplice e ironico.">
   <meta name="robots" content="index,follow">
 
-  
-  
   <style>
     :root {
       --violet-main: #6C5CE7;
@@ -159,6 +157,47 @@
       font-size:0.9rem;
       margin-top:40px;
     }
+
+    /* 🔁 News Ticker stile TG */
+    #news-ticker {
+      background: var(--violet-dark);
+      color: #ffffff;
+      padding: 6px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .news-ticker-track {
+      display: inline-block;
+      padding-left: 100%;
+      animation: ticker-scroll 40s linear infinite; /* più lento, leggibile */
+    }
+
+    .news-ticker-item {
+      color: #ffffff;
+      text-decoration: none;
+      margin-right: 28px;
+      font-size: 0.9rem;
+    }
+
+    .news-ticker-item:hover {
+      text-decoration: underline;
+    }
+
+    .news-ticker-separator {
+      margin: 0 10px;
+      opacity: 0.65;
+    }
+
+    @keyframes ticker-scroll {
+      0% { transform: translateX(0%); }
+      100% { transform: translateX(-100%); }
+    }
+
+    /* Pausa al passaggio del mouse (opzionale ma carina) */
+    #news-ticker:hover .news-ticker-track {
+      animation-play-state: paused;
+    }
   </style>
 </head>
 
@@ -173,24 +212,25 @@
 
       <nav id="main-nav">
         <a href="index.html">Home</a>
-<a href="blog.html">Blog</a>
-<a href="quiz.html">Test Anti-Acquisto</a>
-<a href="calcolatori.html">Calcolatori</a>
-<a href="curiosita.html">Curiosità</a>
-<a href="misteri.html">Misteri</a>
-<a href="offerte.html">Prodotti Consapevoli</a>
-<a href="chi.html">Chi siamo</a>
-
+        <a href="blog.html">Blog</a>
+        <a href="quiz.html">Test Anti-Acquisto</a>
+        <a href="calcolatori.html">Calcolatori</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="offerte.html">Prodotti Consapevoli</a>
+        <a href="chi.html">Chi siamo</a>
       </nav>
     </div>
   </header>
 
+  <!-- 🔁 Nastro notizie dal blog -->
+  <div id="news-ticker">
+    <div class="news-ticker-track" id="news-ticker-track"></div>
+  </div>
+
   <main>
     <section class="intro">
-
-
-      
-     <h1>Articoli e guide SmartShop</h1>
+      <h1>Articoli e guide SmartShop</h1>
 
       <p>
         Qui trovi gli articoli in cui metto in pratica il <strong>Metodo SmartShop</strong>:
@@ -662,15 +702,65 @@
       document.body.classList.toggle('nav-open');
     }
   </script>
-<h2>Articoli consigliati</h2>
-<ul>
-  <li><a href="smart-tv-sotto-700.html">Smart TV sotto 700€</a></li>
-  <li><a href="smartphone-sotto-200.html">Smartphone sotto 200€</a></li>
-  <li><a href="cuffie-sotto-50.html">Cuffie wireless sotto 50€</a></li>
-  <li><a href="robot-cucina-sotto-150.html">Robot da cucina sotto 150€</a></li>
-  <li><a href="stanza-fredda.html">Come ho scaldato la stanza più fredda</a></li>
-  <li><a href="fotovoltaico-4kw-batteria-10kwh.html">Fotovoltaico 4kW + batteria 10kWh</a></li>
-</ul>
+
+  <!-- 🔁 Script ticker: titoli letti da questo stesso blog -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const track = document.getElementById('news-ticker-track');
+      if (!track) return;
+
+      fetch('blog.html')
+        .then(response => response.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, 'text/html');
+
+          const cards = Array.from(doc.querySelectorAll('.post-list .post-card'));
+          if (!cards.length) return;
+
+          const posts = cards.map(card => {
+            const link = card.querySelector('a');
+            const h3 = card.querySelector('h3');
+            return {
+              url: link ? link.getAttribute('href') : '#',
+              title: h3 ? h3.textContent.trim() : ''
+            };
+          }).filter(p => p.url && p.title);
+
+          if (!posts.length) return;
+
+          // Miscolo un po’ i titoli
+          posts.sort(() => Math.random() - 0.5);
+
+          // Prendo ad esempio i primi 12
+          const toShow = posts.slice(0, 12);
+
+          const tickerHTML = toShow
+            .map(p => `<a href="${p.url}" class="news-ticker-item">${p.title}</a>`)
+            .join('<span class="news-ticker-separator">•</span>');
+
+          // Duplica per effetto nastro continuo
+          track.innerHTML =
+            tickerHTML +
+            '<span class="news-ticker-separator">•</span>' +
+            tickerHTML;
+        })
+        .catch(err => {
+          console.error('Errore nel ticker del blog:', err);
+          // Nessun fallback testuale, così non appare nessuna frase fissa
+        });
+    });
+  </script>
+
+  <h2>Articoli consigliati</h2>
+  <ul>
+    <li><a href="smart-tv-sotto-700.html">Smart TV sotto 700€</a></li>
+    <li><a href="smartphone-sotto-200.html">Smartphone sotto 200€</a></li>
+    <li><a href="cuffie-sotto-50.html">Cuffie wireless sotto 50€</a></li>
+    <li><a href="robot-cucina-sotto-150.html">Robot da cucina sotto 150</a></li>
+    <li><a href="stanza-fredda.html">Come ho scaldato la stanza più fredda</a></li>
+    <li><a href="fotovoltaico-4kw-batteria-10kwh.html">Fotovoltaico 4kW + batteria 10kWh</a></li>
+  </ul>
 
   <footer>
     © 2025 Syncras.App — Tutti i diritti riservati<br>
@@ -688,7 +778,8 @@
       è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
     </p>
   </footer>
-<!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
+
+  <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
   <div id="cookie-banner">
     <p>
       Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
@@ -766,78 +857,78 @@
     }
   </style>
 
-<script>
-  (function () {
-    const GA_ID = 'G-CFTTCYDZ2P';
-    const CONSENT_KEY = 'syncras_cookie_consent'; // chiave unica per tutto il sito
+  <script>
+    (function () {
+      const GA_ID = 'G-CFTTCYDZ2P';
+      const CONSENT_KEY = 'syncras_cookie_consent'; // chiave unica per tutto il sito
 
-    // 1️⃣ BLOCCO PREVENTIVO: GA disabilitato finché non c'è consenso
-    window['ga-disable-' + GA_ID] = true;
-
-    function loadGoogleAnalytics() {
-      if (window.__syncrasGaLoaded) return;
-      window.__syncrasGaLoaded = true;
-
-      // Riabilita GA solo dopo il consenso
-      window['ga-disable-' + GA_ID] = false;
-
-      const gaScript = document.createElement('script');
-      gaScript.async = true;
-      gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
-      document.head.appendChild(gaScript);
-
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){ dataLayer.push(arguments); }
-      window.gtag = gtag;
-      gtag('js', new Date());
-      gtag('config', GA_ID, { anonymize_ip: true });
-    }
-
-    function showBanner() {
-      const banner = document.getElementById('cookie-banner');
-      if (banner) banner.style.display = 'block';
-    }
-
-    function hideBanner() {
-      const banner = document.getElementById('cookie-banner');
-      if (banner) banner.style.display = 'none';
-    }
-
-    window.acceptCookies = function () {
-      localStorage.setItem(CONSENT_KEY, 'yes');
-      hideBanner();
-      loadGoogleAnalytics();
-    };
-
-    window.rejectCookies = function () {
-      localStorage.setItem(CONSENT_KEY, 'no');
-      hideBanner();
-      // GA resta bloccato
+      // 1️⃣ BLOCCO PREVENTIVO: GA disabilitato finché non c'è consenso
       window['ga-disable-' + GA_ID] = true;
-    };
 
-    // 2️⃣ FUNZIONE DI REVOCA – per cambiare idea dopo
-    window.revokeCookies = function () {
-      localStorage.removeItem(CONSENT_KEY);
-      window['ga-disable-' + GA_ID] = true;   // blocca subito GA
-      showBanner();                           // ri-mostra il banner
-    };
+      function loadGoogleAnalytics() {
+        if (window.__syncrasGaLoaded) return;
+        window.__syncrasGaLoaded = true;
 
-    document.addEventListener('DOMContentLoaded', function () {
-      const consent = localStorage.getItem(CONSENT_KEY);
+        // Riabilita GA solo dopo il consenso
+        window['ga-disable-' + GA_ID] = false;
 
-      if (consent === 'yes') {
-        loadGoogleAnalytics();
-      } else if (consent === 'no') {
-        window['ga-disable-' + GA_ID] = true;
-      } else {
-        showBanner();
+        const gaScript = document.createElement('script');
+        gaScript.async = true;
+        gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+        document.head.appendChild(gaScript);
+
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){ dataLayer.push(arguments); }
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', GA_ID, { anonymize_ip: true });
       }
-    });
-  })();
-</script>
 
+      function showBanner() {
+        const banner = document.getElementById('cookie-banner');
+        if (banner) banner.style.display = 'block';
+      }
+
+      function hideBanner() {
+        const banner = document.getElementById('cookie-banner');
+        if (banner) banner.style.display = 'none';
+      }
+
+      window.acceptCookies = function () {
+        localStorage.setItem(CONSENT_KEY, 'yes');
+        hideBanner();
+        loadGoogleAnalytics();
+      };
+
+      window.rejectCookies = function () {
+        localStorage.setItem(CONSENT_KEY, 'no');
+        hideBanner();
+        // GA resta bloccato
+        window['ga-disable-' + GA_ID] = true;
+      };
+
+      // 2️⃣ FUNZIONE DI REVOCA – per cambiare idea dopo
+      window.revokeCookies = function () {
+        localStorage.removeItem(CONSENT_KEY);
+        window['ga-disable-' + GA_ID] = true;   // blocca subito GA
+        showBanner();                           // ri-mostra il banner
+      };
+
+      document.addEventListener('DOMContentLoaded', function () {
+        const consent = localStorage.getItem(CONSENT_KEY);
+
+        if (consent === 'yes') {
+          loadGoogleAnalytics();
+        } else if (consent === 'no') {
+          window['ga-disable-' + GA_ID] = true;
+        } else {
+          showBanner();
+        }
+      });
+    })();
+  </script>
 
 </body>
 </html>
+
 
