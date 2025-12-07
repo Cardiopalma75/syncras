@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -129,6 +130,82 @@
       max-width: 1100px;
       margin: 24px auto 40px;
       padding: 0 16px 0;
+    }
+
+    /* 🔹 NASTRO SCORREVOLE STILE TG SYNCRAS */
+    .news-ticker {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 16px;
+      background: var(--violet-dark);
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.95rem;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .news-ticker-label {
+      flex-shrink: 0;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .news-ticker-viewport {
+      overflow: hidden;
+      position: relative;
+      flex: 1;
+    }
+
+    .news-ticker-track {
+      display: inline-block;
+      white-space: nowrap;
+      /* velocità regolabile: aumenta/diminuisci i secondi */
+      animation: ticker-scroll 25s linear infinite;
+    }
+
+    .news-ticker-item {
+      display: inline-block;
+      color: #fff;
+      text-decoration: none;
+      padding: 0 6px;
+    }
+
+    .news-ticker-item:hover {
+      text-decoration: underline;
+    }
+
+    .news-ticker-separator {
+      opacity: 0.6;
+      padding: 0 4px;
+    }
+
+    /* Pausa animazione al passaggio del mouse (desktop) */
+    .news-ticker:hover .news-ticker-track {
+      animation-play-state: paused;
+    }
+
+    /* Animazione scorrimento da destra verso sinistra */
+    @keyframes ticker-scroll {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    /* 🔹 Adattamento mobile */
+    @media (max-width: 600px) {
+      .news-ticker {
+        font-size: 0.85rem;
+        padding: 6px 10px;
+      }
+
+      .news-ticker-label {
+        display: none; /* se vuoi tenerla anche su mobile, commenta questa riga */
+      }
     }
 
     /* HERO */
@@ -555,6 +632,15 @@
     </div>
   </header>
 
+  <!-- 🔹 NASTRO SCORREVOLE AUTOGENERATO DAL BLOG -->
+  <div class="news-ticker">
+    <div class="news-ticker-label">📰 Dal blog Syncras:</div>
+    <div class="news-ticker-viewport">
+      <!-- Verrà riempito in automatico via JS -->
+      <div class="news-ticker-track"></div>
+    </div>
+  </div>
+
   <main>
     <!-- HERO -->
     <section class="hero">
@@ -877,6 +963,78 @@
     });
   </script>
 
+   <!-- 🔹 NASTRO SCORREVOLE: TITOLI DAL BLOG, CON FALLBACK PER USO LOCALE -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const track = document.querySelector('.news-ticker-track');
+      if (!track) return;
+
+      function buildFallback() {
+        // Link base sempre validi, così vedi qualcosa anche in locale
+        let base = `
+          <a href="blog.html" class="news-ticker-item">Tutte le guide SmartShop sul blog Syncras</a>
+          <span class="news-ticker-separator">•</span>
+          <a href="quiz.html" class="news-ticker-item">Fai il Test Anti-Acquisto</a>
+          <span class="news-ticker-separator">•</span>
+          <a href="calcolatori.html" class="news-ticker-item">Apri i calcolatori</a>
+        `;
+        // Duplichiamo per effetto nastro infinito
+        track.innerHTML = base + '<span class="news-ticker-separator">•</span>' + base;
+      }
+
+      fetch('blog.html')
+        .then(response => response.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, 'text/html');
+
+          const cards = Array.from(doc.querySelectorAll('.post-list .post-card'));
+
+          if (!cards.length) {
+            // Nessun post trovato → usiamo il fallback
+            buildFallback();
+            return;
+          }
+
+          const posts = cards.map(card => {
+            const linkEl = card.querySelector('a');
+            const titleEl = card.querySelector('h3');
+            return {
+              url: linkEl ? linkEl.getAttribute('href') : '#',
+              title: titleEl ? titleEl.textContent.trim() : ''
+            };
+          }).filter(p => p.url && p.title);
+
+          if (!posts.length) {
+            buildFallback();
+            return;
+          }
+
+          // Mescola in modo random
+          posts.sort(() => Math.random() - 0.5);
+
+          // Prende ad es. 8 titoli (puoi cambiare il numero)
+          const toShow = posts.slice(0, 8);
+
+          const tickerHTML = toShow
+            .map(p => `<a href="${p.url}" class="news-ticker-item">${p.title}</a>`)
+            .join('<span class="news-ticker-separator">•</span>');
+
+          // Duplica per effetto nastro infinito
+          track.innerHTML =
+            tickerHTML +
+            '<span class="news-ticker-separator">•</span>' +
+            tickerHTML;
+        })
+        .catch(err => {
+          console.error('Errore nel caricamento dei titoli per il nastro dal blog:', err);
+          // Se fetch fallisce (tipico in locale), usiamo il fallback
+          buildFallback();
+        });
+    });
+  </script>
+
+
   <!-- Banner Cookie + Google Analytics solo dopo consenso -->
   <div id="cookie-banner">
     <p>
@@ -1016,5 +1174,4 @@
 
 </body>
 </html>
-
 
