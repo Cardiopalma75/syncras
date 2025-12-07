@@ -8,14 +8,7 @@
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://syncras.app/">
 
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-59D9XRYKF3"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-59D9XRYKF3');
-  </script>
+  <!-- Google Analytics gestito tramite banner cookie in fondo alla pagina -->
 
   <style>
     :root {
@@ -136,6 +129,82 @@
       max-width: 1100px;
       margin: 24px auto 40px;
       padding: 0 16px 0;
+    }
+
+    /* 🔹 NASTRO SCORREVOLE STILE TG SYNCRAS */
+    .news-ticker {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 16px;
+      background: var(--violet-dark);
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.95rem;
+      overflow: hidden;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .news-ticker-label {
+      flex-shrink: 0;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .news-ticker-viewport {
+      overflow: hidden;
+      position: relative;
+      flex: 1;
+    }
+
+    .news-ticker-track {
+      display: inline-block;
+      white-space: nowrap;
+      /* velocità regolabile: aumenta/diminuisci i secondi */
+      animation: ticker-scroll 40s linear infinite;
+    }
+
+    .news-ticker-item {
+      display: inline-block;
+      color: #fff;
+      text-decoration: none;
+      padding: 0 6px;
+    }
+
+    .news-ticker-item:hover {
+      text-decoration: underline;
+    }
+
+    .news-ticker-separator {
+      opacity: 0.6;
+      padding: 0 4px;
+    }
+
+    /* Pausa animazione al passaggio del mouse (desktop) */
+    .news-ticker:hover .news-ticker-track {
+      animation-play-state: paused;
+    }
+
+    /* Animazione scorrimento da destra verso sinistra */
+    @keyframes ticker-scroll {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    /* 🔹 Adattamento mobile */
+    @media (max-width: 600px) {
+      .news-ticker {
+        font-size: 0.85rem;
+        padding: 6px 10px;
+      }
+
+      .news-ticker-label {
+        display: none; /* se vuoi tenerla anche su mobile, commenta questa riga */
+      }
     }
 
     /* HERO */
@@ -538,6 +607,79 @@
       margin: 4px 0;
     }
 
+    /* ⭐⭐ NUOVI BLOCCHI: METEO + PUBBLICITÀ ⭐⭐ */
+
+    .energy-meteo-box {
+      background: #FFFFFF;
+      border: 2px solid rgba(108,92,231,0.25);
+      border-radius: 14px;
+      padding: 14px 18px;
+      margin: 26px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+      font-size: 0.92rem;
+    }
+
+    .energy-meteo-box-emoji {
+      font-size: 1.4rem;
+    }
+
+    .energy-meteo-text {
+      flex: 1;
+    }
+
+    .syncras-adbox {
+      margin-bottom: 32px;
+    }
+
+    .adbox-inner {
+      background: #FFFFFF;
+      border: 2px solid rgba(108,92,231,0.30);
+      border-radius: 14px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 4px 10px rgba(15,23,42,0.08);
+    }
+
+    .adbox-logo {
+      width: 58px;
+      height: 58px;
+      object-fit: contain;
+      border-radius: 12px;
+      background: #fff;
+    }
+
+    .adbox-text h3 {
+      margin: 0;
+      font-size: 1rem;
+      color: var(--violet-dark);
+    }
+
+    .adbox-text p {
+      margin: 3px 0 0;
+      font-size: 0.85rem;
+      color: #4b5563;
+    }
+
+    .adbox-btn {
+      margin-left: auto;
+      background: var(--violet-main);
+      color: white;
+      padding: 9px 14px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .adbox-btn:hover {
+      background: var(--violet-dark);
+    }
+
   </style>
 </head>
 <body>
@@ -561,6 +703,15 @@
       </nav>
     </div>
   </header>
+
+  <!-- 🔹 NASTRO SCORREVOLE AUTOGENERATO DAL BLOG -->
+  <div class="news-ticker">
+    <div class="news-ticker-label">📰 Dal blog Syncras:</div>
+    <div class="news-ticker-viewport">
+      <!-- Verrà riempito in automatico via JS -->
+      <div class="news-ticker-track"></div>
+    </div>
+  </div>
 
   <main>
     <!-- HERO -->
@@ -595,15 +746,33 @@
           <h2>Penso ergo… come funziona Syncras?</h2>
           <ul class="hero-points">
            <li>Calcola i consumi reali della tua auto, scopri quanta energia assorbono i tuoi elettrodomestici e valuta se un impianto fotovoltaico può davvero farti risparmiare.</li>
-<li>MettI alla prova ogni acquisto con il Test Anti-Acquisto e i quiz che ti aiutano a scegliere davvero il prodotto giusto.
-</li>
-<li>Leggi guide leggere ma concrete per evitare spese inutili e scegliere con più consapevolezza.</li>
-
+           <li>Metti alla prova ogni acquisto con il Test Anti-Acquisto e i quiz che ti aiutano davvero a scegliere.</li>
+           <li>Leggi guide leggere ma concrete per evitare acquisti superflui e scegliere con più consapevolezza.</li>
           </ul>
           <p class="hero-small">
             Nessun account, nessuna email obbligatoria. Solo numeri spiegati in modo semplice.
           </p>
         </div>
+      </div>
+    </section>
+
+    <!-- ⭐ METEO ENERGETICO -->
+    <section class="energy-meteo-box">
+      <div class="energy-meteo-box-emoji">🌤️</div>
+      <div class="energy-meteo-text" id="energyMeteoLine">
+        <!-- Riempito via JS -->
+      </div>
+    </section>
+
+    <!-- ⭐ BLOCCO PUBBLICITARIO STATICO -->
+    <section class="syncras-adbox">
+      <div class="adbox-inner">
+        <img src="penso-ergo-logo.png" alt="Syncras Logo" class="adbox-logo">
+        <div class="adbox-text">
+          <h3>Vuoi promuovere un prodotto?</h3>
+          <p>Banner statico e senza distrazioni, ben visibile in questa pagina di Syncras.</p>
+        </div>
+        <a href="chi.html" class="adbox-btn">Info sponsor</a>
       </div>
     </section>
 
@@ -632,7 +801,6 @@
           <h3>Test Anti-Acquisto</h3>
           <p>
             Tre domande secche per evitare acquisti impulsivi, più una serie di quiz intelligenti che ti aiutano davvero a scegliere: il telefono giusto, la lavatrice adatta, la TV migliore per casa tua e molto altro.
-
           </p>
           <a href="quiz.html" class="card-link">
             Fai il test adesso <span class="arrow">→</span>
@@ -758,7 +926,6 @@
           <li><a href="blog.html">Tutte le guide SmartShop</a></li>
           <li><a href="offerte.html">Prodotti Consapevoli &amp; offerte Amazon</a></li>
           <li><a href="calcolatori.html">Pagina dei calcolatori</a></li>
-         
         </ul>
       </div>
 
@@ -883,6 +1050,233 @@
         });
     });
   </script>
+
+  <!-- 🔹 NASTRO SCORREVOLE: TITOLI DAL BLOG, CON FALLBACK PER USO LOCALE -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const track = document.querySelector('.news-ticker-track');
+      if (!track) return;
+
+      function buildFallback() {
+        // Link base sempre validi, così vedi qualcosa anche in locale
+        let base = `
+          <a href="blog.html" class="news-ticker-item">Tutte le guide SmartShop sul blog Syncras</a>
+          <span class="news-ticker-separator">•</span>
+          <a href="quiz.html" class="news-ticker-item">Fai il Test Anti-Acquisto</a>
+          <span class="news-ticker-separator">•</span>
+          <a href="calcolatori.html" class="news-ticker-item">Apri i calcolatori</a>
+        `;
+        // Duplichiamo per effetto nastro infinito
+        track.innerHTML = base + '<span class="news-ticker-separator">•</span>' + base;
+      }
+
+      fetch('blog.html')
+        .then(response => response.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, 'text/html');
+
+          const cards = Array.from(doc.querySelectorAll('.post-list .post-card'));
+
+          if (!cards.length) {
+            // Nessun post trovato → usiamo il fallback
+            buildFallback();
+            return;
+          }
+
+          const posts = cards.map(card => {
+            const linkEl = card.querySelector('a');
+            const titleEl = card.querySelector('h3');
+            return {
+              url: linkEl ? linkEl.getAttribute('href') : '#',
+              title: titleEl ? titleEl.textContent.trim() : ''
+            };
+          }).filter(p => p.url && p.title);
+
+          if (!posts.length) {
+            buildFallback();
+            return;
+          }
+
+          // Mescola in modo random
+          posts.sort(() => Math.random() - 0.5);
+
+          // Prende ad es. 8 titoli (puoi cambiare il numero)
+          const toShow = posts.slice(0, 8);
+
+          const tickerHTML = toShow
+            .map(p => `<a href="${p.url}" class="news-ticker-item">${p.title}</a>`)
+            .join('<span class="news-ticker-separator">•</span>');
+
+          // Duplica per effetto nastro infinito
+          track.innerHTML =
+            tickerHTML +
+            '<span class="news-ticker-separator">•</span>' +
+            tickerHTML;
+        })
+        .catch(err => {
+          console.error('Errore nel caricamento dei titoli per il nastro dal blog:', err);
+          // Se fetch fallisce (tipico in locale), usiamo il fallback
+          buildFallback();
+        });
+    });
+  </script>
+
+  <!-- ⭐ SCRIPT METEO ENERGETICO -->
+  <script>
+    const meteoLines = [
+      "Se oggi c’è sole, programma lavatrice tra le 10 e le 14: sfrutti meglio l’autoconsumo domestico.",
+      "Giornata nuvolosa? Mantieni temperatura costante se usi pompa di calore: evita ON/OFF frequenti.",
+      "Se hai fotovoltaico e batteria quasi piena, ricarica auto o fai asciugatrice: niente sprechi di energia.",
+      "Se fa freddo, evita la stufetta elettrica nelle ore di picco: è la più energivora.",
+      "Se vedi una giornata limpida, usa gli elettrodomestici energivori al mattino: meno dispersione e meno bolletta.",
+      "Se arriva pioggia e batteria è bassa, meglio caricare oggi: sfrutti l’energia mentre è disponibile."
+    ];
+
+    document.addEventListener("DOMContentLoaded", function() {
+      const el = document.getElementById("energyMeteoLine");
+      if (!el) return;
+      const random = meteoLines[Math.floor(Math.random()*meteoLines.length)];
+      el.textContent = random;
+    });
+  </script>
+
+  <!-- Banner Cookie + Google Analytics solo dopo consenso -->
+  <div id="cookie-banner">
+    <p>
+      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
+      (Google Analytics). Alcuni link sono di affiliazione Amazon.
+      Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
+      <a href="privacy.html">Privacy Policy</a>.
+    </p>
+    <div style="display:flex; gap:10px; margin-top:8px;">
+      <button type="button"
+              onclick="rejectCookies()"
+              style="flex:1; background:#E5E7EB; color:#111827; border:none;
+                     padding:10px 12px; border-radius:6px; cursor:pointer; font-weight:600;">
+        Rifiuta
+      </button>
+      <button id="cookie-btn" type="button"
+              onclick="acceptCookies()"
+              style="flex:1;">
+        Accetta e continua
+      </button>
+    </div>
+  </div>
+
+  <style>
+    #cookie-banner {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 90%;
+      width: 420px;
+      background: #ffffff;
+      border: 2px solid #6C5CE7;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      z-index: 9999;
+      font-family: Arial, sans-serif;
+      display: none;
+    }
+    #cookie-banner p {
+      margin: 0 0 12px 0;
+      font-size: 0.95rem;
+      color: #333;
+      line-height: 1.4;
+    }
+    #cookie-banner a {
+      color: #6C5CE7;
+      font-weight: bold;
+      text-decoration: none;
+    }
+    #cookie-btn {
+      background: #6C5CE7;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    #cookie-btn:hover {
+      background: #4B3ACB;
+    }
+  </style>
+
+  <script>
+  (function () {
+    const GA_ID = 'G-CFTTCYDZ2P';
+    const CONSENT_KEY = 'syncras_cookie_consent'; // chiave unica per tutto il sito
+
+    // 1️⃣ BLOCCO PREVENTIVO: GA disabilitato finché non c'è consenso
+    window['ga-disable-' + GA_ID] = true;
+
+    function loadGoogleAnalytics() {
+      if (window.__syncrasGaLoaded) return;
+      window.__syncrasGaLoaded = true;
+
+      // Riabilita GA solo dopo il consenso
+      window['ga-disable-' + GA_ID] = false;
+
+      const gaScript = document.createElement('script');
+      gaScript.async = true;
+      gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+      document.head.appendChild(gaScript);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', GA_ID, { anonymize_ip: true });
+    }
+
+    function showBanner() {
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.style.display = 'block';
+    }
+
+    function hideBanner() {
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.style.display = 'none';
+    }
+
+    window.acceptCookies = function () {
+      localStorage.setItem(CONSENT_KEY, 'yes');
+      hideBanner();
+      loadGoogleAnalytics();
+    };
+
+    window.rejectCookies = function () {
+      localStorage.setItem(CONSENT_KEY, 'no');
+      hideBanner();
+      // GA resta bloccato
+      window['ga-disable-' + GA_ID] = true;
+    };
+
+    // 2️⃣ FUNZIONE DI REVOCA – per cambiare idea dopo
+    window.revokeCookies = function () {
+      localStorage.removeItem(CONSENT_KEY);
+      window['ga-disable-' + GA_ID] = true;   // blocca subito GA
+      showBanner();                           // ri-mostra il banner
+    };
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const consent = localStorage.getItem(CONSENT_KEY);
+
+      if (consent === 'yes') {
+        loadGoogleAnalytics();
+      } else if (consent === 'no') {
+        window['ga-disable-' + GA_ID] = true;
+      } else {
+        showBanner();
+      }
+    });
+  })();
+  </script>
+
 </body>
 </html>
 
