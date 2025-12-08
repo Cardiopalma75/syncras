@@ -10,12 +10,14 @@
 
   <style>
     :root {
-      --violet-main: #6C5CE7;
-      --violet-dark: #4B3ACB;
-      --violet-soft: #A29BFE;
-      --text-main: #403E43;
-      --bg-page: #F7F7FB;
-    }
+  --violet-main: #6C5CE7;
+  --violet-dark: #4B3ACB;
+  --violet-soft: #A29BFE;
+  --text-main: #403E43;
+  --bg-page: #F7F7FB;
+}
+
+    
 
     body {
       font-family: Arial, sans-serif;
@@ -249,7 +251,7 @@
       font-size: 0.95rem;
     }
 
-    .calc-btn {
+       .calc-btn {
       margin-top: 18px;
       background: var(--violet-main);
       color: #fff;
@@ -259,10 +261,17 @@
       cursor: pointer;
       font-size: 0.95rem;
       font-weight: 600;
+      display: inline-block;
+      transition: background 0.15s ease, transform 0.05s ease;
     }
 
     .calc-btn:hover {
       background: var(--violet-dark);
+      transform: translateY(-1px);
+    }
+
+    .calc-btn:active {
+      transform: translateY(0);
     }
 
     .calc-result {
