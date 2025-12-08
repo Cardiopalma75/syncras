@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Caldaia tradizionale vs condensazione: risparmio reale (Calcolatore) | Syncras.App</title>
+  <meta name="description" content="Confronta una caldaia tradizionale con una a condensazione: inserisci i tuoi dati (consumi o superficie casa) e scopri risparmio annuo, consumi stimati e tempo di rientro.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://syncras.app/calcolatore-caldaia-condensazione.html">
+
+  <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --violet-soft: #A29BFE;
+      --text-main: #403E43;
+      --bg-page: #F7F7FB;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    /* HEADER */
+
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color: white;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+
+    #main-nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding-bottom: 2px;
+      border-bottom: 2px solid transparent;
+    }
+
+    #main-nav a:hover {
+      text-decoration: underline;
+    }
+
+    #main-nav a.active {
+      border-bottom-color: rgba(255,255,255,0.9);
+    }
+
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .menu-toggle span {
+      margin-left: 4px;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        margin: 0 auto;
+        max-width: 1180px;
+        flex-direction: column;
+        background-color: var(--violet-dark);
+        padding: 10px 16px 12px 16px;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
+      }
+
+      #main-nav a {
+        padding: 6px 0;
+      }
+
+      body.nav-open #main-nav {
+        display: flex;
+      }
+
+      .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+
+    /* MAIN */
+
+    main {
+      max-width: 1180px;
+      margin: 30px auto;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.08);
+    }
+
+    h1, h2, h3 {
+      color: var(--violet-dark);
+      margin-top: 0;
+    }
+
+    .page-intro {
+      margin-bottom: 20px;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 10px;
+    }
+
+    .badge-page {
+      display: inline-block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(108, 92, 231, 0.08);
+      border: 1px solid rgba(108, 92, 231, 0.35);
+      border-radius: 999px;
+      padding: 2px 8px;
+      color: #3730a3;
+      margin-bottom: 8px;
+    }
+
+    .intro-text {
+      font-size: 0.95rem;
+      color: #4b5563;
+    }
+
+    /* GRIGLIA CARD INFO */
+
+    .calc-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin: 18px 0 26px;
+    }
+
+    .calc-card {
+      background: #f4f5ff;
+      border-radius: 16px;
+      padding: 16px 18px 14px;
+      border: 1px solid #d4d7ff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .calc-card-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #6b7280;
+      margin-bottom: 4px;
+    }
+
+    .calc-card h3 {
+      margin: 0 0 6px;
+      font-size: 1rem;
+      color: #1f2937;
+    }
+
+    .calc-card p {
+      margin: 0 0 10px;
+      font-size: 0.9rem;
+      color: #4b5563;
+    }
+
+    @media (max-width: 768px) {
+      .calc-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* SEZIONE CALCOLATORE */
+
+    .calc-section {
+      margin: 32px 0;
+      padding: 20px;
+      border-radius: 16px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+
+    .calc-section h2 {
+      margin-top: 0;
+      margin-bottom: 6px;
+      font-size: 1.25rem;
+    }
+
+    .calc-section p {
+      font-size: 0.95rem;
+      color: #4b5563;
+    }
+
+    .calc-grid-inputs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 14px;
+    }
+
+    .calc-field {
+      flex: 1 1 220px;
+    }
+
+    .calc-field label {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .calc-field input,
+    .calc-field select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 4px;
+      border-radius: 6px;
+      border: 1px solid #d1d5db;
+      font-size: 0.95rem;
+    }
+
+    .calc-btn {
+      margin-top: 18px;
+      background: var(--violet-main);
+      color: #fff;
+      padding: 9px 16px;
+      border-radius: 7px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: background 0.15s ease, transform 0.12s ease;
+      display: inline-block;
+    }
+
+    .calc-btn:hover {
+      background: var(--violet-dark);
+      transform: translateY(-1px);
+    }
+
+    .calc-btn:active {
+      transform: translateY(0);
+    }
+
+    .calc-result {
+      margin-top: 16px;
+      padding: 18px;
+      background: #ffffff;
+      border-radius: 14px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      display: none;
+      font-size: 0.95rem;
+      border: 1px solid #e5e7eb;
+    }
+
+    .result-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      font-weight: 700;
+      color: var(--violet-dark);
+      font-size: 1rem;
+    }
+
+    .result-title span.emoji {
+      font-size: 1.2rem;
+    }
+
+    .pill-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 10px 0 6px;
+    }
+
+    .pill {
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      background: #f4f5ff;
+      border: 1px solid #d4d7ff;
+      color: #1f2937;
+    }
+
+    .pill--green {
+      background: #ECFDF5;
+      border-color: #6EE7B7;
+      color: #065F46;
+    }
+
+    .pill--red {
+      background: #FEF2F2;
+      border-color: #FCA5A5;
+      color: #991B1B;
+    }
+
+    .pill--violet {
+      background: #EEF2FF;
+      border-color: #A5B4FC;
+      color: #3730A3;
+    }
+
+    .result-subtext {
+      margin-top: 6px;
+      font-size: 0.9rem;
+      color: #4b5563;
+    }
+
+    .result-divider {
+      margin: 10px 0;
+      height: 1px;
+      background: #e5e7eb;
+    }
+
+    .small-note {
+      font-size: 0.8rem;
+      color: #6b7280;
+      margin-top: 8px;
+    }
+
+    /* 🔹 Blocco accettazione Note Legali per il calcolatore */
+    .legal-box-avviso {
+      margin-top: 18px;
+      margin-bottom: 10px;
+      padding: 12px 14px;
+      background: #ffffff;
+      border-radius: 8px;
+      border: 1px solid #e5e7eb;
+      font-size: 0.9rem;
+      color: #374151;
+    }
+
+    .legal-box-avviso a {
+      color: var(--violet-main);
+      text-decoration: underline;
+      font-weight: 600;
+    }
+
+    .legal-note-small {
+      margin: 6px 0 0;
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    a {
+      color: var(--violet-dark);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* FOOTER */
+
+    .syncras-footer {
+      margin-top: 40px;
+      padding: 2.5rem 1.5rem 1.5rem;
+      background: #2b1840;
+      color: #f3eaff;
+      font-family: Arial, sans-serif;
+      font-size: 0.9rem;
+    }
+
+    .syncras-footer a {
+      color: #f3eaff;
+      text-decoration: none;
+    }
+
+    .syncras-footer a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-inner {
+      max-width: 1180px;
+      margin: 0 auto 1.5rem auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+    }
+
+    .footer-column h4 {
+      margin-top: 0;
+      margin-bottom: 0.7rem;
+      font-size: 1rem;
+    }
+
+    .footer-column p {
+      margin: 0;
+      font-size: 0.85rem;
+    }
+
+    .footer-column ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-column li {
+      margin-bottom: 0.4rem;
+      font-size: 0.85rem;
+    }
+
+    .footer-bottom {
+      max-width: 1180px;
+      margin: 0 auto;
+      text-align: center;
+      font-size: 0.8rem;
+      opacity: 0.9;
+    }
+
+    .footer-bottom p {
+      margin: 4px 0;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
+
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
+
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="quiz.html">Test Anti-Acquisto</a>
+        <a href="calcolatori.html">Calcolatori</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="offerte.html">Prodotti Consapevoli</a>
+        <a href="chi.html">Chi siamo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="page-intro">
+      <span class="badge-page">Area strumenti</span>
+      <h1>💧 Caldaia tradizionale vs caldaia a condensazione: quanto risparmi davvero?</h1>
+      <div style="background:#FEF6D8; padding:10px 14px; border-left:4px solid #EAB308; border-radius:6px; margin:15px 0; font-size:0.9rem;">
+        ⚠️ <strong>Avviso importante:</strong> questo calcolatore fornisce <strong>stime orientative</strong> sui consumi e sul risparmio passando a una caldaia a condensazione.  
+        Non sostituisce un progetto termotecnico, una diagnosi energetica o un preventivo ufficiale. I valori reali dipendono da impianto, uso, clima e prezzi aggiornati di gas e lavori.
+      </div>
+
+      <p class="intro-text">
+        Puoi usarlo in due modi: se conosci già i <strong>metri cubi annui di gas</strong> inserisci i tuoi dati
+        nella <strong>Modalità A</strong>. Se non li conosci, usa la <strong>Modalità B</strong> con superficie,
+        zona d’Italia e isolamento per avere una stima ragionata del consumo.
+      </p>
+    </div>
+
+    <!-- Pulsante CONDIVIDI in alto -->
+    <button id="shareBtnTop"
+      style="background: var(--violet-main); color:white; padding:10px 15px; border:none;
+             border-radius:6px; cursor:pointer; margin-bottom:20px; font-weight:600;">
+      📎 Condividi questa pagina
+    </button>
+
+    <!-- CARD DI SPIEGAZIONE -->
+    <section aria-label="Informazioni sul calcolatore">
+      <h2>Come funziona il confronto tra le caldaie</h2>
+      <div class="calc-grid">
+        <article class="calc-card">
+          <div class="calc-card-label">Cosa fa</div>
+          <h3>Stima consumi, costi e tempo di rientro</h3>
+          <p>
+            Il calcolatore mette a confronto una <strong>caldaia tradizionale</strong> con una 
+            <strong>caldaia a condensazione</strong>, stimando:
+          </p>
+          <ul style="padding-left:18px; margin:0;">
+            <li>consumi annui di gas per ciascuna soluzione;</li>
+            <li>costo annuo in bolletta;</li>
+            <li><strong>risparmio annuo</strong> passando alla condensazione;</li>
+            <li><strong>anni necessari per ripagare</strong> l’investimento.</li>
+          </ul>
+        </article>
+
+        <article class="calc-card">
+          <div class="calc-card-label">Cosa NON fa</div>
+          <h3>Niente magie, solo buon senso energetico</h3>
+          <p>
+            Questa non è una perizia tecnica. Non tiene conto di tutti i dettagli dell’impianto,
+            delle dispersioni reali, degli interventi accessori (valvole, canna fumaria, isolamento, ecc.).
+            Serve per farti un’idea e <strong>arrivare al preventivo con la testa già accesa</strong>.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- BLOCCO ACCETTAZIONE NOTE LEGALI -->
+    <div class="legal-box-avviso">
+      <label>
+        <input type="checkbox" id="legalAcceptHeat">
+        Prima di procedere: i risultati di questo calcolatore sono solo <strong>stime indicative</strong>
+        basate sui dati inseriti e su valori medi di riferimento. Non costituiscono consulenza professionale
+        né promessa di risparmio garantito. L’utilizzo di questo strumento è a tuo esclusivo rischio e la
+        responsabilità delle decisioni resta solo tua. Tutte le condizioni sono spiegate nelle
+        <a href="note-legali.html" target="_blank">Note Legali</a>.
+      </label>
+      <p class="legal-note-small">
+        Prima di impegnarti in spese importanti (sostituzione caldaia, interventi sull’impianto, contratti di fornitura),
+        confronta sempre più preventivi e, se necessario, rivolgiti a un tecnico abilitato o a un consulente energetico.
+      </p>
+    </div>
+
+    <!-- CALCOLATORE MODALITÀ A -->
+    <section class="calc-section" id="calc-caldaia-A">
+      <h2>Modalità A – So già quanti metri cubi di gas consumo all’anno</h2>
+      <p>
+        Usa questa modalità se hai sotto mano le bollette o il riepilogo dei consumi:  
+        inserisci i <strong>m³ di gas annui</strong> e scopri quanto risparmieresti con una caldaia a condensazione.
+      </p>
+
+      <div class="calc-grid-inputs">
+        <div class="calc-field">
+          <label for="mcAnnuiA">Consumo annuo attuale (m³/anno)</label>
+          <input id="mcAnnuiA" type="number" min="100" max="50000" step="10" placeholder="Es. 1200">
+        </div>
+
+        <div class="calc-field">
+          <label for="costoGasA">Costo gas (€/m³)</label>
+          <input id="costoGasA" type="number" min="0.3" max="5" step="0.01" value="1.00">
+        </div>
+
+        <div class="calc-field">
+          <label for="effTradA">Rendimento caldaia attuale (%)</label>
+          <input id="effTradA" type="number" min="60" max="95" step="1" value="90">
+        </div>
+
+        <div class="calc-field">
+          <label for="effCondA">Rendimento caldaia a condensazione (%)</label>
+          <input id="effCondA" type="number" min="90" max="110" step="1" value="105">
+        </div>
+
+        <div class="calc-field">
+          <label for="costoImpiantoA">Costo nuova caldaia a condensazione (€)</label>
+          <input id="costoImpiantoA" type="number" min="500" max="15000" step="100" placeholder="Es. 3000">
+        </div>
+      </div>
+
+      <button class="calc-btn" type="button" onclick="calcolaCaldaiaA()">Calcola risparmio (Modalità A)</button>
+
+      <div id="resultA" class="calc-result"></div>
+    </section>
+
+    <!-- CALCOLATORE MODALITÀ B -->
+    <section class="calc-section" id="calc-caldaia-B">
+      <h2>Modalità B – Non so i m³: parto dai metri quadri della casa</h2>
+      <p>
+        Usa questa modalità se non conosci ancora i tuoi consumi, ma vuoi una stima basata su
+        <strong>superficie, zona d’Italia, isolamento e tipo di abitazione</strong>.
+      </p>
+
+      <h3>Dati della casa</h3>
+      <div class="calc-grid-inputs">
+        <div class="calc-field">
+          <label for="superficieB">Superficie riscaldata (m²)</label>
+          <input id="superficieB" type="number" min="20" max="1000" step="5" placeholder="Es. 100">
+        </div>
+
+        <div class="calc-field">
+          <label for="zonaB">Zona d’Italia / clima</label>
+          <select id="zonaB">
+            <option value="nord">Nord (Zone E-F, climi freddi)</option>
+            <option value="centro" selected>Centro (Zone C-D, climi intermedi)</option>
+            <option value="sud">Sud e Isole (Zone A-B, climi miti)</option>
+          </select>
+        </div>
+
+        <div class="calc-field">
+          <label for="isolamentoB">Isolamento dell’abitazione</label>
+          <select id="isolamentoB">
+            <option value="scarso">Scarso (muro pieno, infissi vecchi)</option>
+            <option value="medio" selected>Medio (doppi vetri, qualche intervento)</option>
+            <option value="buono">Buono (cappotto, infissi performanti)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="calc-grid-inputs">
+        <div class="calc-field">
+          <label for="tipologiaB">Tipologia abitazione</label>
+          <select id="tipologiaB">
+            <option value="app_centrale" selected>Appartamento centrale (poche pareti esposte)</option>
+            <option value="ultimo_piano">Appartamento ultimo piano</option>
+            <option value="indipendente">Casa indipendente / villino</option>
+          </select>
+        </div>
+
+        <div class="calc-field">
+          <label for="montagnaB">Abitazione in montagna (&gt; 800 m)</label>
+          <select id="montagnaB">
+            <option value="no" selected>No</option>
+            <option value="si">Sì</option>
+          </select>
+        </div>
+      </div>
+
+      <h3>Dati impianto e costi</h3>
+      <div class="calc-grid-inputs">
+        <div class="calc-field">
+          <label for="costoGasB">Costo gas (€/m³)</label>
+          <input id="costoGasB" type="number" min="0.3" max="5" step="0.01" value="1.00">
+        </div>
+
+        <div class="calc-field">
+          <label for="effTradB">Rendimento caldaia attuale (%)</label>
+          <input id="effTradB" type="number" min="60" max="95" step="1" value="90">
+        </div>
+
+        <div class="calc-field">
+          <label for="effCondB">Rendimento caldaia a condensazione (%)</label>
+          <input id="effCondB" type="number" min="90" max="110" step="1" value="105">
+        </div>
+
+        <div class="calc-field">
+          <label for="costoImpiantoB">Costo nuova caldaia a condensazione (€)</label>
+          <input id="costoImpiantoB" type="number" min="500" max="15000" step="100" placeholder="Es. 3000">
+        </div>
+      </div>
+
+      <button class="calc-btn" type="button" onclick="calcolaCaldaiaB()">Calcola risparmio (Modalità B)</button>
+
+      <div id="resultB" class="calc-result"></div>
+
+      <!-- Pulsante CONDIVIDI in basso -->
+      <div style="text-align:center; margin:20px 0;">
+        <button id="shareBtnBottom"
+          style="background: var(--violet-main); color:white; padding:10px 18px; border:none;
+                 border-radius:6px; cursor:pointer; font-weight:600; font-size:1rem;">
+          📎 Condividi il risultato
+        </button>
+      </div>
+
+      <p class="small-note">
+        I risultati sono da considerare come una <strong>bussola</strong>, non come un contratto scritto nella pietra.
+        Servono per farti un’idea prima di parlare con l’idraulico, il termotecnico o la ditta che seguirà i lavori.
+      </p>
+    </section>
+  </main>
+
+  <footer class="syncras-footer">
+    <div class="footer-inner">
+      <div class="footer-column">
+        <h4>Syncras.App</h4>
+        <p>
+          Metodo SmartShop per fare acquisti con la testa (e con un po’ di ironia).<br>
+          Niente tecnicismi inutili, solo esperienze reali e numeri spiegati semplice.
+        </p>
+      </div>
+
+      <div class="footer-column">
+        <h4>Link utili</h4>
+        <ul>
+          <li><a href="blog.html">Tutte le guide SmartShop</a></li>
+          <li><a href="offerte.html">Offerte Amazon selezionate</a></li>
+          <li><a href="smart-tv-economica-o-tv-buona-con-box.html">Guida Smart TV</a></li>
+          <li><a href="fotovoltaico-4kw-accumulo-10kwh-quanto-costa-davvero-nel-2025.html">Guida fotovoltaico 4 kW</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h4>Legale & Privacy</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="cookie.html">Cookie Policy</a></li>
+          <li><a href="disclaimer-amazon.html">Disclaimer Amazon</a></li>
+          <li><a href="note-legali.html">Note Legali</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© <span id="year-span"></span> Syncras.App — Tutti i diritti riservati.</p>
+      <p>
+        Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+        Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+        senza alcun costo aggiuntivo per l’utente.
+      </p>
+      <p>
+        Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+        è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.body.classList.toggle('nav-open');
+    }
+
+    // FORMATTAZIONE EURO
+    function euro(val) {
+      return val.toFixed(2).replace('.', ',');
+    }
+
+    // ✅ Controllo blocco Note Legali condiviso
+    function checkLegalConsent() {
+      const legalCheckbox = document.getElementById('legalAcceptHeat');
+      if (legalCheckbox && !legalCheckbox.checked) {
+        alert('Per usare il calcolatore devi dichiarare di aver letto e accettato le Note Legali.');
+        return false;
+      }
+      return true;
+    }
+
+    // MODALITÀ A – UTENTE CONOSCE I m³ ANNUI
+    function calcolaCaldaiaA() {
+      if (!checkLegalConsent()) return;
+
+      const mcAnnui = parseFloat(document.getElementById('mcAnnuiA').value) || 0;
+      const costoGas = parseFloat(document.getElementById('costoGasA').value) || 0;
+      const effTradPerc = parseFloat(document.getElementById('effTradA').value) || 0;
+      const effCondPerc = parseFloat(document.getElementById('effCondA').value) || 0;
+      const costoImpianto = parseFloat(document.getElementById('costoImpiantoA').value) || 0;
+
+      if (mcAnnui <= 0 || costoGas <= 0 || effTradPerc <= 0 || effCondPerc <= 0) {
+        alert('Controlla di aver inserito consumi, costi e rendimenti maggiori di zero.');
+        return;
+      }
+
+      const effTrad = effTradPerc / 100;
+      const effCond = effCondPerc / 100;
+
+      // Energia termica utile richiesta (kWh/anno)
+      const Q_annuo = mcAnnui * 9.5 * effTrad;
+
+      // Nuovo volume di gas con la caldaia a condensazione
+      const mcCond = Q_annuo / (9.5 * effCond);
+
+      const costoAttuale = mcAnnui * costoGas;
+      const costoCond = mcCond * costoGas;
+
+      const risparmioAnn = costoAttuale - costoCond;
+
+      let roiText = 'Il risparmio annuo stimato non è sufficiente per calcolare un tempo di rientro attendibile.';
+      if (costoImpianto > 0 && risparmioAnn > 0) {
+        const roiAnni = costoImpianto / risparmioAnn;
+        roiText = `Con un investimento di circa <strong>${euro(costoImpianto)} €</strong>, la caldaia a condensazione si
+          ripagherebbe in circa <strong>${roiAnni.toFixed(1)} anni</strong>, considerando solo il risparmio sul gas.`;
+      }
+
+      const box = document.getElementById('resultA');
+      box.innerHTML = `
+        <div class="result-title">
+          <span class="emoji">🔥</span>
+          <span>Risultato – Modalità A (consumi noti)</span>
+        </div>
+
+        <div class="pill-wrap">
+          <div class="pill pill--red">
+            Consumo attuale: <strong>${mcAnnui.toLocaleString('it-IT')} m³/anno</strong>
+          </div>
+          <div class="pill pill--green">
+            Consumo stimato con condensazione: <strong>${mcCond.toFixed(0)} m³/anno</strong>
+          </div>
+        </div>
+
+        <div class="result-subtext">
+          <p>
+            💸 Costo annuo attuale: <strong>${euro(costoAttuale)} €</strong><br>
+            💸 Costo annuo stimato con caldaia a condensazione: <strong>${euro(costoCond)} €</strong>
+          </p>
+        </div>
+
+        <div class="result-divider"></div>
+
+        <div class="result-subtext">
+          <p>
+            ✅ Risparmio annuo stimato: <strong>${euro(Math.max(0, risparmioAnn))} €/anno</strong>
+          </p>
+          <p>${roiText}</p>
+        </div>
+
+        <p class="small-note">
+          I calcoli si basano sui dati inseriti e su un valore medio di 9,5 kWh per m³ di gas naturale.  
+          Nella realtà possono incidere molti altri fattori (regolazione impianto, temperatura impostata,
+          dispersioni, abitudini di utilizzo, eventuali incentivi o detrazioni fiscali).
+        </p>
+      `;
+      box.style.display = 'block';
+    }
+
+    // MODALITÀ B – UTENTE NON CONOSCE I m³
+    function calcolaCaldaiaB() {
+      if (!checkLegalConsent()) return;
+
+      const superficie = parseFloat(document.getElementById('superficieB').value) || 0;
+      const zona = document.getElementById('zonaB').value;
+      const isolamento = document.getElementById('isolamentoB').value;
+      const tipologia = document.getElementById('tipologiaB').value;
+      const montagna = document.getElementById('montagnaB').value;
+
+      const costoGas = parseFloat(document.getElementById('costoGasB').value) || 0;
+      const effTradPerc = parseFloat(document.getElementById('effTradB').value) || 0;
+      const effCondPerc = parseFloat(document.getElementById('effCondB').value) || 0;
+      const costoImpianto = parseFloat(document.getElementById('costoImpiantoB').value) || 0;
+
+      if (superficie <= 0 || costoGas <= 0 || effTradPerc <= 0 || effCondPerc <= 0) {
+        alert('Inserisci almeno superficie, costo gas e rendimenti maggiori di zero.');
+        return;
+      }
+
+      // 1) Fabbisogno termico specifico base (kWh/m² anno) – valori medi
+      let E_th_base;
+
+      if (zona === 'nord') {
+        if (isolamento === 'scarso') E_th_base = 165;
+        else if (isolamento === 'medio') E_th_base = 115;
+        else E_th_base = 80;
+      } else if (zona === 'centro') {
+        if (isolamento === 'scarso') E_th_base = 140;
+        else if (isolamento === 'medio') E_th_base = 95;
+        else E_th_base = 60;
+      } else { // sud
+        if (isolamento === 'scarso') E_th_base = 95;
+        else if (isolamento === 'medio') E_th_base = 65;
+        else E_th_base = 40;
+      }
+
+      // 2) Fattore forma (tipologia abitazione)
+      let F_forma = 1.0;
+      if (tipologia === 'app_centrale') F_forma = 0.85;
+      else if (tipologia === 'ultimo_piano') F_forma = 1.10;
+      else if (tipologia === 'indipendente') F_forma = 1.0;
+
+      // 3) Fattore montagna
+      const F_montagna = (montagna === 'si') ? 1.15 : 1.0;
+
+      const E_th_finale = E_th_base * F_forma * F_montagna;
+
+      // 4) Consumo termico annuo (kWh/anno)
+      const Q_annuo = E_th_finale * superficie;
+
+      const effTrad = effTradPerc / 100;
+      const effCond = effCondPerc / 100;
+
+      // 5) Convertiamo in m³ gas
+      const mcTrad = Q_annuo / (9.5 * effTrad);
+      const mcCond = Q_annuo / (9.5 * effCond);
+
+      const costoTrad = mcTrad * costoGas;
+      const costoCond = mcCond * costoGas;
+      const risparmioAnn = costoTrad - costoCond;
+
+      let roiText = 'Il risparmio annuo stimato non è sufficiente per calcolare un tempo di rientro attendibile.';
+      if (costoImpianto > 0 && risparmioAnn > 0) {
+        const roiAnni = costoImpianto / risparmioAnn;
+        roiText = `Con un investimento di circa <strong>${euro(costoImpianto)} €</strong>, la caldaia a condensazione si
+          ripagherebbe in circa <strong>${roiAnni.toFixed(1)} anni</strong>, considerando solo il risparmio sul gas.`;
+      }
+
+      const box = document.getElementById('resultB');
+      box.innerHTML = `
+        <div class="result-title">
+          <span class="emoji">🏠</span>
+          <span>Risultato – Modalità B (stima da metri quadri)</span>
+        </div>
+
+        <div class="result-subtext">
+          <p>
+            Per una casa di circa <strong>${superficie.toLocaleString('it-IT')} m²</strong>,
+            in base alla zona, all’isolamento e alla tipologia di abitazione, stimiamo un
+            fabbisogno termico annuo di circa <strong>${Q_annuo.toFixed(0)} kWh/anno</strong>.
+          </p>
+        </div>
+
+        <div class="pill-wrap">
+          <div class="pill pill--red">
+            Consumo stimato con caldaia attuale: <strong>${mcTrad.toFixed(0)} m³/anno</strong>
+          </div>
+          <div class="pill pill--green">
+            Consumo stimato con condensazione: <strong>${mcCond.toFixed(0)} m³/anno</strong>
+          </div>
+          <div class="pill pill--violet">
+            Risparmio annuo stimato: <strong>${euro(Math.max(0, risparmioAnn))} €/anno</strong>
+          </div>
+        </div>
+
+        <div class="result-divider"></div>
+
+        <div class="result-subtext">
+          <p>
+            💸 Costo annuo stimato con caldaia attuale: <strong>${euro(costoTrad)} €</strong><br>
+            💸 Costo annuo stimato con caldaia a condensazione: <strong>${euro(costoCond)} €</strong>
+          </p>
+          <p>${roiText}</p>
+        </div>
+
+        <p class="small-note">
+          Questa stima utilizza valori medi di riferimento per il fabbisogno termico (kWh/m² anno) e per il gas
+          (9,5 kWh per m³). Non sostituisce una diagnosi energetica dettagliata né una relazione tecnica.  
+          Per una valutazione precisa è sempre opportuno rivolgersi a un tecnico abilitato.
+        </p>
+      `;
+      box.style.display = 'block';
+    }
+
+    // FOOTER YEAR + CONDIVISIONE
+    document.addEventListener('DOMContentLoaded', function() {
+      var span = document.getElementById('year-span');
+      if (span) {
+        span.textContent = new Date().getFullYear();
+      }
+
+      // CONDIVISIONE (top + bottom)
+      const shareTop = document.getElementById('shareBtnTop');
+      const shareBottom = document.getElementById('shareBtnBottom');
+
+      function attachShare(btn) {
+        if (!btn) return;
+        if (navigator.share) {
+          btn.addEventListener('click', () => {
+            navigator.share({
+              title: 'Caldaia tradizionale vs condensazione – Calcolatore Syncras.App',
+              text: 'Ho provato questo calcolatore per capire quanto si risparmia passando alla caldaia a condensazione:',
+              url: window.location.href
+            });
+          });
+        } else {
+          btn.style.display = 'none';
+        }
+      }
+
+      attachShare(shareTop);
+      attachShare(shareBottom);
+    });
+  </script>
+
+  <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
+  <div id="cookie-banner">
+    <p>
+      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
+      (Google Analytics). Alcuni link potrebbero essere di affiliazione.
+      Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
+      <a href="privacy.html">Privacy Policy</a>.
+    </p>
+    <div style="display:flex; gap:10px; margin-top:8px;">
+      <button type="button" onclick="rejectCookies()">
+        Rifiuta
+      </button>
+      <button id="cookie-btn" type="button" onclick="acceptCookies()">
+        Accetta e continua
+      </button>
+    </div>
+  </div>
+
+  <style>
+    #cookie-banner {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 90%;
+      width: 420px;
+      background: #ffffff;
+      border: 2px solid #6C5CE7;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      z-index: 9999;
+      font-family: Arial, sans-serif;
+      display: none;
+    }
+
+    #cookie-banner p {
+      margin: 0 0 12px 0;
+      font-size: 0.95rem;
+      color: #333;
+      line-height: 1.4;
+    }
+
+    #cookie-banner a {
+      color: #6C5CE7;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    #cookie-banner button[onclick="rejectCookies()"] {
+      flex: 1;
+      background: white !important;
+      color: #111827 !important;
+      border: 2px solid #6C5CE7 !important;
+      padding: 10px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    #cookie-btn {
+      flex: 1;
+      background: #6C5CE7;
+      color: white;
+      border: 2px solid #6C5CE7;
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    #cookie-btn:hover {
+      background: #4B3ACB;
+    }
+  </style>
+
+  <script>
+    (function () {
+      // 👉 ID Google Analytics di Tiziana
+      const GA_ID = 'G-CFTTCYDZ2P';
+
+      // 👉 Chiave locale per memorizzare la scelta
+      const CONSENT_KEY = "syncras_cookie_consent";
+
+      function loadGoogleAnalytics() {
+        if (window.__tizianaGaLoaded) return;
+        window.__tizianaGaLoaded = true;
+
+        const gaScript = document.createElement('script');
+        gaScript.async = true;
+        gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+        document.head.appendChild(gaScript);
+
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){ dataLayer.push(arguments); }
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', GA_ID, { anonymize_ip: true });
+      }
+
+      function showBanner() {
+        const banner = document.getElementById('cookie-banner');
+        if (banner) banner.style.display = 'block';
+      }
+
+      function hideBanner() {
+        const banner = document.getElementById('cookie-banner');
+        if (banner) banner.style.display = 'none';
+      }
+
+      window.acceptCookies = function () {
+        localStorage.setItem(CONSENT_KEY, 'yes');
+        hideBanner();
+        loadGoogleAnalytics();
+      };
+
+      window.rejectCookies = function () {
+        localStorage.setItem(CONSENT_KEY, 'no');
+        hideBanner();
+      };
+
+      document.addEventListener('DOMContentLoaded', function () {
+        const consent = localStorage.getItem(CONSENT_KEY);
+
+        if (consent === 'yes') {
+          loadGoogleAnalytics();
+        } else if (consent === 'no') {
+          // niente GA, niente banner
+        } else {
+          showBanner();
+        }
+      });
+    })();
+  </script>
+
+</body>
+</html>
+
