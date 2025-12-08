@@ -265,15 +265,78 @@
       background: var(--violet-dark);
     }
 
-    .calc-result {
-      margin-top: 16px;
-      padding: 14px;
-      background: #ffffff;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.06);
-      display: none;
-      font-size: 0.95rem;
-    }
+.calc-result {
+  margin-top: 16px;
+  padding: 18px;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  display: none;
+  font-size: 0.95rem;
+  border: 1px solid #e5e7eb;
+}
+
+.result-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  font-weight: 700;
+  color: var(--violet-dark);
+  font-size: 1rem;
+}
+
+.result-title span.emoji {
+  font-size: 1.2rem;
+}
+
+.price-pill-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0 6px;
+}
+
+.price-pill {
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background: #f4f5ff;
+  border: 1px solid #d4d7ff;
+  color: #1f2937;
+}
+
+.price-pill--min {
+  background: #FEF2F2;
+  border-color: #FCA5A5;
+  color: #991B1B;
+}
+
+.price-pill--max {
+  background: #ECFDF5;
+  border-color: #6EE7B7;
+  color: #065F46;
+}
+
+.price-pill--medio {
+  background: #EEF2FF;
+  border-color: #A5B4FC;
+  color: #3730A3;
+}
+
+.result-subtext {
+  margin-top: 6px;
+  font-size: 0.9rem;
+  color: #4b5563;
+}
+
+.result-divider {
+  margin: 10px 0;
+  height: 1px;
+  background: #e5e7eb;
+}
+
 
     .small-note {
       font-size: 0.8rem;
@@ -683,24 +746,43 @@
 
       const perditaMensileArrotondata = perditaMensile > 0 ? perditaMensile.toFixed(2) : "0.00";
 
-      // Frasi di contesto
-      let fraseRange = "";
+           // Frasi di contesto (testo aggiuntivo opzionale se il valore è praticamente azzerato)
+      let fraseRangeExtra = "";
       if (valoreMin === 0 && valoreMax === 0) {
-        fraseRange = "Con i dati inseriti il telefono risulta praticamente ammortizzato dal punto di vista del valore economico.";
-      } else {
-        fraseRange = `Il valore realistico stimato del tuo smartphone oggi è compreso fra circa <strong>${valoreMin} €</strong> e <strong>${valoreMax} €</strong>.`;
+        fraseRangeExtra = `
+          <p class="result-subtext">
+            Con i dati inseriti il telefono risulta praticamente ammortizzato dal punto di vista del valore economico.
+          </p>
+        `;
       }
 
       const box = document.getElementById('smartResult');
       box.innerHTML = `
-        <strong>Risultato della stima:</strong>
+        <div class="result-title">
+          <span class="emoji">📱</span>
+          <span>Risultato della stima</span>
+        </div>
 
-        <p>${fraseRange}</p>
+        ${fraseRangeExtra}
 
-        <p>📌 Valore medio indicativo: <strong>${valoreMedio} €</strong></p>
+        <div class="price-pill-wrap">
+          <div class="price-pill price-pill--min">
+            Minimo stimato: <strong>${valoreMin} €</strong>
+          </div>
+          <div class="price-pill price-pill--max">
+            Massimo stimato: <strong>${valoreMax} €</strong>
+          </div>
+          <div class="price-pill price-pill--medio">
+            Valore medio indicativo: <strong>${valoreMedio} €</strong>
+          </div>
+        </div>
 
-        <p>⏳ In base al prezzo da nuovo inserito, il telefono ha perso in media circa
-        <strong>${perditaMensileArrotondata} €/mese</strong> di valore nel periodo considerato.</p>
+        <div class="result-subtext">
+          <p>⏳ In base al prezzo da nuovo inserito, il telefono ha perso in media circa
+          <strong>${perditaMensileArrotondata} €/mese</strong> di valore nel periodo considerato.</p>
+        </div>
+
+        <div class="result-divider"></div>
 
         <p class="small-note">
           Questa è una stima orientativa pensata per aiutarti a ragionare con la testa, non un prezzo “ufficiale”.
@@ -709,7 +791,7 @@
         </p>
       `;
       box.style.display = 'block';
-    }
+
 
     // FOOTER YEAR
     document.addEventListener('DOMContentLoaded', function() {
