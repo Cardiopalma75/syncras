@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quanto vale il tuo smartphone usato? (Calcolatore 2025) | Syncras.App</title>
+  <meta name="description" content="Calcola una stima realistica del valore del tuo smartphone usato: range minimo/massimo e perdita media mensile in base a prezzo da nuovo, anni di utilizzo, batteria, estetica e accessori.">
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://syncras.app/calcolatore-valore-smartphone-usato.html">
+
+  <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --violet-soft: #A29BFE;
+      --text-main: #403E43;
+      --bg-page: #F7F7FB;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    /* HEADER */
+
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color: white;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+
+    #main-nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding-bottom: 2px;
+      border-bottom: 2px solid transparent;
+    }
+
+    #main-nav a:hover {
+      text-decoration: underline;
+    }
+
+    #main-nav a.active {
+      border-bottom-color: rgba(255,255,255,0.9);
+    }
+
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .menu-toggle span {
+      margin-left: 4px;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        margin: 0 auto;
+        max-width: 1180px;
+        flex-direction: column;
+        background-color: var(--violet-dark);
+        padding: 10px 16px 12px 16px;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
+      }
+
+      #main-nav a {
+        padding: 6px 0;
+      }
+
+      body.nav-open #main-nav {
+        display: flex;
+      }
+
+      .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+
+    /* MAIN */
+
+    main {
+      max-width: 1180px;
+      margin: 30px auto;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.08);
+    }
+
+    h1, h2, h3 {
+      color: var(--violet-dark);
+      margin-top: 0;
+    }
+
+    .page-intro {
+      margin-bottom: 20px;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 10px;
+    }
+
+    .badge-page {
+      display: inline-block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(108, 92, 231, 0.08);
+      border: 1px solid rgba(108, 92, 231, 0.35);
+      border-radius: 999px;
+      padding: 2px 8px;
+      color: #3730a3;
+      margin-bottom: 8px;
+    }
+
+    .intro-text {
+      font-size: 0.95rem;
+      color: #4b5563;
+    }
+
+    /* GRIGLIA CARD INFO */
+
+    .calc-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin: 18px 0 26px;
+    }
+
+    .calc-card {
+      background: #f4f5ff;
+      border-radius: 16px;
+      padding: 16px 18px 14px;
+      border: 1px solid #d4d7ff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+
+    .calc-card-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #6b7280;
+      margin-bottom: 4px;
+    }
+
+    .calc-card h3 {
+      margin: 0 0 6px;
+      font-size: 1rem;
+      color: #1f2937;
+    }
+
+    .calc-card p {
+      margin: 0 0 10px;
+      font-size: 0.9rem;
+      color: #4b5563;
+    }
+
+    @media (max-width: 768px) {
+      .calc-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* SEZIONE CALCOLATORE */
+
+    .calc-section {
+      margin: 32px 0;
+      padding: 20px;
+      border-radius: 16px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+
+    .calc-section h2 {
+      margin-top: 0;
+      margin-bottom: 6px;
+      font-size: 1.25rem;
+    }
+
+    .calc-section p {
+      font-size: 0.95rem;
+      color: #4b5563;
+    }
+
+    .calc-grid-inputs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 14px;
+    }
+
+    .calc-field {
+      flex: 1 1 220px;
+    }
+
+    .calc-field label {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .calc-field input,
+    .calc-field select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 4px;
+      border-radius: 6px;
+      border: 1px solid #d1d5db;
+      font-size: 0.95rem;
+    }
+
+    .calc-btn {
+      margin-top: 18px;
+      background: var(--violet-main);
+      color: #fff;
+      padding: 9px 16px;
+      border-radius: 7px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .calc-btn:hover {
+      background: var(--violet-dark);
+    }
+
+    .calc-result {
+      margin-top: 16px;
+      padding: 14px;
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.06);
+      display: none;
+      font-size: 0.95rem;
+    }
+
+    .small-note {
+      font-size: 0.8rem;
+      color: #6b7280;
+      margin-top: 8px;
+    }
+
+    /* 🔹 Blocco accettazione Note Legali per il calcolatore */
+    .legal-box-avviso {
+      margin-top: 18px;
+      margin-bottom: 10px;
+      padding: 12px 14px;
+      background: #ffffff;
+      border-radius: 8px;
+      border: 1px solid #e5e7eb;
+      font-size: 0.9rem;
+      color: #374151;
+    }
+
+    .legal-box-avviso a {
+      color: var(--violet-main);
+      text-decoration: underline;
+      font-weight: 600;
+    }
+
+    .legal-note-small {
+      margin: 6px 0 0;
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    a {
+      color: var(--violet-dark);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* FOOTER */
+
+    .syncras-footer {
+      margin-top: 40px;
+      padding: 2.5rem 1.5rem 1.5rem;
+      background: #2b1840;
+      color: #f3eaff;
+      font-family: Arial, sans-serif;
+      font-size: 0.9rem;
+    }
+
+    .syncras-footer a {
+      color: #f3eaff;
+      text-decoration: none;
+    }
+
+    .syncras-footer a:hover {
+      text-decoration: underline;
+    }
+
+    .footer-inner {
+      max-width: 1180px;
+      margin: 0 auto 1.5rem auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+    }
+
+    .footer-column h4 {
+      margin-top: 0;
+      margin-bottom: 0.7rem;
+      font-size: 1rem;
+    }
+
+    .footer-column p {
+      margin: 0;
+      font-size: 0.85rem;
+    }
+
+    .footer-column ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-column li {
+      margin-bottom: 0.4rem;
+      font-size: 0.85rem;
+    }
+
+    .footer-bottom {
+      max-width: 1180px;
+      margin: 0 auto;
+      text-align: center;
+      font-size: 0.8rem;
+      opacity: 0.9;
+    }
+
+    .footer-bottom p {
+      margin: 4px 0;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
+
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
+
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="quiz.html">Test Anti-Acquisto</a>
+        <a href="calcolatori.html">Calcolatori</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="offerte.html">Prodotti Consapevoli</a>
+        <a href="chi.html">Chi siamo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="page-intro">
+      <span class="badge-page">Area strumenti</span>
+      <h1>📱 Quanto vale davvero il tuo smartphone usato?</h1>
+      <div style="background:#FEF6D8; padding:10px 14px; border-left:4px solid #EAB308; border-radius:6px; margin:15px 0; font-size:0.9rem;">
+        ⚠️ <strong>Avviso importante:</strong> questo calcolatore fornisce <strong>stime orientative</strong> sul valore del telefono, basate su prezzo da nuovo, età, batteria, estetica e accessori.  
+        Non sostituisce una valutazione ufficiale di negozi, ricondizionatori o periti. I prezzi reali dipendono sempre dal mercato del momento.
+      </div>
+
+      <p class="intro-text">
+        Inserisci quanto costava da nuovo, da quanto tempo lo usi e in che condizioni è.<br>
+        Il calcolatore ti restituisce un <strong>range di valore realistico</strong> (min–max) e una stima di
+        <strong>quanto ti è “costato” al mese</strong> in perdita di valore.
+      </p>
+    </div>
+
+    <!-- Pulsante CONDIVIDI in alto -->
+    <button id="shareBtnTop"
+      style="background: var(--violet-main); color:white; padding:10px 15px; border:none;
+             border-radius:6px; cursor:pointer; margin-bottom:20px; font-weight:600;">
+      📎 Condividi questa pagina
+    </button>
+
+    <!-- CARD DI SPIEGAZIONE -->
+    <section aria-label="Informazioni sul calcolatore">
+      <h2>Come viene stimato il valore del telefono</h2>
+      <div class="calc-grid">
+        <article class="calc-card">
+          <div class="calc-card-label">Cosa fa</div>
+          <h3>Una stima numerica, non un “prezzo magico”</h3>
+          <p>
+            Usiamo un <strong>deprezzamento annuo diverso</strong> per fascia (top di gamma, media, economica)
+            e applichiamo correttivi per <strong>batteria, estetica e accessori</strong>.  
+            Il risultato è un <strong>range di valore</strong>, non una cifra secca rigida.
+          </p>
+        </article>
+
+        <article class="calc-card">
+          <div class="calc-card-label">Cosa NON fa</div>
+          <h3>Niente promesse, solo buon senso</h3>
+          <p>
+            Il calcolatore non è un listino ufficiale, non tiene conto di offerte temporanee, mode o “follie” di mercato.
+            Serve per ragionare con la testa, non per litigare col negoziante per 10 euro.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- CALCOLATORE SMARTPHONE -->
+    <section class="calc-section" id="calc-smartphone">
+      <h2>Calcolatore valore smartphone usato</h2>
+      <p>
+        Compila i campi qui sotto con dati il più possibile realistici.  
+        Le cifre finali sono una <strong>stima ragionata</strong>, non un prezzo garantito.
+      </p>
+
+      <div class="calc-grid-inputs">
+        <div class="calc-field">
+          <label for="prezzoNuovo">Prezzo da nuovo (in €)</label>
+          <input id="prezzoNuovo" type="number" min="50" max="3000" step="10" placeholder="Es. 999">
+        </div>
+
+        <div class="calc-field">
+          <label for="anniUso">Anni di utilizzo (puoi usare decimali)</label>
+          <input id="anniUso" type="number" min="0.1" max="10" step="0.1" placeholder="Es. 2.5">
+        </div>
+
+        <div class="calc-field">
+          <label for="fascia">Fascia del modello</label>
+          <select id="fascia">
+            <option value="top">Top di gamma (iPhone Pro, Galaxy S Ultra…)</option>
+            <option value="media" selected>Media (Galaxy A, Redmi Note, Poco…)</option>
+            <option value="economica">Economica / base</option>
+          </select>
+        </div>
+      </div>
+
+      <h3>Condizioni del telefono</h3>
+      <div class="calc-grid-inputs">
+        <div class="calc-field">
+          <label for="condizione">Condizione estetica</label>
+          <select id="condizione">
+            <option value="perfetto">Perfetto / quasi nuovo</option>
+            <option value="buono" selected>Buono (piccoli segni d’uso)</option>
+            <option value="discreto">Discreto (graffi visibili, bordo segnato)</option>
+            <option value="usurato">Molto usurato (vetro scheggiato, urti evidenti)</option>
+          </select>
+        </div>
+
+        <div class="calc-field">
+          <label for="batteria">Stato batteria (o autonomia percepita)</label>
+          <select id="batteria">
+            <option value=">85">Ottima (oltre 85% / arrivi a sera senza problemi)</option>
+            <option value="75-85" selected>Buona (75–85% / arrivi a sera ma con qualche attenzione)</option>
+            <option value="60-75">Così così (60–75% / serve spesso una powerbank)</option>
+            <option value="<60">Scarsa (&lt;60% o da cambiare)</option>
+          </select>
+        </div>
+
+        <div class="calc-field">
+          <label for="accessori">Accessori presenti</label>
+          <select id="accessori">
+            <option value="completo">Scatola + caricatore originali</option>
+            <option value="parziale" selected>Solo scatola o solo caricatore</option>
+            <option value="nessuno">Nessuno dei due</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- 🔹 BLOCCO ACCETTAZIONE NOTE LEGALI PRIMA DEL BOTTONE -->
+      <div class="legal-box-avviso">
+        <label>
+          <input type="checkbox" id="legalAcceptSmart">
+          Prima di procedere: i risultati di questo calcolatore sono solo <strong>stime indicative</strong> basate
+          sui dati inseriti. Non sono una valutazione ufficiale né una consulenza professionale.
+          L’utilizzo di questo strumento è a tuo esclusivo rischio e la responsabilità delle decisioni resta solo tua.
+          Tutte le condizioni sono spiegate nelle
+          <a href="note-legali.html" target="_blank">Note Legali</a>.
+        </label>
+        <p class="legal-note-small">
+          I valori non tengono conto di tutte le variabili di mercato (offerte, mode, difetti interni, blocchi account,
+          ecc.). Prima di vendere o acquistare, confronta sempre più preventivi reali da negozi, ricondizionatori o
+          privati, e verifica le condizioni effettive del dispositivo.
+        </p>
+      </div>
+      <!-- 🔹 FINE BLOCCO ACCETTAZIONE -->
+
+      <button class="calc-btn" type="button" onclick="calcolaSmartphone()">Calcola valore dello smartphone</button>
+
+      <div id="smartResult" class="calc-result"></div>
+
+      <!-- Pulsante CONDIVIDI in basso -->
+      <div style="text-align:center; margin:20px 0;">
+        <button id="shareBtnBottom"
+          style="background: var(--violet-main); color:white; padding:10px 18px; border:none;
+                 border-radius:6px; cursor:pointer; font-weight:600; font-size:1rem;">
+          📎 Condividi il risultato
+        </button>
+      </div>
+
+      <p class="small-note">
+        Questo strumento serve per farsi un’idea del valore del telefono e della perdita media mensile nel tempo.
+        Non è pensato per definire un prezzo “al centesimo”, ma per aiutarti a ragionare prima di vendere o cambiare smartphone.
+      </p>
+    </section>
+  </main>
+
+  <footer class="syncras-footer">
+    <div class="footer-inner">
+      <div class="footer-column">
+        <h4>Syncras.App</h4>
+        <p>
+          Metodo SmartShop per fare acquisti con la testa (e con un po’ di ironia).<br>
+          Niente tecnicismi inutili, solo esperienze reali e numeri spiegati semplice.
+        </p>
+      </div>
+
+      <div class="footer-column">
+        <h4>Link utili</h4>
+        <ul>
+          <li><a href="blog.html">Tutte le guide SmartShop</a></li>
+          <li><a href="offerte.html">Offerte Amazon selezionate</a></li>
+          <li><a href="smart-tv-economica-o-tv-buona-con-box.html">Guida Smart TV</a></li>
+          <li><a href="fotovoltaico-4kw-accumulo-10kwh-quanto-costa-davvero-nel-2025.html">Guida fotovoltaico 4 kW</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h4>Legale & Privacy</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="cookie.html">Cookie Policy</a></li>
+          <li><a href="disclaimer-amazon.html">Disclaimer Amazon</a></li>
+          <li><a href="note-legali.html">Note Legali</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© <span id="year-span"></span> Syncras.App — Tutti i diritti riservati.</p>
+      <p>
+        Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+        Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+        senza alcun costo aggiuntivo per l’utente.
+      </p>
+      <p>
+        Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+        è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.body.classList.toggle('nav-open');
+    }
+
+    // FORMATTAZIONE EURO
+    function euro(val) {
+      return val.toFixed(2).replace('.', ',');
+    }
+
+    // CALCOLO VALORE SMARTPHONE
+    function calcolaSmartphone() {
+      // ✅ Controllo accettazione Note Legali
+      const legalCheckbox = document.getElementById('legalAcceptSmart');
+      if (legalCheckbox && !legalCheckbox.checked) {
+        alert('Per usare il calcolatore devi dichiarare di aver letto e accettato le Note Legali.');
+        return;
+      }
+
+      const prezzoNuovo = parseFloat(document.getElementById('prezzoNuovo').value) || 0;
+      const anniUso = parseFloat(document.getElementById('anniUso').value) || 0;
+      const fascia = document.getElementById('fascia').value;
+      const condizione = document.getElementById('condizione').value;
+      const batteria = document.getElementById('batteria').value;
+      const accessori = document.getElementById('accessori').value;
+
+      if (prezzoNuovo <= 0 || anniUso <= 0) {
+        alert('Inserisci un prezzo da nuovo e degli anni di utilizzo validi.');
+        return;
+      }
+
+      // 1) Deprezzamento base per fascia (ottimistico/pessimistico)
+      let dOtt, dPess;
+      if (fascia === 'top') {
+        dOtt = 0.22;   // top di gamma
+      } else if (fascia === 'media') {
+        dOtt = 0.27;   // fascia media
+      } else {
+        dOtt = 0.32;   // economica
+      }
+      dPess = dOtt + 0.06;
+
+      const valoreBaseAlto = prezzoNuovo * Math.pow((1 - dOtt), anniUso);
+      const valoreBaseBasso = prezzoNuovo * Math.pow((1 - dPess), anniUso);
+
+      // 2) Fattori di correzione per condizione reale
+      let fattoreCond = 1, fattoreBatt = 1, fattoreAcc = 1;
+
+      switch (condizione) {
+        case 'perfetto': fattoreCond = 1.0; break;
+        case 'buono': fattoreCond = 0.9; break;
+        case 'discreto': fattoreCond = 0.8; break;
+        case 'usurato': fattoreCond = 0.65; break;
+      }
+
+      switch (batteria) {
+        case '>85': fattoreBatt = 1.0; break;
+        case '75-85': fattoreBatt = 0.92; break;
+        case '60-75': fattoreBatt = 0.85; break;
+        case '<60': fattoreBatt = 0.7; break;
+      }
+
+      switch (accessori) {
+        case 'completo': fattoreAcc = 1.05; break;
+        case 'parziale': fattoreAcc = 1.0; break;
+        case 'nessuno': fattoreAcc = 0.93; break;
+      }
+
+      const fattoreTot = fattoreCond * fattoreBatt * fattoreAcc;
+
+      let valoreMin = valoreBaseBasso * fattoreTot;
+      let valoreMax = valoreBaseAlto * fattoreTot;
+      let valoreMedio = (valoreMin + valoreMax) / 2;
+
+      // Arrotondamenti e limite minimo 0
+      valoreMin = Math.max(0, Math.round(valoreMin));
+      valoreMax = Math.max(0, Math.round(valoreMax));
+      valoreMedio = Math.max(0, Math.round(valoreMedio));
+
+      // 3) Perdita mensile
+      const mesiUso = anniUso * 12;
+      let perditaMensile = 0;
+      let perditaTotale = 0;
+
+      if (mesiUso > 0) {
+        perditaTotale = prezzoNuovo - valoreMedio;
+        if (perditaTotale < 0) perditaTotale = 0;
+        perditaMensile = perditaTotale / mesiUso;
+      }
+
+      const perditaMensileArrotondata = perditaMensile > 0 ? perditaMensile.toFixed(2) : "0.00";
+
+      // Frasi di contesto
+      let fraseRange = "";
+      if (valoreMin === 0 && valoreMax === 0) {
+        fraseRange = "Con i dati inseriti il telefono risulta praticamente ammortizzato dal punto di vista del valore economico.";
+      } else {
+        fraseRange = `Il valore realistico stimato del tuo smartphone oggi è compreso fra circa <strong>${valoreMin} €</strong> e <strong>${valoreMax} €</strong>.`;
+      }
+
+      const box = document.getElementById('smartResult');
+      box.innerHTML = `
+        <strong>Risultato della stima:</strong>
+
+        <p>${fraseRange}</p>
+
+        <p>📌 Valore medio indicativo: <strong>${valoreMedio} €</strong></p>
+
+        <p>⏳ In base al prezzo da nuovo inserito, il telefono ha perso in media circa
+        <strong>${perditaMensileArrotondata} €/mese</strong> di valore nel periodo considerato.</p>
+
+        <p class="small-note">
+          Questa è una stima orientativa pensata per aiutarti a ragionare con la testa, non un prezzo “ufficiale”.
+          Nella realtà il valore può variare in base a domanda/offerta, modello specifico, memoria, colore, provenienza,
+          garanzia residua, difetti interni o blocchi software/hardware.
+        </p>
+      `;
+      box.style.display = 'block';
+    }
+
+    // FOOTER YEAR
+    document.addEventListener('DOMContentLoaded', function() {
+      var span = document.getElementById('year-span');
+      if (span) {
+        span.textContent = new Date().getFullYear();
+      }
+    });
+
+    // CONDIVISIONE (top + bottom)
+    (function() {
+      const shareTop = document.getElementById('shareBtnTop');
+      const shareBottom = document.getElementById('shareBtnBottom');
+
+      function attachShare(btn) {
+        if (!btn) return;
+        if (navigator.share) {
+          btn.addEventListener('click', () => {
+            navigator.share({
+              title: 'Calcolatore valore smartphone usato – Syncras.App',
+              text: 'Vuoi capire quanto vale davvero il tuo smartphone usato? Ho provato questo calcolatore:',
+              url: window.location.href
+            });
+          });
+        } else {
+          btn.style.display = 'none';
+        }
+      }
+
+      attachShare(shareTop);
+      attachShare(shareBottom);
+    })();
+  </script>
+
+  <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
+  <div id="cookie-banner">
+    <p>
+      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
+      (Google Analytics). Alcuni link potrebbero essere di affiliazione.
+      Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
+      <a href="privacy.html">Privacy Policy</a>.
+    </p>
+    <div style="display:flex; gap:10px; margin-top:8px;">
+      <button type="button" onclick="rejectCookies()">
+        Rifiuta
+      </button>
+      <button id="cookie-btn" type="button" onclick="acceptCookies()">
+        Accetta e continua
+      </button>
+    </div>
+  </div>
+
+  <style>
+    #cookie-banner {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 90%;
+      width: 420px;
+      background: #ffffff;
+      border: 2px solid #6C5CE7;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      z-index: 9999;
+      font-family: Arial, sans-serif;
+      display: none;
+    }
+
+    #cookie-banner p {
+      margin: 0 0 12px 0;
+      font-size: 0.95rem;
+      color: #333;
+      line-height: 1.4;
+    }
+
+    #cookie-banner a {
+      color: #6C5CE7;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    /* Pulsante RIFIUTA – pari importanza al pulsante ACCETTA */
+    #cookie-banner button[onclick="rejectCookies()"] {
+      flex: 1;
+      background: white !important;
+      color: #111827 !important;
+      border: 2px solid #6C5CE7 !important;
+      padding: 10px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    /* Pulsante ACCETTA */
+    #cookie-btn {
+      flex: 1;
+      background: #6C5CE7;
+      color: white;
+      border: 2px solid #6C5CE7;
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    #cookie-btn:hover {
+      background: #4B3ACB;
+    }
+  </style>
+
+  <script>
+    (function () {
+      // 👉 ID Google Analytics di Tiziana
+      const GA_ID = 'G-CFTTCYDZ2P';
+
+      // 👉 Chiave locale per memorizzare la scelta
+      const CONSENT_KEY = "syncras_cookie_consent";
+
+      function loadGoogleAnalytics() {
+        if (window.__tizianaGaLoaded) return;
+        window.__tizianaGaLoaded = true;
+
+        const gaScript = document.createElement('script');
+        gaScript.async = true;
+        gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+        document.head.appendChild(gaScript);
+
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){ dataLayer.push(arguments); }
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', GA_ID, { anonymize_ip: true });
+      }
+
+      function showBanner() {
+        const banner = document.getElementById('cookie-banner');
+        if (banner) banner.style.display = 'block';
+      }
+
+      function hideBanner() {
+        const banner = document.getElementById('cookie-banner');
+        if (banner) banner.style.display = 'none';
+      }
+
+      window.acceptCookies = function () {
+        localStorage.setItem(CONSENT_KEY, 'yes');
+        hideBanner();
+        loadGoogleAnalytics();
+      };
+
+      window.rejectCookies = function () {
+        localStorage.setItem(CONSENT_KEY, 'no');
+        hideBanner();
+      };
+
+      document.addEventListener('DOMContentLoaded', function () {
+        const consent = localStorage.getItem(CONSENT_KEY);
+
+        if (consent === 'yes') {
+          loadGoogleAnalytics();
+        } else if (consent === 'no') {
+          // niente GA, niente banner
+        } else {
+          showBanner();
+        }
+      });
+    })();
+  </script>
+
+</body>
+</html>
