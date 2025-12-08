@@ -10,7 +10,7 @@
 
   <style>
     :root {
-      --violet-main: #6C5CE7;F
+      --violet-main: #6C5CE7;
       --violet-dark: #4B3ACB;
       --violet-soft: #A29BFE;
       --text-main: #403E43;
@@ -265,78 +265,77 @@
       background: var(--violet-dark);
     }
 
-.calc-result {
-  margin-top: 16px;
-  padding: 18px;
-  background: #ffffff;
-  border-radius: 14px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-  display: none;
-  font-size: 0.95rem;
-  border: 1px solid #e5e7eb;
-}
+    .calc-result {
+      margin-top: 16px;
+      padding: 18px;
+      background: #ffffff;
+      border-radius: 14px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+      display: none;
+      font-size: 0.95rem;
+      border: 1px solid #e5e7eb;
+    }
 
-.result-title {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 10px;
-  font-weight: 700;
-  color: var(--violet-dark);
-  font-size: 1rem;
-}
+    .result-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      font-weight: 700;
+      color: var(--violet-dark);
+      font-size: 1rem;
+    }
 
-.result-title span.emoji {
-  font-size: 1.2rem;
-}
+    .result-title span.emoji {
+      font-size: 1.2rem;
+    }
 
-.price-pill-wrap {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 10px 0 6px;
-}
+    .price-pill-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 10px 0 6px;
+    }
 
-.price-pill {
-  padding: 6px 10px;
-  border-radius: 999px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  background: #f4f5ff;
-  border: 1px solid #d4d7ff;
-  color: #1f2937;
-}
+    .price-pill {
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      background: #f4f5ff;
+      border: 1px solid #d4d7ff;
+      color: #1f2937;
+    }
 
-.price-pill--min {
-  background: #FEF2F2;
-  border-color: #FCA5A5;
-  color: #991B1B;
-}
+    .price-pill--min {
+      background: #FEF2F2;
+      border-color: #FCA5A5;
+      color: #991B1B;
+    }
 
-.price-pill--max {
-  background: #ECFDF5;
-  border-color: #6EE7B7;
-  color: #065F46;
-}
+    .price-pill--max {
+      background: #ECFDF5;
+      border-color: #6EE7B7;
+      color: #065F46;
+    }
 
-.price-pill--medio {
-  background: #EEF2FF;
-  border-color: #A5B4FC;
-  color: #3730A3;
-}
+    .price-pill--medio {
+      background: #EEF2FF;
+      border-color: #A5B4FC;
+      color: #3730A3;
+    }
 
-.result-subtext {
-  margin-top: 6px;
-  font-size: 0.9rem;
-  color: #4b5563;
-}
+    .result-subtext {
+      margin-top: 6px;
+      font-size: 0.9rem;
+      color: #4b5563;
+    }
 
-.result-divider {
-  margin: 10px 0;
-  height: 1px;
-  background: #e5e7eb;
-}
-
+    .result-divider {
+      margin: 10px 0;
+      height: 1px;
+      background: #e5e7eb;
+    }
 
     .small-note {
       font-size: 0.8rem;
@@ -746,7 +745,7 @@
 
       const perditaMensileArrotondata = perditaMensile > 0 ? perditaMensile.toFixed(2) : "0.00";
 
-           // Frasi di contesto (testo aggiuntivo opzionale se il valore è praticamente azzerato)
+      // Frasi di contesto (testo aggiuntivo opzionale se il valore è praticamente azzerato)
       let fraseRangeExtra = "";
       if (valoreMin === 0 && valoreMax === 0) {
         fraseRangeExtra = `
@@ -791,7 +790,7 @@
         </p>
       `;
       box.style.display = 'block';
-  }  
+    }
 
     // FOOTER YEAR
     document.addEventListener('DOMContentLoaded', function() {
@@ -965,3 +964,4 @@
 
 </body>
 </html>
+
