@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Caldaia tradizionale vs condensazione: risparmio reale (Calcolatore) | Syncras.App</title>
-  <meta name="description" content="Confronta una caldaia tradizionale con una a condensazione: inserisci i tuoi dati (consumi o superficie casa) e scopri risparmio annuo, consumi stimati e tempo di rientro.">
+  <meta name="description" content="Confronta una caldaia tradizionale con una a condensazione: inserisci i tuoi dati (consumi o superficie casa) e scopri risparmio annuo, consumi stimati, tempo di rientro e impatto delle detrazioni fiscali.">
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://syncras.app/calcolatore-caldaia-condensazione.html">
 
@@ -474,13 +474,14 @@
       <h1>💧 Caldaia tradizionale vs caldaia a condensazione: quanto risparmi davvero?</h1>
       <div style="background:#FEF6D8; padding:10px 14px; border-left:4px solid #EAB308; border-radius:6px; margin:15px 0; font-size:0.9rem;">
         ⚠️ <strong>Avviso importante:</strong> questo calcolatore fornisce <strong>stime orientative</strong> sui consumi e sul risparmio passando a una caldaia a condensazione.  
-        Non sostituisce un progetto termotecnico, una diagnosi energetica o un preventivo ufficiale. I valori reali dipendono da impianto, uso, clima e prezzi aggiornati di gas e lavori.
+        Non sostituisce un progetto termotecnico, una diagnosi energetica o un preventivo ufficiale. I valori reali dipendono da impianto, uso, clima, prezzi aggiornati di gas e norme fiscali.
       </div>
 
       <p class="intro-text">
         Puoi usarlo in due modi: se conosci già i <strong>metri cubi annui di gas</strong> inserisci i tuoi dati
         nella <strong>Modalità A</strong>. Se non li conosci, usa la <strong>Modalità B</strong> con superficie,
-        zona d’Italia e isolamento per avere una stima ragionata del consumo.
+        zona d’Italia e isolamento per avere una stima ragionata del consumo.  
+        In entrambi i casi puoi indicare una <strong>percentuale di detrazione fiscale</strong> (es. 50% in 10 anni) per vedere l’effetto sul tempo di rientro.
       </p>
     </div>
 
@@ -497,7 +498,7 @@
       <div class="calc-grid">
         <article class="calc-card">
           <div class="calc-card-label">Cosa fa</div>
-          <h3>Stima consumi, costi e tempo di rientro</h3>
+          <h3>Stima consumi, costi, detrazioni e tempo di rientro</h3>
           <p>
             Il calcolatore mette a confronto una <strong>caldaia tradizionale</strong> con una 
             <strong>caldaia a condensazione</strong>, stimando:
@@ -506,7 +507,8 @@
             <li>consumi annui di gas per ciascuna soluzione;</li>
             <li>costo annuo in bolletta;</li>
             <li><strong>risparmio annuo</strong> passando alla condensazione;</li>
-            <li><strong>anni necessari per ripagare</strong> l’investimento.</li>
+            <li><strong>tempo di rientro</strong> dell’investimento;</li>
+            <li>effetto di una <strong>detrazione fiscale</strong> (es. 50% in 10 anni) sull’esborso netto.</li>
           </ul>
         </article>
 
@@ -514,8 +516,9 @@
           <div class="calc-card-label">Cosa NON fa</div>
           <h3>Niente magie, solo buon senso energetico</h3>
           <p>
-            Questa non è una perizia tecnica. Non tiene conto di tutti i dettagli dell’impianto,
-            delle dispersioni reali, degli interventi accessori (valvole, canna fumaria, isolamento, ecc.).
+            Questa non è una perizia tecnica né una consulenza fiscale.  
+            Non tiene conto di tutti i dettagli dell’impianto, delle dispersioni reali, delle pratiche burocratiche,
+            dei massimali di spesa o delle future modifiche di legge.  
             Serve per farti un’idea e <strong>arrivare al preventivo con la testa già accesa</strong>.
           </p>
         </article>
@@ -527,14 +530,16 @@
       <label>
         <input type="checkbox" id="legalAcceptHeat">
         Prima di procedere: i risultati di questo calcolatore sono solo <strong>stime indicative</strong>
-        basate sui dati inseriti e su valori medi di riferimento. Non costituiscono consulenza professionale
-        né promessa di risparmio garantito. L’utilizzo di questo strumento è a tuo esclusivo rischio e la
-        responsabilità delle decisioni resta solo tua. Tutte le condizioni sono spiegate nelle
+        basate sui dati inseriti e su valori medi di riferimento. Non costituiscono consulenza
+        professionale, tecnica o fiscale né promessa di risparmio garantito. L’utilizzo di questo strumento
+        è a tuo esclusivo rischio e la responsabilità delle decisioni resta solo tua.
+        Tutte le condizioni sono spiegate nelle
         <a href="note-legali.html" target="_blank">Note Legali</a>.
       </label>
       <p class="legal-note-small">
-        Prima di impegnarti in spese importanti (sostituzione caldaia, interventi sull’impianto, contratti di fornitura),
-        confronta sempre più preventivi e, se necessario, rivolgiti a un tecnico abilitato o a un consulente energetico.
+        Le agevolazioni fiscali (ad es. 50% in 10 anni) possono cambiare nel tempo e hanno regole,
+        limiti e requisiti specifici. Per decisioni importanti è sempre consigliabile confrontare più
+        preventivi e, quando serve, parlare con un tecnico abilitato o un consulente fiscale.
       </p>
     </div>
 
@@ -543,7 +548,8 @@
       <h2>Modalità A – So già quanti metri cubi di gas consumo all’anno</h2>
       <p>
         Usa questa modalità se hai sotto mano le bollette o il riepilogo dei consumi:  
-        inserisci i <strong>m³ di gas annui</strong> e scopri quanto risparmieresti con una caldaia a condensazione.
+        inserisci i <strong>m³ di gas annui</strong> e scopri quanto risparmieresti con una caldaia a condensazione
+        e in quanti anni si ripagherebbe, con e senza agevolazioni fiscali.
       </p>
 
       <div class="calc-grid-inputs">
@@ -566,10 +572,21 @@
           <label for="effCondA">Rendimento caldaia a condensazione (%)</label>
           <input id="effCondA" type="number" min="90" max="110" step="1" value="105">
         </div>
+      </div>
 
+      <div class="calc-grid-inputs">
         <div class="calc-field">
           <label for="costoImpiantoA">Costo nuova caldaia a condensazione (€)</label>
           <input id="costoImpiantoA" type="number" min="500" max="15000" step="100" placeholder="Es. 3000">
+        </div>
+
+        <div class="calc-field">
+          <label for="detrazioneA">Agevolazione fiscale (% detraibile)</label>
+          <input id="detrazioneA" type="number" min="0" max="100" step="1" value="50">
+          <div class="small-note">
+            Esempio tipico: <strong>50%</strong> di detrazione in 10 anni su lavori conformi alla normativa.
+            Valore modificabile in base alla situazione reale.
+          </div>
         </div>
       </div>
 
@@ -584,6 +601,7 @@
       <p>
         Usa questa modalità se non conosci ancora i tuoi consumi, ma vuoi una stima basata su
         <strong>superficie, zona d’Italia, isolamento e tipo di abitazione</strong>.
+        Anche qui puoi indicare una percentuale di detrazione fiscale per vedere come cambia il tempo di rientro.
       </p>
 
       <h3>Dati della casa</h3>
@@ -652,13 +670,22 @@
           <label for="costoImpiantoB">Costo nuova caldaia a condensazione (€)</label>
           <input id="costoImpiantoB" type="number" min="500" max="15000" step="100" placeholder="Es. 3000">
         </div>
+
+        <div class="calc-field">
+          <label for="detrazioneB">Agevolazione fiscale (% detraibile)</label>
+          <input id="detrazioneB" type="number" min="0" max="100" step="1" value="50">
+          <div class="small-note">
+            Esempio: <strong>50%</strong> in 10 anni, se la normativa lo prevede e i lavori sono conformi.
+            Questo campo è solo una semplificazione per simulare l’effetto sul rientro.
+          </div>
+        </div>
       </div>
 
       <button class="calc-btn" type="button" onclick="calcolaCaldaiaB()">Calcola risparmio (Modalità B)</button>
 
       <div id="resultB" class="calc-result"></div>
 
-      <!-- Pulsante CONDIVIDI in basso -->
+      <!-- Pulsante CONDIVISIONE in basso -->
       <div style="text-align:center; margin:20px 0;">
         <button id="shareBtnBottom"
           style="background: var(--violet-main); color:white; padding:10px 18px; border:none;
@@ -669,7 +696,7 @@
 
       <p class="small-note">
         I risultati sono da considerare come una <strong>bussola</strong>, non come un contratto scritto nella pietra.
-        Servono per farti un’idea prima di parlare con l’idraulico, il termotecnico o la ditta che seguirà i lavori.
+        Servono per farti un’idea prima di parlare con l’idraulico, il termotecnico o il commercialista.
       </p>
     </section>
   </main>
@@ -748,6 +775,7 @@
       const effTradPerc = parseFloat(document.getElementById('effTradA').value) || 0;
       const effCondPerc = parseFloat(document.getElementById('effCondA').value) || 0;
       const costoImpianto = parseFloat(document.getElementById('costoImpiantoA').value) || 0;
+      const detrazionePerc = parseFloat(document.getElementById('detrazioneA').value) || 0;
 
       if (mcAnnui <= 0 || costoGas <= 0 || effTradPerc <= 0 || effCondPerc <= 0) {
         alert('Controlla di aver inserito consumi, costi e rendimenti maggiori di zero.');
@@ -768,11 +796,30 @@
 
       const risparmioAnn = costoAttuale - costoCond;
 
+      // Detrazione fiscale – semplificata
+      const quotaDetrazTot = (detrazionePerc > 0 && costoImpianto > 0)
+        ? (costoImpianto * detrazionePerc / 100)
+        : 0;
+      const costoNetto = Math.max(0, costoImpianto - quotaDetrazTot);
+
       let roiText = 'Il risparmio annuo stimato non è sufficiente per calcolare un tempo di rientro attendibile.';
       if (costoImpianto > 0 && risparmioAnn > 0) {
-        const roiAnni = costoImpianto / risparmioAnn;
-        roiText = `Con un investimento di circa <strong>${euro(costoImpianto)} €</strong>, la caldaia a condensazione si
-          ripagherebbe in circa <strong>${roiAnni.toFixed(1)} anni</strong>, considerando solo il risparmio sul gas.`;
+        const roiLordo = costoImpianto / risparmioAnn;
+        let roiNettoText = '';
+
+        if (detrazionePerc > 0 && costoNetto > 0) {
+          const roiNetto = costoNetto / risparmioAnn;
+          const quotaAnnuaDetr = quotaDetrazTot / 10; // ipotesi 10 anni
+          roiNettoText = ` Con una agevolazione fiscale del circa <strong>${detrazionePerc.toFixed(0)}%</strong>
+            (ripartita in 10 anni), la spesa netta scenderebbe a circa
+            <strong>${euro(costoNetto)} €</strong>, con una detrazione media annua di circa
+            <strong>${euro(quotaAnnuaDetr)} €/anno</strong> e un tempo di rientro “netto” di circa
+            <strong>${roiNetto.toFixed(1)} anni</strong>, considerando solo il risparmio sul gas.`;
+        }
+
+        roiText = `Senza considerare le agevolazioni fiscali, un investimento di circa
+          <strong>${euro(costoImpianto)} €</strong> si ripagherebbe in circa
+          <strong>${roiLordo.toFixed(1)} anni</strong>, guardando solo al risparmio sul gas.${roiNettoText}`;
       }
 
       const box = document.getElementById('resultA');
@@ -808,9 +855,9 @@
         </div>
 
         <p class="small-note">
-          I calcoli si basano sui dati inseriti e su un valore medio di 9,5 kWh per m³ di gas naturale.  
-          Nella realtà possono incidere molti altri fattori (regolazione impianto, temperatura impostata,
-          dispersioni, abitudini di utilizzo, eventuali incentivi o detrazioni fiscali).
+          I calcoli si basano sui dati inseriti, su un valore medio di 9,5 kWh per m³ di gas naturale
+          e su una rappresentazione semplificata delle detrazioni fiscali (es. 50% in 10 anni).
+          Le normative possono cambiare e ogni caso va verificato con un tecnico e/o un consulente fiscale.
         </p>
       `;
       box.style.display = 'block';
@@ -830,6 +877,7 @@
       const effTradPerc = parseFloat(document.getElementById('effTradB').value) || 0;
       const effCondPerc = parseFloat(document.getElementById('effCondB').value) || 0;
       const costoImpianto = parseFloat(document.getElementById('costoImpiantoB').value) || 0;
+      const detrazionePerc = parseFloat(document.getElementById('detrazioneB').value) || 0;
 
       if (superficie <= 0 || costoGas <= 0 || effTradPerc <= 0 || effCondPerc <= 0) {
         alert('Inserisci almeno superficie, costo gas e rendimenti maggiori di zero.');
@@ -878,11 +926,30 @@
       const costoCond = mcCond * costoGas;
       const risparmioAnn = costoTrad - costoCond;
 
+      // Detrazione fiscale – semplificata
+      const quotaDetrazTot = (detrazionePerc > 0 && costoImpianto > 0)
+        ? (costoImpianto * detrazionePerc / 100)
+        : 0;
+      const costoNetto = Math.max(0, costoImpianto - quotaDetrazTot);
+
       let roiText = 'Il risparmio annuo stimato non è sufficiente per calcolare un tempo di rientro attendibile.';
       if (costoImpianto > 0 && risparmioAnn > 0) {
-        const roiAnni = costoImpianto / risparmioAnn;
-        roiText = `Con un investimento di circa <strong>${euro(costoImpianto)} €</strong>, la caldaia a condensazione si
-          ripagherebbe in circa <strong>${roiAnni.toFixed(1)} anni</strong>, considerando solo il risparmio sul gas.`;
+        const roiLordo = costoImpianto / risparmioAnn;
+        let roiNettoText = '';
+
+        if (detrazionePerc > 0 && costoNetto > 0) {
+          const roiNetto = costoNetto / risparmioAnn;
+          const quotaAnnuaDetr = quotaDetrazTot / 10; // ipotesi 10 anni
+          roiNettoText = ` Con una detrazione fiscale ipotizzata del <strong>${detrazionePerc.toFixed(0)}%</strong>
+            (spalmata in 10 anni), la spesa netta scenderebbe a circa
+            <strong>${euro(costoNetto)} €</strong>, con una detrazione media annua di circa
+            <strong>${euro(quotaAnnuaDetr)} €/anno</strong> e un tempo di rientro “netto” di circa
+            <strong>${roiNetto.toFixed(1)} anni</strong>, considerando solo il risparmio sul gas.`;
+        }
+
+        roiText = `Senza considerare le agevolazioni fiscali, un investimento di circa
+          <strong>${euro(costoImpianto)} €</strong> si ripagherebbe in circa
+          <strong>${roiLordo.toFixed(1)} anni</strong> sulla base dei consumi stimati.${roiNettoText}`;
       }
 
       const box = document.getElementById('resultB');
@@ -923,9 +990,9 @@
         </div>
 
         <p class="small-note">
-          Questa stima utilizza valori medi di riferimento per il fabbisogno termico (kWh/m² anno) e per il gas
-          (9,5 kWh per m³). Non sostituisce una diagnosi energetica dettagliata né una relazione tecnica.  
-          Per una valutazione precisa è sempre opportuno rivolgersi a un tecnico abilitato.
+          Questa stima utilizza valori medi di riferimento per il fabbisogno termico (kWh/m² anno),
+          per il gas (9,5 kWh per m³) e per le detrazioni fiscali (esempio 50% in 10 anni).
+          Non sostituisce una diagnosi energetica né una consulenza fiscale personalizzata.
         </p>
       `;
       box.style.display = 'block';
@@ -1099,4 +1166,5 @@
 
 </body>
 </html>
+
 
