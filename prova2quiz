@@ -108,7 +108,7 @@
     }
 
     #main-nav a.active {
-      border-bottom-color: rgba(255,255,255,0.9);
+     border-bottom: none;
     }
 
     .menu-toggle {
