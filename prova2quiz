@@ -2205,7 +2205,7 @@
       updateAmazonBox('tv', key);
     }
 
-    /* ==============================
+        /* ==============================
        TEST GIGA
        ============================== */
 
@@ -2265,81 +2265,66 @@
       el.innerHTML = messaggio + linkAmazon;
     }
 
-<script>
-  // ...lascia tutto quello che hai già...
+    /* ==============================
+       TEST SMARTSCREEN
+       ============================== */
 
-  /* ==============================
-     TEST SMARTSCREEN
-     ============================== */
-  function valutaTestSmartScreen() {
-    if (!hasAcceptedLegal()) return;
+    function valutaTestSmartScreen() {
+      if (!hasAcceptedLegal()) return;
 
-    const domande = ['ss_q1','ss_q2','ss_q3','ss_q4','ss_q5','ss_q6'];
-    let punteggio = 0;
-    let risposte  = 0;
+      const domande = ['ss_q1','ss_q2','ss_q3','ss_q4','ss_q5','ss_q6'];
+      let punteggio = 0;
+      let risposte  = 0;
 
-    domande.forEach(function(nome) {
-      const sel = document.querySelector('input[name="' + nome + '"]:checked');
-      if (sel) {
-        risposte++;
-        punteggio += parseInt(sel.value, 10);
+      domande.forEach(function(nome) {
+        const sel = document.querySelector('input[name="' + nome + '"]:checked');
+        if (sel) {
+          risposte++;
+          punteggio += parseInt(sel.value, 10);
+        }
+      });
+
+      const el = document.getElementById('risultato-smartscreen');
+      if (!el) return;
+
+      el.className = 'test-result';
+
+      if (risposte < domande.length) {
+        el.textContent = 'Rispondi a tutte le domande del Test SmartScreen per vedere il risultato.';
+        return;
       }
-    });
 
-    const el = document.getElementById('risultato-smartscreen');
-    if (!el) return;
+      let messaggio = '';
 
-    // reset classi
-    el.className = 'test-result';
+      if (punteggio <= 4) {
+        el.classList.add('result-good');
+        messaggio =
+          'Verde: il tuo uso dello smartphone è abbastanza sotto controllo. ' +
+          'Lo usi quando serve e non sembri dipendere troppo dallo “scroll infinito”. ' +
+          'Continua così, magari tenendo d’occhio solo il tempo a letto prima di dormire.';
+      } else if (punteggio <= 8) {
+        el.classList.add('result-medium');
+        messaggio =
+          'Giallo: lo smartphone ti prende più tempo di quanto pensi. ' +
+          'Non sei in modalità emergenza, ma qualche abitudine (notifiche, scroll a letto, ' +
+          'telefono automatico in ogni pausa) inizia a rubarti ore preziose. ' +
+          'Potresti iniziare con piccoli esperimenti: togli notifiche inutili o fissa una “fascia oraria senza telefono”.';
+      } else {
+        el.classList.add('result-bad');
+        messaggio =
+          'Rosso: il telefono ha parecchio potere sulle tue giornate. ' +
+          'Scroll automatico, molte notifiche, uso serale lungo: è facile perdere pezzi di tempo senza accorgersene. ' +
+          'Non serve panico, ma può essere il momento giusto per un “reset”: ' +
+          'disattiva notifiche non essenziali, imposta limiti orari e prova ogni tanto qualche pomeriggio “offline guidato”.';
+      }
 
-    if (risposte < domande.length) {
-      el.textContent = 'Rispondi a tutte le domande del Test SmartScreen per vedere il risultato.';
-      return;
+      el.textContent = messaggio;
     }
-
-    let messaggio = '';
-
-    if (punteggio <= 4) {
-      // uso sereno
-      el.classList.add('result-good');
-      messaggio =
-        'Verde: il tuo uso dello smartphone è abbastanza sotto controllo. ' +
-        'Lo usi quando serve e non sembri dipendere troppo dallo “scroll infinito”. ' +
-        'Continua così, magari tenendo d’occhio solo il tempo a letto prima di dormire.';
-    } else if (punteggio <= 8) {
-      // zona gialla
-      el.classList.add('result-medium');
-      messaggio =
-        'Giallo: lo smartphone ti prende più tempo di quanto pensi. ' +
-        'Non sei in modalità emergenza, ma qualche abitudine (notifiche, scroll a letto, ' +
-        'telefono automatico in ogni pausa) inizia a rubarti ore preziose. ' +
-        'Potresti iniziare con piccoli esperimenti: togli notifiche inutili o fissa una “fascia oraria senza telefono”.';
-    } else {
-      // zona rossa
-      el.classList.add('result-bad');
-      messaggio =
-        'Rosso: il telefono ha parecchio potere sulle tue giornate. ' +
-        'Scroll automatico, molte notifiche, uso serale lungo: è facile perdere pezzi di tempo senza accorgersene. ' +
-        'Non serve panico, ma può essere il momento giusto per un “reset”: ' +
-        'disattiva notifiche non essenziali, imposta limiti orari e prova ogni tanto qualche pomeriggio “offline guidato”.';
-    }
-
-    el.textContent = messaggio;
-  }
-
-  // ...e poi il resto del tuo script rimane identico
-</script>
-
-
-
-
-
-
-
 
     /* ==============================
        TEST ANTI-ALGORITMO
        ============================== */
+
     function valutaTestAntiAlgoritmo() {
       if (!hasAcceptedLegal()) return;
 
@@ -2365,11 +2350,6 @@
         return;
       }
 
-      // Punteggio minimo = 0, massimo = 14
-      // 0–5  = poco influenzabile
-      // 6–10 = medio
-      // 11–14 = molto influenzabile
-
       if (punteggio <= 5) {
         el.textContent =
           'Verde: sei tu a guidare l’algoritmo, non il contrario. Sai cosa vuoi vedere e usi i suggerimenti come un semplice extra.';
@@ -2386,12 +2366,6 @@
       }
     }
 
-
-
-
-
-
-
     /* ==============================
        FOOTER YEAR
        ============================== */
@@ -2403,6 +2377,7 @@
       }
     });
   </script>
+
 
   <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
   <div id="cookie-banner">
