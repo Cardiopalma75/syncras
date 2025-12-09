@@ -108,7 +108,7 @@
     }
 
     #main-nav a.active {
-      border-bottom-color: rgba(255,255,255,0.9);
+     border-bottom: none;
     }
 
     .menu-toggle {
@@ -432,14 +432,6 @@
       font-weight: 600;
     }
 
-    .answer-option.input-checked,
-    .answer-option input[type="radio"]:checked + span {
-    }
-
-    .answer-option input[type="radio"]:checked + span::before {
-      content: '';
-    }
-
     @supports(selector(:has(*))) {
       .answer-option:has(input[type="radio"]:checked) {
         background: #d9c8ff;
@@ -613,7 +605,7 @@
       <nav id="main-nav">
         <a href="index.html">Home</a>
         <a href="blog.html">Blog</a>
-        <a href="quiz.html">Test Anti-Acquisto</a>
+        <a href="quiz.html" class="active">Test Anti-Acquisto</a>
         <a href="calcolatori.html">Calcolatori</a>
         <a href="curiosita.html">Curiosità</a>
         <a href="misteri.html">Misteri</a>
@@ -716,6 +708,30 @@
             o se è meglio puntare più in alto.
           </p>
           <a href="#test-tv" class="quiz-card-link">Vai al test</a>
+        </article>
+
+        <article class="quiz-card">
+  <div class="quiz-card-label">TEST #7</div>
+  <h3>Test Anti-Algoritmo</h3>
+  <p>
+    Quanto sei influenzabile dai suggerimenti dei social? Scopri se sei tu a guidare il feed,
+    o se è il feed a guidare te.
+  </p>
+  <a href="#test-anti-algoritmo" class="quiz-card-link">Vai al test</a>
+</article>
+
+
+
+
+        <article class="quiz-card">
+          <div class="quiz-card-label">TEST #8</div>
+          <h3>Test SmartScreen</h3>
+          <p>
+            Vuoi misurare quanto tempo ti “ruba” lo smartphone? Scopri il tuo livello di scroll infinito
+            e se sei ancora tu a decidere quando mettere giù il telefono.
+          </p>
+          <a href="#test-smartscreen" class="quiz-card-link">Vai al test</a>
+
         </article>
       </div>
     </section>
@@ -1111,6 +1127,257 @@
           <button type="button" class="test-btn" onclick="valutaTestGiga()">Calcola il risultato</button>
           <p id="giga-result" class="test-result"></p>
         </section>
+
+
+<section class="test-card" id="test-smartscreen">
+  <div class="test-section-label">Test abitudini</div>
+  <h2>Test SmartScreen – quante ore regali allo smartphone?</h2>
+  <p class="test-subtitle">
+    6 domande veloci per capire se il tuo uso dello smartphone è sotto controllo
+    o se stai scivolando nello “scroll infinito”.
+  </p>
+
+  <ol class="test-questions">
+    <li>
+      Quante volte sblocchi il telefono in un’ora “normale”?<br>
+      <label class="answer-option">
+        <input type="radio" name="ss_q1" value="0">
+        <span>0–5 volte</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="ss_q1" value="1">
+        <span>6–15 volte</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="ss_q1" value="2">
+        <span>Più di 15 volte</span>
+      </label>
+    </li>
+
+    <li>
+      Quanto tempo passi al giorno davanti allo schermo del telefono (in media)?<br>
+      <label class="answer-option">
+        <input type="radio" name="ss_q2" value="0">
+        <span>Meno di 1,5 ore</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="ss_q2" value="1">
+        <span>Tra 1,5 e 3 ore</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="ss_q2" value="2">
+        <span>Oltre 3 ore</span>
+      </label>
+    </li>
+
+    <li>
+      Cosa fai di solito quando hai 2–3 minuti di attesa (fila, bus, sala d’attesa)?<br>
+      <label class="answer-option">
+        <input type="radio" name="ss_q3" value="0">
+        <span>Guardo intorno o penso ai fatti miei</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="ss_q3" value="1">
+        <span>A volte prendo il telefono, a volte no</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="ss_q3" value="2">
+        <span>Prendo sempre il telefono, automatico</span>
+      </label>
+    </li>
+
+    <li>
+      Come gestisci le notifiche di social, chat e app varie?<br>
+      <label class="answer-option">
+        <input type="radio" name="ss_q4" value="0">
+        <span>Ho tolto quasi tutte le notifiche non essenziali</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="ss_q4" value="1">
+        <span>Ne tengo alcune, ma cerco di limitarle</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="ss_q4" value="2">
+        <span>È un carnevale: vibra e suona tutto</span>
+      </label>
+    </li>
+
+    <li>
+      Quanto spesso ti capita di “scrollare” a letto prima di dormire?<br>
+      <label class="answer-option">
+        <input type="radio" name="ss_q5" value="0">
+        <span>Quasi mai / 5 minuti al massimo</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="ss_q5" value="1">
+        <span>Spesso, 15–30 minuti</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="ss_q5" value="2">
+        <span>Praticamente sempre, oltre 30 minuti</span>
+      </label>
+    </li>
+
+    <li>
+      Se per un pomeriggio resti senza smartphone (batteria morta o dimenticato a casa), come ti senti?<br>
+      <label class="answer-option">
+        <input type="radio" name="ss_q6" value="0">
+        <span>Quasi sollevato: ogni tanto fa bene</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="ss_q6" value="1">
+        <span>Un po’ a disagio, ma gestibile</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="ss_q6" value="2">
+        <span>In crisi: controllo ovunque, mi manca tantissimo</span>
+      </label>
+    </li>
+  </ol>
+
+  <button type="button" class="test-btn" onclick="valutaTestSmartScreen()">
+    Calcola il risultato
+  </button>
+  <p id="risultato-smartscreen" class="test-result"></p>
+</section>
+
+
+
+
+
+        <!-- TEST ANTI-ALGORITMO -->
+        <section class="test-card" id="test-anti-algoritmo">
+          <div class="test-section-label">Test comportamento online</div>
+          <h2>Test Anti-Algoritmo – Quanto ti guida il feed?</h2>
+          <p class="test-subtitle">
+            7 domande veloci per capire se sei tu a scegliere cosa guardare,
+            o se sono i suggerimenti a scegliere per te.
+          </p>
+
+          <ol class="test-questions">
+            <li>
+              Quando apri un social (YouTube, TikTok, Instagram...), dove clicchi più spesso?<br>
+              <label class="answer-option">
+                <input type="radio" name="alg_q1" value="0">
+                <span>Sulle cose che cerco io (barra di ricerca, profili salvati)</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="alg_q1" value="1">
+                <span>Un po’ cerco io, un po’ seguo i suggeriti</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="alg_q1" value="2">
+                <span>Quasi sempre sui suggeriti in home</span>
+              </label>
+            </li>
+
+            <li>
+              Ti capita di dire “guardo solo un video” e poi passare 30–40 minuti a scrollare?<br>
+              <label class="answer-option">
+                <input type="radio" name="alg_q2" value="0">
+                <span>Quasi mai</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="alg_q2" value="1">
+                <span>A volte, quando sono stanco</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="alg_q2" value="2">
+                <span>Spessissimo, è la normalità</span>
+              </label>
+            </li>
+
+            <li>
+              Quanto spesso ti appaiono sempre gli stessi tipi di contenuti (stessa voce, stesso tema)?<br>
+              <label class="answer-option">
+                <input type="radio" name="alg_q3" value="0">
+                <span>Poco, il feed è abbastanza vario</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="alg_q3" value="1">
+                <span>Abbastanza spesso</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="alg_q3" value="2">
+                <span>Quasi sempre: sembra la replica dello stesso video</span>
+              </label>
+            </li>
+
+            <li>
+              Se un video polemico o “drammatico” appare nei suggeriti, cosa fai di solito?<br>
+              <label class="answer-option">
+                <input type="radio" name="alg_q4" value="0">
+                <span>Lo salto, non mi interessa alimentare il casino</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="alg_q4" value="1">
+                <span>A volte lo guardo, a volte lo ignoro</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="alg_q4" value="2">
+                <span>Lo apro quasi sempre “solo per capire”</span>
+              </label>
+            </li>
+
+            <li>
+              Ogni quanto pulisci o modifichi i suggerimenti (es. “non mi interessa”, togli notifiche, disiscrizioni)?<br>
+              <label class="answer-option">
+                <input type="radio" name="alg_q5" value="0">
+                <span>Ogni tanto faccio pulizia: segnalo e sistemo</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="alg_q5" value="1">
+                <span>Raramente</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="alg_q5" value="2">
+                <span>Mai: “se l’algoritmo vuole così...”</span>
+              </label>
+            </li>
+
+            <li>
+              Quante volte hai acquistato qualcosa dopo averlo visto più volte nei suggerimenti o nelle sponsorizzate?<br>
+              <label class="answer-option">
+                <input type="radio" name="alg_q6" value="0">
+                <span>Praticamente mai</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="alg_q6" value="1">
+                <span>Qualche volta</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="alg_q6" value="2">
+                <span>Più di una volta, me ne sono accorto dopo</span>
+              </label>
+            </li>
+
+            <li>
+              Se un social smettesse di suggerirti contenuti per una settimana, come ti sentiresti?<br>
+              <label class="answer-option">
+                <input type="radio" name="alg_q7" value="0">
+                <span>Rilassato: potrei scegliere io cosa vedere</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="alg_q7" value="1">
+                <span>Stranito, ma mi arrangerei</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="alg_q7" value="2">
+                <span>Perduto: non saprei da dove partire</span>
+              </label>
+            </li>
+          </ol>
+
+          <button type="button" class="test-btn" onclick="valutaTestAntiAlgoritmo()">
+            Calcola il risultato
+          </button>
+          <p id="risultato-anti-algoritmo" class="test-result"></p>
+        </section>
+
+
+
+
+
 
         <!-- TEST LAVATRICE COMPLETO -->
         <section class="test-card" id="test-lavatrice">
@@ -1938,7 +2205,7 @@
       updateAmazonBox('tv', key);
     }
 
-    /* ==============================
+        /* ==============================
        TEST GIGA
        ============================== */
 
@@ -1999,6 +2266,107 @@
     }
 
     /* ==============================
+       TEST SMARTSCREEN
+       ============================== */
+
+    function valutaTestSmartScreen() {
+      if (!hasAcceptedLegal()) return;
+
+      const domande = ['ss_q1','ss_q2','ss_q3','ss_q4','ss_q5','ss_q6'];
+      let punteggio = 0;
+      let risposte  = 0;
+
+      domande.forEach(function(nome) {
+        const sel = document.querySelector('input[name="' + nome + '"]:checked');
+        if (sel) {
+          risposte++;
+          punteggio += parseInt(sel.value, 10);
+        }
+      });
+
+      const el = document.getElementById('risultato-smartscreen');
+      if (!el) return;
+
+      el.className = 'test-result';
+
+      if (risposte < domande.length) {
+        el.textContent = 'Rispondi a tutte le domande del Test SmartScreen per vedere il risultato.';
+        return;
+      }
+
+      let messaggio = '';
+
+      if (punteggio <= 4) {
+        el.classList.add('result-good');
+        messaggio =
+          'Verde: il tuo uso dello smartphone è abbastanza sotto controllo. ' +
+          'Lo usi quando serve e non sembri dipendere troppo dallo “scroll infinito”. ' +
+          'Continua così, magari tenendo d’occhio solo il tempo a letto prima di dormire.';
+      } else if (punteggio <= 8) {
+        el.classList.add('result-medium');
+        messaggio =
+          'Giallo: lo smartphone ti prende più tempo di quanto pensi. ' +
+          'Non sei in modalità emergenza, ma qualche abitudine (notifiche, scroll a letto, ' +
+          'telefono automatico in ogni pausa) inizia a rubarti ore preziose. ' +
+          'Potresti iniziare con piccoli esperimenti: togli notifiche inutili o fissa una “fascia oraria senza telefono”.';
+      } else {
+        el.classList.add('result-bad');
+        messaggio =
+          'Rosso: il telefono ha parecchio potere sulle tue giornate. ' +
+          'Scroll automatico, molte notifiche, uso serale lungo: è facile perdere pezzi di tempo senza accorgersene. ' +
+          'Non serve panico, ma può essere il momento giusto per un “reset”: ' +
+          'disattiva notifiche non essenziali, imposta limiti orari e prova ogni tanto qualche pomeriggio “offline guidato”.';
+      }
+
+      el.textContent = messaggio;
+    }
+
+    /* ==============================
+       TEST ANTI-ALGORITMO
+       ============================== */
+
+    function valutaTestAntiAlgoritmo() {
+      if (!hasAcceptedLegal()) return;
+
+      const domande = ['alg_q1','alg_q2','alg_q3','alg_q4','alg_q5','alg_q6','alg_q7'];
+      let punteggio = 0;
+      let risposte  = 0;
+
+      domande.forEach(function(nome) {
+        const sel = document.querySelector('input[name="' + nome + '"]:checked');
+        if (sel) {
+          risposte++;
+          punteggio += parseInt(sel.value, 10);
+        }
+      });
+
+      const el = document.getElementById('risultato-anti-algoritmo');
+      if (!el) return;
+
+      el.className = 'test-result';
+
+      if (risposte < domande.length) {
+        el.textContent = 'Rispondi a tutte le domande per vedere il risultato.';
+        return;
+      }
+
+      if (punteggio <= 5) {
+        el.textContent =
+          'Verde: sei tu a guidare l’algoritmo, non il contrario. Sai cosa vuoi vedere e usi i suggerimenti come un semplice extra.';
+        el.classList.add('result-good');
+      } else if (punteggio <= 10) {
+        el.textContent =
+          'Giallo: l’algoritmo ti conosce abbastanza bene. Ogni tanto ti fai trascinare, ma se decidi di mettere un limite, ci riesci.';
+        el.classList.add('result-medium');
+      } else {
+        el.textContent =
+          'Rosso: il tuo feed ti guida parecchio. Se non stai attento, finisci in tunnel di contenuti tutti uguali. ' +
+          'Ogni tanto prova a cercare tu qualcosa di diverso e a dire “non mi interessa” ai video che ti rubano tempo.';
+        el.classList.add('result-bad');
+      }
+    }
+
+    /* ==============================
        FOOTER YEAR
        ============================== */
 
@@ -2009,6 +2377,7 @@
       }
     });
   </script>
+
 
   <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
   <div id="cookie-banner">
@@ -2100,7 +2469,7 @@
       if (window.__syncrasGaLoaded) return;
       window.__syncrasGaLoaded = true;
 
-      // Riabilita GA solo dopo il consenso
+       // Riabilita GA solo dopo il consenso
       window['ga-disable-' + GA_ID] = false;
 
       const gaScript = document.createElement('script');
@@ -2161,4 +2530,6 @@
 
 </body>
 </html>
+
+
 
