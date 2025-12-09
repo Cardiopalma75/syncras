@@ -720,6 +720,119 @@
   <a href="#test-anti-algoritmo" class="quiz-card-link">Vai al test</a>
 </article>
 
+<section class="test-card" id="test-smartscreen">
+  <div class="test-section-label">Test abitudini</div>
+  <h2>Test SmartScreen – quante ore regali allo smartphone?</h2>
+  <p class="test-subtitle">
+    6 domande veloci per capire se il tuo uso dello smartphone è sotto controllo
+    o se stai scivolando nello “scroll infinito”.
+  </p>
+
+  <ol class="test-questions">
+    <li>
+      Quante volte sblocchi il telefono in un’ora “normale”?<br>
+      <label class="answer-option">
+        <input type="radio" name="ss_q1" value="0">
+        <span>0–5 volte</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="ss_q1" value="1">
+        <span>6–15 volte</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="ss_q1" value="2">
+        <span>Più di 15 volte</span>
+      </label>
+    </li>
+
+    <li>
+      Quanto tempo passi al giorno davanti allo schermo del telefono (in media)?<br>
+      <label class="answer-option">
+        <input type="radio" name="ss_q2" value="0">
+        <span>Meno di 1,5 ore</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="ss_q2" value="1">
+        <span>Tra 1,5 e 3 ore</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="ss_q2" value="2">
+        <span>Oltre 3 ore</span>
+      </label>
+    </li>
+
+    <li>
+      Cosa fai di solito quando hai 2–3 minuti di attesa (fila, bus, sala d’attesa)?<br>
+      <label class="answer-option">
+        <input type="radio" name="ss_q3" value="0">
+        <span>Guardo intorno o penso ai fatti miei</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="ss_q3" value="1">
+        <span>A volte prendo il telefono, a volte no</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="ss_q3" value="2">
+        <span>Prendo sempre il telefono, automatico</span>
+      </label>
+    </li>
+
+    <li>
+      Come gestisci le notifiche di social, chat e app varie?<br>
+      <label class="answer-option">
+        <input type="radio" name="ss_q4" value="0">
+        <span>Ho tolto quasi tutte le notifiche non essenziali</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="ss_q4" value="1">
+        <span>Ne tengo alcune, ma cerco di limitarle</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="ss_q4" value="2">
+        <span>È un carnevale: vibra e suona tutto</span>
+      </label>
+    </li>
+
+    <li>
+      Quanto spesso ti capita di “scrollare” a letto prima di dormire?<br>
+      <label class="answer-option">
+        <input type="radio" name="ss_q5" value="0">
+        <span>Quasi mai / 5 minuti al massimo</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="ss_q5" value="1">
+        <span>Spesso, 15–30 minuti</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="ss_q5" value="2">
+        <span>Praticamente sempre, oltre 30 minuti</span>
+      </label>
+    </li>
+
+    <li>
+      Se per un pomeriggio resti senza smartphone (batteria morta o dimenticato a casa), come ti senti?<br>
+      <label class="answer-option">
+        <input type="radio" name="ss_q6" value="0">
+        <span>Quasi sollevato: ogni tanto fa bene</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="ss_q6" value="1">
+        <span>Un po’ a disagio, ma gestibile</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="ss_q6" value="2">
+        <span>In crisi: controllo ovunque, mi manca tantissimo</span>
+      </label>
+    </li>
+  </ol>
+
+  <button type="button" class="test-btn" onclick="valutaTestSmartScreen()">
+    Calcola il risultato
+  </button>
+  <p id="risultato-smartscreen" class="test-result"></p>
+</section>
+
+
 
         <article class="quiz-card">
           <div class="quiz-card-label">TEST #8</div>
@@ -2144,6 +2257,78 @@
 
       el.innerHTML = messaggio + linkAmazon;
     }
+
+<script>
+  // ...lascia tutto quello che hai già...
+
+  /* ==============================
+     TEST SMARTSCREEN
+     ============================== */
+  function valutaTestSmartScreen() {
+    if (!hasAcceptedLegal()) return;
+
+    const domande = ['ss_q1','ss_q2','ss_q3','ss_q4','ss_q5','ss_q6'];
+    let punteggio = 0;
+    let risposte  = 0;
+
+    domande.forEach(function(nome) {
+      const sel = document.querySelector('input[name="' + nome + '"]:checked');
+      if (sel) {
+        risposte++;
+        punteggio += parseInt(sel.value, 10);
+      }
+    });
+
+    const el = document.getElementById('risultato-smartscreen');
+    if (!el) return;
+
+    // reset classi
+    el.className = 'test-result';
+
+    if (risposte < domande.length) {
+      el.textContent = 'Rispondi a tutte le domande del Test SmartScreen per vedere il risultato.';
+      return;
+    }
+
+    let messaggio = '';
+
+    if (punteggio <= 4) {
+      // uso sereno
+      el.classList.add('result-good');
+      messaggio =
+        'Verde: il tuo uso dello smartphone è abbastanza sotto controllo. ' +
+        'Lo usi quando serve e non sembri dipendere troppo dallo “scroll infinito”. ' +
+        'Continua così, magari tenendo d’occhio solo il tempo a letto prima di dormire.';
+    } else if (punteggio <= 8) {
+      // zona gialla
+      el.classList.add('result-medium');
+      messaggio =
+        'Giallo: lo smartphone ti prende più tempo di quanto pensi. ' +
+        'Non sei in modalità emergenza, ma qualche abitudine (notifiche, scroll a letto, ' +
+        'telefono automatico in ogni pausa) inizia a rubarti ore preziose. ' +
+        'Potresti iniziare con piccoli esperimenti: togli notifiche inutili o fissa una “fascia oraria senza telefono”.';
+    } else {
+      // zona rossa
+      el.classList.add('result-bad');
+      messaggio =
+        'Rosso: il telefono ha parecchio potere sulle tue giornate. ' +
+        'Scroll automatico, molte notifiche, uso serale lungo: è facile perdere pezzi di tempo senza accorgersene. ' +
+        'Non serve panico, ma può essere il momento giusto per un “reset”: ' +
+        'disattiva notifiche non essenziali, imposta limiti orari e prova ogni tanto qualche pomeriggio “offline guidato”.';
+    }
+
+    el.textContent = messaggio;
+  }
+
+  // ...e poi il resto del tuo script rimane identico
+</script>
+
+
+
+
+
+
+
 
     /* ==============================
        TEST ANTI-ALGORITMO
