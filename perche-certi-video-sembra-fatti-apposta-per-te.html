@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perché certi video sembrano fatti apposta per te? Guida agli algoritmi | Syncras.App</title>
+  <meta name="description" content="Perché i social ti mostrano sempre gli stessi video? Scopri come funziona davvero l’algoritmo, perché la bacheca diventa monotona e come raddrizzare i suggerimenti.">
+  <meta name="robots" content="index,follow">
+
+  <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --bg-page: #F7F7FB;
+      --text-main: #403E43;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg-page);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      color: var(--text-main);
+    }
+
+    /* HEADER VIOLA UNIFICATO */
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color: white;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+    #main-nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding-bottom: 2px;
+    }
+    #main-nav a:hover {
+      text-decoration: underline;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .menu-toggle span {
+      margin-left: 4px;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        margin: 0 auto;
+        max-width: 1180px;
+        flex-direction: column;
+        background-color: var(--violet-dark);
+        padding: 10px 16px 12px 16px;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
+      }
+      #main-nav a {
+        padding: 6px 0;
+      }
+      body.nav-open #main-nav {
+        display: flex;
+      }
+      .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+
+    main {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    h1, h2, h3 {
+      color: var(--violet-dark);
+    }
+    p {
+      margin-bottom: 15px;
+    }
+    ul {
+      margin-left: 20px;
+    }
+
+    .box {
+      background: #f6faf7;
+      border: 1px solid #d7e8dc;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .tip-box {
+      background: #F6F4FF;
+      border-left: 4px solid #6C5CE7;
+      padding: 14px;
+      margin: 25px 0;
+      border-radius: 8px;
+    }
+
+    .mini-test {
+      background: #FDFBF6;
+      border-left: 4px solid #EAB308;
+      padding: 14px;
+      margin: 25px 0;
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+
+    .back-links {
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+    .back-links a {
+      color: var(--violet-dark);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .back-links a:hover {
+      text-decoration: underline;
+    }
+
+    .small {
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 0.95rem;
+    }
+    th, td {
+      border: 1px solid #E5E7EB;
+      padding: 8px 10px;
+      text-align: left;
+    }
+    th {
+      background: #F3F4FF;
+    }
+
+    /* Box prodotto / suggerimento */
+    .product-box {
+      background: #f6f0ff;
+      border: 1px solid #dccff8;
+      border-radius: 10px;
+      padding: 18px 16px;
+      margin: 25px 0;
+      font-size: 0.95rem;
+    }
+    .product-box a {
+      display: inline-block;
+      margin-top: 8px;
+      color: #ffffff;
+      background: var(--violet-main);
+      padding: 8px 14px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .product-box a:hover {
+      background: var(--violet-dark);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      background: #eee;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER UNIFICATO -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
+
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
+
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="quiz.html">Test Anti-Acquisto</a>
+        <a href="calcolatori.html">Calcolatori</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="offerte.html">Prodotti Consapevoli</a>
+        <a href="chi.html">Chi siamo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="back-links">
+      ← <a href="index.html">Torna alla Home</a> |
+      <a href="blog.html">Vai al Blog</a> |
+      <a href="categorie.html">Categorie</a>
+    </div>
+
+    <h1>Perché certi video sembrano fatti apposta per te? (Versione con l’algoritmo troppo entusiasta)</h1>
+
+    <button id="shareBtnTop"
+      style="background: var(--violet-main); color:white; padding:10px 15px; border:none;
+             border-radius:6px; cursor:pointer; margin-bottom:20px; font-weight:600;">
+      📎 Condividi questo articolo
+    </button>
+
+    <p>
+      Apri il social di turno per “giusto due minuti” e ti ritrovi la bacheca piena di:
+      <strong>gli stessi video, gli stessi argomenti, gli stessi faccioni</strong>.
+      E spesso ti chiedi: <em>“Ma com’è possibile che sappiano sempre cosa mi interessa?”</em>
+    </p>
+
+    <p>
+      Spoiler: non è magia, non è telepatia, non è il microfono che ti spia mentre parli
+      (nella maggior parte dei casi). È qualcosa di più semplice e più noioso:
+      <strong>algoritmo + abitudini</strong>.
+    </p>
+
+    <div class="tip-box" style="background:#FFFBEA; border-left-color:#FBBF24;">
+      <strong>Riassunto veloce (senza formule, solo realtà):</strong>
+      <ul>
+        <li>Gli algoritmi guardano <strong>cosa fai</strong>, non cosa pensi.</li>
+        <li>Se ti fermi su certi video, te ne mostrano <strong>altri uguali o simili</strong>.</li>
+        <li>La bacheca diventa una versione estrema di te, basata sulle tue abitudini (anche distratte).</li>
+      </ul>
+      <p style="margin-top:8px; font-size:0.9rem;">
+        La buona notizia? Puoi mandare segnali diversi e “raddrizzare” i suggerimenti senza diventare
+        tecnico informatico. Basta capire due o tre meccanismi base.
+      </p>
+    </div>
+
+    <h2>1. La storia di Luca e del feed che è impazzito (versione breve)</h2>
+
+    <p>
+      Luca apre un social una sera, stanco, solo per “fare scroll”.  
+      Gli compare un video di gente che rompe oggetti con una pressa idraulica.  
+      Carino, ci perde <strong>5 secondi in più</strong> del solito.
+    </p>
+
+    <p>
+      Il giorno dopo, la sua bacheca è:
+    </p>
+
+    <ul>
+      <li>10 video con presse idrauliche;</li>
+      <li>3 video con cose che esplodono al rallentatore;</li>
+      <li>un paio di suggerimenti su “attrezzatura industriale che forse ti piacerà”.</li>
+    </ul>
+
+    <p>
+      Dopo una settimana, Luca è convinto che il social “lo conosca benissimo”.  
+      In realtà il sistema sa solo una cosa:
+      <strong>“Quando rompi cose, Luca non scorre via subito”</strong>.
+    </p>
+
+    <p>
+      E siccome l’algoritmo non è uno psicologo, non si chiede se Luca:
+    </p>
+
+    <ul>
+      <li>era solo annoiato,</li>
+      <li>ha guardato per caso,</li>
+      <li>o se vuole davvero cambiare vita e aprire un’officina meccanica.</li>
+    </ul>
+
+    <p>
+      Ha visto un segnale → lo ha <strong>amplificato</strong>.
+    </p>
+
+    <h2>2. Come funziona davvero l’algoritmo (spiegato semplice)</h2>
+
+    <p>
+      Ogni piattaforma ha i suoi dettagli tecnici, ma il concetto di base è sempre lo stesso:
+      l’algoritmo prova a indovinare cosa potresti voler vedere
+      <strong>prima ancora</strong> che tu lo sappia.
+    </p>
+
+    <p>
+      Per farlo, osserva soprattutto:
+    </p>
+
+    <ul>
+      <li><strong>Tempo di visualizzazione</strong>: quanto ti fermi su un video o un post.</li>
+      <li><strong>Interazioni</strong>: like, commenti, condivisioni, salvataggi.</li>
+      <li><strong>Ripetizione</strong>: quante volte torni su contenuti simili.</li>
+      <li><strong>Scorrimento veloce</strong>: cosa salti in meno di mezzo secondo.</li>
+    </ul>
+
+    <p>
+      In pratica traduce il tuo comportamento in una specie di etichetta:
+    </p>
+
+    <p style="background:#f0eefc; padding:10px; border-radius:6px; font-size:0.95rem;">
+      <strong>“Utenti che guardano X per più di Y secondi, di solito apprezzano anche Z.”</strong>
+    </p>
+
+    <p>
+      Non c’è magia, solo <strong>statistica e tentativi</strong>.
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Cosa fai</th>
+          <th>Cosa interpreta l’algoritmo</th>
+          <th>Effetto sul feed</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Guardi un video fino alla fine</td>
+          <td>“Contenuto interessante per te”</td>
+          <td>Più video simili nella bacheca</td>
+        </tr>
+        <tr>
+          <td>Metti like e commenti</td>
+          <td>“Segnale forte di gradimento”</td>
+          <td>Contenuto spinto ancora di più</td>
+        </tr>
+        <tr>
+          <td>Scorri via in 0,2 secondi</td>
+          <td>“Poco o nulla di interessante”</td>
+          <td>Meno contenuti simili in futuro</td>
+        </tr>
+        <tr>
+          <td>Cerchi un tema nel box di ricerca</td>
+          <td>“Nuovo interesse emerso”</td>
+          <td>Comparsa di contenuti nuovi a tema</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="small">
+      Ogni piattaforma ha algoritmi diversi e regole non pubbliche. Qui parliamo per semplificazioni generali,
+      utili a capire il comportamento tipico dei sistemi di raccomandazione.
+    </p>
+
+    <div class="mini-test">
+      <strong>Mini test mentale:</strong><br>
+      Se negli ultimi 7 giorni hai guardato soprattutto:
+      <ul>
+        <li>video di polemiche,</li>
+        <li>contenuti “shock”,</li>
+        <li>clip corte ma super emotive…</li>
+      </ul>
+      è probabile che il tuo feed ti restituisca:
+      <ul>
+        <li>più polemiche,</li>
+        <li>più “shock”,</li>
+        <li>più contenuti che ti tengono incollato.</li>
+      </ul>
+      Non perché “sei così”, ma perché <strong>sei stato letto così</strong> dai tuoi ultimi click.
+    </div>
+
+    <h2>3. Perché la bacheca diventa tutta uguale</h2>
+
+    <p>
+      Il problema non è che l’algoritmo “non ti conosce”.  
+      Il problema è che spesso <strong>ti riduce a una sola versione di te</strong>.
+    </p>
+
+    <p>
+      Se per qualche giorno ti concentri su:
+    </p>
+
+    <ul>
+      <li>video di finanza → diventi “quello della finanza”;</li>
+      <li>video di cospirazioni → diventi “quello dei complotti”;</li>
+      <li>video di gattini → diventi “quello dei gattini (hardcore)”.</li>
+    </ul>
+
+    <p>
+      L’algoritmo amplifica ciò che nota di più, e lentamente il tuo feed passa da:
+    </p>
+
+    <ul>
+      <li><em>“un po’ di tutto”</em> → all’inizio;</li>
+      <li><em>“tutto di più su una cosa sola”</em> → dopo un po’.</li>
+    </ul>
+
+    <p>
+      È comodo per “non pensare” troppo, ma ha un effetto collaterale:
+      <strong>ti chiude in una bolla</strong> dove vedi sempre le stesse idee, gli stessi toni, gli stessi schemi.
+    </p>
+
+    <h2>4. Lato comico: l’amico che capisce male la battuta</h2>
+
+    <p>
+      L’algoritmo è come quell’amico che fraintende una volta e poi insiste per sempre.
+    </p>
+
+    <p>
+      Tu dici:
+      <em>“Carino quel video di ricette”</em>.  
+      E lui:
+    </p>
+
+    <ul>
+      <li>ti manda 50 video di ricette,</li>
+      <li>ti chiede se vuoi aprire un ristorante,</li>
+      <li>ti gira 3 corsi per diventare chef.</li>
+    </ul>
+
+    <p>
+      Tu volevi solo una pasta al forno ben fatta,
+      lui ti ha iscritto a <strong>MasterChef</strong> a tua insaputa.
+    </p>
+
+    <p>
+      Gli algoritmi non conoscono la sfumatura:
+      <strong>confondono il “mi hai incuriosito 10 secondi” con “voglio basare la mia identità su questo”</strong>.
+    </p>
+
+    <h2>5. Come raddrizzare i suggerimenti in 48 ore (in pratica)</h2>
+
+    <p>
+      La parte bella è che, proprio come li hai “allenati” senza accorgertene,
+      puoi anche <strong>riprogrammarli un po’ alla volta</strong>.
+    </p>
+
+    <h3>1️⃣ Scorri velocissimo ciò che non vuoi più vedere</h3>
+
+    <p>
+      Quando compare un contenuto che non ti interessa più:
+    </p>
+
+    <ul>
+      <li>non fermarti,</li>
+      <li>non leggere,</li>
+      <li>non aprire i commenti “solo per vedere”.</li>
+    </ul>
+
+    <p>
+      Scrolla via in meno di mezzo secondo: per l’algoritmo è un segnale chiaro di “no grazie”.
+    </p>
+
+    <h3>2️⃣ Cerca attivamente contenuti diversi</h3>
+
+    <p>
+      Il box di ricerca è una delle armi più forti:
+      se inizi a cercare <strong>temi nuovi</strong> (es. scienza, documentari, artigianato, musica)
+      stai dicendo al sistema: “Ehi, non sono solo quello dei video polemici”.
+    </p>
+
+    <p>
+      Bastano pochi giorni di ricerche mirate per iniziare a vedere una bacheca più varia.
+    </p>
+
+    <h3>3️⃣ Usa i pulsanti “Non mi interessa” o “Mostramene meno”</h3>
+
+    <p>
+      Molte piattaforme hanno strumenti tipo:
+    </p>
+
+    <ul>
+      <li><strong>“Non mi interessa”</strong>,</li>
+      <li><strong>“Non suggerire questo canale”</strong>,</li>
+      <li><strong>“Segnala contenuto irrilevante”</strong>.</li>
+    </ul>
+
+    <p>
+      Non devi usarli per arrabbiarti col mondo: usali come
+      <strong>manopole di regolazione del feed</strong>.
+    </p>
+
+    <p class="small">
+      Le opzioni disponibili e il loro funzionamento preciso dipendono dalla piattaforma specifica.
+      Per i dettagli aggiornati su privacy, cronologia e suggerimenti è sempre meglio consultare la documentazione ufficiale
+      del servizio che utilizzi.
+    </p>
+
+    <h3>4️⃣ Fai “pulizia” nella cronologia (quando possibile)</h3>
+
+    <p>
+      Alcune app permettono di:
+    </p>
+
+    <ul>
+      <li>cancellare la <strong>cronologia delle visualizzazioni</strong>,</li>
+      <li>mettere in pausa la <strong>storia delle ricerche</strong>,</li>
+      <li>disattivare certi tipi di personalizzazione.</li>
+    </ul>
+
+    <p>
+      Non azzera tutto all’istante, ma aiuta a ridurre il peso dei vecchi interessi che non ti rappresentano più.
+    </p>
+
+    <h3>5️⃣ Allenalo verso ciò che vuoi davvero vedere</h3>
+
+    <p>
+      Così come prima “lo nutrivi” senza accorgertene, ora puoi farlo in modo consapevole:
+    </p>
+
+    <ul>
+      <li>fermati un po’ di più sui contenuti che ti fanno stare bene,</li>
+      <li>metti like a ciò che è davvero utile o interessante,</li>
+      <li>salva i video che vorresti rivedere o approfondire.</li>
+    </ul>
+
+    <p>
+      In pratica: <strong>usa l’algoritmo a tuo favore</strong>, invece di subirlo.
+    </p>
+
+    <div class="product-box">
+      <strong>Vuoi misurare quanto tempo ti “ruba” lo smartphone?</strong>
+      <p style="margin-top:6px;">
+        Stiamo preparando un <strong>Test SmartScreen</strong>: un mini strumento per calcolare quante ore al mese
+        regali ai social e quanto potresti recuperare con piccoli cambi di abitudine.
+      </p>
+      <p style="margin-top:8px; font-size:0.9rem;">
+        Appena sarà online lo troverai nella sezione <strong>Calcolatori</strong> di Syncras.App.
+      </p>
+      <a href="calcolatori.html">🔢 Vai ai calcolatori Syncras</a>
+    </div>
+
+    <h2>6. Conclusione: non è magia, è algoritmo (e un po’ di abitudine)</h2>
+
+    <p>
+      Il feed non è uno specchio della tua anima: è uno specchio delle tue <strong>azioni recenti</strong>.
+      Quello che clicchi, guardi e cerchi oggi diventa il menu di domani.
+    </p>
+
+    <p>
+      La filosofia Syncras è semplice:
+    </p>
+
+    <ul>
+      <li><strong>Capire come funziona</strong> (senza farsi spaventare dagli algoritmi);</li>
+      <li><strong>Usare i social con testa</strong>, non solo per abitudine;</li>
+      <li><strong>Tenere i contenuti utili e divertenti</strong>, riducendo il rumore e la monotonia.</li>
+    </ul>
+
+    <p>
+      Non devi diventare invisibile ai sistemi di raccomandazione.  
+      Ti basta <strong>insegnare al tuo feed chi vuoi essere oggi</strong>, invece di lasciare che lo decida lui.
+    </p>
+
+    <p class="small">
+      <strong>Tag:</strong> come funziona l’algoritmo, suggerimenti video social, bacheca personalizzata, feed monotono,
+      come resettare i consigli, tempo di visualizzazione, algoritmi social, dipendenza da smartphone
+    </p>
+
+    <!-- RICHIAMO AD ALTRI ARTICOLI CORRELATI -->
+    <section style="margin-top:30px; padding:16px; border-radius:10px; background:#F7F7FB; border:1px solid #E5E7EB;">
+      <h2 style="margin-top:0;">Ti possono interessare anche:</h2>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-top:10px;">
+        <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
+          <h3 style="margin-top:0; font-size:1rem;">
+            <a href="perche-perdiamo-ore-sullo-smartphone.html" style="text-decoration:none; color:var(--violet-dark);">
+              Perché perdiamo ore sullo smartphone senza accorgercene?
+            </a>
+          </h3>
+          <p style="font-size:0.9rem; margin:0;">
+            Un viaggio tra notifiche, scroll infinito e piccole abitudini che ci rubano tempo (e come riprendercelo).
+          </p>
+        </article>
+
+        <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
+          <h3 style="margin-top:0; font-size:1rem;">
+            <a href="come-difendersi-dalle-offerte-troppo-belle-online.html" style="text-decoration:none; color:var(--violet-dark);">
+              Come difendersi dalle offerte “troppo belle per essere vere” online
+            </a>
+          </h3>
+          <p style="font-size:0.9rem; margin:0;">
+            Trucchi pratici per riconoscere le offerte furbe dalle vere occasioni, senza farsi guidare solo dall’impulso.
+          </p>
+        </article>
+
+        <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
+          <h3 style="margin-top:0; font-size:1rem;">
+            <a href="test-anti-algoritmo-quanto-sei-influenzabile.html" style="text-decoration:none; color:var(--violet-dark);">
+              Test Anti-Algoritmo: quanto sei influenzabile dai suggerimenti?
+            </a>
+          </h3>
+          <p style="font-size:0.9rem; margin:0;">
+            Un mini test in stile Syncras per capire se sei tu a guidare il feed o è il feed a guidare te.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <div style="text-align:center; margin:30px 0 10px;">
+      <button id="shareBtnBottom"
+        style="background: var(--violet-main); color:white; padding:10px 18px; border:none;
+               border-radius:6px; cursor:pointer; font-weight:600; font-size:1rem;">
+        📎 Condividi questo articolo
+      </button>
+    </div>
+  </main>
+
+  <script>
+    // Toggle menu mobile
+    function toggleMenu() {
+      document.body.classList.toggle('nav-open');
+    }
+
+    // Condivisione articolo (top e bottom)
+    (function() {
+      const shareTop = document.getElementById('shareBtnTop');
+      const shareBottom = document.getElementById('shareBtnBottom');
+
+      function attachShare(btn) {
+        if (!btn) return;
+        if (navigator.share) {
+          btn.addEventListener('click', () => {
+            navigator.share({
+              title: 'Perché certi video sembrano fatti apposta per te?',
+              text: 'Guida semplice (e un po’ ironica) per capire come funzionano gli algoritmi dei social e come raddrizzare i suggerimenti.',
+              url: window.location.href
+            });
+          });
+        } else {
+          btn.style.display = 'none';
+        }
+      }
+
+      attachShare(shareTop);
+      attachShare(shareBottom);
+    })();
+  </script>
+
+  <footer>
+    © 2025 Syncras.App — Tutti i diritti riservati<br>
+    <div style="margin-top:8px;">
+      <a href="privacy.html">Privacy Policy</a> |
+      <a href="cookie.html">Cookie Policy</a> |
+      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
+      <a href="note-legali.html">Note Legali</a>
+    </div>
+    <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+      senza alcun costo aggiuntivo per l’utente.  
+      Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+      è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+    </p>
+  </footer>
+
+  <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
+  <div id="cookie-banner">
+    <p>
+      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
+      (Google Analytics). Alcuni link potrebbero essere di affiliazione.
+      Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
+      <a href="privacy.html">Privacy Policy</a>.
+    </p>
+    <div style="display:flex; gap:10px; margin-top:8px;">
+      <button type="button" onclick="rejectCookies()">
+        Rifiuta
+      </button>
+      <button id="cookie-btn" type="button" onclick="acceptCookies()">
+        Accetta e continua
+      </button>
+    </div>
+  </div>
+
+  <style>
+    #cookie-banner {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 90%;
+      width: 420px;
+      background: #ffffff;
+      border: 2px solid #6C5CE7;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      z-index: 9999;
+      font-family: Arial, sans-serif;
+      display: none;
+    }
+
+    #cookie-banner p {
+      margin: 0 0 12px 0;
+      font-size: 0.95rem;
+      color: #333;
+      line-height: 1.4;
+    }
+
+    #cookie-banner a {
+      color: #6C5CE7;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    /* Pulsante RIFIUTA – pari importanza al pulsante ACCETTA */
+    #cookie-banner button[onclick="rejectCookies()"] {
+      flex: 1;
+      background: white !important;
+      color: #111827 !important;
+      border: 2px solid #6C5CE7 !important;
+      padding: 10px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    /* Pulsante ACCETTA */
+    #cookie-btn {
+      flex: 1;
+      background: #6C5CE7;
+      color: white;
+      border: 2px solid #6C5CE7;
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    #cookie-btn:hover {
+      background: #4B3ACB;
+    }
+  </style>
+
+  <script>
+  (function () {
+    const GA_ID = 'G-CFTTCYDZ2P';
+    const CONSENT_KEY = 'syncras_cookie_consent'; // chiave unica per tutto il sito
+
+    // 1️⃣ BLOCCO PREVENTIVO: GA disabilitato finché non c'è consenso
+    window['ga-disable-' + GA_ID] = true;
+
+    function loadGoogleAnalytics() {
+      if (window.__syncrasGaLoaded) return;
+      window.__syncrasGaLoaded = true;
+
+      // Riabilita GA solo dopo il consenso
+      window['ga-disable-' + GA_ID] = false;
+
+      const gaScript = document.createElement('script');
+      gaScript.async = true;
+      gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+      document.head.appendChild(gaScript);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', GA_ID, { anonymize_ip: true });
+    }
+
+    function showBanner() {
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.style.display = 'block';
+    }
+
+    function hideBanner() {
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.style.display = 'none';
+    }
+
+    window.acceptCookies = function () {
+      localStorage.setItem(CONSENT_KEY, 'yes');
+      hideBanner();
+      loadGoogleAnalytics();
+    };
+
+    window.rejectCookies = function () {
+      localStorage.setItem(CONSENT_KEY, 'no');
+      hideBanner();
+      // GA resta bloccato
+      window['ga-disable-' + GA_ID] = true;
+    };
+
+    // 2️⃣ FUNZIONE DI REVOCA – per cambiare idea dopo
+    window.revokeCookies = function () {
+      localStorage.removeItem(CONSENT_KEY);
+      window['ga-disable-' + GA_ID] = true;   // blocca subito GA
+      showBanner();                           // ri-mostra il banner
+    };
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const consent = localStorage.getItem(CONSENT_KEY);
+
+      if (consent === 'yes') {
+        loadGoogleAnalytics();
+      } else if (consent === 'no') {
+        window['ga-disable-' + GA_ID] = true;
+      } else {
+        showBanner();
+      }
+    });
+  })();
+  </script>
+
+</body>
+</html>
