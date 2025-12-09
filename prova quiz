@@ -1124,6 +1124,140 @@
           <p id="giga-result" class="test-result"></p>
         </section>
 
+        <!-- TEST ANTI-ALGORITMO -->
+        <section class="test-card" id="test-anti-algoritmo">
+          <div class="test-section-label">Test comportamento online</div>
+          <h2>Test Anti-Algoritmo – Quanto ti guida il feed?</h2>
+          <p class="test-subtitle">
+            7 domande veloci per capire se sei tu a scegliere cosa guardare,
+            o se sono i suggerimenti a scegliere per te.
+          </p>
+
+          <ol class="test-questions">
+            <li>
+              Quando apri un social (YouTube, TikTok, Instagram...), dove clicchi più spesso?<br>
+              <label class="answer-option">
+                <input type="radio" name="alg_q1" value="0">
+                <span>Sulle cose che cerco io (barra di ricerca, profili salvati)</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="alg_q1" value="1">
+                <span>Un po’ cerco io, un po’ seguo i suggeriti</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="alg_q1" value="2">
+                <span>Quasi sempre sui suggeriti in home</span>
+              </label>
+            </li>
+
+            <li>
+              Ti capita di dire “guardo solo un video” e poi passare 30–40 minuti a scrollare?<br>
+              <label class="answer-option">
+                <input type="radio" name="alg_q2" value="0">
+                <span>Quasi mai</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="alg_q2" value="1">
+                <span>A volte, quando sono stanco</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="alg_q2" value="2">
+                <span>Spessissimo, è la normalità</span>
+              </label>
+            </li>
+
+            <li>
+              Quanto spesso ti appaiono sempre gli stessi tipi di contenuti (stessa voce, stesso tema)?<br>
+              <label class="answer-option">
+                <input type="radio" name="alg_q3" value="0">
+                <span>Poco, il feed è abbastanza vario</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="alg_q3" value="1">
+                <span>Abbastanza spesso</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="alg_q3" value="2">
+                <span>Quasi sempre: sembra la replica dello stesso video</span>
+              </label>
+            </li>
+
+            <li>
+              Se un video polemico o “drammatico” appare nei suggeriti, cosa fai di solito?<br>
+              <label class="answer-option">
+                <input type="radio" name="alg_q4" value="0">
+                <span>Lo salto, non mi interessa alimentare il casino</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="alg_q4" value="1">
+                <span>A volte lo guardo, a volte lo ignoro</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="alg_q4" value="2">
+                <span>Lo apro quasi sempre “solo per capire”</span>
+              </label>
+            </li>
+
+            <li>
+              Ogni quanto pulisci o modifichi i suggerimenti (es. “non mi interessa”, togli notifiche, disiscrizioni)?<br>
+              <label class="answer-option">
+                <input type="radio" name="alg_q5" value="0">
+                <span>Ogni tanto faccio pulizia: segnalo e sistemo</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="alg_q5" value="1">
+                <span>Raramente</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="alg_q5" value="2">
+                <span>Mai: “se l’algoritmo vuole così...”</span>
+              </label>
+            </li>
+
+            <li>
+              Quante volte hai acquistato qualcosa dopo averlo visto più volte nei suggerimenti o nelle sponsorizzate?<br>
+              <label class="answer-option">
+                <input type="radio" name="alg_q6" value="0">
+                <span>Praticamente mai</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="alg_q6" value="1">
+                <span>Qualche volta</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="alg_q6" value="2">
+                <span>Più di una volta, me ne sono accorto dopo</span>
+              </label>
+            </li>
+
+            <li>
+              Se un social smettesse di suggerirti contenuti per una settimana, come ti sentiresti?<br>
+              <label class="answer-option">
+                <input type="radio" name="alg_q7" value="0">
+                <span>Rilassato: potrei scegliere io cosa vedere</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="alg_q7" value="1">
+                <span>Stranito, ma mi arrangerei</span>
+              </label>
+              <label class="answer-option">
+                <input type="radio" name="alg_q7" value="2">
+                <span>Perduto: non saprei da dove partire</span>
+              </label>
+            </li>
+          </ol>
+
+          <button type="button" class="test-btn" onclick="valutaTestAntiAlgoritmo()">
+            Calcola il risultato
+          </button>
+          <p id="risultato-anti-algoritmo" class="test-result"></p>
+        </section>
+
+
+
+
+
+
         <!-- TEST LAVATRICE COMPLETO -->
         <section class="test-card" id="test-lavatrice">
           <div class="test-section-label">Test specifico</div>
@@ -2009,6 +2143,61 @@
 
       el.innerHTML = messaggio + linkAmazon;
     }
+
+    /* ==============================
+       TEST ANTI-ALGORITMO
+       ============================== */
+    function valutaTestAntiAlgoritmo() {
+      if (!hasAcceptedLegal()) return;
+
+      const domande = ['alg_q1','alg_q2','alg_q3','alg_q4','alg_q5','alg_q6','alg_q7'];
+      let punteggio = 0;
+      let risposte  = 0;
+
+      domande.forEach(function(nome) {
+        const sel = document.querySelector('input[name="' + nome + '"]:checked');
+        if (sel) {
+          risposte++;
+          punteggio += parseInt(sel.value, 10);
+        }
+      });
+
+      const el = document.getElementById('risultato-anti-algoritmo');
+      if (!el) return;
+
+      el.className = 'test-result';
+
+      if (risposte < domande.length) {
+        el.textContent = 'Rispondi a tutte le domande per vedere il risultato.';
+        return;
+      }
+
+      // Punteggio minimo = 0, massimo = 14
+      // 0–5  = poco influenzabile
+      // 6–10 = medio
+      // 11–14 = molto influenzabile
+
+      if (punteggio <= 5) {
+        el.textContent =
+          'Verde: sei tu a guidare l’algoritmo, non il contrario. Sai cosa vuoi vedere e usi i suggerimenti come un semplice extra.';
+        el.classList.add('result-good');
+      } else if (punteggio <= 10) {
+        el.textContent =
+          'Giallo: l’algoritmo ti conosce abbastanza bene. Ogni tanto ti fai trascinare, ma se decidi di mettere un limite, ci riesci.';
+        el.classList.add('result-medium');
+      } else {
+        el.textContent =
+          'Rosso: il tuo feed ti guida parecchio. Se non stai attento, finisci in tunnel di contenuti tutti uguali. ' +
+          'Ogni tanto prova a cercare tu qualcosa di diverso e a dire “non mi interessa” ai video che ti rubano tempo.';
+        el.classList.add('result-bad');
+      }
+    }
+
+
+
+
+
+
 
     /* ==============================
        FOOTER YEAR
