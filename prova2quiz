@@ -730,7 +730,8 @@
             Vuoi misurare quanto tempo ti “ruba” lo smartphone? Scopri il tuo livello di scroll infinito
             e se sei ancora tu a decidere quando mettere giù il telefono.
           </p>
-          <a href="test-smartscreen.html" class="quiz-card-link">Vai al test</a>
+          <a href="#test-smartscreen" class="quiz-card-link">Vai al test</a>
+
         </article>
       </div>
     </section>
