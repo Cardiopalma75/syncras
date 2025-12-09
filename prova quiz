@@ -717,7 +717,7 @@
             Quanto sei influenzabile dai suggerimenti dei social? Scopri se sei tu a guidare il feed
             o se è il feed a guidare te.
           </p>
-          <a href="test-anti-algoritmo.html" class="quiz-card-link">Vai al test</a>
+          <a href="test-anti-algoritmo" class="quiz-card-link">Vai al test</a>
         </article>
 
         <article class="quiz-card">
