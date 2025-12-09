@@ -720,117 +720,6 @@
   <a href="#test-anti-algoritmo" class="quiz-card-link">Vai al test</a>
 </article>
 
-<section class="test-card" id="test-smartscreen">
-  <div class="test-section-label">Test abitudini</div>
-  <h2>Test SmartScreen – quante ore regali allo smartphone?</h2>
-  <p class="test-subtitle">
-    6 domande veloci per capire se il tuo uso dello smartphone è sotto controllo
-    o se stai scivolando nello “scroll infinito”.
-  </p>
-
-  <ol class="test-questions">
-    <li>
-      Quante volte sblocchi il telefono in un’ora “normale”?<br>
-      <label class="answer-option">
-        <input type="radio" name="ss_q1" value="0">
-        <span>0–5 volte</span>
-      </label>
-      <label class="answer-option">
-        <input type="radio" name="ss_q1" value="1">
-        <span>6–15 volte</span>
-      </label>
-      <label class="answer-option">
-        <input type="radio" name="ss_q1" value="2">
-        <span>Più di 15 volte</span>
-      </label>
-    </li>
-
-    <li>
-      Quanto tempo passi al giorno davanti allo schermo del telefono (in media)?<br>
-      <label class="answer-option">
-        <input type="radio" name="ss_q2" value="0">
-        <span>Meno di 1,5 ore</span>
-      </label>
-      <label class="answer-option">
-        <input type="radio" name="ss_q2" value="1">
-        <span>Tra 1,5 e 3 ore</span>
-      </label>
-      <label class="answer-option">
-        <input type="radio" name="ss_q2" value="2">
-        <span>Oltre 3 ore</span>
-      </label>
-    </li>
-
-    <li>
-      Cosa fai di solito quando hai 2–3 minuti di attesa (fila, bus, sala d’attesa)?<br>
-      <label class="answer-option">
-        <input type="radio" name="ss_q3" value="0">
-        <span>Guardo intorno o penso ai fatti miei</span>
-      </label>
-      <label class="answer-option">
-        <input type="radio" name="ss_q3" value="1">
-        <span>A volte prendo il telefono, a volte no</span>
-      </label>
-      <label class="answer-option">
-        <input type="radio" name="ss_q3" value="2">
-        <span>Prendo sempre il telefono, automatico</span>
-      </label>
-    </li>
-
-    <li>
-      Come gestisci le notifiche di social, chat e app varie?<br>
-      <label class="answer-option">
-        <input type="radio" name="ss_q4" value="0">
-        <span>Ho tolto quasi tutte le notifiche non essenziali</span>
-      </label>
-      <label class="answer-option">
-        <input type="radio" name="ss_q4" value="1">
-        <span>Ne tengo alcune, ma cerco di limitarle</span>
-      </label>
-      <label class="answer-option">
-        <input type="radio" name="ss_q4" value="2">
-        <span>È un carnevale: vibra e suona tutto</span>
-      </label>
-    </li>
-
-    <li>
-      Quanto spesso ti capita di “scrollare” a letto prima di dormire?<br>
-      <label class="answer-option">
-        <input type="radio" name="ss_q5" value="0">
-        <span>Quasi mai / 5 minuti al massimo</span>
-      </label>
-      <label class="answer-option">
-        <input type="radio" name="ss_q5" value="1">
-        <span>Spesso, 15–30 minuti</span>
-      </label>
-      <label class="answer-option">
-        <input type="radio" name="ss_q5" value="2">
-        <span>Praticamente sempre, oltre 30 minuti</span>
-      </label>
-    </li>
-
-    <li>
-      Se per un pomeriggio resti senza smartphone (batteria morta o dimenticato a casa), come ti senti?<br>
-      <label class="answer-option">
-        <input type="radio" name="ss_q6" value="0">
-        <span>Quasi sollevato: ogni tanto fa bene</span>
-      </label>
-      <label class="answer-option">
-        <input type="radio" name="ss_q6" value="1">
-        <span>Un po’ a disagio, ma gestibile</span>
-      </label>
-      <label class="answer-option">
-        <input type="radio" name="ss_q6" value="2">
-        <span>In crisi: controllo ovunque, mi manca tantissimo</span>
-      </label>
-    </li>
-  </ol>
-
-  <button type="button" class="test-btn" onclick="valutaTestSmartScreen()">
-    Calcola il risultato
-  </button>
-  <p id="risultato-smartscreen" class="test-result"></p>
-</section>
 
 
 
@@ -1237,6 +1126,123 @@
           <button type="button" class="test-btn" onclick="valutaTestGiga()">Calcola il risultato</button>
           <p id="giga-result" class="test-result"></p>
         </section>
+
+
+<section class="test-card" id="test-smartscreen">
+  <div class="test-section-label">Test abitudini</div>
+  <h2>Test SmartScreen – quante ore regali allo smartphone?</h2>
+  <p class="test-subtitle">
+    6 domande veloci per capire se il tuo uso dello smartphone è sotto controllo
+    o se stai scivolando nello “scroll infinito”.
+  </p>
+
+  <ol class="test-questions">
+    <li>
+      Quante volte sblocchi il telefono in un’ora “normale”?<br>
+      <label class="answer-option">
+        <input type="radio" name="ss_q1" value="0">
+        <span>0–5 volte</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="ss_q1" value="1">
+        <span>6–15 volte</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="ss_q1" value="2">
+        <span>Più di 15 volte</span>
+      </label>
+    </li>
+
+    <li>
+      Quanto tempo passi al giorno davanti allo schermo del telefono (in media)?<br>
+      <label class="answer-option">
+        <input type="radio" name="ss_q2" value="0">
+        <span>Meno di 1,5 ore</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="ss_q2" value="1">
+        <span>Tra 1,5 e 3 ore</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="ss_q2" value="2">
+        <span>Oltre 3 ore</span>
+      </label>
+    </li>
+
+    <li>
+      Cosa fai di solito quando hai 2–3 minuti di attesa (fila, bus, sala d’attesa)?<br>
+      <label class="answer-option">
+        <input type="radio" name="ss_q3" value="0">
+        <span>Guardo intorno o penso ai fatti miei</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="ss_q3" value="1">
+        <span>A volte prendo il telefono, a volte no</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="ss_q3" value="2">
+        <span>Prendo sempre il telefono, automatico</span>
+      </label>
+    </li>
+
+    <li>
+      Come gestisci le notifiche di social, chat e app varie?<br>
+      <label class="answer-option">
+        <input type="radio" name="ss_q4" value="0">
+        <span>Ho tolto quasi tutte le notifiche non essenziali</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="ss_q4" value="1">
+        <span>Ne tengo alcune, ma cerco di limitarle</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="ss_q4" value="2">
+        <span>È un carnevale: vibra e suona tutto</span>
+      </label>
+    </li>
+
+    <li>
+      Quanto spesso ti capita di “scrollare” a letto prima di dormire?<br>
+      <label class="answer-option">
+        <input type="radio" name="ss_q5" value="0">
+        <span>Quasi mai / 5 minuti al massimo</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="ss_q5" value="1">
+        <span>Spesso, 15–30 minuti</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="ss_q5" value="2">
+        <span>Praticamente sempre, oltre 30 minuti</span>
+      </label>
+    </li>
+
+    <li>
+      Se per un pomeriggio resti senza smartphone (batteria morta o dimenticato a casa), come ti senti?<br>
+      <label class="answer-option">
+        <input type="radio" name="ss_q6" value="0">
+        <span>Quasi sollevato: ogni tanto fa bene</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="ss_q6" value="1">
+        <span>Un po’ a disagio, ma gestibile</span>
+      </label>
+      <label class="answer-option">
+        <input type="radio" name="ss_q6" value="2">
+        <span>In crisi: controllo ovunque, mi manca tantissimo</span>
+      </label>
+    </li>
+  </ol>
+
+  <button type="button" class="test-btn" onclick="valutaTestSmartScreen()">
+    Calcola il risultato
+  </button>
+  <p id="risultato-smartscreen" class="test-result"></p>
+</section>
+
+
+
+
 
         <!-- TEST ANTI-ALGORITMO -->
         <section class="test-card" id="test-anti-algoritmo">
