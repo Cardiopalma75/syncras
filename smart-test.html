@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Test | Syncras.App – Test furbi su soldi, smartphone, energia e auto</title>
+  <meta name="description" content="Smart Test Syncras: test veloci e ironici per capire se stai usando bene soldi, smartphone, energia e auto. Zero moralismi, solo numeri e realtà.">
+  <meta name="robots" content="index,follow">
+
+  <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --bg-page: #F7F7FB;
+      --text-main: #403E43;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg-page);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      color: var(--text-main);
+    }
+
+    /* HEADER VIOLA UNIFICATO */
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color: white;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+    #main-nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding-bottom: 2px;
+    }
+    #main-nav a:hover {
+      text-decoration: underline;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .menu-toggle span {
+      margin-left: 4px;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        margin: 0 auto;
+        max-width: 1180px;
+        flex-direction: column;
+        background-color: var(--violet-dark);
+        padding: 10px 16px 12px 16px;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
+      }
+      #main-nav a {
+        padding: 6px 0;
+      }
+      body.nav-open #main-nav {
+        display: flex;
+      }
+      .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 30px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    h1, h2, h3 {
+      color: var(--violet-dark);
+    }
+
+    p {
+      margin-bottom: 15px;
+    }
+
+    .back-links {
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+    .back-links a {
+      color: var(--violet-dark);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .back-links a:hover {
+      text-decoration: underline;
+    }
+
+    .intro-tag {
+      display: inline-block;
+      background: #F3F4FF;
+      color: var(--violet-dark);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+
+    .smart-test-lead {
+      font-size: 1.02rem;
+    }
+
+    .disclaimer-box {
+      background: #FFFBEA;
+      border-left: 4px solid #FBBF24;
+      padding: 12px 14px;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      margin: 20px 0 25px;
+    }
+
+    .group-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+      margin-top: 10px;
+    }
+
+    .test-group-card {
+      background: #F7F7FB;
+      border-radius: 10px;
+      padding: 16px 16px 14px;
+      border: 1px solid #E5E7EB;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .test-group-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #6B7280;
+      margin-bottom: 4px;
+    }
+
+    .test-group-card h2 {
+      margin-top: 0;
+      margin-bottom: 6px;
+      font-size: 1.2rem;
+    }
+
+    .test-group-card p {
+      font-size: 0.95rem;
+      margin-bottom: 10px;
+    }
+
+    .test-list {
+      list-style: none;
+      padding-left: 0;
+      margin: 8px 0 0;
+      font-size: 0.95rem;
+    }
+
+    .test-list li {
+      margin-bottom: 6px;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+    }
+
+    .test-list li span.bullet {
+      font-size: 0.9rem;
+      margin-top: 1px;
+    }
+
+    .test-list a {
+      color: var(--violet-dark);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .test-list a:hover {
+      text-decoration: underline;
+    }
+
+    .badge-soon {
+      display: inline-block;
+      font-size: 0.72rem;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: #E5E7EB;
+      color: #374151;
+      margin-left: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .section-title {
+      margin-top: 30px;
+      margin-bottom: 8px;
+    }
+
+    .section-subtitle {
+      font-size: 0.92rem;
+      color: #4B5563;
+      margin-bottom: 16px;
+    }
+
+    .helper-note {
+      font-size: 0.88rem;
+      color: #6B7280;
+      margin-top: 22px;
+    }
+
+    .helper-note a {
+      color: var(--violet-dark);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .helper-note a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      background: #eee;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+      main {
+        margin: 16px auto;
+        padding: 16px 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER UNIFICATO -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
+
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
+
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="smart-test.html">Smart Test</a>
+        <a href="calcolatori.html">Calcolatori</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="offerte.html">Prodotti Consapevoli</a>
+        <a href="chi.html">Chi siamo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="back-links">
+      ← <a href="index.html">Torna alla Home</a> |
+      <a href="categorie.html">Categorie</a>
+    </div>
+
+    <span class="intro-tag">Area interattiva</span>
+    <h1>Smart Test Syncras</h1>
+    <p class="smart-test-lead">
+      Piccoli test per fare pace con la realtà: capisci se stai usando bene
+      <strong>soldi, smartphone, energia e auto</strong>, senza moralismi ma con numeri, esempi pratici
+      e una dose di ironia.  
+      Non servono registrazioni: rispondi, rifletti e – se vuoi – condividi il risultato con chi tende a dire
+      sempre <em>“ma sì, cosa vuoi che sia…”</em>.
+    </p>
+
+    <div class="disclaimer-box">
+      <strong>Promemoria importante:</strong>  
+      i risultati di questi Smart Test sono <strong>solo stime e spunti di riflessione</strong>.
+      Non sono consulenza professionale, né indicazioni personalizzate su investimenti, salute, lavoro
+      o scelte di vita.  
+      Per decisioni importanti è sempre meglio confrontare più fonti, dati ufficiali e, quando serve,
+      parlare con un professionista qualificato.
+    </div>
+
+    <!-- GRUPPO 1: ABITUDINI DIGITALI -->
+    <h2 class="section-title">1. Smart Test – Abitudini digitali & smartphone</h2>
+    <p class="section-subtitle">
+      Qui si parla di <strong>tempo rubato dallo smartphone</strong>, algoritmi che ti incollano al feed,
+      notifiche che ti interrompono ogni 3 minuti e abitudini digitali che sembrano innocue… finché non
+      guardi l’orologio.
+    </p>
+
+    <section class="group-grid" id="smart-test-digitali">
+      <article class="test-group-card">
+        <div class="test-group-label">Macro-area</div>
+        <h2>Tempo & uso smartphone</h2>
+        <p>
+          Test pensati per capire se lo smartphone lo usi tu o è lui che usa te.  
+          Numeri semplici, esempi concreti e qualche schiaffo gentile alla “scrollite” cronica.
+        </p>
+        <ul class="test-list">
+          <li>
+            <span class="bullet">•</span>
+            <!-- Link alla pagina dell'articolo che stai creando ora -->
+            <a href="quanto-tempo-ruba-lo-smartphone.html">
+              Smart Test – Quanto tempo ti ruba davvero lo smartphone?
+            </a>
+          </li>
+          <li>
+            <span class="bullet">•</span>
+            <span>
+              Smart Test – Notifiche: chi comanda, tu o il telefono?
+              <span class="badge-soon">in arrivo</span>
+            </span>
+          </li>
+        </ul>
+      </article>
+
+      <article class="test-group-card">
+        <div class="test-group-label">Macro-area</div>
+        <h2>Algoritmi & social</h2>
+        <p>
+          Test dedicati a feed infiniti, video “su misura” e suggerimenti che sembrano leggerti nel pensiero.
+          Per capire quanto sei dentro la bolla dell’algoritmo.
+        </p>
+        <ul class="test-list">
+          <li>
+            <span class="bullet">•</span>
+            <a href="smart-test-anti-algoritmo.html">
+              Smart Test Anti-Algoritmo
+            </a>
+            <span class="badge-soon">in arrivo</span>
+          </li>
+          <li>
+            <span class="bullet">•</span>
+            <span>
+              Smart Test – Scroll infinito: passatempo o abitudine costosa?
+              <span class="badge-soon">in arrivo</span>
+            </span>
+          </li>
+        </ul>
+      </article>
+    </section>
+
+    <!-- GRUPPO 2: SOLDI & ACQUISTI -->
+    <h2 class="section-title">2. Smart Test – Soldi, acquisti & “mi concedo questo”</h2>
+    <p class="section-subtitle">
+      Qui vivono i test per chi dice <em>“ma sì, è solo una spesa in più”</em>.
+      Calcoliamo l’impatto di acquisti ricorrenti, sfizi e decisioni impulsive su mesi e anni.
+    </p>
+
+    <section class="group-grid" id="smart-test-soldi">
+      <article class="test-group-card">
+        <div class="test-group-label">Macro-area</div>
+        <h2>Test Anti-Acquisto & spese ricorrenti</h2>
+        <p>
+          Strumenti per vedere nero su bianco quanto ti costa davvero “solo un caffè al bar”,
+          l’abbonamento in più o l’upgrade superfluo.
+        </p>
+        <ul class="test-list">
+          <li>
+            <span class="bullet">•</span>
+            <a href="test-anti-acquisto.html">
+              Smart Test Anti-Acquisto
+            </a>
+          </li>
+          <li>
+            <span class="bullet">•</span>
+            <span>
+              Smart Test – Piccole spese che diventano grandi numeri
+              <span class="badge-soon">in arrivo</span>
+            </span>
+          </li>
+        </ul>
+      </article>
+
+      <article class="test-group-card">
+        <div class="test-group-label">Macro-area</div>
+        <h2>Scelte “top di gamma” vs realtà</h2>
+        <p>
+          Test per capire se ha senso prendere sempre il modello più caro
+          (auto, smartphone, elettrodomestici) o se sul lungo periodo ti stai solo complicando la vita.
+        </p>
+        <ul class="test-list">
+          <li>
+            <span class="bullet">•</span>
+            <span>
+              Smart Test – Smartphone top o medio gamma?
+              <span class="badge-soon">in arrivo</span>
+            </span>
+          </li>
+          <li>
+            <span class="bullet">•</span>
+            <span>
+              Smart Test – Auto nuova, usata o nessuna?
+              <span class="badge-soon">in arrivo</span>
+            </span>
+          </li>
+        </ul>
+      </article>
+    </section>
+
+    <!-- GRUPPO 3: ENERGIA & CASA -->
+    <h2 class="section-title">3. Smart Test – Energia, casa & bollette</h2>
+    <p class="section-subtitle">
+      Per chi guarda la bolletta e pensa: <em>“qui c’è qualcosa che non torna”</em>.
+      Test che ti aiutano a capire dove stanno davvero i kWh “buttati” e quanto
+      pesano certe abitudini in casa.
+    </p>
+
+    <section class="group-grid" id="smart-test-energia">
+      <article class="test-group-card">
+        <div class="test-group-label">Macro-area</div>
+        <h2>Elettrodomestici & abitudini energetiche</h2>
+        <p>
+          Qui incrociamo i calcolatori Syncras con i test di realtà:
+          non solo “quanto consuma”, ma “quanto ti cambia davvero in un anno”.
+        </p>
+        <ul class="test-list">
+          <li>
+            <span class="bullet">•</span>
+            <a href="smart-test-elettrodomestici.html">
+              Smart Test – Elettrodomestici e consumi nascosti
+            </a>
+            <span class="badge-soon">in arrivo</span>
+          </li>
+          <li>
+            <span class="bullet">•</span>
+            <span>
+              Smart Test – Riscaldamento elettrico vs gas
+              <span class="badge-soon">in arrivo</span>
+            </span>
+          </li>
+        </ul>
+      </article>
+
+      <article class="test-group-card">
+        <div class="test-group-label">Macro-area</div>
+        <h2>Comfort, sprechi & “tanto pago dopo”</h2>
+        <p>
+          Test pensati per chi tiene tutto acceso “per comfort” e poi
+          si stupisce della bolletta. Qui vediamo quanto pesano certe scelte…
+          senza demonizzare nessuno.
+        </p>
+        <ul class="test-list">
+          <li>
+            <span class="bullet">•</span>
+            <span>
+              Smart Test – Termostato, abitudini e sprechi
+              <span class="badge-soon">in arrivo</span>
+            </span>
+          </li>
+          <li>
+            <span class="bullet">•</span>
+            <span>
+              Smart Test – Abitudini serali e consumi in standby
+              <span class="badge-soon">in arrivo</span>
+            </span>
+          </li>
+        </ul>
+      </article>
+    </section>
+
+    <!-- GRUPPO 4: AUTO & MOBILITÀ -->
+    <h2 class="section-title">4. Smart Test – Auto, mobilità & spostamenti</h2>
+    <p class="section-subtitle">
+      Per capire se l’auto che hai (o che vorresti) ha senso per il tuo uso reale,
+      o se stai pagando per qualcosa che esiste solo negli spot.
+    </p>
+
+    <section class="group-grid" id="smart-test-auto">
+      <article class="test-group-card">
+        <div class="test-group-label">Macro-area</div>
+        <h2>Auto & costi nascosti</h2>
+        <p>
+          Test che ti aiutano a trasformare “mi piace” e “è comoda” in numeri annui:
+          carburante, manutenzione, tasse, svalutazione.
+        </p>
+        <ul class="test-list">
+          <li>
+            <span class="bullet">•</span>
+            <span>
+              Smart Test – Auto: quanto ti costa davvero tenerla ferma?
+              <span class="badge-soon">in arrivo</span>
+            </span>
+          </li>
+          <li>
+            <span class="bullet">•</span>
+            <span>
+              Smart Test – Usare l’auto o alternative?
+              <span class="badge-soon">in arrivo</span>
+            </span>
+          </li>
+        </ul>
+      </article>
+
+      <article class="test-group-card">
+        <div class="test-group-label">Macro-area</div>
+        <h2>Scelte future: elettrico, ibrido & co.</h2>
+        <p>
+          Non è un referendum pro o contro, ma uno spazio per vedere se certe scelte
+          sono sensate per il tuo caso concreto, non per quello del vicino.
+        </p>
+        <ul class="test-list">
+          <li>
+            <span class="bullet">•</span>
+            <span>
+              Smart Test – Ha senso l’auto elettrica per te?
+              <span class="badge-soon">in arrivo</span>
+            </span>
+          </li>
+          <li>
+            <span class="bullet">•</span>
+            <span>
+              Smart Test – Ibrida, plug-in o… nessuna delle due?
+              <span class="badge-soon">in arrivo</span>
+            </span>
+          </li>
+        </ul>
+      </article>
+    </section>
+
+    <p class="helper-note">
+      Gli Smart Test verranno pubblicati in modo progressivo.  
+      Quando un test è pronto, lo vedrai senza etichetta <span class="badge-soon">in arrivo</span>
+      e con il link attivo.  
+      Se vuoi un test su un tema specifico, puoi scriverci dalla pagina
+      <a href="chi.html">Chi siamo / Contatti</a>.
+    </p>
+  </main>
+
+  <script>
+    // Toggle menu mobile
+    function toggleMenu() {
+      document.body.classList.toggle('nav-open');
+    }
+  </script>
+
+  <footer>
+    © 2025 Syncras.App — Tutti i diritti riservati<br>
+    <div style="margin-top:8px;">
+      <a href="privacy.html">Privacy Policy</a> |
+      <a href="cookie.html">Cookie Policy</a> |
+      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
+      <a href="note-legali.html">Note Legali</a>
+    </div>
+    <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+      senza alcun costo aggiuntivo per l’utente.  
+      Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+      è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+    </p>
+  </footer>
+
+  <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
+  <div id="cookie-banner">
+    <p>
+      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
+      (Google Analytics). Alcuni link potrebbero essere di affiliazione.
+      Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
+      <a href="privacy.html">Privacy Policy</a>.
+    </p>
+    <div style="display:flex; gap:10px; margin-top:8px;">
+      <button type="button" onclick="rejectCookies()">
+        Rifiuta
+      </button>
+      <button id="cookie-btn" type="button" onclick="acceptCookies()">
+        Accetta e continua
+      </button>
+    </div>
+  </div>
+
+  <style>
+    #cookie-banner {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 90%;
+      width: 420px;
+      background: #ffffff;
+      border: 2px solid #6C5CE7;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      z-index: 9999;
+      font-family: Arial, sans-serif;
+      display: none;
+    }
+
+    #cookie-banner p {
+      margin: 0 0 12px 0;
+      font-size: 0.95rem;
+      color: #333;
+      line-height: 1.4;
+    }
+
+    #cookie-banner a {
+      color: #6C5CE7;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    /* Pulsante RIFIUTA – pari importanza al pulsante ACCETTA */
+    #cookie-banner button[onclick="rejectCookies()"] {
+      flex: 1;
+      background: white !important;
+      color: #111827 !important;
+      border: 2px solid #6C5CE7 !important;
+      padding: 10px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    /* Pulsante ACCETTA */
+    #cookie-btn {
+      flex: 1;
+      background: #6C5CE7;
+      color: white;
+      border: 2px solid #6C5CE7;
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    #cookie-btn:hover {
+      background: #4B3ACB;
+    }
+  </style>
+
+  <script>
+  (function () {
+    const GA_ID = 'G-CFTTCYDZ2P';
+    const CONSENT_KEY = 'syncras_cookie_consent'; // chiave unica per tutto il sito
+
+    // 1️⃣ BLOCCO PREVENTIVO: GA disabilitato finché non c'è consenso
+    window['ga-disable-' + GA_ID] = true;
+
+    function loadGoogleAnalytics() {
+      if (window.__syncrasGaLoaded) return;
+      window.__syncrasGaLoaded = true;
+
+      // Riabilita GA solo dopo il consenso
+      window['ga-disable-' + GA_ID] = false;
+
+      const gaScript = document.createElement('script');
+      gaScript.async = true;
+      gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+      document.head.appendChild(gaScript);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', GA_ID, { anonymize_ip: true });
+    }
+
+    function showBanner() {
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.style.display = 'block';
+    }
+
+    function hideBanner() {
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.style.display = 'none';
+    }
+
+    window.acceptCookies = function () {
+      localStorage.setItem(CONSENT_KEY, 'yes');
+      hideBanner();
+      loadGoogleAnalytics();
+    };
+
+    window.rejectCookies = function () {
+      localStorage.setItem(CONSENT_KEY, 'no');
+      hideBanner();
+      // GA resta bloccato
+      window['ga-disable-' + GA_ID] = true;
+    };
+
+    // 2️⃣ FUNZIONE DI REVOCA – per cambiare idea dopo
+    window.revokeCookies = function () {
+      localStorage.removeItem(CONSENT_KEY);
+      window['ga-disable-' + GA_ID] = true;   // blocca subito GA
+      showBanner();                           // ri-mostra il banner
+    };
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const consent = localStorage.getItem(CONSENT_KEY);
+
+      if (consent === 'yes') {
+        loadGoogleAnalytics();
+      } else if (consent === 'no') {
+        window['ga-disable-' + GA_ID] = true;
+      } else {
+        showBanner();
+      }
+    });
+  })();
+  </script>
+
+</body>
+</html>
