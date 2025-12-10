@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Anti-Algoritmo: quanto ti comanda il feed dei social? | Syncras.App</title>
+  <meta name="description" content="Scopri quanto il feed di Instagram, TikTok e YouTube influenza ciò che guardi. Test rapido, ironico e pratico per capire se sei tu a guidare l’algoritmo o il contrario.">
+  <meta name="robots" content="index,follow">
+
+  <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --bg-page: #F7F7FB;
+      --text-main: #403E43;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg-page);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      color: var(--text-main);
+    }
+
+    /* HEADER VIOLA UNIFICATO */
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color: white;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+    #main-nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding-bottom: 2px;
+    }
+    #main-nav a:hover {
+      text-decoration: underline;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .menu-toggle span {
+      margin-left: 4px;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        margin: 0 auto;
+        max-width: 1180px;
+        flex-direction: column;
+        background-color: var(--violet-dark);
+        padding: 10px 16px 12px 16px;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
+      }
+      #main-nav a {
+        padding: 6px 0;
+      }
+      body.nav-open #main-nav {
+        display: flex;
+      }
+      .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+
+    main {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    h1, h2, h3 {
+      color: var(--violet-dark);
+    }
+    p {
+      margin-bottom: 15px;
+    }
+    ul {
+      margin-left: 20px;
+    }
+
+    .back-links {
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+    .back-links a {
+      color: var(--violet-dark);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .back-links a:hover {
+      text-decoration: underline;
+    }
+
+    .small {
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    /* BOX INTRO / TIP / TEST */
+    .tip-box {
+      background: #F6F4FF;
+      border-left: 4px solid #6C5CE7;
+      padding: 14px;
+      margin: 25px 0;
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+
+    .mini-test {
+      background: #FDFBF6;
+      border-left: 4px solid #EAB308;
+      padding: 14px;
+      margin: 25px 0;
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+
+    /* AREA TEST */
+    .legal-box {
+      background: #F9FAFB;
+      border: 1px solid #E5E7EB;
+      border-radius: 8px;
+      padding: 14px;
+      margin: 20px 0;
+      font-size: 0.9rem;
+    }
+    .legal-box label a {
+      color: var(--violet-dark);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .legal-box label a:hover {
+      text-decoration: underline;
+    }
+
+    .quiz-wrapper {
+      position: relative;
+      margin-top: 20px;
+    }
+
+    .quiz-section {
+      background: #F7F7FB;
+      border-radius: 10px;
+      padding: 18px 16px;
+      border: 1px solid #E5E7EB;
+      transition: opacity 0.2s ease;
+    }
+
+    .quiz-disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    #quiz-overlay-message {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 16px;
+      background: rgba(255,255,255,0.7);
+      color: #111827;
+      font-size: 0.95rem;
+      border-radius: 10px;
+      pointer-events: none;
+    }
+
+    .question {
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #E5E7EB;
+    }
+
+    .question:last-of-type {
+      border-bottom: none;
+      margin-bottom: 10px;
+      padding-bottom: 0;
+    }
+
+    .question h3 {
+      font-size: 1rem;
+      margin-bottom: 8px;
+    }
+
+    .question p {
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+    }
+
+    .question label {
+      display: block;
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+      cursor: pointer;
+    }
+
+    .question input[type="radio"] {
+      margin-right: 6px;
+    }
+
+    #quiz-result {
+      margin-top: 18px;
+      padding: 14px;
+      border-radius: 8px;
+      background: #ECFEFF;
+      border: 1px solid #22C3D6;
+      font-size: 0.95rem;
+      display: none;
+    }
+
+    #submitQuiz {
+      margin-top: 10px;
+      background: var(--violet-main);
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    #submitQuiz:hover {
+      background: var(--violet-dark);
+    }
+
+    /* BOX ARTICOLI CORRELATI */
+    .related-box {
+      margin-top: 30px;
+      padding: 16px;
+      border-radius: 10px;
+      background:#F7F7FB;
+      border:1px solid #E5E7EB;
+    }
+    .related-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:12px;
+      margin-top:10px;
+    }
+    .related-item {
+      background:#FFFFFF;
+      border-radius:8px;
+      padding:10px 12px;
+      border:1px solid #E5E7EB;
+      font-size:0.9rem;
+    }
+    .related-item h3 {
+      margin-top:0;
+      font-size:1rem;
+    }
+    .related-item a {
+      text-decoration:none;
+      color:var(--violet-dark);
+      font-weight:600;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      background: #eee;
+      font-size: 0.9rem;
+    }
+
+    /* COOKIE BANNER */
+    #cookie-banner {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 90%;
+      width: 420px;
+      background: #ffffff;
+      border: 2px solid #6C5CE7;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      z-index: 9999;
+      font-family: Arial, sans-serif;
+      display: none;
+    }
+
+    #cookie-banner p {
+      margin: 0 0 12px 0;
+      font-size: 0.95rem;
+      color: #333;
+      line-height: 1.4;
+    }
+
+    #cookie-banner a {
+      color: #6C5CE7;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    #cookie-banner button[onclick="rejectCookies()"] {
+      flex: 1;
+      background: white !important;
+      color: #111827 !important;
+      border: 2px solid #6C5CE7 !important;
+      padding: 10px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    #cookie-btn {
+      flex: 1;
+      background: #6C5CE7;
+      color: white;
+      border: 2px solid #6C5CE7;
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    #cookie-btn:hover {
+      background: #4B3ACB;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER UNIFICATO -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
+
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
+
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="quiz.html">Test Anti-Acquisto</a>
+        <a href="calcolatori.html">Calcolatori</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="offerte.html">Prodotti Consapevoli</a>
+        <a href="chi.html">Chi siamo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="back-links">
+      ← <a href="index.html">Torna alla Home</a> |
+      <a href="quiz.html">Vai ai Test</a> |
+      <a href="blog.html">Vai al Blog</a>
+    </div>
+
+    <h1>Test Anti-Algoritmo: quanto ti comanda il feed dei social?</h1>
+
+    <button id="shareBtnTop"
+      style="background: var(--violet-main); color:white; padding:10px 15px; border:none;
+             border-radius:6px; cursor:pointer; margin-bottom:20px; font-weight:600;">
+      📎 Condividi questo test
+    </button>
+
+    <p>
+      Instagram, TikTok, YouTube… ti sembra che “indovinino” sempre quello che vuoi vedere?
+      Questo test non misura la tua bravura con la tecnologia, ma quanto
+      <strong>sei tu a guidare il feed</strong> e quanto, invece, il feed guida te.
+    </p>
+
+    <p>
+      Rispondi alle domande in modo sincero (non ti giudichiamo: anche noi ogni tanto cadiamo nel buco nero degli short).
+      Alla fine scoprirai se sei:
+    </p>
+
+    <ul>
+      <li>un sereno “<strong>Resistente all’Algoritmo</strong>”,</li>
+      <li>un “<strong>Equilibrista Digitale</strong>”,</li>
+      <li>oppure un “<strong>Cittadino del Regno dell’Algoritmo</strong>” (con residenza nel feed).</li>
+    </ul>
+
+    <div class="tip-box">
+      <strong>Come funziona il test:</strong>
+      <ul>
+        <li>Leggi ogni domanda e scegli la risposta che ti rappresenta di più.</li>
+        <li>Clicca su <strong>“Calcola risultato”</strong> alla fine.</li>
+        <li>Nessun dato viene salvato: è solo un test ludico-informativo in stile Syncras.</li>
+      </ul>
+    </div>
+
+    <div class="legal-box">
+      <label for="legalAccept">
+        <input type="checkbox" id="legalAccept">
+        <span>
+          Prima di procedere, un promemoria: i risultati di questo test sono solo indicativi e non sono una
+          consulenza professionale. L’utilizzo di questo strumento è a tuo esclusivo rischio e la responsabilità
+          delle decisioni resta tua. Tutti i dettagli sono spiegati nelle
+          <a href="note-legali.html" target="_blank" rel="noopener noreferrer">Note Legali</a>.
+        </span>
+      </label>
+    </div>
+
+    <div class="quiz-wrapper">
+      <div id="quiz-overlay-message">
+        Spunta prima la casella qui sopra per accettare le Note Legali, poi potrai compilare il test Anti-Algoritmo.
+      </div>
+
+      <section id="quiz-section" class="quiz-section quiz-disabled">
+
+        <div class="question">
+          <h3>1. Quando apri un social, quanto spesso pensi “solo 2 minuti” e poi…?</h3>
+          <label>
+            <input type="radio" name="q1" value="0">
+            Di solito lo chiudo davvero dopo pochi minuti.
+          </label>
+          <label>
+            <input type="radio" name="q1" value="1">
+            A volte perdo la cognizione del tempo, ma non sempre.
+          </label>
+          <label>
+            <input type="radio" name="q1" value="2">
+            “Due minuti” = mezz’ora minima sindacale, se non di più.
+          </label>
+        </div>
+
+        <div class="question">
+          <h3>2. Quante volte al giorno apri la stessa app (Instagram, TikTok, YouTube)?</h3>
+          <label>
+            <input type="radio" name="q2" value="0">
+            1–3 volte al giorno, massimo.
+          </label>
+          <label>
+            <input type="radio" name="q2" value="1">
+            4–8 volte al giorno, senza pensarci troppo.
+          </label>
+          <label>
+            <input type="radio" name="q2" value="2">
+            Ho perso il conto: la apro in automatico appena ho 3 secondi liberi.
+          </label>
+        </div>
+
+        <div class="question">
+          <h3>3. Quanto sono “tutti uguali” i video che ti escono nel feed?</h3>
+          <label>
+            <input type="radio" name="q3" value="0">
+            Molto vari: cambio spesso tipo di contenuti e li cerco io.
+          </label>
+          <label>
+            <input type="radio" name="q3" value="1">
+            Vedo diversi temi, ma alcuni si ripetono spesso.
+          </label>
+          <label>
+            <input type="radio" name="q3" value="2">
+            Sono sempre lo stesso genere di video, sembra un loop infinito.
+          </label>
+        </div>
+
+        <div class="question">
+          <h3>4. Ti è mai capitato di pensare: “Questa app mi conosce meglio di mia madre”?</h3>
+          <label>
+            <input type="radio" name="q4" value="0">
+            No, al massimo indovina un video ogni tanto.
+          </label>
+          <label>
+            <input type="radio" name="q4" value="1">
+            Sì, qualche volta l’ho pensato scherzando.
+          </label>
+          <label>
+            <input type="radio" name="q4" value="2">
+            Sì, spesso. E un po’ mi inquieta.
+          </label>
+        </div>
+
+        <div class="question">
+          <h3>5. Quando un video non ti piace, cosa fai di solito?</h3>
+          <label>
+            <input type="radio" name="q5" value="0">
+            Lo salto e, se posso, clicco su “Non mi interessa”.
+          </label>
+          <label>
+            <input type="radio" name="q5" value="1">
+            Lo passo oltre, ma senza dare feedback all’app.
+          </label>
+          <label>
+            <input type="radio" name="q5" value="2">
+            A volte lo guardo lo stesso “per curiosità”, anche se non mi interessa davvero.
+          </label>
+        </div>
+
+        <div class="question">
+          <h3>6. Quanto spesso ti capita di aprire un social “solo per controllare una cosa” e poi guardare tutt’altro?</h3>
+          <label>
+            <input type="radio" name="q6" value="0">
+            Raramente, di solito faccio quello che avevo in mente e basta.
+          </label>
+          <label>
+            <input type="radio" name="q6" value="1">
+            Succede ogni tanto, ma me ne accorgo.
+          </label>
+          <label>
+            <input type="radio" name="q6" value="2">
+            Quasi sempre: entro per una cosa e finisco nel vortice del feed.
+          </label>
+        </div>
+
+        <div class="question">
+          <h3>7. Hai mai modificato volontariamente i tuoi interessi (ricerche, like, canali seguiti) per “rieducare” l’algoritmo?</h3>
+          <label>
+            <input type="radio" name="q7" value="0">
+            Sì, ogni tanto faccio pulizia: smetto di seguire, nascondo e cambio tipo di contenuti.
+          </label>
+          <label>
+            <input type="radio" name="q7" value="1">
+            Ci ho pensato, ma l’ho fatto solo raramente.
+          </label>
+          <label>
+            <input type="radio" name="q7" value="2">
+            No, non ho mai toccato nulla: vedo quello che capita.
+          </label>
+        </div>
+
+        <div class="question">
+          <h3>8. Se l’app ti propone una nuova sezione (ad esempio “Reel”, “Shorts”, “Per te”), cosa fai?</h3>
+          <label>
+            <input type="radio" name="q8" value="0">
+            La provo, ma la uso solo se mi serve davvero.
+          </label>
+          <label>
+            <input type="radio" name="q8" value="1">
+            Mi ci abituo e la uso quando capita.
+          </label>
+          <label>
+            <input type="radio" name="q8" value="2">
+            Diventa subito la mia nuova zona di comfort digitale.
+          </label>
+        </div>
+
+        <div class="question">
+          <h3>9. Quanto ti dà fastidio vedere sempre lo stesso tipo di contenuti?</h3>
+          <label>
+            <input type="radio" name="q9" value="0">
+            Molto: se vedo troppa ripetizione cambio o chiudo.
+          </label>
+          <label>
+            <input type="radio" name="q9" value="1">
+            Mi dà fastidio, ma spesso continuo a guardare.
+          </label>
+          <label>
+            <input type="radio" name="q9" value="2">
+            In realtà mi ci abituo e non ci faccio più caso.
+          </label>
+        </div>
+
+        <div class="question">
+          <h3>10. Se domani il feed diventasse improvvisamente più “vuoto” (meno suggerimenti automatici), come reagiresti?</h3>
+          <label>
+            <input type="radio" name="q10" value="0">
+            Nessun problema: cercherei io i contenuti che mi interessano.
+          </label>
+          <label>
+            <input type="radio" name="q10" value="1">
+            Mi darebbe un po’ fastidio all’inizio, poi mi abituerei.
+          </label>
+          <label>
+            <input type="radio" name="q10" value="2">
+            Panico: non saprei cosa guardare senza suggerimenti continui.
+          </label>
+        </div>
+
+        <button id="submitQuiz">Calcola risultato</button>
+
+        <div id="quiz-result"></div>
+
+      </section>
+    </div>
+
+    <div class="mini-test">
+      <strong>Nota importante:</strong><br>
+      Questo test è solo un gioco per riflettere sulle abitudini digitali.  
+      Se senti che l’uso dei social ti crea stress, ansia o dipendenza,
+      può essere utile parlarne con una persona di fiducia o con uno specialista.
+    </div>
+
+    <section class="related-box">
+      <h2 style="margin-top:0;">Ti possono interessare anche:</h2>
+      <div class="related-grid">
+        <article class="related-item">
+          <h3>
+            <a href="perche-certi-video-sembra-fatti-apposta-per-te.html">
+              Perché certi video sembrano fatti apposta per te?
+            </a>
+          </h3>
+          <p>
+            Guida semplice e ironica agli algoritmi dei social: come capiscono cosa ti piace e come “raddrizzare” il feed.
+          </p>
+        </article>
+
+        <article class="related-item">
+          <h3>
+            <a href="quanto-tempo-ruba-lo-smartphone.html">
+              Quanto tempo ruba lo smartphone?
+            </a>
+          </h3>
+          <p>
+            Articolo pratico su notifiche, scroll infinito e piccoli furti di tempo quotidiani (con consigli per riprenderlo).
+          </p>
+        </article>
+
+        <article class="related-item">
+          <h3>
+            <a href="quiz.html">
+              Altri Test Syncras
+            </a>
+          </h3>
+          <p>
+            Scopri gli altri Smart Test per allenare il tuo lato “consapevole” su acquisti, energia e abitudini digitali.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <div style="text-align:center; margin:30px 0 10px;">
+      <button id="shareBtnBottom"
+        style="background: var(--violet-main); color:white; padding:10px 18px; border:none;
+               border-radius:6px; cursor:pointer; font-weight:600; font-size:1rem;">
+        📎 Condividi questo test
+      </button>
+    </div>
+  </main>
+
+  <script>
+    // Toggle menu mobile
+    function toggleMenu() {
+      document.body.classList.toggle('nav-open');
+    }
+
+    // Sblocco test dopo accettazione Note Legali
+    (function() {
+      const checkbox = document.getElementById('legalAccept');
+      const quizSection = document.getElementById('quiz-section');
+      const overlayMsg = document.getElementById('quiz-overlay-message');
+
+      if (!checkbox || !quizSection || !overlayMsg) return;
+
+      checkbox.addEventListener('change', function() {
+        if (this.checked) {
+          quizSection.classList.remove('quiz-disabled');
+          overlayMsg.style.display = 'none';
+        } else {
+          quizSection.classList.add('quiz-disabled');
+          overlayMsg.style.display = 'flex';
+        }
+      });
+    })();
+
+    // Logica punteggio test Anti-Algoritmo
+    (function() {
+      const submitBtn = document.getElementById('submitQuiz');
+      const resultBox = document.getElementById('quiz-result');
+
+      if (!submitBtn || !resultBox) return;
+
+      submitBtn.addEventListener('click', function() {
+        let total = 0;
+        let allAnswered = true;
+
+        for (let i = 1; i <= 10; i++) {
+          const answers = document.querySelectorAll('input[name="q' + i + '"]');
+          let answered = false;
+          answers.forEach(a => {
+            if (a.checked) {
+              total += parseInt(a.value, 10);
+              answered = true;
+            }
+          });
+          if (!answered) {
+            allAnswered = false;
+          }
+        }
+
+        if (!allAnswered) {
+          resultBox.style.display = 'block';
+          resultBox.style.background = '#FEF2F2';
+          resultBox.style.borderColor = '#F97373';
+          resultBox.innerHTML = `
+            <strong>Prima rispondi a tutte le domande.</strong><br>
+            Il test funziona solo se completi tutte le risposte (niente scorciatoie da algoritmo 😉).
+          `;
+          return;
+        }
+
+        let titolo, testo;
+
+        if (total <= 7) {
+          titolo = '🧠 Resistente all’Algoritmo';
+          testo = `
+            Complimenti: il tuo rapporto con il feed è <strong>molto sano</strong>.
+            Sei tu a scegliere cosa guardare e non ti fai trascinare facilmente dalla
+            catena infinita di contenuti suggeriti.
+            Continui a usare la tecnologia come strumento, non come pilota automatico.
+          `;
+        } else if (total <= 14) {
+          titolo = '⚖️ Equilibrista Digitale';
+          testo = `
+            A volte l’algoritmo ti porta in giro, a volte sei tu che tieni il volante.
+            Hai già una buona consapevolezza, ma potresti guadagnare ancora più tempo
+            e lucidità scegliendo con più decisione cosa seguire e cosa no
+            (ogni tanto un “Non mi interessa” è un ottimo tasto da usare).
+          `;
+        } else {
+          titolo = '📺 Cittadino del Regno dell’Algoritmo';
+          testo = `
+            Il feed ti conosce bene, forse <strong>fin troppo</strong>.
+            Tendi a lasciarti trasportare dai suggerimenti, a guardare “solo un altro video”
+            e a seguire la strada che l’app ti costruisce sotto i pollici.
+            Non è un dramma, ma forse è il momento giusto per:
+            <ul>
+              <li>ripulire i contenuti che non ti servono più;</li>
+              <li>cercare attivamente cose nuove fuori dalla bolla;</li>
+              <li>decidere tu quando chiudere l’app (non quando finisce il feed).</li>
+            </ul>
+          `;
+        }
+
+        resultBox.style.display = 'block';
+        resultBox.style.background = '#ECFEFF';
+        resultBox.style.borderColor = '#22C3D6';
+        resultBox.innerHTML = `
+          <strong>${titolo}</strong><br><br>
+          ${testo}
+          <br><br>
+          <span style="font-size:0.85rem; opacity:0.85;">
+            Questo test è solo uno strumento ludico per riflettere sulle tue abitudini digitali.
+          </span>
+        `;
+      });
+    })();
+
+    // Condivisione test (top e bottom)
+    (function() {
+      const shareTop = document.getElementById('shareBtnTop');
+      const shareBottom = document.getElementById('shareBtnBottom');
+
+      function attachShare(btn) {
+        if (!btn) return;
+        if (navigator.share) {
+          btn.addEventListener('click', () => {
+            navigator.share({
+              title: 'Test Anti-Algoritmo: quanto ti comanda il feed dei social?',
+              text: 'Ho fatto questo test Anti-Algoritmo su Syncras: scopri quanto il feed dei social guida quello che guardi.',
+              url: window.location.href
+            });
+          });
+        } else {
+          btn.style.display = 'none';
+        }
+      }
+
+      attachShare(shareTop);
+      attachShare(shareBottom);
+    })();
+  </script>
+
+  <footer>
+    © 2025 Syncras.App — Tutti i diritti riservati<br>
+    <div style="margin-top:8px;">
+      <a href="privacy.html">Privacy Policy</a> |
+      <a href="cookie.html">Cookie Policy</a> |
+      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
+      <a href="note-legali.html">Note Legali</a>
+    </div>
+    <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+      senza alcun costo aggiuntivo per l’utente.  
+      Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+      è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+    </p>
+  </footer>
+
+  <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
+  <div id="cookie-banner">
+    <p>
+      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
+      (Google Analytics). Alcuni link potrebbero essere di affiliazione.
+      Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
+      <a href="privacy.html">Privacy Policy</a>.
+    </p>
+    <div style="display:flex; gap:10px; margin-top:8px;">
+      <button type="button" onclick="rejectCookies()">
+        Rifiuta
+      </button>
+      <button id="cookie-btn" type="button" onclick="acceptCookies()">
+        Accetta e continua
+      </button>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    const GA_ID = 'G-CFTTCYDZ2P';
+    const CONSENT_KEY = 'syncras_cookie_consent';
+
+    // GA disabilitato finché non c'è consenso
+    window['ga-disable-' + GA_ID] = true;
+
+    function loadGoogleAnalytics() {
+      if (window.__syncrasGaLoaded) return;
+      window.__syncrasGaLoaded = true;
+
+      window['ga-disable-' + GA_ID] = false;
+
+      const gaScript = document.createElement('script');
+      gaScript.async = true;
+      gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+      document.head.appendChild(gaScript);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', GA_ID, { anonymize_ip: true });
+    }
+
+    function showBanner() {
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.style.display = 'block';
+    }
+
+    function hideBanner() {
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.style.display = 'none';
+    }
+
+    window.acceptCookies = function () {
+      localStorage.setItem(CONSENT_KEY, 'yes');
+      hideBanner();
+      loadGoogleAnalytics();
+    };
+
+    window.rejectCookies = function () {
+      localStorage.setItem(CONSENT_KEY, 'no');
+      hideBanner();
+      window['ga-disable-' + GA_ID] = true;
+    };
+
+    window.revokeCookies = function () {
+      localStorage.removeItem(CONSENT_KEY);
+      window['ga-disable-' + GA_ID] = true;
+      showBanner();
+    };
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const consent = localStorage.getItem(CONSENT_KEY);
+
+      if (consent === 'yes') {
+        loadGoogleAnalytics();
+      } else if (consent === 'no') {
+        window['ga-disable-' + GA_ID] = true;
+      } else {
+        showBanner();
+      }
+    });
+  })();
+  </script>
+
+</body>
+</html>
