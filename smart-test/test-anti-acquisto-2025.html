@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Anti-Acquisto 2025: quanto sei a rischio shopping inutile? | Syncras.App</title>
+  <meta name="description" content="Scopri quanto sei a rischio di acquisti impulsivi, offerte trappola e gadget inutili. Test Anti-Acquisto 2025 in stile Syncras: ironico, pratico e un po' scomodo.">
+  <meta name="robots" content="index,follow">
+
+  <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --bg-page: #F7F7FB;
+      --text-main: #403E43;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg-page);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      color: var(--text-main);
+    }
+
+    /* HEADER VIOLA UNIFICATO */
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color: white;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+    #main-nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding-bottom: 2px;
+    }
+    #main-nav a:hover {
+      text-decoration: underline;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .menu-toggle span {
+      margin-left: 4px;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        margin: 0 auto;
+        max-width: 1180px;
+        flex-direction: column;
+        background-color: var(--violet-dark);
+        padding: 10px 16px 12px 16px;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
+      }
+      #main-nav a {
+        padding: 6px 0;
+      }
+      body.nav-open #main-nav {
+        display: flex;
+      }
+      .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+
+    main {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    h1, h2, h3 {
+      color: var(--violet-dark);
+    }
+    p {
+      margin-bottom: 15px;
+    }
+    ul {
+      margin-left: 20px;
+    }
+
+    .back-links {
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+    .back-links a {
+      color: var(--violet-dark);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .back-links a:hover {
+      text-decoration: underline;
+    }
+
+    .small {
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    .tip-box {
+      background: #F6F4FF;
+      border-left: 4px solid #6C5CE7;
+      padding: 14px;
+      margin: 25px 0;
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+
+    .mini-test {
+      background: #FDFBF6;
+      border-left: 4px solid #EAB308;
+      padding: 14px;
+      margin: 25px 0;
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+
+    /* AREA TEST */
+    .legal-box {
+      background: #F9FAFB;
+      border: 1px solid #E5E7EB;
+      border-radius: 8px;
+      padding: 14px;
+      margin: 20px 0;
+      font-size: 0.9rem;
+    }
+    .legal-box label a {
+      color: var(--violet-dark);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .legal-box label a:hover {
+      text-decoration: underline;
+    }
+
+    .quiz-wrapper {
+      position: relative;
+      margin-top: 20px;
+    }
+
+    .quiz-section {
+      background: #F7F7FB;
+      border-radius: 10px;
+      padding: 18px 16px;
+      border: 1px solid #E5E7EB;
+      transition: opacity 0.2s ease;
+    }
+
+    .quiz-disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    #quiz-overlay-message {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 16px;
+      background: rgba(255,255,255,0.7);
+      color: #111827;
+      font-size: 0.95rem;
+      border-radius: 10px;
+      pointer-events: none;
+    }
+
+    .question {
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #E5E7EB;
+    }
+
+    .question:last-of-type {
+      border-bottom: none;
+      margin-bottom: 10px;
+      padding-bottom: 0;
+    }
+
+    .question h3 {
+      font-size: 1rem;
+      margin-bottom: 8px;
+    }
+
+    .question p {
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+    }
+
+    .question label {
+      display: block;
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+      cursor: pointer;
+    }
+
+    .question input[type="radio"] {
+      margin-right: 6px;
+    }
+
+    #quiz-result {
+      margin-top: 18px;
+      padding: 14px;
+      border-radius: 8px;
+      background: #ECFEFF;
+      border: 1px solid #22C3D6;
+      font-size: 0.95rem;
+      display: none;
+    }
+
+    #submitQuiz {
+      margin-top: 10px;
+      background: var(--violet-main);
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    #submitQuiz:hover {
+      background: var(--violet-dark);
+    }
+
+    /* BOX ARTICOLI CORRELATI */
+    .related-box {
+      margin-top: 30px;
+      padding: 16px;
+      border-radius: 10px;
+      background:#F7F7FB;
+      border:1px solid #E5E7EB;
+    }
+    .related-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:12px;
+      margin-top:10px;
+    }
+    .related-item {
+      background:#FFFFFF;
+      border-radius:8px;
+      padding:10px 12px;
+      border:1px solid #E5E7EB;
+      font-size:0.9rem;
+    }
+    .related-item h3 {
+      margin-top:0;
+      font-size:1rem;
+    }
+    .related-item a {
+      text-decoration:none;
+      color:var(--violet-dark);
+      font-weight:600;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      background: #eee;
+      font-size: 0.9rem;
+    }
+
+    /* COOKIE BANNER */
+    #cookie-banner {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 90%;
+      width: 420px;
+      background: #ffffff;
+      border: 2px solid #6C5CE7;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      z-index: 9999;
+      font-family: Arial, sans-serif;
+      display: none;
+    }
+
+    #cookie-banner p {
+      margin: 0 0 12px 0;
+      font-size: 0.95rem;
+      color: #333;
+      line-height: 1.4;
+    }
+
+    #cookie-banner a {
+      color: #6C5CE7;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    #cookie-banner button[onclick="rejectCookies()"] {
+      flex: 1;
+      background: white !important;
+      color: #111827 !important;
+      border: 2px solid #6C5CE7 !important;
+      padding: 10px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    #cookie-btn {
+      flex: 1;
+      background: #6C5CE7;
+      color: white;
+      border: 2px solid #6C5CE7;
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    #cookie-btn:hover {
+      background: #4B3ACB;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER UNIFICATO -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
+
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
+
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="quiz.html">Test Anti-Acquisto</a>
+        <a href="calcolatori.html">Calcolatori</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="offerte.html">Prodotti Consapevoli</a>
+        <a href="chi.html">Chi siamo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="back-links">
+      ← <a href="index.html">Torna alla Home</a> |
+      <a href="quiz.html">Vai ai Test</a> |
+      <a href="calcolatori.html">Vai ai Calcolatori</a>
+    </div>
+
+    <h1>Test Anti-Acquisto 2025: quanto sei a rischio shopping inutile?</h1>
+
+    <button id="shareBtnTop"
+      style="background: var(--violet-main); color:white; padding:10px 15px; border:none;
+             border-radius:6px; cursor:pointer; margin-bottom:20px; font-weight:600;">
+      📎 Condividi questo test
+    </button>
+
+    <p>
+      Questo non è un test “per tirarti le orecchie”, ma per capire quanto sei
+      <strong>a rischio di comprare cose che non ti servono</strong>:
+      offerte lampo, gadget “geniali”, sconti che scadono tra 7 minuti e 12 secondi.
+    </p>
+
+    <p>
+      Rispondi sinceramente. Nessuno leggerà le risposte, ma il tuo portafoglio sì.
+    </p>
+
+    <div class="tip-box">
+      <strong>Cosa misura questo Test Anti-Acquisto:</strong>
+      <ul>
+        <li>quanto decidi tu e quanto decide il “<strong>che sarà mai, costa solo</strong>…”;</li>
+        <li>quanto ti conoscono bene pubblicità, offerte e “consigliati per te”;</li>
+        <li>quanta distanza c’è tra ciò che <em>vuoi</em> e ciò che ti <em>fanno venire voglia</em> di comprare.</li>
+      </ul>
+    </div>
+
+    <div class="legal-box">
+      <label for="legalAccept">
+        <input type="checkbox" id="legalAccept">
+        <span>
+          Prima di procedere, un promemoria: i risultati di questo test sono solo stime e non costituiscono
+          consulenza finanziaria o psicologica. L’utilizzo di questo strumento è a tuo esclusivo rischio
+          e la responsabilità delle decisioni di spesa resta tua. Tutte le condizioni sono spiegate nelle
+          <a href="note-legali.html" target="_blank" rel="noopener noreferrer">Note Legali</a>.
+        </span>
+      </label>
+    </div>
+
+    <div class="quiz-wrapper">
+      <div id="quiz-overlay-message">
+        Spunta prima la casella qui sopra per accettare le Note Legali, poi potrai compilare il Test Anti-Acquisto 2025.
+      </div>
+
+      <section id="quiz-section" class="quiz-section quiz-disabled">
+
+        <div class="question">
+          <h3>1. Davanti a un’offerta “-40% solo per oggi”, cosa pensi per primo?</h3>
+          <label>
+            <input type="radio" name="q1" value="0">
+            “Mi serve davvero?” e solo dopo guardo il prezzo.
+          </label>
+          <label>
+            <input type="radio" name="q1" value="1">
+            “Interessante, ci penso un attimo” e poi valuto.
+          </label>
+          <label>
+            <input type="radio" name="q1" value="2">
+            “Affare!” e rischio di cliccare prima di capire se mi serve.
+          </label>
+        </div>
+
+        <div class="question">
+          <h3>2. Quante volte ti è capitato di comprare qualcosa online e poi pensare: “Potevo evitarlo”?</h3>
+          <label>
+            <input type="radio" name="q2" value="0">
+            Raramente, una o due volte l’anno.
+          </label>
+          <label>
+            <input type="radio" name="q2" value="1">
+            Ogni tanto, diciamo una volta ogni 1–2 mesi.
+          </label>
+          <label>
+            <input type="radio" name="q2" value="2">
+            Spesso: ormai è una rubrica fissa “Perché l’ho comprato?”.
+          </label>
+        </div>
+
+        <div class="question">
+          <h3>3. Prima di comprare un oggetto sopra i 100 €, cosa fai di solito?</h3>
+          <label>
+            <input type="radio" name="q3" value="0">
+            Confronto prezzi, leggo recensioni, magari uso un calcolatore per capire il senso della spesa.
+          </label>
+          <label>
+            <input type="radio" name="q3" value="1">
+            Guardo un po’ di recensioni e il prezzo, ma senza troppa analisi.
+          </label>
+          <label>
+            <input type="radio" name="q3" value="2">
+            Se mi “scatta la voglia”, lo compro e basta. Al massimo ci penso dopo.
+          </label>
+        </div>
+
+        <div class="question">
+          <h3>4. Ti succede di comprare oggetti “motivazionali” (agenda, planner, gadget fitness) che poi usi pochissimo?</h3>
+          <label>
+            <input type="radio" name="q4" value="0">
+            Quasi mai. Se li compro, li uso fino in fondo.
+          </label>
+          <label>
+            <input type="radio" name="q4" value="1">
+            Sì, alcuni li abbandono dopo poco.
+          </label>
+          <label>
+            <input type="radio" name="q4" value="2">
+            Sì, spesso: mi piace l’idea più dell’uso reale.
+          </label>
+        </div>
+
+        <div class="question">
+          <h3>5. Quanto ti influenzano i “Consigliati per te” o “Chi ha comprato X ha comprato anche Y”?</h3>
+          <label>
+            <input type="radio" name="q5" value="0">
+            Poco: li guardo, ma raramente compro da lì.
+          </label>
+          <label>
+            <input type="radio" name="q5" value="1">
+            A volte ci cascano 1–2 prodotti, soprattutto se sembrano utili.
+          </label>
+          <label>
+            <input type="radio" name="q5" value="2">
+            Spesso: metà delle mie tentazioni arriva da quella sezione.
+          </label>
+        </div>
+
+        <div class="question">
+          <h3>6. Quando ti arriva uno stipendio extra (straordinari, bonus, tredicesima), cosa succede?</h3>
+          <label>
+            <input type="radio" name="q6" value="0">
+            Prima metto qualcosa da parte, poi valuto se comprare qualcosa.
+          </label>
+          <label>
+            <input type="radio" name="q6" value="1">
+            Mi concedo qualche sfizio, ma con un minimo di controllo.
+          </label>
+          <label>
+            <input type="radio" name="q6" value="2">
+            È automaticamente “budget shopping”: so già che lo spenderò quasi tutto.
+          </label>
+        </div>
+
+        <div class="question">
+          <h3>7. Quante volte ti capita di comprare doppioni (tipo l’ennesimo cavo, tazza, cover, powerbank…)?</h3>
+          <label>
+            <input type="radio" name="q7" value="0">
+            Raramente: tendo a sostituire, non ad accumulare.
+          </label>
+          <label>
+            <input type="radio" name="q7" value="1">
+            Ogni tanto scappa qualche doppione.
+          </label>
+          <label>
+            <input type="radio" name="q7" value="2">
+            Spesso: ho la collezione ufficiale dei doppioni inutili.
+          </label>
+        </div>
+
+        <div class="question">
+          <h3>8. Ti capita di comprare “per noia” o “per consolarti” dopo una giornata storta?</h3>
+          <label>
+            <input type="radio" name="q8" value="0">
+            No, quando sto giù faccio altro (serie TV, passeggiata, ecc.).
+          </label>
+          <label>
+            <input type="radio" name="q8" value="1">
+            Qualche volta sì, ma non è una regola.
+          </label>
+          <label>
+            <input type="radio" name="q8" value="2">
+            Sì, lo shopping è una delle mie consolazioni principali.
+          </label>
+        </div>
+
+        <div class="question">
+          <h3>9. Dopo quanto tempo controlli davvero quanto hai speso in un mese tra online e negozi?</h3>
+          <label>
+            <input type="radio" name="q9" value="0">
+            Regolarmente: ogni mese o quasi.
+          </label>
+          <label>
+            <input type="radio" name="q9" value="1">
+            Solo quando la carta inizia a piangere o la banca mi scrive.
+          </label>
+          <label>
+            <input type="radio" name="q9" value="2">
+            Raramente: preferisco non guardare troppo nel dettaglio…
+          </label>
+        </div>
+
+        <div class="question">
+          <h3>10. Se domani sparissero tutti gli sconti “a tempo”, quanto cambierebbero davvero i tuoi acquisti?</h3>
+          <label>
+            <input type="radio" name="q10" value="0">
+            Poco: compro principalmente in base alle necessità, non al timer.
+          </label>
+          <label>
+            <input type="radio" name="q10" value="1">
+            Qualcosa cambierebbe, ma non sarebbe una rivoluzione.
+          </label>
+          <label>
+            <input type="radio" name="q10" value="2">
+            Tantissimo: metà degli acquisti è “perché stava per finire l’offerta”.
+          </label>
+        </div>
+
+        <button id="submitQuiz">Calcola risultato</button>
+
+        <div id="quiz-result"></div>
+
+      </section>
+    </div>
+
+    <div class="mini-test">
+      <strong>Nota importante:</strong><br>
+      Questo test è solo un modo ironico per riflettere sulle tue abitudini di spesa.
+      Se senti che gli acquisti impulsivi ti creano problemi reali (debiti, ansia, discussioni continue),
+      parlarne con una persona di fiducia o con un professionista può essere un passo prezioso.
+    </div>
+
+    <section class="related-box">
+      <h2 style="margin-top:0;">Ti possono interessare anche:</h2>
+      <div class="related-grid">
+        <article class="related-item">
+          <h3>
+            <a href="quanto-tempo-ruba-lo-smartphone.html">
+              Quanto tempo ruba lo smartphone?
+            </a>
+          </h3>
+          <p>
+            Articolo su notifiche, scroll infinito e piccoli “furti di tempo” quotidiani (e come riprendercelo).
+          </p>
+        </article>
+
+        <article class="related-item">
+          <h3>
+            <a href="perche-certi-video-sembra-fatti-apposta-per-te.html">
+              Perché certi video sembrano fatti apposta per te?
+            </a>
+          </h3>
+          <p>
+            Algoritmi dei social spiegati semplice: perché ti mostrano certe cose e come ripulire il feed.
+          </p>
+        </article>
+
+        <article class="related-item">
+          <h3>
+            <a href="calcolatori.html">
+              Calcolatori Syncras
+            </a>
+          </h3>
+          <p>
+            Strumenti pratici per capire quanto ti costano davvero energia, auto, elettrodomestici e abitudini.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <div style="text-align:center; margin:30px 0 10px;">
+      <button id="shareBtnBottom"
+        style="background: var(--violet-main); color:white; padding:10px 18px; border:none;
+               border-radius:6px; cursor:pointer; font-weight:600; font-size:1rem;">
+        📎 Condividi questo test
+      </button>
+    </div>
+  </main>
+
+  <script>
+    // Toggle menu mobile
+    function toggleMenu() {
+      document.body.classList.toggle('nav-open');
+    }
+
+    // Sblocco test dopo accettazione Note Legali
+    (function() {
+      const checkbox = document.getElementById('legalAccept');
+      const quizSection = document.getElementById('quiz-section');
+      const overlayMsg = document.getElementById('quiz-overlay-message');
+
+      if (!checkbox || !quizSection || !overlayMsg) return;
+
+      checkbox.addEventListener('change', function() {
+        if (this.checked) {
+          quizSection.classList.remove('quiz-disabled');
+          overlayMsg.style.display = 'none';
+        } else {
+          quizSection.classList.add('quiz-disabled');
+          overlayMsg.style.display = 'flex';
+        }
+      });
+    })();
+
+    // Logica punteggio Test Anti-Acquisto 2025
+    (function() {
+      const submitBtn = document.getElementById('submitQuiz');
+      const resultBox = document.getElementById('quiz-result');
+
+      if (!submitBtn || !resultBox) return;
+
+      submitBtn.addEventListener('click', function() {
+        let total = 0;
+        let allAnswered = true;
+
+        for (let i = 1; i <= 10; i++) {
+          const answers = document.querySelectorAll('input[name="q' + i + '"]');
+          let answered = false;
+          answers.forEach(a => {
+            if (a.checked) {
+              total += parseInt(a.value, 10);
+              answered = true;
+            }
+          });
+          if (!answered) {
+            allAnswered = false;
+          }
+        }
+
+        if (!allAnswered) {
+          resultBox.style.display = 'block';
+          resultBox.style.background = '#FEF2F2';
+          resultBox.style.borderColor = '#F97373';
+          resultBox.innerHTML = `
+            <strong>Prima rispondi a tutte le domande.</strong><br>
+            Il Test Anti-Acquisto funziona solo se completi tutte le risposte
+            (no, non vale “aggiungi al carrello e vedi dopo” 😄).
+          `;
+          return;
+        }
+
+        let titolo, testo;
+
+        if (total <= 7) {
+          titolo = '🧊 Cervello Freddo & Portafoglio Consapevole';
+          testo = `
+            Sei nel gruppo delle persone che sanno <strong>mettere il freno prima del carrello</strong>.
+            Valuti, confronti, ti chiedi se ti serve davvero e non ti fai trascinare troppo da offerte-lampo
+            e gadget “geniali”.
+            <br><br>
+            Continua così: un pizzico di leggerezza va bene, ma la tua base è solida.
+          `;
+        } else if (total <= 14) {
+          titolo = '⚖️ Equilibrista degli Acquisti';
+          testo = `
+            Ti muovi su un equilibrio interessante: una parte di te è consapevole,
+            una parte si lascia ancora sedurre da sconti, timer e “offerte irripetibili”.
+            <br><br>
+            Con qualche accortezza in più (ad esempio rimandare di 24 ore gli acquisti non urgenti
+            o usare un budget mensile fisso per gli sfizi) potresti trasformarti in
+            <strong>Professionista del “Compro solo se ha senso”</strong>.
+          `;
+        } else {
+          titolo = '🛒 Cittadino del Regno dell’Acquisto Impulsivo';
+          testo = `
+            Le offerte, i “solo per oggi”, i consigliati per te… con te funzionano benissimo.
+            <strong>L’istinto di comprare arriva spesso prima della domanda “mi serve davvero?”</strong>.
+            <br><br>
+            Niente panico: puoi iniziare a rimettere ordine così:
+            <ul>
+              <li>prima di comprare, chiediti: “Tra 30 giorni sarò ancora contento di averlo preso?”;</li>
+              <li>fissa un <strong>budget mensile fisso</strong> per i “capricci” e non sforarlo;</li>
+              <li>usa calcolatori e conti semplici per capire il costo reale nel tempo (auto, telefono, abbonamenti…);</li>
+              <li>quando sei stanco, annoiato o giù di morale, rimanda sempre gli acquisti al giorno dopo.</li>
+            </ul>
+            Non si tratta di smettere di comprare, ma di comprare con te al comando, non il pulsante “Compra ora”.
+          `;
+        }
+
+        resultBox.style.display = 'block';
+        resultBox.style.background = '#ECFEFF';
+        resultBox.style.borderColor = '#22C3D6';
+        resultBox.innerHTML = `
+          <strong>${titolo}</strong><br><br>
+          ${testo}
+          <br><br>
+          <span style="font-size:0.85rem; opacity:0.85;">
+            Questo test è solo uno strumento ludico per riflettere sulle tue abitudini di spesa.
+          </span>
+        `;
+      });
+    })();
+
+    // Condivisione test (top e bottom)
+    (function() {
+      const shareTop = document.getElementById('shareBtnTop');
+      const shareBottom = document.getElementById('shareBtnBottom');
+
+      function attachShare(btn) {
+        if (!btn) return;
+        if (navigator.share) {
+          btn.addEventListener('click', () => {
+            navigator.share({
+              title: 'Test Anti-Acquisto 2025: quanto sei a rischio shopping inutile?',
+              text: 'Ho fatto il Test Anti-Acquisto 2025 su Syncras: prova anche tu a vedere quanto comandi tu e quanto comanda il carrello.',
+              url: window.location.href
+            });
+          });
+        } else {
+          btn.style.display = 'none';
+        }
+      }
+
+      attachShare(shareTop);
+      attachShare(shareBottom);
+    })();
+  </script>
+
+  <footer>
+    © 2025 Syncras.App — Tutti i diritti riservati<br>
+    <div style="margin-top:8px;">
+      <a href="privacy.html">Privacy Policy</a> |
+      <a href="cookie.html">Cookie Policy</a> |
+      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
+      <a href="note-legali.html">Note Legali</a>
+    </div>
+    <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+      senza alcun costo aggiuntivo per l’utente.  
+      Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+      è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+    </p>
+  </footer>
+
+  <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
+  <div id="cookie-banner">
+    <p>
+      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
+      (Google Analytics). Alcuni link potrebbero essere di affiliazione.
+      Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
+      <a href="privacy.html">Privacy Policy</a>.
+    </p>
+    <div style="display:flex; gap:10px; margin-top:8px;">
+      <button type="button" onclick="rejectCookies()">
+        Rifiuta
+      </button>
+      <button id="cookie-btn" type="button" onclick="acceptCookies()">
+        Accetta e continua
+      </button>
+    </div>
+  </div>
+
+  <script>
+  (function () {
+    const GA_ID = 'G-CFTTCYDZ2P';
+    const CONSENT_KEY = 'syncras_cookie_consent';
+
+    // GA disabilitato finché non c'è consenso
+    window['ga-disable-' + GA_ID] = true;
+
+    function loadGoogleAnalytics() {
+      if (window.__syncrasGaLoaded) return;
+      window.__syncrasGaLoaded = true;
+
+      window['ga-disable-' + GA_ID] = false;
+
+      const gaScript = document.createElement('script');
+      gaScript.async = true;
+      gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+      document.head.appendChild(gaScript);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', GA_ID, { anonymize_ip: true });
+    }
+
+    function showBanner() {
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.style.display = 'block';
+    }
+
+    function hideBanner() {
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.style.display = 'none';
+    }
+
+    window.acceptCookies = function () {
+      localStorage.setItem(CONSENT_KEY, 'yes');
+      hideBanner();
+      loadGoogleAnalytics();
+    };
+
+    window.rejectCookies = function () {
+      localStorage.setItem(CONSENT_KEY, 'no');
+      hideBanner();
+      window['ga-disable-' + GA_ID] = true;
+    };
+
+    window.revokeCookies = function () {
+      localStorage.removeItem(CONSENT_KEY);
+      window['ga-disable-' + GA_ID] = true;
+      showBanner();
+    };
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const consent = localStorage.getItem(CONSENT_KEY);
+
+      if (consent === 'yes') {
+        loadGoogleAnalytics();
+      } else if (consent === 'no') {
+        window['ga-disable-' + GA_ID] = true;
+      } else {
+        showBanner();
+      }
+    });
+  })();
+  </script>
+
+</body>
+</html>
