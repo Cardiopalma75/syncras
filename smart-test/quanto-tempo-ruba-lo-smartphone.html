@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quanto tempo ti ruba lo smartphone? Guida pratica alle ore perse (e come riprendertele) | Syncras.App</title>
+  <meta name="description" content="Perché perdiamo ore sullo smartphone senza accorgercene? Notifiche, scroll infinito e piccole abitudini che ci rubano tempo. Guida pratica e leggera per riprenderti le tue ore.">
+  <meta name="robots" content="index,follow">
+
+  <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --bg-page: #F7F7FB;
+      --text-main: #403E43;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg-page);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      color: var(--text-main);
+    }
+
+    /* HEADER VIOLA UNIFICATO */
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color: white;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+    #main-nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding-bottom: 2px;
+    }
+    #main-nav a:hover {
+      text-decoration: underline;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .menu-toggle span {
+      margin-left: 4px;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        margin: 0 auto;
+        max-width: 1180px;
+        flex-direction: column;
+        background-color: var(--violet-dark);
+        padding: 10px 16px 12px 16px;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
+      }
+      #main-nav a {
+        padding: 6px 0;
+      }
+      body.nav-open #main-nav {
+        display: flex;
+      }
+      .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+
+    main {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    h1, h2, h3 {
+      color: var(--violet-dark);
+    }
+    p {
+      margin-bottom: 15px;
+    }
+    ul {
+      margin-left: 20px;
+    }
+
+    .box {
+      background: #f6faf7;
+      border: 1px solid #d7e8dc;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .tip-box {
+      background: #F6F4FF;
+      border-left: 4px solid #6C5CE7;
+      padding: 14px;
+      margin: 25px 0;
+      border-radius: 8px;
+    }
+
+    .mini-test {
+      background: #FDFBF6;
+      border-left: 4px solid #EAB308;
+      padding: 14px;
+      margin: 25px 0;
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+
+    .back-links {
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+    .back-links a {
+      color: var(--violet-dark);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .back-links a:hover {
+      text-decoration: underline;
+    }
+
+    .small {
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    /* Box prodotto / consigli */
+    .product-box {
+      background: #f6f0ff;
+      border: 1px solid #dccff8;
+      border-radius: 10px;
+      padding: 18px 16px;
+      margin: 25px 0;
+      font-size: 0.95rem;
+    }
+    .product-box a {
+      display: inline-block;
+      margin-top: 8px;
+      color: #ffffff;
+      background: var(--violet-main);
+      padding: 8px 14px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .product-box a:hover {
+      background: var(--violet-dark);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      background: #eee;
+      font-size: 0.9rem;
+    }
+
+    /* Lista numerata “soft” */
+    .soft-list li {
+      margin-bottom: 6px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER UNIFICATO -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
+
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
+
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="quiz.html">Test Anti-Acquisto</a>
+        <a href="calcolatori.html">Calcolatori</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="offerte.html">Prodotti Consapevoli</a>
+        <a href="chi.html">Chi siamo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="back-links">
+      ← <a href="index.html">Torna alla Home</a> |
+      <a href="blog.html">Vai al Blog</a> |
+      <a href="categorie.html">Categorie</a>
+    </div>
+
+    <h1>Quanto tempo ti ruba lo smartphone? (E come riprendertelo senza andare a vivere in montagna)</h1>
+
+    <button id="shareBtnTop"
+      style="background: var(--violet-main); color:white; padding:10px 15px; border:none;
+             border-radius:6px; cursor:pointer; margin-bottom:20px; font-weight:600;">
+      📎 Condividi questo articolo
+    </button>
+
+    <p>
+      Ti è mai capitato questo: <strong>“Controllo un attimo lo smartphone”</strong>…  
+      e quando alzi gli occhi sono passati <strong>35 minuti</strong>, due Reels di gatti,
+      tre video motivazionali e una recensione di friggitrice ad aria che non volevi vedere?
+    </p>
+
+    <p>
+      In questo articolo facciamo un viaggio leggero ma concreto tra:
+    </p>
+
+    <ul class="soft-list">
+      <li>notifiche che ti interrompono ogni 5 minuti,</li>
+      <li>scroll infinito che ti ipnotizza,</li>
+      <li>piccole abitudini che ti rubano <strong>ore</strong> senza che tu te ne accorga,</li>
+      <li>e qualche trucco pratico per riprenderti il controllo (senza diventare un monaco digitale).</li>
+    </ul>
+
+    <div class="tip-box">
+      <strong>Riassunto veloce per chi ha già il dito sullo schermo:</strong>
+      <ul>
+        <li>Lo smartphone non ruba solo “5 minuti”, ma tanti micro-momenti durante la giornata.</li>
+        <li>Notifiche, social e app sono progettati per tenerti agganciato il più a lungo possibile.</li>
+        <li>Con poche regole semplici puoi recuperare <strong>1–2 ore al giorno</strong> senza rinunciare alla tecnologia.</li>
+      </ul>
+    </div>
+
+    <h2>1. Perché perdiamo ore senza accorgercene?</h2>
+
+    <p>
+      Lo smartphone non ti dice mai: <em>“Ora ti prendo 2 ore intere”</em>.  
+      Fa una cosa più furba: ti chiede solo <strong>micro-attenzioni</strong>.
+    </p>
+
+    <ul>
+      <li>“Solo un messaggio su WhatsApp.”</li>
+      <li>“Solo una notifica Instagram.”</li>
+      <li>“Solo un attimo su YouTube mentre aspetto.”</li>
+    </ul>
+
+    <p>
+      Il problema è che questi “solo un attimo” si sommano.  
+      Un po’ al mattino, un po’ in pausa, un po’ alla sera sul divano… e a fine giornata
+      <strong>non sai dove sono finite le tue ore libere</strong>.
+    </p>
+
+    <p>
+      Non è mancanza di forza di volontà, è che il sistema è letteralmente progettato così:
+      notifiche, suoni, badge rossi, feed che si aggiorna all’infinito, video brevi che partono da soli…
+      il tutto per tenerti lì più a lungo possibile.
+    </p>
+
+    <div class="mini-test">
+      <strong>Mini test lampo:</strong><br>
+      Negli ultimi 7 giorni:
+      <ul>
+        <li>Hai mai aperto lo smartphone “solo per vedere l’ora” e ti sei ritrovato in un social?</li>
+        <li>Ti è capitato di iniziare un video mentre mangiavi e finire il piatto senza ricordarti cosa hai visto?</li>
+        <li>Hai mai detto “un’ultima storia e poi vado a dormire”?</li>
+      </ul>
+      Se hai risposto “sì” ad almeno 2, tranquillo: sei in buona compagnia.  
+      È <strong>normale</strong>, ma proprio per questo conviene darsi qualche regola.
+    </div>
+
+    <h2>2. Il trio che ti ruba tempo: notifiche, social, scroll infinito</h2>
+
+    <h3>2.1 Notifiche: il campanello alla porta del cervello</h3>
+
+    <p>
+      Ogni notifica è come qualcuno che ti bussa alla spalla dicendo:
+      <em>“Scusa, scusa, ma ti ricordi che esisto?”</em>.
+    </p>
+
+    <p>
+      Il problema non è la singola notifica, ma:
+    </p>
+
+    <ul>
+      <li>quelle inutili (offerte, app che non usi, promemoria che non ti servono),</li>
+      <li>quelle multiple (“3 nuovi video”, “5 nuovi post”, “9+ notifiche”),</li>
+      <li>quelle che ti portano dentro un social anche se non volevi entrarci.</li>
+    </ul>
+
+    <p>
+      Ogni volta che ti interrompono, perdi:
+    </p>
+
+    <ul>
+      <li>concentrazione,</li>
+      <li>tempo per ritornare a quello che stavi facendo,</li>
+      <li>un po’ di pazienza con il mondo.</li>
+    </ul>
+
+    <h3>2.2 Social & feed automatici</h3>
+
+    <p>
+      Quando apri un social, non trovi una pagina vuota.  
+      Trovi un <strong>nastro trasportatore di contenuti</strong> che non finisce mai:
+      se scrolli c’è sempre qualcos’altro.
+    </p>
+
+    <p>
+      E qui entra in gioco la vera trappola:
+      <strong>il prossimo video potrebbe essere quello interessante</strong>.
+      Così vai avanti, avanti, avanti… e il tempo scivola via.
+    </p>
+
+    <p>
+      Se vuoi capire meglio come funziona questa “magia”, puoi leggere anche:
+      <a href="perche-certi-video-sembra-fatti-apposta-per-te.html">Perché certi video sembrano fatti apposta per te?</a>.
+    </p>
+
+    <h2>3. Mini Test: quante ore stai regalando allo smartphone?</h2>
+
+    <p>
+      Non serve un calcolo perfetto al minuto.  
+      Bastano pochi segnali per capire se sei in zona “uso sereno” o “rapimento digitale”.
+    </p>
+
+    <div class="mini-test">
+      <strong>Segna mentalmente SÌ o NO:</strong>
+      <ol>
+        <li>Controlli il telefono entro i primi 10 minuti dal risveglio.</li>
+        <li>Ti capita di sbloccarlo senza sapere bene perché (solo per “vedere se c’è qualcosa”).</li>
+        <li>Spesso passi da un’app all’altra senza un motivo preciso.</li>
+        <li>Se sei in coda o in attesa, lo tiri fuori automaticamente.</li>
+        <li>Ti è capitato di dire “vado a letto” e poi restare al telefono ancora 30–40 minuti.</li>
+        <li>Quando senti una notifica, è più forte di te: devi vedere subito cos’è.</li>
+        <li>Se dimentichi il telefono in un’altra stanza, ti senti “nudo” o inquieto.</li>
+      </ol>
+
+      <p><strong>Risultato veloce:</strong></p>
+      <ul>
+        <li><strong>0–2 SÌ:</strong> uso abbastanza consapevole, continua così (e perfeziona un po’).</li>
+        <li><strong>3–5 SÌ:</strong> zona gialla, lo smartphone comanda più di quanto pensi.</li>
+        <li><strong>6–7 SÌ:</strong> zona rossa: è ora di mettere alcune regole serie, senza sensi di colpa ma con decisione.</li>
+      </ul>
+    </div>
+
+    <p class="small">
+      Questo non è un test clinico, ma una fotografia onesta delle tue abitudini quotidiane.
+      Il punto non è sentirsi in colpa, ma capire da dove partire per migliorare.
+    </p>
+
+    <h2>4. Come riprenderti il tuo tempo (senza buttare lo smartphone dalla finestra)</h2>
+
+    <h3>4.1 Sfoltisci le notifiche (subito)</h3>
+
+    <p>
+      Prima mossa, la più potente e la meno faticosa:
+      <strong>disattiva tutte le notifiche non essenziali</strong>.
+    </p>
+
+    <ul>
+      <li>Lascia attive solo quelle davvero importanti (famiglia, lavoro, poche app utili).</li>
+      <li>Disattiva promozioni, social, giochi, “Non perderti questo” e simili.</li>
+      <li>Valuta di togliere anche il suono, lasciando solo le notifiche visive per le cose urgenti.</li>
+    </ul>
+
+    <p>
+      Se il telefono smette di bussare ogni 3 minuti, metà del lavoro è già fatto.
+    </p>
+
+    <h3>4.2 Home più pulita, meno tentazioni</h3>
+
+    <p>
+      Quando sblocchi il telefono, cosa vedi per prima cosa?
+    </p>
+
+    <ul>
+      <li>Se vedi subito le icone dei social → è un invito costante ad aprirli.</li>
+      <li>Se vedi solo poche app essenziali → hai già impostato una barriera leggera.</li>
+    </ul>
+
+    <p>
+      Idee pratiche:
+    </p>
+
+    <ul>
+      <li>Metti in prima schermata solo telefono, messaggi, fotocamera, banca, magari il calendario.</li>
+      <li>Spingi social e giochi nella seconda o terza schermata.</li>
+      <li>Se serve, togli proprio le icone dalla home e accedi solo dalla lista app.</li>
+    </ul>
+
+    <h3>4.3 Orari “protetti” senza smartphone</h3>
+
+    <p>
+      Non serve una rivoluzione, basta inserire qualche <strong>zona senza telefono</strong>:
+    </p>
+
+    <ul>
+      <li>primi 30 minuti dopo il risveglio;</li>
+      <li>pasti (colazione, pranzo, cena);</li>
+      <li>ultima mezz’ora prima di dormire;</li>
+      <li>momenti in cui stai con i tuoi cari.</li>
+    </ul>
+
+    <p>
+      Puoi anche usare la modalità “Non disturbare” in automatico in alcune fasce orarie
+      per evitare che il telefono si intrufoli ovunque.
+    </p>
+
+    <h3>4.4 Limiti di tempo per le app più “pericolose”</h3>
+
+    <p>
+      Quasi tutti gli smartphone hanno ormai:
+    </p>
+
+    <ul>
+      <li><strong>statistiche di utilizzo</strong> (quante ore passi sulle singole app),</li>
+      <li><strong>timer</strong> per limitare il tempo giornaliero su social, giochi, ecc.</li>
+    </ul>
+
+    <p>
+      Non serve essere rigidi, può bastare:
+    </p>
+
+    <ul>
+      <li>mettere un limite di 30–40 minuti al giorno per l’app che ti mangia più tempo;</li>
+      <li>usare il pop-up del limite come “promemoria di realtà”: se lo superi, almeno è una scelta consapevole.</li>
+    </ul>
+
+    <h2>5. Cosa potresti fare con quell’ora recuperata?</h2>
+
+    <p>
+      Se recuperi anche solo <strong>1 ora al giorno</strong>, hai:
+    </p>
+
+    <ul>
+      <li>7 ore a settimana;</li>
+      <li>circa 30 ore al mese;</li>
+      <li>oltre 350 ore all’anno (più di due settimane lavorative).</li>
+    </ul>
+
+    <p>
+      Con quell’ora potresti:
+    </p>
+
+    <ul>
+      <li>leggere un libro che rimandi da mesi,</li>
+      <li>fare una camminata,</li>
+      <li>studiare qualcosa di nuovo,</li>
+      <li>o semplicemente annoiarti un po’ (che è molto più sano di quanto sembri).</li>
+    </ul>
+
+    <div class="product-box">
+      <strong>Vuoi renderti conto meglio di dove “scappano” le tue ore?</strong>
+      <p>
+        Prova per una settimana a segnare su un foglio o in una nota del telefono
+        quanto tempo passi sui social o nelle app più usate.  
+        Anche una stima grossolana può bastare per darti una scossa.
+      </p>
+      <p style="font-size:0.9rem; margin-top:8px;">
+        Non serve essere perfetti, basta essere più consapevoli rispetto a ieri.
+      </p>
+    </div>
+
+    <h2>6. Conclusione: lo smartphone è un ladro o uno strumento?</h2>
+
+    <p>
+      Lo smartphone in sé non è il nemico.  
+      Può essere una <strong>risorsa enorme</strong>: mappe, foto, messaggi, lavoro, studio, ricordi.
+    </p>
+
+    <p>
+      Diventa un problema quando:
+    </p>
+
+    <ul>
+      <li>lo usi in modo automatico e non per scelta;</li>
+      <li>entra in ogni ritaglio di tempo, anche quando vorresti staccare;</li>
+      <li>ti porta via ore senza che tu abbia deciso davvero di spenderle così.</li>
+    </ul>
+
+    <p>
+      La filosofia Syncras è semplice:
+    </p>
+
+    <ul>
+      <li><strong>Capire</strong> come funziona il gioco (notifiche, algoritmi, abitudini);</li>
+      <li><strong>Rimettere limiti</strong> chiari e sostenibili;</li>
+      <li><strong>Usare la tecnologia</strong> per quello che ti serve davvero, non per riempire ogni silenzio.</li>
+    </ul>
+
+    <p class="small">
+      Questo articolo ha solo scopo informativo e di riflessione generale sul rapporto con la tecnologia.
+      Non sostituisce un parere medico o psicologico professionale.  
+      Se senti che l’uso dello smartphone ti crea disagio, ansia o interferisce seriamente con la tua vita,
+      valuta di parlarne con uno specialista.
+    </p>
+
+    <!-- RICHIAMO AD ALTRI ARTICOLI CORRELATI (SOLO ARTICOLI GIÀ ESISTENTI) -->
+    <section style="margin-top:30px; padding:16px; border-radius:10px; background:#F7F7FB; border:1px solid #E5E7EB;">
+      <h2 style="margin-top:0;">Ti possono interessare anche:</h2>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-top:10px;">
+        <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
+          <h3 style="margin-top:0; font-size:1rem;">
+            <a href="perche-certi-video-sembra-fatti-apposta-per-te.html" style="text-decoration:none; color:var(--violet-dark);">
+              Perché certi video sembrano fatti apposta per te?
+            </a>
+          </h3>
+          <p style="font-size:0.9rem; margin:0;">
+            Come funzionano gli algoritmi di social e video e perché ti mostrano sempre gli stessi contenuti “su misura”.
+          </p>
+        </article>
+
+        <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
+          <h3 style="margin-top:0; font-size:1rem;">
+            <a href="quanto-consuma-un-frigorifero-al-giorno.html" style="text-decoration:none; color:var(--violet-dark);">
+              Quanto consuma un frigorifero al giorno?
+            </a>
+          </h3>
+          <p style="font-size:0.9rem; margin:0;">
+            Un altro “compagno di casa” che lavora h24: conti semplici per capire i suoi consumi reali.
+          </p>
+        </article>
+
+        <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
+          <h3 style="margin-top:0; font-size:1rem;">
+            <a href="calcolatore-consumi-elettrodomestici.html" style="text-decoration:none; color:var(--violet-dark);">
+              Calcolatore Consumi Elettrodomestici
+            </a>
+          </h3>
+          <p style="font-size:0.9rem; margin:0;">
+            Inserisci potenza, tempo di utilizzo e costo del kWh: scopri quanto ti costa davvero tenere acceso ogni apparecchio.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <div style="text-align:center; margin:30px 0 10px;">
+      <button id="shareBtnBottom"
+        style="background: var(--violet-main); color:white; padding:10px 18px; border:none;
+               border-radius:6px; cursor:pointer; font-weight:600; font-size:1rem;">
+        📎 Condividi questo articolo
+      </button>
+    </div>
+  </main>
+
+  <script>
+    // Toggle menu mobile
+    function toggleMenu() {
+      document.body.classList.toggle('nav-open');
+    }
+
+    // Condivisione articolo (top e bottom)
+    (function() {
+      const shareTop = document.getElementById('shareBtnTop');
+      const shareBottom = document.getElementById('shareBtnBottom');
+
+      function attachShare(btn) {
+        if (!btn) return;
+        if (navigator.share) {
+          btn.addEventListener('click', () => {
+            navigator.share({
+              title: 'Quanto tempo ti ruba lo smartphone?',
+              text: 'Un viaggio pratico e leggero tra notifiche, scroll infinito e abitudini che ti rubano ore. Con qualche trucco per riprenderti il controllo.',
+              url: window.location.href
+            });
+          });
+        } else {
+          btn.style.display = 'none';
+        }
+      }
+
+      attachShare(shareTop);
+      attachShare(shareBottom);
+    })();
+  </script>
+
+  <footer>
+    © 2025 Syncras.App — Tutti i diritti riservati<br>
+    <div style="margin-top:8px;">
+      <a href="privacy.html">Privacy Policy</a> |
+      <a href="cookie.html">Cookie Policy</a> |
+      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
+      <a href="note-legali.html">Note Legali</a>
+    </div>
+    <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+      senza alcun costo aggiuntivo per l’utente.  
+      Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+      è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+    </p>
+  </footer>
+
+  <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
+  <div id="cookie-banner">
+    <p>
+      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
+      (Google Analytics). Alcuni link potrebbero essere di affiliazione.
+      Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
+      <a href="privacy.html">Privacy Policy</a>.
+    </p>
+    <div style="display:flex; gap:10px; margin-top:8px;">
+      <button type="button" onclick="rejectCookies()">
+        Rifiuta
+      </button>
+      <button id="cookie-btn" type="button" onclick="acceptCookies()">
+        Accetta e continua
+      </button>
+    </div>
+  </div>
+
+  <style>
+    #cookie-banner {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 90%;
+      width: 420px;
+      background: #ffffff;
+      border: 2px solid #6C5CE7;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      z-index: 9999;
+      font-family: Arial, sans-serif;
+      display: none;
+    }
+
+    #cookie-banner p {
+      margin: 0 0 12px 0;
+      font-size: 0.95rem;
+      color: #333;
+      line-height: 1.4;
+    }
+
+    #cookie-banner a {
+      color: #6C5CE7;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    /* Pulsante RIFIUTA – pari importanza al pulsante ACCETTA */
+    #cookie-banner button[onclick="rejectCookies()"] {
+      flex: 1;
+      background: white !important;
+      color: #111827 !important;
+      border: 2px solid #6C5CE7 !important;
+      padding: 10px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    /* Pulsante ACCETTA */
+    #cookie-btn {
+      flex: 1;
+      background: #6C5CE7;
+      color: white;
+      border: 2px solid #6C5CE7;
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    #cookie-btn:hover {
+      background: #4B3ACB;
+    }
+  </style>
+
+  <script>
+  (function () {
+    const GA_ID = 'G-CFTTCYDZ2P';
+    const CONSENT_KEY = 'syncras_cookie_consent'; // chiave unica per tutto il sito
+
+    // 1️⃣ BLOCCO PREVENTIVO: GA disabilitato finché non c'è consenso
+    window['ga-disable-' + GA_ID] = true;
+
+    function loadGoogleAnalytics() {
+      if (window.__syncrasGaLoaded) return;
+      window.__syncrasGaLoaded = true;
+
+      // Riabilita GA solo dopo il consenso
+      window['ga-disable-' + GA_ID] = false;
+
+      const gaScript = document.createElement('script');
+      gaScript.async = true;
+      gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+      document.head.appendChild(gaScript);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', GA_ID, { anonymize_ip: true });
+    }
+
+    function showBanner() {
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.style.display = 'block';
+    }
+
+    function hideBanner() {
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.style.display = 'none';
+    }
+
+    window.acceptCookies = function () {
+      localStorage.setItem(CONSENT_KEY, 'yes');
+      hideBanner();
+      loadGoogleAnalytics();
+    };
+
+    window.rejectCookies = function () {
+      localStorage.setItem(CONSENT_KEY, 'no');
+      hideBanner();
+      // GA resta bloccato
+      window['ga-disable-' + GA_ID] = true;
+    };
+
+    // 2️⃣ FUNZIONE DI REVOCA – per cambiare idea dopo
+    window.revokeCookies = function () {
+      localStorage.removeItem(CONSENT_KEY);
+      window['ga-disable-' + GA_ID] = true;   // blocca subito GA
+      showBanner();                           // ri-mostra il banner
+    };
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const consent = localStorage.getItem(CONSENT_KEY);
+
+      if (consent === 'yes') {
+        loadGoogleAnalytics();
+      } else if (consent === 'no') {
+        window['ga-disable-' + GA_ID] = true;
+      } else {
+        showBanner();
+      }
+    });
+  })();
+  </script>
+
+</body>
+</html>
