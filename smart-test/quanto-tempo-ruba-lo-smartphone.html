@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quanto tempo ti ruba lo smartphone? Guida pratica alle ore perse (e come riprendertele) | Syncras.App</title>
-  <meta name="description" content="Perché perdiamo ore sullo smartphone senza accorgercene? Notifiche, scroll infinito e piccole abitudini che ci rubano tempo. Guida pratica e leggera per riprenderti le tue ore.">
+  <title>Quanto tempo ti ruba lo smartphone? Smart Test in 9 domande | Syncras.App</title>
+  <meta name="description" content="Scopri quanto tempo ti sta rubando davvero lo smartphone con un test veloce in 9 domande. Valuta le tue abitudini digitali e ricevi un profilo finale: tranquillo, in equilibrio fragile o in zona dipendenza soft.">
   <meta name="robots" content="index,follow">
 
   <style>
@@ -115,37 +115,6 @@
     h1, h2, h3 {
       color: var(--violet-dark);
     }
-    p {
-      margin-bottom: 15px;
-    }
-    ul {
-      margin-left: 20px;
-    }
-
-    .box {
-      background: #f6faf7;
-      border: 1px solid #d7e8dc;
-      border-radius: 10px;
-      padding: 20px;
-      margin-bottom: 20px;
-    }
-
-    .tip-box {
-      background: #F6F4FF;
-      border-left: 4px solid #6C5CE7;
-      padding: 14px;
-      margin: 25px 0;
-      border-radius: 8px;
-    }
-
-    .mini-test {
-      background: #FDFBF6;
-      border-left: 4px solid #EAB308;
-      padding: 14px;
-      margin: 25px 0;
-      border-radius: 8px;
-      font-size: 0.95rem;
-    }
 
     .back-links {
       margin-bottom: 20px;
@@ -160,33 +129,106 @@
       text-decoration: underline;
     }
 
-    .small {
-      font-size: 0.9rem;
-      color: #555;
+    .intro {
+      margin-bottom: 18px;
     }
 
-    /* Box prodotto / consigli */
-    .product-box {
-      background: #f6f0ff;
-      border: 1px solid #dccff8;
-      border-radius: 10px;
-      padding: 18px 16px;
-      margin: 25px 0;
+    .legal-box {
+      background: #FDFBF6;
+      border-left: 4px solid #EAB308;
+      padding: 12px 14px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      margin: 18px 0 22px;
+    }
+    .legal-box a {
+      color: var(--violet-dark);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .legal-box a:hover {
+      text-decoration: underline;
+    }
+
+    .test-locked {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .question {
+      margin-bottom: 18px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #E5E7EB;
+    }
+    .question h3 {
+      margin: 0 0 6px;
+      font-size: 1rem;
+    }
+    .question p {
+      margin: 0 0 8px;
       font-size: 0.95rem;
     }
-    .product-box a {
-      display: inline-block;
-      margin-top: 8px;
-      color: #ffffff;
+    .question label {
+      display: block;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+      cursor: pointer;
+    }
+
+    .btn-primary {
       background: var(--violet-main);
-      padding: 8px 14px;
+      color: #fff;
+      border: none;
+      padding: 10px 18px;
       border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1rem;
+      margin-top: 10px;
+    }
+    .btn-primary:hover {
+      background: var(--violet-dark);
+    }
+
+    .result-box {
+      margin-top: 24px;
+      padding: 16px;
+      border-radius: 10px;
+      background: #F3F4FF;
+      border: 1px solid #E5E7EB;
+      display: none;
+    }
+    .result-title {
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .result-score {
+      font-size: 0.9rem;
+      opacity: 0.8;
+      margin-bottom: 10px;
+    }
+
+    .mini-links {
+      margin-top: 20px;
+      padding: 14px;
+      border-radius: 8px;
+      background: #F7F7FB;
+      border: 1px solid #E5E7EB;
+      font-size: 0.93rem;
+    }
+    .mini-links a {
+      color: var(--violet-dark);
       text-decoration: none;
       font-weight: 600;
-      font-size: 0.9rem;
     }
-    .product-box a:hover {
-      background: var(--violet-dark);
+    .mini-links a:hover {
+      text-decoration: underline;
+    }
+
+    .small {
+      font-size: 0.85rem;
+      color: #555;
+      margin-top: 16px;
     }
 
     footer {
@@ -195,11 +237,6 @@
       padding: 20px;
       background: #eee;
       font-size: 0.9rem;
-    }
-
-    /* Lista numerata “soft” */
-    .soft-list li {
-      margin-bottom: 6px;
     }
   </style>
 </head>
@@ -231,353 +268,135 @@
   <main>
     <div class="back-links">
       ← <a href="index.html">Torna alla Home</a> |
-      <a href="blog.html">Vai al Blog</a> |
-      <a href="categorie.html">Categorie</a>
+      <a href="quiz.html">Vai ai Test</a>
     </div>
 
-    <h1>Quanto tempo ti ruba lo smartphone? (E come riprendertelo senza andare a vivere in montagna)</h1>
+    <h1>Quanto tempo ti ruba davvero lo smartphone? <br>Smart Test in 9 domande</h1>
 
-    <button id="shareBtnTop"
-      style="background: var(--violet-main); color:white; padding:10px 15px; border:none;
-             border-radius:6px; cursor:pointer; margin-bottom:20px; font-weight:600;">
-      📎 Condividi questo articolo
-    </button>
-
-    <p>
-      Ti è mai capitato questo: <strong>“Controllo un attimo lo smartphone”</strong>…  
-      e quando alzi gli occhi sono passati <strong>35 minuti</strong>, due Reels di gatti,
-      tre video motivazionali e una recensione di friggitrice ad aria che non volevi vedere?
+    <p class="intro">
+      Questo non è il solito test “sei dipendente sì/no”.  
+      In 9 domande veloci proviamo a capire se lo smartphone è:
+      <strong>un compagno di vita utile</strong> o un aspirapolvere di tempo che ti succhia minuti
+      ogni volta che lo sblocchi “solo un secondo”.
     </p>
 
-    <p>
-      In questo articolo facciamo un viaggio leggero ma concreto tra:
-    </p>
-
-    <ul class="soft-list">
-      <li>notifiche che ti interrompono ogni 5 minuti,</li>
-      <li>scroll infinito che ti ipnotizza,</li>
-      <li>piccole abitudini che ti rubano <strong>ore</strong> senza che tu te ne accorga,</li>
-      <li>e qualche trucco pratico per riprenderti il controllo (senza diventare un monaco digitale).</li>
-    </ul>
-
-    <div class="tip-box">
-      <strong>Riassunto veloce per chi ha già il dito sullo schermo:</strong>
-      <ul>
-        <li>Lo smartphone non ruba solo “5 minuti”, ma tanti micro-momenti durante la giornata.</li>
-        <li>Notifiche, social e app sono progettati per tenerti agganciato il più a lungo possibile.</li>
-        <li>Con poche regole semplici puoi recuperare <strong>1–2 ore al giorno</strong> senza rinunciare alla tecnologia.</li>
-      </ul>
+    <div class="legal-box">
+      <label for="legalAccept">
+        <input type="checkbox" id="legalAccept">
+        Prima di iniziare, un promemoria: questo è solo un test ludico e informativo.
+        Non è una valutazione psicologica o medica.  
+        Le decisioni che prenderai dopo sono solo tue, come spiegato nelle
+        <a href="note-legali.html" target="_blank">Note Legali</a>.
+      </label>
     </div>
 
-    <h2>1. Perché perdiamo ore senza accorgercene?</h2>
+    <div id="testContainer" class="test-locked">
+      <!-- DOMANDE -->
+      <div class="question">
+        <h3>1. In una giornata tipo, quanto tempo passi sullo smartphone “solo per scrollare” (non lavoro/studio)?</h3>
+        <label><input type="radio" name="q1" value="1"> Meno di 30 minuti</label>
+        <label><input type="radio" name="q1" value="3"> Tra 30 minuti e 1 ora</label>
+        <label><input type="radio" name="q1" value="5"> Tra 1 e 2 ore</label>
+        <label><input type="radio" name="q1" value="7"> Più di 2 ore</label>
+      </div>
 
-    <p>
-      Lo smartphone non ti dice mai: <em>“Ora ti prendo 2 ore intere”</em>.  
-      Fa una cosa più furba: ti chiede solo <strong>micro-attenzioni</strong>.
-    </p>
+      <div class="question">
+        <h3>2. Quante volte al giorno sblocchi il telefono, più o meno?</h3>
+        <label><input type="radio" name="q2" value="1"> Meno di 20 volte</label>
+        <label><input type="radio" name="q2" value="3"> 20–40 volte</label>
+        <label><input type="radio" name="q2" value="5"> 40–70 volte</label>
+        <label><input type="radio" name="q2" value="7"> Oltre 70 volte (non le conto più)</label>
+      </div>
 
-    <ul>
-      <li>“Solo un messaggio su WhatsApp.”</li>
-      <li>“Solo una notifica Instagram.”</li>
-      <li>“Solo un attimo su YouTube mentre aspetto.”</li>
-    </ul>
+      <div class="question">
+        <h3>3. Quando senti una notifica mentre stai facendo altro...</h3>
+        <label><input type="radio" name="q3" value="1"> La guardo dopo, quando finisco quello che sto facendo</label>
+        <label><input type="radio" name="q3" value="3"> Dipende dall’importanza, a volte mollo tutto</label>
+        <label><input type="radio" name="q3" value="5"> Mi distraggo quasi sempre, do un’occhiata</label>
+        <label><input type="radio" name="q3" value="7"> Mi scatta il riflesso automatico: devo aprirla subito</label>
+      </div>
 
-    <p>
-      Il problema è che questi “solo un attimo” si sommano.  
-      Un po’ al mattino, un po’ in pausa, un po’ alla sera sul divano… e a fine giornata
-      <strong>non sai dove sono finite le tue ore libere</strong>.
-    </p>
+      <div class="question">
+        <h3>4. Appena ti svegli, cosa fai di solito?</h3>
+        <label><input type="radio" name="q4" value="1"> Mi alzo, mi preparo e solo dopo prendo il telefono</label>
+        <label><input type="radio" name="q4" value="3"> Controllo velocemente messaggi/mail e poi lo appoggio</label>
+        <label><input type="radio" name="q4" value="5"> Resto qualche minuto a scorrere social/news</label>
+        <label><input type="radio" name="q4" value="7"> Passo almeno 15–20 minuti sullo schermo prima ancora di alzarmi</label>
+      </div>
 
-    <p>
-      Non è mancanza di forza di volontà, è che il sistema è letteralmente progettato così:
-      notifiche, suoni, badge rossi, feed che si aggiorna all’infinito, video brevi che partono da soli…
-      il tutto per tenerti lì più a lungo possibile.
-    </p>
+      <div class="question">
+        <h3>5. Ti capita di perdere il senso del tempo mentre scorri feed o video brevi?</h3>
+        <label><input type="radio" name="q5" value="1"> Quasi mai</label>
+        <label><input type="radio" name="q5" value="3"> A volte, ma me ne accorgo dopo poco</label>
+        <label><input type="radio" name="q5" value="5"> Spesso: penso “5 minuti” e scopro che ne sono passati 30</label>
+        <label><input type="radio" name="q5" value="7"> Praticamente sempre: il tempo sparisce</label>
+      </div>
 
-    <div class="mini-test">
-      <strong>Mini test lampo:</strong><br>
-      Negli ultimi 7 giorni:
-      <ul>
-        <li>Hai mai aperto lo smartphone “solo per vedere l’ora” e ti sei ritrovato in un social?</li>
-        <li>Ti è capitato di iniziare un video mentre mangiavi e finire il piatto senza ricordarti cosa hai visto?</li>
-        <li>Hai mai detto “un’ultima storia e poi vado a dormire”?</li>
-      </ul>
-      Se hai risposto “sì” ad almeno 2, tranquillo: sei in buona compagnia.  
-      È <strong>normale</strong>, ma proprio per questo conviene darsi qualche regola.
-    </div>
+      <div class="question">
+        <h3>6. Quando sei con amici, partner o famiglia...</h3>
+        <label><input type="radio" name="q6" value="1"> Il telefono resta in tasca o in borsa</label>
+        <label><input type="radio" name="q6" value="3"> Lo tengo vicino ma lo uso poco</label>
+        <label><input type="radio" name="q6" value="5"> Ogni tanto lo prendo per controllare qualcosa</label>
+        <label><input type="radio" name="q6" value="7"> È quasi sempre sul tavolo e lo guardo spesso</label>
+      </div>
 
-    <h2>2. Il trio che ti ruba tempo: notifiche, social, scroll infinito</h2>
+      <div class="question">
+        <h3>7. Se resti senza batteria o senza connessione per qualche ora...</h3>
+        <label><input type="radio" name="q7" value="1"> Nessun problema, quasi mi fa piacere</label>
+        <label><input type="radio" name="q7" value="3"> Mi dà un po’ fastidio, ma sopravvivo bene</label>
+        <label><input type="radio" name="q7" value="5"> Mi sento “scoperto”, come se mancasse qualcosa</label>
+        <label><input type="radio" name="q7" value="7"> Mi sale l’ansia: devo ricaricare o trovare il wi-fi</label>
+      </div>
 
-    <h3>2.1 Notifiche: il campanello alla porta del cervello</h3>
+      <div class="question">
+        <h3>8. Quanto spesso usi il telefono mentre fai altre cose (TV, studio, lavoro, tavola)?</h3>
+        <label><input type="radio" name="q8" value="1"> Raramente</label>
+        <label><input type="radio" name="q8" value="3"> Ogni tanto</label>
+        <label><input type="radio" name="q8" value="5"> Spesso, faccio due cose insieme</label>
+        <label><input type="radio" name="q8" value="7"> Quasi sempre: è la mia “seconda mano”</label>
+      </div>
 
-    <p>
-      Ogni notifica è come qualcuno che ti bussa alla spalla dicendo:
-      <em>“Scusa, scusa, ma ti ricordi che esisto?”</em>.
-    </p>
+      <div class="question">
+        <h3>9. Ti capita di rimandare qualcosa (compiti, lavoro, sonno) per colpa del telefono?</h3>
+        <label><input type="radio" name="q9" value="1"> Quasi mai</label>
+        <label><input type="radio" name="q9" value="3"> A volte, ma su cose poco importanti</label>
+        <label><input type="radio" name="q9" value="5"> Spesso rimando piccole cose</label>
+        <label><input type="radio" name="q9" value="7"> Sì, rimando anche cose importanti</label>
+      </div>
 
-    <p>
-      Il problema non è la singola notifica, ma:
-    </p>
+      <button class="btn-primary" type="button" onclick="calcolaRisultato()">
+        📊 Calcola il risultato
+      </button>
 
-    <ul>
-      <li>quelle inutili (offerte, app che non usi, promemoria che non ti servono),</li>
-      <li>quelle multiple (“3 nuovi video”, “5 nuovi post”, “9+ notifiche”),</li>
-      <li>quelle che ti portano dentro un social anche se non volevi entrarci.</li>
-    </ul>
+      <div id="resultBox" class="result-box">
+        <div id="resultTitle" class="result-title"></div>
+        <div id="resultScore" class="result-score"></div>
+        <div id="resultText"></div>
+      </div>
 
-    <p>
-      Ogni volta che ti interrompono, perdi:
-    </p>
-
-    <ul>
-      <li>concentrazione,</li>
-      <li>tempo per ritornare a quello che stavi facendo,</li>
-      <li>un po’ di pazienza con il mondo.</li>
-    </ul>
-
-    <h3>2.2 Social & feed automatici</h3>
-
-    <p>
-      Quando apri un social, non trovi una pagina vuota.  
-      Trovi un <strong>nastro trasportatore di contenuti</strong> che non finisce mai:
-      se scrolli c’è sempre qualcos’altro.
-    </p>
-
-    <p>
-      E qui entra in gioco la vera trappola:
-      <strong>il prossimo video potrebbe essere quello interessante</strong>.
-      Così vai avanti, avanti, avanti… e il tempo scivola via.
-    </p>
-
-    <p>
-      Se vuoi capire meglio come funziona questa “magia”, puoi leggere anche:
-      <a href="perche-certi-video-sembra-fatti-apposta-per-te.html">Perché certi video sembrano fatti apposta per te?</a>.
-    </p>
-
-    <h2>3. Mini Test: quante ore stai regalando allo smartphone?</h2>
-
-    <p>
-      Non serve un calcolo perfetto al minuto.  
-      Bastano pochi segnali per capire se sei in zona “uso sereno” o “rapimento digitale”.
-    </p>
-
-    <div class="mini-test">
-      <strong>Segna mentalmente SÌ o NO:</strong>
-      <ol>
-        <li>Controlli il telefono entro i primi 10 minuti dal risveglio.</li>
-        <li>Ti capita di sbloccarlo senza sapere bene perché (solo per “vedere se c’è qualcosa”).</li>
-        <li>Spesso passi da un’app all’altra senza un motivo preciso.</li>
-        <li>Se sei in coda o in attesa, lo tiri fuori automaticamente.</li>
-        <li>Ti è capitato di dire “vado a letto” e poi restare al telefono ancora 30–40 minuti.</li>
-        <li>Quando senti una notifica, è più forte di te: devi vedere subito cos’è.</li>
-        <li>Se dimentichi il telefono in un’altra stanza, ti senti “nudo” o inquieto.</li>
-      </ol>
-
-      <p><strong>Risultato veloce:</strong></p>
-      <ul>
-        <li><strong>0–2 SÌ:</strong> uso abbastanza consapevole, continua così (e perfeziona un po’).</li>
-        <li><strong>3–5 SÌ:</strong> zona gialla, lo smartphone comanda più di quanto pensi.</li>
-        <li><strong>6–7 SÌ:</strong> zona rossa: è ora di mettere alcune regole serie, senza sensi di colpa ma con decisione.</li>
-      </ul>
-    </div>
-
-    <p class="small">
-      Questo non è un test clinico, ma una fotografia onesta delle tue abitudini quotidiane.
-      Il punto non è sentirsi in colpa, ma capire da dove partire per migliorare.
-    </p>
-
-    <h2>4. Come riprenderti il tuo tempo (senza buttare lo smartphone dalla finestra)</h2>
-
-    <h3>4.1 Sfoltisci le notifiche (subito)</h3>
-
-    <p>
-      Prima mossa, la più potente e la meno faticosa:
-      <strong>disattiva tutte le notifiche non essenziali</strong>.
-    </p>
-
-    <ul>
-      <li>Lascia attive solo quelle davvero importanti (famiglia, lavoro, poche app utili).</li>
-      <li>Disattiva promozioni, social, giochi, “Non perderti questo” e simili.</li>
-      <li>Valuta di togliere anche il suono, lasciando solo le notifiche visive per le cose urgenti.</li>
-    </ul>
-
-    <p>
-      Se il telefono smette di bussare ogni 3 minuti, metà del lavoro è già fatto.
-    </p>
-
-    <h3>4.2 Home più pulita, meno tentazioni</h3>
-
-    <p>
-      Quando sblocchi il telefono, cosa vedi per prima cosa?
-    </p>
-
-    <ul>
-      <li>Se vedi subito le icone dei social → è un invito costante ad aprirli.</li>
-      <li>Se vedi solo poche app essenziali → hai già impostato una barriera leggera.</li>
-    </ul>
-
-    <p>
-      Idee pratiche:
-    </p>
-
-    <ul>
-      <li>Metti in prima schermata solo telefono, messaggi, fotocamera, banca, magari il calendario.</li>
-      <li>Spingi social e giochi nella seconda o terza schermata.</li>
-      <li>Se serve, togli proprio le icone dalla home e accedi solo dalla lista app.</li>
-    </ul>
-
-    <h3>4.3 Orari “protetti” senza smartphone</h3>
-
-    <p>
-      Non serve una rivoluzione, basta inserire qualche <strong>zona senza telefono</strong>:
-    </p>
-
-    <ul>
-      <li>primi 30 minuti dopo il risveglio;</li>
-      <li>pasti (colazione, pranzo, cena);</li>
-      <li>ultima mezz’ora prima di dormire;</li>
-      <li>momenti in cui stai con i tuoi cari.</li>
-    </ul>
-
-    <p>
-      Puoi anche usare la modalità “Non disturbare” in automatico in alcune fasce orarie
-      per evitare che il telefono si intrufoli ovunque.
-    </p>
-
-    <h3>4.4 Limiti di tempo per le app più “pericolose”</h3>
-
-    <p>
-      Quasi tutti gli smartphone hanno ormai:
-    </p>
-
-    <ul>
-      <li><strong>statistiche di utilizzo</strong> (quante ore passi sulle singole app),</li>
-      <li><strong>timer</strong> per limitare il tempo giornaliero su social, giochi, ecc.</li>
-    </ul>
-
-    <p>
-      Non serve essere rigidi, può bastare:
-    </p>
-
-    <ul>
-      <li>mettere un limite di 30–40 minuti al giorno per l’app che ti mangia più tempo;</li>
-      <li>usare il pop-up del limite come “promemoria di realtà”: se lo superi, almeno è una scelta consapevole.</li>
-    </ul>
-
-    <h2>5. Cosa potresti fare con quell’ora recuperata?</h2>
-
-    <p>
-      Se recuperi anche solo <strong>1 ora al giorno</strong>, hai:
-    </p>
-
-    <ul>
-      <li>7 ore a settimana;</li>
-      <li>circa 30 ore al mese;</li>
-      <li>oltre 350 ore all’anno (più di due settimane lavorative).</li>
-    </ul>
-
-    <p>
-      Con quell’ora potresti:
-    </p>
-
-    <ul>
-      <li>leggere un libro che rimandi da mesi,</li>
-      <li>fare una camminata,</li>
-      <li>studiare qualcosa di nuovo,</li>
-      <li>o semplicemente annoiarti un po’ (che è molto più sano di quanto sembri).</li>
-    </ul>
-
-    <div class="product-box">
-      <strong>Vuoi renderti conto meglio di dove “scappano” le tue ore?</strong>
-      <p>
-        Prova per una settimana a segnare su un foglio o in una nota del telefono
-        quanto tempo passi sui social o nelle app più usate.  
-        Anche una stima grossolana può bastare per darti una scossa.
-      </p>
-      <p style="font-size:0.9rem; margin-top:8px;">
-        Non serve essere perfetti, basta essere più consapevoli rispetto a ieri.
-      </p>
-    </div>
-
-    <h2>6. Conclusione: lo smartphone è un ladro o uno strumento?</h2>
-
-    <p>
-      Lo smartphone in sé non è il nemico.  
-      Può essere una <strong>risorsa enorme</strong>: mappe, foto, messaggi, lavoro, studio, ricordi.
-    </p>
-
-    <p>
-      Diventa un problema quando:
-    </p>
-
-    <ul>
-      <li>lo usi in modo automatico e non per scelta;</li>
-      <li>entra in ogni ritaglio di tempo, anche quando vorresti staccare;</li>
-      <li>ti porta via ore senza che tu abbia deciso davvero di spenderle così.</li>
-    </ul>
-
-    <p>
-      La filosofia Syncras è semplice:
-    </p>
-
-    <ul>
-      <li><strong>Capire</strong> come funziona il gioco (notifiche, algoritmi, abitudini);</li>
-      <li><strong>Rimettere limiti</strong> chiari e sostenibili;</li>
-      <li><strong>Usare la tecnologia</strong> per quello che ti serve davvero, non per riempire ogni silenzio.</li>
-    </ul>
-
-    <p class="small">
-      Questo articolo ha solo scopo informativo e di riflessione generale sul rapporto con la tecnologia.
-      Non sostituisce un parere medico o psicologico professionale.  
-      Se senti che l’uso dello smartphone ti crea disagio, ansia o interferisce seriamente con la tua vita,
-      valuta di parlarne con uno specialista.
-    </p>
-
-    <!-- RICHIAMO AD ALTRI ARTICOLI CORRELATI (SOLO ARTICOLI GIÀ ESISTENTI) -->
-    <section style="margin-top:30px; padding:16px; border-radius:10px; background:#F7F7FB; border:1px solid #E5E7EB;">
-      <h2 style="margin-top:0;">Ti possono interessare anche:</h2>
-      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-top:10px;">
-        <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
-          <h3 style="margin-top:0; font-size:1rem;">
-            <a href="perche-certi-video-sembra-fatti-apposta-per-te.html" style="text-decoration:none; color:var(--violet-dark);">
+      <div class="mini-links">
+        Ti è piaciuto questo test?  
+        Puoi approfondire con:
+        <ul>
+          <li>
+            L’articolo:
+            <a href="perche-certi-video-sembra-fatti-apposta-per-te.html">
               Perché certi video sembrano fatti apposta per te?
             </a>
-          </h3>
-          <p style="font-size:0.9rem; margin:0;">
-            Come funzionano gli algoritmi di social e video e perché ti mostrano sempre gli stessi contenuti “su misura”.
-          </p>
-        </article>
-
-        <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
-          <h3 style="margin-top:0; font-size:1rem;">
-            <a href="quanto-consuma-un-frigorifero-al-giorno.html" style="text-decoration:none; color:var(--violet-dark);">
-              Quanto consuma un frigorifero al giorno?
-            </a>
-          </h3>
-          <p style="font-size:0.9rem; margin:0;">
-            Un altro “compagno di casa” che lavora h24: conti semplici per capire i suoi consumi reali.
-          </p>
-        </article>
-
-        <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
-          <h3 style="margin-top:0; font-size:1rem;">
-            <a href="calcolatore-consumi-elettrodomestici.html" style="text-decoration:none; color:var(--violet-dark);">
-              Calcolatore Consumi Elettrodomestici
-            </a>
-          </h3>
-          <p style="font-size:0.9rem; margin:0;">
-            Inserisci potenza, tempo di utilizzo e costo del kWh: scopri quanto ti costa davvero tenere acceso ogni apparecchio.
-          </p>
-        </article>
+          </li>
+          <li>
+            Altri test nella pagina
+            <a href="quiz.html">Test Anti-Acquisto & Smart Test</a>
+            (in aggiornamento).
+          </li>
+        </ul>
       </div>
-    </section>
 
-    <div style="text-align:center; margin:30px 0 10px;">
-      <button id="shareBtnBottom"
-        style="background: var(--violet-main); color:white; padding:10px 18px; border:none;
-               border-radius:6px; cursor:pointer; font-weight:600; font-size:1rem;">
-        📎 Condividi questo articolo
-      </button>
+      <p class="small">
+        Questo test non sostituisce una valutazione professionale o un percorso con uno specialista.
+        Serve solo come spunto per osservare le tue abitudini digitali e capire se vale la pena
+        mettere qualche limite in più alle notifiche.
+      </p>
     </div>
   </main>
 
@@ -587,29 +406,68 @@
       document.body.classList.toggle('nav-open');
     }
 
-    // Condivisione articolo (top e bottom)
+    // Sblocco del test dopo accettazione Note Legali
     (function() {
-      const shareTop = document.getElementById('shareBtnTop');
-      const shareBottom = document.getElementById('shareBtnBottom');
+      const checkbox = document.getElementById('legalAccept');
+      const container = document.getElementById('testContainer');
 
-      function attachShare(btn) {
-        if (!btn) return;
-        if (navigator.share) {
-          btn.addEventListener('click', () => {
-            navigator.share({
-              title: 'Quanto tempo ti ruba lo smartphone?',
-              text: 'Un viaggio pratico e leggero tra notifiche, scroll infinito e abitudini che ti rubano ore. Con qualche trucco per riprenderti il controllo.',
-              url: window.location.href
-            });
-          });
+      function updateLock() {
+        if (checkbox.checked) {
+          container.classList.remove('test-locked');
         } else {
-          btn.style.display = 'none';
+          container.classList.add('test-locked');
         }
       }
 
-      attachShare(shareTop);
-      attachShare(shareBottom);
+      checkbox.addEventListener('change', updateLock);
+      updateLock();
     })();
+
+    // Calcolo punteggio
+    function calcolaRisultato() {
+      const questions = 9;
+      let total = 0;
+      let answered = 0;
+
+      for (let i = 1; i <= questions; i++) {
+        const sel = document.querySelector('input[name="q' + i + '"]:checked');
+        if (sel) {
+          answered++;
+          total += parseInt(sel.value, 10);
+        }
+      }
+
+      if (answered < questions) {
+        alert('Rispondi a tutte le domande prima di vedere il risultato.');
+        return;
+      }
+
+      const resultBox = document.getElementById('resultBox');
+      const titleEl = document.getElementById('resultTitle');
+      const scoreEl = document.getElementById('resultScore');
+      const textEl = document.getElementById('resultText');
+
+      let title = '';
+      let text = '';
+
+      if (total <= 18) {
+        title = '📱 Uso consapevole (quasi zen)';
+        text = 'Lo smartphone per te è uno strumento, non un buco nero. Ogni tanto esageri, ma in generale riesci a tenerlo al suo posto. Puoi comunque guadagnare minuti preziosi riducendo un po’ le notifiche e continuando a proteggere i momenti senza schermo.';
+      } else if (total <= 36) {
+        title = '⚖️ Equilibrio fragile: rischio “scroll infinito”';
+        text = 'In molti momenti lo smartphone ti ruba più tempo di quanto vorresti. Non è una catastrofe, ma sei nella zona in cui qualche piccola scelta quotidiana può fare una grande differenza: timer per i social, niente telefono a tavola, sveglia analogica al posto del telefono sul comodino.';
+      } else {
+        title = '🚨 Zona dipendenza soft: lo smartphone comanda l’agenda';
+        text = 'Il telefono è diventato il principale aspirapolvere di tempo. Non serve sentirsi in colpa, ma vale la pena prendere decisioni pratiche: limiti orari alle app, zone “no smartphone”, notifiche ridotte al minimo e momenti della giornata in cui il telefono resta in un’altra stanza.';
+      }
+
+      titleEl.textContent = title;
+      scoreEl.textContent = 'Punteggio totale: ' + total + ' (min 9 – max 63)';
+      textEl.textContent = text;
+
+      resultBox.style.display = 'block';
+      resultBox.scrollIntoView({ behavior: 'smooth' });
+    }
   </script>
 
   <footer>
@@ -678,7 +536,6 @@
       text-decoration: none;
     }
 
-    /* Pulsante RIFIUTA – pari importanza al pulsante ACCETTA */
     #cookie-banner button[onclick="rejectCookies()"] {
       flex: 1;
       background: white !important;
@@ -690,7 +547,6 @@
       font-weight: 600;
     }
 
-    /* Pulsante ACCETTA */
     #cookie-btn {
       flex: 1;
       background: #6C5CE7;
@@ -710,16 +566,14 @@
   <script>
   (function () {
     const GA_ID = 'G-CFTTCYDZ2P';
-    const CONSENT_KEY = 'syncras_cookie_consent'; // chiave unica per tutto il sito
+    const CONSENT_KEY = 'syncras_cookie_consent';
 
-    // 1️⃣ BLOCCO PREVENTIVO: GA disabilitato finché non c'è consenso
     window['ga-disable-' + GA_ID] = true;
 
     function loadGoogleAnalytics() {
       if (window.__syncrasGaLoaded) return;
       window.__syncrasGaLoaded = true;
 
-      // Riabilita GA solo dopo il consenso
       window['ga-disable-' + GA_ID] = false;
 
       const gaScript = document.createElement('script');
@@ -753,15 +607,13 @@
     window.rejectCookies = function () {
       localStorage.setItem(CONSENT_KEY, 'no');
       hideBanner();
-      // GA resta bloccato
       window['ga-disable-' + GA_ID] = true;
     };
 
-    // 2️⃣ FUNZIONE DI REVOCA – per cambiare idea dopo
     window.revokeCookies = function () {
       localStorage.removeItem(CONSENT_KEY);
-      window['ga-disable-' + GA_ID] = true;   // blocca subito GA
-      showBanner();                           // ri-mostra il banner
+      window['ga-disable-' + GA_ID] = true;
+      showBanner();
     };
 
     document.addEventListener('DOMContentLoaded', function () {
