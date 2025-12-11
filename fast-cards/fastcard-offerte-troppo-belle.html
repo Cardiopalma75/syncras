@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+ <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fast Card – Offerte troppo belle per essere vere | Syncras.App</title>
+<meta name="description" content="La Fast Card Syncras che ti aiuta a riconoscere in 30 secondi se un'offerta è un vero affare o una furbata di marketing.">
+<meta name="robots" content="index,follow">
+
+
+  <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --bg-page: #F7F7FB;
+      --text-main: #403E43;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg-page);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      color: var(--text-main);
+    }
+
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color: white;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+    }
+
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+    #main-nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    #main-nav a:hover {
+      text-decoration: underline;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 25px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      color: var(--violet-dark);
+      margin-top: 0;
+    }
+
+    .fastcard-box {
+      background: #F7F7FB;
+      border-left: 4px solid var(--violet-main);
+      padding: 16px 20px;
+      border-radius: 8px;
+      font-size: 1rem;
+      margin: 20px 0;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      background: #eee;
+      font-size: 0.9rem;
+    }
+
+    /* Cookie Banner */
+    #cookie-banner {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 90%;
+      width: 420px;
+      background: #ffffff;
+      border: 2px solid #6C5CE7;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      z-index: 9999;
+      font-family: Arial, sans-serif;
+      display: none;
+    }
+
+    #cookie-banner button {
+      flex: 1;
+      border-radius: 6px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    #cookie-btn {
+      background: #6C5CE7;
+      color: white;
+      border: 2px solid #6C5CE7;
+    }
+    
+    #cookie-banner button[onclick="rejectCookies()"] {
+      background: white;
+      border: 2px solid #6C5CE7;
+      color: #111;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo">Syncras.App</div>
+    <nav id="main-nav">
+      <a href="index.html">Home</a>
+      <a href="blog.html">Blog</a>
+      <a href="smart-test.html">Smart Test</a>
+      <a href="fast-cards.html">Fast Cards</a>
+      <a href="calcolatori.html">Calcolatori</a>
+      <a href="curiosita.html">Curiosità</a>
+      <a href="misteri.html">Misteri</a>
+      <a href="offerte.html">Prodotti Consapevoli</a>
+      <a href="chi.html">Chi siamo</a>
+    </nav>
+  </div>
+</header>
+
+<!-- CONTENUTO FAST CARD -->
+<main>
+
+  <span class="intro-tag">Fast Card Syncras</span>
+  <h1>TITOLO PRINCIPALE DELLA FAST CARD</h1>
+
+  <p>
+    🔍 <strong>Riassunto in una frase:</strong>  
+    QUI UNA BREVE FRASE DI PRESENTAZIONE (es. “3 segnali rapidi per capire se un’offerta è un affare o una fregatura”).  
+  </p>
+
+  <div class="fastcard-box">
+    <h2>1️⃣ Primo punto chiave</h2>
+    <p>
+      Testo breve, diretto e utile. Consiglio pratico da applicare subito.
+    </p>
+  </div>
+
+  <div class="fastcard-box">
+    <h2>2️⃣ Secondo punto chiave</h2>
+    <p>
+      Spiegazione semplice, con un esempio concreto che chiunque riconosce.
+    </p>
+  </div>
+
+  <div class="fastcard-box">
+    <h2>3️⃣ Terzo punto chiave</h2>
+    <p>
+      Ultimo consiglio rapido che fa dire al lettore “ah, è vero!”.
+    </p>
+  </div>
+
+  <p>
+    Vuoi altre Fast Cards?  
+    👉 Torna alla pagina principale:  
+    <a href="fast-cards.html">tutte le Fast Cards Syncras</a>.
+  </p>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  © 2025 Syncras.App — Tutti i diritti riservati<br>
+  <div style="margin-top:8px;">
+    <a href="privacy.html">Privacy Policy</a> |
+    <a href="cookie.html">Cookie Policy</a> |
+    <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
+    <a href="note-legali.html">Note Legali</a>
+  </div>
+</footer>
+
+<!-- COOKIE BANNER + GA -->
+<div id="cookie-banner">
+  <p>
+    Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite (Google Analytics).
+    Leggi la <a href="privacy.html">Privacy Policy</a>.
+  </p>
+  <div style="display:flex; gap:8px; margin-top:10px;">
+    <button onclick="rejectCookies()">Rifiuta</button>
+    <button id="cookie-btn" onclick="acceptCookies()">Accetta</button>
+  </div>
+</div>
+
+<script>
+  const GA_ID = 'G-CFTTCYDZ2P';
+  const CONSENT_KEY = 'syncras_cookie_consent';
+  window['ga-disable-' + GA_ID] = true;
+
+  function loadGA() {
+    if (window.__gaLoaded) return;
+    window.__gaLoaded = true;
+    window['ga-disable-' + GA_ID] = false;
+
+    const s = document.createElement('script');
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+    s.async = true;
+    document.head.appendChild(s);
+
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    window.gtag = gtag;
+    gtag('js', new Date());
+    gtag('config', GA_ID, { anonymize_ip: true });
+  }
+
+  function acceptCookies() {
+    localStorage.setItem(CONSENT_KEY, 'yes');
+    document.getElementById('cookie-banner').style.display = 'none';
+    loadGA();
+  }
+
+  function rejectCookies() {
+    localStorage.setItem(CONSENT_KEY, 'no');
+    document.getElementById('cookie-banner').style.display = 'none';
+    window['ga-disable-' + GA_ID] = true;
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const c = localStorage.getItem(CONSENT_KEY);
+    if (!c) {
+      document.getElementById('cookie-banner').style.display = 'block';
+    } else if (c === 'yes') {
+      loadGA();
+    }
+  });
+</script>
+  <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
+<div id="cookie-banner">
+  <p>
+    Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
+    (Google Analytics). Alcuni link potrebbero essere di affiliazione.
+    Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
+    <a href="privacy.html">Privacy Policy</a>.
+  </p>
+  <div style="display:flex; gap:10px; margin-top:8px;">
+    <button type="button" onclick="rejectCookies()">
+      Rifiuta
+    </button>
+    <button id="cookie-btn" type="button" onclick="acceptCookies()">
+      Accetta e continua
+    </button>
+  </div>
+</div>
+
+<style>
+  #cookie-banner {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 90%;
+    width: 420px;
+    background: #ffffff;
+    border: 2px solid #6C5CE7;
+    border-radius: 10px;
+    padding: 16px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    z-index: 9999;
+    font-family: Arial, sans-serif;
+    display: none;
+  }
+
+  #cookie-banner p {
+    margin: 0 0 12px 0;
+    font-size: 0.95rem;
+    color: #333;
+    line-height: 1.4;
+  }
+
+  #cookie-banner a {
+    color: #6C5CE7;
+    font-weight: bold;
+    text-decoration: none;
+  }
+
+  /* Pulsante RIFIUTA */
+  #cookie-banner button[onclick="rejectCookies()"] {
+    flex: 1;
+    background: white !important;
+    color: #111827 !important;
+    border: 2px solid #6C5CE7 !important;
+    padding: 10px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+
+  /* Pulsante ACCETTA */
+  #cookie-btn {
+    flex: 1;
+    background: #6C5CE7;
+    color: white;
+    border: 2px solid #6C5CE7;
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 700;
+  }
+
+  #cookie-btn:hover {
+    background: #4B3ACB;
+  }
+</style>
+
+<script>
+(function () {
+  const GA_ID = 'G-CFTTCYDZ2P';
+  const CONSENT_KEY = 'syncras_cookie_consent';
+
+  // BLOCCO PREVENTIVO DI GOOGLE ANALYTICS
+  window['ga-disable-' + GA_ID] = true;
+
+  // Carica GA solo dopo il consenso
+  function loadGoogleAnalytics() {
+    if (window.__syncrasGaLoaded) return;
+    window.__syncrasGaLoaded = true;
+
+    window['ga-disable-' + GA_ID] = false;
+
+    const gaScript = document.createElement('script');
+    gaScript.async = true;
+    gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+    document.head.appendChild(gaScript);
+
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    window.gtag = gtag;
+    gtag('js', new Date());
+    gtag('config', GA_ID, { anonymize_ip: true });
+  }
+
+  function showBanner() {
+    const banner = document.getElementById('cookie-banner');
+    if (banner) banner.style.display = 'block';
+  }
+
+  function hideBanner() {
+    const banner = document.getElementById('cookie-banner');
+    if (banner) banner.style.display = 'none';
+  }
+
+  // ACCETTA
+  window.acceptCookies = function () {
+    localStorage.setItem(CONSENT_KEY, 'yes');
+    hideBanner();
+    loadGoogleAnalytics();
+  };
+
+  // RIFIUTA
+  window.rejectCookies = function () {
+    localStorage.setItem(CONSENT_KEY, 'no');
+    hideBanner();
+    window['ga-disable-' + GA_ID] = true;
+  };
+
+  // REVOCA CONSENSO
+  window.revokeCookies = function () {
+    localStorage.removeItem(CONSENT_KEY);
+    window['ga-disable-' + GA_ID] = true;
+    showBanner();
+  };
+
+  // AVVIO
+  document.addEventListener('DOMContentLoaded', function () {
+    const consent = localStorage.getItem(CONSENT_KEY);
+    
+    if (consent === 'yes') {
+      loadGoogleAnalytics();
+    } else if (consent === 'no') {
+      window['ga-disable-' + GA_ID] = true;
+    } else {
+      showBanner();
+    }
+  });
+})();
+</script>
+
+
+</body>
+</html>
