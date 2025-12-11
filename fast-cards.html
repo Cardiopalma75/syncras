@@ -175,6 +175,16 @@
       overflow: hidden;
     }
 
+    /* Card cliccabili */
+    .test-group-card[data-href] {
+      cursor: pointer;
+      transition: box-shadow 0.15s ease, transform 0.15s ease;
+    }
+    .test-group-card[data-href]:hover {
+      box-shadow: 0 6px 14px rgba(0,0,0,0.14);
+      transform: translateY(-1px);
+    }
+
     .test-group-label {
       font-size: 0.8rem;
       text-transform: uppercase;
@@ -194,17 +204,6 @@
       margin-bottom: 10px;
     }
 
-    .test-group-card[data-href] {
-      cursor: pointer;
-      transition: box-shadow 0.15s ease, transform 0.15s ease;
-    }
-
-    .test-group-card[data-href]:hover {
-      box-shadow: 0 6px 14px rgba(0,0,0,0.14);
-      transform: translateY(-1px);
-    }
-
-    
     .test-list {
       list-style: none;
       padding-left: 0;
@@ -318,7 +317,7 @@
   <main>
     <div class="back-links">
       ← <a href="index.html">Torna alla Home</a> |
-    
+      <a href="categorie.html">Categorie</a>
     </div>
 
     <span class="intro-tag">Schede veloci</span>
@@ -345,7 +344,7 @@
       Perfette da leggere prima dei saldi, del Black Friday o di un acquisto impulsivo.
     </p>
 
-       <section class="group-grid" id="fast-cards-offerte">
+    <section class="group-grid" id="fast-cards-offerte">
       <article class="test-group-card" data-href="fast-cards/fastcard-offerte-troppo-belle.html">
         <div class="test-group-label">Fast Card</div>
         <h2>Offerte “troppo belle per essere vere”</h2>
@@ -363,7 +362,7 @@
         </ul>
       </article>
 
-      <article class="test-group-card" data-href="fast-cards/countdown-offerte.html">
+      <article class="test-group-card" data-href="fast-cards/fastcard-countdown-offerte.html">
         <div class="test-group-label">Fast Card</div>
         <h2>Countdown & “solo per oggi”</h2>
         <p>
@@ -379,7 +378,7 @@
         </ul>
       </article>
 
-      <article class="test-group-card" data-href="fast-cards/bundle-pacchetti.html">
+      <article class="test-group-card" data-href="fast-cards/fastcard-bundle-pacchetti.html">
         <div class="test-group-label">Fast Card</div>
         <h2>Bundle e “pacchetti convenienza”</h2>
         <p>
@@ -396,7 +395,6 @@
       </article>
     </section>
 
-
     <!-- SEZIONE 2: PREZZI & MARKETING -->
     <h2 class="section-title">2. Prezzi, psicologia & marketing</h2>
     <p class="section-subtitle">
@@ -404,7 +402,7 @@
       e come i piccoli dettagli influenzano le nostre scelte senza farcene accorgere.
     </p>
 
-       <section class="group-grid" id="fast-cards-prezzi">
+    <section class="group-grid" id="fast-cards-prezzi">
       <article class="test-group-card" data-href="fast-cards/fastcard-prezzo-psicologico.html">
         <div class="test-group-label">Fast Card</div>
         <h2>Il prezzo psicologico</h2>
@@ -454,8 +452,6 @@
       </article>
     </section>
 
-   
-
     <!-- SEZIONE 3: ATTENZIONE & TEMPO -->
     <h2 class="section-title">3. Attenzione, tempo & scroll infinito</h2>
     <p class="section-subtitle">
@@ -463,7 +459,7 @@
       il tuo tempo e la tua attenzione, soprattutto quando sei davanti allo schermo.
     </p>
 
-        <section class="group-grid" id="fast-cards-attenzione">
+    <section class="group-grid" id="fast-cards-attenzione">
       <article class="test-group-card" data-href="fast-cards/fastcard-scroll-infinito.html">
         <div class="test-group-label">Fast Card</div>
         <h2>Scroll infinito & notifiche</h2>
@@ -513,7 +509,6 @@
       </article>
     </section>
 
-
     <p class="helper-note">
       Le Syncras Fast Cards verranno aggiornate e ampliate nel tempo.  
       Quando una nuova scheda è pronta, la troverai qui con il link attivo.
@@ -528,6 +523,23 @@
     function toggleMenu() {
       document.body.classList.toggle('nav-open');
     }
+  </script>
+
+  <!-- Script per rendere cliccabili le card -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('.test-group-card[data-href]').forEach(function (card) {
+        card.addEventListener('click', function (e) {
+          // se clicchi su un link interno, lascia fare al link
+          if (e.target.tagName.toLowerCase() === 'a') return;
+
+          const url = card.getAttribute('data-href');
+          if (url) {
+            window.location.href = url;
+          }
+        });
+      });
+    });
   </script>
 
   <footer>
@@ -624,22 +636,6 @@
       background: #4B3ACB;
     }
   </style>
-  <script>
-    // Rende cliccabili le intere card Fast Cards
-    document.addEventListener('DOMContentLoaded', function () {
-      document.querySelectorAll('.test-group-card[data-href]').forEach(function (card) {
-        card.addEventListener('click', function (e) {
-          // Se clicchi su un link interno, lascia fare al link
-          if (e.target.tagName.toLowerCase() === 'a') return;
-
-          const url = card.getAttribute('data-href');
-          if (url) {
-            window.location.href = url;
-          }
-        });
-      });
-    });
-  </script>
 
   <script>
   (function () {
@@ -714,3 +710,4 @@
 
 </body>
 </html>
+
