@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Syncras Fast Cards | Schede veloci per non farsi fregare dalle offerte</title>
+  <meta name="description" content="Syncras Fast Cards: schede veloci e ironiche per riconoscere offerte furbe, errori di acquisto e trucchi di marketing in 30 secondi.">
+  <meta name="robots" content="index,follow">
+
+  <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --bg-page: #F7F7FB;
+      --text-main: #403E43;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg-page);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      color: var(--text-main);
+    }
+
+    /* HEADER VIOLA UNIFICATO */
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color: white;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+    #main-nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding-bottom: 2px;
+    }
+    #main-nav a:hover {
+      text-decoration: underline;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .menu-toggle span {
+      margin-left: 4px;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        margin: 0 auto;
+        max-width: 1180px;
+        flex-direction: column;
+        background-color: var(--violet-dark);
+        padding: 10px 16px 12px 16px;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
+      }
+      #main-nav a {
+        padding: 6px 0;
+      }
+      body.nav-open #main-nav {
+        display: flex;
+      }
+      .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 30px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    h1, h2, h3 {
+      color: var(--violet-dark);
+    }
+
+    p {
+      margin-bottom: 15px;
+    }
+
+    .back-links {
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+    .back-links a {
+      color: var(--violet-dark);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .back-links a:hover {
+      text-decoration: underline;
+    }
+
+    .intro-tag {
+      display: inline-block;
+      background: #F3F4FF;
+      color: var(--violet-dark);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+
+    .smart-test-lead {
+      font-size: 1.02rem;
+    }
+
+    .disclaimer-box {
+      background: #FFFBEA;
+      border-left: 4px solid #FBBF24;
+      padding: 12px 14px;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      margin: 20px 0 25px;
+    }
+
+    .group-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+      margin-top: 10px;
+    }
+
+    .test-group-card {
+      background: #F7F7FB;
+      border-radius: 10px;
+      padding: 16px 16px 14px;
+      border: 1px solid #E5E7EB;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .test-group-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #6B7280;
+      margin-bottom: 4px;
+    }
+
+    .test-group-card h2 {
+      margin-top: 0;
+      margin-bottom: 6px;
+      font-size: 1.2rem;
+    }
+
+    .test-group-card p {
+      font-size: 0.95rem;
+      margin-bottom: 10px;
+    }
+
+    .test-list {
+      list-style: none;
+      padding-left: 0;
+      margin: 8px 0 0;
+      font-size: 0.95rem;
+    }
+
+    .test-list li {
+      margin-bottom: 6px;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+    }
+
+    .test-list li span.bullet {
+      font-size: 0.9rem;
+      margin-top: 1px;
+    }
+
+    .test-list a {
+      color: var(--violet-dark);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .test-list a:hover {
+      text-decoration: underline;
+    }
+
+    .badge-soon {
+      display: inline-block;
+      font-size: 0.72rem;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: #E5E7EB;
+      color: #374151;
+      margin-left: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .section-title {
+      margin-top: 30px;
+      margin-bottom: 8px;
+    }
+
+    .section-subtitle {
+      font-size: 0.92rem;
+      color: #4B5563;
+      margin-bottom: 16px;
+    }
+
+    .helper-note {
+      font-size: 0.88rem;
+      color: #6B7280;
+      margin-top: 22px;
+    }
+
+    .helper-note a {
+      color: var(--violet-dark);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .helper-note a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      background: #eee;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+      main {
+        margin: 16px auto;
+        padding: 16px 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER UNIFICATO -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
+
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
+
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="smart-test.html">Smart Test</a>
+        <a href="fast-cards.html">Fast Cards</a>
+        <a href="calcolatori.html">Calcolatori</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="offerte.html">Prodotti Consapevoli</a>
+        <a href="chi.html">Chi siamo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="back-links">
+      ← <a href="index.html">Torna alla Home</a> |
+      <a href="categorie.html">Categorie</a>
+    </div>
+
+    <span class="intro-tag">Schede veloci</span>
+    <h1>Syncras Fast Cards</h1>
+    <p class="smart-test-lead">
+      Le Fast Cards sono <strong>mini-schede da 30 secondi</strong> per riconoscere al volo:
+      offerte troppo belle per essere vere, trucchi di marketing, errori di acquisto
+      e situazioni in cui l’algoritmo ci spinge a spendere o cliccare senza pensarci.
+      Zero moralismi, solo realtà spiegata semplice.
+    </p>
+
+    <div class="disclaimer-box">
+      <strong>Come usare queste schede:</strong><br>
+      ogni Fast Card è un promemoria rapido, non una verità assoluta.
+      Serve a farti accendere una lampadina prima di cliccare su “compra ora” o “accetta l’offerta”.
+      Per decisioni importanti è sempre meglio confrontare più fonti,
+      leggere bene le condizioni e – quando serve – parlare con un professionista qualificato.
+    </div>
+
+    <!-- SEZIONE 1: OFFERTE & ACQUISTI -->
+    <h2 class="section-title">1. Offerte, sconti & “occasioni irripetibili”</h2>
+    <p class="section-subtitle">
+      Schede veloci per distinguere un vero affare da una spinta a comprare.
+      Perfette da leggere prima dei saldi, del Black Friday o di un acquisto impulsivo.
+    </p>
+
+    <section class="group-grid" id="fast-cards-offerte">
+      <article class="test-group-card">
+        <div class="test-group-label">Fast Card</div>
+        <h2>Offerte “troppo belle per essere vere”</h2>
+        <p>
+          3 segnali semplici per capire se un’offerta è furbata di marketing o
+          un’occasione che vale davvero la pena considerare.
+        </p>
+        <ul class="test-list">
+          <li>
+            <span class="bullet">•</span>
+            <a href="fastcard-offerte-troppo-belle.html">
+              Fast Card – Come riconoscere un finto affare
+            </a>
+          </li>
+        </ul>
+      </article>
+
+      <article class="test-group-card">
+        <div class="test-group-label">Fast Card</div>
+        <h2>Countdown & “solo per oggi”</h2>
+        <p>
+          Quando il timer è uno strumento utile e quando è solo ansia artificiale per farti cliccare più in fretta.
+        </p>
+        <ul class="test-list">
+          <li>
+            <span class="bullet">•</span>
+            <a href="fastcard-countdown-offerte.html">
+              Fast Card – Timer, urgenza e decisioni di fretta
+            </a>
+          </li>
+        </ul>
+      </article>
+
+      <article class="test-group-card">
+        <div class="test-group-label">Fast Card</div>
+        <h2>Bundle e “pacchetti convenienza”</h2>
+        <p>
+          Come capire al volo se stai risparmiando davvero o se stai pagando cose che non ti servono.
+        </p>
+        <ul class="test-list">
+          <li>
+            <span class="bullet">•</span>
+            <a href="fastcard-bundle-pacchetti.html">
+              Fast Card – Quando il pacchetto conviene davvero
+            </a>
+          </li>
+        </ul>
+      </article>
+    </section>
+
+    <!-- SEZIONE 2: PREZZI & MARKETING -->
+    <h2 class="section-title">2. Prezzi, psicologia & marketing</h2>
+    <p class="section-subtitle">
+      Qui trovi le schede che spiegano in modo semplice perché i prezzi sono scritti in un certo modo
+      e come i piccoli dettagli influenzano le nostre scelte senza farcene accorgere.
+    </p>
+
+    <section class="group-grid" id="fast-cards-prezzi">
+      <article class="test-group-card">
+        <div class="test-group-label">Fast Card</div>
+        <h2>Il prezzo psicologico</h2>
+        <p>
+          Perché 499&nbsp;€ “suona” meglio di 500&nbsp;€ e come non farti fregare da una differenza che sulla carta è minima.
+        </p>
+        <ul class="test-list">
+          <li>
+            <span class="bullet">•</span>
+            <a href="fastcard-prezzo-psicologico.html">
+              Fast Card – Cosa nasconde il 9 finale
+            </a>
+          </li>
+        </ul>
+      </article>
+
+      <article class="test-group-card">
+        <div class="test-group-label">Fast Card</div>
+        <h2>Recensioni perfette & stelle brillanti</h2>
+        <p>
+          3 controlli veloci da fare prima di fidarti ciecamente di un prodotto con solo 5 stelle e zero difetti.
+        </p>
+        <ul class="test-list">
+          <li>
+            <span class="bullet">•</span>
+            <a href="fastcard-recensioni-fake.html">
+              Fast Card – Come annusare le recensioni sospette
+            </a>
+          </li>
+        </ul>
+      </article>
+
+      <article class="test-group-card">
+        <div class="test-group-label">Fast Card</div>
+        <h2>“Lo prendono tutti”</h2>
+        <p>
+          Quando il “prodotto del momento” ha senso anche per te e quando è solo effetto branco spinto dall’algoritmo.
+        </p>
+        <ul class="test-list">
+          <li>
+            <span class="bullet">•</span>
+            <a href="fastcard-prodotto-del-momento.html">
+              Fast Card – Effetto moda vs utilità reale
+            </a>
+          </li>
+        </ul>
+      </article>
+    </section>
+
+    <!-- SEZIONE 3: ATTENZIONE & TEMPO -->
+    <h2 class="section-title">3. Attenzione, tempo & scroll infinito</h2>
+    <p class="section-subtitle">
+      Schede che non parlano solo di soldi, ma di qualcosa che vale ancora di più:
+      il tuo tempo e la tua attenzione, soprattutto quando sei davanti allo schermo.
+    </p>
+
+    <section class="group-grid" id="fast-cards-attenzione">
+      <article class="test-group-card">
+        <div class="test-group-label">Fast Card</div>
+        <h2>Scroll infinito & notifiche</h2>
+        <p>
+          Un promemoria veloce per capire quando “mi rilasso un attimo” è diventato “è passata un’ora e non so come”.
+        </p>
+        <ul class="test-list">
+          <li>
+            <span class="bullet">•</span>
+            <a href="fastcard-scroll-infinito.html">
+              Fast Card – Quando è il telefono a decidere per te
+            </a>
+          </li>
+        </ul>
+      </article>
+
+      <article class="test-group-card">
+        <div class="test-group-label">Fast Card</div>
+        <h2>“Solo 5 minuti sul sito”</h2>
+        <p>
+          Come ricordarti che ogni giro “per curiosità” tra offerte e novità ha un costo invisibile in tempo ed energia.
+        </p>
+        <ul class="test-list">
+          <li>
+            <span class="bullet">•</span>
+            <a href="fastcard-solo-5-minuti.html">
+              Fast Card – La trappola dei 5 minuti
+            </a>
+          </li>
+        </ul>
+      </article>
+
+      <article class="test-group-card">
+        <div class="test-group-label">Fast Card</div>
+        <h2>Pubblicità che ti inseguono ovunque</h2>
+        <p>
+          Perché vedi sempre lo stesso prodotto ovunque vai e come non scambiare la ripetizione per destino.
+        </p>
+        <ul class="test-list">
+          <li>
+            <span class="bullet">•</span>
+            <a href="fastcard-retargeting.html">
+              Fast Card – Quando il prodotto ti insegue troppo
+            </a>
+          </li>
+        </ul>
+      </article>
+    </section>
+
+    <p class="helper-note">
+      Le Syncras Fast Cards verranno aggiornate e ampliate nel tempo.  
+      Quando una nuova scheda è pronta, la troverai qui con il link attivo.
+      Se hai un’idea per una Fast Card (un trucco di marketing, una trappola di acquisto o una situazione
+      in cui ti sei sentito fregato), puoi scriverci dalla pagina
+      <a href="chi.html">Chi siamo / Contatti</a>.
+    </p>
+  </main>
+
+  <script>
+    // Toggle menu mobile
+    function toggleMenu() {
+      document.body.classList.toggle('nav-open');
+    }
+  </script>
+
+  <footer>
+    © 2025 Syncras.App — Tutti i diritti riservati<br>
+    <div style="margin-top:8px;">
+      <a href="privacy.html">Privacy Policy</a> |
+      <a href="cookie.html">Cookie Policy</a> |
+      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
+      <a href="note-legali.html">Note Legali</a>
+    </div>
+    <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+      senza alcun costo aggiuntivo per l’utente.  
+      Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+      è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+    </p>
+  </footer>
+
+  <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
+  <div id="cookie-banner">
+    <p>
+      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
+      (Google Analytics). Alcuni link potrebbero essere di affiliazione.
+      Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
+      <a href="privacy.html">Privacy Policy</a>.
+    </p>
+    <div style="display:flex; gap:10px; margin-top:8px;">
+      <button type="button" onclick="rejectCookies()">
+        Rifiuta
+      </button>
+      <button id="cookie-btn" type="button" onclick="acceptCookies()">
+        Accetta e continua
+      </button>
+    </div>
+  </div>
+
+  <style>
+    #cookie-banner {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 90%;
+      width: 420px;
+      background: #ffffff;
+      border: 2px solid #6C5CE7;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      z-index: 9999;
+      font-family: Arial, sans-serif;
+      display: none;
+    }
+
+    #cookie-banner p {
+      margin: 0 0 12px 0;
+      font-size: 0.95rem;
+      color: #333;
+      line-height: 1.4;
+    }
+
+    #cookie-banner a {
+      color: #6C5CE7;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    /* Pulsante RIFIUTA – pari importanza al pulsante ACCETTA */
+    #cookie-banner button[onclick="rejectCookies()"] {
+      flex: 1;
+      background: white !important;
+      color: #111827 !important;
+      border: 2px solid #6C5CE7 !important;
+      padding: 10px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    /* Pulsante ACCETTA */
+    #cookie-btn {
+      flex: 1;
+      background: #6C5CE7;
+      color: white;
+      border: 2px solid #6C5CE7;
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    #cookie-btn:hover {
+      background: #4B3ACB;
+    }
+  </style>
+
+  <script>
+  (function () {
+    const GA_ID = 'G-CFTTCYDZ2P';
+    const CONSENT_KEY = 'syncras_cookie_consent'; // chiave unica per tutto il sito
+
+    // 1️⃣ BLOCCO PREVENTIVO: GA disabilitato finché non c'è consenso
+    window['ga-disable-' + GA_ID] = true;
+
+    function loadGoogleAnalytics() {
+      if (window.__syncrasGaLoaded) return;
+      window.__syncrasGaLoaded = true;
+
+      // Riabilita GA solo dopo il consenso
+      window['ga-disable-' + GA_ID] = false;
+
+      const gaScript = document.createElement('script');
+      gaScript.async = true;
+      gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+      document.head.appendChild(gaScript);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', GA_ID, { anonymize_ip: true });
+    }
+
+    function showBanner() {
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.style.display = 'block';
+    }
+
+    function hideBanner() {
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.style.display = 'none';
+    }
+
+    window.acceptCookies = function () {
+      localStorage.setItem(CONSENT_KEY, 'yes');
+      hideBanner();
+      loadGoogleAnalytics();
+    };
+
+    window.rejectCookies = function () {
+      localStorage.setItem(CONSENT_KEY, 'no');
+      hideBanner();
+      // GA resta bloccato
+      window['ga-disable-' + GA_ID] = true;
+    };
+
+    // 2️⃣ FUNZIONE DI REVOCA – per cambiare idea dopo
+    window.revokeCookies = function () {
+      localStorage.removeItem(CONSENT_KEY);
+      window['ga-disable-' + GA_ID] = true;   // blocca subito GA
+      showBanner();                           // ri-mostra il banner
+    };
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const consent = localStorage.getItem(CONSENT_KEY);
+
+      if (consent === 'yes') {
+        loadGoogleAnalytics();
+      } else if (consent === 'no') {
+        window['ga-disable-' + GA_ID] = true;
+      } else {
+        showBanner();
+      }
+    });
+  })();
+  </script>
+
+</body>
+</html>
