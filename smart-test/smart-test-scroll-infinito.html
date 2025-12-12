@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Test – Scroll infinito: passatempo o abitudine costosa? | Syncras.App</title>
+  <meta name="description" content="Scopri se lo scroll infinito dei social è un semplice passatempo o un'abitudine che ti ruba tempo, energia e attenzione. Smart Test in stile Syncras.">
+  <meta name="robots" content="index,follow">
+
+  <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --bg-page: #F7F7FB;
+      --text-main: #403E43;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg-page);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      color: var(--text-main);
+    }
+
+    /* HEADER */
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color: white;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+    #main-nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    #main-nav a:hover {
+      text-decoration: underline;
+    }
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        margin: 0 auto;
+        max-width: 1180px;
+        flex-direction: column;
+        background-color: var(--violet-dark);
+        padding: 10px 16px;
+        border-radius: 0 0 8px 8px;
+      }
+      .menu-toggle { display: inline-flex; }
+      body.nav-open #main-nav { display: flex; }
+    }
+
+    /* MAIN */
+    main {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    h1, h2, h3 { color: var(--violet-dark); }
+
+    .legal-box {
+      background: #F9FAFB;
+      border: 1px solid #E5E7EB;
+      border-radius: 8px;
+      padding: 14px;
+      margin: 20px 0;
+      font-size: 0.9rem;
+    }
+
+    .quiz-section {
+      background: #F7F7FB;
+      border-radius: 10px;
+      padding: 18px;
+      border: 1px solid #E5E7EB;
+    }
+    .quiz-disabled { opacity: 0.4; pointer-events: none; }
+
+    .question { margin-bottom: 18px; border-bottom: 1px solid #E5E7EB; padding-bottom: 12px; }
+    .question:last-of-type { border-bottom: none; }
+
+    #quiz-result {
+      margin-top: 18px;
+      padding: 14px;
+      border-radius: 8px;
+      background: #ECFEFF;
+      border: 1px solid #22C3D6;
+      display: none;
+    }
+
+    #submitQuiz {
+      margin-top: 10px;
+      background: var(--violet-main);
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .related-box {
+      margin-top: 30px;
+      padding: 16px;
+      background:#F7F7FB;
+      border-radius:10px;
+      border:1px solid #E5E7EB;
+    }
+    .related-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:12px;
+    }
+    .related-item {
+      background:#fff;
+      border-radius:8px;
+      padding:10px 12px;
+      border:1px solid #E5E7EB;
+    }
+    .related-item a {
+      text-decoration:none;
+      color:var(--violet-dark);
+      font-weight:600;
+    }
+
+    /* COOKIE */
+    #cookie-banner {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 90%;
+      width: 420px;
+      background: #ffffff;
+      border: 2px solid #6C5CE7;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      z-index: 9999;
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo">Syncras.App</div>
+    <button class="menu-toggle" onclick="document.body.classList.toggle('nav-open')">Menu ☰</button>
+    <nav id="main-nav">
+      <a href="index.html">Home</a>
+      <a href="blog.html">Blog</a>
+      <a href="quiz.html">Test Anti-Acquisto</a>
+      <a href="calcolatori.html">Calcolatori</a>
+      <a href="curiosita.html">Curiosità</a>
+      <a href="misteri.html">Misteri</a>
+      <a href="offerte.html">Prodotti Consapevoli</a>
+      <a href="chi.html">Chi siamo</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <div class="back-links">
+    ← <a href="index.html">Torna alla Home</a> |
+    <a href="quiz.html">Vai ai Test</a>
+  </div>
+
+  <h1>Smart Test – Scroll infinito: passatempo o abitudine costosa?</h1>
+
+  <button id="shareBtnTop"
+    style="background: var(--violet-main); color:white; padding:10px 15px; border:none;
+           border-radius:6px; cursor:pointer; margin-bottom:20px; font-weight:600;">
+    📎 Condividi questo test
+  </button>
+
+  <p>
+    Apri un attimo Instagram, TikTok o YouTube “solo per due minuti”…  
+    <strong>E poi scopri che è passata mezz’ora?</strong>
+  </p>
+
+  <p>
+    Questo Smart Test ti aiuta a capire se lo scroll infinito è sotto controllo  
+    o se sta iniziando a rubarti più tempo (e attenzione) di quanto pensi.
+  </p>
+
+  <!-- NOTE LEGALI -->
+  <div class="legal-box">
+    <label>
+      <input type="checkbox" id="legalAccept">
+      <span>
+        Prima di procedere, un promemoria: i risultati di questo test sono solo stime e non costituiscono
+        consulenza psicologica o comportamentale. L’utilizzo è a tuo esclusivo rischio.
+        Tutte le condizioni sono spiegate nelle
+        <a href="note-legali.html" target="_blank">Note Legali</a>.
+      </span>
+    </label>
+  </div>
+
+  <div class="quiz-wrapper">
+    <div id="quiz-overlay-message"
+         style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+                background:rgba(255,255,255,0.7); text-align:center; border-radius:10px;">
+      Spunta la casella sopra per sbloccare il Test sullo Scroll Infinito.
+    </div>
+
+    <section id="quiz-section" class="quiz-section quiz-disabled">
+
+      <!-- DOMANDE -->
+      <div class="question">
+        <h3>1. Quanto spesso apri un social “al volo” per riempire un momento morto?</h3>
+        <label><input type="radio" name="q1" value="0"> Raramente, preferisco fare altro.</label>
+        <label><input type="radio" name="q1" value="1"> Qualche volta, dipende dal giorno.</label>
+        <label><input type="radio" name="q1" value="2"> Spessissimo, è automatico.</label>
+      </div>
+
+      <div class="question">
+        <h3>2. Dopo quanto tempo ti rendi conto che stai scrollando?</h3>
+        <label><input type="radio" name="q2" value="0"> Dopo pochi minuti.</label>
+        <label><input type="radio" name="q2" value="1"> Dopo un po’, ma me ne accorgo.</label>
+        <label><input type="radio" name="q2" value="2"> Quando ormai è passata mezz’ora.</label>
+      </div>
+
+      <div class="question">
+        <h3>3. Se ti arriva una notifica mentre scrolli, cosa succede?</h3>
+        <label><input type="radio" name="q3" value="0"> La ignoro finché non finisco.</label>
+        <label><input type="radio" name="q3" value="1"> Dipende: a volte guardo.</label>
+        <label><input type="radio" name="q3" value="2"> La apro subito, anche se non era importante.</label>
+      </div>
+
+      <div class="question">
+        <h3>4. Quante volte al giorno controlli i social senza vera necessità?</h3>
+        <label><input type="radio" name="q4" value="0"> 1–2 volte.</label>
+        <label><input type="radio" name="q4" value="1"> 3–5 volte.</label>
+        <label><input type="radio" name="q4" value="2"> Più di 5: ormai non le conto più.</label>
+      </div>
+
+      <div class="question">
+        <h3>5. Quando chiudi l’app dopo una lunga sessione, come ti senti?</h3>
+        <label><input type="radio" name="q5" value="0"> Bene, ero rilassato.</label>
+        <label><input type="radio" name="q5" value="1"> Né bene né male: routine.</label>
+        <label><input type="radio" name="q5" value="2"> Un po’ svuotato o nervoso.</label>
+      </div>
+
+      <div class="question">
+        <h3>6. Ti capita di scrollare mentre fai altro (TV, tavola, letto)?</h3>
+        <label><input type="radio" name="q6" value="0"> No, separo le attività.</label>
+        <label><input type="radio" name="q6" value="1"> A volte.</label>
+        <label><input type="radio" name="q6" value="2"> Quasi sempre.</label>
+      </div>
+
+      <div class="question">
+        <h3>7. Ti è mai capitato di perdere il sonno per colpa dello scroll?</h3>
+        <label><input type="radio" name="q7" value="0"> Mai.</label>
+        <label><input type="radio" name="q7" value="1"> Qualche volta.</label>
+        <label><input type="radio" name="q7" value="2"> Spesso, soprattutto la sera.</label>
+      </div>
+
+      <button id="submitQuiz">Calcola risultato</button>
+      <div id="quiz-result"></div>
+
+    </section>
+  </div>
+
+  <!-- CORRELATI -->
+  <section class="related-box">
+    <h2>Ti possono interessare anche:</h2>
+    <div class="related-grid">
+
+      <article class="related-item">
+        <h3><a href="quanto-tempo-ruba-lo-smartphone.html">Quanto tempo ruba lo smartphone?</a></h3>
+        <p>Un articolo per capire quanto tempo invisibile spendiamo tra notifiche e scroll.</p>
+      </article>
+
+      <article class="related-item">
+        <h3><a href="perche-certi-video-sembra-fatti-apposta-per-te.html">Perché certi video sembrano fatti apposta per te?</a></h3>
+        <p>Come l’algoritmo impara ciò che ti aggancia e non ti lascia andare.</p>
+      </article>
+
+      <article class="related-item">
+        <h3><a href="calcolatori.html">Calcolatori Syncras</a></h3>
+        <p>Strumenti pratici per capire costi, consumi e decisioni intelligenti.</p>
+      </article>
+
+    </div>
+  </section>
+
+  <div style="text-align:center; margin-top:20px;">
+    <button id="shareBtnBottom"
+      style="background: var(--violet-main); color:white; padding:10px 18px; border:none; border-radius:6px; cursor:pointer;">
+      📎 Condividi questo test
+    </button>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer style="text-align:center; margin-top:40px; padding:20px; background:#eee;">
+  © 2025 Syncras.App — Tutti i diritti riservati<br>
+  <div>
+    <a href="privacy.html">Privacy Policy</a> |
+    <a href="cookie.html">Cookie Policy</a> |
+    <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
+    <a href="note-legali.html">Note Legali</a>
+  </div>
+  <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
+    Syncras.App partecipa al Programma Affiliazione Amazon EU.
+    Acquistando tramite i link presenti, il sito può ricevere una piccola commissione senza costi per l'utente.
+  </p>
+</footer>
+
+<!-- COOKIE + ANALYTICS SCRIPT -->
+<script>
+(function () {
+  const GA_ID = 'G-CFTTCYDZ2P';
+  const CONSENT_KEY = 'syncras_cookie_consent';
+
+  window['ga-disable-' + GA_ID] = true;
+
+  function loadGA() {
+    if (window.__syncrasGaLoaded) return;
+    window.__syncrasGaLoaded = true;
+    window['ga-disable-' + GA_ID] = false;
+
+    const s = document.createElement('script');
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+    s.async = true;
+    document.head.appendChild(s);
+
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    window.gtag = gtag;
+    gtag('js', new Date());
+    gtag('config', GA_ID, { anonymize_ip: true });
+  }
+
+  function showBanner() {
+    const b = document.getElementById('cookie-banner');
+    if (b) b.style.display = 'block';
+  }
+
+  function hideBanner() {
+    const b = document.getElementById('cookie-banner');
+    if (b) b.style.display = 'none';
+  }
+
+  window.acceptCookies = function() {
+    localStorage.setItem(CONSENT_KEY, 'yes');
+    hideBanner();
+    loadGA();
+  };
+
+  window.rejectCookies = function() {
+    localStorage.setItem(CONSENT_KEY, 'no');
+    hideBanner();
+    window['ga-disable-' + GA_ID] = true;
+  };
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const consent = localStorage.getItem(CONSENT_KEY);
+    if (consent === 'yes') loadGA();
+    else if (!consent) showBanner();
+  });
+})();
+</script>
+
+<!-- COOKIE BANNER -->
+<div id="cookie-banner">
+  <p>
+    Usiamo cookie tecnici e dati anonimi per migliorare il sito (Google Analytics).
+    Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
+    <a href="privacy.html">Privacy Policy</a>.
+  </p>
+  <div style="display:flex; gap:10px;">
+    <button onclick="rejectCookies()">Rifiuta</button>
+    <button onclick="acceptCookies()" id="cookie-btn">Accetta</button>
+  </div>
+</div>
+
+<!-- SBLOCCO TEST -->
+<script>
+const checkbox = document.getElementById('legalAccept');
+const quizSection = document.getElementById('quiz-section');
+const overlayMsg = document.getElementById('quiz-overlay-message');
+
+checkbox.addEventListener('change', () => {
+  if (checkbox.checked) {
+    quizSection.classList.remove('quiz-disabled');
+    overlayMsg.style.display = 'none';
+  } else {
+    quizSection.classList.add('quiz-disabled');
+    overlayMsg.style.display = 'flex';
+  }
+});
+</script>
+
+<!-- LOGICA QUIZ -->
+<script>
+document.getElementById('submitQuiz').addEventListener('click', () => {
+  let total = 0;
+  let answered = true;
+
+  for (let i = 1; i <= 7; i++) {
+    const q = document.querySelector('input[name="q'+i+'"]:checked');
+    if (!q) { answered = false; break; }
+    total += parseInt(q.value);
+  }
+
+  const box = document.getElementById('quiz-result');
+  box.style.display = 'block';
+
+  if (!answered) {
+    box.style.background = '#FEF2F2';
+    box.style.borderColor = '#F97373';
+    box.innerHTML = `<strong>Rispondi a tutte le domande per calcolare il risultato 😄</strong>`;
+    return;
+  }
+
+  let title, text;
+
+  if (total <= 4) {
+    title = "🧘 Padronanza totale dello scroll";
+    text = "Usi i social con equilibrio e consapevolezza. Nessun allarme: il controllo è saldamente tuo.";
+  } else if (total <= 8) {
+    title = "⚖️ Scroll sotto controllo… quasi";
+    text = "Ogni tanto ti fai prendere, ma sai rimetterti in carreggiata. Puoi migliorare con poche regole di attenzione.";
+  } else if (total <= 12) {
+    title = "⚠️ Scroll a rischio abitudine costosa";
+    text = "Lo scroll ti ruba più tempo di quanto immagini. Prova a ridurre le sessioni automatiche e usa timer o limiti.";
+  } else {
+    title = "🧨 Scroll ad alto impatto su tempo ed energia";
+    text = "L’algoritmo ti conosce molto bene… forse troppo. È il momento di riprendere il controllo dello smartphone.";
+  }
+
+  box.innerHTML = `<strong>${title}</strong><br><br>${text}`;
+});
+</script>
+
+<!-- SHARE API -->
+<script>
+function attachShare(btn) {
+  if (!btn) return;
+  if (navigator.share) {
+    btn.addEventListener('click', () => {
+      navigator.share({
+        title: 'Smart Test – Scroll infinito',
+        text: 'Ho fatto il Test Syncras sullo Scroll Infinito: prova anche tu!',
+        url: window.location.href
+      });
+    });
+  } else {
+    btn.style.display = 'none';
+  }
+}
+
+attachShare(document.getElementById('shareBtnTop'));
+attachShare(document.getElementById('shareBtnBottom'));
+</script>
+
+</body>
+</html>
