@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fast Card – Effetto “Lo prendono tutti” | Syncras.App</title>
+  <meta name="description" content="Come capire al volo se un prodotto di moda è davvero utile per te o se stai per comprare qualcosa solo perché lo prendono tutti.">
+  <meta name="robots" content="index,follow">
+
+  <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --bg-page: #F7F7FB;
+      --text-main: #403E43;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg-page);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      color: var(--text-main);
+    }
+
+    /* HEADER */
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color: white;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+    }
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+    #main-nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    #main-nav a:hover {
+      text-decoration: underline;
+    }
+
+    /* MAIN */
+    main {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 25px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      color: var(--violet-dark);
+      margin-top: 0;
+    }
+
+    .fastcard-box {
+      background: #F7F7FB;
+      border-left: 4px solid var(--violet-main);
+      padding: 16px 20px;
+      border-radius: 8px;
+      margin: 20px 0;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      background: #eee;
+      font-size: 0.9rem;
+    }
+
+    /* COOKIE BANNER */
+    #cookie-banner {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 90%;
+      width: 420px;
+      background: #ffffff;
+      border: 2px solid #6C5CE7;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      z-index: 9999;
+      display: none;
+    }
+    #cookie-banner button {
+      flex: 1;
+      border-radius: 6px;
+      padding: 10px 12px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    #cookie-btn {
+      background: #6C5CE7;
+      color: white;
+      border: 2px solid #6C5CE7;
+    }
+    #cookie-banner button[onclick="rejectCookies()"] {
+      background: white;
+      border: 2px solid #6C5CE7;
+      color: #111;
+    }
+  </style>
+</head>
+
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo">Syncras.App</div>
+    <nav id="main-nav">
+      <a href="../index.html">Home</a>
+      <a href="../blog.html">Blog</a>
+      <a href="../smart-test.html">Smart Test</a>
+      <a href="../fast-cards.html">Fast Cards</a>
+      <a href="../calcolatori.html">Calcolatori</a>
+      <a href="../curiosita.html">Curiosità</a>
+      <a href="../misteri.html">Misteri</a>
+      <a href="../offerte.html">Prodotti Consapevoli</a>
+      <a href="../chi.html">Chi siamo</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <span class="intro-tag">Fast Card Syncras</span>
+  <h1>Effetto “Lo prendono tutti”</h1>
+
+  <p>
+    🔍 <strong>Riassunto in una frase:</strong><br>
+    Quando un prodotto è ovunque, non è detto che sia adatto anche a te.  
+    Questa Fast Card ti aiuta a capirlo in 30 secondi.
+  </p>
+
+  <div class="fastcard-box">
+    <h2>1️⃣ Chiediti: “Mi serve davvero o lo voglio perché lo hanno tutti?”</h2>
+    <p>
+      L'effetto branco è potentissimo: se un prodotto è ovunque, il cervello lo interpreta come “giusto”.  
+      Ma la domanda chiave è un’altra: <strong>risolve un tuo problema reale?</strong>
+    </p>
+  </div>
+
+  <div class="fastcard-box">
+    <h2>2️⃣ Se non esistesse la moda del momento… lo compreresti?</h2>
+    <p>
+      Un modo semplice per capire se sei influenzato dal trend è immaginare che il prodotto non sia virale.  
+      Se la risposta è “no”, probabilmente è un acquisto impulsivo.
+    </p>
+  </div>
+
+  <div class="fastcard-box">
+    <h2>3️⃣ Guarda chi lo sta consigliando</h2>
+    <p>
+      Influencer? Pubblicità? Video sponsorizzati?  
+      Quando un prodotto diventa una “onda”, i consigli non sono sempre neutrali.  
+      Controlla: <strong>quanto è genuino l’entusiasmo?</strong>
+    </p>
+  </div>
+
+  <p>
+    Vuoi altre Fast Cards?<br>
+    👉 Torna a <a href="../fast-cards.html">tutte le Fast Cards Syncras</a>.
+  </p>
+
+</main>
+
+<footer>
+  © 2025 Syncras.App — Tutti i diritti riservati<br>
+  <a href="../privacy.html">Privacy Policy</a> |
+  <a href="../cookie.html">Cookie Policy</a> |
+  <a href="../disclaimer-amazon.html">Disclaimer Amazon</a> |
+  <a href="../note-legali.html">Note Legali</a>
+</footer>
+
+
+<!-- COOKIE + GA -->
+<div id="cookie-banner">
+  <p>
+    Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite (Google Analytics).
+    Leggi la <a href="../privacy.html">Privacy Policy</a>.
+  </p>
+  <div style="display:flex; gap:8px; margin-top:10px;">
+    <button onclick="rejectCookies()">Rifiuta</button>
+    <button id="cookie-btn" onclick="acceptCookies()">Accetta</button>
+  </div>
+</div>
+
+<script>
+  const GA_ID = 'G-CFTTCYDZ2P';
+  const CONSENT_KEY = 'syncras_cookie_consent';
+  window['ga-disable-' + GA_ID] = true;
+
+  function loadGA() {
+    if (window.__gaLoaded) return;
+    window.__gaLoaded = true;
+    window['ga-disable-' + GA_ID] = false;
+
+    const s = document.createElement('script');
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+    s.async = true;
+    document.head.appendChild(s);
+
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    window.gtag = gtag;
+    gtag('js', new Date());
+    gtag('config', GA_ID, { anonymize_ip: true });
+  }
+
+  function acceptCookies() {
+    localStorage.setItem(CONSENT_KEY, 'yes');
+    document.getElementById('cookie-banner').style.display = 'none';
+    loadGA();
+  }
+
+  function rejectCookies() {
+    localStorage.setItem(CONSENT_KEY, 'no');
+    document.getElementById('cookie-banner').style.display = 'none';
+    window['ga-disable-' + GA_ID] = true;
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const c = localStorage.getItem(CONSENT_KEY);
+    if (!c) {
+      document.getElementById('cookie-banner').style.display = 'block';
+    } else if (c === 'yes') {
+      loadGA();
+    }
+  });
+</script>
+
+</body>
+</html>
