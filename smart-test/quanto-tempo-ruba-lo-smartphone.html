@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quanto tempo ti ruba lo smartphone? Smart Test in 9 domande | Syncras.App</title>
-  <meta name="description" content="Scopri quanto tempo ti sta rubando davvero lo smartphone con un test veloce in 9 domande. Valuta le tue abitudini digitali e ricevi un profilo finale: tranquillo, in equilibrio fragile o in zona dipendenza soft.">
+  <title>Smart Test – Quanto tempo ti ruba davvero lo smartphone? | Syncras.App</title>
+  <meta name="description" content="Scopri quante ore e quanti giorni all’anno ti ruba davvero lo smartphone tra social, chat e scroll infinito. Test ibrido numerico + comportamentale, in stile Syncras.">
   <meta name="robots" content="index,follow">
 
   <style>
@@ -13,6 +13,9 @@
       --violet-dark: #4B3ACB;
       --bg-page: #F7F7FB;
       --text-main: #403E43;
+      --danger: #DC2626;
+      --ok: #16A34A;
+      --warn: #D97706;
     }
 
     body {
@@ -104,7 +107,7 @@
     }
 
     main {
-      max-width: 900px;
+      max-width: 980px;
       margin: 30px auto;
       padding: 20px;
       background: white;
@@ -112,12 +115,23 @@
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
 
+    @media (max-width: 600px) {
+      main {
+        margin: 16px auto;
+        padding: 16px 14px;
+      }
+    }
+
     h1, h2, h3 {
       color: var(--violet-dark);
     }
 
+    p {
+      margin-bottom: 15px;
+    }
+
     .back-links {
-      margin-bottom: 20px;
+      margin-bottom: 18px;
       font-size: 0.9rem;
     }
     .back-links a {
@@ -129,106 +143,267 @@
       text-decoration: underline;
     }
 
-    .intro {
-      margin-bottom: 18px;
+    .intro-tag {
+      display: inline-block;
+      background: #F3F4FF;
+      color: var(--violet-dark);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 6px;
+    }
+
+    .lead {
+      font-size: 1.02rem;
+    }
+
+    .highlight-inline {
+      background: #EEF2FF;
+      padding: 0 4px;
+      border-radius: 4px;
+    }
+
+    .test-layout {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.4fr);
+      gap: 22px;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 900px) {
+      .test-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .test-card {
+      background: #F9FAFB;
+      border-radius: 10px;
+      padding: 16px 16px 18px;
+      border: 1px solid #E5E7EB;
+    }
+
+    .test-card h2 {
+      margin-top: 0;
+    }
+
+    .question-block {
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px dashed #E5E7EB;
+    }
+
+    .question-block:last-of-type {
+      border-bottom: none;
+      margin-bottom: 8px;
+      padding-bottom: 0;
+    }
+
+    .question-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .question-help {
+      font-size: 0.88rem;
+      color: #6B7280;
+      margin-bottom: 6px;
+    }
+
+    .field-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-top: 4px;
+    }
+
+    .field-row label {
+      font-size: 0.9rem;
+    }
+
+    .input-number {
+      width: 90px;
+      padding: 6px 8px;
+      border-radius: 6px;
+      border: 1px solid #D1D5DB;
+      font-size: 0.95rem;
+    }
+
+    .input-number:focus {
+      outline: 2px solid var(--violet-main);
+      border-color: var(--violet-main);
+    }
+
+    .radio-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 4px;
+      font-size: 0.9rem;
+    }
+
+    .radio-group label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+
+    .small-note {
+      font-size: 0.8rem;
+      color: #6B7280;
+      margin-top: 2px;
     }
 
     .legal-box {
-      background: #FDFBF6;
-      border-left: 4px solid #EAB308;
-      padding: 12px 14px;
+      margin-top: 14px;
+      padding: 10px 12px;
+      background: #FEF3C7;
       border-radius: 8px;
-      font-size: 0.9rem;
-      margin: 18px 0 22px;
+      border-left: 4px solid #F59E0B;
+      font-size: 0.88rem;
     }
+
+    .legal-box p {
+      margin: 0 0 8px 0;
+    }
+
+    .legal-box label {
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      cursor: pointer;
+      font-size: 0.86rem;
+    }
+
+    .legal-box input[type="checkbox"] {
+      margin-top: 2px;
+      transform: scale(1.05);
+    }
+
     .legal-box a {
       color: var(--violet-dark);
       font-weight: 600;
       text-decoration: none;
     }
+
     .legal-box a:hover {
       text-decoration: underline;
     }
 
-    .test-locked {
-      opacity: 0.5;
-      pointer-events: none;
-    }
-
-    .question {
-      margin-bottom: 18px;
-      padding-bottom: 14px;
-      border-bottom: 1px solid #E5E7EB;
-    }
-    .question h3 {
-      margin: 0 0 6px;
-      font-size: 1rem;
-    }
-    .question p {
-      margin: 0 0 8px;
-      font-size: 0.95rem;
-    }
-    .question label {
-      display: block;
-      font-size: 0.95rem;
-      margin-bottom: 4px;
-      cursor: pointer;
+    .btn-row {
+      margin-top: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
     }
 
     .btn-primary {
       background: var(--violet-main);
-      color: #fff;
+      color: white;
       border: none;
-      padding: 10px 18px;
-      border-radius: 6px;
-      cursor: pointer;
+      border-radius: 999px;
+      padding: 10px 20px;
+      font-size: 0.98rem;
       font-weight: 600;
-      font-size: 1rem;
-      margin-top: 10px;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
-    .btn-primary:hover {
+
+    .btn-primary[disabled] {
+      opacity: 0.6;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .btn-primary:hover:not([disabled]) {
       background: var(--violet-dark);
     }
 
-    .result-box {
-      margin-top: 24px;
-      padding: 16px;
-      border-radius: 10px;
-      background: #F3F4FF;
-      border: 1px solid #E5E7EB;
-      display: none;
+    .btn-secondary-link {
+      font-size: 0.88rem;
+      color: #6B7280;
+      text-decoration: underline;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
     }
-    .result-title {
-      font-weight: 700;
+
+    .result-card {
+      background: #F9FAFB;
+      border-radius: 10px;
+      padding: 16px 16px 18px;
+      border: 1px solid #E5E7EB;
+      min-height: 120px;
+    }
+
+    .result-placeholder {
+      font-size: 0.9rem;
+      color: #6B7280;
+    }
+
+    .result-level {
+      font-size: 0.95rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
       margin-bottom: 6px;
     }
-    .result-score {
+
+    .result-level.ok {
+      background: #DCFCE7;
+      color: #166534;
+    }
+
+    .result-level.warn {
+      background: #FEF3C7;
+      color: #92400E;
+    }
+
+    .result-level.high {
+      background: #FEE2E2;
+      color: #B91C1C;
+    }
+
+    .result-main-number {
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+    }
+
+    .result-main-number strong {
+      font-size: 1.15rem;
+    }
+
+    .result-sub {
+      font-size: 0.92rem;
+      margin-bottom: 6px;
+    }
+
+    .result-advices {
       font-size: 0.9rem;
-      opacity: 0.8;
-      margin-bottom: 10px;
+      margin-top: 8px;
     }
 
-    .mini-links {
-      margin-top: 20px;
-      padding: 14px;
-      border-radius: 8px;
-      background: #F7F7FB;
-      border: 1px solid #E5E7EB;
-      font-size: 0.93rem;
-    }
-    .mini-links a {
-      color: var(--violet-dark);
-      text-decoration: none;
-      font-weight: 600;
-    }
-    .mini-links a:hover {
-      text-decoration: underline;
+    .result-advices ul {
+      padding-left: 18px;
+      margin: 4px 0 0;
     }
 
-    .small {
-      font-size: 0.85rem;
-      color: #555;
-      margin-top: 16px;
+    .result-advices li {
+      margin-bottom: 4px;
     }
 
     footer {
@@ -255,7 +430,7 @@
       <nav id="main-nav">
         <a href="index.html">Home</a>
         <a href="blog.html">Blog</a>
-        <a href="quiz.html">Test Anti-Acquisto</a>
+        <a href="smart-test.html">Smart Test</a>
         <a href="calcolatori.html">Calcolatori</a>
         <a href="curiosita.html">Curiosità</a>
         <a href="misteri.html">Misteri</a>
@@ -267,208 +442,170 @@
 
   <main>
     <div class="back-links">
-      ← <a href="index.html">Torna alla Home</a> |
-      <a href="quiz.html">Vai ai Test</a>
+      ← <a href="smart-test.html">Torna alla pagina Smart Test</a> |
+      <a href="index.html">Home</a>
     </div>
 
-    <h1>Quanto tempo ti ruba davvero lo smartphone? <br>Smart Test in 9 domande</h1>
+    <span class="intro-tag">Smart Test – Abitudini digitali</span>
+    <h1>Quanto tempo ti ruba davvero lo smartphone?</h1>
 
-    <p class="intro">
-      Questo non è il solito test “sei dipendente sì/no”.  
-      In 9 domande veloci proviamo a capire se lo smartphone è:
-      <strong>un compagno di vita utile</strong> o un aspirapolvere di tempo che ti succhia minuti
-      ogni volta che lo sblocchi “solo un secondo”.
+    <p class="lead">
+      Questo non è un test “moralista”, ma un <span class="highlight-inline">contachilometri onesto</span>
+      del tempo che lo smartphone ti prende tra social, chat e “do solo un’occhiata al volo”.
+      Metti numeri realistici e guarda cosa succede quando li portiamo su base annua.
     </p>
 
-    <div class="legal-box">
-      <label for="legalAccept">
-        <input type="checkbox" id="legalAccept">
-        Prima di iniziare, un promemoria: questo è solo un test ludico e informativo.
-        Non è una valutazione psicologica o medica.  
-        Le decisioni che prenderai dopo sono solo tue, come spiegato nelle
-        <a href="note-legali.html" target="_blank">Note Legali</a>.
-      </label>
+    <p style="font-size:0.95rem; color:#4B5563; margin-top:-4px;">
+      Alla fine vedrai:
+      <strong>ore al giorno</strong>, <strong>giorni all’anno</strong> “mangiati” dal telefono
+      e un profilo da <em>“Sotto controllo”</em> a <em>“Scrollatore seriale”</em>.
+    </p>
+
+    <div class="test-layout">
+      <!-- COLONNA SINISTRA – DOMANDE -->
+      <section class="test-card" aria-label="Domande del test">
+        <h2>1) La parte numerica – il tempo “misurabile”</h2>
+
+        <!-- Q1: SOCIAL -->
+        <div class="question-block">
+          <div class="question-title">1. Minuti al giorno su social, video e scroll infinito</div>
+          <div class="question-help">
+            Somma più o meno il tempo su Instagram, TikTok, Facebook, YouTube Shorts, Reels, ecc.
+          </div>
+          <div class="field-row">
+            <label for="minutesSocial">Tempo totale:</label>
+            <input type="number" id="minutesSocial" class="input-number" min="0" step="5" placeholder="min">
+            <span>minuti al giorno</span>
+          </div>
+          <div class="small-note">
+            Se non sei sicuro, guarda il report “Tempo di utilizzo” del telefono e fai una media.
+          </div>
+        </div>
+
+        <!-- Q2: CHAT NON ESSENZIALI -->
+        <div class="question-block">
+          <div class="question-title">2. Chat non strettamente necessarie</div>
+          <div class="question-help">
+            Qui non contiamo il messaggio di lavoro o “arrivo tra 5 minuti”, ma le chat “per stare sul gruppo”.
+          </div>
+          <div class="field-row">
+            <label for="minutesChat">Tempo totale:</label>
+            <input type="number" id="minutesChat" class="input-number" min="0" step="5" placeholder="min">
+            <span>minuti al giorno</span>
+          </div>
+          <div class="small-note">
+            Gruppi WhatsApp/Telegram in cui scrolli e commenti per abitudine più che per reale necessità.
+          </div>
+        </div>
+
+        <!-- Q3: SBLOCCO “AL VOLO” -->
+        <div class="question-block">
+          <div class="question-title">3. Quante volte al giorno sblocchi il telefono “solo per vedere”?</div>
+          <div class="question-help">
+            Non quando devi davvero fare qualcosa. Solo le volte in cui lo prendi in mano per riflesso.
+          </div>
+          <div class="field-row">
+            <label for="unlockCount">Sblocchi “al volo”:</label>
+            <input type="number" id="unlockCount" class="input-number" min="0" step="1" placeholder="es. 20">
+            <span>volte al giorno</span>
+          </div>
+          <div class="small-note">
+            In media considereremo <strong>30 secondi</strong> “bruciati” ad ogni sblocco di questo tipo.
+          </div>
+        </div>
+
+        <h2 style="margin-top:18px;">2) La parte comportamentale – le abitudini</h2>
+
+        <!-- B1: APPENA SVEGLIO -->
+        <div class="question-block">
+          <div class="question-title">4. Appena sveglio guardi subito il telefono?</div>
+          <div class="radio-group">
+            <label><input type="radio" name="qMorning" value="yes"> Sì, praticamente sempre</label>
+            <label><input type="radio" name="qMorning" value="no"> No, prima faccio altro</label>
+          </div>
+        </div>
+
+        <!-- B2: A TAVOLA -->
+        <div class="question-block">
+          <div class="question-title">5. A tavola il telefono è presente?</div>
+          <div class="radio-group">
+            <label><input type="radio" name="qMeal" value="always"> Sempre sul tavolo</label>
+            <label><input type="radio" name="qMeal" value="sometimes"> Ogni tanto</label>
+            <label><input type="radio" name="qMeal" value="never"> Quasi mai / mai</label>
+          </div>
+        </div>
+
+        <!-- B3: GUIDA / STRADA -->
+        <div class="question-block">
+          <div class="question-title">6. Lo usi mentre guidi o attraversi?</div>
+          <div class="question-help">
+            Qui non è solo tempo: è anche rischio. Risposta sincera, non c’è giudizio, solo realtà.
+          </div>
+          <div class="radio-group">
+            <label><input type="radio" name="qDrive" value="often"> Sì, spesso</label>
+            <label><input type="radio" name="qDrive" value="sometimes"> Qualche volta</label>
+            <label><input type="radio" name="qDrive" value="never"> No, mai</label>
+          </div>
+        </div>
+
+        <!-- B4: PRIMA DI DORMIRE -->
+        <div class="question-block">
+          <div class="question-title">7. Vai a letto con il telefono in mano?</div>
+          <div class="radio-group">
+            <label><input type="radio" name="qNight" value="yes"> Sì, fino all’ultimo minuto</label>
+            <label><input type="radio" name="qNight" value="mid"> A volte, ma non sempre</label>
+            <label><input type="radio" name="qNight" value="no"> Quasi mai / mai</label>
+          </div>
+        </div>
+
+        <!-- BOX LEGALE -->
+        <div class="legal-box">
+          <p>
+            <strong>Prima di procedere, un promemoria:</strong>  
+            I risultati di questo test sono <strong>stime indicative</strong> e non sono consulenza
+            psicologica, medica o professionale. L’uso del test e le decisioni che ne derivano
+            sono a tuo esclusivo rischio.
+          </p>
+          <label for="legalAccept">
+            <input type="checkbox" id="legalAccept">
+            Confermo di aver letto e compreso le condizioni riportate nelle
+            <a href="note-legali.html" target="_blank">Note Legali</a> e nelle pagine
+            <a href="privacy.html" target="_blank">Privacy</a> e
+            <a href="cookie.html" target="_blank">Cookie</a>.
+          </label>
+        </div>
+
+        <div class="btn-row">
+          <button type="button" class="btn-primary" id="calcBtn" disabled>
+            Calcola il tempo che ti ruba 📱
+          </button>
+          <button type="button" class="btn-secondary-link" id="resetBtn">
+            Azzera tutto e riparti
+          </button>
+        </div>
+      </section>
+
+      <!-- COLONNA DESTRA – RISULTATO -->
+      <aside class="result-card" aria-label="Risultato del test" id="resultBox">
+        <div id="resultContent" class="result-placeholder">
+          Compila i campi a sinistra e clicca su
+          <strong>“Calcola il tempo che ti ruba”</strong>.  
+          Vedrai:
+          <ul style="margin-top:6px; padding-left:18px;">
+            <li>quanti minuti / ore al giorno “mangia” lo smartphone;</li>
+            <li>quanti <strong>giorni pieni all’anno</strong> equivalgono;</li>
+            <li>un profilo sintetico (da “sotto controllo” a “scroll mode ON”).</li>
+          </ul>
+        </div>
+      </aside>
     </div>
 
-    <div id="testContainer" class="test-locked">
-      <!-- DOMANDE -->
-      <div class="question">
-        <h3>1. In una giornata tipo, quanto tempo passi sullo smartphone “solo per scrollare” (non lavoro/studio)?</h3>
-        <label><input type="radio" name="q1" value="1"> Meno di 30 minuti</label>
-        <label><input type="radio" name="q1" value="3"> Tra 30 minuti e 1 ora</label>
-        <label><input type="radio" name="q1" value="5"> Tra 1 e 2 ore</label>
-        <label><input type="radio" name="q1" value="7"> Più di 2 ore</label>
-      </div>
+    <p style="font-size:0.86rem; color:#6B7280; margin-top:18px;">
+      Questo Smart Test non sostituisce strumenti di <em>Digital Wellbeing</em>, ma può essere
+      un buon punto di partenza per decidere se cambiare qualcosa nelle tue abitudini.
+    </p>
 
-      <div class="question">
-        <h3>2. Quante volte al giorno sblocchi il telefono, più o meno?</h3>
-        <label><input type="radio" name="q2" value="1"> Meno di 20 volte</label>
-        <label><input type="radio" name="q2" value="3"> 20–40 volte</label>
-        <label><input type="radio" name="q2" value="5"> 40–70 volte</label>
-        <label><input type="radio" name="q2" value="7"> Oltre 70 volte (non le conto più)</label>
-      </div>
-
-      <div class="question">
-        <h3>3. Quando senti una notifica mentre stai facendo altro...</h3>
-        <label><input type="radio" name="q3" value="1"> La guardo dopo, quando finisco quello che sto facendo</label>
-        <label><input type="radio" name="q3" value="3"> Dipende dall’importanza, a volte mollo tutto</label>
-        <label><input type="radio" name="q3" value="5"> Mi distraggo quasi sempre, do un’occhiata</label>
-        <label><input type="radio" name="q3" value="7"> Mi scatta il riflesso automatico: devo aprirla subito</label>
-      </div>
-
-      <div class="question">
-        <h3>4. Appena ti svegli, cosa fai di solito?</h3>
-        <label><input type="radio" name="q4" value="1"> Mi alzo, mi preparo e solo dopo prendo il telefono</label>
-        <label><input type="radio" name="q4" value="3"> Controllo velocemente messaggi/mail e poi lo appoggio</label>
-        <label><input type="radio" name="q4" value="5"> Resto qualche minuto a scorrere social/news</label>
-        <label><input type="radio" name="q4" value="7"> Passo almeno 15–20 minuti sullo schermo prima ancora di alzarmi</label>
-      </div>
-
-      <div class="question">
-        <h3>5. Ti capita di perdere il senso del tempo mentre scorri feed o video brevi?</h3>
-        <label><input type="radio" name="q5" value="1"> Quasi mai</label>
-        <label><input type="radio" name="q5" value="3"> A volte, ma me ne accorgo dopo poco</label>
-        <label><input type="radio" name="q5" value="5"> Spesso: penso “5 minuti” e scopro che ne sono passati 30</label>
-        <label><input type="radio" name="q5" value="7"> Praticamente sempre: il tempo sparisce</label>
-      </div>
-
-      <div class="question">
-        <h3>6. Quando sei con amici, partner o famiglia...</h3>
-        <label><input type="radio" name="q6" value="1"> Il telefono resta in tasca o in borsa</label>
-        <label><input type="radio" name="q6" value="3"> Lo tengo vicino ma lo uso poco</label>
-        <label><input type="radio" name="q6" value="5"> Ogni tanto lo prendo per controllare qualcosa</label>
-        <label><input type="radio" name="q6" value="7"> È quasi sempre sul tavolo e lo guardo spesso</label>
-      </div>
-
-      <div class="question">
-        <h3>7. Se resti senza batteria o senza connessione per qualche ora...</h3>
-        <label><input type="radio" name="q7" value="1"> Nessun problema, quasi mi fa piacere</label>
-        <label><input type="radio" name="q7" value="3"> Mi dà un po’ fastidio, ma sopravvivo bene</label>
-        <label><input type="radio" name="q7" value="5"> Mi sento “scoperto”, come se mancasse qualcosa</label>
-        <label><input type="radio" name="q7" value="7"> Mi sale l’ansia: devo ricaricare o trovare il wi-fi</label>
-      </div>
-
-      <div class="question">
-        <h3>8. Quanto spesso usi il telefono mentre fai altre cose (TV, studio, lavoro, tavola)?</h3>
-        <label><input type="radio" name="q8" value="1"> Raramente</label>
-        <label><input type="radio" name="q8" value="3"> Ogni tanto</label>
-        <label><input type="radio" name="q8" value="5"> Spesso, faccio due cose insieme</label>
-        <label><input type="radio" name="q8" value="7"> Quasi sempre: è la mia “seconda mano”</label>
-      </div>
-
-      <div class="question">
-        <h3>9. Ti capita di rimandare qualcosa (compiti, lavoro, sonno) per colpa del telefono?</h3>
-        <label><input type="radio" name="q9" value="1"> Quasi mai</label>
-        <label><input type="radio" name="q9" value="3"> A volte, ma su cose poco importanti</label>
-        <label><input type="radio" name="q9" value="5"> Spesso rimando piccole cose</label>
-        <label><input type="radio" name="q9" value="7"> Sì, rimando anche cose importanti</label>
-      </div>
-
-      <button class="btn-primary" type="button" onclick="calcolaRisultato()">
-        📊 Calcola il risultato
-      </button>
-
-      <div id="resultBox" class="result-box">
-        <div id="resultTitle" class="result-title"></div>
-        <div id="resultScore" class="result-score"></div>
-        <div id="resultText"></div>
-      </div>
-
-      <div class="mini-links">
-        Ti è piaciuto questo test?  
-        Puoi approfondire con:
-        <ul>
-          <li>
-            L’articolo:
-            <a href="perche-certi-video-sembra-fatti-apposta-per-te.html">
-              Perché certi video sembrano fatti apposta per te?
-            </a>
-          </li>
-          <li>
-            Altri test nella pagina
-            <a href="quiz.html">Test Anti-Acquisto & Smart Test</a>
-            (in aggiornamento).
-          </li>
-        </ul>
-      </div>
-
-      <p class="small">
-        Questo test non sostituisce una valutazione professionale o un percorso con uno specialista.
-        Serve solo come spunto per osservare le tue abitudini digitali e capire se vale la pena
-        mettere qualche limite in più alle notifiche.
-      </p>
-    </div>
   </main>
-
-  <script>
-    // Toggle menu mobile
-    function toggleMenu() {
-      document.body.classList.toggle('nav-open');
-    }
-
-    // Sblocco del test dopo accettazione Note Legali
-    (function() {
-      const checkbox = document.getElementById('legalAccept');
-      const container = document.getElementById('testContainer');
-
-      function updateLock() {
-        if (checkbox.checked) {
-          container.classList.remove('test-locked');
-        } else {
-          container.classList.add('test-locked');
-        }
-      }
-
-      checkbox.addEventListener('change', updateLock);
-      updateLock();
-    })();
-
-    // Calcolo punteggio
-    function calcolaRisultato() {
-      const questions = 9;
-      let total = 0;
-      let answered = 0;
-
-      for (let i = 1; i <= questions; i++) {
-        const sel = document.querySelector('input[name="q' + i + '"]:checked');
-        if (sel) {
-          answered++;
-          total += parseInt(sel.value, 10);
-        }
-      }
-
-      if (answered < questions) {
-        alert('Rispondi a tutte le domande prima di vedere il risultato.');
-        return;
-      }
-
-      const resultBox = document.getElementById('resultBox');
-      const titleEl = document.getElementById('resultTitle');
-      const scoreEl = document.getElementById('resultScore');
-      const textEl = document.getElementById('resultText');
-
-      let title = '';
-      let text = '';
-
-      if (total <= 18) {
-        title = '📱 Uso consapevole (quasi zen)';
-        text = 'Lo smartphone per te è uno strumento, non un buco nero. Ogni tanto esageri, ma in generale riesci a tenerlo al suo posto. Puoi comunque guadagnare minuti preziosi riducendo un po’ le notifiche e continuando a proteggere i momenti senza schermo.';
-      } else if (total <= 36) {
-        title = '⚖️ Equilibrio fragile: rischio “scroll infinito”';
-        text = 'In molti momenti lo smartphone ti ruba più tempo di quanto vorresti. Non è una catastrofe, ma sei nella zona in cui qualche piccola scelta quotidiana può fare una grande differenza: timer per i social, niente telefono a tavola, sveglia analogica al posto del telefono sul comodino.';
-      } else {
-        title = '🚨 Zona dipendenza soft: lo smartphone comanda l’agenda';
-        text = 'Il telefono è diventato il principale aspirapolvere di tempo. Non serve sentirsi in colpa, ma vale la pena prendere decisioni pratiche: limiti orari alle app, zone “no smartphone”, notifiche ridotte al minimo e momenti della giornata in cui il telefono resta in un’altra stanza.';
-      }
-
-      titleEl.textContent = title;
-      scoreEl.textContent = 'Punteggio totale: ' + total + ' (min 9 – max 63)';
-      textEl.textContent = text;
-
-      resultBox.style.display = 'block';
-      resultBox.scrollIntoView({ behavior: 'smooth' });
-    }
-  </script>
 
   <footer>
     © 2025 Syncras.App — Tutti i diritti riservati<br>
@@ -536,6 +673,7 @@
       text-decoration: none;
     }
 
+    /* Pulsante RIFIUTA – pari importanza al pulsante ACCETTA */
     #cookie-banner button[onclick="rejectCookies()"] {
       flex: 1;
       background: white !important;
@@ -547,6 +685,7 @@
       font-weight: 600;
     }
 
+    /* Pulsante ACCETTA */
     #cookie-btn {
       flex: 1;
       background: #6C5CE7;
@@ -564,71 +703,306 @@
   </style>
 
   <script>
-  (function () {
-    const GA_ID = 'G-CFTTCYDZ2P';
-    const CONSENT_KEY = 'syncras_cookie_consent';
-
-    window['ga-disable-' + GA_ID] = true;
-
-    function loadGoogleAnalytics() {
-      if (window.__syncrasGaLoaded) return;
-      window.__syncrasGaLoaded = true;
-
-      window['ga-disable-' + GA_ID] = false;
-
-      const gaScript = document.createElement('script');
-      gaScript.async = true;
-      gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
-      document.head.appendChild(gaScript);
-
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){ dataLayer.push(arguments); }
-      window.gtag = gtag;
-      gtag('js', new Date());
-      gtag('config', GA_ID, { anonymize_ip: true });
+    // Toggle menu mobile
+    function toggleMenu() {
+      document.body.classList.toggle('nav-open');
     }
 
-    function showBanner() {
-      const banner = document.getElementById('cookie-banner');
-      if (banner) banner.style.display = 'block';
-    }
+    // Logica Cookie + Google Analytics (stessa di Smart Test)
+    (function () {
+      const GA_ID = 'G-CFTTCYDZ2P';
+      const CONSENT_KEY = 'syncras_cookie_consent'; // chiave unica per tutto il sito
 
-    function hideBanner() {
-      const banner = document.getElementById('cookie-banner');
-      if (banner) banner.style.display = 'none';
-    }
-
-    window.acceptCookies = function () {
-      localStorage.setItem(CONSENT_KEY, 'yes');
-      hideBanner();
-      loadGoogleAnalytics();
-    };
-
-    window.rejectCookies = function () {
-      localStorage.setItem(CONSENT_KEY, 'no');
-      hideBanner();
+      // GA disabilitato finché non c'è consenso
       window['ga-disable-' + GA_ID] = true;
-    };
 
-    window.revokeCookies = function () {
-      localStorage.removeItem(CONSENT_KEY);
-      window['ga-disable-' + GA_ID] = true;
-      showBanner();
-    };
+      function loadGoogleAnalytics() {
+        if (window.__syncrasGaLoaded) return;
+        window.__syncrasGaLoaded = true;
 
-    document.addEventListener('DOMContentLoaded', function () {
-      const consent = localStorage.getItem(CONSENT_KEY);
+        window['ga-disable-' + GA_ID] = false;
 
-      if (consent === 'yes') {
+        const gaScript = document.createElement('script');
+        gaScript.async = true;
+        gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+        document.head.appendChild(gaScript);
+
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){ dataLayer.push(arguments); }
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', GA_ID, { anonymize_ip: true });
+      }
+
+      function showBanner() {
+        const banner = document.getElementById('cookie-banner');
+        if (banner) banner.style.display = 'block';
+      }
+
+      function hideBanner() {
+        const banner = document.getElementById('cookie-banner');
+        if (banner) banner.style.display = 'none';
+      }
+
+      window.acceptCookies = function () {
+        localStorage.setItem(CONSENT_KEY, 'yes');
+        hideBanner();
         loadGoogleAnalytics();
-      } else if (consent === 'no') {
+      };
+
+      window.rejectCookies = function () {
+        localStorage.setItem(CONSENT_KEY, 'no');
+        hideBanner();
         window['ga-disable-' + GA_ID] = true;
-      } else {
+      };
+
+      window.revokeCookies = function () {
+        localStorage.removeItem(CONSENT_KEY);
+        window['ga-disable-' + GA_ID] = true;
         showBanner();
+      };
+
+      document.addEventListener('DOMContentLoaded', function () {
+        const consent = localStorage.getItem(CONSENT_KEY);
+
+        if (consent === 'yes') {
+          loadGoogleAnalytics();
+        } else if (consent === 'no') {
+          window['ga-disable-' + GA_ID] = true;
+        } else {
+          showBanner();
+        }
+      });
+    })();
+
+    // Abilita / disabilita pulsante in base alla spunta legale
+    document.addEventListener('DOMContentLoaded', function () {
+      const legalCheckbox = document.getElementById('legalAccept');
+      const calcBtn = document.getElementById('calcBtn');
+      const resetBtn = document.getElementById('resetBtn');
+
+      if (legalCheckbox && calcBtn) {
+        legalCheckbox.addEventListener('change', function () {
+          calcBtn.disabled = !legalCheckbox.checked;
+        });
+      }
+
+      if (calcBtn) {
+        calcBtn.addEventListener('click', calculateSmartphoneTime);
+      }
+
+      if (resetBtn) {
+        resetBtn.addEventListener('click', resetForm);
       }
     });
-  })();
+
+    function parseNumberField(id) {
+      const el = document.getElementById(id);
+      if (!el) return 0;
+      const value = parseFloat(el.value.replace(',', '.'));
+      if (isNaN(value) || value < 0) return 0;
+      return value;
+    }
+
+    function calculateSmartphoneTime() {
+      const resultBox = document.getElementById('resultBox');
+      const resultContent = document.getElementById('resultContent');
+
+      if (!resultBox || !resultContent) return;
+
+      // Numerici
+      const minutesSocial = parseNumberField('minutesSocial');   // min
+      const minutesChat = parseNumberField('minutesChat');       // min
+      const unlockCount = parseNumberField('unlockCount');       // count
+
+      const minutesUnlock = unlockCount * 0.5; // 30 secondi per sblocco
+
+      let baseMinutes = minutesSocial + minutesChat + minutesUnlock;
+
+      // Comportamentali – punteggio 0–8
+      let behaviorScore = 0;
+
+      const qMorning = document.querySelector('input[name="qMorning"]:checked');
+      const qMeal = document.querySelector('input[name="qMeal"]:checked');
+      const qDrive = document.querySelector('input[name="qDrive"]:checked');
+      const qNight = document.querySelector('input[name="qNight"]:checked');
+
+      if (qMorning && qMorning.value === 'yes') behaviorScore += 2;
+
+      if (qMeal) {
+        if (qMeal.value === 'always') behaviorScore += 2;
+        else if (qMeal.value === 'sometimes') behaviorScore += 1;
+      }
+
+      if (qDrive) {
+        if (qDrive.value === 'often') behaviorScore += 3;
+        else if (qDrive.value === 'sometimes') behaviorScore += 1;
+      }
+
+      if (qNight) {
+        if (qNight.value === 'yes') behaviorScore += 2;
+        else if (qNight.value === 'mid') behaviorScore += 1;
+      }
+
+      // Se comportamento alto, aumentiamo leggermente il tempo stimato
+      let behaviorMultiplier = 1;
+      if (behaviorScore >= 6) behaviorMultiplier = 1.25;
+      else if (behaviorScore >= 3) behaviorMultiplier = 1.1;
+
+      const adjustedMinutes = baseMinutes * behaviorMultiplier;
+
+      // Evita 0 totale: se tutto vuoto, mostriamo messaggio
+      if (adjustedMinutes <= 0) {
+        resultBox.classList.remove('empty');
+        resultContent.innerHTML = `
+          <div class="result-main-number">
+            Per ora i numeri sono tutti a <strong>zero</strong> (o quasi).
+          </div>
+          <div class="result-sub">
+            Inserisci qualche valore realistico a sinistra per vedere
+            quante ore e quanti giorni all’anno ti porta via lo smartphone.
+          </div>
+        `;
+        return;
+      }
+
+      const minutesPerDay = adjustedMinutes;
+      const hoursPerDay = minutesPerDay / 60;
+
+      const minutesPerYear = minutesPerDay * 365;
+      const hoursPerYear = minutesPerYear / 60;
+      const daysPerYear = hoursPerYear / 24;
+
+      // Livelli
+      let levelClass = 'ok';
+      let levelLabel = 'Livello 1 – Smartphone sotto controllo (ma da tenere d’occhio)';
+      let shortComment = 'Sei ancora tu a decidere quando usarlo, non il contrario.';
+
+      if (minutesPerDay >= 60 && minutesPerDay < 120) {
+        levelClass = 'warn';
+        levelLabel = 'Livello 2 – Equilibrio fragile';
+        shortComment = 'Lo smartphone pesa già come un secondo hobby quotidiano.';
+      } 
+      if (minutesPerDay >= 120 && minutesPerDay < 240) {
+        levelClass = 'high';
+        levelLabel = 'Livello 3 – Scrollatore seriale';
+        shortComment = 'Una fetta importante della tua giornata passa dentro lo schermo.';
+      }
+      if (minutesPerDay >= 240) {
+        levelClass = 'high';
+        levelLabel = 'Livello 4 – Lo smartphone detta il ritmo';
+        shortComment = 'Per il telefono dedichi tempo paragonabile a un part-time.';
+      }
+
+      // Se usi il telefono spesso alla guida, inseriamo un alert aggiuntivo
+      const qDrive = document.querySelector('input[name="qDrive"]:checked');
+      let driveWarning = '';
+      if (qDrive && (qDrive.value === 'often' || qDrive.value === 'sometimes')) {
+        driveWarning = `
+          <p class="result-sub" style="color:#B91C1C; margin-top:8px;">
+            <strong>Nota seria:</strong> hai indicato che usi spesso il telefono
+            mentre guidi o attraversi. Qui non è solo una questione di tempo:
+            valuta seriamente di togliere questa abitudine, è uno dei punti più rischiosi.
+          </p>
+        `;
+      }
+
+      const advices = buildAdviceList(minutesPerDay, behaviorScore);
+
+      resultContent.innerHTML = `
+        <div class="result-level ${levelClass}">
+          ${levelLabel}
+        </div>
+
+        <div class="result-main-number">
+          Il tuo smartphone ti ruba circa
+          <strong>${minutesPerDay.toFixed(0)} minuti al giorno</strong>
+          (${hoursPerDay.toFixed(1)} ore).
+        </div>
+
+        <div class="result-sub">
+          In un anno significa circa
+          <strong>${hoursPerYear.toFixed(0)} ore</strong>,
+          cioè più o meno <strong>${daysPerYear.toFixed(1)} giorni pieni</strong>
+          passati dentro allo schermo.
+        </div>
+
+        <div class="result-sub">
+          <em>${shortComment}</em>
+        </div>
+
+        ${driveWarning}
+
+        <div class="result-advices">
+          <strong>Da dove puoi iniziare a riprenderti un po’ di tempo?</strong>
+          ${advices}
+        </div>
+      `;
+    }
+
+    function buildAdviceList(minutesPerDay, behaviorScore) {
+      const tips = [];
+
+      if (minutesPerDay > 180) {
+        tips.push('Imposta un limite giornaliero per social/video (es. 60 minuti) usando le impostazioni del telefono.');
+        tips.push('Scegli una “fascia oraria senza schermo” la sera (anche solo 30–45 minuti prima di dormire).');
+      } else if (minutesPerDay > 90) {
+        tips.push('Sposta le app più “pericolose” (social, video) fuori dalla schermata principale.');
+        tips.push('Decidi due momenti al giorno per rispondere alle chat, invece di aprirle ogni volta che arriva una notifica.');
+      } else {
+        tips.push('Mantieni questa impostazione, ma controlla ogni tanto il tuo “Tempo di utilizzo” per non farti fregare dalla routine.');
+      }
+
+      if (behaviorScore >= 5) {
+        tips.push('Prova per una settimana a non tenere il telefono sul tavolo a pranzo/cena.');
+      }
+
+      if (behaviorScore >= 3) {
+        tips.push('Metti il telefono lontano dal letto e usa una sveglia vera per ridurre lo scroll notturno.');
+      }
+
+      if (tips.length === 0) {
+        tips.push('Continua così: il punto non è demonizzare il telefono, ma usarlo con intenzione.');
+      }
+
+      const listItems = tips.map(t => `<li>${t}</li>`).join('');
+      return `<ul>${listItems}</ul>`;
+    }
+
+    function resetForm() {
+      ['minutesSocial','minutesChat','unlockCount'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+      });
+
+      ['qMorning','qMeal','qDrive','qNight'].forEach(name => {
+        const checked = document.querySelectorAll('input[name="'+name+'"]:checked');
+        checked.forEach(r => r.checked = false);
+      });
+
+      const legalCheckbox = document.getElementById('legalAccept');
+      const calcBtn = document.getElementById('calcBtn');
+      if (legalCheckbox) legalCheckbox.checked = false;
+      if (calcBtn) calcBtn.disabled = true;
+
+      const resultContent = document.getElementById('resultContent');
+      if (resultContent) {
+        resultContent.innerHTML = `
+          <div class="result-placeholder">
+            Compila i campi a sinistra e clicca su
+            <strong>“Calcola il tempo che ti ruba”</strong>.  
+            Vedrai:
+            <ul style="margin-top:6px; padding-left:18px;">
+              <li>quanti minuti / ore al giorno “mangia” lo smartphone;</li>
+              <li>quanti <strong>giorni pieni all’anno</strong> equivalgono;</li>
+              <li>un profilo sintetico (da “sotto controllo” a “scroll mode ON”).</li>
+            </ul>
+          </div>
+        `;
+      }
+    }
   </script>
 
 </body>
 </html>
+
