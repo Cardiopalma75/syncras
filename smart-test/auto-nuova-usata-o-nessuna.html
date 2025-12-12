@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Test – Auto nuova, usata o nessuna? | Syncras.App</title>
+  <meta name="description" content="Smart Test Syncras per capire se per te ha più senso un'auto nuova, usata o nessuna. Incrocio tra numeri reali, utilizzo e necessità quotidiane.">
+  <meta name="robots" content="index,follow">
+
+  <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --bg-page: #F7F7FB;
+      --text-main: #403E43;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg-page);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      color: var(--text-main);
+    }
+
+    /* HEADER VIOLA UNIFICATO */
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color: white;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+    #main-nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding-bottom: 2px;
+    }
+    #main-nav a:hover {
+      text-decoration: underline;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .menu-toggle span {
+      margin-left: 4px;
+      font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        margin: 0 auto;
+        max-width: 1180px;
+        flex-direction: column;
+        background-color: var(--violet-dark);
+        padding: 10px 16px 12px 16px;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
+      }
+      #main-nav a {
+        padding: 6px 0;
+      }
+      body.nav-open #main-nav {
+        display: flex;
+      }
+      .menu-toggle {
+        display: inline-flex;
+        align-items: center;
+      }
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 30px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    h1, h2, h3 {
+      color: var(--violet-dark);
+    }
+
+    p {
+      margin-bottom: 14px;
+    }
+
+    .back-links {
+      margin-bottom: 18px;
+      font-size: 0.9rem;
+    }
+    .back-links a {
+      color: var(--violet-dark);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .back-links a:hover {
+      text-decoration: underline;
+    }
+
+    .intro-tag {
+      display: inline-block;
+      background: #F3F4FF;
+      color: var(--violet-dark);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+
+    .smart-test-lead {
+      font-size: 1.02rem;
+    }
+
+    .test-card {
+      background: #F7F7FB;
+      border-radius: 10px;
+      padding: 18px 16px 16px;
+      border: 1px solid #E5E7EB;
+      margin-top: 20px;
+    }
+
+    .test-section-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-top: 6px;
+      margin-bottom: 4px;
+      color: #111827;
+    }
+
+    .test-section-sub {
+      font-size: 0.92rem;
+      color: #4B5563;
+      margin-bottom: 10px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 14px 18px;
+      margin-top: 10px;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 0.92rem;
+    }
+
+    .form-field label {
+      font-weight: 600;
+      color: #374151;
+    }
+
+    .form-field small {
+      font-size: 0.8rem;
+      color: #6B7280;
+    }
+
+    input[type="number"],
+    input[type="text"],
+    select {
+      padding: 8px 9px;
+      border-radius: 6px;
+      border: 1px solid #D1D5DB;
+      font-size: 0.92rem;
+      font-family: inherit;
+      box-sizing: border-box;
+    }
+
+    input[type="number"]:focus,
+    input[type="text"]:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--violet-main);
+      box-shadow: 0 0 0 1px rgba(108, 92, 231, 0.25);
+    }
+
+    .legal-box {
+      margin-top: 18px;
+      padding: 10px 12px;
+      background: #FFFBEB;
+      border-radius: 8px;
+      border-left: 4px solid #FACC15;
+      font-size: 0.9rem;
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .legal-box input[type="checkbox"] {
+      margin-top: 3px;
+    }
+
+    .legal-box label {
+      font-weight: 400;
+      color: #4B5563;
+    }
+
+    .legal-box a {
+      color: var(--violet-dark);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .legal-box a:hover {
+      text-decoration: underline;
+    }
+
+    .btn-row {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .primary-btn {
+      background: var(--violet-main);
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 0.96rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .primary-btn:hover {
+      background: var(--violet-dark);
+    }
+
+    .btn-hint {
+      font-size: 0.85rem;
+      color: #6B7280;
+    }
+
+    .error-msg {
+      margin-top: 8px;
+      font-size: 0.88rem;
+      color: #B91C1C;
+      display: none;
+    }
+
+    .result-box {
+      margin-top: 22px;
+      padding: 16px 14px;
+      border-radius: 10px;
+      border: 1px solid #D1FAE5;
+      background: #ECFDF5;
+      display: none;
+    }
+
+    .result-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #065F46;
+      margin-bottom: 4px;
+    }
+
+    .result-tagline {
+      font-size: 0.92rem;
+      color: #047857;
+      margin-bottom: 10px;
+    }
+
+    .result-numbers {
+      font-size: 0.9rem;
+      color: #064E3B;
+      margin-bottom: 10px;
+    }
+
+    .result-advice {
+      font-size: 0.92rem;
+      color: #111827;
+    }
+
+    .result-note {
+      margin-top: 10px;
+      font-size: 0.8rem;
+      color: #6B7280;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      background: #eee;
+      font-size: 0.9rem;
+    }
+
+    footer a {
+      color: #111827;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      main {
+        margin: 16px auto;
+        padding: 16px 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- HEADER UNIFICATO -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
+
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
+
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="smart-test.html">Smart Test</a>
+        <a href="calcolatori.html">Calcolatori</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="offerte.html">Prodotti Consapevoli</a>
+        <a href="chi.html">Chi siamo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="back-links">
+      ← <a href="smart-test.html">Torna alla pagina Smart Test</a> |
+      <a href="index.html">Home</a>
+    </div>
+
+    <span class="intro-tag">Smart Test / Auto & mobilità</span>
+    <h1>Smart Test – Auto nuova, usata o nessuna?</h1>
+    <p class="smart-test-lead">
+      Questo test incrocia <strong>numeri reali</strong> (costi annui e chilometri)
+      con il tuo <strong>uso quotidiano dell’auto</strong>.  
+      Alla fine avrai un responso sincero: per te ha più senso un’auto
+      <strong>nuova</strong>, <strong>usata</strong>… o forse <strong>nessuna</strong>.
+    </p>
+
+    <div class="test-card">
+      <div class="test-section-title">1. Il tuo profilo di utilizzo</div>
+      <p class="test-section-sub">
+        Partiamo da come usi davvero l’auto. Niente giudizi: solo realtà.
+      </p>
+
+      <div class="form-grid">
+        <div class="form-field">
+          <label for="km-annui">Chilometri percorsi in un anno*</label>
+          <input type="number" id="km-annui" min="0" placeholder="es. 8.000">
+          <small>Somma indicativa di tutti gli spostamenti (casa, lavoro, weekend).</small>
+        </div>
+
+        <div class="form-field">
+          <label for="uso-frequenza">Quanto spesso usi l’auto?</label>
+          <select id="uso-frequenza">
+            <option value="quasi-mai">Quasi mai</option>
+            <option value="weekend">Solo nel weekend</option>
+            <option value="alcuni-giorni">Qualche giorno a settimana</option>
+            <option value="quasi-ogni-giorno">Quasi ogni giorno</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label for="uso-principale">Motivo principale per cui ti serve</label>
+          <select id="uso-principale">
+            <option value="comodita">Comodità / abitudine</option>
+            <option value="spesa-famiglia">Spesa, famiglia, accompagnare figli</option>
+            <option value="lavoro">Lavoro / turni / orari scomodi</option>
+            <option value="salute">Salute / necessità particolari</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="test-card">
+      <div class="test-section-title">2. I costi principali della tua auto</div>
+      <p class="test-section-sub">
+        Inserisci valori indicativi: non servono numeri perfetti, ma realistici.
+      </p>
+
+      <div class="form-grid">
+        <div class="form-field">
+          <label for="carburante-mensile">Spesa carburante al mese (€)</label>
+          <input type="number" id="carburante-mensile" min="0" placeholder="es. 120">
+          <small>In media, tra benzina/diesel/GPL/energia elettrica.</small>
+        </div>
+
+        <div class="form-field">
+          <label for="assicurazione-annua">Assicurazione annua (€)</label>
+          <input type="number" id="assicurazione-annua" min="0" placeholder="es. 650">
+        </div>
+
+        <div class="form-field">
+          <label for="altri-costi-annui">Bollo + manutenzione annua (€)</label>
+          <input type="number" id="altri-costi-annui" min="0" placeholder="es. 500">
+          <small>Tagliandi, gomme, piccoli imprevisti mediati.</small>
+        </div>
+
+        <div class="form-field">
+          <label for="valore-auto">Valore attuale dell’auto (€)</label>
+          <input type="number" id="valore-auto" min="0" placeholder="es. 10.000">
+          <small>Stima di quanto potresti venderla oggi.</small>
+        </div>
+
+        <div class="form-field">
+          <label for="eta-auto">Età dell’auto (anni)</label>
+          <input type="number" id="eta-auto" min="0" placeholder="es. 6">
+          <small>Serve a stimare la svalutazione annua.</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="legal-box">
+      <input type="checkbox" id="legalAccept">
+      <label for="legalAccept">
+        Prima di procedere, un promemoria: i risultati di questo test sono solo
+        <strong>stime indicativi</strong> e non sostituiscono una consulenza professionale.
+        L’uso di questo strumento è a tuo esclusivo rischio e la responsabilità delle decisioni
+        rimane tua, come spiegato nelle
+        <a href="note-legali.html" target="_blank" rel="noopener noreferrer">Note Legali</a>.
+      </label>
+    </div>
+
+    <div class="btn-row">
+      <button type="button" class="primary-btn" onclick="calcolaProfiloAuto()">
+        Calcola il tuo profilo auto
+        <span>➜</span>
+      </button>
+      <div class="btn-hint">
+        Nessun dato viene salvato: il calcolo avviene solo qui sulla pagina.
+      </div>
+    </div>
+
+    <div id="errorBox" class="error-msg">
+      Compila almeno i chilometri annui e un minimo di costi per ottenere un risultato sensato.
+    </div>
+
+    <div id="resultBox" class="result-box">
+      <div id="resultTitle" class="result-title"></div>
+      <div id="resultTagline" class="result-tagline"></div>
+      <div id="resultNumbers" class="result-numbers"></div>
+      <div id="resultAdvice" class="result-advice"></div>
+      <div class="result-note">
+        Questo non è un “verdetto morale” ma uno specchio numerico: puoi usarlo come base
+        per fare altri confronti (trasporti pubblici, seconda auto in famiglia, car sharing, ecc.).
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 Syncras.App — Tutti i diritti riservati<br>
+    <div style="margin-top:8px;">
+      <a href="privacy.html">Privacy Policy</a> |
+      <a href="cookie.html">Cookie Policy</a> |
+      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
+      <a href="note-legali.html">Note Legali</a>
+    </div>
+    <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+      senza alcun costo aggiuntivo per l’utente.  
+      Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+      è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+    </p>
+  </footer>
+
+  <!-- Toggle menu mobile -->
+  <script>
+    function toggleMenu() {
+      document.body.classList.toggle('nav-open');
+    }
+  </script>
+
+  <script>
+    function calcolaProfiloAuto() {
+      const errorBox = document.getElementById('errorBox');
+      const resultBox = document.getElementById('resultBox');
+      errorBox.style.display = 'none';
+      resultBox.style.display = 'none';
+
+      // Check Note Legali
+      const legalOk = document.getElementById('legalAccept').checked;
+      if (!legalOk) {
+        errorBox.textContent = 'Per proseguire devi confermare di aver letto le Note Legali.';
+        errorBox.style.display = 'block';
+        return;
+      }
+
+      // Input numerici
+      const kmAnnui = parseFloat(document.getElementById('km-annui').value.replace(',', '.')) || 0;
+      const carburanteMensile = parseFloat(document.getElementById('carburante-mensile').value.replace(',', '.')) || 0;
+      const assicurazioneAnnua = parseFloat(document.getElementById('assicurazione-annua').value.replace(',', '.')) || 0;
+      const altriCostiAnnui = parseFloat(document.getElementById('altri-costi-annui').value.replace(',', '.')) || 0;
+      const valoreAuto = parseFloat(document.getElementById('valore-auto').value.replace(',', '.')) || 0;
+      const etaAuto = parseFloat(document.getElementById('eta-auto').value.replace(',', '.')) || 0;
+
+      // Input qualitativi
+      const usoFrequenza = document.getElementById('uso-frequenza').value;
+      const usoPrincipale = document.getElementById('uso-principale').value;
+
+      // Validazione minima
+      if (kmAnnui <= 0 || (carburanteMensile <= 0 && assicurazioneAnnua <= 0 && altriCostiAnnui <= 0)) {
+        errorBox.textContent = 'Inserisci almeno i chilometri annui e qualche costo per avere un risultato utile.';
+        errorBox.style.display = 'block';
+        return;
+      }
+
+      const costoCarburanteAnnuale = carburanteMensile * 12;
+      const costoDirettoAnnuale = costoCarburanteAnnuale + assicurazioneAnnua + altriCostiAnnui;
+
+      // Stima molto semplificata della svalutazione annua
+      let anniResiduiTeorici = 10 - etaAuto;
+      if (anniResiduiTeorici < 3) anniResiduiTeorici = 3;
+      if (anniResiduiTeorici > 10) anniResiduiTeorici = 10;
+
+      let svalutazioneAnnua = 0;
+      if (valoreAuto > 0) {
+        svalutazioneAnnua = valoreAuto / anniResiduiTeorici;
+      }
+
+      const costoTotaleAnnuale = costoDirettoAnnuale + svalutazioneAnnua;
+      const costoPerKm = kmAnnui > 0 ? costoTotaleAnnuale / kmAnnui : 0;
+
+      // Punteggi di necessità (0 = non necessaria, 10 = molto necessaria)
+      let punteggioFrequenza = 0;
+      if (usoFrequenza === 'quasi-mai') punteggioFrequenza = 2;
+      if (usoFrequenza === 'weekend') punteggioFrequenza = 4;
+      if (usoFrequenza === 'alcuni-giorni') punteggioFrequenza = 7;
+      if (usoFrequenza === 'quasi-ogni-giorno') punteggioFrequenza = 9;
+
+      let punteggioMotivo = 0;
+      if (usoPrincipale === 'comodita') punteggioMotivo = 3;
+      if (usoPrincipale === 'spesa-famiglia') punteggioMotivo = 6;
+      if (usoPrincipale === 'lavoro') punteggioMotivo = 9;
+      if (usoPrincipale === 'salute') punteggioMotivo = 10;
+
+      const punteggioNecessita = (punteggioFrequenza + punteggioMotivo) / 2;
+
+      // Classificazione
+      let titolo = '';
+      let tagline = '';
+      let advice = '';
+
+      const costoPerKmRounded = costoPerKm || 0;
+      const costoPerKmHigh = costoPerKmRounded > 0.6;  // >0,60 €/km = caro
+      const costoPerKmMedium = costoPerKmRounded > 0.3 && costoPerKmRounded <= 0.6;
+
+      if (kmAnnui < 4000 && punteggioNecessita <= 4 && costoTotaleAnnuale > 1500) {
+        // Profilo: nessuna o riduzione forte della dipendenza dall'auto
+        titolo = 'Profilo: Auto Non Necessaria (o quasi)';
+        tagline = 'Per come la usi oggi, l’auto è più un costo fisso che una reale necessità quotidiana.';
+        advice = 'I numeri dicono che stai pagando parecchio per qualcosa che usi poco. ' +
+                 'Potresti valutare seriamente di vivere con una sola auto in famiglia, ' +
+                 'passare a noleggio occasionale, car sharing o combinare mezzi pubblici, bici, taxi ' +
+                 'quando davvero ti serve. Prima di pensare a un’auto nuova, chiediti se non sia il caso ' +
+                 'di fare un esperimento “30 giorni con l’auto il meno possibile”.';
+      } else if (
+        (kmAnnui >= 4000 && kmAnnui <= 15000 && punteggioNecessita >= 4 && punteggioNecessita <= 8) ||
+        (costoPerKmMedium && etaAuto >= 4)
+      ) {
+        // Profilo: meglio un'usata furba, niente esagerazioni
+        titolo = 'Profilo: Auto Usata Furba';
+        tagline = 'Ti serve, ma non abbastanza da giustificare un modello nuovo di zecca ogni pochi anni.';
+        advice = 'Per i chilometri che fai e il tipo di utilizzo, una buona auto usata (o un’auto nuova ma base) ' +
+                 'di segmento sensato è spesso la soluzione più equilibrata. ' +
+                 'Confronta più modelli, guarda i costi reali di manutenzione, evita optional inutili e ragiona ' +
+                 'su quanto tempo vuoi tenerla. L’obiettivo è: costo per km sotto controllo, senza vivere in funzione dell’auto.';
+      } else {
+        // Profilo: auto nuova o recente sensata
+        titolo = 'Profilo: Auto Nuova o Recente (sensata)';
+        tagline = 'L’auto per te è davvero uno strumento di lavoro o di vita quotidiana, non solo un vezzo.';
+        advice = 'Con chilometraggi medio-alti e una necessità forte (lavoro, salute, turni, famiglia), ' +
+                 'un’auto nuova o recente può avere senso, soprattutto se ti garantisce affidabilità e costi di gestione più stabili. ' +
+                 'Questo però non significa prendere il modello più costoso: ragiona su consumi, garanzia, assistenza e valore residuo. ' +
+                 'L’obiettivo è: tanta utilità, pochi fronzoli, niente rate che ti tolgono il sonno.';
+      }
+
+      // Stampa risultati
+      const fmt = (num) => num.toLocaleString('it-IT', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+      const fmt2 = (num) => num.toLocaleString('it-IT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+      document.getElementById('resultTitle').textContent = titolo;
+      document.getElementById('resultTagline').textContent = tagline;
+
+      let numeriText = 'Costo annuo stimato della tua auto: circa ' + fmt(costoTotaleAnnuale) + ' €';
+      if (kmAnnui > 0) {
+        numeriText += ' (≈ ' + fmt2(costoPerKmRounded) + ' € per km su ' + fmt(kmAnnui) + ' km/anno).';
+      }
+      document.getElementById('resultNumbers').textContent = numeriText;
+      document.getElementById('resultAdvice').textContent = advice;
+
+      resultBox.style.display = 'block';
+    }
+  </script>
+
+  <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR -->
+  <div id="cookie-banner">
+    <p>
+      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
+      (Google Analytics). Alcuni link potrebbero essere di affiliazione.
+      Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
+      <a href="privacy.html">Privacy Policy</a>.
+    </p>
+    <div style="display:flex; gap:10px; margin-top:8px;">
+      <button type="button" onclick="rejectCookies()">
+        Rifiuta
+      </button>
+      <button id="cookie-btn" type="button" onclick="acceptCookies()">
+        Accetta e continua
+      </button>
+    </div>
+  </div>
+
+  <style>
+    #cookie-banner {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 90%;
+      width: 420px;
+      background: #ffffff;
+      border: 2px solid #6C5CE7;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      z-index: 9999;
+      font-family: Arial, sans-serif;
+      display: none;
+    }
+
+    #cookie-banner p {
+      margin: 0 0 12px 0;
+      font-size: 0.95rem;
+      color: #333;
+      line-height: 1.4;
+    }
+
+    #cookie-banner a {
+      color: #6C5CE7;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    #cookie-banner button[onclick="rejectCookies()"] {
+      flex: 1;
+      background: white !important;
+      color: #111827 !important;
+      border: 2px solid #6C5CE7 !important;
+      padding: 10px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    #cookie-btn {
+      flex: 1;
+      background: #6C5CE7;
+      color: white;
+      border: 2px solid #6C5CE7;
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    #cookie-btn:hover {
+      background: #4B3ACB;
+    }
+  </style>
+
+  <script>
+  (function () {
+    const GA_ID = 'G-CFTTCYDZ2P';
+    const CONSENT_KEY = 'syncras_cookie_consent';
+
+    window['ga-disable-' + GA_ID] = true;
+
+    function loadGoogleAnalytics() {
+      if (window.__syncrasGaLoaded) return;
+      window.__syncrasGaLoaded = true;
+
+      window['ga-disable-' + GA_ID] = false;
+
+      const gaScript = document.createElement('script');
+      gaScript.async = true;
+      gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+      document.head.appendChild(gaScript);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', GA_ID, { anonymize_ip: true });
+    }
+
+    function showBanner() {
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.style.display = 'block';
+    }
+
+    function hideBanner() {
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.style.display = 'none';
+    }
+
+    window.acceptCookies = function () {
+      localStorage.setItem(CONSENT_KEY, 'yes');
+      hideBanner();
+      loadGoogleAnalytics();
+    };
+
+    window.rejectCookies = function () {
+      localStorage.setItem(CONSENT_KEY, 'no');
+      hideBanner();
+      window['ga-disable-' + GA_ID] = true;
+    };
+
+    window.revokeCookies = function () {
+      localStorage.removeItem(CONSENT_KEY);
+      window['ga-disable-' + GA_ID] = true;
+      showBanner();
+    };
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const consent = localStorage.getItem(CONSENT_KEY);
+
+      if (consent === 'yes') {
+        loadGoogleAnalytics();
+      } else if (consent === 'no') {
+        window['ga-disable-' + GA_ID] = true;
+      } else {
+        showBanner();
+      }
+    });
+  })();
+  </script>
+
+</body>
+</html>
