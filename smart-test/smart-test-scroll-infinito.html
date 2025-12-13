@@ -30,6 +30,8 @@
       color: white;
       padding: 12px 14px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+      position: relative;
+      z-index: 60;
     }
     .header-inner {
       max-width: 1180px;
@@ -106,6 +108,7 @@
       font-weight: 600;
       text-decoration: none;
     }
+    .back-links a:hover { text-decoration: underline; }
 
     .legal-box {
       background: #F9FAFB;
@@ -115,6 +118,8 @@
       margin: 20px 0;
       font-size: 0.9rem;
     }
+    .legal-box a { color: var(--violet-dark); font-weight: 700; text-decoration: none; }
+    .legal-box a:hover { text-decoration: underline; }
 
     /* QUIZ */
     .quiz-wrapper {
@@ -127,26 +132,40 @@
       border-radius: 10px;
       padding: 18px;
       border: 1px solid #E5E7EB;
-      transition: opacity .2s;
+      transition: opacity .2s, filter .2s;
     }
 
+    /* ✅ MODIFICA: niente effetto "appannato" forte */
     .quiz-disabled {
-      opacity: 0.4;
-      pointer-events: none;
+      opacity: 1;             /* niente sbiadito */
+      pointer-events: none;   /* resta bloccato */
+      filter: blur(0.8px);    /* leggerissimo, effetto “pro” */
     }
 
+    /* ✅ MODIFICA: overlay senza velo, messaggio a card */
     #quiz-overlay-message {
       position: absolute;
       inset: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(255,255,255,0.7);
+      background: transparent;  /* niente velo */
       border-radius: 10px;
       text-align: center;
       pointer-events: none;
       padding: 12px;
       font-size: 0.95rem;
+      z-index: 5;
+    }
+    #quiz-overlay-message > div {
+      background: #ffffff;
+      border: 1px solid #E5E7EB;
+      border-radius: 10px;
+      padding: 14px 14px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+      max-width: 520px;
+      width: calc(100% - 28px);
+      color: #111827;
     }
 
     .question {
@@ -155,6 +174,11 @@
       padding-bottom: 12px;
     }
     .question:last-of-type { border-bottom: none; }
+
+    .question label {
+      display: block;
+      margin: 8px 0;
+    }
 
     #quiz-result {
       margin-top: 18px;
@@ -175,6 +199,7 @@
       font-weight: 600;
       cursor: pointer;
     }
+    #submitQuiz:hover { background: var(--violet-dark); }
 
     /* RELATED */
     .related-box {
@@ -201,10 +226,11 @@
     .related-item a {
       color:var(--violet-dark);
       text-decoration:none;
-      font-weight:600;
+      font-weight:700;
     }
+    .related-item a:hover { text-decoration: underline; }
 
-    /* COOKIE */
+    /* COOKIE (solo box, i bottoni sono inline come nel tuo file) */
     #cookie-banner {
       position: fixed;
       bottom: 20px;
@@ -219,6 +245,40 @@
       box-shadow: 0 4px 8px rgba(0,0,0,0.15);
       z-index: 9999;
       display: none;
+    }
+
+    #cookie-banner p {
+      margin: 0 0 12px 0;
+      font-size: 0.95rem;
+      color: #333;
+      line-height: 1.4;
+    }
+
+    #cookie-banner a {
+      color: #6C5CE7;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    #cookie-banner button {
+      flex: 1;
+      border-radius: 6px;
+      padding: 10px 12px;
+      cursor: pointer;
+      font-weight: 700;
+      border: 2px solid #6C5CE7;
+    }
+
+    #cookie-banner button#cookie-btn {
+      background: #6C5CE7;
+      color: white;
+    }
+    #cookie-banner button#cookie-btn:hover {
+      background: #4B3ACB;
+    }
+    #cookie-banner button:not(#cookie-btn) {
+      background: white;
+      color: #111827;
     }
   </style>
 </head>
@@ -282,7 +342,7 @@
 
   <div class="quiz-wrapper">
     <div id="quiz-overlay-message">
-      Spunta la casella sopra per sbloccare il Test sullo Scroll Infinito.
+      <div>Spunta la casella sopra per sbloccare il Test sullo Scroll Infinito.</div>
     </div>
 
     <section id="quiz-section" class="quiz-section quiz-disabled">
@@ -512,6 +572,8 @@ document.getElementById('submitQuiz').addEventListener('click', () => {
     text = "L’algoritmo ti conosce molto bene… forse troppo. È il momento di riprendere il controllo.";
   }
 
+  box.style.background = '#ECFEFF';
+  box.style.borderColor = '#22C3D6';
   box.innerHTML = `<strong>${title}</strong><br><br>${text}`;
 });
 </script>
