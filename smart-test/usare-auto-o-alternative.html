@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Test – Usare l’auto o alternative? | Syncras.App</title>
+  <meta name="description" content="Conviene usare sempre l’auto o esistono alternative più sensate? Confronta costi reali di auto, mezzi pubblici, bici, car sharing e taxi con un test pratico in stile Syncras." />
+  <meta name="robots" content="index,follow" />
+
+  <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --bg-page: #F7F7FB;
+      --text-main: #403E43;
+      --card-border: #E5E7EB;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg-page);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      color: var(--text-main);
+    }
+
+    /* HEADER */
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color: white;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+      position: relative;
+      z-index: 60;
+    }
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+    }
+
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+    #main-nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        flex-direction: column;
+        background-color: var(--violet-dark);
+        padding: 12px;
+      }
+      body.nav-open #main-nav { display: flex; }
+      .menu-toggle { display: inline-flex; }
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 30px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    h1, h2 { color: var(--violet-dark); }
+    p { margin-bottom: 14px; }
+
+    .intro-tag {
+      display: inline-block;
+      background: #F3F4FF;
+      color: var(--violet-dark);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .lead { font-size: 1.03rem; }
+
+    .disclaimer-box {
+      background: #FFFBEA;
+      border-left: 4px solid #FBBF24;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      margin: 16px 0;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: #F7F7FB;
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 16px;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      margin: 10px 0 6px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #D1D5DB;
+      font-size: 0.95rem;
+    }
+
+    .legal-gate {
+      background: #F3F4FF;
+      border: 1px solid #DAD9FF;
+      border-radius: 10px;
+      padding: 12px;
+      margin-top: 14px;
+    }
+
+    .actions {
+      margin-top: 14px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      background: var(--violet-main);
+      color: white;
+      border: 2px solid var(--violet-main);
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .btn:hover { background: var(--violet-dark); }
+
+    .btn-ghost {
+      background: white;
+      color: #111827;
+      border: 2px solid var(--violet-main);
+    }
+
+    .result {
+      display: none;
+      margin-top: 18px;
+      background: #ECFDF5;
+      border: 1px solid #A7F3D0;
+      border-radius: 10px;
+      padding: 14px;
+    }
+
+    .warn {
+      display: none;
+      background: #FFF1F2;
+      border: 1px solid #FECDD3;
+      color: #7F1D1D;
+      border-radius: 10px;
+      padding: 10px;
+      font-weight: 700;
+      margin-top: 10px;
+    }
+
+    footer {
+      margin-top: 40px;
+      background: #eee;
+      padding: 20px;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo">Syncras.App</div>
+    <button class="menu-toggle" onclick="toggleMenu()">Menu ☰</button>
+    <nav id="main-nav">
+      <a href="index.html">Home</a>
+      <a href="smart-test.html">Smart Test</a>
+      <a href="calcolatori.html">Calcolatori</a>
+      <a href="blog.html">Blog</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <span class="intro-tag">Auto & alternative</span>
+  <h1>Smart Test – Usare l’auto o alternative?</h1>
+
+  <p class="lead">
+    L’auto è comoda, sì.  
+    Ma è sempre la scelta più sensata?  
+    Questo test confronta <strong>auto privata</strong> con <strong>alternative reali</strong>:
+    mezzi pubblici, bici, car sharing, taxi.
+  </p>
+
+  <div class="disclaimer-box">
+    Test basato su stime realistiche.  
+    Non è consulenza professionale.  
+    Condizioni complete nelle <a href="note-legali.html">Note Legali</a>.
+  </div>
+
+  <section class="grid">
+    <div class="card">
+      <h2>1) La tua situazione</h2>
+
+      <label>Kilometri medi al mese</label>
+      <input id="km" type="number" value="800" />
+
+      <label>Costo stimato dell’auto (€/mese)</label>
+      <input id="autoCost" type="number" value="450" />
+      <p style="font-size:0.85rem;color:#6B7280;">
+        Include tutto: carburante, assicurazione, manutenzione, svalutazione.
+      </p>
+
+      <label>Giorni in cui ti sposti (al mese)</label>
+      <input id="days" type="number" value="20" />
+    </div>
+
+    <div class="card">
+      <h2>2) Alternative disponibili</h2>
+
+      <label>Abbonamento mezzi pubblici (€/mese)</label>
+      <input id="public" type="number" value="40" />
+
+      <label>Spesa media taxi / car sharing (€/mese)</label>
+      <input id="taxi" type="number" value="120" />
+
+      <label>Usi bici / piedi spesso?</label>
+      <select id="bike">
+        <option value="no">No</option>
+        <option value="yes">Sì</option>
+      </select>
+    </div>
+  </section>
+
+  <div class="legal-gate">
+    <label>
+      <input type="checkbox" id="legalAccept" />
+      Ho letto e accetto le <a href="note-legali.html">Note Legali</a>
+    </label>
+  </div>
+
+  <div class="warn" id="warn">
+    Devi prima accettare le Note Legali.
+  </div>
+
+  <div class="actions">
+    <button class="btn" onclick="calculate()">Confronta</button>
+    <button class="btn btn-ghost" onclick="resetForm()">Reset</button>
+  </div>
+
+  <div class="result" id="result">
+    <h3>Risultato</h3>
+    <p id="output"></p>
+  </div>
+</main>
+
+<footer>
+  © 2025 Syncras.App — Tutti i diritti riservati
+</footer>
+
+<script>
+function toggleMenu() {
+  document.body.classList.toggle('nav-open');
+}
+
+function calculate() {
+  if (!document.getElementById('legalAccept').checked) {
+    document.getElementById('warn').style.display = 'block';
+    return;
+  }
+  document.getElementById('warn').style.display = 'none';
+
+  const autoCost = Number(document.getElementById('autoCost').value);
+  const publicT = Number(document.getElementById('public').value);
+  const taxi = Number(document.getElementById('taxi').value);
+  const bike = document.getElementById('bike').value;
+
+  let altCost = publicT + taxi;
+  if (bike === "yes") altCost *= 0.8;
+
+  let msg = "";
+  if (altCost < autoCost * 0.6) {
+    msg = "Le alternative sono MOLTO più convenienti della tua auto.";
+  } else if (altCost < autoCost) {
+    msg = "Le alternative costano meno dell’auto.";
+  } else {
+    msg = "L’auto resta più comoda, ma stai pagando per questa comodità.";
+  }
+
+  document.getElementById('output').innerHTML =
+    `Auto: <strong>${autoCost.toFixed(0)} € / mese</strong><br>
+     Alternative: <strong>${altCost.toFixed(0)} € / mese</strong><br><br>
+     ${msg}`;
+
+  document.getElementById('result').style.display = 'block';
+}
+
+function resetForm() {
+  document.getElementById('result').style.display = 'none';
+  document.getElementById('warn').style.display = 'none';
+}
+</script>
+
+</body>
+</html>
