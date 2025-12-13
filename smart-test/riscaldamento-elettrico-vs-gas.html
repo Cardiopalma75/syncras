@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Riscaldamento elettrico vs gas: conviene davvero? | Smart Test Syncras</title>
+  <meta name="description" content="Smart Test Syncras: confronta riscaldamento elettrico (pompa di calore, stufa/termoventilatore) vs gas (metano/GPL). Inserisci numeri reali e scopri costi e consumi.">
+  <meta name="robots" content="index,follow">
+
+  <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --bg-page: #F7F7FB;
+      --text-main: #403E43;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg-page);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      color: var(--text-main);
+    }
+
+    /* HEADER VIOLA UNIFICATO */
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color: white;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      position: relative;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+    #main-nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding-bottom: 2px;
+    }
+    #main-nav a:hover { text-decoration: underline; }
+
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .menu-toggle span { margin-left: 4px; font-size: 1.1rem; }
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        margin: 0 auto;
+        max-width: 1180px;
+        flex-direction: column;
+        background-color: var(--violet-dark);
+        padding: 10px 16px 12px 16px;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
+      }
+      #main-nav a { padding: 6px 0; }
+      body.nav-open #main-nav { display: flex; }
+      .menu-toggle { display: inline-flex; align-items: center; }
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 30px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    h1, h2, h3 { color: var(--violet-dark); }
+    p { margin-bottom: 15px; }
+
+    .back-links {
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+    .back-links a {
+      color: var(--violet-dark);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .back-links a:hover { text-decoration: underline; }
+
+    .intro-tag {
+      display: inline-block;
+      background: #F3F4FF;
+      color: var(--violet-dark);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+
+    .disclaimer-box {
+      background: #FFFBEA;
+      border-left: 4px solid #FBBF24;
+      padding: 12px 14px;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      margin: 16px 0 18px;
+    }
+
+    .test-card {
+      background: #F7F7FB;
+      border-radius: 12px;
+      padding: 16px;
+      border: 1px solid #E5E7EB;
+      margin: 14px 0 18px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+    @media (max-width: 820px) {
+      .grid { grid-template-columns: 1fr; }
+    }
+
+    label {
+      display: block;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #374151;
+      margin-bottom: 6px;
+    }
+
+    input, select {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid #D1D5DB;
+      background: white;
+      font-size: 1rem;
+      outline: none;
+    }
+    input:focus, select:focus {
+      border-color: var(--violet-main);
+      box-shadow: 0 0 0 3px rgba(108,92,231,0.15);
+    }
+
+    .hint {
+      font-size: 0.86rem;
+      color: #6B7280;
+      margin-top: 6px;
+    }
+
+    .cta-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 10px;
+      padding: 11px 14px;
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 0.98rem;
+    }
+    .btn-primary {
+      background: var(--violet-main);
+      color: white;
+      border: 2px solid var(--violet-main);
+    }
+    .btn-primary:hover { background: var(--violet-dark); }
+    .btn-ghost {
+      background: white;
+      color: #111827;
+      border: 2px solid #E5E7EB;
+      font-weight: 700;
+    }
+    .btn-ghost:hover { border-color: var(--violet-main); }
+
+    .legal-row {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px dashed #D1D5DB;
+      background: #ffffff;
+      font-size: 0.92rem;
+    }
+    .legal-row a { color: var(--violet-dark); font-weight: 700; text-decoration: none; }
+    .legal-row a:hover { text-decoration: underline; }
+
+    .result {
+      display: none;
+      margin-top: 16px;
+      border-radius: 12px;
+      border: 1px solid #E5E7EB;
+      background: #ffffff;
+      padding: 14px;
+    }
+
+    .result h3 { margin-top: 0; }
+    .result .kpi {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin: 12px 0;
+    }
+    @media (max-width: 820px) {
+      .result .kpi { grid-template-columns: 1fr; }
+    }
+    .kpi-box {
+      background: #F7F7FB;
+      border: 1px solid #E5E7EB;
+      border-radius: 12px;
+      padding: 12px;
+    }
+    .kpi-title { font-size: 0.85rem; color: #6B7280; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+    .kpi-value { font-size: 1.25rem; font-weight: 900; color: #111827; margin-top: 4px; }
+
+    .score {
+      margin-top: 10px;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid #E5E7EB;
+      background: #FFFBEA;
+    }
+
+    .note {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      color: #4B5563;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      background: #eee;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER UNIFICATO -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
+
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
+
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="smart-test.html">Smart Test</a>
+        <a href="calcolatori.html">Calcolatori</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="offerte.html">Prodotti Consapevoli</a>
+        <a href="chi.html">Chi siamo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="back-links">
+      ← <a href="smart-test.html">Torna agli Smart Test</a> | <a href="calcolatori.html">Vai ai Calcolatori</a>
+    </div>
+
+    <span class="intro-tag">Smart Test — Energia</span>
+    <h1>Riscaldamento elettrico vs gas: conviene davvero?</h1>
+    <p>
+      Questo test non fa filosofia: ti prende i tuoi numeri e li traduce in
+      <strong>€ reali</strong>. Se vuoi scaldarti casa senza farti scaldare anche dalla bolletta,
+      qui vedi quanto cambia tra <strong>gas</strong> e <strong>elettrico</strong>
+      (pompa di calore o “resistenza pura” tipo stufetta/termoventilatore).
+    </p>
+
+    <div class="disclaimer-box">
+      <strong>Promemoria:</strong> sono <strong>stime</strong> basate sui dati che inserisci.
+      Non è consulenza. Per conti “da firma”, servono bollette, diagnosi energetica e un tecnico.
+    </div>
+
+    <section class="test-card">
+      <h2>1) Inserisci i tuoi dati (2 minuti, promesso)</h2>
+
+      <div class="grid">
+        <div>
+          <label for="kwhHeat">Quanti kWh di calore ti servono (stagione)?</label>
+          <input id="kwhHeat" type="number" min="0" step="50" placeholder="Es. 8000">
+          <div class="hint">Se non lo sai: metti una stima “prudente” e poi rifai il test con un valore più alto.</div>
+        </div>
+
+        <div>
+          <label for="gasPrice">Prezzo del gas (€/Smc)</label>
+          <input id="gasPrice" type="number" min="0" step="0.01" placeholder="Es. 1.20">
+          <div class="hint">Usa il prezzo “tutto incluso” che trovi in bolletta (o una media realistica).</div>
+        </div>
+
+        <div>
+          <label for="boilerEff">Rendimento caldaia (%)</label>
+          <input id="boilerEff" type="number" min="50" max="110" step="1" value="92">
+          <div class="hint">Tipico: tradizionale 80–90, condensazione 90–105 (dipende da impianto e temperatura).</div>
+        </div>
+
+        <div>
+          <label for="kwhPerSmc">Conversione gas → energia (kWh per Smc)</label>
+          <input id="kwhPerSmc" type="number" min="8" max="13" step="0.1" value="10.5">
+          <div class="hint">10,5 è una media comoda per fare conti veloci.</div>
+        </div>
+
+        <div>
+          <label for="elecPrice">Prezzo energia elettrica (€/kWh)</label>
+          <input id="elecPrice" type="number" min="0" step="0.01" placeholder="Es. 0.30">
+          <div class="hint">Metti il costo “tutto incluso” (non solo la componente energia).</div>
+        </div>
+
+        <div>
+          <label for="mode">Tipo di riscaldamento elettrico</label>
+          <select id="mode">
+            <option value="hp">Pompa di calore (split/condizionatore)</option>
+            <option value="res">Resistenza (stufetta/termoventilatore)</option>
+          </select>
+          <div class="hint">La pompa di calore moltiplica il calore (COP). La stufetta no: 1 kWh = 1 kWh.</div>
+        </div>
+
+        <div id="copWrap">
+          <label for="cop">COP medio (solo pompa di calore)</label>
+          <input id="cop" type="number" min="1" max="6" step="0.1" value="3.0">
+          <div class="hint">3,0 è una stima “ok”. In inverno duro può scendere. In mezze stagioni può salire.</div>
+        </div>
+
+        <div>
+          <label for="pvShare">Quota coperta da FV / autoconsumo (%)</label>
+          <input id="pvShare" type="number" min="0" max="100" step="1" value="0">
+          <div class="hint">Se hai fotovoltaico, metti la % di kWh elettrici che pensi di coprire “gratis” (autoconsumo).</div>
+        </div>
+      </div>
+
+      <div class="legal-row">
+        <label style="font-weight:700; margin:0;">
+          <input type="checkbox" id="legalAccept" style="width:auto; margin-right:8px;">
+          Prima di procedere: i risultati sono solo stime e l’uso è a tuo rischio, come descritto nelle
+          <a href="note-legali.html" target="_blank" rel="noopener">Note Legali</a>.
+        </label>
+      </div>
+
+      <div class="cta-row">
+        <button class="btn btn-primary" type="button" onclick="runTest()">Calcola il confronto</button>
+        <button class="btn btn-ghost" type="button" onclick="resetTest()">Reset</button>
+      </div>
+
+      <div id="result" class="result" aria-live="polite">
+        <h2>2) Risultato (senza pietà, ma utile)</h2>
+
+        <div class="kpi">
+          <div class="kpi-box">
+            <div class="kpi-title">Costo annuo con GAS</div>
+            <div class="kpi-value" id="gasCost">—</div>
+            <div class="hint" id="gasSmc">—</div>
+          </div>
+
+          <div class="kpi-box">
+            <div class="kpi-title">Costo annuo con ELETTRICO</div>
+            <div class="kpi-value" id="elecCost">—</div>
+            <div class="hint" id="elecKwh">—</div>
+          </div>
+
+          <div class="kpi-box">
+            <div class="kpi-title">Differenza</div>
+            <div class="kpi-value" id="diffCost">—</div>
+            <div class="hint" id="winner">—</div>
+          </div>
+        </div>
+
+        <div class="score" id="scoreBox">
+          <strong>Verdetto Syncras:</strong> <span id="verdict">—</span>
+          <div class="note" id="verdictNote"></div>
+        </div>
+
+        <p class="note">
+          Tip: se vuoi un confronto più realistico, rifai il test cambiando <strong>COP</strong> (2,2 / 2,8 / 3,5)
+          e la quota <strong>FV</strong>. È lì che spesso cambia tutto.
+        </p>
+      </div>
+    </section>
+
+    <section class="test-card">
+      <h2>3) Mini guida: cosa significa davvero “conviene”</h2>
+      <ul>
+        <li><strong>Pompa di calore</strong>: conviene quando il COP resta buono e/o hai FV che copre una quota.</li>
+        <li><strong>Stufetta/termoventilatore</strong>: comodo per emergenze, ma come riscaldamento “principale” spesso è una mazzata.</li>
+        <li><strong>Gas</strong>: può restare competitivo se hai un buon prezzo €/Smc e una caldaia efficiente.</li>
+      </ul>
+      <p class="note">
+        Questo test non considera costi fissi di fornitura, manutenzione, canone, ecc.
+        Serve per capire l’ordine di grandezza e smontare le “frasi da bar”.
+      </p>
+    </section>
+  </main>
+
+  <script>
+    function toggleMenu() {
+      document.body.classList.toggle('nav-open');
+    }
+
+    function eur(x) {
+      return x.toLocaleString('it-IT', { style: 'currency', currency: 'EUR' });
+    }
+
+    function num(x, digits=0) {
+      return x.toLocaleString('it-IT', { maximumFractionDigits: digits, minimumFractionDigits: digits });
+    }
+
+    const modeEl = document.getElementById('mode');
+    const copWrap = document.getElementById('copWrap');
+
+    modeEl.addEventListener('change', () => {
+      copWrap.style.display = (modeEl.value === 'hp') ? 'block' : 'none';
+    });
+
+    function runTest() {
+      const legal = document.getElementById('legalAccept').checked;
+      if (!legal) {
+        alert("Prima spunta l’accettazione delle Note Legali.");
+        return;
+      }
+
+      const kwhHeat = parseFloat(document.getElementById('kwhHeat').value);
+      const gasPrice = parseFloat(document.getElementById('gasPrice').value);
+      const boilerEff = parseFloat(document.getElementById('boilerEff').value);
+      const kwhPerSmc = parseFloat(document.getElementById('kwhPerSmc').value);
+      const elecPrice = parseFloat(document.getElementById('elecPrice').value);
+      const mode = document.getElementById('mode').value;
+      const cop = parseFloat(document.getElementById('cop').value);
+      const pvShare = parseFloat(document.getElementById('pvShare').value);
+
+      if (!isFinite(kwhHeat) || kwhHeat <= 0) { alert("Inserisci i kWh di calore (stagione)."); return; }
+      if (!isFinite(gasPrice) || gasPrice <= 0) { alert("Inserisci il prezzo gas €/Smc."); return; }
+      if (!isFinite(boilerEff) || boilerEff <= 0) { alert("Inserisci il rendimento caldaia."); return; }
+      if (!isFinite(kwhPerSmc) || kwhPerSmc <= 0) { alert("Inserisci i kWh per Smc."); return; }
+      if (!isFinite(elecPrice) || elecPrice <= 0) { alert("Inserisci il prezzo elettrico €/kWh."); return; }
+      if (!isFinite(pvShare) || pvShare < 0 || pvShare > 100) { alert("La quota FV deve essere tra 0 e 100."); return; }
+      if (mode === 'hp' && (!isFinite(cop) || cop <= 0)) { alert("Inserisci un COP valido."); return; }
+
+      // GAS: per ottenere kWh di calore utili
+      // energia da gas necessaria (kWh input) = kWhHeat / (eff%)
+      const eff = boilerEff / 100;
+      const gasKwhIn = kwhHeat / eff;
+      const gasSmc = gasKwhIn / kwhPerSmc;
+      const gasCost = gasSmc * gasPrice;
+
+      // ELETTRICO:
+      let elecKwh = 0;
+      if (mode === 'hp') {
+        elecKwh = kwhHeat / cop;         // kWh elettrici necessari per produrre kWhHeat
+      } else {
+        elecKwh = kwhHeat;               // resistenza: 1:1
+      }
+
+      const pvFrac = pvShare / 100;
+      const paidKwh = elecKwh * (1 - pvFrac);
+      const elecCost = paidKwh * elecPrice;
+
+      const diff = elecCost - gasCost;
+
+      // UI
+      document.getElementById('gasCost').textContent = eur(gasCost);
+      document.getElementById('gasSmc').textContent = `Consumo stimato: ${num(gasSmc, 0)} Smc`;
+      document.getElementById('elecCost').textContent = eur(elecCost);
+      document.getElementById('elecKwh').textContent = `kWh elettrici stimati: ${num(elecKwh, 0)} (pagati: ${num(paidKwh, 0)})`;
+      document.getElementById('diffCost').textContent = (diff >= 0) ? `+ ${eur(Math.abs(diff))}` : `- ${eur(Math.abs(diff))}`;
+
+      const winner = (elecCost < gasCost) ? "Vince: Elettrico" : (elecCost > gasCost) ? "Vince: Gas" : "Pareggio (raro ma possibile)";
+      document.getElementById('winner').textContent = winner;
+
+      // Verdict
+      const verdictEl = document.getElementById('verdict');
+      const verdictNoteEl = document.getElementById('verdictNote');
+
+      if (Math.abs(diff) < 80) {
+        verdictEl.textContent = "Siamo lì: la differenza è piccola.";
+        verdictNoteEl.textContent = "Qui contano più comfort, praticità, manutenzione e quanto riesci a coprire con FV (se ce l’hai).";
+      } else if (diff < 0) {
+        verdictEl.textContent = "Elettrico più conveniente (nel tuo scenario).";
+        verdictNoteEl.textContent = (mode === 'hp')
+          ? "Soprattutto se il COP resta buono e una parte è coperta da FV. Se fuori fa molto freddo, prova a ridurre il COP e ricontrolla."
+          : "Attenzione: questa cosa con la resistenza è rara. Ricontrolla prezzo kWh e kWh di calore: potresti aver sottostimato.";
+      } else {
+        verdictEl.textContent = "Gas più conveniente (nel tuo scenario).";
+        verdictNoteEl.textContent = (mode === 'hp')
+          ? "Non significa che la pompa di calore sia “male”: spesso cambia tutto con COP più alto, FV, isolamento o un prezzo kWh diverso."
+          : "Con resistenza elettrica come riscaldamento principale è normale perdere. È ok per spot brevi, non per scaldare casa tutta la stagione.";
+      }
+
+      document.getElementById('result').style.display = 'block';
+      document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function resetTest() {
+      document.getElementById('kwhHeat').value = '';
+      document.getElementById('gasPrice').value = '';
+      document.getElementById('elecPrice').value = '';
+      document.getElementById('pvShare').value = '0';
+      document.getElementById('boilerEff').value = '92';
+      document.getElementById('kwhPerSmc').value = '10.5';
+      document.getElementById('mode').value = 'hp';
+      document.getElementById('cop').value = '3.0';
+      document.getElementById('legalAccept').checked = false;
+      copWrap.style.display = 'block';
+      document.getElementById('result').style.display = 'none';
+    }
+  </script>
+
+  <footer>
+    © 2025 Syncras.App — Tutti i diritti riservati<br>
+    <div style="margin-top:8px;">
+      <a href="privacy.html">Privacy Policy</a> |
+      <a href="cookie.html">Cookie Policy</a> |
+      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
+      <a href="note-legali.html">Note Legali</a>
+    </div>
+    <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.
+      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+      senza alcun costo aggiuntivo per l’utente.
+      Per ordini, resi, spedizioni o gestione dati relativi agli acquisti,
+      rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+    </p>
+  </footer>
+
+  <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
+  <div id="cookie-banner">
+    <p>
+      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
+      (Google Analytics). Alcuni link potrebbero essere di affiliazione.
+      Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
+      <a href="privacy.html">Privacy Policy</a>.
+    </p>
+    <div style="display:flex; gap:10px; margin-top:8px;">
+      <button type="button" onclick="rejectCookies()">Rifiuta</button>
+      <button id="cookie-btn" type="button" onclick="acceptCookies()">Accetta e continua</button>
+    </div>
+  </div>
+
+  <style>
+    #cookie-banner {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 90%;
+      width: 420px;
+      background: #ffffff;
+      border: 2px solid #6C5CE7;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      z-index: 9999;
+      font-family: Arial, sans-serif;
+      display: none;
+    }
+    #cookie-banner p {
+      margin: 0 0 12px 0;
+      font-size: 0.95rem;
+      color: #333;
+      line-height: 1.4;
+    }
+    #cookie-banner a {
+      color: #6C5CE7;
+      font-weight: bold;
+      text-decoration: none;
+    }
+    #cookie-banner button[onclick="rejectCookies()"] {
+      flex: 1;
+      background: white !important;
+      color: #111827 !important;
+      border: 2px solid #6C5CE7 !important;
+      padding: 10px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    #cookie-btn {
+      flex: 1;
+      background: #6C5CE7;
+      color: white;
+      border: 2px solid #6C5CE7;
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+    #cookie-btn:hover { background: #4B3ACB; }
+  </style>
+
+  <script>
+  (function () {
+    const GA_ID = 'G-CFTTCYDZ2P';
+    const CONSENT_KEY = 'syncras_cookie_consent';
+
+    window['ga-disable-' + GA_ID] = true;
+
+    function loadGoogleAnalytics() {
+      if (window.__syncrasGaLoaded) return;
+      window.__syncrasGaLoaded = true;
+      window['ga-disable-' + GA_ID] = false;
+
+      const gaScript = document.createElement('script');
+      gaScript.async = true;
+      gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+      document.head.appendChild(gaScript);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', GA_ID, { anonymize_ip: true });
+    }
+
+    function showBanner() {
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.style.display = 'block';
+    }
+
+    function hideBanner() {
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.style.display = 'none';
+    }
+
+    window.acceptCookies = function () {
+      localStorage.setItem(CONSENT_KEY, 'yes');
+      hideBanner();
+      loadGoogleAnalytics();
+    };
+
+    window.rejectCookies = function () {
+      localStorage.setItem(CONSENT_KEY, 'no');
+      hideBanner();
+      window['ga-disable-' + GA_ID] = true;
+    };
+
+    window.revokeCookies = function () {
+      localStorage.removeItem(CONSENT_KEY);
+      window['ga-disable-' + GA_ID] = true;
+      showBanner();
+    };
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const consent = localStorage.getItem(CONSENT_KEY);
+
+      if (consent === 'yes') {
+        loadGoogleAnalytics();
+      } else if (consent === 'no') {
+        window['ga-disable-' + GA_ID] = true;
+      } else {
+        showBanner();
+      }
+    });
+  })();
+  </script>
+
+</body>
+</html>
