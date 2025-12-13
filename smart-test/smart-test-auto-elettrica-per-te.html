@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Test – Ha senso l’auto elettrica per te? | Syncras.App</title>
+  <meta name="description" content="Smart Test Syncras: capisci se l’auto elettrica ha senso per te (uso reale, ricarica, costi, abitudini). 7 domande rapide, risultato e consigli pratici.">
+  <meta name="robots" content="index,follow">
+
+  <style>
+    :root{
+      --violet-main:#6C5CE7;
+      --violet-dark:#4B3ACB;
+      --bg-page:#F7F7FB;
+      --text-main:#403E43;
+    }
+
+    body{
+      font-family:Arial, sans-serif;
+      background:var(--bg-page);
+      margin:0;
+      padding:0;
+      line-height:1.6;
+      color:var(--text-main);
+    }
+
+    /* HEADER */
+    .site-header{
+      background:linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color:#fff;
+      padding:12px 14px;
+      box-shadow:0 2px 4px rgba(0,0,0,.15);
+      position:relative;
+      z-index:60;
+    }
+    .header-inner{
+      max-width:1180px;
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+    }
+    .logo{
+      font-size:1.4rem;
+      font-weight:700;
+      letter-spacing:.03em;
+    }
+    #main-nav{
+      display:flex;
+      gap:18px;
+      font-size:.95rem;
+    }
+    #main-nav a{
+      color:#fff;
+      text-decoration:none;
+      font-weight:600;
+      padding-bottom:2px;
+    }
+    #main-nav a:hover{ text-decoration:underline; }
+
+    .menu-toggle{
+      display:none;
+      background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.4);
+      border-radius:6px;
+      color:#fff;
+      padding:6px 10px;
+      font-size:.9rem;
+      cursor:pointer;
+    }
+    .menu-toggle span{ margin-left:4px; font-size:1.1rem; }
+
+    @media(max-width:768px){
+      #main-nav{
+        display:none;
+        position:absolute;
+        left:0; right:0;
+        top:56px;
+        margin:0 auto;
+        max-width:1180px;
+        flex-direction:column;
+        background-color:var(--violet-dark);
+        padding:10px 16px 12px;
+        border-radius:0 0 8px 8px;
+        box-shadow:0 3px 6px rgba(0,0,0,.25);
+        z-index:50;
+      }
+      #main-nav a{ padding:6px 0; }
+      body.nav-open #main-nav{ display:flex; }
+      .menu-toggle{ display:inline-flex; align-items:center; }
+    }
+
+    main{
+      max-width:900px;
+      margin:30px auto;
+      padding:20px;
+      background:#fff;
+      border-radius:10px;
+      box-shadow:0 4px 6px rgba(0,0,0,.1);
+    }
+    h1,h2,h3{ color:var(--violet-dark); }
+    p{ margin-bottom:15px; }
+
+    .back-links{
+      margin-bottom:20px;
+      font-size:.9rem;
+    }
+    .back-links a{
+      color:var(--violet-dark);
+      text-decoration:none;
+      font-weight:600;
+    }
+    .back-links a:hover{ text-decoration:underline; }
+
+    .tip-box{
+      background:#F6F4FF;
+      border-left:4px solid var(--violet-main);
+      padding:14px;
+      margin:18px 0 22px;
+      border-radius:8px;
+      font-size:.95rem;
+    }
+
+    /* LEGAL + QUIZ */
+    .legal-box{
+      background:#F9FAFB;
+      border:1px solid #E5E7EB;
+      border-radius:8px;
+      padding:14px;
+      margin:20px 0;
+      font-size:.9rem;
+    }
+    .legal-box a{
+      color:var(--violet-dark);
+      font-weight:700;
+      text-decoration:none;
+    }
+    .legal-box a:hover{ text-decoration:underline; }
+
+    .quiz-wrapper{
+      position:relative;
+      margin-top:18px;
+    }
+
+    .quiz-section{
+      background:#F7F7FB;
+      border-radius:10px;
+      padding:18px 16px;
+      border:1px solid #E5E7EB;
+      transition:opacity .2s ease;
+    }
+    .quiz-disabled{
+      opacity:.4;
+      pointer-events:none;
+    }
+
+    #quiz-overlay-message{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:16px;
+      background:rgba(255,255,255,.7);
+      color:#111827;
+      font-size:.95rem;
+      border-radius:10px;
+      pointer-events:none;
+    }
+
+    .question{
+      margin-bottom:18px;
+      padding-bottom:12px;
+      border-bottom:1px solid #E5E7EB;
+    }
+    .question:last-of-type{
+      border-bottom:none;
+      margin-bottom:10px;
+      padding-bottom:0;
+    }
+    .question h3{
+      font-size:1rem;
+      margin:0 0 8px;
+    }
+    .question label{
+      display:block;
+      font-size:.92rem;
+      margin-bottom:6px;
+      cursor:pointer;
+    }
+    .question input[type="radio"]{ margin-right:6px; }
+
+    #submitQuiz{
+      margin-top:10px;
+      background:var(--violet-main);
+      color:#fff;
+      border:none;
+      padding:10px 16px;
+      border-radius:6px;
+      cursor:pointer;
+      font-weight:700;
+      font-size:.95rem;
+    }
+    #submitQuiz:hover{ background:var(--violet-dark); }
+
+    #quiz-result{
+      margin-top:18px;
+      padding:14px;
+      border-radius:8px;
+      background:#ECFEFF;
+      border:1px solid #22C3D6;
+      font-size:.95rem;
+      display:none;
+    }
+
+    .mini-test{
+      background:#FDFBF6;
+      border-left:4px solid #EAB308;
+      padding:14px;
+      margin:25px 0;
+      border-radius:8px;
+      font-size:.95rem;
+    }
+
+    .related-box{
+      margin-top:30px;
+      padding:16px;
+      border-radius:10px;
+      background:#F7F7FB;
+      border:1px solid #E5E7EB;
+    }
+    .related-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+      gap:12px;
+      margin-top:10px;
+    }
+    .related-item{
+      background:#fff;
+      border-radius:8px;
+      padding:10px 12px;
+      border:1px solid #E5E7EB;
+      font-size:.9rem;
+    }
+    .related-item h3{ margin:0 0 6px; font-size:1rem; }
+    .related-item a{
+      text-decoration:none;
+      color:var(--violet-dark);
+      font-weight:700;
+    }
+
+    footer{
+      text-align:center;
+      margin-top:40px;
+      padding:20px;
+      background:#eee;
+      font-size:.9rem;
+    }
+
+    /* COOKIE BANNER */
+    #cookie-banner{
+      position:fixed;
+      bottom:20px;
+      left:50%;
+      transform:translateX(-50%);
+      max-width:90%;
+      width:420px;
+      background:#fff;
+      border:2px solid var(--violet-main);
+      border-radius:10px;
+      padding:16px;
+      box-shadow:0 4px 8px rgba(0,0,0,.15);
+      z-index:9999;
+      display:none;
+      font-family:Arial, sans-serif;
+    }
+    #cookie-banner p{
+      margin:0 0 12px 0;
+      font-size:.95rem;
+      color:#333;
+      line-height:1.4;
+    }
+    #cookie-banner a{
+      color:var(--violet-main);
+      font-weight:800;
+      text-decoration:none;
+    }
+    #cookie-banner a:hover{ text-decoration:underline; }
+
+    #cookie-banner .cookie-row{
+      display:flex;
+      gap:10px;
+      margin-top:8px;
+    }
+    #cookie-banner button{
+      flex:1;
+      padding:10px 12px;
+      border-radius:6px;
+      cursor:pointer;
+      font-weight:800;
+    }
+    #cookie-reject{
+      background:#fff;
+      color:#111827;
+      border:2px solid var(--violet-main);
+    }
+    #cookie-accept{
+      background:var(--violet-main);
+      color:#fff;
+      border:2px solid var(--violet-main);
+    }
+    #cookie-accept:hover{ background:var(--violet-dark); }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER UNIFICATO -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
+
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
+
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="smart-test.html">Smart Test</a>
+        <a href="calcolatori.html">Calcolatori</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="offerte.html">Prodotti Consapevoli</a>
+        <a href="chi.html">Chi siamo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="back-links">
+      ← <a href="smart-test.html">Torna agli Smart Test</a> |
+      <a href="index.html">Home</a>
+    </div>
+
+    <h1>Smart Test – Ha senso l’auto elettrica per te?</h1>
+
+    <button id="shareBtnTop"
+      style="background: var(--violet-main); color:white; padding:10px 15px; border:none;
+             border-radius:6px; cursor:pointer; margin-bottom:18px; font-weight:700;">
+      📎 Condividi questo test
+    </button>
+
+    <p>
+      L’auto elettrica può essere una svolta… oppure un incubo se la tua vita reale non è compatibile
+      con ricariche, tempi e abitudini. Questo test non fa propaganda: prova a capire
+      <strong>se nel tuo caso ha senso</strong>.
+    </p>
+
+    <div class="tip-box">
+      <strong>Cosa valuta questo test:</strong>
+      <ul>
+        <li>quanto usi l’auto e che tipo di tragitti fai;</li>
+        <li>se hai un modo semplice di ricaricare (casa/lavoro/colonnine);</li>
+        <li>quanto ti pesa l’idea di pianificare (anche poco) le ricariche;</li>
+        <li>quanto vuoi “zero manutenzione” vs “zero pensieri”.</li>
+      </ul>
+    </div>
+
+    <!-- NOTE LEGALI -->
+    <div class="legal-box">
+      <label for="legalAccept">
+        <input type="checkbox" id="legalAccept">
+        <span>
+          Prima di procedere: i risultati sono <strong>stime</strong> e non costituiscono consulenza tecnica/finanziaria.
+          L’uso di questo test è a tuo esclusivo rischio. Tutte le condizioni sono nelle
+          <a href="note-legali.html" target="_blank" rel="noopener noreferrer">Note Legali</a>.
+        </span>
+      </label>
+    </div>
+
+    <!-- QUIZ -->
+    <div class="quiz-wrapper">
+      <div id="quiz-overlay-message">
+        Spunta la casella qui sopra per accettare le Note Legali e sbloccare il test.
+      </div>
+
+      <section id="quiz-section" class="quiz-section quiz-disabled">
+
+        <div class="question">
+          <h3>1) Quanti km fai in un giorno “normale”?</h3>
+          <label><input type="radio" name="q1" value="0"> Sotto i 50 km (uso quotidiano tranquillo)</label>
+          <label><input type="radio" name="q1" value="1"> 50–120 km (dipende dai giorni)</label>
+          <label><input type="radio" name="q1" value="2"> Oltre 120 km spesso</label>
+        </div>
+
+        <div class="question">
+          <h3>2) Dove potresti ricaricare più comodamente?</h3>
+          <label><input type="radio" name="q2" value="0"> A casa (box/posto auto) o al lavoro con presa/colonnina</label>
+          <label><input type="radio" name="q2" value="1"> Colonnine in zona: si può, ma non è “a portata di mano”</label>
+          <label><input type="radio" name="q2" value="2"> Non ho un posto chiaro: sarebbe sempre una caccia</label>
+        </div>
+
+        <div class="question">
+          <h3>3) Quanto ti pesa l’idea di “pianificare” un minimo?</h3>
+          <label><input type="radio" name="q3" value="0"> Zero: organizzarmi un attimo non mi costa nulla</label>
+          <label><input type="radio" name="q3" value="1"> Un po’: preferisco semplicità, ma posso adattarmi</label>
+          <label><input type="radio" name="q3" value="2"> Molto: voglio fare benzina in 3 minuti e fine</label>
+        </div>
+
+        <div class="question">
+          <h3>4) Viaggi lunghi (oltre 300 km in un giorno) quante volte li fai?</h3>
+          <label><input type="radio" name="q4" value="0"> Raramente (0–2 volte l’anno)</label>
+          <label><input type="radio" name="q4" value="1"> Qualche volta (3–10 volte l’anno)</label>
+          <label><input type="radio" name="q4" value="2"> Spesso (quasi ogni mese)</label>
+        </div>
+
+        <div class="question">
+          <h3>5) Hai pazienza per la “fase iniziale” (capire app, colonnine, abitudini)?</h3>
+          <label><input type="radio" name="q5" value="0"> Sì: mi piace ottimizzare e capire come funziona</label>
+          <label><input type="radio" name="q5" value="1"> Ne ho un po’, ma se è troppo complicato mi passa</label>
+          <label><input type="radio" name="q5" value="2"> No: voglio tutto immediato e senza sbattimenti</label>
+        </div>
+
+        <div class="question">
+          <h3>6) Cosa ti interessa di più in un’auto?</h3>
+          <label><input type="radio" name="q6" value="0"> Comfort, silenzio, manutenzione ridotta</label>
+          <label><input type="radio" name="q6" value="1"> Un po’ tutto: non ho una priorità chiara</label>
+          <label><input type="radio" name="q6" value="2"> Autonomia “libera” e rifornimento rapidissimo</label>
+        </div>
+
+        <div class="question">
+          <h3>7) Se una settimana va storta, quanto ti cambia avere “pieno sempre pronto”?</h3>
+          <label><input type="radio" name="q7" value="0"> Poco: posso gestire con ricariche regolari</label>
+          <label><input type="radio" name="q7" value="1"> Abbastanza: dipende dagli imprevisti</label>
+          <label><input type="radio" name="q7" value="2"> Molto: sono sempre in emergenza e senza tempo</label>
+        </div>
+
+        <button id="submitQuiz">Calcola risultato</button>
+        <div id="quiz-result"></div>
+
+      </section>
+    </div>
+
+    <div class="mini-test">
+      <strong>Nota Syncras:</strong><br>
+      “Ha senso” non significa “è perfetta”. Significa: <em>nel tuo scenario reale</em> ti semplifica la vita e non te la complica.
+    </div>
+
+    <section class="related-box">
+      <h2 style="margin-top:0;">Ti possono interessare anche:</h2>
+      <div class="related-grid">
+        <article class="related-item">
+          <h3><a href="smart-test.html">Altri Smart Test</a></h3>
+          <p>La lista completa dei test Syncras (soldi, smartphone, energia, auto).</p>
+        </article>
+        <article class="related-item">
+          <h3><a href="calcolatori.html">Calcolatori Syncras</a></h3>
+          <p>Strumenti pratici per costi, consumi e scelte intelligenti.</p>
+        </article>
+        <article class="related-item">
+          <h3><a href="chi.html">Contatti</a></h3>
+          <p>Hai un’idea per un test? Scrivici e lo trasformiamo in una scheda utile.</p>
+        </article>
+      </div>
+    </section>
+
+    <div style="text-align:center; margin:24px 0 8px;">
+      <button id="shareBtnBottom"
+        style="background: var(--violet-main); color:white; padding:10px 18px; border:none;
+               border-radius:6px; cursor:pointer; font-weight:700; font-size:1rem;">
+        📎 Condividi questo test
+      </button>
+    </div>
+
+  </main>
+
+  <footer>
+    © 2025 Syncras.App — Tutti i diritti riservati<br>
+    <div style="margin-top:8px;">
+      <a href="privacy.html">Privacy Policy</a> |
+      <a href="cookie.html">Cookie Policy</a> |
+      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
+      <a href="note-legali.html">Note Legali</a>
+    </div>
+    <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.
+      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+      senza alcun costo aggiuntivo per l’utente.
+      Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+      è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+    </p>
+  </footer>
+
+  <!-- COOKIE BANNER -->
+  <div id="cookie-banner" role="dialog" aria-live="polite" aria-label="Banner cookie">
+    <p>
+      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite (Google Analytics).
+      Alcuni link potrebbero essere di affiliazione.
+      Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la <a href="privacy.html">Privacy Policy</a>.
+    </p>
+    <div class="cookie-row">
+      <button id="cookie-reject" type="button">Rifiuta</button>
+      <button id="cookie-accept" type="button">Accetta e continua</button>
+    </div>
+  </div>
+
+  <script>
+    function toggleMenu(){ document.body.classList.toggle('nav-open'); }
+  </script>
+
+  <script>
+  (function () {
+    const GA_ID = 'G-CFTTCYDZ2P';
+    const CONSENT_KEY = 'syncras_cookie_consent';
+
+    // GA disabilitato finché non c'è consenso
+    window['ga-disable-' + GA_ID] = true;
+
+    function loadGoogleAnalytics(){
+      if (window.__syncrasGaLoaded) return;
+      window.__syncrasGaLoaded = true;
+
+      window['ga-disable-' + GA_ID] = false;
+
+      const gaScript = document.createElement('script');
+      gaScript.async = true;
+      gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+      document.head.appendChild(gaScript);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', GA_ID, { anonymize_ip: true });
+    }
+
+    function showBanner(){
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.style.display = 'block';
+    }
+    function hideBanner(){
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.style.display = 'none';
+    }
+
+    function acceptCookies(){
+      localStorage.setItem(CONSENT_KEY, 'yes');
+      hideBanner();
+      loadGoogleAnalytics();
+    }
+    function rejectCookies(){
+      localStorage.setItem(CONSENT_KEY, 'no');
+      hideBanner();
+      window['ga-disable-' + GA_ID] = true;
+    }
+
+    // wiring bottoni
+    document.getElementById('cookie-accept').addEventListener('click', acceptCookies);
+    document.getElementById('cookie-reject').addEventListener('click', rejectCookies);
+
+    document.addEventListener('DOMContentLoaded', function(){
+      const consent = localStorage.getItem(CONSENT_KEY);
+      if (consent === 'yes') loadGoogleAnalytics();
+      else if (consent === 'no') window['ga-disable-' + GA_ID] = true;
+      else showBanner();
+    });
+  })();
+  </script>
+
+  <script>
+  // Sblocco test dopo accettazione Note Legali
+  (function(){
+    const checkbox = document.getElementById('legalAccept');
+    const quizSection = document.getElementById('quiz-section');
+    const overlayMsg = document.getElementById('quiz-overlay-message');
+
+    if (!checkbox || !quizSection || !overlayMsg) return;
+
+    checkbox.addEventListener('change', function(){
+      if (this.checked){
+        quizSection.classList.remove('quiz-disabled');
+        overlayMsg.style.display = 'none';
+      } else {
+        quizSection.classList.add('quiz-disabled');
+        overlayMsg.style.display = 'flex';
+      }
+    });
+  })();
+  </script>
+
+  <script>
+  // Logica punteggio
+  (function(){
+    const submitBtn = document.getElementById('submitQuiz');
+    const resultBox = document.getElementById('quiz-result');
+    if (!submitBtn || !resultBox) return;
+
+    submitBtn.addEventListener('click', function(){
+      let total = 0;
+      let allAnswered = true;
+
+      for (let i=1; i<=7; i++){
+        const checked = document.querySelector('input[name="q'+i+'"]:checked');
+        if (!checked){ allAnswered = false; break; }
+        total += parseInt(checked.value, 10);
+      }
+
+      resultBox.style.display = 'block';
+
+      if (!allAnswered){
+        resultBox.style.background = '#FEF2F2';
+        resultBox.style.borderColor = '#F97373';
+        resultBox.innerHTML = `<strong>Rispondi a tutte le domande.</strong><br>Altrimenti questo test è come comprare l’auto “a sentimento” 😄`;
+        return;
+      }
+
+      let titolo = '';
+      let testo = '';
+
+      if (total <= 4){
+        titolo = '⚡ Sì: per te l’elettrica ha molto senso';
+        testo = `
+          Hai il profilo tipico “compatibile”: tragitti gestibili, possibilità di ricarica sensata e poca ansia da pianificazione.
+          <br><br>
+          <strong>Consiglio pratico:</strong> se puoi ricaricare spesso “a casa o al lavoro”, l’elettrica tende a semplificare e a ridurre manutenzione.
+        `;
+      } else if (total <= 8){
+        titolo = '⚖️ Dipende: può avere senso, ma con due condizioni';
+        testo = `
+          Non sei fuori gioco, però ci sono variabili che possono rendere l’esperienza ottima o irritante.
+          <br><br>
+          <strong>Per farla funzionare:</strong>
+          <ul>
+            <li>assicurati di avere almeno un punto ricarica affidabile vicino (casa/lavoro/colonnine comode);</li>
+            <li>se fai viaggi lunghi ogni tanto, scegli un modello e una rete di ricarica che non ti facciano odiare la domenica.</li>
+          </ul>
+        `;
+      } else if (total <= 11){
+        titolo = '⚠️ Rischio frustrazione: oggi potresti trovarti scomodo';
+        testo = `
+          L’elettrica potrebbe funzionare, ma probabilmente <strong>ti costerebbe “energia mentale”</strong> tra ricariche e imprevisti.
+          <br><br>
+          <strong>Alternative sensate:</strong> valuta ibrida/plug-in (se ricarichi davvero) o rimanda finché la tua logistica non migliora (box, colonnine, abitudini).
+        `;
+      } else {
+        titolo = '🧨 Al momento: meglio evitare (o cambiare prima scenario)';
+        testo = `
+          Con la tua routine reale, l’elettrica rischia di diventare un “progetto” più che un’auto.
+          <br><br>
+          <strong>Se vuoi arrivarci lo stesso:</strong> prima risolvi il punto cruciale: <em>ricarica comoda</em> (casa/lavoro) e tempi gestibili.
+          Senza quello, ti farà solo arrabbiare.
+        `;
+      }
+
+      resultBox.style.background = '#ECFEFF';
+      resultBox.style.borderColor = '#22C3D6';
+      resultBox.innerHTML = `
+        <strong>${titolo}</strong><br><br>
+        ${testo}
+        <br><br>
+        <span style="font-size:0.85rem; opacity:0.85;">
+          Questo test è un supporto “da realtà”, non una consulenza tecnica o finanziaria.
+        </span>
+      `;
+    });
+  })();
+  </script>
+
+  <script>
+  // Share API (top e bottom)
+  (function(){
+    function attachShare(btn){
+      if (!btn) return;
+      if (navigator.share){
+        btn.addEventListener('click', () => {
+          navigator.share({
+            title: 'Smart Test – Ha senso l’auto elettrica per te?',
+            text: 'Ho fatto il test Syncras: “Ha senso l’auto elettrica per te?”. Provalo anche tu.',
+            url: window.location.href
+          });
+        });
+      } else {
+        btn.style.display = 'none';
+      }
+    }
+    attachShare(document.getElementById('shareBtnTop'));
+    attachShare(document.getElementById('shareBtnBottom'));
+  })();
+  </script>
+
+</body>
+</html>
