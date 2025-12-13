@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Test – Ibrida, plug-in o… nessuna delle due? | Syncras.App</title>
+  <meta name="description" content="Smart Test Syncras: capisci se per te ha più senso un’auto ibrida, plug-in o nessuna delle due. 7 domande pratiche, risultato chiaro.">
+  <meta name="robots" content="index,follow">
+
+  <style>
+    :root{
+      --violet-main:#6C5CE7;
+      --violet-dark:#4B3ACB;
+      --bg-page:#F7F7FB;
+      --text-main:#403E43;
+    }
+    body{
+      font-family:Arial,sans-serif;
+      background:var(--bg-page);
+      margin:0;
+      color:var(--text-main);
+      line-height:1.6;
+    }
+    header{
+      background:linear-gradient(90deg,var(--violet-dark),var(--violet-main));
+      color:#fff;
+      padding:12px 14px;
+    }
+    .header-inner{
+      max-width:1180px;
+      margin:0 auto;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+    nav a{
+      color:#fff;
+      text-decoration:none;
+      font-weight:600;
+      margin-left:16px;
+    }
+    main{
+      max-width:900px;
+      margin:30px auto;
+      background:#fff;
+      padding:20px;
+      border-radius:10px;
+      box-shadow:0 4px 6px rgba(0,0,0,.1);
+    }
+    h1,h2,h3{color:var(--violet-dark);}
+    .legal-box{
+      background:#F9FAFB;
+      border:1px solid #E5E7EB;
+      border-radius:8px;
+      padding:14px;
+      margin:20px 0;
+      font-size:.9rem;
+    }
+    .quiz-wrapper{position:relative;}
+    .quiz-section{
+      background:#F7F7FB;
+      padding:18px;
+      border-radius:10px;
+      border:1px solid #E5E7EB;
+    }
+    .quiz-disabled{opacity:.4;pointer-events:none;}
+    #quiz-overlay{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:rgba(255,255,255,.7);
+      border-radius:10px;
+      text-align:center;
+      font-size:.95rem;
+    }
+    .question{
+      border-bottom:1px solid #E5E7EB;
+      padding-bottom:12px;
+      margin-bottom:16px;
+    }
+    .question:last-child{border-bottom:none;}
+    label{display:block;font-size:.92rem;margin-bottom:6px;}
+    #submitQuiz{
+      background:var(--violet-main);
+      color:#fff;
+      border:none;
+      padding:10px 16px;
+      border-radius:6px;
+      font-weight:700;
+      cursor:pointer;
+    }
+    #quiz-result{
+      display:none;
+      margin-top:18px;
+      padding:14px;
+      border-radius:8px;
+      background:#ECFEFF;
+      border:1px solid #22C3D6;
+    }
+    footer{
+      margin-top:40px;
+      background:#eee;
+      padding:20px;
+      text-align:center;
+      font-size:.9rem;
+    }
+    #cookie-banner{
+      position:fixed;
+      bottom:20px;
+      left:50%;
+      transform:translateX(-50%);
+      width:420px;
+      max-width:90%;
+      background:#fff;
+      border:2px solid var(--violet-main);
+      border-radius:10px;
+      padding:16px;
+      display:none;
+      z-index:9999;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-inner">
+    <strong>Syncras.App</strong>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="smart-test.html">Smart Test</a>
+      <a href="calcolatori.html">Calcolatori</a>
+      <a href="chi.html">Chi siamo</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<h1>Smart Test – Ibrida, plug-in o… nessuna delle due?</h1>
+
+<p>
+Le auto ibride sembrano sempre la scelta “furba”.  
+Ma tra <strong>ibrida classica</strong>, <strong>plug-in</strong> e <strong>nessuna delle due</strong>,
+la risposta giusta dipende solo da come vivi davvero l’auto.
+</p>
+
+<div class="legal-box">
+<label>
+<input type="checkbox" id="legalAccept">
+ Prima di procedere: questo test fornisce stime indicative e non è consulenza tecnica o finanziaria.
+ Tutte le condizioni sono nelle <a href="note-legali.html" target="_blank">Note Legali</a>.
+</label>
+</div>
+
+<div class="quiz-wrapper">
+<div id="quiz-overlay">Accetta le Note Legali per sbloccare il test.</div>
+
+<section id="quiz" class="quiz-section quiz-disabled">
+
+<div class="question">
+<h3>1. Quanti km fai al giorno di solito?</h3>
+<label><input type="radio" name="q1" value="0"> Meno di 40 km</label>
+<label><input type="radio" name="q1" value="1"> 40–100 km</label>
+<label><input type="radio" name="q1" value="2"> Oltre 100 km</label>
+</div>
+
+<div class="question">
+<h3>2. Puoi ricaricare facilmente a casa o al lavoro?</h3>
+<label><input type="radio" name="q2" value="0"> Sì, senza problemi</label>
+<label><input type="radio" name="q2" value="1"> A volte / con difficoltà</label>
+<label><input type="radio" name="q2" value="2"> No</label>
+</div>
+
+<div class="question">
+<h3>3. Come vivi l’idea di dover ricaricare?</h3>
+<label><input type="radio" name="q3" value="0"> Nessun problema</label>
+<label><input type="radio" name="q3" value="1"> Dipende dal periodo</label>
+<label><input type="radio" name="q3" value="2"> Preferisco evitarlo</label>
+</div>
+
+<div class="question">
+<h3>4. Viaggi lunghi (>300 km) quante volte fai?</h3>
+<label><input type="radio" name="q4" value="0"> Raramente</label>
+<label><input type="radio" name="q4" value="1"> Qualche volta</label>
+<label><input type="radio" name="q4" value="2"> Spesso</label>
+</div>
+
+<div class="question">
+<h3>5. Quanto odi fare benzina?</h3>
+<label><input type="radio" name="q5" value="0"> Molto</label>
+<label><input type="radio" name="q5" value="1"> Normale</label>
+<label><input type="radio" name="q5" value="2"> Zero</label>
+</div>
+
+<div class="question">
+<h3>6. Ti piace ottimizzare consumi e abitudini?</h3>
+<label><input type="radio" name="q6" value="0"> Sì</label>
+<label><input type="radio" name="q6" value="1"> Un po’</label>
+<label><input type="radio" name="q6" value="2"> No</label>
+</div>
+
+<div class="question">
+<h3>7. Se l’auto consuma di più del previsto?</h3>
+<label><input type="radio" name="q7" value="0"> Cambio abitudini</label>
+<label><input type="radio" name="q7" value="1"> Mi infastidisce</label>
+<label><input type="radio" name="q7" value="2"> Mi arrabbio</label>
+</div>
+
+<button id="submitQuiz">Calcola risultato</button>
+<div id="quiz-result"></div>
+
+</section>
+</div>
+
+</main>
+
+<footer>
+© 2025 Syncras.App — Tutti i diritti riservati<br>
+<a href="privacy.html">Privacy</a> | <a href="cookie.html">Cookie</a> | <a href="note-legali.html">Note Legali</a>
+</footer>
+
+<!-- COOKIE GDPR -->
+<div id="cookie-banner">
+<p>Usiamo cookie tecnici e Google Analytics anonimo.  
+Leggi <a href="cookie.html">Cookie Policy</a> e <a href="privacy.html">Privacy Policy</a>.</p>
+<button onclick="acceptCookies()">Accetta</button>
+<button onclick="rejectCookies()">Rifiuta</button>
+</div>
+
+<script>
+const checkbox=document.getElementById('legalAccept');
+const quiz=document.getElementById('quiz');
+const overlay=document.getElementById('quiz-overlay');
+checkbox.addEventListener('change',()=>{
+  if(checkbox.checked){
+    quiz.classList.remove('quiz-disabled');
+    overlay.style.display='none';
+  }else{
+    quiz.classList.add('quiz-disabled');
+    overlay.style.display='flex';
+  }
+});
+document.getElementById('submitQuiz').onclick=()=>{
+let total=0;
+for(let i=1;i<=7;i++){
+const q=document.querySelector('input[name="q'+i+'"]:checked');
+if(!q)return alert("Rispondi a tutte le domande");
+total+=parseInt(q.value);
+}
+const box=document.getElementById('quiz-result');
+box.style.display='block';
+if(total<=4) box.innerHTML="<strong>✅ Plug-in consigliata</strong><br>Se ricarichi davvero, è la scelta migliore.";
+else if(total<=8) box.innerHTML="<strong>⚖️ Ibrida classica</strong><br>Riduce consumi senza complicarti la vita.";
+else box.innerHTML="<strong>❌ Nessuna delle due</strong><br>Rischi di pagare di più senza benefici reali.";
+};
+</script>
+
+<script>
+const KEY="syncras_cookie";
+function acceptCookies(){localStorage.setItem(KEY,"yes");document.getElementById('cookie-banner').style.display='none';}
+function rejectCookies(){localStorage.setItem(KEY,"no");document.getElementById('cookie-banner').style.display='none';}
+window.onload=()=>{
+if(!localStorage.getItem(KEY))document.getElementById('cookie-banner').style.display='block';
+};
+</script>
+
+</body>
+</html>
