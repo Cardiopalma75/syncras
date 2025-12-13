@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Test – Elettrodomestici e consumi nascosti: stai pagando più del dovuto? | Syncras.App</title>
+  <meta name="description" content="Smart Test Syncras: scopri se in casa tua ci sono elettrodomestici e abitudini che consumano più del previsto (stand-by, cicli sbagliati, temperature, vecchi modelli). 7 domande, risultato immediato.">
+  <meta name="robots" content="index,follow">
+
+  <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --bg-page: #F7F7FB;
+      --text-main: #403E43;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg-page);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      color: var(--text-main);
+    }
+
+    /* HEADER */
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color: white;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    }
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      position: relative;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+    #main-nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    #main-nav a:hover {
+      text-decoration: underline;
+    }
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 12px;
+        right: 12px;
+        top: 56px;
+        flex-direction: column;
+        background-color: var(--violet-dark);
+        padding: 10px 16px;
+        border-radius: 0 0 8px 8px;
+        z-index: 50;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+      }
+      .menu-toggle { display: inline-flex; align-items: center; gap: 8px; }
+      body.nav-open #main-nav { display: flex; }
+    }
+
+    /* MAIN */
+    main {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    h1, h2, h3 { color: var(--violet-dark); }
+
+    .back-links {
+      margin-bottom: 15px;
+      font-size: 0.9rem;
+    }
+    .back-links a {
+      color: var(--violet-dark);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .back-links a:hover { text-decoration: underline; }
+
+    .tip-box {
+      background: #F6F4FF;
+      border-left: 4px solid #6C5CE7;
+      padding: 14px;
+      margin: 18px 0;
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+
+    .mini-test {
+      background: #FDFBF6;
+      border-left: 4px solid #EAB308;
+      padding: 14px;
+      margin: 22px 0;
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+
+    .legal-box {
+      background: #F9FAFB;
+      border: 1px solid #E5E7EB;
+      border-radius: 8px;
+      padding: 14px;
+      margin: 20px 0;
+      font-size: 0.9rem;
+    }
+    .legal-box a {
+      color: var(--violet-dark);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .legal-box a:hover { text-decoration: underline; }
+
+    /* QUIZ */
+    .quiz-wrapper {
+      position: relative;
+      margin-top: 16px;
+    }
+
+    .quiz-section {
+      background: #F7F7FB;
+      border-radius: 10px;
+      padding: 18px;
+      border: 1px solid #E5E7EB;
+      transition: opacity .2s ease;
+    }
+
+    .quiz-disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    #quiz-overlay-message {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 14px;
+      background: rgba(255,255,255,0.72);
+      color: #111827;
+      font-size: 0.95rem;
+      border-radius: 10px;
+      pointer-events: none;
+    }
+
+    .question {
+      margin-bottom: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #E5E7EB;
+    }
+    .question:last-of-type {
+      border-bottom: none;
+      margin-bottom: 10px;
+      padding-bottom: 0;
+    }
+
+    .question h3 {
+      font-size: 1rem;
+      margin-bottom: 8px;
+    }
+
+    .question label {
+      display: block;
+      font-size: 0.92rem;
+      margin-bottom: 6px;
+      cursor: pointer;
+    }
+
+    .question input[type="radio"] {
+      margin-right: 6px;
+    }
+
+    #quiz-result {
+      margin-top: 18px;
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      display: none;
+      background: #ECFEFF;
+      border: 1px solid #22C3D6;
+    }
+
+    #submitQuiz {
+      margin-top: 10px;
+      background: var(--violet-main);
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+    #submitQuiz:hover { background: var(--violet-dark); }
+
+    /* RELATED */
+    .related-box {
+      margin-top: 30px;
+      padding: 16px;
+      border-radius: 10px;
+      background:#F7F7FB;
+      border:1px solid #E5E7EB;
+    }
+    .related-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:12px;
+      margin-top:10px;
+    }
+    .related-item {
+      background:#FFFFFF;
+      border-radius:8px;
+      padding:10px 12px;
+      border:1px solid #E5E7EB;
+      font-size:0.9rem;
+    }
+    .related-item h3 {
+      margin-top:0;
+      font-size:1rem;
+    }
+    .related-item a {
+      text-decoration:none;
+      color:var(--violet-dark);
+      font-weight:700;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      background: #eee;
+      font-size: 0.9rem;
+    }
+
+    /* COOKIE */
+    #cookie-banner {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 90%;
+      width: 420px;
+      background: #ffffff;
+      border: 2px solid #6C5CE7;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      z-index: 9999;
+      font-family: Arial, sans-serif;
+      display: none;
+    }
+
+    #cookie-banner p {
+      margin: 0 0 12px 0;
+      font-size: 0.95rem;
+      color: #333;
+      line-height: 1.4;
+    }
+
+    #cookie-banner a {
+      color: #6C5CE7;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    #cookie-banner button[onclick="rejectCookies()"] {
+      flex: 1;
+      background: white !important;
+      color: #111827 !important;
+      border: 2px solid #6C5CE7 !important;
+      padding: 10px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    #cookie-btn {
+      flex: 1;
+      background: #6C5CE7;
+      color: white;
+      border: 2px solid #6C5CE7;
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 800;
+    }
+    #cookie-btn:hover { background: #4B3ACB; }
+
+  </style>
+</head>
+
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
+
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
+
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="quiz.html">Test Anti-Acquisto</a>
+        <a href="calcolatori.html">Calcolatori</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="offerte.html">Prodotti Consapevoli</a>
+        <a href="chi.html">Chi siamo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="back-links">
+      ← <a href="index.html">Torna alla Home</a> |
+      <a href="quiz.html">Vai ai Test</a>
+    </div>
+
+    <h1>Smart Test – Elettrodomestici e consumi nascosti: stai pagando più del dovuto?</h1>
+
+    <button id="shareBtnTop"
+      style="background: var(--violet-main); color:white; padding:10px 15px; border:none;
+             border-radius:6px; cursor:pointer; margin:12px 0 18px; font-weight:700;">
+      📎 Condividi questo test
+    </button>
+
+    <p>
+      In bolletta non paghi solo “gli elettrodomestici”.  
+      Paghi anche <strong>abitudini</strong>, <strong>stand-by</strong>, <strong>cicli sbagliati</strong> e quella frase classica:
+      “Vabbè, tanto lo fa da solo”.
+    </p>
+
+    <div class="tip-box">
+      <strong>Cosa misura questo Smart Test:</strong>
+      <ul>
+        <li>quanto sei esposto ai consumi “invisibili” (stand-by, temperature alte, cicli inutili);</li>
+        <li>se usi bene lavatrice/lavastoviglie/frigo/clima;</li>
+        <li>se hai in casa “vampiri elettrici” che succhiano energia senza farsi notare.</li>
+      </ul>
+      <div style="margin-top:8px; font-size:0.9rem; opacity:0.9;">
+        Non servono strumenti: rispondi in 2 minuti e ottieni un profilo + 3 azioni pratiche.
+      </div>
+    </div>
+
+    <div class="legal-box">
+      <label for="legalAccept">
+        <input type="checkbox" id="legalAccept">
+        <span>
+          Prima di procedere: i risultati sono <strong>stime</strong> e non costituiscono consulenza tecnica o energetica.
+          L’uso del test è a tuo esclusivo rischio e la responsabilità delle decisioni resta tua.
+          Tutte le condizioni sono spiegate nelle
+          <a href="note-legali.html" target="_blank" rel="noopener noreferrer">Note Legali</a>.
+        </span>
+      </label>
+    </div>
+
+    <div class="quiz-wrapper">
+      <div id="quiz-overlay-message">
+        Spunta prima la casella qui sopra per accettare le Note Legali, poi potrai compilare il Test sui Consumi Nascosti.
+      </div>
+
+      <section id="quiz-section" class="quiz-section quiz-disabled">
+
+        <div class="question">
+          <h3>1) Quanti dispositivi lasci spesso in stand-by (TV, decoder, console, soundbar, PC, stampante)?</h3>
+          <label><input type="radio" name="q1" value="0"> Pochi: spengo quasi tutto o uso multiprese.</label>
+          <label><input type="radio" name="q1" value="1"> Alcuni: so che esistono, ma “poi ci penso”.</label>
+          <label><input type="radio" name="q1" value="2"> Tanti: casa mia è un resort per LED rossi.</label>
+        </div>
+
+        <div class="question">
+          <h3>2) Lavatrice: che temperatura e programma usi più spesso?</h3>
+          <label><input type="radio" name="q2" value="0"> 30–40°C / eco / tempi ragionevoli (quando possibile).</label>
+          <label><input type="radio" name="q2" value="1"> Misto: a volte eco, a volte “spariamo 60° e via”.</label>
+          <label><input type="radio" name="q2" value="2"> Spesso 60°C o programmi lunghi “perché così lava meglio”.</label>
+        </div>
+
+        <div class="question">
+          <h3>3) Lavastoviglie: quando la fai partire?</h3>
+          <label><input type="radio" name="q3" value="0"> Solo a pieno carico (eco o automatico).</label>
+          <label><input type="radio" name="q3" value="1"> Quasi pieno, ma qualche volta “vabbè parte lo stesso”.</label>
+          <label><input type="radio" name="q3" value="2"> Spesso mezzo carico: l’importante è liberare il lavandino.</label>
+        </div>
+
+        <div class="question">
+          <h3>4) Frigorifero: quanto è pieno e come lo gestisci?</h3>
+          <label><input type="radio" name="q4" value="0"> Ben organizzato, non troppo vuoto, niente aperture infinite.</label>
+          <label><input type="radio" name="q4" value="1"> Normale, ma ogni tanto resta aperto “per pensare”.</label>
+          <label><input type="radio" name="q4" value="2"> A volte sembra un museo: aperto spesso e per troppo tempo.</label>
+        </div>
+
+        <div class="question">
+          <h3>5) Asciugatrice / phon / stufette elettriche: quanto spesso entrano in scena?</h3>
+          <label><input type="radio" name="q5" value="0"> Raramente, solo quando serve davvero.</label>
+          <label><input type="radio" name="q5" value="1"> Ogni tanto, dipende dal periodo.</label>
+          <label><input type="radio" name="q5" value="2"> Spesso: sono i miei “salvavita”… e divoratori di kWh.</label>
+        </div>
+
+        <div class="question">
+          <h3>6) Climatizzatore/pompa di calore: come lo usi di solito?</h3>
+          <label><input type="radio" name="q6" value="0"> In modo stabile (temperatura moderata) e con porte/finestre chiuse.</label>
+          <label><input type="radio" name="q6" value="1"> A tratti: accendo/spengo spesso.</label>
+          <label><input type="radio" name="q6" value="2"> “Sparo forte 10 minuti” + finestre aperte = cinema.</label>
+        </div>
+
+        <div class="question">
+          <h3>7) Hai mai controllato davvero i consumi (anche solo guardando il contatore/app) dopo un uso intenso?</h3>
+          <label><input type="radio" name="q7" value="0"> Sì: ogni tanto misuro o controllo e correggo.</label>
+          <label><input type="radio" name="q7" value="1"> Ci ho provato, ma non ho costanza.</label>
+          <label><input type="radio" name="q7" value="2"> No: preferisco non sapere, così non soffro.</label>
+        </div>
+
+        <button id="submitQuiz" type="button">Calcola risultato</button>
+        <div id="quiz-result"></div>
+      </section>
+    </div>
+
+    <div class="mini-test">
+      <strong>Mini-verità Syncras:</strong><br>
+      Se vuoi tagliare davvero i consumi, spesso non serve “comprare cose nuove”.  
+      Serve <strong>togliere sprechi</strong> e usare meglio quello che hai già.
+    </div>
+
+    <section class="related-box">
+      <h2 style="margin-top:0;">Ti possono interessare anche:</h2>
+      <div class="related-grid">
+        <article class="related-item">
+          <h3><a href="calcolatori.html">Calcolatori Syncras</a></h3>
+          <p>Strumenti pratici per stimare costi reali e consumi (energia, riscaldamento, scelte smart).</p>
+        </article>
+        <article class="related-item">
+          <h3><a href="smart-test-scroll-infinito.html">Smart Test – Scroll infinito</a></h3>
+          <p>Perché a volte non perdi soldi… perdi tempo. E il tempo vale più dei soldi.</p>
+        </article>
+        <article class="related-item">
+          <h3><a href="quiz.html">Altri Smart Test</a></h3>
+          <p>Test rapidi e ironici per non farti fregare da offerte, abitudini e marketing.</p>
+        </article>
+      </div>
+    </section>
+
+    <div style="text-align:center; margin:28px 0 10px;">
+      <button id="shareBtnBottom"
+        style="background: var(--violet-main); color:white; padding:10px 18px; border:none;
+               border-radius:6px; cursor:pointer; font-weight:800; font-size:1rem;">
+        📎 Condividi questo test
+      </button>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 Syncras.App — Tutti i diritti riservati<br>
+    <div style="margin-top:8px;">
+      <a href="privacy.html">Privacy Policy</a> |
+      <a href="cookie.html">Cookie Policy</a> |
+      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
+      <a href="note-legali.html">Note Legali</a>
+    </div>
+    <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+      senza alcun costo aggiuntivo per l’utente.
+    </p>
+  </footer>
+
+  <!-- Cookie Banner + Blocco Google Analytics – GDPR -->
+  <div id="cookie-banner">
+    <p>
+      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
+      (Google Analytics). Alcuni link potrebbero essere di affiliazione.
+      Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
+      <a href="privacy.html">Privacy Policy</a>.
+    </p>
+    <div style="display:flex; gap:10px; margin-top:8px;">
+      <button type="button" onclick="rejectCookies()">
+        Rifiuta
+      </button>
+      <button id="cookie-btn" type="button" onclick="acceptCookies()">
+        Accetta e continua
+      </button>
+    </div>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      document.body.classList.toggle('nav-open');
+    }
+  </script>
+
+  <script>
+  (function () {
+    const GA_ID = 'G-CFTTCYDZ2P';
+    const CONSENT_KEY = 'syncras_cookie_consent';
+
+    // GA disabilitato finché non c'è consenso
+    window['ga-disable-' + GA_ID] = true;
+
+    function loadGoogleAnalytics() {
+      if (window.__syncrasGaLoaded) return;
+      window.__syncrasGaLoaded = true;
+
+      window['ga-disable-' + GA_ID] = false;
+
+      const gaScript = document.createElement('script');
+      gaScript.async = true;
+      gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+      document.head.appendChild(gaScript);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', GA_ID, { anonymize_ip: true });
+    }
+
+    function showBanner() {
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.style.display = 'block';
+    }
+
+    function hideBanner() {
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.style.display = 'none';
+    }
+
+    window.acceptCookies = function () {
+      localStorage.setItem(CONSENT_KEY, 'yes');
+      hideBanner();
+      loadGoogleAnalytics();
+    };
+
+    window.rejectCookies = function () {
+      localStorage.setItem(CONSENT_KEY, 'no');
+      hideBanner();
+      window['ga-disable-' + GA_ID] = true;
+    };
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const consent = localStorage.getItem(CONSENT_KEY);
+
+      if (consent === 'yes') {
+        loadGoogleAnalytics();
+      } else if (consent === 'no') {
+        window['ga-disable-' + GA_ID] = true;
+      } else {
+        showBanner();
+      }
+    });
+  })();
+  </script>
+
+  <!-- Sblocco quiz dopo accettazione Note Legali -->
+  <script>
+    (function () {
+      const checkbox = document.getElementById('legalAccept');
+      const quizSection = document.getElementById('quiz-section');
+      const overlayMsg = document.getElementById('quiz-overlay-message');
+
+      if (!checkbox || !quizSection || !overlayMsg) return;
+
+      checkbox.addEventListener('change', function () {
+        if (this.checked) {
+          quizSection.classList.remove('quiz-disabled');
+          overlayMsg.style.display = 'none';
+        } else {
+          quizSection.classList.add('quiz-disabled');
+          overlayMsg.style.display = 'flex';
+        }
+      });
+    })();
+  </script>
+
+  <!-- Logica Quiz -->
+  <script>
+    (function () {
+      const submitBtn = document.getElementById('submitQuiz');
+      const resultBox = document.getElementById('quiz-result');
+
+      if (!submitBtn || !resultBox) return;
+
+      submitBtn.addEventListener('click', function () {
+        let total = 0;
+        let allAnswered = true;
+
+        for (let i = 1; i <= 7; i++) {
+          const selected = document.querySelector('input[name="q' + i + '"]:checked');
+          if (!selected) { allAnswered = false; break; }
+          total += parseInt(selected.value, 10);
+        }
+
+        resultBox.style.display = 'block';
+
+        if (!allAnswered) {
+          resultBox.style.background = '#FEF2F2';
+          resultBox.style.borderColor = '#F97373';
+          resultBox.innerHTML = `
+            <strong>Prima rispondi a tutte le domande.</strong><br>
+            Il test funziona solo se completi tutto (sì, anche quella domanda che ti smaschera 😄).
+          `;
+          return;
+        }
+
+        let titolo = '';
+        let testo = '';
+        let azioni = '';
+
+        if (total <= 4) {
+          titolo = '✅ Casa “quasi efficiente”: sprechi sotto controllo';
+          testo = `
+            Non stai buttando energia a caso: ottimo.  
+            Qualche miglioramento è sempre possibile, ma sei già sopra la media.
+          `;
+          azioni = `
+            <ul>
+              <li>Continua con multiprese e stand-by sotto controllo.</li>
+              <li>Eco e pieno carico: tienila come regola base.</li>
+              <li>Se vuoi fare il salto: monitora 1 settimana i consumi per curiosità.</li>
+            </ul>
+          `;
+        } else if (total <= 8) {
+          titolo = '⚠️ Zona gialla: consumi “invisibili” probabili';
+          testo = `
+            Non sei messo male, ma ci sono segnali classici: stand-by, cicli non ottimali,
+            clima usato “a scatti”, apertura frigo stile conferenza stampa.
+          `;
+          azioni = `
+            <ul>
+              <li>Fai una “settimana anti-standby” (TV/decoder/console).</li>
+              <li>Lavatrice e lavastoviglie: pieno carico + eco quando possibile.</li>
+              <li>Clima: meglio stabile e moderato che “sparato” a caso.</li>
+            </ul>
+          `;
+        } else if (total <= 11) {
+          titolo = '🧯 Zona arancione: bolletta a rischio (ma recuperabile)';
+          testo = `
+            Qui i consumi nascosti potrebbero pesare davvero.  
+            La buona notizia? Spesso si risolve con 3 abitudini, non con 3 acquisti.
+          `;
+          azioni = `
+            <ul>
+              <li>1) Taglia lo stand-by con una multipresa “seria”.</li>
+              <li>2) Evita mezzi carichi: sono kWh spesi male.</li>
+              <li>3) Clima: porte/finestre chiuse + temperatura moderata.</li>
+            </ul>
+          `;
+        } else {
+          titolo = '🧨 Consumi nascosti ovunque: i “vampiri” stanno vincendo';
+          testo = `
+            Probabile mix di stand-by, mezzi carichi e uso poco efficiente degli apparecchi.
+            Non è colpa tua: è il modo in cui siamo abituati a vivere “comodi”.
+          `;
+          azioni = `
+            <ul>
+              <li>Fai una lista di 5 dispositivi sempre accesi e spegnine almeno 2.</li>
+              <li>Stop ai mezzi carichi (o usa davvero la modalità dedicata).</li>
+              <li>Se hai un contatore/app: controlla una sera “tipica” e scopri dove scappa.</li>
+            </ul>
+          `;
+        }
+
+        resultBox.style.background = '#ECFEFF';
+        resultBox.style.borderColor = '#22C3D6';
+        resultBox.innerHTML = `
+          <strong>${titolo}</strong><br><br>
+          ${testo}
+          <div style="margin-top:10px;">
+            <strong>3 mosse pratiche:</strong>
+            ${azioni}
+          </div>
+          <div style="margin-top:10px; font-size:0.85rem; opacity:0.85;">
+            Nota: test indicativo. I consumi reali dipendono da modelli, età degli apparecchi, tariffe e uso quotidiano.
+          </div>
+        `;
+      });
+    })();
+  </script>
+
+  <!-- Share API -->
+  <script>
+    (function () {
+      const shareTop = document.getElementById('shareBtnTop');
+      const shareBottom = document.getElementById('shareBtnBottom');
+
+      function attachShare(btn) {
+        if (!btn) return;
+        if (navigator.share) {
+          btn.addEventListener('click', () => {
+            navigator.share({
+              title: 'Smart Test – Elettrodomestici e consumi nascosti',
+              text: 'Ho fatto lo Smart Test Syncras sui consumi nascosti in casa: prova anche tu!',
+              url: window.location.href
+            });
+          });
+        } else {
+          btn.style.display = 'none';
+        }
+      }
+
+      attachShare(shareTop);
+      attachShare(shareBottom);
+    })();
+  </script>
+
+</body>
+</html>
