@@ -457,20 +457,40 @@
       Non solo “quanto consuma”, ma “quanto ti cambia davvero in un anno”.
     </p>
     <ul class="test-list">
-      <li><span class="bullet">•</span><a href="smart-test-elettrodomestici-consumi-nascosti.html">Elettrodomestici e consumi nascosti</a> <span class="badge-soon">in arrivo</span></li>
-      <li><span class="bullet">•</span><a href="riscaldamento-elettrico-vs-gas.html">Riscaldamento elettrico vs gas</a> <span class="badge-soon">in arrivo</span></li>
+     <li>
+  <span class="bullet">•</span>
+  <a href="smart-test-elettrodomestici-consumi-nascosti.html">
+    Elettrodomestici e consumi nascosti
+  </a>
+</li>
+<li>
+  <span class="bullet">•</span>
+  <a href="riscaldamento-elettrico-vs-gas.html">
+    Riscaldamento elettrico vs gas
+  </a>
+</li>
+
     </ul>
   </article>
 
   <article class="test-group-card">
-    <div class="test-group-label">Macro-area</div>
-    <h2>Comfort, sprechi & “tanto pago dopo”</h2>
-    <ul class="test-list">
-      <li><span class="bullet">•</span>Termostato, abitudini e sprechi <span class="badge-soon">in arrivo</span></li>
-      <li><span class="bullet">•</span>Abitudini serali e consumi in standby <span class="badge-soon">in arrivo</span></li>
-    </ul>
-  </article>
-</section>
+  <div class="test-group-label">Macro-area</div>
+  <h2>Comfort, sprechi & “tanto pago dopo”</h2>
+  <ul class="test-list">
+    <li>
+      <span class="bullet">•</span>
+      <a href="smart-test-termostato-abitudini-sprechi.html">
+        Smart Test – Termostato, abitudini e sprechi
+      </a>
+    </li>
+    <li>
+      <span class="bullet">•</span>
+      Abitudini serali e consumi in standby
+      <span class="badge-soon">in arrivo</span>
+    </li>
+  </ul>
+</article>
+
 
 
 <!-- GRUPPO 5: AUTO & MOBILITÀ -->
@@ -498,6 +518,7 @@
     </ul>
   </article>
 </section>
+
 
 
    
