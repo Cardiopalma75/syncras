@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Test – Termostato, abitudini e sprechi | Syncras.App</title>
+  <meta name="description" content="Scopri se il tuo termostato lavora per te o contro di te: abitudini, comfort e sprechi. Smart Test Syncras in stile ironico ma pratico." />
+  <meta name="robots" content="index,follow" />
+
+  <style>
+    :root{
+      --violet-main:#6C5CE7;
+      --violet-dark:#4B3ACB;
+      --bg-page:#F7F7FB;
+      --text-main:#403E43;
+    }
+
+    body{
+      font-family: Arial, sans-serif;
+      background: var(--bg-page);
+      margin:0;
+      padding:0;
+      line-height:1.6;
+      color: var(--text-main);
+    }
+
+    /* HEADER VIOLA UNIFICATO */
+    .site-header{
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color:#fff;
+      padding:12px 14px;
+      box-shadow:0 2px 4px rgba(0,0,0,0.15);
+      position: relative;
+      z-index: 50;
+    }
+    .header-inner{
+      max-width:1180px;
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+    }
+    .logo{
+      font-size:1.4rem;
+      font-weight:bold;
+      letter-spacing:0.03em;
+    }
+    #main-nav{
+      display:flex;
+      gap:18px;
+      font-size:0.95rem;
+    }
+    #main-nav a{
+      color:#fff;
+      text-decoration:none;
+      font-weight:600;
+      padding-bottom:2px;
+    }
+    #main-nav a:hover{ text-decoration: underline; }
+
+    .menu-toggle{
+      display:none;
+      background: rgba(255,255,255,0.12);
+      border:1px solid rgba(255,255,255,0.4);
+      border-radius:6px;
+      color:#fff;
+      padding:6px 10px;
+      font-size:0.9rem;
+      cursor:pointer;
+    }
+    .menu-toggle span{ margin-left:4px; font-size:1.1rem; }
+
+    @media (max-width:768px){
+      #main-nav{
+        display:none;
+        position:absolute;
+        left:0;
+        right:0;
+        top:56px;
+        margin:0 auto;
+        max-width:1180px;
+        flex-direction:column;
+        background-color: var(--violet-dark);
+        padding:10px 16px 12px 16px;
+        border-radius:0 0 8px 8px;
+        box-shadow:0 3px 6px rgba(0,0,0,0.25);
+        z-index: 60;
+      }
+      #main-nav a{ padding:6px 0; }
+      body.nav-open #main-nav{ display:flex; }
+      .menu-toggle{ display:inline-flex; align-items:center; }
+    }
+
+    /* MAIN */
+    main{
+      max-width:900px;
+      margin:30px auto;
+      padding:20px;
+      background:#fff;
+      border-radius:10px;
+      box-shadow:0 4px 6px rgba(0,0,0,0.1);
+    }
+    h1,h2,h3{ color: var(--violet-dark); }
+    p{ margin-bottom:15px; }
+
+    .back-links{
+      margin-bottom:20px;
+      font-size:0.9rem;
+    }
+    .back-links a{
+      color: var(--violet-dark);
+      text-decoration:none;
+      font-weight:600;
+    }
+    .back-links a:hover{ text-decoration: underline; }
+
+    .tip-box{
+      background:#F6F4FF;
+      border-left:4px solid var(--violet-main);
+      padding:14px;
+      margin:20px 0;
+      border-radius:8px;
+      font-size:0.95rem;
+    }
+
+    /* NOTE LEGALI + SBLOCCO */
+    .legal-box{
+      background:#F9FAFB;
+      border:1px solid #E5E7EB;
+      border-radius:8px;
+      padding:14px;
+      margin:18px 0 10px;
+      font-size:0.9rem;
+    }
+    .legal-box label a{
+      color: var(--violet-dark);
+      font-weight:600;
+      text-decoration:none;
+    }
+    .legal-box label a:hover{ text-decoration: underline; }
+
+    .quiz-wrapper{
+      position: relative; /* IMPORTANTISSIMO: overlay solo qui */
+      margin-top: 14px;
+    }
+
+    .quiz-section{
+      background:#F7F7FB;
+      border-radius:10px;
+      padding:18px 16px;
+      border:1px solid #E5E7EB;
+      transition: opacity 0.2s ease;
+    }
+    .quiz-disabled{
+      opacity:0.4;
+      pointer-events:none;
+    }
+
+    #quiz-overlay-message{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      padding:16px;
+      background: rgba(255,255,255,0.72);
+      color:#111827;
+      font-size:0.95rem;
+      border-radius:10px;
+      pointer-events:none; /* non blocca click fuori dal quiz */
+    }
+
+    .question{
+      margin-bottom:18px;
+      padding-bottom:12px;
+      border-bottom:1px solid #E5E7EB;
+    }
+    .question:last-of-type{
+      border-bottom:none;
+      margin-bottom:10px;
+      padding-bottom:0;
+    }
+    .question h3{
+      font-size:1rem;
+      margin:0 0 8px 0;
+    }
+    .question label{
+      display:block;
+      font-size:0.9rem;
+      margin:6px 0;
+      cursor:pointer;
+    }
+    .question input[type="radio"]{ margin-right:6px; }
+
+    #submitQuiz{
+      margin-top:10px;
+      background: var(--violet-main);
+      color:#fff;
+      border:none;
+      padding:10px 16px;
+      border-radius:6px;
+      cursor:pointer;
+      font-weight:600;
+      font-size:0.95rem;
+    }
+    #submitQuiz:hover{ background: var(--violet-dark); }
+
+    #quiz-result{
+      margin-top:16px;
+      padding:14px;
+      border-radius:8px;
+      background:#ECFEFF;
+      border:1px solid #22C3D6;
+      font-size:0.95rem;
+      display:none;
+    }
+
+    .mini-note{
+      background:#FDFBF6;
+      border-left:4px solid #EAB308;
+      padding:14px;
+      margin:22px 0 10px;
+      border-radius:8px;
+      font-size:0.95rem;
+    }
+
+    /* CORRELATI */
+    .related-box{
+      margin-top:26px;
+      padding:16px;
+      border-radius:10px;
+      background:#F7F7FB;
+      border:1px solid #E5E7EB;
+    }
+    .related-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:12px;
+      margin-top:10px;
+    }
+    .related-item{
+      background:#fff;
+      border-radius:8px;
+      padding:10px 12px;
+      border:1px solid #E5E7EB;
+      font-size:0.9rem;
+    }
+    .related-item h3{ margin:0 0 6px 0; font-size:1rem; }
+    .related-item a{
+      text-decoration:none;
+      color: var(--violet-dark);
+      font-weight:600;
+    }
+
+    footer{
+      text-align:center;
+      margin-top:40px;
+      padding:20px;
+      background:#eee;
+      font-size:0.9rem;
+    }
+
+    @media (max-width:600px){
+      main{ margin:16px auto; padding:16px 14px; }
+    }
+
+    /* COOKIE BANNER (UNICO) */
+    #cookie-banner{
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 90%;
+      width: 420px;
+      background: #ffffff;
+      border: 2px solid #6C5CE7;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      z-index: 9999;
+      font-family: Arial, sans-serif;
+      display: none;
+    }
+    #cookie-banner p{
+      margin: 0 0 12px 0;
+      font-size: 0.95rem;
+      color: #333;
+      line-height: 1.4;
+    }
+    #cookie-banner a{
+      color: #6C5CE7;
+      font-weight: bold;
+      text-decoration: none;
+    }
+    #cookie-banner .cookie-actions{
+      display:flex;
+      gap:10px;
+      margin-top:8px;
+    }
+    #cookie-banner button{
+      flex:1;
+      border-radius:6px;
+      padding:10px 12px;
+      cursor:pointer;
+      font-weight:600;
+      border:2px solid #6C5CE7;
+    }
+    #cookie-reject{
+      background:#fff;
+      color:#111827;
+    }
+    #cookie-accept{
+      background:#6C5CE7;
+      color:#fff;
+      font-weight:700;
+    }
+    #cookie-accept:hover{ background:#4B3ACB; }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
+
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
+
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="smart-test.html">Smart Test</a>
+        <a href="fast-cards.html">Fast Cards</a>
+        <a href="calcolatori.html">Calcolatori</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="offerte.html">Prodotti Consapevoli</a>
+        <a href="chi.html">Chi siamo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="back-links">
+      ← <a href="index.html">Torna alla Home</a> |
+      <a href="smart-test.html">Vai agli Smart Test</a>
+    </div>
+
+    <h1>Smart Test – Termostato, abitudini e sprechi</h1>
+
+    <button id="shareBtnTop"
+      style="background: var(--violet-main); color:white; padding:10px 15px; border:none;
+             border-radius:6px; cursor:pointer; margin-bottom:18px; font-weight:600;">
+      📎 Condividi questo test
+    </button>
+
+    <p>
+      Il termostato è una cosa semplice… finché non diventa il telecomando del destino.
+      <strong>Questo test</strong> ti fa capire se sei in modalità “comfort intelligente”
+      o in modalità “riscaldo l’Italia intera perché ho freddino ai piedi”.
+    </p>
+
+    <div class="tip-box">
+      <strong>Cosa misura questo Smart Test:</strong>
+      <ul>
+        <li>quanto sei costante con temperature e orari;</li>
+        <li>se usi il termostato “a scatti” (che spesso aumenta gli sprechi);</li>
+        <li>se comfort e bolletta stanno andando d’accordo o si odiano.</li>
+      </ul>
+    </div>
+
+    <!-- NOTE LEGALI -->
+    <div class="legal-box">
+      <label for="legalAccept">
+        <input type="checkbox" id="legalAccept" />
+        <span>
+          Prima di procedere: i risultati di questo test sono indicativi e non costituiscono consulenza tecnica.
+          L’uso di questo strumento è a tuo esclusivo rischio. Tutte le condizioni sono nelle
+          <a href="note-legali.html" target="_blank" rel="noopener noreferrer">Note Legali</a>.
+        </span>
+      </label>
+    </div>
+
+    <!-- QUIZ -->
+    <div class="quiz-wrapper">
+      <div id="quiz-overlay-message">
+        Spunta la casella qui sopra per accettare le Note Legali e sbloccare il test.
+      </div>
+
+      <section id="quiz-section" class="quiz-section quiz-disabled">
+
+        <div class="question">
+          <h3>1) Quanto spesso cambi la temperatura durante la giornata?</h3>
+          <label><input type="radio" name="q1" value="0"> Quasi mai: tengo un’impostazione stabile (o programmata).</label>
+          <label><input type="radio" name="q1" value="1"> Ogni tanto: quando mi accorgo che “si sente”.</label>
+          <label><input type="radio" name="q1" value="2"> Spesso: è il mio joystick emotivo.</label>
+        </div>
+
+        <div class="question">
+          <h3>2) Quando esci di casa (anche per ore), cosa fai col riscaldamento?</h3>
+          <label><input type="radio" name="q2" value="0"> Abbasso o lascio in eco / programmazione.</label>
+          <label><input type="radio" name="q2" value="1"> Dipende: se ricordo, lo abbasso.</label>
+          <label><input type="radio" name="q2" value="2"> Lascio tutto com’è: “tanto poi rientro”.</label>
+        </div>
+
+        <div class="question">
+          <h3>3) Di notte come gestisci la temperatura?</h3>
+          <label><input type="radio" name="q3" value="0"> Programmo più basso o uso una modalità notte.</label>
+          <label><input type="radio" name="q3" value="1"> La lascio simile al giorno ma ogni tanto ritocco.</label>
+          <label><input type="radio" name="q3" value="2"> La tengo alta: voglio dormire “tropicale”.</label>
+        </div>
+
+        <div class="question">
+          <h3>4) Quando hai freddo, cosa fai di solito?</h3>
+          <label><input type="radio" name="q4" value="0"> Metto una felpa / calze e valuto dopo.</label>
+          <label><input type="radio" name="q4" value="1"> Alzo di 1 grado e poi vedo.</label>
+          <label><input type="radio" name="q4" value="2"> Alzo subito di 2–3 gradi (effetto “booster”).</label>
+        </div>
+
+        <div class="question">
+          <h3>5) In casa, le stanze sono tutte uguali come temperatura?</h3>
+          <label><input type="radio" name="q5" value="0"> Più o meno sì, e cerco di non surriscaldare.</label>
+          <label><input type="radio" name="q5" value="1"> Alcune stanze sono diverse e ci convivo.</label>
+          <label><input type="radio" name="q5" value="2"> Alcune stanze sono freezer, quindi alzo tutto.</label>
+        </div>
+
+        <div class="question">
+          <h3>6) Hai orari “ricorrenti” (mattina/sera) o vai a caso?</h3>
+          <label><input type="radio" name="q6" value="0"> Orari abbastanza regolari: programmo o seguo routine.</label>
+          <label><input type="radio" name="q6" value="1"> Un po’ regolari, ma con eccezioni frequenti.</label>
+          <label><input type="radio" name="q6" value="2"> A caso totale: oggi casa piena, domani deserto.</label>
+        </div>
+
+        <div class="question">
+          <h3>7) Quando ricevi una bolletta alta, qual è la reazione?</h3>
+          <label><input type="radio" name="q7" value="0"> Cerco la causa e faccio piccoli aggiustamenti.</label>
+          <label><input type="radio" name="q7" value="1"> Mi arrabbio e poi dopo una settimana dimentico.</label>
+          <label><input type="radio" name="q7" value="2"> Penso “sarà aumentato tutto” e fine.</label>
+        </div>
+
+        <button id="submitQuiz" type="button">Calcola risultato</button>
+        <div id="quiz-result"></div>
+
+      </section>
+    </div>
+
+    <div class="mini-note">
+      <strong>Mini-consiglio Syncras:</strong><br>
+      Se vuoi fare un esperimento serio (senza diventare monaco tibetano), prova per 7 giorni:
+      <ul>
+        <li>una temperatura “base” stabile;</li>
+        <li>riduzione notturna;</li>
+        <li>orari coerenti.</li>
+      </ul>
+      Poi confronta la sensazione in casa e i consumi. Spesso la differenza è più grande di quanto sembra.
+    </div>
+
+    <section class="related-box">
+      <h2 style="margin-top:0;">Ti possono interessare anche:</h2>
+      <div class="related-grid">
+        <article class="related-item">
+          <h3><a href="calcolatori.html">Calcolatori Syncras</a></h3>
+          <p>Strumenti pratici per stimare consumi e costi reali (energia, elettrodomestici, abitudini).</p>
+        </article>
+        <article class="related-item">
+          <h3><a href="smart-test.html">Altri Smart Test</a></h3>
+          <p>Test rapidi per capire dove perdi soldi/tempo senza accorgertene.</p>
+        </article>
+        <article class="related-item">
+          <h3><a href="fast-cards.html">Fast Cards</a></h3>
+          <p>Schede da 30 secondi anti-fregatura: offerte, marketing, psicologia del prezzo.</p>
+        </article>
+      </div>
+    </section>
+
+    <div style="text-align:center; margin:26px 0 10px;">
+      <button id="shareBtnBottom"
+        style="background: var(--violet-main); color:white; padding:10px 18px; border:none;
+               border-radius:6px; cursor:pointer; font-weight:600; font-size:1rem;">
+        📎 Condividi questo test
+      </button>
+    </div>
+
+  </main>
+
+  <footer>
+    © 2025 Syncras.App — Tutti i diritti riservati<br>
+    <div style="margin-top:8px;">
+      <a href="privacy.html">Privacy Policy</a> |
+      <a href="cookie.html">Cookie Policy</a> |
+      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
+      <a href="note-legali.html">Note Legali</a>
+    </div>
+    <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.
+      Acquistando tramite i link presenti, il sito può ricevere una piccola commissione senza costi aggiuntivi per l’utente.
+    </p>
+  </footer>
+
+  <!-- COOKIE BANNER + GA (UNICO, GA BLOCCATO FINCHÉ NON ACCETTI) -->
+  <div id="cookie-banner">
+    <p>
+      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite (Google Analytics).
+      Alcuni link potrebbero essere di affiliazione.
+      Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
+      <a href="privacy.html">Privacy Policy</a>.
+    </p>
+    <div class="cookie-actions">
+      <button id="cookie-reject" type="button">Rifiuta</button>
+      <button id="cookie-accept" type="button">Accetta e continua</button>
+    </div>
+  </div>
+
+  <script>
+    // Menu mobile
+    function toggleMenu(){ document.body.classList.toggle('nav-open'); }
+  </script>
+
+  <script>
+    (function () {
+      // ====== CONFIG ======
+      const GA_ID = 'G-CFTTCYDZ2P';
+      const CONSENT_KEY = 'syncras_cookie_consent';
+
+      // 1) blocca GA finché non c'è consenso
+      window['ga-disable-' + GA_ID] = true;
+
+      function loadGoogleAnalytics(){
+        if (window.__syncrasGaLoaded) return;
+        window.__syncrasGaLoaded = true;
+
+        window['ga-disable-' + GA_ID] = false;
+
+        const s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+        document.head.appendChild(s);
+
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){ dataLayer.push(arguments); }
+        window.gtag = gtag;
+
+        gtag('js', new Date());
+        gtag('config', GA_ID, { anonymize_ip: true });
+      }
+
+      function showBanner(){
+        const b = document.getElementById('cookie-banner');
+        if (b) b.style.display = 'block';
+      }
+      function hideBanner(){
+        const b = document.getElementById('cookie-banner');
+        if (b) b.style.display = 'none';
+      }
+
+      document.addEventListener('DOMContentLoaded', function(){
+        const consent = localStorage.getItem(CONSENT_KEY);
+
+        // click handler
+        const btnAccept = document.getElementById('cookie-accept');
+        const btnReject = document.getElementById('cookie-reject');
+
+        if (btnAccept){
+          btnAccept.addEventListener('click', function(){
+            localStorage.setItem(CONSENT_KEY, 'yes');
+            hideBanner();
+            loadGoogleAnalytics();
+          });
+        }
+        if (btnReject){
+          btnReject.addEventListener('click', function(){
+            localStorage.setItem(CONSENT_KEY, 'no');
+            hideBanner();
+            window['ga-disable-' + GA_ID] = true;
+          });
+        }
+
+        if (consent === 'yes'){
+          loadGoogleAnalytics();
+        } else if (consent === 'no'){
+          window['ga-disable-' + GA_ID] = true;
+        } else {
+          showBanner();
+        }
+      });
+    })();
+  </script>
+
+  <script>
+    // Sblocco quiz solo dopo spunta Note Legali (NON sfoca la pagina: solo il box quiz)
+    (function(){
+      const checkbox = document.getElementById('legalAccept');
+      const quizSection = document.getElementById('quiz-section');
+      const overlayMsg = document.getElementById('quiz-overlay-message');
+      if (!checkbox || !quizSection || !overlayMsg) return;
+
+      function refresh(){
+        if (checkbox.checked){
+          quizSection.classList.remove('quiz-disabled');
+          overlayMsg.style.display = 'none';
+        } else {
+          quizSection.classList.add('quiz-disabled');
+          overlayMsg.style.display = 'flex';
+        }
+      }
+      checkbox.addEventListener('change', refresh);
+      refresh();
+    })();
+  </script>
+
+  <script>
+    // Logica quiz (7 domande)
+    (function(){
+      const submitBtn = document.getElementById('submitQuiz');
+      const resultBox = document.getElementById('quiz-result');
+      if (!submitBtn || !resultBox) return;
+
+      submitBtn.addEventListener('click', function(){
+        let total = 0;
+        let allAnswered = true;
+
+        for (let i=1; i<=7; i++){
+          const checked = document.querySelector('input[name="q'+i+'"]:checked');
+          if (!checked){ allAnswered = false; break; }
+          total += parseInt(checked.value, 10);
+        }
+
+        resultBox.style.display = 'block';
+
+        if (!allAnswered){
+          resultBox.style.background = '#FEF2F2';
+          resultBox.style.borderColor = '#F97373';
+          resultBox.innerHTML = '<strong>Prima rispondi a tutte le domande.</strong><br>Altrimenti il termostato vince per KO 😄';
+          return;
+        }
+
+        let titolo = '';
+        let testo = '';
+
+        if (total <= 4){
+          titolo = '🧠 Gestione intelligente: comfort + controllo';
+          testo = `
+            Hai una gestione molto buona: <strong>stabilità, routine e piccoli aggiustamenti</strong>.
+            Probabilmente stai evitando gli sprechi più comuni (quelli “invisibili”).
+            <br><br>
+            Piccolo upgrade: se puoi, usa una programmazione semplice (anche solo notte/giorno).
+          `;
+        } else if (total <= 8){
+          titolo = '⚖️ Zona grigia: qualche spreco c’è, ma recuperabile';
+          testo = `
+            Non sei messo male, ma ci sono segnali di <strong>gestione a impulsi</strong>:
+            alzi/abbassi “a sensazione” e ogni tanto la casa lavora a vuoto.
+            <br><br>
+            Prova una regola facile: <strong>+1 grado massimo</strong> e aspetta 20 minuti prima di ritoccare.
+          `;
+        } else if (total <= 11){
+          titolo = '⚠️ Rischio sprechi: il termostato ti sta guidando lui';
+          testo = `
+            Qui lo spreco tipico è: <strong>ritocchi frequenti + orari incoerenti</strong>.
+            Il risultato è comfort instabile e consumi più alti del necessario.
+            <br><br>
+            La cura Syncras: scegli una temperatura base e tienila stabile per 7 giorni (con notte più bassa).
+          `;
+        } else {
+          titolo = '🔥 Modalità “tropicale”: comfort altissimo, bolletta pure';
+          testo = `
+            Le tue risposte indicano una gestione “spinta”: termostato alto, ritocchi frequenti, poca routine.
+            Se ti va di migliorare senza soffrire:
+            <ul>
+              <li>riduci la temperatura base di <strong>1 grado</strong> per una settimana;</li>
+              <li>abbassa di notte;</li>
+              <li>evita i “boost” da +2/+3 gradi.</li>
+            </ul>
+            Spesso il comfort resta simile, ma lo spreco scende.
+          `;
+        }
+
+        resultBox.style.background = '#ECFEFF';
+        resultBox.style.borderColor = '#22C3D6';
+        resultBox.innerHTML = `
+          <strong>${titolo}</strong><br><br>
+          ${testo}
+          <br><br>
+          <span style="font-size:0.85rem; opacity:0.85;">
+            Test indicativo: risultati influenzati da casa, isolamento, impianto e abitudini.
+          </span>
+        `;
+      });
+    })();
+  </script>
+
+  <script>
+    // Condivisione (se supportata)
+    (function(){
+      const shareTop = document.getElementById('shareBtnTop');
+      const shareBottom = document.getElementById('shareBtnBottom');
+
+      function attachShare(btn){
+        if (!btn) return;
+        if (navigator.share){
+          btn.addEventListener('click', function(){
+            navigator.share({
+              title: 'Smart Test – Termostato, abitudini e sprechi | Syncras.App',
+              text: 'Ho fatto lo Smart Test Syncras sul termostato: abitudini e sprechi. Provalo anche tu.',
+              url: window.location.href
+            });
+          });
+        } else {
+          btn.style.display = 'none';
+        }
+      }
+
+      attachShare(shareTop);
+      attachShare(shareBottom);
+    })();
+  </script>
+
+</body>
+</html>
