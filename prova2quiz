@@ -364,8 +364,9 @@
         <h2>Tempo & uso smartphone</h2>
         <p>Test per capire se lo smartphone lo usi tu o è lui che usa te.</p>
         <ul class="test-list">
-          <li><span class="bullet">•</span><a href="quanto-tempo-ruba-lo-smartphone.html">Smart Test – Quanto tempo ti ruba davvero lo smartphone?</a></li>
-          <li><span class="bullet">•</span><span>Smart Test – Notifiche: chi comanda, tu o il telefono?<span class="badge-soon">in arrivo</span></span></li>
+         <li><span class="bullet">•</span><a href="quanto-tempo-ruba-lo-smartphone.html">Smart Test – Quanto tempo ti ruba davvero lo smartphone?</a></li>
+<li><span class="bullet">•</span><a href="smart-test-notifiche-chi-comanda.html">Smart Test – Notifiche: chi comanda, tu o il telefono?</a></li>
+
         </ul>
       </article>
 
@@ -431,8 +432,9 @@
         <h2>Scelte “top di gamma” vs realtà</h2>
         <p>Per capire se ha senso prendere sempre il modello più caro.</p>
         <ul class="test-list">
-          <li><span class="bullet">•</span><span>Smart Test – Smartphone top o medio gamma?<span class="badge-soon">in arrivo</span></span></li>
-          <li><span class="bullet">•</span><span>Smart Test – Auto nuova, usata o nessuna?<span class="badge-soon">in arrivo</span></span></li>
+        <li><span class="bullet">•</span><a href="smartphone-top-o-medio-gamma.html">Smart Test – Smartphone top o medio gamma?</a></li>
+<li><span class="bullet">•</span><a href="auto-nuova-usata-o-nessuna.html">Smart Test – Auto nuova, usata o nessuna?</a></li>
+
         </ul>
       </article>
     </section>
