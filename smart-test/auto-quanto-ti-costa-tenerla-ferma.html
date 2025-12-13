@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Test – Auto: quanto ti costa davvero tenerla ferma? | Syncras.App</title>
+  <meta name="description" content="Calcola quanto ti costa davvero tenere l’auto anche quando non la usi: assicurazione, bollo, manutenzione, parcheggio e svalutazione. Test ironico ma concreto in stile Syncras." />
+  <meta name="robots" content="index,follow" />
+
+  <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --bg-page: #F7F7FB;
+      --text-main: #403E43;
+      --card-border: #E5E7EB;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg-page);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      color: var(--text-main);
+    }
+
+    /* HEADER VIOLA UNIFICATO */
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color: white;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+      position: relative;
+      z-index: 60;
+    }
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+    #main-nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding-bottom: 2px;
+    }
+    #main-nav a:hover { text-decoration: underline; }
+
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .menu-toggle span { margin-left: 4px; font-size: 1.1rem; }
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        margin: 0 auto;
+        max-width: 1180px;
+        flex-direction: column;
+        background-color: var(--violet-dark);
+        padding: 10px 16px 12px 16px;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
+      }
+      #main-nav a { padding: 6px 0; }
+      body.nav-open #main-nav { display: flex; }
+      .menu-toggle { display: inline-flex; align-items: center; }
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 30px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    h1, h2, h3 { color: var(--violet-dark); }
+    p { margin-bottom: 14px; }
+
+    .back-links {
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+    .back-links a {
+      color: var(--violet-dark);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .back-links a:hover { text-decoration: underline; }
+
+    .intro-tag {
+      display: inline-block;
+      background: #F3F4FF;
+      color: var(--violet-dark);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+
+    .lead { font-size: 1.03rem; }
+
+    .disclaimer-box {
+      background: #FFFBEA;
+      border-left: 4px solid #FBBF24;
+      padding: 12px 14px;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      margin: 16px 0 18px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 12px;
+    }
+
+    .card {
+      background: #F7F7FB;
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 16px;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      margin: 10px 0 6px;
+      color: #2F2D33;
+    }
+
+    input[type="number"], select {
+      width: 100%;
+      padding: 10px 10px;
+      border: 1px solid #D1D5DB;
+      border-radius: 8px;
+      font-size: 0.98rem;
+      outline: none;
+      background: white;
+      box-sizing: border-box;
+    }
+
+    .row2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    @media (max-width: 520px) {
+      .row2 { grid-template-columns: 1fr; }
+    }
+
+    .hint {
+      font-size: 0.88rem;
+      color: #6B7280;
+      margin-top: 6px;
+      line-height: 1.35;
+    }
+
+    .legal-gate {
+      background: #F3F4FF;
+      border: 1px solid #DAD9FF;
+      border-radius: 10px;
+      padding: 12px 12px;
+      margin-top: 12px;
+      font-size: 0.95rem;
+    }
+    .legal-gate label {
+      font-weight: 600;
+      margin: 0;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      color: #2F2D33;
+    }
+    .legal-gate input { margin-top: 3px; }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: 2px solid var(--violet-main);
+      background: var(--violet-main);
+      color: white;
+      font-weight: 800;
+      padding: 10px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 0.98rem;
+    }
+    .btn:hover { background: var(--violet-dark); border-color: var(--violet-dark); }
+
+    .btn-ghost {
+      background: white;
+      color: #111827;
+      font-weight: 800;
+      border: 2px solid var(--violet-main);
+    }
+    .btn-ghost:hover { background: #F3F4FF; }
+
+    .result {
+      margin-top: 16px;
+      display: none;
+      background: #ECFDF5;
+      border: 1px solid #A7F3D0;
+      border-radius: 10px;
+      padding: 14px;
+    }
+
+    .result h3 { margin-top: 0; margin-bottom: 6px; }
+
+    .kpi {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 12px;
+      margin-top: 10px;
+    }
+    .kpi .box {
+      background: white;
+      border: 1px solid #D1FAE5;
+      border-radius: 10px;
+      padding: 12px;
+    }
+    .kpi .box strong { display: block; font-size: 1.05rem; }
+
+    .note {
+      margin-top: 10px;
+      font-size: 0.92rem;
+      color: #374151;
+    }
+
+    .warn {
+      margin-top: 12px;
+      display: none;
+      background: #FFF1F2;
+      border: 1px solid #FECDD3;
+      color: #7F1D1D;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-weight: 700;
+    }
+
+    .mini {
+      margin-top: 10px;
+      background: #F3F4FF;
+      border: 1px dashed #C7C5FF;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 0.92rem;
+      color: #2F2D33;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      background: #eee;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+      main { margin: 16px auto; padding: 16px 14px; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- HEADER UNIFICATO -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
+
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
+
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="smart-test.html">Smart Test</a>
+        <a href="calcolatori.html">Calcolatori</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="offerte.html">Prodotti Consapevoli</a>
+        <a href="chi.html">Chi siamo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="back-links">
+      ← <a href="smart-test.html">Torna a Smart Test</a> |
+      <a href="index.html">Home</a>
+    </div>
+
+    <span class="intro-tag">Auto & costi nascosti</span>
+    <h1>Smart Test – Auto: quanto ti costa davvero tenerla ferma?</h1>
+
+    <p class="lead">
+      L’auto “ferma” non è gratis: anche se la usi poco, ci sono costi che scorrono come Netflix…
+      solo che non ti danno nemmeno una serie in cambio.
+      Qui calcoliamo il <strong>costo annuo e mensile</strong> dell’auto anche quando fa la statua in parcheggio.
+    </p>
+
+    <div class="disclaimer-box">
+      <strong>Promemoria importante:</strong>
+      questo test usa stime. Non è consulenza professionale.
+      Le condizioni complete sono nelle <a href="note-legali.html" target="_blank" rel="noopener">Note Legali</a>.
+    </div>
+
+    <section class="grid">
+      <div class="card">
+        <h2 style="margin-top:0;">1) Costi fissi annui</h2>
+
+        <label for="insurance">Assicurazione (€/anno)</label>
+        <input id="insurance" type="number" min="0" step="10" value="500" />
+
+        <label for="tax">Bollo (€/anno)</label>
+        <input id="tax" type="number" min="0" step="10" value="200" />
+
+        <label for="service">Manutenzione “minima” (€/anno)</label>
+        <input id="service" type="number" min="0" step="10" value="250" />
+        <div class="hint">Tagliandi, controlli, gomme/consumi medi “spalmati”. Anche se la usi poco: qualcosa prima o poi tocca.</div>
+
+        <label for="parking">Parcheggio / box / strisce (€/anno)</label>
+        <input id="parking" type="number" min="0" step="10" value="0" />
+        <div class="hint">Se hai box o paghi abbonamenti, qui è il posto giusto.</div>
+      </div>
+
+      <div class="card">
+        <h2 style="margin-top:0;">2) Svalutazione (il costo “fantasma”)</h2>
+
+        <label for="carValue">Valore attuale auto (€/oggi)</label>
+        <input id="carValue" type="number" min="0" step="100" value="12000" />
+
+        <label for="deprRate">Svalutazione annua stimata (%)</label>
+        <input id="deprRate" type="number" min="0" step="0.5" value="10" />
+        <div class="hint">Tipico: 8–15% (dipende da età, km, mercato). Se non sai: 10% è una stima “onesta”.</div>
+
+        <label for="daysUsed">Giorni in cui la usi davvero (al mese)</label>
+        <input id="daysUsed" type="number" min="0" max="31" step="1" value="10" />
+        <div class="hint">Serve solo per calcolare il “costo per giorno d’uso”.</div>
+
+        <label for="mode">Modalità</label>
+        <select id="mode">
+          <option value="real" selected>Realtà (costo annuo + mensile + per giorno d’uso)</option>
+          <option value="shock">Modalità “schiaffo gentile” (ti confronto con alternative)</option>
+        </select>
+
+        <div class="mini">
+          <strong>Nota Syncras:</strong> se fai pochi km ma “tieni l’auto per sicurezza”, questo test è fatto apposta per te.
+        </div>
+      </div>
+    </section>
+
+    <div class="legal-gate">
+      <label>
+        <input type="checkbox" id="legalAccept" />
+        Prima di procedere: ho letto e accetto le
+        <a href="note-legali.html" target="_blank" rel="noopener">Note Legali</a> (limitazione di responsabilità e uso a mio rischio).
+      </label>
+    </div>
+
+    <div class="warn" id="warn">
+      Prima spunta l’accettazione delle Note Legali. (Sì, è noioso. Ma è anche vita vera.)
+    </div>
+
+    <div class="actions">
+      <button class="btn" type="button" onclick="calculate()">Calcola il costo “auto ferma”</button>
+      <button class="btn btn-ghost" type="button" onclick="resetForm()">Reset</button>
+    </div>
+
+    <section class="result" id="result">
+      <h3>Risultato: quanto ti costa l’auto (anche quando non si muove)</h3>
+      <div id="summary" class="note"></div>
+
+      <div class="kpi">
+        <div class="box">
+          <strong id="eurYear">—</strong>
+          €/anno (costi fissi + svalutazione)
+        </div>
+        <div class="box">
+          <strong id="eurMonth">—</strong>
+          €/mese stimati
+        </div>
+        <div class="box">
+          <strong id="eurUseDay">—</strong>
+          €/giorno d’uso (stimato)
+        </div>
+      </div>
+
+      <div class="note" id="extra"></div>
+    </section>
+  </main>
+
+  <script>
+    function toggleMenu() {
+      document.body.classList.toggle('nav-open');
+    }
+
+    function fmtEUR(x) {
+      return x.toLocaleString('it-IT', { style: 'currency', currency: 'EUR' });
+    }
+
+    function clamp(n, min, max) {
+      return Math.max(min, Math.min(max, n));
+    }
+
+    function calculate() {
+      const legal = document.getElementById('legalAccept').checked;
+      const warn = document.getElementById('warn');
+      if (!legal) { warn.style.display = 'block'; return; }
+      warn.style.display = 'none';
+
+      const insurance = Math.max(0, Number(document.getElementById('insurance').value || 0));
+      const tax = Math.max(0, Number(document.getElementById('tax').value || 0));
+      const service = Math.max(0, Number(document.getElementById('service').value || 0));
+      const parking = Math.max(0, Number(document.getElementById('parking').value || 0));
+
+      const carValue = Math.max(0, Number(document.getElementById('carValue').value || 0));
+      const deprRate = Math.max(0, Number(document.getElementById('deprRate').value || 0));
+      const daysUsed = clamp(Number(document.getElementById('daysUsed').value || 0), 0, 31);
+
+      const mode = document.getElementById('mode').value;
+
+      const fixedYear = insurance + tax + service + parking;
+      const deprYear = carValue * (deprRate / 100);
+
+      const totalYear = fixedYear + deprYear;
+      const totalMonth = totalYear / 12;
+
+      // costo per "giorno d'uso": divido per giorni/anno di utilizzo stimati
+      const useDaysYear = daysUsed * 12;
+      const perUseDay = (useDaysYear > 0) ? (totalYear / useDaysYear) : totalYear;
+
+      document.getElementById('eurYear').textContent = fmtEUR(totalYear);
+      document.getElementById('eurMonth').textContent = fmtEUR(totalMonth);
+      document.getElementById('eurUseDay').textContent = useDaysYear > 0 ? fmtEUR(perUseDay) : '—';
+
+      const summary = document.getElementById('summary');
+      summary.innerHTML =
+        `Costi fissi annui: <strong>${fmtEUR(fixedYear)}</strong> (assicurazione+bollo+manutenzione+parcheggio). ` +
+        `Svalutazione stimata: <strong>${fmtEUR(deprYear)}</strong>/anno (~${deprRate.toFixed(1)}% su ${fmtEUR(carValue)}).`;
+
+      const extra = document.getElementById('extra');
+
+      if (mode === 'shock') {
+        // confronto semplice con alternative "tipo"
+        const taxiBudget = totalMonth; // budget mensile equivalente
+        const carSharingTrips = Math.floor((totalMonth) / 15); // 15€ ipotesi corsa media breve
+        extra.innerHTML =
+          `<strong>Modalità “schiaffo gentile”:</strong><br>` +
+          `• Stai pagando ~<strong>${fmtEUR(totalMonth)}</strong> al mese per “avere l’auto disponibile”.<br>` +
+          `• Con lo stesso budget potresti permetterti, a spanne: <strong>${carSharingTrips}</strong> spostamenti da 15€ (taxi/car sharing/corse brevi).<br>` +
+          `<br>Non è un invito a vendere l’auto: è solo un modo per capire se la “comodità” ti costa più di quanto pensi.`;
+      } else {
+        if (useDaysYear > 0) {
+          extra.innerHTML =
+            `Se la usi ~<strong>${daysUsed}</strong> giorni/mese, il costo “tutto incluso” è circa <strong>${fmtEUR(perUseDay)}</strong> per ogni giorno in cui la usi davvero.`;
+        } else {
+          extra.innerHTML =
+            `Hai messo 0 giorni/mese: in questo scenario l’auto è una statua con abbonamento.`;
+        }
+      }
+
+      document.getElementById('result').style.display = 'block';
+      document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function resetForm() {
+      document.getElementById('insurance').value = 500;
+      document.getElementById('tax').value = 200;
+      document.getElementById('service').value = 250;
+      document.getElementById('parking').value = 0;
+
+      document.getElementById('carValue').value = 12000;
+      document.getElementById('deprRate').value = 10;
+      document.getElementById('daysUsed').value = 10;
+      document.getElementById('mode').value = 'real';
+
+      document.getElementById('legalAccept').checked = false;
+      document.getElementById('result').style.display = 'none';
+      document.getElementById('warn').style.display = 'none';
+    }
+  </script>
+
+  <footer>
+    © 2025 Syncras.App — Tutti i diritti riservati<br>
+    <div style="margin-top:8px;">
+      <a href="privacy.html">Privacy Policy</a> |
+      <a href="cookie.html">Cookie Policy</a> |
+      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
+      <a href="note-legali.html">Note Legali</a>
+    </div>
+    <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.
+      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+      senza alcun costo aggiuntivo per l’utente.
+      Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+      è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+    </p>
+  </footer>
+
+  <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
+  <div id="cookie-banner">
+    <p>
+      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
+      (Google Analytics). Alcuni link potrebbero essere di affiliazione.
+      Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
+      <a href="privacy.html">Privacy Policy</a>.
+    </p>
+    <div style="display:flex; gap:10px; margin-top:8px;">
+      <button type="button" onclick="rejectCookies()">Rifiuta</button>
+      <button id="cookie-btn" type="button" onclick="acceptCookies()">Accetta e continua</button>
+    </div>
+  </div>
+
+  <style>
+    #cookie-banner {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 90%;
+      width: 420px;
+      background: #ffffff;
+      border: 2px solid #6C5CE7;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      z-index: 9999;
+      font-family: Arial, sans-serif;
+      display: none;
+    }
+    #cookie-banner p {
+      margin: 0 0 12px 0;
+      font-size: 0.95rem;
+      color: #333;
+      line-height: 1.4;
+    }
+    #cookie-banner a {
+      color: #6C5CE7;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    #cookie-banner button[onclick="rejectCookies()"] {
+      flex: 1;
+      background: white !important;
+      color: #111827 !important;
+      border: 2px solid #6C5CE7 !important;
+      padding: 10px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    #cookie-btn {
+      flex: 1;
+      background: #6C5CE7;
+      color: white;
+      border: 2px solid #6C5CE7;
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+    #cookie-btn:hover { background: #4B3ACB; }
+  </style>
+
+  <script>
+  (function () {
+    const GA_ID = 'G-CFTTCYDZ2P';
+    const CONSENT_KEY = 'syncras_cookie_consent';
+
+    window['ga-disable-' + GA_ID] = true;
+
+    function loadGoogleAnalytics() {
+      if (window.__syncrasGaLoaded) return;
+      window.__syncrasGaLoaded = true;
+
+      window['ga-disable-' + GA_ID] = false;
+
+      const gaScript = document.createElement('script');
+      gaScript.async = true;
+      gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+      document.head.appendChild(gaScript);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', GA_ID, { anonymize_ip: true });
+    }
+
+    function showBanner() {
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.style.display = 'block';
+    }
+
+    function hideBanner() {
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.style.display = 'none';
+    }
+
+    window.acceptCookies = function () {
+      localStorage.setItem(CONSENT_KEY, 'yes');
+      hideBanner();
+      loadGoogleAnalytics();
+    };
+
+    window.rejectCookies = function () {
+      localStorage.setItem(CONSENT_KEY, 'no');
+      hideBanner();
+      window['ga-disable-' + GA_ID] = true;
+    };
+
+    window.revokeCookies = function () {
+      localStorage.removeItem(CONSENT_KEY);
+      window['ga-disable-' + GA_ID] = true;
+      showBanner();
+    };
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const consent = localStorage.getItem(CONSENT_KEY);
+
+      if (consent === 'yes') {
+        loadGoogleAnalytics();
+      } else if (consent === 'no') {
+        window['ga-disable-' + GA_ID] = true;
+      } else {
+        showBanner();
+      }
+    });
+  })();
+  </script>
+</body>
+</html>
