@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Test – Abitudini serali e consumi in standby | Syncras.App</title>
+  <meta name="description" content="Scopri quanto ti costano davvero le abitudini serali e i consumi in standby: TV, decoder, console, luci, PC, caricabatterie. Test ironico ma concreto in stile Syncras." />
+  <meta name="robots" content="index,follow" />
+
+  <style>
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --bg-page: #F7F7FB;
+      --text-main: #403E43;
+      --card-border: #E5E7EB;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg-page);
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      color: var(--text-main);
+    }
+
+    /* HEADER VIOLA UNIFICATO */
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color: white;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+      position: relative;
+      z-index: 60;
+    }
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+    #main-nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding-bottom: 2px;
+    }
+    #main-nav a:hover { text-decoration: underline; }
+
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .menu-toggle span { margin-left: 4px; font-size: 1.1rem; }
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        margin: 0 auto;
+        max-width: 1180px;
+        flex-direction: column;
+        background-color: var(--violet-dark);
+        padding: 10px 16px 12px 16px;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
+      }
+      #main-nav a { padding: 6px 0; }
+      body.nav-open #main-nav { display: flex; }
+      .menu-toggle { display: inline-flex; align-items: center; }
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 30px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    h1, h2, h3 { color: var(--violet-dark); }
+    p { margin-bottom: 14px; }
+
+    .back-links {
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+    .back-links a {
+      color: var(--violet-dark);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .back-links a:hover { text-decoration: underline; }
+
+    .intro-tag {
+      display: inline-block;
+      background: #F3F4FF;
+      color: var(--violet-dark);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+
+    .lead { font-size: 1.03rem; }
+
+    .disclaimer-box {
+      background: #FFFBEA;
+      border-left: 4px solid #FBBF24;
+      padding: 12px 14px;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      margin: 16px 0 18px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 12px;
+    }
+
+    .card {
+      background: #F7F7FB;
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 16px;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      margin: 10px 0 6px;
+      color: #2F2D33;
+    }
+
+    input[type="number"], select {
+      width: 100%;
+      padding: 10px 10px;
+      border: 1px solid #D1D5DB;
+      border-radius: 8px;
+      font-size: 0.98rem;
+      outline: none;
+      background: white;
+      box-sizing: border-box;
+    }
+
+    .row2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    @media (max-width: 520px) {
+      .row2 { grid-template-columns: 1fr; }
+    }
+
+    .hint {
+      font-size: 0.88rem;
+      color: #6B7280;
+      margin-top: 6px;
+      line-height: 1.35;
+    }
+
+    .legal-gate {
+      background: #F3F4FF;
+      border: 1px solid #DAD9FF;
+      border-radius: 10px;
+      padding: 12px 12px;
+      margin-top: 12px;
+      font-size: 0.95rem;
+    }
+    .legal-gate label {
+      font-weight: 600;
+      margin: 0;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      color: #2F2D33;
+    }
+    .legal-gate input { margin-top: 3px; }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: 2px solid var(--violet-main);
+      background: var(--violet-main);
+      color: white;
+      font-weight: 800;
+      padding: 10px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 0.98rem;
+    }
+    .btn:hover { background: var(--violet-dark); border-color: var(--violet-dark); }
+
+    .btn-ghost {
+      background: white;
+      color: #111827;
+      font-weight: 800;
+      border: 2px solid var(--violet-main);
+    }
+    .btn-ghost:hover { background: #F3F4FF; }
+
+    .result {
+      margin-top: 16px;
+      display: none;
+      background: #ECFDF5;
+      border: 1px solid #A7F3D0;
+      border-radius: 10px;
+      padding: 14px;
+    }
+
+    .result h3 { margin-top: 0; margin-bottom: 6px; }
+    .kpi {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 12px;
+      margin-top: 10px;
+    }
+    .kpi .box {
+      background: white;
+      border: 1px solid #D1FAE5;
+      border-radius: 10px;
+      padding: 12px;
+    }
+    .kpi .box strong { display: block; font-size: 1.05rem; }
+
+    .note {
+      margin-top: 10px;
+      font-size: 0.92rem;
+      color: #374151;
+    }
+
+    .warn {
+      margin-top: 12px;
+      display: none;
+      background: #FFF1F2;
+      border: 1px solid #FECDD3;
+      color: #7F1D1D;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-weight: 700;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      background: #eee;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+      main { margin: 16px auto; padding: 16px 14px; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- HEADER UNIFICATO -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
+
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
+
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="smart-test.html">Smart Test</a>
+        <a href="calcolatori.html">Calcolatori</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="offerte.html">Prodotti Consapevoli</a>
+        <a href="chi.html">Chi siamo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="back-links">
+      ← <a href="smart-test.html">Torna a Smart Test</a> |
+      <a href="index.html">Home</a>
+    </div>
+
+    <span class="intro-tag">Energia & bolletta</span>
+    <h1>Smart Test – Abitudini serali e consumi in standby</h1>
+
+    <p class="lead">
+      Traduzione simultanea: <em>“Mi rilasso la sera”</em> spesso significa
+      <strong>TV + decoder + console + luci + router + caricabatterie</strong>… e una piccola
+      colonia di “standby” che vive in casa tua.
+      Questo test ti dice <strong>quanto ti costa</strong> quella routine.
+    </p>
+
+    <div class="disclaimer-box">
+      <strong>Promemoria importante:</strong>
+      questo è un test con stime. Non è consulenza professionale.
+      Le condizioni complete sono nelle <a href="note-legali.html" target="_blank" rel="noopener">Note Legali</a>.
+    </div>
+
+    <section class="grid">
+      <div class="card">
+        <h2 style="margin-top:0;">1) La tua “sera tipo”</h2>
+
+        <div class="row2">
+          <div>
+            <label for="hours">Ore serali al giorno</label>
+            <input id="hours" type="number" min="0" step="0.5" value="3" />
+            <div class="hint">Quante ore al giorno, in media, hai TV/luci/qualcosa acceso “per relax”.</div>
+          </div>
+          <div>
+            <label for="days">Giorni a settimana</label>
+            <input id="days" type="number" min="0" max="7" step="1" value="7" />
+            <div class="hint">Se nel weekend fai la maratona serie TV, metti 7 e nessuno giudica (qui si calcola).</div>
+          </div>
+        </div>
+
+        <label for="power">Potenza media “serale” (W)</label>
+        <input id="power" type="number" min="0" step="10" value="250" />
+        <div class="hint">
+          Esempio rapido: TV 100W + luci 40W + router 10W + laptop 40W + extra (decoder/console) = 200–350W.
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 style="margin-top:0;">2) Gli “standby” che non dormono mai</h2>
+
+        <label for="standbyW">Standby totale (W) – sempre acceso</label>
+        <input id="standbyW" type="number" min="0" step="1" value="15" />
+        <div class="hint">
+          Router + decoder + TV in standby + console “spenta” + alimentatori.
+          Tipico: 8–25W (ma alcune case fanno anche di più).
+        </div>
+
+        <label for="price">Prezzo energia (€/kWh)</label>
+        <input id="price" type="number" min="0" step="0.01" value="0.28" />
+        <div class="hint">
+          Se vuoi una stima “prudente”, 0,25–0,35 €/kWh. Se hai tariffa variabile, metti una media.
+        </div>
+
+        <label for="mode">Modalità: come vuoi leggerla?</label>
+        <select id="mode">
+          <option value="real" selected>Realtà (costo annuo e mensile)</option>
+          <option value="shock">Modalità “schiaffo gentile” (ti dico anche cosa potresti ridurre)</option>
+        </select>
+      </div>
+    </section>
+
+    <div class="legal-gate">
+      <label>
+        <input type="checkbox" id="legalAccept" />
+        Prima di procedere: ho letto e accetto le
+        <a href="note-legali.html" target="_blank" rel="noopener">Note Legali</a> (limitazione di responsabilità e uso a mio rischio).
+      </label>
+    </div>
+
+    <div class="warn" id="warn">
+      Prima spunta l’accettazione delle Note Legali. (È il nostro “filtro anti-cause”.)
+    </div>
+
+    <div class="actions">
+      <button class="btn" type="button" onclick="calculate()">Calcola il costo reale</button>
+      <button class="btn btn-ghost" type="button" onclick="resetForm()">Reset</button>
+    </div>
+
+    <section class="result" id="result">
+      <h3>Risultato: quanto ti costa la routine serale</h3>
+      <div id="summary" class="note"></div>
+
+      <div class="kpi">
+        <div class="box">
+          <strong id="kwhYear">—</strong>
+          kWh/anno stimati (sera + standby)
+        </div>
+        <div class="box">
+          <strong id="eurYear">—</strong>
+          €/anno stimati
+        </div>
+        <div class="box">
+          <strong id="eurMonth">—</strong>
+          €/mese stimati
+        </div>
+      </div>
+
+      <div class="note" id="extra"></div>
+    </section>
+  </main>
+
+  <script>
+    function toggleMenu() {
+      document.body.classList.toggle('nav-open');
+    }
+
+    function fmtEUR(x) {
+      return x.toLocaleString('it-IT', { style: 'currency', currency: 'EUR' });
+    }
+
+    function clamp(n, min, max) {
+      return Math.max(min, Math.min(max, n));
+    }
+
+    function calculate() {
+      const legal = document.getElementById('legalAccept').checked;
+      const warn = document.getElementById('warn');
+      if (!legal) {
+        warn.style.display = 'block';
+        return;
+      }
+      warn.style.display = 'none';
+
+      const hours = Math.max(0, Number(document.getElementById('hours').value || 0));
+      const days = clamp(Number(document.getElementById('days').value || 0), 0, 7);
+      const powerW = Math.max(0, Number(document.getElementById('power').value || 0));
+      const standbyW = Math.max(0, Number(document.getElementById('standbyW').value || 0));
+      const price = Math.max(0, Number(document.getElementById('price').value || 0));
+      const mode = document.getElementById('mode').value;
+
+      // kWh sera: (W/1000) * ore * giorni/sett * 52
+      const kwhEveningYear = (powerW / 1000) * hours * days * 52;
+
+      // kWh standby: (W/1000) * 24h * 365
+      const kwhStandbyYear = (standbyW / 1000) * 24 * 365;
+
+      const kwhYear = kwhEveningYear + kwhStandbyYear;
+      const eurYear = kwhYear * price;
+      const eurMonth = eurYear / 12;
+
+      document.getElementById('kwhYear').textContent = kwhYear.toFixed(1);
+      document.getElementById('eurYear').textContent = fmtEUR(eurYear);
+      document.getElementById('eurMonth').textContent = fmtEUR(eurMonth);
+
+      const summary = document.getElementById('summary');
+      summary.innerHTML =
+        `Sera tipo: <strong>${hours}</strong> ore/giorno per <strong>${days}</strong> giorni/sett a ~<strong>${powerW}W</strong>. ` +
+        `Standby totale: ~<strong>${standbyW}W</strong> sempre acceso. Prezzo energia: <strong>${price.toFixed(2)} €/kWh</strong>.`;
+
+      const extra = document.getElementById('extra');
+
+      if (mode === 'shock') {
+        // “consigli” non moralisti, con numeri
+        const standbyCost = kwhStandbyYear * price;
+        const eveningCost = kwhEveningYear * price;
+
+        // Ipotesi di riduzione “ragionevole”
+        const standbyWCut = Math.max(0, standbyW - 5); // esempio: multipresa + spegnimenti -> -5W
+        const standbySaved = ((standbyW - standbyWCut) / 1000) * 24 * 365 * price;
+
+        const hoursCut = Math.max(0, hours - 0.5);
+        const eveningSaved = ((powerW / 1000) * (hours - hoursCut) * days * 52) * price;
+
+        extra.innerHTML =
+          `<strong>Modalità “schiaffo gentile”:</strong><br>` +
+          `• Solo standby: <strong>${fmtEUR(standbyCost)}</strong>/anno.<br>` +
+          `• Solo routine serale: <strong>${fmtEUR(eveningCost)}</strong>/anno.<br><br>` +
+          `Se abbassi lo standby di <strong>5W</strong> (multipresa + spegnere il “finto spento”), risparmi ~<strong>${fmtEUR(standbySaved)}</strong>/anno.<br>` +
+          `Se riduci la routine di <strong>30 minuti</strong> al giorno (o fai 1 sera “spenta” a settimana), risparmi ~<strong>${fmtEUR(eveningSaved)}</strong>/anno.<br>` +
+          `<br>Non è una predica: è solo la bolletta che parla.`;
+      } else {
+        extra.innerHTML =
+          `Nota: sono stime. Se vuoi rendere il numero più preciso, prova a sommare i consumi reali dei dispositivi (W) o misura con una presa smart/energy meter.`;
+      }
+
+      document.getElementById('result').style.display = 'block';
+      document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function resetForm() {
+      document.getElementById('hours').value = 3;
+      document.getElementById('days').value = 7;
+      document.getElementById('power').value = 250;
+      document.getElementById('standbyW').value = 15;
+      document.getElementById('price').value = 0.28;
+      document.getElementById('mode').value = 'real';
+      document.getElementById('legalAccept').checked = false;
+      document.getElementById('result').style.display = 'none';
+      document.getElementById('warn').style.display = 'none';
+    }
+  </script>
+
+  <footer>
+    © 2025 Syncras.App — Tutti i diritti riservati<br>
+    <div style="margin-top:8px;">
+      <a href="privacy.html">Privacy Policy</a> |
+      <a href="cookie.html">Cookie Policy</a> |
+      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
+      <a href="note-legali.html">Note Legali</a>
+    </div>
+    <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.
+      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+      senza alcun costo aggiuntivo per l’utente.
+      Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+      è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+    </p>
+  </footer>
+
+  <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
+  <div id="cookie-banner">
+    <p>
+      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
+      (Google Analytics). Alcuni link potrebbero essere di affiliazione.
+      Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
+      <a href="privacy.html">Privacy Policy</a>.
+    </p>
+    <div style="display:flex; gap:10px; margin-top:8px;">
+      <button type="button" onclick="rejectCookies()">Rifiuta</button>
+      <button id="cookie-btn" type="button" onclick="acceptCookies()">Accetta e continua</button>
+    </div>
+  </div>
+
+  <style>
+    #cookie-banner {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 90%;
+      width: 420px;
+      background: #ffffff;
+      border: 2px solid #6C5CE7;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      z-index: 9999;
+      font-family: Arial, sans-serif;
+      display: none;
+    }
+
+    #cookie-banner p {
+      margin: 0 0 12px 0;
+      font-size: 0.95rem;
+      color: #333;
+      line-height: 1.4;
+    }
+
+    #cookie-banner a {
+      color: #6C5CE7;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    /* Pulsante RIFIUTA – pari importanza al pulsante ACCETTA */
+    #cookie-banner button[onclick="rejectCookies()"] {
+      flex: 1;
+      background: white !important;
+      color: #111827 !important;
+      border: 2px solid #6C5CE7 !important;
+      padding: 10px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    /* Pulsante ACCETTA */
+    #cookie-btn {
+      flex: 1;
+      background: #6C5CE7;
+      color: white;
+      border: 2px solid #6C5CE7;
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    #cookie-btn:hover { background: #4B3ACB; }
+  </style>
+
+  <script>
+  (function () {
+    const GA_ID = 'G-CFTTCYDZ2P';
+    const CONSENT_KEY = 'syncras_cookie_consent';
+
+    // GA disabilitato finché non c'è consenso
+    window['ga-disable-' + GA_ID] = true;
+
+    function loadGoogleAnalytics() {
+      if (window.__syncrasGaLoaded) return;
+      window.__syncrasGaLoaded = true;
+
+      window['ga-disable-' + GA_ID] = false;
+
+      const gaScript = document.createElement('script');
+      gaScript.async = true;
+      gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+      document.head.appendChild(gaScript);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', GA_ID, { anonymize_ip: true });
+    }
+
+    function showBanner() {
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.style.display = 'block';
+    }
+
+    function hideBanner() {
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.style.display = 'none';
+    }
+
+    window.acceptCookies = function () {
+      localStorage.setItem(CONSENT_KEY, 'yes');
+      hideBanner();
+      loadGoogleAnalytics();
+    };
+
+    window.rejectCookies = function () {
+      localStorage.setItem(CONSENT_KEY, 'no');
+      hideBanner();
+      window['ga-disable-' + GA_ID] = true;
+    };
+
+    window.revokeCookies = function () {
+      localStorage.removeItem(CONSENT_KEY);
+      window['ga-disable-' + GA_ID] = true;
+      showBanner();
+    };
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const consent = localStorage.getItem(CONSENT_KEY);
+
+      if (consent === 'yes') {
+        loadGoogleAnalytics();
+      } else if (consent === 'no') {
+        window['ga-disable-' + GA_ID] = true;
+      } else {
+        showBanner();
+      }
+    });
+  })();
+  </script>
+</body>
+</html>
