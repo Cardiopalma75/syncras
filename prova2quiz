@@ -369,183 +369,136 @@
       </article>
     </section>
 
- <!-- GRUPPO 2: SCELTE PRODOTTO & TAGLIA GIUSTA -->
-    <h2 class="section-title">5. Smart Test – Scelte prodotto & taglia giusta</h2>
-    <p class="section-subtitle">
-      Test pratici e veloci per scegliere la misura giusta di un elettrodomestico
-      o il modello più sensato per il tuo uso reale. Zero fronzoli: solo scenari concreti
-      e valutazioni intelligenti.
+<!-- GRUPPO 2: SCELTE PRODOTTO & TAGLIA GIUSTA -->
+<h2 class="section-title">2. Smart Test – Scelte prodotto & taglia giusta</h2>
+<p class="section-subtitle">
+  Test pratici e veloci per scegliere la misura giusta di un elettrodomestico
+  o il modello più sensato per il tuo uso reale. Zero fronzoli: solo scenari concreti
+  e valutazioni intelligenti.
+</p>
+
+<section class="group-grid" id="smart-test-prodotto">
+  <article class="test-group-card">
+    <div class="test-group-label">Macro-area</div>
+    <h2>Elettrodomestici – Dimensioni & scelta</h2>
+    <p>
+      Test dedicati a chi deve scegliere la taglia giusta di un elettrodomestico
+      senza farsi guidare dal marketing o dai consigli confusi.
     </p>
+    <ul class="test-list">
+      <li><span class="bullet">•</span><a href="archivioquiz.html#test-lavastoviglie">Lavastoviglie: 45 cm o 60 cm?</a></li>
+      <li><span class="bullet">•</span><a href="archivioquiz.html#test-lavatrice">Lavatrice: quale capacità è giusta per te?</a></li>
+      <li><span class="bullet">•</span><a href="archivioquiz.html#test-tv">TV: quale dimensione scegliere davvero?</a></li>
+    </ul>
+  </article>
 
-    <section class="group-grid" id="smart-test-prodotto">
-      <article class="test-group-card">
-        <div class="test-group-label">Macro-area</div>
-        <h2>Elettrodomestici – Dimensioni & scelta</h2>
-        <p>
-          Test dedicati a chi deve scegliere la taglia giusta di un elettrodomestico
-          senza farsi guidare dal marketing o dai consigli confusi.
-        </p>
-        <ul class="test-list">
-          <li><span class="bullet">•</span><a href="archivioquiz.html#test-lavastoviglie">Lavastoviglie: 45 cm o 60 cm?</a></li>
-          <li><span class="bullet">•</span><a href="archivioquiz.html#test-lavatrice">Lavatrice: quale capacità è giusta per te?</a></li>
-          <li><span class="bullet">•</span><a href="archivioquiz.html#test-tv">TV: quale dimensione scegliere davvero?</a></li>
-        </ul>
-      </article>
-
-      <article class="test-group-card">
-        <div class="test-group-label">Macro-area</div>
-        <h2>Smartphone & utilizzo reale</h2>
-        <p>
-          Test per indirizzare chi vuole comprare un nuovo smartphone
-          ma non sa quale fascia scegliere. Niente mode: solo esigenze reali.
-        </p>
-        <ul class="test-list">
-          <li><span class="bullet">•</span><a href="archivioquiz.html#test-smartphone">Smartphone: fascia economica, media o top?</a></li>
-          <li><span class="bullet">•</span><a href="archivioquiz.html#test-giga">Quanti giga ti servono davvero?</a></li>
-        </ul>
-      </article>
-    </section>
-
-
-
-    <!-- GRUPPO 3: SOLDI & ACQUISTI -->
-    <h2 class="section-title">2. Smart Test – Soldi, acquisti & “mi concedo questo”</h2>
-    <p class="section-subtitle">
-      Qui vivono i test per chi dice <em>“ma sì, è solo una spesa in più”</em>.
-      Calcoliamo l’impatto di acquisti ricorrenti, sfizi e decisioni impulsive su mesi e anni.
+  <article class="test-group-card">
+    <div class="test-group-label">Macro-area</div>
+    <h2>Smartphone & utilizzo reale</h2>
+    <p>
+      Test per indirizzare chi vuole comprare un nuovo smartphone
+      ma non sa quale fascia scegliere. Niente mode: solo esigenze reali.
     </p>
+    <ul class="test-list">
+      <li><span class="bullet">•</span><a href="archivioquiz.html#test-smartphone">Smartphone: fascia economica, media o top?</a></li>
+      <li><span class="bullet">•</span><a href="archivioquiz.html#test-giga">Quanti giga ti servono davvero?</a></li>
+    </ul>
+  </article>
+</section>
 
-    <section class="group-grid" id="smart-test-soldi">
-      <article class="test-group-card">
-        <div class="test-group-label">Macro-area</div>
-        <h2>Test Anti-Acquisto & spese ricorrenti</h2>
-        <p>
-          Strumenti per vedere nero su bianco quanto ti costa davvero “solo un caffè al bar”,
-          l’abbonamento in più o l’upgrade superfluo.
-        </p>
-        <ul class="test-list">
-          <li>
-            <span class="bullet">•</span>
-            <a href="test-anti-acquisto-2025.html">Smart Test Anti-Acquisto 2025</a>
-          </li>
-          <li>
-            <span class="bullet">•</span>
-            <a href="test-abbonamenti-invisibili.html">Smart Test – Abbonamenti invisibili</a>
-          </li>
-        </ul>
-      </article>
 
-      <article class="test-group-card">
-        <div class="test-group-label">Macro-area</div>
-        <h2>Scelte “top di gamma” vs realtà</h2>
-        <p>
-          Test per capire se ha senso prendere sempre il modello più caro
-          (auto, smartphone, elettrodomestici) o se sul lungo periodo ti stai solo complicando la vita.
-        </p>
-        <ul class="test-list">
-          <li>
-            <span class="bullet">•</span>
-            <a href="smartphone-top-o-medio-gamma.html">Smart Test – Smartphone top o medio gamma?</a>
-            <span class="badge-soon">in arrivo</span>
-          </li>
-          <li>
-            <span class="bullet">•</span>
-            <a href="auto-nuova-usata-o-nessuna.html">Smart Test – Auto nuova, usata o nessuna?</a>
-            <span class="badge-soon">in arrivo</span>
-          </li>
-        </ul>
-      </article>
-    </section>
+<!-- GRUPPO 3: SOLDI & ACQUISTI -->
+<h2 class="section-title">3. Smart Test – Soldi, acquisti & “mi concedo questo”</h2>
+<p class="section-subtitle">
+  Qui vivono i test per chi dice <em>“ma sì, è solo una spesa in più”</em>.
+  Calcoliamo l’impatto di acquisti ricorrenti, sfizi e decisioni impulsive su mesi e anni.
+</p>
 
-    <!-- GRUPPO 4: ENERGIA & CASA -->
-    <h2 class="section-title">3. Smart Test – Energia, casa & bollette</h2>
-    <p class="section-subtitle">
-      Per chi guarda la bolletta e pensa: <em>“qui c’è qualcosa che non torna”</em>.
-      Test che ti aiutano a capire dove stanno davvero i kWh “buttati” e quanto
-      pesano certe abitudini in casa.
+<section class="group-grid" id="smart-test-soldi">
+  <article class="test-group-card">
+    <div class="test-group-label">Macro-area</div>
+    <h2>Test Anti-Acquisto & spese ricorrenti</h2>
+    <p>
+      Strumenti per vedere nero su bianco quanto ti costa davvero “solo un caffè al bar”,
+      l’abbonamento in più o l’upgrade superfluo.
     </p>
+    <ul class="test-list">
+      <li><span class="bullet">•</span><a href="test-anti-acquisto-2025.html">Smart Test Anti-Acquisto 2025</a></li>
+      <li><span class="bullet">•</span><a href="test-abbonamenti-invisibili.html">Smart Test – Abbonamenti invisibili</a></li>
+    </ul>
+  </article>
 
-    <section class="group-grid" id="smart-test-energia">
-      <article class="test-group-card">
-        <div class="test-group-label">Macro-area</div>
-        <h2>Elettrodomestici & abitudini energetiche</h2>
-        <p>
-          Qui incrociamo i calcolatori Syncras con i test di realtà:
-          non solo “quanto consuma”, ma “quanto ti cambia davvero in un anno”.
-        </p>
-        <ul class="test-list">
-          <li>
-            <span class="bullet">•</span>
-            <a href="smart-test-elettrodomestici-consumi-nascosti.html">
-              Smart Test – Elettrodomestici e consumi nascosti
-            </a>
-            <span class="badge-soon">in arrivo</span>
-          </li>
-          <li>
-            <span class="bullet">•</span>
-            <a href="riscaldamento-elettrico-vs-gas.html">
-              Smart Test – Riscaldamento elettrico vs gas
-            </a>
-            <span class="badge-soon">in arrivo</span>
-          </li>
-        </ul>
-      </article>
-
-      <article class="test-group-card">
-        <div class="test-group-label">Macro-area</div>
-        <h2>Comfort, sprechi & “tanto pago dopo”</h2>
-        <p>
-          Test pensati per chi tiene tutto acceso “per comfort” e poi
-          si stupisce della bolletta. Qui vediamo quanto pesano certe scelte…
-          senza demonizzare nessuno.
-        </p>
-        <ul class="test-list">
-          <li>
-            <span class="bullet">•</span>
-            <span>Smart Test – Termostato, abitudini e sprechi <span class="badge-soon">in arrivo</span></span>
-          </li>
-          <li>
-            <span class="bullet">•</span>
-            <span>Smart Test – Abitudini serali e consumi in standby <span class="badge-soon">in arrivo</span></span>
-          </li>
-        </ul>
-      </article>
-    </section>
-
-    <!-- GRUPPO 5: AUTO & MOBILITÀ -->
-    <h2 class="section-title">4. Smart Test – Auto, mobilità & spostamenti</h2>
-    <p class="section-subtitle">
-      Per capire se l’auto che hai (o che vorresti) ha senso per il tuo uso reale,
-      o se stai pagando per qualcosa che esiste solo negli spot.
+  <article class="test-group-card">
+    <div class="test-group-label">Macro-area</div>
+    <h2>Scelte “top di gamma” vs realtà</h2>
+    <p>
+      Test per capire se ha senso prendere sempre il modello più caro
+      o se sul lungo periodo ti stai solo complicando la vita.
     </p>
+    <ul class="test-list">
+      <li><span class="bullet">•</span><a href="smartphone-top-o-medio-gamma.html">Smart Test – Smartphone top o medio gamma?</a> <span class="badge-soon">in arrivo</span></li>
+      <li><span class="bullet">•</span><a href="auto-nuova-usata-o-nessuna.html">Smart Test – Auto nuova, usata o nessuna?</a> <span class="badge-soon">in arrivo</span></li>
+    </ul>
+  </article>
+</section>
 
-    <section class="group-grid" id="smart-test-auto">
-      <article class="test-group-card">
-        <div class="test-group-label">Macro-area</div>
-        <h2>Auto & costi nascosti</h2>
-        <p>
-          Test che ti aiutano a trasformare “mi piace” e “è comoda” in numeri annui:
-          carburante, manutenzione, tasse, svalutazione.
-        </p>
-        <ul class="test-list">
-          <li><span class="bullet">•</span><span>Smart Test – Auto: quanto ti costa davvero tenerla ferma? <span class="badge-soon">in arrivo</span></span></li>
-          <li><span class="bullet">•</span><span>Smart Test – Usare l’auto o alternative? <span class="badge-soon">in arrivo</span></span></li>
-        </ul>
-      </article>
 
-      <article class="test-group-card">
-        <div class="test-group-label">Macro-area</div>
-        <h2>Scelte future: elettrico, ibrido & co.</h2>
-        <p>
-          Non è un referendum pro o contro, ma uno spazio per vedere se certe scelte
-          sono sensate per il tuo caso concreto, non per quello del vicino.
-        </p>
-        <ul class="test-list">
-          <li><span class="bullet">•</span><span>Smart Test – Ha senso l’auto elettrica per te? <span class="badge-soon">in arrivo</span></span></li>
-          <li><span class="bullet">•</span><span>Smart Test – Ibrida, plug-in o… nessuna delle due? <span class="badge-soon">in arrivo</span></span></li>
-        </ul>
-      </article>
-    </section>
+<!-- GRUPPO 4: ENERGIA & CASA -->
+<h2 class="section-title">4. Smart Test – Energia, casa & bollette</h2>
+<p class="section-subtitle">
+  Per chi guarda la bolletta e pensa: <em>“qui c’è qualcosa che non torna”</em>.
+</p>
+
+<section class="group-grid" id="smart-test-energia">
+  <article class="test-group-card">
+    <div class="test-group-label">Macro-area</div>
+    <h2>Elettrodomestici & abitudini energetiche</h2>
+    <p>
+      Non solo “quanto consuma”, ma “quanto ti cambia davvero in un anno”.
+    </p>
+    <ul class="test-list">
+      <li><span class="bullet">•</span><a href="smart-test-elettrodomestici-consumi-nascosti.html">Elettrodomestici e consumi nascosti</a> <span class="badge-soon">in arrivo</span></li>
+      <li><span class="bullet">•</span><a href="riscaldamento-elettrico-vs-gas.html">Riscaldamento elettrico vs gas</a> <span class="badge-soon">in arrivo</span></li>
+    </ul>
+  </article>
+
+  <article class="test-group-card">
+    <div class="test-group-label">Macro-area</div>
+    <h2>Comfort, sprechi & “tanto pago dopo”</h2>
+    <ul class="test-list">
+      <li><span class="bullet">•</span>Termostato, abitudini e sprechi <span class="badge-soon">in arrivo</span></li>
+      <li><span class="bullet">•</span>Abitudini serali e consumi in standby <span class="badge-soon">in arrivo</span></li>
+    </ul>
+  </article>
+</section>
+
+
+<!-- GRUPPO 5: AUTO & MOBILITÀ -->
+<h2 class="section-title">5. Smart Test – Auto, mobilità & spostamenti</h2>
+<p class="section-subtitle">
+  Per capire se l’auto che hai (o che vorresti) ha senso per il tuo uso reale.
+</p>
+
+<section class="group-grid" id="smart-test-auto">
+  <article class="test-group-card">
+    <div class="test-group-label">Macro-area</div>
+    <h2>Auto & costi nascosti</h2>
+    <ul class="test-list">
+      <li><span class="bullet">•</span>Auto: quanto ti costa davvero tenerla ferma? <span class="badge-soon">in arrivo</span></li>
+      <li><span class="bullet">•</span>Usare l’auto o alternative? <span class="badge-soon">in arrivo</span></li>
+    </ul>
+  </article>
+
+  <article class="test-group-card">
+    <div class="test-group-label">Macro-area</div>
+    <h2>Scelte future: elettrico, ibrido & co.</h2>
+    <ul class="test-list">
+      <li><span class="bullet">•</span>Ha senso l’auto elettrica per te? <span class="badge-soon">in arrivo</span></li>
+      <li><span class="bullet">•</span>Ibrida, plug-in o… nessuna delle due? <span class="badge-soon">in arrivo</span></li>
+    </ul>
+  </article>
+</section>
+
 
    
    
