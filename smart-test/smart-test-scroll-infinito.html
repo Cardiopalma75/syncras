@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -13,8 +14,11 @@
       --violet-dark: #4B3ACB;
       --bg-page: #F7F7FB;
       --text-main: #403E43;
+      --border: #E5E7EB;
     }
 
+    /* ✅ Layout stabile: footer sempre dritto */
+    html, body { height: 100%; }
     body {
       font-family: Arial, sans-serif;
       background: var(--bg-page);
@@ -22,7 +26,11 @@
       padding: 0;
       line-height: 1.6;
       color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
+    main { flex: 1; }
 
     /* HEADER */
     .site-header {
@@ -40,6 +48,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 16px;
+      position: relative;
     }
     .logo {
       font-size: 1.4rem;
@@ -55,10 +64,10 @@
       color: white;
       text-decoration: none;
       font-weight: 600;
+      padding-bottom: 2px;
     }
-    #main-nav a:hover {
-      text-decoration: underline;
-    }
+    #main-nav a:hover { text-decoration: underline; }
+
     .menu-toggle {
       display: none;
       background: rgba(255,255,255,0.12);
@@ -67,6 +76,7 @@
       color: white;
       padding: 6px 10px;
       cursor: pointer;
+      font-weight: 700;
     }
 
     @media (max-width: 768px) {
@@ -80,14 +90,17 @@
         max-width: 1180px;
         flex-direction: column;
         background-color: var(--violet-dark);
-        padding: 10px 16px;
+        padding: 10px 16px 12px 16px;
         border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 60;
       }
-      .menu-toggle { display: inline-flex; }
+      #main-nav a { padding: 6px 0; }
+      .menu-toggle { display: inline-flex; align-items:center; gap:6px; }
       body.nav-open #main-nav { display: flex; }
     }
 
-    /* MAIN */
+    /* MAIN CARD */
     main {
       max-width: 900px;
       margin: 30px auto;
@@ -95,6 +108,7 @@
       background: white;
       border-radius: 10px;
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      width: calc(100% - 28px);
     }
 
     h1, h2, h3 { color: var(--violet-dark); }
@@ -110,14 +124,33 @@
     }
     .back-links a:hover { text-decoration: underline; }
 
+    .btn-share{
+      background: var(--violet-main);
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+    .btn-share:hover { background: var(--violet-dark); }
+
     .legal-box {
       background: #F9FAFB;
-      border: 1px solid #E5E7EB;
+      border: 1px solid var(--border);
       border-radius: 8px;
       padding: 14px;
       margin: 20px 0;
       font-size: 0.9rem;
     }
+    .legal-box label{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      cursor:pointer;
+    }
+    .legal-box input{ margin-top:2px; }
     .legal-box a { color: var(--violet-dark); font-weight: 700; text-decoration: none; }
     .legal-box a:hover { text-decoration: underline; }
 
@@ -131,54 +164,55 @@
       background: #F7F7FB;
       border-radius: 10px;
       padding: 18px;
-      border: 1px solid #E5E7EB;
-      transition: opacity .2s, filter .2s;
+      border: 1px solid var(--border);
+      transition: opacity .2s ease;
     }
 
-    /* ✅ MODIFICA: niente effetto "appannato" forte */
+    /* ✅ NIENTE blur/appannato */
     .quiz-disabled {
-      opacity: 1;             /* niente sbiadito */
-      pointer-events: none;   /* resta bloccato */
-      filter: blur(0.8px);    /* leggerissimo, effetto “pro” */
+      opacity: 0.35;
+      pointer-events: none;
+      filter: none;
     }
 
-    /* ✅ MODIFICA: overlay senza velo, messaggio a card */
+    /* ✅ Overlay leggero, senza “velo schifoso” */
     #quiz-overlay-message {
       position: absolute;
       inset: 0;
-      display: flex;
+      display: none;               /* si attiva solo quando bloccato */
       align-items: center;
       justify-content: center;
-      background: transparent;  /* niente velo */
       border-radius: 10px;
       text-align: center;
       pointer-events: none;
       padding: 12px;
-      font-size: 0.95rem;
       z-index: 5;
     }
     #quiz-overlay-message > div {
-      background: #ffffff;
-      border: 1px solid #E5E7EB;
+      background: rgba(255,255,255,0.98);
+      border: 1px solid var(--border);
       border-radius: 10px;
       padding: 14px 14px;
       box-shadow: 0 6px 18px rgba(0,0,0,0.08);
       max-width: 520px;
       width: calc(100% - 28px);
       color: #111827;
+      font-size: 0.95rem;
     }
 
     .question {
       margin-bottom: 18px;
-      border-bottom: 1px solid #E5E7EB;
+      border-bottom: 1px solid var(--border);
       padding-bottom: 12px;
     }
-    .question:last-of-type { border-bottom: none; }
+    .question:last-of-type { border-bottom: none; margin-bottom: 10px; padding-bottom: 0; }
 
     .question label {
       display: block;
       margin: 8px 0;
+      cursor: pointer;
     }
+    .question input[type="radio"]{ margin-right:8px; }
 
     #quiz-result {
       margin-top: 18px;
@@ -196,7 +230,7 @@
       border: none;
       padding: 10px 16px;
       border-radius: 6px;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
     }
     #submitQuiz:hover { background: var(--violet-dark); }
@@ -207,7 +241,7 @@
       padding: 16px;
       background:#F7F7FB;
       border-radius:10px;
-      border:1px solid #E5E7EB;
+      border:1px solid var(--border);
     }
 
     .related-grid {
@@ -220,7 +254,7 @@
       background:#fff;
       border-radius:8px;
       padding:10px 12px;
-      border:1px solid #E5E7EB;
+      border:1px solid var(--border);
     }
 
     .related-item a {
@@ -230,7 +264,17 @@
     }
     .related-item a:hover { text-decoration: underline; }
 
-    /* COOKIE (solo box, i bottoni sono inline come nel tuo file) */
+    /* FOOTER (dritto e centrato) */
+    footer{
+      text-align:center;
+      padding:20px;
+      background:#eee;
+      font-size:0.9rem;
+    }
+    footer a{ color: var(--violet-dark); text-decoration:none; font-weight:700; }
+    footer a:hover{ text-decoration:underline; }
+
+    /* COOKIE (UNICO, niente doppioni) */
     #cookie-banner {
       position: fixed;
       bottom: 20px;
@@ -239,46 +283,49 @@
       max-width: 90%;
       width: 420px;
       background: #ffffff;
-      border: 2px solid #6C5CE7;
+      border: 2px solid var(--violet-main);
       border-radius: 10px;
       padding: 16px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.15);
       z-index: 9999;
       display: none;
     }
-
     #cookie-banner p {
       margin: 0 0 12px 0;
       font-size: 0.95rem;
       color: #333;
       line-height: 1.4;
     }
-
     #cookie-banner a {
-      color: #6C5CE7;
+      color: var(--violet-main);
       font-weight: bold;
       text-decoration: none;
     }
-
+    #cookie-banner .cookie-actions{
+      display:flex;
+      gap:10px;
+      margin-top:8px;
+    }
     #cookie-banner button {
       flex: 1;
       border-radius: 6px;
       padding: 10px 12px;
       cursor: pointer;
       font-weight: 700;
-      border: 2px solid #6C5CE7;
+      border: 2px solid var(--violet-main);
     }
-
-    #cookie-banner button#cookie-btn {
-      background: #6C5CE7;
+    #cookie-btn {
+      background: var(--violet-main);
       color: white;
     }
-    #cookie-banner button#cookie-btn:hover {
-      background: #4B3ACB;
-    }
-    #cookie-banner button:not(#cookie-btn) {
+    #cookie-btn:hover { background: var(--violet-dark); }
+    #cookie-reject{
       background: white;
       color: #111827;
+    }
+
+    @media (max-width:600px){
+      main{ margin:16px auto; padding:16px 14px; }
     }
   </style>
 </head>
@@ -288,7 +335,7 @@
 <header class="site-header">
   <div class="header-inner">
     <div class="logo">Syncras.App</div>
-    <button class="menu-toggle" onclick="document.body.classList.toggle('nav-open')">Menu ☰</button>
+    <button class="menu-toggle" type="button" onclick="toggleMenu()">Menu <span>☰</span></button>
     <nav id="main-nav">
       <a href="index.html">Home</a>
       <a href="blog.html">Blog</a>
@@ -304,19 +351,14 @@
 </header>
 
 <main>
-
   <div class="back-links">
     ← <a href="index.html">Torna alla Home</a> |
-    <a href="quiz.html">Vai ai Test</a>
+    <a href="smart-test.html">Vai agli Smart Test</a>
   </div>
 
   <h1>Smart Test – Scroll infinito: passatempo o abitudine costosa?</h1>
 
-  <button id="shareBtnTop"
-    style="background: var(--violet-main); color:white; padding:10px 15px; border:none;
-           border-radius:6px; cursor:pointer; margin-bottom:20px; font-weight:600;">
-    📎 Condividi questo test
-  </button>
+  <button id="shareBtnTop" class="btn-share" type="button">📎 Condividi questo test</button>
 
   <p>
     Apri un attimo Instagram, TikTok o YouTube “solo per due minuti”…  
@@ -330,13 +372,13 @@
 
   <!-- NOTE LEGALI -->
   <div class="legal-box">
-    <label>
+    <label for="legalAccept">
       <input type="checkbox" id="legalAccept">
       <span>
         Prima di procedere, un promemoria: i risultati di questo test sono solo stime e non costituiscono
         consulenza psicologica o comportamentale. L’utilizzo è a tuo esclusivo rischio.
         Tutte le condizioni sono spiegate nelle
-        <a href="note-legali.html" target="_blank">Note Legali</a>.
+        <a href="note-legali.html" target="_blank" rel="noopener noreferrer">Note Legali</a>.
       </span>
     </label>
   </div>
@@ -348,7 +390,6 @@
 
     <section id="quiz-section" class="quiz-section quiz-disabled">
 
-      <!-- DOMANDE -->
       <div class="question">
         <h3>1. Quanto spesso apri un social “al volo” per riempire un momento morto?</h3>
         <label><input type="radio" name="q1" value="0"> Raramente.</label>
@@ -398,17 +439,15 @@
         <label><input type="radio" name="q7" value="2"> Spesso.</label>
       </div>
 
-      <button id="submitQuiz">Calcola risultato</button>
+      <button id="submitQuiz" type="button">Calcola risultato</button>
       <div id="quiz-result"></div>
 
     </section>
   </div>
 
-  <!-- CORRELATI -->
   <section class="related-box">
     <h2>Ti possono interessare anche:</h2>
     <div class="related-grid">
-
       <article class="related-item">
         <h3><a href="quanto-tempo-ruba-lo-smartphone.html">Quanto tempo ruba lo smartphone?</a></h3>
         <p>Un articolo per prendere consapevolezza sui minuti invisibili che perdi ogni giorno.</p>
@@ -423,127 +462,134 @@
         <h3><a href="calcolatori.html">Calcolatori Syncras</a></h3>
         <p>Strumenti pratici per capire costi e consumi reali.</p>
       </article>
-
     </div>
   </section>
 
   <div style="text-align:center; margin-top:20px;">
-    <button id="shareBtnBottom"
-      style="background: var(--violet-main); color:white; padding:10px 18px; border:none; border-radius:6px; cursor:pointer;">
+    <button id="shareBtnBottom" class="btn-share" type="button" style="padding:10px 18px;">
       📎 Condividi questo test
     </button>
   </div>
-
 </main>
 
-  <footer>
-    © 2025 Syncras.App — Tutti i diritti riservati<br>
-    <div style="margin-top:8px;">
-      <a href="privacy.html">Privacy Policy</a> |
-      <a href="cookie.html">Cookie Policy</a> |
-      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
-      <a href="note-legali.html">Note Legali</a>
-    </div>
-    <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
-      Syncras.App partecipa al Programma Affiliazione Amazon EU.  
-      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
-      senza alcun costo aggiuntivo per l’utente.  
-      Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
-      è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
-    </p>
-  </footer>
-
-  <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
-  <div id="cookie-banner">
-    <p>
-      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
-      (Google Analytics). Alcuni link potrebbero essere di affiliazione.
-      Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
-      <a href="privacy.html">Privacy Policy</a>.
-    </p>
-    <div style="display:flex; gap:10px; margin-top:8px;">
-      <button type="button" onclick="rejectCookies()">
-        Rifiuta
-      </button>
-      <button id="cookie-btn" type="button" onclick="acceptCookies()">
-        Accetta e continua
-      </button>
-    </div>
+<footer>
+  © 2025 Syncras.App — Tutti i diritti riservati<br>
+  <div style="margin-top:8px;">
+    <a href="privacy.html">Privacy Policy</a> |
+    <a href="cookie.html">Cookie Policy</a> |
+    <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
+    <a href="note-legali.html">Note Legali</a>
   </div>
+  <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
+    Syncras.App partecipa al Programma Affiliazione Amazon EU.
+    Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+    senza alcun costo aggiuntivo per l’utente.
+    Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+    è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+  </p>
+</footer>
 
-  <style>
-    #cookie-banner {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      max-width: 90%;
-      width: 420px;
-      background: #ffffff;
-      border: 2px solid #6C5CE7;
-      border-radius: 10px;
-      padding: 16px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-      z-index: 9999;
-      font-family: Arial, sans-serif;
-      display: none;
+<!-- Cookie Banner + Blocco Google Analytics – GDPR -->
+<div id="cookie-banner">
+  <p>
+    Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite (Google Analytics).
+    Alcuni link potrebbero essere di affiliazione.
+    Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
+    <a href="privacy.html">Privacy Policy</a>.
+  </p>
+  <div class="cookie-actions">
+    <button id="cookie-reject" type="button" onclick="rejectCookies()">Rifiuta</button>
+    <button id="cookie-btn" type="button" onclick="acceptCookies()">Accetta e continua</button>
+  </div>
+</div>
+
+<script>
+  // Menu mobile
+  function toggleMenu(){ document.body.classList.toggle('nav-open'); }
+
+  // Share
+  (function(){
+    function sharePage(){
+      const url = window.location.href;
+      const title = document.title;
+      if (navigator.share) {
+        navigator.share({ title, url }).catch(()=>{});
+      } else {
+        navigator.clipboard.writeText(url).then(()=>alert("Link copiato negli appunti ✅"));
+      }
     }
+    const t = document.getElementById('shareBtnTop');
+    const b = document.getElementById('shareBtnBottom');
+    if (t) t.addEventListener('click', sharePage);
+    if (b) b.addEventListener('click', sharePage);
+  })();
 
-    #cookie-banner p {
-      margin: 0 0 12px 0;
-      font-size: 0.95rem;
-      color: #333;
-      line-height: 1.4;
+  // Sblocco quiz (niente appannato)
+  (function () {
+    const checkbox = document.getElementById('legalAccept');
+    const quizSection = document.getElementById('quiz-section');
+    const overlay = document.getElementById('quiz-overlay-message');
+    if (!checkbox || !quizSection || !overlay) return;
+
+    function syncState() {
+      if (checkbox.checked) {
+        quizSection.classList.remove('quiz-disabled');
+        overlay.style.display = 'none';
+      } else {
+        quizSection.classList.add('quiz-disabled');
+        overlay.style.display = 'flex';
+      }
     }
+    checkbox.addEventListener('change', syncState);
+    syncState();
+  })();
 
-    #cookie-banner a {
-      color: #6C5CE7;
-      font-weight: bold;
-      text-decoration: none;
-    }
+  // Calcolo risultato
+  (function(){
+    const btn = document.getElementById('submitQuiz');
+    const out = document.getElementById('quiz-result');
+    if (!btn || !out) return;
 
-    /* Pulsante RIFIUTA – pari importanza al pulsante ACCETTA */
-    #cookie-banner button[onclick="rejectCookies()"] {
-      flex: 1;
-      background: white !important;
-      color: #111827 !important;
-      border: 2px solid #6C5CE7 !important;
-      padding: 10px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-    }
+    btn.addEventListener('click', function(){
+      let sum = 0, answered = 0;
+      for (let i=1;i<=7;i++){
+        const sel = document.querySelector('input[name="q'+i+'"]:checked');
+        if (sel){ sum += Number(sel.value); answered++; }
+      }
 
-    /* Pulsante ACCETTA */
-    #cookie-btn {
-      flex: 1;
-      background: #6C5CE7;
-      color: white;
-      border: 2px solid #6C5CE7;
-      padding: 10px 16px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 700;
-    }
+      out.style.display = 'block';
+      if (answered < 7){
+        out.innerHTML = "<strong>⚠️ Ti manca qualche risposta:</strong> completa tutte le domande e riprova.";
+        return;
+      }
 
-    #cookie-btn:hover {
-      background: #4B3ACB;
-    }
-  </style>
+      let titolo="", testo="";
+      if (sum <= 4){
+        titolo="✅ Profilo: Scroll sotto controllo";
+        testo="Lo usi come passatempo e non come pilota automatico. Mantieni l’abitudine: entrate brevi e con un obiettivo.";
+      } else if (sum <= 8){
+        titolo="⚖️ Profilo: Rischio medio (ti scappa la mano)";
+        testo="Ogni tanto entri “per due minuti” e ne esci un’ora dopo. Prova a fissare timer da 10 minuti e disattivare le notifiche meno utili.";
+      } else {
+        titolo="🔥 Profilo: Scroll infinito ad alta intensità";
+        testo="Qui lo scroll sta rubando attenzione e tempo con costanza. Strategia: limiti chiari (timer), notifiche ridotte, e una regola: niente social a letto.";
+      }
 
-  <script>
+      out.innerHTML = "<strong>"+titolo+"</strong><br><br>"+testo+"<br><br><em>Punteggio:</em> "+sum+" / 14";
+    });
+  })();
+
+  // Cookie + GA (GDPR: GA bloccato finché non accetti)
   (function () {
     const GA_ID = 'G-CFTTCYDZ2P';
-    const CONSENT_KEY = 'syncras_cookie_consent'; // chiave unica per tutto il sito
+    const CONSENT_KEY = 'syncras_cookie_consent';
 
-    // 1️⃣ BLOCCO PREVENTIVO: GA disabilitato finché non c'è consenso
     window['ga-disable-' + GA_ID] = true;
 
     function loadGoogleAnalytics() {
       if (window.__syncrasGaLoaded) return;
       window.__syncrasGaLoaded = true;
 
-      // Riabilita GA solo dopo il consenso
       window['ga-disable-' + GA_ID] = false;
 
       const gaScript = document.createElement('script');
@@ -562,7 +608,6 @@
       const banner = document.getElementById('cookie-banner');
       if (banner) banner.style.display = 'block';
     }
-
     function hideBanner() {
       const banner = document.getElementById('cookie-banner');
       if (banner) banner.style.display = 'none';
@@ -577,30 +622,23 @@
     window.rejectCookies = function () {
       localStorage.setItem(CONSENT_KEY, 'no');
       hideBanner();
-      // GA resta bloccato
       window['ga-disable-' + GA_ID] = true;
     };
 
-    // 2️⃣ FUNZIONE DI REVOCA – per cambiare idea dopo
     window.revokeCookies = function () {
       localStorage.removeItem(CONSENT_KEY);
-      window['ga-disable-' + GA_ID] = true;   // blocca subito GA
-      showBanner();                           // ri-mostra il banner
+      window['ga-disable-' + GA_ID] = true;
+      showBanner();
     };
 
     document.addEventListener('DOMContentLoaded', function () {
       const consent = localStorage.getItem(CONSENT_KEY);
-
-      if (consent === 'yes') {
-        loadGoogleAnalytics();
-      } else if (consent === 'no') {
-        window['ga-disable-' + GA_ID] = true;
-      } else {
-        showBanner();
-      }
+      if (consent === 'yes') loadGoogleAnalytics();
+      else if (consent === 'no') window['ga-disable-' + GA_ID] = true;
+      else showBanner();
     });
   })();
-  </script>
+</script>
 
 </body>
 </html>
