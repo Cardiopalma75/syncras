@@ -369,15 +369,15 @@
       </button>
 
       <nav id="main-nav">
-      <a href="index.html">Home</a>
-      <a href="blog.html">Blog</a>
-      <a href="smart-test.html">Smart Test</a>
-      <a href="calcolatori.html">Calcolatori</a>
-      <a href="fast-card.html">Fast Card</a>
-      <a href="offerte.html">Prodotti Consapevoli</a>
-      <a href="curiosita.html">Curiosità</a>
-      <a href="misteri.html">Misteri</a>
-      <a href="chi.html">Chi siamo</a>
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="smart-test.html">Smart Test</a>
+        <a href="calcolatori.html">Calcolatori</a>
+        <a href="fast-card.html">Fast Card</a>
+        <a href="offerte.html">Prodotti Consapevoli</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="chi.html">Chi siamo</a>
       </nav>
     </div>
   </header>
@@ -532,101 +532,7 @@
     </p>
   </main>
 
-  <footer>
-    © 2025 Syncras.App — Tutti i diritti riservati<br>
-    <div style="margin-top:8px;">
-      <a href="privacy.html">Privacy Policy</a> |
-      <a href="cookie.html">Cookie Policy</a> |
-      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
-      <a href="note-legali.html">Note Legali</a>
-    </div>
-    <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
-      Syncras.App partecipa al Programma Affiliazione Amazon EU.  
-      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
-      senza alcun costo aggiuntivo per l’utente.  
-      Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
-      è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
-    </p>
-  </footer>
-
-  <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
-  <div id="cookie-banner">
-    <p>
-      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
-      (Google Analytics). Alcuni link potrebbero essere di affiliazione.
-      Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
-      <a href="privacy.html">Privacy Policy</a>.
-    </p>
-    <div style="display:flex; gap:10px; margin-top:8px;">
-      <button type="button" onclick="rejectCookies()">
-        Rifiuta
-      </button>
-      <button id="cookie-btn" type="button" onclick="acceptCookies()">
-        Accetta e continua
-      </button>
-    </div>
-  </div>
-
-  <style>
-    #cookie-banner {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      max-width: 90%;
-      width: 420px;
-      background: #ffffff;
-      border: 2px solid #6C5CE7;
-      border-radius: 10px;
-      padding: 16px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-      z-index: 9999;
-      font-family: Arial, sans-serif;
-      display: none;
-    }
-
-    #cookie-banner p {
-      margin: 0 0 12px 0;
-      font-size: 0.95rem;
-      color: #333;
-      line-height: 1.4;
-    }
-
-    #cookie-banner a {
-      color: #6C5CE7;
-      font-weight: bold;
-      text-decoration: none;
-    }
-
-    /* Pulsante RIFIUTA – pari importanza al pulsante ACCETTA */
-    #cookie-banner button[onclick="rejectCookies()"] {
-      flex: 1;
-      background: white !important;
-      color: #111827 !important;
-      border: 2px solid #6C5CE7 !important;
-      padding: 10px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-
-    /* Pulsante ACCETTA */
-    #cookie-btn {
-      flex: 1;
-      background: #6C5CE7;
-      color: white;
-      border: 2px solid #6C5CE7;
-      padding: 10px 16px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 700;
-    }
-
-    #cookie-btn:hover {
-      background: #4B3ACB;
-    }
-  </style>
-
+  <!-- SCRIPT PAGINA: menu + test (ordine come master) -->
   <script>
     // Toggle menu mobile
     function toggleMenu() {
@@ -662,11 +568,11 @@
       calcBtn.addEventListener('click', function () {
         errorMsg.style.display = 'none';
 
-        const prezzoTop = parseFloat(prezzoTopEl.value.replace(',', '.'));
-        const anniTop = parseFloat(anniTopEl.value.replace(',', '.'));
-        const prezzoMedio = parseFloat(prezzoMedioEl.value.replace(',', '.'));
-        const anniMedio = parseFloat(anniMedioEl.value.replace(',', '.'));
-        const budgetTech = parseFloat(budgetTechEl.value.replace(',', '.'));
+        const prezzoTop = parseFloat(String(prezzoTopEl.value).replace(',', '.'));
+        const anniTop = parseFloat(String(anniTopEl.value).replace(',', '.'));
+        const prezzoMedio = parseFloat(String(prezzoMedioEl.value).replace(',', '.'));
+        const anniMedio = parseFloat(String(anniMedioEl.value).replace(',', '.'));
+        const budgetTech = parseFloat(String(budgetTechEl.value).replace(',', '.'));
 
         if (
           !prezzoTop || prezzoTop <= 0 ||
@@ -688,13 +594,11 @@
         const costoMeseTop = costoAnnoTop / 12;
         const costoMeseMedio = costoAnnoMedio / 12;
 
-        // punteggio logico
         let scoreTop = 0;
         let scoreMedio = 0;
 
-        // 1) puro costo per anno
+        // 1) costo per anno
         if (costoAnnoTop <= costoAnnoMedio * 1.05) {
-          // quasi uguali → il top non è follia economica
           scoreTop += 2;
         } else if (costoAnnoTop <= costoAnnoMedio * 1.3) {
           scoreTop += 1;
@@ -712,14 +616,14 @@
           scoreTop += 2;
         }
 
-        // 3) peso del cambio
+        // 3) peso cambio
         if (pesaCambio === 'miStressa') {
           scoreTop += 1;
         } else if (pesaCambio === 'miDiverte') {
           scoreMedio += 1;
         }
 
-        // 4) interesse per l'ultimo modello
+        // 4) interesse ultimo modello
         if (ultimoModello === 'poco') {
           scoreMedio += 1;
         } else if (ultimoModello === 'molto') {
@@ -781,78 +685,177 @@
         }
 
         resultExtra.textContent = extra;
-
         resultCard.style.display = 'block';
-      });
-    })();
-
-    // Cookie + GA (stesso schema usato sulle altre pagine)
-    (function () {
-      const GA_ID = 'G-CFTTCYDZ2P';
-      const CONSENT_KEY = 'syncras_cookie_consent';
-
-      // GA disabilitato di default
-      window['ga-disable-' + GA_ID] = true;
-
-      function loadGoogleAnalytics() {
-        if (window.__syncrasGaLoaded) return;
-        window.__syncrasGaLoaded = true;
-
-        window['ga-disable-' + GA_ID] = false;
-
-        const gaScript = document.createElement('script');
-        gaScript.async = true;
-        gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
-        document.head.appendChild(gaScript);
-
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){ dataLayer.push(arguments); }
-        window.gtag = gtag;
-        gtag('js', new Date());
-        gtag('config', GA_ID, { anonymize_ip: true });
-      }
-
-      function showBanner() {
-        const banner = document.getElementById('cookie-banner');
-        if (banner) banner.style.display = 'block';
-      }
-
-      function hideBanner() {
-        const banner = document.getElementById('cookie-banner');
-        if (banner) banner.style.display = 'none';
-      }
-
-      window.acceptCookies = function () {
-        localStorage.setItem(CONSENT_KEY, 'yes');
-        hideBanner();
-        loadGoogleAnalytics();
-      };
-
-      window.rejectCookies = function () {
-        localStorage.setItem(CONSENT_KEY, 'no');
-        hideBanner();
-        window['ga-disable-' + GA_ID] = true;
-      };
-
-      window.revokeCookies = function () {
-        localStorage.removeItem(CONSENT_KEY);
-        window['ga-disable-' + GA_ID] = true;
-        showBanner();
-      };
-
-      document.addEventListener('DOMContentLoaded', function () {
-        const consent = localStorage.getItem(CONSENT_KEY);
-
-        if (consent === 'yes') {
-          loadGoogleAnalytics();
-        } else if (consent === 'no') {
-          window['ga-disable-' + GA_ID] = true;
-        } else {
-          showBanner();
-        }
       });
     })();
   </script>
 
+  <!-- FOOTER (ordine come master) -->
+  <footer>
+    © 2025 Syncras.App — Tutti i diritti riservati<br>
+    <div style="margin-top:8px;">
+      <a href="privacy.html">Privacy Policy</a> |
+      <a href="cookie.html">Cookie Policy</a> |
+      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
+      <a href="note-legali.html">Note Legali</a> |
+      <a href="#" onclick="revokeCookies(); return false;">Gestisci consenso cookie</a>
+    </div>
+    <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+      senza alcun costo aggiuntivo per l’utente.  
+      Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+      è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+    </p>
+  </footer>
+
+  <!-- COOKIE BANNER (unico, come master) -->
+  <div id="cookie-banner">
+    <p>
+      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
+      (Google Analytics). Alcuni link potrebbero essere di affiliazione.
+      Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
+      <a href="privacy.html">Privacy Policy</a>.
+    </p>
+    <div style="display:flex; gap:10px; margin-top:8px;">
+      <button type="button" onclick="rejectCookies()">Rifiuta</button>
+      <button id="cookie-btn" type="button" onclick="acceptCookies()">Accetta e continua</button>
+    </div>
+  </div>
+
+  <!-- STILE COOKIE (come master) -->
+  <style>
+    #cookie-banner {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 90%;
+      width: 420px;
+      background: #ffffff;
+      border: 2px solid #6C5CE7;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      z-index: 9999;
+      font-family: Arial, sans-serif;
+      display: none;
+    }
+
+    #cookie-banner p {
+      margin: 0 0 12px 0;
+      font-size: 0.95rem;
+      color: #333;
+      line-height: 1.4;
+    }
+
+    #cookie-banner a {
+      color: #6C5CE7;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    /* Pulsante RIFIUTA – pari importanza al pulsante ACCETTA */
+    #cookie-banner button[onclick="rejectCookies()"] {
+      flex: 1;
+      background: white !important;
+      color: #111827 !important;
+      border: 2px solid #6C5CE7 !important;
+      padding: 10px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    /* Pulsante ACCETTA */
+    #cookie-btn {
+      flex: 1;
+      background: #6C5CE7;
+      color: white;
+      border: 2px solid #6C5CE7;
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    #cookie-btn:hover {
+      background: #4B3ACB;
+    }
+  </style>
+
+  <!-- SCRIPT COOKIE + GA (GDPR identico al primo) -->
+  <script>
+  (function () {
+    const GA_ID = 'G-CFTTCYDZ2P';
+    const CONSENT_KEY = 'syncras_cookie_consent'; // chiave unica per tutto il sito
+
+    // 1) BLOCCO PREVENTIVO: GA disabilitato finché non c'è consenso
+    window['ga-disable-' + GA_ID] = true;
+
+    function loadGoogleAnalytics() {
+      if (window.__syncrasGaLoaded) return;
+      window.__syncrasGaLoaded = true;
+
+      // Riabilita GA solo dopo il consenso
+      window['ga-disable-' + GA_ID] = false;
+
+      const gaScript = document.createElement('script');
+      gaScript.async = true;
+      gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+      document.head.appendChild(gaScript);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', GA_ID, { anonymize_ip: true });
+    }
+
+    function showBanner() {
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.style.display = 'block';
+    }
+
+    function hideBanner() {
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.style.display = 'none';
+    }
+
+    window.acceptCookies = function () {
+      localStorage.setItem(CONSENT_KEY, 'yes');
+      hideBanner();
+      loadGoogleAnalytics();
+    };
+
+    window.rejectCookies = function () {
+      localStorage.setItem(CONSENT_KEY, 'no');
+      hideBanner();
+      // GA resta bloccato
+      window['ga-disable-' + GA_ID] = true;
+    };
+
+    // Revoca: per cambiare idea dopo
+    window.revokeCookies = function () {
+      localStorage.removeItem(CONSENT_KEY);
+      window['ga-disable-' + GA_ID] = true;  // blocca subito GA
+      showBanner();                          // ri-mostra il banner
+    };
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const consent = localStorage.getItem(CONSENT_KEY);
+
+      if (consent === 'yes') {
+        loadGoogleAnalytics();
+      } else if (consent === 'no') {
+        window['ga-disable-' + GA_ID] = true;
+      } else {
+        showBanner();
+      }
+    });
+  })();
+  </script>
+
 </body>
 </html>
+
