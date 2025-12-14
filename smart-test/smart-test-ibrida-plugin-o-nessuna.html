@@ -63,18 +63,22 @@
       border-radius:10px;
       border:1px solid #E5E7EB;
     }
-    .quiz-disabled{opacity:.4;pointer-events:none;}
-    #quiz-overlay{
-      position:absolute;
-      inset:0;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background:rgba(255,255,255,.7);
-      border-radius:10px;
-      text-align:center;
-      font-size:.95rem;
-    }
+    .quiz-disable.quiz-disabled{
+  pointer-events:none;
+}
+d{opacity:.4;pointer-events:none;}
+   #quiz-overlay{
+  position:absolute;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background:rgba(255,255,255,.7);
+  border-radius:10px;
+  text-align:center;
+  font-size:.95rem;
+}
+
     .question{
       border-bottom:1px solid #E5E7EB;
       padding-bottom:12px;
@@ -387,6 +391,28 @@ la risposta giusta dipende solo da come vivi davvero l’auto.
     });
   })();
   </script>
+<script>
+(function(){
+  const checkbox = document.getElementById('legalAccept');
+  const quiz = document.getElementById('quiz');
+  const overlay = document.getElementById('quiz-overlay');
+
+  if(!checkbox || !quiz || !overlay) return;
+
+  function syncQuiz(){
+    if(checkbox.checked){
+      quiz.classList.remove('quiz-disabled');
+      overlay.style.display = 'none';
+    } else {
+      quiz.classList.add('quiz-disabled');
+      overlay.style.display = 'flex';
+    }
+  }
+
+  checkbox.addEventListener('change', syncQuiz);
+  syncQuiz(); // stato iniziale
+})();
+</script>
 
 </body>
 </html>
