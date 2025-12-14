@@ -170,10 +170,9 @@
 
     /* ✅ NIENTE blur/appannato */
     .quiz-disabled {
-      opacity: 0.35;
-      pointer-events: none;
-      filter: none;
-    }
+  pointer-events: none;
+}
+
 
     /* ✅ Overlay leggero, senza “velo schifoso” */
     #quiz-overlay-message {
@@ -638,6 +637,28 @@
       else showBanner();
     });
   })();
+</script>
+<script>
+(function () {
+  const checkbox = document.getElementById('legalAccept');
+  const quiz = document.getElementById('quiz-section');
+  const overlay = document.getElementById('quiz-overlay-message');
+
+  if (!checkbox || !quiz || !overlay) return;
+
+  function updateQuizState() {
+    if (checkbox.checked) {
+      quiz.classList.remove('quiz-disabled');
+      overlay.style.display = 'none';
+    } else {
+      quiz.classList.add('quiz-disabled');
+      overlay.style.display = 'flex';
+    }
+  }
+
+  checkbox.addEventListener('change', updateQuizState);
+  updateQuizState(); // stato iniziale
+})();
 </script>
 
 </body>
