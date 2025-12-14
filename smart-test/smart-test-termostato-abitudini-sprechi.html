@@ -13,6 +13,7 @@
       --violet-dark:#4B3ACB;
       --bg-page:#F7F7FB;
       --text-main:#403E43;
+      --border:#E5E7EB;
     }
 
     body{
@@ -40,12 +41,14 @@
       align-items:center;
       justify-content:space-between;
       gap:16px;
+      position: relative;
     }
     .logo{
       font-size:1.4rem;
       font-weight:bold;
       letter-spacing:0.03em;
     }
+
     #main-nav{
       display:flex;
       gap:18px;
@@ -115,6 +118,18 @@
     }
     .back-links a:hover{ text-decoration: underline; }
 
+    .btn-share{
+      background: var(--violet-main);
+      color:white;
+      padding:10px 15px;
+      border:none;
+      border-radius:6px;
+      cursor:pointer;
+      margin-bottom:18px;
+      font-weight:600;
+    }
+    .btn-share:hover{ background: var(--violet-dark); }
+
     .tip-box{
       background:#F6F4FF;
       border-left:4px solid var(--violet-main);
@@ -127,21 +142,29 @@
     /* NOTE LEGALI + SBLOCCO */
     .legal-box{
       background:#F9FAFB;
-      border:1px solid #E5E7EB;
+      border:1px solid var(--border);
       border-radius:8px;
       padding:14px;
       margin:18px 0 10px;
       font-size:0.9rem;
     }
-    .legal-box label a{
+    .legal-box a{
       color: var(--violet-dark);
       font-weight:600;
       text-decoration:none;
     }
-    .legal-box label a:hover{ text-decoration: underline; }
+    .legal-box a:hover{ text-decoration: underline; }
+    .legal-box label{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      cursor:pointer;
+    }
+    .legal-box input{ margin-top:2px; }
 
+    /* QUIZ */
     .quiz-wrapper{
-      position: relative; /* IMPORTANTISSIMO: overlay solo qui */
+      position: relative;
       margin-top: 14px;
     }
 
@@ -149,33 +172,37 @@
       background:#F7F7FB;
       border-radius:10px;
       padding:18px 16px;
-      border:1px solid #E5E7EB;
-      transition: opacity 0.2s ease;
-    }
-    .quiz-disabled{
-      opacity:0.4;
-      pointer-events:none;
+      border:1px solid var(--border);
     }
 
+    /* Blocco vero: niente opacità residua dopo sblocco */
+    .quiz-disabled{
+      opacity: 0.35;
+      pointer-events: none;
+      filter: grayscale(0.05);
+    }
+
+    /* Overlay solo quando bloccato */
     #quiz-overlay-message{
       position:absolute;
       inset:0;
-      display:flex;
+      display:none;            /* visibile solo se bloccato */
       align-items:center;
       justify-content:center;
       text-align:center;
       padding:16px;
-      background: rgba(255,255,255,0.72);
+      background: rgba(255,255,255,0.78);
       color:#111827;
       font-size:0.95rem;
       border-radius:10px;
-      pointer-events:none; /* non blocca click fuori dal quiz */
+      pointer-events:none;
+      z-index: 5;
     }
 
     .question{
       margin-bottom:18px;
       padding-bottom:12px;
-      border-bottom:1px solid #E5E7EB;
+      border-bottom:1px solid var(--border);
     }
     .question:last-of-type{
       border-bottom:none;
@@ -188,11 +215,11 @@
     }
     .question label{
       display:block;
-      font-size:0.9rem;
-      margin:6px 0;
+      font-size:0.92rem;
+      margin:7px 0;
       cursor:pointer;
     }
-    .question input[type="radio"]{ margin-right:6px; }
+    .question input[type="radio"]{ margin-right:8px; }
 
     #submitQuiz{
       margin-top:10px;
@@ -202,7 +229,7 @@
       padding:10px 16px;
       border-radius:6px;
       cursor:pointer;
-      font-weight:600;
+      font-weight:700;
       font-size:0.95rem;
     }
     #submitQuiz:hover{ background: var(--violet-dark); }
@@ -232,7 +259,7 @@
       padding:16px;
       border-radius:10px;
       background:#F7F7FB;
-      border:1px solid #E5E7EB;
+      border:1px solid var(--border);
     }
     .related-grid{
       display:grid;
@@ -244,15 +271,16 @@
       background:#fff;
       border-radius:8px;
       padding:10px 12px;
-      border:1px solid #E5E7EB;
+      border:1px solid var(--border);
       font-size:0.9rem;
     }
     .related-item h3{ margin:0 0 6px 0; font-size:1rem; }
     .related-item a{
       text-decoration:none;
       color: var(--violet-dark);
-      font-weight:600;
+      font-weight:700;
     }
+    .related-item a:hover{ text-decoration: underline; }
 
     footer{
       text-align:center;
@@ -275,7 +303,7 @@
       max-width: 90%;
       width: 420px;
       background: #ffffff;
-      border: 2px solid #6C5CE7;
+      border: 2px solid var(--violet-main);
       border-radius: 10px;
       padding: 16px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.15);
@@ -290,7 +318,7 @@
       line-height: 1.4;
     }
     #cookie-banner a{
-      color: #6C5CE7;
+      color: var(--violet-main);
       font-weight: bold;
       text-decoration: none;
     }
@@ -304,20 +332,18 @@
       border-radius:6px;
       padding:10px 12px;
       cursor:pointer;
-      font-weight:600;
-      border:2px solid #6C5CE7;
+      font-weight:700;
+      border:2px solid var(--violet-main);
     }
     #cookie-reject{
       background:#fff;
       color:#111827;
     }
     #cookie-accept{
-      background:#6C5CE7;
+      background: var(--violet-main);
       color:#fff;
-      font-weight:700;
     }
-    #cookie-accept:hover{ background:#4B3ACB; }
-
+    #cookie-accept:hover{ background: var(--violet-dark); }
   </style>
 </head>
 
@@ -333,15 +359,15 @@
       </button>
 
       <nav id="main-nav">
-       <a href="index.html">Home</a>
-      <a href="blog.html">Blog</a>
-      <a href="smart-test.html">Smart Test</a>
-      <a href="calcolatori.html">Calcolatori</a>
-      <a href="fast-card.html">Fast Card</a>
-      <a href="offerte.html">Prodotti Consapevoli</a>
-      <a href="curiosita.html">Curiosità</a>
-      <a href="misteri.html">Misteri</a>
-      <a href="chi.html">Chi siamo</a>
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="smart-test.html">Smart Test</a>
+        <a href="calcolatori.html">Calcolatori</a>
+        <a href="fast-card.html">Fast Card</a>
+        <a href="offerte.html">Prodotti Consapevoli</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="chi.html">Chi siamo</a>
       </nav>
     </div>
   </header>
@@ -354,11 +380,7 @@
 
     <h1>Smart Test – Termostato, abitudini e sprechi</h1>
 
-    <button id="shareBtnTop"
-      style="background: var(--violet-main); color:white; padding:10px 15px; border:none;
-             border-radius:6px; cursor:pointer; margin-bottom:18px; font-weight:600;">
-      📎 Condividi questo test
-    </button>
+    <button id="shareBtnTop" class="btn-share" type="button">📎 Condividi questo test</button>
 
     <p>
       Il termostato è una cosa semplice… finché non diventa il telecomando del destino.
@@ -393,7 +415,7 @@
         Spunta la casella qui sopra per accettare le Note Legali e sbloccare il test.
       </div>
 
-      <section id="quiz-section" class="quiz-section quiz-disabled">
+      <section id="quiz-section" class="quiz-section quiz-disabled" aria-live="polite">
 
         <div class="question">
           <h3>1) Quanto spesso cambi la temperatura durante la giornata?</h3>
@@ -473,23 +495,20 @@
           <p>Test rapidi per capire dove perdi soldi/tempo senza accorgertene.</p>
         </article>
         <article class="related-item">
-          <h3><a href="fast-cards.html">Fast Cards</a></h3>
+          <h3><a href="fast-card.html">Fast Card</a></h3>
           <p>Schede da 30 secondi anti-fregatura: offerte, marketing, psicologia del prezzo.</p>
         </article>
       </div>
     </section>
 
     <div style="text-align:center; margin:26px 0 10px;">
-      <button id="shareBtnBottom"
-        style="background: var(--violet-main); color:white; padding:10px 18px; border:none;
-               border-radius:6px; cursor:pointer; font-weight:600; font-size:1rem;">
+      <button id="shareBtnBottom" class="btn-share" type="button" style="padding:10px 18px; font-size:1rem;">
         📎 Condividi questo test
       </button>
     </div>
-
   </main>
 
-   <footer>
+  <footer>
     © 2025 Syncras.App — Tutti i diritti riservati<br>
     <div style="margin-top:8px;">
       <a href="privacy.html">Privacy Policy</a> |
@@ -498,185 +517,176 @@
       <a href="note-legali.html">Note Legali</a>
     </div>
     <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
-      Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.
       Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
-      senza alcun costo aggiuntivo per l’utente.  
+      senza alcun costo aggiuntivo per l’utente.
       Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
       è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
     </p>
   </footer>
-<script>
-  // Sblocco quiz dopo accettazione Note Legali
-  (function () {
-    const checkbox = document.getElementById('legalAccept');
-    const quizSection = document.getElementById('quiz-section');
-    const overlayMsg = document.getElementById('quiz-overlay-message');
 
-    if (!checkbox || !quizSection || !overlayMsg) return;
-
-    function syncState() {
-      if (checkbox.checked) {
-        quizSection.classList.remove('quiz-disabled');
-        overlayMsg.style.display = 'none';
-      } else {
-        quizSection.classList.add('quiz-disabled');
-        overlayMsg.style.display = 'flex';
-      }
-    }
-
-    checkbox.addEventListener('change', syncState);
-    syncState(); // importante: applica lo stato al caricamento
-  })();
-</script>
-
-  <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
-  <div id="cookie-banner">
+  <!-- COOKIE BANNER (UNICO) -->
+  <div id="cookie-banner" role="dialog" aria-live="polite" aria-label="Banner cookie">
     <p>
-      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
-      (Google Analytics). Alcuni link potrebbero essere di affiliazione.
+      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite (Google Analytics).
+      Alcuni link potrebbero essere di affiliazione.
       Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
       <a href="privacy.html">Privacy Policy</a>.
     </p>
-    <div style="display:flex; gap:10px; margin-top:8px;">
-      <button type="button" onclick="rejectCookies()">
-        Rifiuta
-      </button>
-      <button id="cookie-btn" type="button" onclick="acceptCookies()">
-        Accetta e continua
-      </button>
+    <div class="cookie-actions">
+      <button id="cookie-reject" type="button" onclick="rejectCookies()">Rifiuta</button>
+      <button id="cookie-accept" type="button" onclick="acceptCookies()">Accetta e continua</button>
     </div>
   </div>
 
-  <style>
-    #cookie-banner {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      max-width: 90%;
-      width: 420px;
-      background: #ffffff;
-      border: 2px solid #6C5CE7;
-      border-radius: 10px;
-      padding: 16px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-      z-index: 9999;
-      font-family: Arial, sans-serif;
-      display: none;
-    }
-
-    #cookie-banner p {
-      margin: 0 0 12px 0;
-      font-size: 0.95rem;
-      color: #333;
-      line-height: 1.4;
-    }
-
-    #cookie-banner a {
-      color: #6C5CE7;
-      font-weight: bold;
-      text-decoration: none;
-    }
-
-    /* Pulsante RIFIUTA – pari importanza al pulsante ACCETTA */
-    #cookie-banner button[onclick="rejectCookies()"] {
-      flex: 1;
-      background: white !important;
-      color: #111827 !important;
-      border: 2px solid #6C5CE7 !important;
-      padding: 10px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-
-    /* Pulsante ACCETTA */
-    #cookie-btn {
-      flex: 1;
-      background: #6C5CE7;
-      color: white;
-      border: 2px solid #6C5CE7;
-      padding: 10px 16px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 700;
-    }
-
-    #cookie-btn:hover {
-      background: #4B3ACB;
-    }
-  </style>
-
   <script>
-  (function () {
-    const GA_ID = 'G-CFTTCYDZ2P';
-    const CONSENT_KEY = 'syncras_cookie_consent'; // chiave unica per tutto il sito
+    // Menu mobile
+    function toggleMenu(){ document.body.classList.toggle('nav-open'); }
 
-    // 1️⃣ BLOCCO PREVENTIVO: GA disabilitato finché non c'è consenso
-    window['ga-disable-' + GA_ID] = true;
-
-    function loadGoogleAnalytics() {
-      if (window.__syncrasGaLoaded) return;
-      window.__syncrasGaLoaded = true;
-
-      // Riabilita GA solo dopo il consenso
-      window['ga-disable-' + GA_ID] = false;
-
-      const gaScript = document.createElement('script');
-      gaScript.async = true;
-      gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
-      document.head.appendChild(gaScript);
-
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){ dataLayer.push(arguments); }
-      window.gtag = gtag;
-      gtag('js', new Date());
-      gtag('config', GA_ID, { anonymize_ip: true });
-    }
-
-    function showBanner() {
-      const banner = document.getElementById('cookie-banner');
-      if (banner) banner.style.display = 'block';
-    }
-
-    function hideBanner() {
-      const banner = document.getElementById('cookie-banner');
-      if (banner) banner.style.display = 'none';
-    }
-
-    window.acceptCookies = function () {
-      localStorage.setItem(CONSENT_KEY, 'yes');
-      hideBanner();
-      loadGoogleAnalytics();
-    };
-
-    window.rejectCookies = function () {
-      localStorage.setItem(CONSENT_KEY, 'no');
-      hideBanner();
-      // GA resta bloccato
-      window['ga-disable-' + GA_ID] = true;
-    };
-
-    // 2️⃣ FUNZIONE DI REVOCA – per cambiare idea dopo
-    window.revokeCookies = function () {
-      localStorage.removeItem(CONSENT_KEY);
-      window['ga-disable-' + GA_ID] = true;   // blocca subito GA
-      showBanner();                           // ri-mostra il banner
-    };
-
-    document.addEventListener('DOMContentLoaded', function () {
-      const consent = localStorage.getItem(CONSENT_KEY);
-
-      if (consent === 'yes') {
-        loadGoogleAnalytics();
-      } else if (consent === 'no') {
-        window['ga-disable-' + GA_ID] = true;
-      } else {
-        showBanner();
+    // Share (top + bottom)
+    (function(){
+      function sharePage(){
+        const url = window.location.href;
+        const title = document.title;
+        if (navigator.share) {
+          navigator.share({ title, url }).catch(() => {});
+        } else {
+          navigator.clipboard.writeText(url).then(() => alert("Link copiato negli appunti ✅"));
+        }
       }
-    });
-  })();
+      const t = document.getElementById('shareBtnTop');
+      const b = document.getElementById('shareBtnBottom');
+      if (t) t.addEventListener('click', sharePage);
+      if (b) b.addEventListener('click', sharePage);
+    })();
+
+    // Sblocco quiz (NO opacità residua)
+    (function(){
+      const checkbox = document.getElementById('legalAccept');
+      const quizSection = document.getElementById('quiz-section');
+      const overlayMsg = document.getElementById('quiz-overlay-message');
+
+      function syncState(){
+        const unlocked = !!checkbox.checked;
+        if (unlocked){
+          quizSection.classList.remove('quiz-disabled');
+          overlayMsg.style.display = 'none';
+        } else {
+          quizSection.classList.add('quiz-disabled');
+          overlayMsg.style.display = 'flex';
+        }
+      }
+
+      checkbox.addEventListener('change', syncState);
+      window.addEventListener('DOMContentLoaded', syncState);
+      syncState();
+    })();
+
+    // Calcolo risultato (semplice, stabile)
+    (function(){
+      const btn = document.getElementById('submitQuiz');
+      const out = document.getElementById('quiz-result');
+
+      btn.addEventListener('click', function(){
+        let sum = 0;
+        let answered = 0;
+
+        for (let i=1; i<=7; i++){
+          const sel = document.querySelector('input[name="q'+i+'"]:checked');
+          if (sel){ sum += Number(sel.value); answered++; }
+        }
+
+        if (answered < 7){
+          out.style.display = 'block';
+          out.innerHTML = "<strong>⚠️ Ti manca qualche risposta:</strong> completa tutte le domande e riprova.";
+          return;
+        }
+
+        let titolo = "";
+        let testo = "";
+
+        if (sum <= 4){
+          titolo = "✅ Profilo: Termostato zen (pochi sprechi)";
+          testo = "Gestisci temperature e orari in modo abbastanza coerente. Se vuoi migliorare ancora, lavora sulla riduzione notturna e su 1 sola temperatura base.";
+        } else if (sum <= 8){
+          titolo = "⚖️ Profilo: Comfort ok, ma puoi tagliare sprechi";
+          testo = "Non sei messo male, ma ogni tanto il termostato diventa impulsivo. Riduci i “boost” e prova 7 giorni di routine stabile.";
+        } else {
+          titolo = "🔥 Profilo: Termostato joystick (alto rischio sprechi)";
+          testo = "Molte variazioni e scelte di pancia: la bolletta ringrazia… ma in senso ironico. La strategia migliore: meno scatti, più programmazione e abbasso quando esci.";
+        }
+
+        out.style.display = 'block';
+        out.innerHTML = "<strong>"+titolo+"</strong><br><br>"+testo+"<br><br><em>Punteggio totale:</em> "+sum+" / 14";
+      });
+    })();
+
+    // Cookie + GA (GDPR: GA bloccato finché non accetti)
+    (function () {
+      const GA_ID = 'G-CFTTCYDZ2P';
+      const CONSENT_KEY = 'syncras_cookie_consent';
+
+      window['ga-disable-' + GA_ID] = true;
+
+      function loadGoogleAnalytics() {
+        if (window.__syncrasGaLoaded) return;
+        window.__syncrasGaLoaded = true;
+
+        window['ga-disable-' + GA_ID] = false;
+
+        const gaScript = document.createElement('script');
+        gaScript.async = true;
+        gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+        document.head.appendChild(gaScript);
+
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){ dataLayer.push(arguments); }
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', GA_ID, { anonymize_ip: true });
+      }
+
+      function showBanner() {
+        const banner = document.getElementById('cookie-banner');
+        if (banner) banner.style.display = 'block';
+      }
+      function hideBanner() {
+        const banner = document.getElementById('cookie-banner');
+        if (banner) banner.style.display = 'none';
+      }
+
+      window.acceptCookies = function () {
+        localStorage.setItem(CONSENT_KEY, 'yes');
+        hideBanner();
+        loadGoogleAnalytics();
+      };
+
+      window.rejectCookies = function () {
+        localStorage.setItem(CONSENT_KEY, 'no');
+        hideBanner();
+        window['ga-disable-' + GA_ID] = true;
+      };
+
+      window.revokeCookies = function () {
+        localStorage.removeItem(CONSENT_KEY);
+        window['ga-disable-' + GA_ID] = true;
+        showBanner();
+      };
+
+      document.addEventListener('DOMContentLoaded', function () {
+        const consent = localStorage.getItem(CONSENT_KEY);
+
+        if (consent === 'yes') {
+          loadGoogleAnalytics();
+        } else if (consent === 'no') {
+          window['ga-disable-' + GA_ID] = true;
+        } else {
+          showBanner();
+        }
+      });
+    })();
   </script>
 
 </body>
 </html>
+
