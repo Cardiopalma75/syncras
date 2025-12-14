@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="it">
 <head>
   <meta charset="UTF-8">
@@ -56,28 +56,46 @@
       margin:20px 0;
       font-size:.9rem;
     }
+
     .quiz-wrapper{position:relative;}
     .quiz-section{
       background:#F7F7FB;
       padding:18px;
       border-radius:10px;
       border:1px solid #E5E7EB;
+      transition: filter .15s ease;
     }
-    .quiz-disable.quiz-disabled{
-  pointer-events:none;
-}
-d{opacity:.4;pointer-events:none;}
-   #quiz-overlay{
-  position:absolute;
-  inset:0;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  background:rgba(255,255,255,.7);
-  border-radius:10px;
-  text-align:center;
-  font-size:.95rem;
-}
+
+    /* ✅ QUI: niente opacità. Solo blocco click quando disabilitato */
+    .quiz-disabled{
+      pointer-events:none;
+    }
+
+    /* Overlay: visibile solo quando il quiz è bloccato (gestito da JS) */
+    #quiz-overlay{
+      position:absolute;
+      inset:0;
+      display:none; /* ✅ default OFF, lo gestisce lo script */
+      align-items:center;
+      justify-content:center;
+      background:rgba(255,255,255,.75);
+      border-radius:10px;
+      text-align:center;
+      font-size:.95rem;
+      padding:14px;
+      z-index:10;
+    }
+    #quiz-overlay .overlay-card{
+      background:#fff;
+      border:1px solid #E5E7EB;
+      border-radius:10px;
+      padding:14px;
+      box-shadow:0 10px 24px rgba(0,0,0,.08);
+      max-width:520px;
+      width:calc(100% - 20px);
+      color:#111827;
+      font-weight:600;
+    }
 
     .question{
       border-bottom:1px solid #E5E7EB;
@@ -157,240 +175,95 @@ la risposta giusta dipende solo da come vivi davvero l’auto.
 </p>
 
 <div class="legal-box">
-<label>
-<input type="checkbox" id="legalAccept">
- Prima di procedere: questo test fornisce stime indicative e non è consulenza tecnica o finanziaria.
- Tutte le condizioni sono nelle <a href="note-legali.html" target="_blank">Note Legali</a>.
-</label>
+  <label>
+    <input type="checkbox" id="legalAccept">
+    Prima di procedere: questo test fornisce stime indicative e non è consulenza tecnica o finanziaria.
+    Tutte le condizioni sono nelle <a href="note-legali.html" target="_blank" rel="noopener noreferrer">Note Legali</a>.
+  </label>
 </div>
 
 <div class="quiz-wrapper">
-<div id="quiz-overlay">Accetta le Note Legali per sbloccare il test.</div>
+  <div id="quiz-overlay">
+    <div class="overlay-card">Accetta le Note Legali per sbloccare il test.</div>
+  </div>
 
-<section id="quiz" class="quiz-section quiz-disabled">
+  <section id="quiz" class="quiz-section quiz-disabled">
 
-<div class="question">
-<h3>1. Quanti km fai al giorno di solito?</h3>
-<label><input type="radio" name="q1" value="0"> Meno di 40 km</label>
-<label><input type="radio" name="q1" value="1"> 40–100 km</label>
-<label><input type="radio" name="q1" value="2"> Oltre 100 km</label>
-</div>
+    <div class="question">
+      <h3>1. Quanti km fai al giorno di solito?</h3>
+      <label><input type="radio" name="q1" value="0"> Meno di 40 km</label>
+      <label><input type="radio" name="q1" value="1"> 40–100 km</label>
+      <label><input type="radio" name="q1" value="2"> Oltre 100 km</label>
+    </div>
 
-<div class="question">
-<h3>2. Puoi ricaricare facilmente a casa o al lavoro?</h3>
-<label><input type="radio" name="q2" value="0"> Sì, senza problemi</label>
-<label><input type="radio" name="q2" value="1"> A volte / con difficoltà</label>
-<label><input type="radio" name="q2" value="2"> No</label>
-</div>
+    <div class="question">
+      <h3>2. Puoi ricaricare facilmente a casa o al lavoro?</h3>
+      <label><input type="radio" name="q2" value="0"> Sì, senza problemi</label>
+      <label><input type="radio" name="q2" value="1"> A volte / con difficoltà</label>
+      <label><input type="radio" name="q2" value="2"> No</label>
+    </div>
 
-<div class="question">
-<h3>3. Come vivi l’idea di dover ricaricare?</h3>
-<label><input type="radio" name="q3" value="0"> Nessun problema</label>
-<label><input type="radio" name="q3" value="1"> Dipende dal periodo</label>
-<label><input type="radio" name="q3" value="2"> Preferisco evitarlo</label>
-</div>
+    <div class="question">
+      <h3>3. Come vivi l’idea di dover ricaricare?</h3>
+      <label><input type="radio" name="q3" value="0"> Nessun problema</label>
+      <label><input type="radio" name="q3" value="1"> Dipende dal periodo</label>
+      <label><input type="radio" name="q3" value="2"> Preferisco evitarlo</label>
+    </div>
 
-<div class="question">
-<h3>4. Viaggi lunghi (>300 km) quante volte fai?</h3>
-<label><input type="radio" name="q4" value="0"> Raramente</label>
-<label><input type="radio" name="q4" value="1"> Qualche volta</label>
-<label><input type="radio" name="q4" value="2"> Spesso</label>
-</div>
+    <div class="question">
+      <h3>4. Viaggi lunghi (&gt;300 km) quante volte fai?</h3>
+      <label><input type="radio" name="q4" value="0"> Raramente</label>
+      <label><input type="radio" name="q4" value="1"> Qualche volta</label>
+      <label><input type="radio" name="q4" value="2"> Spesso</label>
+    </div>
 
-<div class="question">
-<h3>5. Quanto odi fare benzina?</h3>
-<label><input type="radio" name="q5" value="0"> Molto</label>
-<label><input type="radio" name="q5" value="1"> Normale</label>
-<label><input type="radio" name="q5" value="2"> Zero</label>
-</div>
+    <div class="question">
+      <h3>5. Quanto odi fare benzina?</h3>
+      <label><input type="radio" name="q5" value="0"> Molto</label>
+      <label><input type="radio" name="q5" value="1"> Normale</label>
+      <label><input type="radio" name="q5" value="2"> Zero</label>
+    </div>
 
-<div class="question">
-<h3>6. Ti piace ottimizzare consumi e abitudini?</h3>
-<label><input type="radio" name="q6" value="0"> Sì</label>
-<label><input type="radio" name="q6" value="1"> Un po’</label>
-<label><input type="radio" name="q6" value="2"> No</label>
-</div>
+    <div class="question">
+      <h3>6. Ti piace ottimizzare consumi e abitudini?</h3>
+      <label><input type="radio" name="q6" value="0"> Sì</label>
+      <label><input type="radio" name="q6" value="1"> Un po’</label>
+      <label><input type="radio" name="q6" value="2"> No</label>
+    </div>
 
-<div class="question">
-<h3>7. Se l’auto consuma di più del previsto?</h3>
-<label><input type="radio" name="q7" value="0"> Cambio abitudini</label>
-<label><input type="radio" name="q7" value="1"> Mi infastidisce</label>
-<label><input type="radio" name="q7" value="2"> Mi arrabbio</label>
-</div>
+    <div class="question">
+      <h3>7. Se l’auto consuma di più del previsto?</h3>
+      <label><input type="radio" name="q7" value="0"> Cambio abitudini</label>
+      <label><input type="radio" name="q7" value="1"> Mi infastidisce</label>
+      <label><input type="radio" name="q7" value="2"> Mi arrabbio</label>
+    </div>
 
-<button id="submitQuiz">Calcola risultato</button>
-<div id="quiz-result"></div>
+    <button id="submitQuiz" type="button">Calcola risultato</button>
+    <div id="quiz-result"></div>
 
-</section>
+  </section>
 </div>
 
 </main>
 
-  <footer>
-    © 2025 Syncras.App — Tutti i diritti riservati<br>
-    <div style="margin-top:8px;">
-      <a href="privacy.html">Privacy Policy</a> |
-      <a href="cookie.html">Cookie Policy</a> |
-      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
-      <a href="note-legali.html">Note Legali</a>
-    </div>
-    <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
-      Syncras.App partecipa al Programma Affiliazione Amazon EU.  
-      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
-      senza alcun costo aggiuntivo per l’utente.  
-      Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
-      è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
-    </p>
-  </footer>
-
-  <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
-  <div id="cookie-banner">
-    <p>
-      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
-      (Google Analytics). Alcuni link potrebbero essere di affiliazione.
-      Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
-      <a href="privacy.html">Privacy Policy</a>.
-    </p>
-    <div style="display:flex; gap:10px; margin-top:8px;">
-      <button type="button" onclick="rejectCookies()">
-        Rifiuta
-      </button>
-      <button id="cookie-btn" type="button" onclick="acceptCookies()">
-        Accetta e continua
-      </button>
-    </div>
+<footer>
+  © 2025 Syncras.App — Tutti i diritti riservati<br>
+  <div style="margin-top:8px;">
+    <a href="privacy.html">Privacy Policy</a> |
+    <a href="cookie.html">Cookie Policy</a> |
+    <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
+    <a href="note-legali.html">Note Legali</a>
   </div>
+  <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
+    Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+    Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+    senza alcun costo aggiuntivo per l’utente.  
+    Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+    è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+  </p>
+</footer>
 
-  <style>
-    #cookie-banner {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      max-width: 90%;
-      width: 420px;
-      background: #ffffff;
-      border: 2px solid #6C5CE7;
-      border-radius: 10px;
-      padding: 16px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-      z-index: 9999;
-      font-family: Arial, sans-serif;
-      display: none;
-    }
-
-    #cookie-banner p {
-      margin: 0 0 12px 0;
-      font-size: 0.95rem;
-      color: #333;
-      line-height: 1.4;
-    }
-
-    #cookie-banner a {
-      color: #6C5CE7;
-      font-weight: bold;
-      text-decoration: none;
-    }
-
-    /* Pulsante RIFIUTA – pari importanza al pulsante ACCETTA */
-    #cookie-banner button[onclick="rejectCookies()"] {
-      flex: 1;
-      background: white !important;
-      color: #111827 !important;
-      border: 2px solid #6C5CE7 !important;
-      padding: 10px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-
-    /* Pulsante ACCETTA */
-    #cookie-btn {
-      flex: 1;
-      background: #6C5CE7;
-      color: white;
-      border: 2px solid #6C5CE7;
-      padding: 10px 16px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 700;
-    }
-
-    #cookie-btn:hover {
-      background: #4B3ACB;
-    }
-  </style>
-
-  <script>
-  (function () {
-    const GA_ID = 'G-CFTTCYDZ2P';
-    const CONSENT_KEY = 'syncras_cookie_consent'; // chiave unica per tutto il sito
-
-    // 1️⃣ BLOCCO PREVENTIVO: GA disabilitato finché non c'è consenso
-    window['ga-disable-' + GA_ID] = true;
-
-    function loadGoogleAnalytics() {
-      if (window.__syncrasGaLoaded) return;
-      window.__syncrasGaLoaded = true;
-
-      // Riabilita GA solo dopo il consenso
-      window['ga-disable-' + GA_ID] = false;
-
-      const gaScript = document.createElement('script');
-      gaScript.async = true;
-      gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
-      document.head.appendChild(gaScript);
-
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){ dataLayer.push(arguments); }
-      window.gtag = gtag;
-      gtag('js', new Date());
-      gtag('config', GA_ID, { anonymize_ip: true });
-    }
-
-    function showBanner() {
-      const banner = document.getElementById('cookie-banner');
-      if (banner) banner.style.display = 'block';
-    }
-
-    function hideBanner() {
-      const banner = document.getElementById('cookie-banner');
-      if (banner) banner.style.display = 'none';
-    }
-
-    window.acceptCookies = function () {
-      localStorage.setItem(CONSENT_KEY, 'yes');
-      hideBanner();
-      loadGoogleAnalytics();
-    };
-
-    window.rejectCookies = function () {
-      localStorage.setItem(CONSENT_KEY, 'no');
-      hideBanner();
-      // GA resta bloccato
-      window['ga-disable-' + GA_ID] = true;
-    };
-
-    // 2️⃣ FUNZIONE DI REVOCA – per cambiare idea dopo
-    window.revokeCookies = function () {
-      localStorage.removeItem(CONSENT_KEY);
-      window['ga-disable-' + GA_ID] = true;   // blocca subito GA
-      showBanner();                           // ri-mostra il banner
-    };
-
-    document.addEventListener('DOMContentLoaded', function () {
-      const consent = localStorage.getItem(CONSENT_KEY);
-
-      if (consent === 'yes') {
-        loadGoogleAnalytics();
-      } else if (consent === 'no') {
-        window['ga-disable-' + GA_ID] = true;
-      } else {
-        showBanner();
-      }
-    });
-  })();
-  </script>
+<!-- ✅ SCRIPT SBLOCCO QUIZ (QUESTO ERA IL PEZZO MANCANTE) -->
 <script>
 (function(){
   const checkbox = document.getElementById('legalAccept');
@@ -399,7 +272,7 @@ la risposta giusta dipende solo da come vivi davvero l’auto.
 
   if(!checkbox || !quiz || !overlay) return;
 
-  function syncQuiz(){
+  function sync(){
     if(checkbox.checked){
       quiz.classList.remove('quiz-disabled');
       overlay.style.display = 'none';
@@ -409,10 +282,150 @@ la risposta giusta dipende solo da come vivi davvero l’auto.
     }
   }
 
-  checkbox.addEventListener('change', syncQuiz);
-  syncQuiz(); // stato iniziale
+  checkbox.addEventListener('change', sync);
+  sync();
+})();
+</script>
+
+<!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
+<div id="cookie-banner">
+  <p>
+    Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
+    (Google Analytics). Alcuni link potrebbero essere di affiliazione.
+    Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
+    <a href="privacy.html">Privacy Policy</a>.
+  </p>
+  <div style="display:flex; gap:10px; margin-top:8px;">
+    <button type="button" onclick="rejectCookies()">Rifiuta</button>
+    <button id="cookie-btn" type="button" onclick="acceptCookies()">Accetta e continua</button>
+  </div>
+</div>
+
+<style>
+  #cookie-banner {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 90%;
+    width: 420px;
+    background: #ffffff;
+    border: 2px solid #6C5CE7;
+    border-radius: 10px;
+    padding: 16px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    z-index: 9999;
+    font-family: Arial, sans-serif;
+    display: none;
+  }
+
+  #cookie-banner p {
+    margin: 0 0 12px 0;
+    font-size: 0.95rem;
+    color: #333;
+    line-height: 1.4;
+  }
+
+  #cookie-banner a {
+    color: #6C5CE7;
+    font-weight: bold;
+    text-decoration: none;
+  }
+
+  #cookie-banner button[onclick="rejectCookies()"] {
+    flex: 1;
+    background: white !important;
+    color: #111827 !important;
+    border: 2px solid #6C5CE7 !important;
+    padding: 10px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+
+  #cookie-btn {
+    flex: 1;
+    background: #6C5CE7;
+    color: white;
+    border: 2px solid #6C5CE7;
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 700;
+  }
+
+  #cookie-btn:hover {
+    background: #4B3ACB;
+  }
+</style>
+
+<script>
+(function () {
+  const GA_ID = 'G-CFTTCYDZ2P';
+  const CONSENT_KEY = 'syncras_cookie_consent';
+
+  window['ga-disable-' + GA_ID] = true;
+
+  function loadGoogleAnalytics() {
+    if (window.__syncrasGaLoaded) return;
+    window.__syncrasGaLoaded = true;
+
+    window['ga-disable-' + GA_ID] = false;
+
+    const gaScript = document.createElement('script');
+    gaScript.async = true;
+    gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+    document.head.appendChild(gaScript);
+
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    window.gtag = gtag;
+    gtag('js', new Date());
+    gtag('config', GA_ID, { anonymize_ip: true });
+  }
+
+  function showBanner() {
+    const banner = document.getElementById('cookie-banner');
+    if (banner) banner.style.display = 'block';
+  }
+
+  function hideBanner() {
+    const banner = document.getElementById('cookie-banner');
+    if (banner) banner.style.display = 'none';
+  }
+
+  window.acceptCookies = function () {
+    localStorage.setItem(CONSENT_KEY, 'yes');
+    hideBanner();
+    loadGoogleAnalytics();
+  };
+
+  window.rejectCookies = function () {
+    localStorage.setItem(CONSENT_KEY, 'no');
+    hideBanner();
+    window['ga-disable-' + GA_ID] = true;
+  };
+
+  window.revokeCookies = function () {
+    localStorage.removeItem(CONSENT_KEY);
+    window['ga-disable-' + GA_ID] = true;
+    showBanner();
+  };
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const consent = localStorage.getItem(CONSENT_KEY);
+
+    if (consent === 'yes') {
+      loadGoogleAnalytics();
+    } else if (consent === 'no') {
+      window['ga-disable-' + GA_ID] = true;
+    } else {
+      showBanner();
+    }
+  });
 })();
 </script>
 
 </body>
 </html>
+
