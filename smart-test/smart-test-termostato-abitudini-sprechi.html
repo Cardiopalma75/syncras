@@ -505,6 +505,29 @@
       è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
     </p>
   </footer>
+<script>
+  // Sblocco quiz dopo accettazione Note Legali
+  (function () {
+    const checkbox = document.getElementById('legalAccept');
+    const quizSection = document.getElementById('quiz-section');
+    const overlayMsg = document.getElementById('quiz-overlay-message');
+
+    if (!checkbox || !quizSection || !overlayMsg) return;
+
+    function syncState() {
+      if (checkbox.checked) {
+        quizSection.classList.remove('quiz-disabled');
+        overlayMsg.style.display = 'none';
+      } else {
+        quizSection.classList.add('quiz-disabled');
+        overlayMsg.style.display = 'flex';
+      }
+    }
+
+    checkbox.addEventListener('change', syncState);
+    syncState(); // importante: applica lo stato al caricamento
+  })();
+</script>
 
   <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
   <div id="cookie-banner">
