@@ -301,13 +301,14 @@
 
       <nav id="main-nav">
         <a href="index.html">Home</a>
-        <a href="blog.html">Blog</a>
-        <a href="smart-test.html">Smart Test</a>
-        <a href="calcolatori.html">Calcolatori</a>
-        <a href="curiosita.html">Curiosità</a>
-        <a href="misteri.html">Misteri</a>
-        <a href="offerte.html">Prodotti Consapevoli</a>
-        <a href="chi.html">Chi siamo</a>
+      <a href="blog.html">Blog</a>
+      <a href="smart-test.html">Smart Test</a>
+      <a href="calcolatori.html">Calcolatori</a>
+      <a href="fast-card.html">Fast Card</a>
+      <a href="offerte.html">Prodotti Consapevoli</a>
+      <a href="curiosita.html">Curiosità</a>
+      <a href="misteri.html">Misteri</a>
+      <a href="chi.html">Chi siamo</a>
       </nav>
     </div>
   </header>
@@ -522,9 +523,9 @@
       <a href="note-legali.html">Note Legali</a>
     </div>
     <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
-      Syncras.App partecipa al Programma Affiliazione Amazon EU.
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.  
       Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
-      senza alcun costo aggiuntivo per l’utente.
+      senza alcun costo aggiuntivo per l’utente.  
       Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
       è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
     </p>
@@ -539,8 +540,12 @@
       <a href="privacy.html">Privacy Policy</a>.
     </p>
     <div style="display:flex; gap:10px; margin-top:8px;">
-      <button type="button" onclick="rejectCookies()">Rifiuta</button>
-      <button id="cookie-btn" type="button" onclick="acceptCookies()">Accetta e continua</button>
+      <button type="button" onclick="rejectCookies()">
+        Rifiuta
+      </button>
+      <button id="cookie-btn" type="button" onclick="acceptCookies()">
+        Accetta e continua
+      </button>
     </div>
   </div>
 
@@ -599,21 +604,24 @@
       font-weight: 700;
     }
 
-    #cookie-btn:hover { background: #4B3ACB; }
+    #cookie-btn:hover {
+      background: #4B3ACB;
+    }
   </style>
 
   <script>
   (function () {
     const GA_ID = 'G-CFTTCYDZ2P';
-    const CONSENT_KEY = 'syncras_cookie_consent';
+    const CONSENT_KEY = 'syncras_cookie_consent'; // chiave unica per tutto il sito
 
-    // GA disabilitato finché non c'è consenso
+    // 1️⃣ BLOCCO PREVENTIVO: GA disabilitato finché non c'è consenso
     window['ga-disable-' + GA_ID] = true;
 
     function loadGoogleAnalytics() {
       if (window.__syncrasGaLoaded) return;
       window.__syncrasGaLoaded = true;
 
+      // Riabilita GA solo dopo il consenso
       window['ga-disable-' + GA_ID] = false;
 
       const gaScript = document.createElement('script');
@@ -647,13 +655,15 @@
     window.rejectCookies = function () {
       localStorage.setItem(CONSENT_KEY, 'no');
       hideBanner();
+      // GA resta bloccato
       window['ga-disable-' + GA_ID] = true;
     };
 
+    // 2️⃣ FUNZIONE DI REVOCA – per cambiare idea dopo
     window.revokeCookies = function () {
       localStorage.removeItem(CONSENT_KEY);
-      window['ga-disable-' + GA_ID] = true;
-      showBanner();
+      window['ga-disable-' + GA_ID] = true;   // blocca subito GA
+      showBanner();                           // ri-mostra il banner
     };
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -669,5 +679,6 @@
     });
   })();
   </script>
+
 </body>
 </html>
