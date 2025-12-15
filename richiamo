@@ -7,6 +7,10 @@
   <title>TITOLO PAGINA | Syncras.App</title>
   <meta name="description" content="Descrizione SEO della pagina.">
 
+
+<script src="/js/syncras.js"></script>
+
+
   <!-- CSS UNICO SYNCRAS (PC + MOBILE) -->
   <link rel="stylesheet" href="/css/syncras.css">
 </head>
