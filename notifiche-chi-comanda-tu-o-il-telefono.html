@@ -6,6 +6,7 @@
 
   <title>Notifiche: chi comanda, tu o il telefono? | Syncras.App</title>
   <meta name="description" content="La grande bugia nazionale: decido io quando guardarlo. Spoiler: quasi mai.">
+  <meta name="robots" content="index,follow">
 
   <!-- CSS UNIFICATO SYNCRAS -->
   <link rel="stylesheet" href="/css/syncras.css">
@@ -13,19 +14,27 @@
 
 <body>
 
-  <!-- HEADER -->
+  <!-- HEADER (caricato da file unico) -->
   <div id="site-header"></div>
 
-  <!-- CONTENUTO ARTICOLO -->
+  <!-- CONTENUTO ARTICOLO (variabile) -->
   <main>
     <div class="back-links">
-      ← <a href="blog.html">Torna al Blog</a> | <a href="smart-test.html">Vai agli Smart Test</a> | <a href="fast-cards.html">Vai alle Fast Cards</a>
+      ← <a href="/blog.html">Torna al Blog</a> |
+      <a href="/smart-test.html">Vai agli Smart Test</a> |
+      <a href="/fast-cards.html">Vai alle Fast Cards</a>
     </div>
 
     <span class="intro-tag">Psicologia pratica (e italiana)</span>
     <h1>Notifiche: chi comanda, tu o il telefono?</h1>
 
-    <button class="shareBtn" id="shareBtnTop">📎 Condividi questo articolo</button>
+    <!-- SHARE (deve avere data-share) -->
+    <button class="shareBtn"
+            data-share
+            data-title="Notifiche: chi comanda, tu o il telefono?"
+            data-text="La grande bugia nazionale: decido io quando guardarlo. Spoiler: quasi mai.">
+      📎 Condividi questo articolo
+    </button>
 
     <p>
       In Italia abbiamo un superpotere: la <strong>sensazione di controllo</strong>.
@@ -88,12 +97,6 @@
       E il cervello odia i finali aperti.
     </p>
 
-    <p>
-      È come avere un post-it in fronte che dice:
-      “Hai lasciato qualcosa in sospeso”.
-      E tu vuoi toglierlo.
-    </p>
-
     <div class="syn-box">
       <strong>Syncras tip:</strong><br>
       Se puoi, togli i badge dalle app “buco nero” (social, news, shopping, video).
@@ -118,36 +121,12 @@
     </p>
 
     <h3>3) La regola del “se apro, devo uscire con qualcosa”</h3>
-    <p>
-      Se apri un’app, esci solo se hai fatto una di queste cose:
-    </p>
+    <p>Se apri un’app, esci solo se hai fatto una di queste cose:</p>
     <ul class="list">
       <li>hai risposto a un messaggio importante</li>
       <li>hai salvato una cosa utile (nota/link)</li>
       <li>hai risolto una micro-attività (mail, promemoria)</li>
     </ul>
-    <p>
-      Se esci a mani vuote 9 volte su 10, non è “informazione”. È anestesia.
-    </p>
-
-    <div class="cta-row">
-      <a class="cta" href="fast-cards.html">⚡ Vai alle Fast Cards</a>
-      <a class="cta-ghost" href="smart-test.html">🧪 Vai agli Smart Test</a>
-    </div>
-
-    <p class="small">
-      Vuoi un promemoria ancora più rapido? C’è la Fast Card dedicata a tempo/attenzione:
-      appena la pubblichi, linkala qui dentro e diventa una combo perfetta.
-    </p>
-
-    <h2>Conclusione: non è “colpa tua”, ma è responsabilità tua</h2>
-
-    <p>
-      Le notifiche sono progettate per una cosa: <strong>farti tornare</strong>.
-      Non per farti vivere meglio.
-      La buona notizia è che non serve una rivoluzione:
-      bastano 2-3 scelte furbe e ti riprendi già un bel pezzo di tempo.
-    </p>
 
     <div class="mini-test">
       <strong>Micro-sfida Syncras (7 giorni):</strong>
@@ -157,41 +136,37 @@
         <li>Controlli “a orari” (2-3 volte al giorno)</li>
       </ul>
       Se dopo una settimana non noti differenza, mi prendo la responsabilità morale e ti offro una pizza virtuale.
-      (Non è detraibile, però è sentita.)
     </div>
 
-    <button class="shareBtn" id="shareBtnBottom">📎 Condividi questo articolo</button>
+    <!-- SHARE (bottom) -->
+    <button class="shareBtn"
+            data-share
+            data-title="Notifiche: chi comanda, tu o il telefono?"
+            data-text="La grande bugia nazionale: decido io quando guardarlo. Spoiler: quasi mai.">
+      📎 Condividi questo articolo
+    </button>
   </main>
 
-  <!-- FOOTER + GDPR -->
+  <!-- FOOTER + GDPR (caricati da file unici) -->
   <div id="site-footer"></div>
   <div id="site-gdpr"></div>
 
- <script src="/js/syncras.js"></script>
+  <!-- JS UNICO (menu + share) -->
+  <script src="/js/syncras.js"></script>
 
-<script>
-  Promise.all([
-    fetch("/header.html")
-      .then(r => r.text())
-      .then(t => document.getElementById("site-header").innerHTML = t),
-
-    fetch("/footer.html")
-      .then(r => r.text())
-      .then(t => document.getElementById("site-footer").innerHTML = t),
-
-    fetch("/gdpr.html")
-      .then(r => r.text())
-      .then(t => document.getElementById("site-gdpr").innerHTML = t)
-  ]).then(() => {
-    // menu + share
-    if (window.__syncrasBindAll) window.__syncrasBindAll();
-
-    // cookie banner + revoke
-    if (window.__syncrasInitGdpr) window.__syncrasInitGdpr();
-  });
-</script>
-
+  <!-- Caricamento header/footer/gdpr e bind finale -->
+  <script>
+    Promise.all([
+      fetch("/header.html").then(r => r.text()).then(t => (document.getElementById("site-header").innerHTML = t)),
+      fetch("/footer.html").then(r => r.text()).then(t => (document.getElementById("site-footer").innerHTML = t)),
+      fetch("/gdpr.html").then(r => r.text()).then(t => (document.getElementById("site-gdpr").innerHTML = t))
+    ]).then(() => {
+      if (window.__syncrasBindAll) window.__syncrasBindAll();
+      if (window.__syncrasInitGdpr) window.__syncrasInitGdpr();
+    });
+  </script>
 
 </body>
 </html>
+
 
