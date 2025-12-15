@@ -533,129 +533,147 @@
     </p>
   </footer>
 
-   <!-- Cookie Banner + Google Analytics (GDPR) -->
-  <div id="cookie-banner" role="dialog" aria-modal="true" aria-label="Preferenze cookie">
-    <p>
-      Usiamo cookie <strong>tecnici</strong> per far funzionare il sito.
-      <br>
-      <strong>Solo se acconsenti</strong>, useremo cookie di <strong>misurazione</strong> (Google Analytics)
-      per statistiche sulle visite.
-      <br>
-      Alcuni link potrebbero essere di affiliazione.
-      Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
-      <a href="privacy.html">Privacy Policy</a>.
-    </p>
+  <!-- Cookie Banner + Google Analytics (GDPR 10/10) -->
+<div id="cookie-banner" role="dialog" aria-modal="true" aria-label="Preferenze cookie">
+  <p>
+    Usiamo cookie <strong>tecnici</strong> per far funzionare il sito.<br>
+    <strong>Solo se acconsenti</strong>, useremo cookie di <strong>misurazione</strong> (Google Analytics)
+    per statistiche sulle visite.<br>
+    Alcuni link potrebbero essere di affiliazione.
+    Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
+    <a href="privacy.html">Privacy Policy</a>.
+  </p>
 
-    <div style="display:flex; gap:10px; margin-top:8px;">
-      <button type="button" onclick="rejectCookies()" style="flex:1;background:#fff;color:#111827;border:2px solid #6C5CE7;padding:10px 12px;border-radius:6px;cursor:pointer;font-weight:700;">
-        Rifiuta
-      </button>
-      <button type="button" onclick="acceptCookies()" style="flex:1;background:#6C5CE7;color:#fff;border:2px solid #6C5CE7;padding:10px 16px;border-radius:6px;cursor:pointer;font-weight:800;">
-        Accetta
-      </button>
-    </div>
+  <div style="display:flex; gap:10px; margin-top:8px;">
+    <button id="cookie-reject" type="button"
+      style="flex:1;background:#fff;color:#111827;border:2px solid #6C5CE7;padding:10px 12px;border-radius:6px;cursor:pointer;font-weight:700;">
+      Rifiuta
+    </button>
+    <button id="cookie-accept" type="button"
+      style="flex:1;background:#6C5CE7;color:#fff;border:2px solid #6C5CE7;padding:10px 16px;border-radius:6px;cursor:pointer;font-weight:800;">
+      Accetta
+    </button>
   </div>
+</div>
 
-  <style>
-    #cookie-banner{
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      max-width: 90%;
-      width: 420px;
-      background: #ffffff;
-      border: 2px solid #6C5CE7;
-      border-radius: 10px;
-      padding: 16px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-      z-index: 9999;
-      font-family: Arial, sans-serif;
-      display: none;
-    }
-    #cookie-banner p{
-      margin: 0 0 12px 0;
-      font-size: 0.95rem;
-      color: #111827;
-      line-height: 1.4;
-    }
-    #cookie-banner a{
-      color: #6C5CE7;
-      font-weight: 800;
-      text-decoration: none;
-    }
-    #cookie-banner a:hover{ text-decoration: underline; }
-  </style>
+<style>
+  #cookie-banner{
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 90%;
+    width: 420px;
+    background: #ffffff;
+    border: 2px solid #6C5CE7;
+    border-radius: 10px;
+    padding: 16px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    z-index: 9999;
+    font-family: Arial, sans-serif;
+    display: none;
+  }
+  #cookie-banner p{
+    margin: 0 0 12px 0;
+    font-size: 0.95rem;
+    color: #111827;
+    line-height: 1.4;
+  }
+  #cookie-banner a{
+    color: #6C5CE7;
+    font-weight: 800;
+    text-decoration: none;
+  }
+  #cookie-banner a:hover{ text-decoration: underline; }
+</style>
 
-  <script>
-  (function () {
-    const GA_ID = 'G-CFTTCYDZ2P';
-    const CONSENT_KEY = 'syncras_cookie_consent';
+<script>
+(function () {
+  const GA_ID = 'G-CFTTCYDZ2P';
+  const CONSENT_KEY = 'syncras_cookie_consent';
 
-    // Blocca GA finché non c'è consenso
+  // Hard block finché non c'è consenso
+  window['ga-disable-' + GA_ID] = true;
+
+  // Consent Mode (default: denied) — livello alto
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  window.gtag = gtag;
+
+  gtag('consent','default',{
+    ad_storage:'denied',
+    analytics_storage:'denied',
+    ad_user_data:'denied',
+    ad_personalization:'denied'
+  });
+
+  function loadGoogleAnalytics() {
+    if (window.__syncrasGaLoaded) return;
+    window.__syncrasGaLoaded = true;
+
+    window['ga-disable-' + GA_ID] = false;
+
+    const s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+    document.head.appendChild(s);
+
+    gtag('js', new Date());
+    gtag('config', GA_ID, { anonymize_ip: true });
+  }
+
+  function showBanner() {
+    const banner = document.getElementById('cookie-banner');
+    if (banner) banner.style.display = 'block';
+  }
+
+  function hideBanner() {
+    const banner = document.getElementById('cookie-banner');
+    if (banner) banner.style.display = 'none';
+  }
+
+  window.acceptCookies = function () {
+    localStorage.setItem(CONSENT_KEY, 'yes');
+    hideBanner();
+    gtag('consent','update',{ analytics_storage:'granted' });
+    loadGoogleAnalytics();
+  };
+
+  window.rejectCookies = function () {
+    localStorage.setItem(CONSENT_KEY, 'no');
+    hideBanner();
+    gtag('consent','update',{ analytics_storage:'denied' });
     window['ga-disable-' + GA_ID] = true;
+  };
 
-    function loadGoogleAnalytics() {
-      if (window.__syncrasGaLoaded) return;
-      window.__syncrasGaLoaded = true;
+  window.revokeCookies = function () {
+    localStorage.removeItem(CONSENT_KEY);
+    gtag('consent','update',{ analytics_storage:'denied' });
+    window['ga-disable-' + GA_ID] = true;
+    showBanner();
+  };
 
-      window['ga-disable-' + GA_ID] = false;
+  document.addEventListener('DOMContentLoaded', function () {
+    const consent = localStorage.getItem(CONSENT_KEY);
 
-      const gaScript = document.createElement('script');
-      gaScript.async = true;
-      gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
-      document.head.appendChild(gaScript);
-
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){ dataLayer.push(arguments); }
-      window.gtag = gtag;
-
-      gtag('js', new Date());
-      gtag('config', GA_ID, { anonymize_ip: true });
-    }
-
-    function showBanner() {
-      const banner = document.getElementById('cookie-banner');
-      if (banner) banner.style.display = 'block';
-    }
-
-    function hideBanner() {
-      const banner = document.getElementById('cookie-banner');
-      if (banner) banner.style.display = 'none';
-    }
-
-    window.acceptCookies = function () {
-      localStorage.setItem(CONSENT_KEY, 'yes');
-      hideBanner();
+    if (consent === 'yes') {
+      gtag('consent','update',{ analytics_storage:'granted' });
       loadGoogleAnalytics();
-    };
-
-    window.rejectCookies = function () {
-      localStorage.setItem(CONSENT_KEY, 'no');
-      hideBanner();
+    } else if (consent === 'no') {
+      gtag('consent','update',{ analytics_storage:'denied' });
       window['ga-disable-' + GA_ID] = true;
-    };
-
-    // Revoca / modifica: la richiami dal footer (niente pulsanti fissi)
-    window.revokeCookies = function () {
-      localStorage.removeItem(CONSENT_KEY);
-      window['ga-disable-' + GA_ID] = true;
+    } else {
       showBanner();
-    };
+    }
 
-    document.addEventListener('DOMContentLoaded', function () {
-      const consent = localStorage.getItem(CONSENT_KEY);
-
-      if (consent === 'yes') {
-        loadGoogleAnalytics();
-      } else if (consent === 'no') {
-        window['ga-disable-' + GA_ID] = true;
-      } else {
-        showBanner();
-      }
-    });
-  })();
-  </script>
+    // Hook bottoni (evita onclick inline se vuoi, ma va bene anche inline)
+    const a = document.getElementById('cookie-accept');
+    const r = document.getElementById('cookie-reject');
+    if (a) a.addEventListener('click', window.acceptCookies);
+    if (r) r.addEventListener('click', window.rejectCookies);
+  });
+})();
+</script>
 
 
 </body>
