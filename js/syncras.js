@@ -1,75 +1,77 @@
+// /js/syncras.js
 (function () {
-  function initMenu() {
-    const btn = document.querySelector('.menu-toggle');
-    const nav = document.getElementById('main-nav');
+  "use strict";
 
+  // --- MENU MOBILE (funziona anche con header caricato via fetch) ---
+  function bindMenu() {
+    const btn = document.querySelector(".menu-toggle");
+    const nav = document.getElementById("main-nav");
     if (!btn || !nav) return;
 
-    // Toggle menu
-    btn.addEventListener('click', function () {
-      document.body.classList.toggle('nav-open');
-    });
+    // evita doppi binding se richiamato più volte
+    if (btn.dataset.bound === "1") return;
+    btn.dataset.bound = "1";
 
-    // Chiudi menu quando tocchi un link (mobile)
-    nav.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => document.body.classList.remove('nav-open'));
+    btn.addEventListener("click", function () {
+      document.body.classList.toggle("nav-open");
     });
   }
 
-  async function shareOrCopy() {
-    const url = window.location.href;
-    const title = document.title || 'Syncras.App';
-    const text = 'Articolo Syncras: tempo, attenzione e scelte furbe.';
+  // --- SHARE (usa Web Share API se disponibile, altrimenti copia link) ---
+  function bindShare() {
+    const buttons = document.querySelectorAll("[data-share]");
+    if (!buttons.length) return;
 
-    // Prova share nativo
-    if (navigator.share) {
-      try {
-        await navigator.share({ title, text, url });
-        return;
-      } catch (e) {
-        // se l’utente annulla o il browser blocca → fallback sotto
-      }
-    }
+    buttons.forEach((btn) => {
+      if (btn.dataset.bound === "1") return;
+      btn.dataset.bound = "1";
 
-    // Fallback: copia link
-    try {
-      await navigator.clipboard.writeText(url);
-      alert('Link copiato ✅\n\n' + url);
-    } catch (e) {
-      // fallback “vecchio”
-      const tmp = document.createElement('input');
-      tmp.value = url;
-      document.body.appendChild(tmp);
-      tmp.select();
-      document.execCommand('copy');
-      document.body.removeChild(tmp);
-      alert('Link copiato ✅\n\n' + url);
-    }
-  }
+      btn.addEventListener("click", async () => {
+        const title = btn.getAttribute("data-title") || document.title;
+        const text = btn.getAttribute("data-text") || "";
+        const url = window.location.href;
 
-  function initShare() {
-    const btns = ['shareBtnTop', 'shareBtnBottom']
-      .map(id => document.getElementById(id))
-      .filter(Boolean);
+        // Web Share API (mobile e alcuni browser)
+        if (navigator.share) {
+          try {
+            await navigator.share({ title, text, url });
+          } catch (e) {
+            // l'utente può annullare: non è un errore vero
+          }
+          return;
+        }
 
-    if (!btns.length) return;
-
-    btns.forEach(btn => {
-      btn.style.display = 'inline-block';
-      btn.addEventListener('click', shareOrCopy);
+        // Fallback: copia link
+        try {
+          await navigator.clipboard.writeText(url);
+          btn.textContent = "✅ Link copiato!";
+          setTimeout(() => (btn.textContent = "📎 Condividi"), 1400);
+        } catch (e) {
+          // fallback vecchio stile
+          const tmp = document.createElement("textarea");
+          tmp.value = url;
+          document.body.appendChild(tmp);
+          tmp.select();
+          document.execCommand("copy");
+          document.body.removeChild(tmp);
+          btn.textContent = "✅ Link copiato!";
+          setTimeout(() => (btn.textContent = "📎 Condividi"), 1400);
+        }
+      });
     });
   }
 
-  // Questo è il punto chiave: funziona anche con header caricato via fetch
-  function initAll() {
-    initMenu();
-    initShare();
+  // chiamata unica per agganciare tutto
+  function bindAll() {
+    bindMenu();
+    bindShare();
   }
 
-  // Parte quando la pagina è pronta
-  document.addEventListener('DOMContentLoaded', initAll);
+  // 1) quando DOM pronto
+  document.addEventListener("DOMContentLoaded", bindAll);
 
-  // E riprova poco dopo (utile quando header/footer arrivano via fetch)
-  setTimeout(initAll, 200);
-  setTimeout(initAll, 800);
+  // 2) quando header/footer vengono inseriti via fetch: richiama bindAll()
+  // (lo farà la pagina, vedi punto 2 sotto)
+  window.__syncrasBindAll = bindAll;
 })();
+
