@@ -8,349 +8,359 @@
   <meta name="robots" content="index,follow">
 
   <style>
-    :root {
-      --violet-main: #6C5CE7;
-      --violet-dark: #4B3ACB;
-      --bg-page: #F7F7FB;
-      --text-main: #403E43;
+    :root{
+      --violet-main:#6C5CE7;
+      --violet-dark:#4B3ACB;
+      --bg-page:#F7F7FB;
+      --text-main:#403E43;
+      --border:#E5E7EB;
     }
 
-    body {
+    *{ box-sizing:border-box; }
+
+    body{
       font-family: Arial, sans-serif;
       background: var(--bg-page);
-      margin: 0;
-      padding: 0;
-      line-height: 1.6;
+      margin:0;
+      padding:0;
+      line-height:1.6;
       color: var(--text-main);
     }
 
     /* HEADER VIOLA UNIFICATO */
-    .site-header {
+    .site-header{
       background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
-      color: white;
-      padding: 12px 14px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+      color:#fff;
+      padding:12px 14px;
+      box-shadow:0 2px 4px rgba(0,0,0,0.15);
+      position: relative;
+      z-index: 50;
     }
-    .header-inner {
-      max-width: 1180px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
+    .header-inner{
+      max-width:1180px;
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      position: relative;
     }
-    .logo {
-      font-size: 1.4rem;
-      font-weight: bold;
-      letter-spacing: 0.03em;
-    }
-
-    #main-nav {
-      display: flex;
-      gap: 18px;
-      font-size: 0.95rem;
-    }
-    #main-nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: 600;
-      padding-bottom: 2px;
-    }
-    #main-nav a:hover {
-      text-decoration: underline;
+    .logo{
+      font-size:1.4rem;
+      font-weight:bold;
+      letter-spacing:0.03em;
     }
 
-    .menu-toggle {
-      display: none;
+    #main-nav{
+      display:flex;
+      gap:18px;
+      font-size:0.95rem;
+    }
+    #main-nav a{
+      color:#fff;
+      text-decoration:none;
+      font-weight:600;
+      padding-bottom:2px;
+    }
+    #main-nav a:hover{ text-decoration: underline; }
+
+    .menu-toggle{
+      display:none;
       background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.4);
-      border-radius: 6px;
-      color: white;
-      padding: 6px 10px;
-      font-size: 0.9rem;
-      cursor: pointer;
+      border:1px solid rgba(255,255,255,0.4);
+      border-radius:6px;
+      color:#fff;
+      padding:6px 10px;
+      font-size:0.9rem;
+      cursor:pointer;
     }
-    .menu-toggle span {
-      margin-left: 4px;
-      font-size: 1.1rem;
-    }
+    .menu-toggle span{ margin-left:4px; font-size:1.1rem; }
 
-    @media (max-width: 768px) {
-      #main-nav {
-        display: none;
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 56px;
-        margin: 0 auto;
-        max-width: 1180px;
-        flex-direction: column;
+    @media (max-width:768px){
+      #main-nav{
+        display:none;
+        position:absolute;
+        left:0;
+        right:0;
+        top:56px;
+        margin:0 auto;
+        max-width:1180px;
+        flex-direction:column;
         background-color: var(--violet-dark);
-        padding: 10px 16px 12px 16px;
-        border-radius: 0 0 8px 8px;
-        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
-        z-index: 50;
+        padding:10px 16px 12px 16px;
+        border-radius:0 0 8px 8px;
+        box-shadow:0 3px 6px rgba(0,0,0,0.25);
+        z-index: 60;
       }
-      #main-nav a {
-        padding: 6px 0;
-      }
-      body.nav-open #main-nav {
-        display: flex;
-      }
-      .menu-toggle {
-        display: inline-flex;
-        align-items: center;
-      }
+      #main-nav a{ padding:6px 0; }
+      body.nav-open #main-nav{ display:flex; }
+      .menu-toggle{ display:inline-flex; align-items:center; }
     }
 
-    main {
-      max-width: 1100px;
-      margin: 30px auto;
-      padding: 20px;
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    main{
+      max-width:1100px;
+      margin:30px auto;
+      padding:20px;
+      background:#fff;
+      border-radius:10px;
+      box-shadow:0 4px 6px rgba(0,0,0,0.1);
     }
 
-    h1, h2, h3 {
+    h1,h2,h3{ color: var(--violet-dark); }
+    p{ margin-bottom:14px; }
+
+    .back-links{
+      margin-bottom:18px;
+      font-size:0.9rem;
+    }
+    .back-links a{
       color: var(--violet-dark);
+      text-decoration:none;
+      font-weight:700;
     }
+    .back-links a:hover{ text-decoration: underline; }
 
-    p {
-      margin-bottom: 14px;
-    }
-
-    .back-links {
-      margin-bottom: 18px;
-      font-size: 0.9rem;
-    }
-    .back-links a {
+    .intro-tag{
+      display:inline-block;
+      background:#F3F4FF;
       color: var(--violet-dark);
-      text-decoration: none;
-      font-weight: 600;
-    }
-    .back-links a:hover {
-      text-decoration: underline;
-    }
-
-    .intro-tag {
-      display: inline-block;
-      background: #F3F4FF;
-      color: var(--violet-dark);
-      padding: 4px 10px;
-      border-radius: 999px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-bottom: 8px;
+      padding:4px 10px;
+      border-radius:999px;
+      font-size:0.8rem;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:0.06em;
+      margin-bottom:8px;
     }
 
-    .smart-test-lead {
-      font-size: 1.02rem;
+    .smart-test-lead{ font-size:1.02rem; }
+
+    .test-card{
+      background:#F7F7FB;
+      border-radius:10px;
+      padding:18px 16px 16px;
+      border:1px solid var(--border);
+      margin-top:20px;
     }
 
-    .test-card {
-      background: #F7F7FB;
-      border-radius: 10px;
-      padding: 18px 16px 16px;
-      border: 1px solid #E5E7EB;
-      margin-top: 20px;
+    .test-section-title{
+      font-size:1.05rem;
+      font-weight:900;
+      margin-top:6px;
+      margin-bottom:4px;
+      color:#111827;
+    }
+    .test-section-sub{
+      font-size:0.92rem;
+      color:#4B5563;
+      margin-bottom:10px;
     }
 
-    .test-section-title {
-      font-size: 1.05rem;
-      font-weight: 700;
-      margin-top: 6px;
-      margin-bottom: 4px;
-      color: #111827;
+    .form-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(230px,1fr));
+      gap:14px 18px;
+      margin-top:10px;
     }
 
-    .test-section-sub {
-      font-size: 0.92rem;
-      color: #4B5563;
-      margin-bottom: 10px;
+    .form-field{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+      font-size:0.92rem;
     }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 14px 18px;
-      margin-top: 10px;
+    .form-field label{
+      font-weight:800;
+      color:#374151;
     }
-
-    .form-field {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      font-size: 0.92rem;
-    }
-
-    .form-field label {
-      font-weight: 600;
-      color: #374151;
-    }
-
-    .form-field small {
-      font-size: 0.8rem;
-      color: #6B7280;
+    .form-field small{
+      font-size:0.8rem;
+      color:#6B7280;
     }
 
     input[type="number"],
     input[type="text"],
-    select {
-      padding: 8px 9px;
-      border-radius: 6px;
-      border: 1px solid #D1D5DB;
-      font-size: 0.92rem;
-      font-family: inherit;
-      box-sizing: border-box;
+    select{
+      padding:8px 9px;
+      border-radius:6px;
+      border:1px solid #D1D5DB;
+      font-size:0.92rem;
+      font-family:inherit;
     }
-
-    input[type="number"]:focus,
-    input[type="text"]:focus,
-    select:focus {
-      outline: none;
+    input:focus, select:focus{
+      outline:none;
       border-color: var(--violet-main);
-      box-shadow: 0 0 0 1px rgba(108, 92, 231, 0.25);
+      box-shadow:0 0 0 1px rgba(108,92,231,0.25);
     }
 
-    .legal-box {
-      margin-top: 18px;
-      padding: 10px 12px;
-      background: #FFFBEB;
-      border-radius: 8px;
-      border-left: 4px solid #FACC15;
-      font-size: 0.9rem;
-      display: flex;
-      gap: 8px;
-      align-items: flex-start;
+    /* NOTE LEGALI */
+    .legal-box{
+      margin-top:18px;
+      padding:12px 12px;
+      background:#FFFBEB;
+      border-radius:8px;
+      border-left:4px solid #FACC15;
+      font-size:0.9rem;
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
     }
-
-    .legal-box input[type="checkbox"] {
-      margin-top: 3px;
-    }
-
-    .legal-box label {
-      font-weight: 400;
-      color: #4B5563;
-    }
-
-    .legal-box a {
+    .legal-box input{ margin-top:3px; }
+    .legal-box a{
       color: var(--violet-dark);
-      font-weight: 600;
-      text-decoration: none;
+      font-weight:800;
+      text-decoration:none;
     }
+    .legal-box a:hover{ text-decoration: underline; }
 
-    .legal-box a:hover {
-      text-decoration: underline;
+    .btn-row{
+      margin-top:18px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
     }
-
-    .btn-row {
-      margin-top: 18px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .primary-btn {
+    .primary-btn{
       background: var(--violet-main);
-      color: white;
-      border: none;
-      padding: 10px 18px;
-      border-radius: 999px;
-      font-size: 0.96rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+      color:#fff;
+      border:none;
+      padding:10px 18px;
+      border-radius:999px;
+      font-size:0.96rem;
+      font-weight:900;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
     }
-    .primary-btn:hover {
-      background: var(--violet-dark);
+    .primary-btn:hover{ background: var(--violet-dark); }
+
+    .primary-btn:disabled{
+      opacity:0.5;
+      cursor:not-allowed;
     }
 
-    .btn-hint {
-      font-size: 0.85rem;
-      color: #6B7280;
+    .btn-hint{
+      font-size:0.85rem;
+      color:#6B7280;
     }
 
-    .error-msg {
-      margin-top: 8px;
-      font-size: 0.88rem;
-      color: #B91C1C;
-      display: none;
+    .error-msg{
+      margin-top:10px;
+      font-size:0.9rem;
+      color:#B91C1C;
+      display:none;
     }
 
-    .result-box {
-      margin-top: 22px;
-      padding: 16px 14px;
-      border-radius: 10px;
-      border: 1px solid #D1FAE5;
-      background: #ECFDF5;
-      display: none;
+    .result-box{
+      margin-top:22px;
+      padding:16px 14px;
+      border-radius:10px;
+      border:1px solid #D1FAE5;
+      background:#ECFDF5;
+      display:none;
+    }
+    .result-title{
+      font-size:1.05rem;
+      font-weight:900;
+      color:#065F46;
+      margin-bottom:4px;
+    }
+    .result-tagline{
+      font-size:0.92rem;
+      color:#047857;
+      margin-bottom:10px;
+    }
+    .result-numbers{
+      font-size:0.9rem;
+      color:#064E3B;
+      margin-bottom:10px;
+    }
+    .result-advice{
+      font-size:0.92rem;
+      color:#111827;
+    }
+    .result-note{
+      margin-top:10px;
+      font-size:0.8rem;
+      color:#6B7280;
     }
 
-    .result-title {
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: #065F46;
-      margin-bottom: 4px;
+    footer{
+      text-align:center;
+      margin-top:40px;
+      padding:20px;
+      background:#eee;
+      font-size:0.9rem;
+    }
+    footer a{
+      color:#111827;
+      text-decoration:none;
+      font-weight:800;
+    }
+    footer a:hover{ text-decoration: underline; }
+
+    @media (max-width:600px){
+      main{ margin:16px auto; padding:16px 14px; }
     }
 
-    .result-tagline {
-      font-size: 0.92rem;
-      color: #047857;
-      margin-bottom: 10px;
+    /* COOKIE BANNER (UNICO) */
+    #cookie-banner{
+      position:fixed;
+      bottom:20px;
+      left:50%;
+      transform:translateX(-50%);
+      max-width:90%;
+      width:420px;
+      background:#fff;
+      border:2px solid var(--violet-main);
+      border-radius:10px;
+      padding:16px;
+      box-shadow:0 4px 8px rgba(0,0,0,0.15);
+      z-index:9999;
+      display:none;
     }
+    #cookie-banner p{
+      margin:0 0 12px 0;
+      font-size:0.95rem;
+      color:#333;
+      line-height:1.4;
+    }
+    #cookie-banner a{
+      color: var(--violet-main);
+      font-weight:900;
+      text-decoration:none;
+    }
+    #cookie-banner a:hover{ text-decoration: underline; }
 
-    .result-numbers {
-      font-size: 0.9rem;
-      color: #064E3B;
-      margin-bottom: 10px;
+    #cookie-banner .cookie-actions{
+      display:flex;
+      gap:10px;
+      margin-top:8px;
     }
-
-    .result-advice {
-      font-size: 0.92rem;
-      color: #111827;
+    #cookie-banner button{
+      flex:1;
+      border-radius:6px;
+      padding:10px 12px;
+      cursor:pointer;
+      font-weight:900;
+      border:2px solid var(--violet-main);
     }
-
-    .result-note {
-      margin-top: 10px;
-      font-size: 0.8rem;
-      color: #6B7280;
+    #cookie-reject{
+      background:#fff;
+      color:#111827;
     }
-
-    footer {
-      text-align: center;
-      margin-top: 40px;
-      padding: 20px;
-      background: #eee;
-      font-size: 0.9rem;
+    #cookie-accept{
+      background: var(--violet-main);
+      color:#fff;
     }
-
-    footer a {
-      color: #111827;
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    footer a:hover {
-      text-decoration: underline;
-    }
-
-    @media (max-width: 600px) {
-      main {
-        margin: 16px auto;
-        padding: 16px 14px;
-      }
-    }
+    #cookie-accept:hover{ background: var(--violet-dark); }
   </style>
 </head>
 
 <body>
-  <!-- HEADER UNIFICATO -->
+
+  <!-- HEADER -->
   <header class="site-header">
     <div class="header-inner">
       <div class="logo">Syncras.App</div>
@@ -361,14 +371,14 @@
 
       <nav id="main-nav">
         <a href="index.html">Home</a>
-      <a href="blog.html">Blog</a>
-      <a href="smart-test.html">Smart Test</a>
-      <a href="calcolatori.html">Calcolatori</a>
-      <a href="fast-cards.html">Fast Card</a>
-      <a href="offerte.html">Prodotti Consapevoli</a>
-      <a href="curiosita.html">Curiosità</a>
-      <a href="misteri.html">Misteri</a>
-      <a href="chi.html">Chi siamo</a>
+        <a href="blog.html">Blog</a>
+        <a href="smart-test.html">Smart Test</a>
+        <a href="calcolatori.html">Calcolatori</a>
+        <a href="fast-cards.html">Fast Card</a>
+        <a href="offerte.html">Prodotti Consapevoli</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="chi.html">Chi siamo</a>
       </nav>
     </div>
   </header>
@@ -381,18 +391,17 @@
 
     <span class="intro-tag">Smart Test / Auto & mobilità</span>
     <h1>Smart Test – Auto nuova, usata o nessuna?</h1>
+
     <p class="smart-test-lead">
       Questo test incrocia <strong>numeri reali</strong> (costi annui e chilometri)
-      con il tuo <strong>uso quotidiano dell’auto</strong>.  
+      con il tuo <strong>uso quotidiano dell’auto</strong>.
       Alla fine avrai un responso sincero: per te ha più senso un’auto
       <strong>nuova</strong>, <strong>usata</strong>… o forse <strong>nessuna</strong>.
     </p>
 
     <div class="test-card">
-      <div class="test-section-title">1. Il tuo profilo di utilizzo</div>
-      <p class="test-section-sub">
-        Partiamo da come usi davvero l’auto. Niente giudizi: solo realtà.
-      </p>
+      <div class="test-section-title">1) Il tuo profilo di utilizzo</div>
+      <p class="test-section-sub">Partiamo da come usi davvero l’auto. Niente giudizi: solo realtà.</p>
 
       <div class="form-grid">
         <div class="form-field">
@@ -424,14 +433,12 @@
     </div>
 
     <div class="test-card">
-      <div class="test-section-title">2. I costi principali della tua auto</div>
-      <p class="test-section-sub">
-        Inserisci valori indicativi: non servono numeri perfetti, ma realistici.
-      </p>
+      <div class="test-section-title">2) I costi principali della tua auto</div>
+      <p class="test-section-sub">Inserisci valori indicativi: non servono numeri perfetti, ma realistici.</p>
 
       <div class="form-grid">
         <div class="form-field">
-          <label for="carburante-mensile">Spesa carburante al mese (€)</label>
+          <label for="carburante-mensile">Spesa carburante/energia al mese (€)</label>
           <input type="number" id="carburante-mensile" min="0" placeholder="es. 120">
           <small>In media, tra benzina/diesel/GPL/energia elettrica.</small>
         </div>
@@ -459,41 +466,35 @@
           <small>Serve a stimare la svalutazione annua.</small>
         </div>
       </div>
-    </div>
 
-    <div class="legal-box">
-      <input type="checkbox" id="legalAccept">
-      <label for="legalAccept">
-        Prima di procedere, un promemoria: i risultati di questo test sono solo
-        <strong>stime indicativi</strong> e non sostituiscono una consulenza professionale.
-        L’uso di questo strumento è a tuo esclusivo rischio e la responsabilità delle decisioni
-        rimane tua, come spiegato nelle
-        <a href="note-legali.html" target="_blank" rel="noopener noreferrer">Note Legali</a>.
-      </label>
-    </div>
-
-    <div class="btn-row">
-      <button type="button" class="primary-btn" onclick="calcolaProfiloAuto()">
-        Calcola il tuo profilo auto
-        <span>➜</span>
-      </button>
-      <div class="btn-hint">
-        Nessun dato viene salvato: il calcolo avviene solo qui sulla pagina.
+      <div class="legal-box">
+        <input type="checkbox" id="legalAccept">
+        <label for="legalAccept">
+          Prima di procedere: i risultati di questo test sono <strong>stime indicative</strong> e non sostituiscono
+          una consulenza professionale. L’uso dello strumento è a tuo esclusivo rischio e la responsabilità delle decisioni
+          rimane tua, come spiegato nelle
+          <a href="note-legali.html" target="_blank" rel="noopener noreferrer">Note Legali</a>.
+        </label>
       </div>
-    </div>
 
-    <div id="errorBox" class="error-msg">
-      Compila almeno i chilometri annui e un minimo di costi per ottenere un risultato sensato.
-    </div>
+      <div class="btn-row">
+        <button id="calcBtn" type="button" class="primary-btn" onclick="calcolaProfiloAuto()" disabled>
+          Calcola il tuo profilo auto <span>➜</span>
+        </button>
+        <div class="btn-hint">Nessun dato viene salvato: il calcolo avviene solo qui sulla pagina.</div>
+      </div>
 
-    <div id="resultBox" class="result-box">
-      <div id="resultTitle" class="result-title"></div>
-      <div id="resultTagline" class="result-tagline"></div>
-      <div id="resultNumbers" class="result-numbers"></div>
-      <div id="resultAdvice" class="result-advice"></div>
-      <div class="result-note">
-        Questo non è un “verdetto morale” ma uno specchio numerico: puoi usarlo come base
-        per fare altri confronti (trasporti pubblici, seconda auto in famiglia, car sharing, ecc.).
+      <div id="errorBox" class="error-msg"></div>
+
+      <div id="resultBox" class="result-box">
+        <div id="resultTitle" class="result-title"></div>
+        <div id="resultTagline" class="result-tagline"></div>
+        <div id="resultNumbers" class="result-numbers"></div>
+        <div id="resultAdvice" class="result-advice"></div>
+        <div class="result-note">
+          Questo non è un “verdetto morale” ma uno specchio numerico: puoi usarlo come base
+          per fare altri confronti (trasporti pubblici, seconda auto in famiglia, car sharing, ecc.).
+        </div>
       </div>
     </div>
   </main>
@@ -504,32 +505,54 @@
       <a href="privacy.html">Privacy Policy</a> |
       <a href="cookie.html">Cookie Policy</a> |
       <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
-      <a href="note-legali.html">Note Legali</a>
+      <a href="note-legali.html">Note Legali</a> |
+      <a href="#" onclick="window.revokeCookies(); return false;">Gestisci cookie</a>
     </div>
     <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
-      Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.
       Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
-      senza alcun costo aggiuntivo per l’utente.  
+      senza alcun costo aggiuntivo per l’utente.
       Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
       è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
     </p>
   </footer>
 
-  <!-- Toggle menu mobile -->
-  <script>
-    function toggleMenu() {
-      document.body.classList.toggle('nav-open');
-    }
-  </script>
+  <!-- COOKIE BANNER (UNICO) -->
+  <div id="cookie-banner" role="dialog" aria-live="polite" aria-label="Banner cookie">
+    <p>
+      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite (Google Analytics).
+      Alcuni link potrebbero essere di affiliazione.
+      Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
+      <a href="privacy.html">Privacy Policy</a>.
+    </p>
+    <div class="cookie-actions">
+      <button id="cookie-reject" type="button" onclick="rejectCookies()">Rifiuta</button>
+      <button id="cookie-accept" type="button" onclick="acceptCookies()">Accetta e continua</button>
+    </div>
+  </div>
 
   <script>
+    function toggleMenu(){ document.body.classList.toggle('nav-open'); }
+
+    // Abilita/disabilita bottone calcolo in base alla spunta Note Legali
+    (function(){
+      const cb = document.getElementById('legalAccept');
+      const btn = document.getElementById('calcBtn');
+      function sync(){
+        btn.disabled = !cb.checked;
+      }
+      cb.addEventListener('change', sync);
+      window.addEventListener('DOMContentLoaded', sync);
+      sync();
+    })();
+
     function calcolaProfiloAuto() {
       const errorBox = document.getElementById('errorBox');
       const resultBox = document.getElementById('resultBox');
       errorBox.style.display = 'none';
       resultBox.style.display = 'none';
+      errorBox.textContent = '';
 
-      // Check Note Legali
       const legalOk = document.getElementById('legalAccept').checked;
       if (!legalOk) {
         errorBox.textContent = 'Per proseguire devi confermare di aver letto le Note Legali.';
@@ -537,19 +560,22 @@
         return;
       }
 
-      // Input numerici
-      const kmAnnui = parseFloat(document.getElementById('km-annui').value.replace(',', '.')) || 0;
-      const carburanteMensile = parseFloat(document.getElementById('carburante-mensile').value.replace(',', '.')) || 0;
-      const assicurazioneAnnua = parseFloat(document.getElementById('assicurazione-annua').value.replace(',', '.')) || 0;
-      const altriCostiAnnui = parseFloat(document.getElementById('altri-costi-annui').value.replace(',', '.')) || 0;
-      const valoreAuto = parseFloat(document.getElementById('valore-auto').value.replace(',', '.')) || 0;
-      const etaAuto = parseFloat(document.getElementById('eta-auto').value.replace(',', '.')) || 0;
+      const num = (id) => {
+        const v = (document.getElementById(id).value || '').toString().replace(',', '.');
+        const n = parseFloat(v);
+        return Number.isFinite(n) ? n : 0;
+      };
 
-      // Input qualitativi
+      const kmAnnui = num('km-annui');
+      const carburanteMensile = num('carburante-mensile');
+      const assicurazioneAnnua = num('assicurazione-annua');
+      const altriCostiAnnui = num('altri-costi-annui');
+      const valoreAuto = num('valore-auto');
+      const etaAuto = num('eta-auto');
+
       const usoFrequenza = document.getElementById('uso-frequenza').value;
       const usoPrincipale = document.getElementById('uso-principale').value;
 
-      // Validazione minima
       if (kmAnnui <= 0 || (carburanteMensile <= 0 && assicurazioneAnnua <= 0 && altriCostiAnnui <= 0)) {
         errorBox.textContent = 'Inserisci almeno i chilometri annui e qualche costo per avere un risultato utile.';
         errorBox.style.display = 'block';
@@ -559,20 +585,18 @@
       const costoCarburanteAnnuale = carburanteMensile * 12;
       const costoDirettoAnnuale = costoCarburanteAnnuale + assicurazioneAnnua + altriCostiAnnui;
 
-      // Stima molto semplificata della svalutazione annua
+      // svalutazione semplificata
       let anniResiduiTeorici = 10 - etaAuto;
       if (anniResiduiTeorici < 3) anniResiduiTeorici = 3;
       if (anniResiduiTeorici > 10) anniResiduiTeorici = 10;
 
       let svalutazioneAnnua = 0;
-      if (valoreAuto > 0) {
-        svalutazioneAnnua = valoreAuto / anniResiduiTeorici;
-      }
+      if (valoreAuto > 0) svalutazioneAnnua = valoreAuto / anniResiduiTeorici;
 
       const costoTotaleAnnuale = costoDirettoAnnuale + svalutazioneAnnua;
-      const costoPerKm = kmAnnui > 0 ? costoTotaleAnnuale / kmAnnui : 0;
+      const costoPerKm = kmAnnui > 0 ? (costoTotaleAnnuale / kmAnnui) : 0;
 
-      // Punteggi di necessità (0 = non necessaria, 10 = molto necessaria)
+      // necessità
       let punteggioFrequenza = 0;
       if (usoFrequenza === 'quasi-mai') punteggioFrequenza = 2;
       if (usoFrequenza === 'weekend') punteggioFrequenza = 4;
@@ -587,205 +611,125 @@
 
       const punteggioNecessita = (punteggioFrequenza + punteggioMotivo) / 2;
 
-      // Classificazione
       let titolo = '';
       let tagline = '';
       let advice = '';
 
-      const costoPerKmRounded = costoPerKm || 0;
-      const costoPerKmHigh = costoPerKmRounded > 0.6;  // >0,60 €/km = caro
-      const costoPerKmMedium = costoPerKmRounded > 0.3 && costoPerKmRounded <= 0.6;
-
       if (kmAnnui < 4000 && punteggioNecessita <= 4 && costoTotaleAnnuale > 1500) {
-        // Profilo: nessuna o riduzione forte della dipendenza dall'auto
-        titolo = 'Profilo: Auto Non Necessaria (o quasi)';
-        tagline = 'Per come la usi oggi, l’auto è più un costo fisso che una reale necessità quotidiana.';
-        advice = 'I numeri dicono che stai pagando parecchio per qualcosa che usi poco. ' +
-                 'Potresti valutare seriamente di vivere con una sola auto in famiglia, ' +
-                 'passare a noleggio occasionale, car sharing o combinare mezzi pubblici, bici, taxi ' +
-                 'quando davvero ti serve. Prima di pensare a un’auto nuova, chiediti se non sia il caso ' +
-                 'di fare un esperimento “30 giorni con l’auto il meno possibile”.';
-      } else if (
-        (kmAnnui >= 4000 && kmAnnui <= 15000 && punteggioNecessita >= 4 && punteggioNecessita <= 8) ||
-        (costoPerKmMedium && etaAuto >= 4)
-      ) {
-        // Profilo: meglio un'usata furba, niente esagerazioni
-        titolo = 'Profilo: Auto Usata Furba';
-        tagline = 'Ti serve, ma non abbastanza da giustificare un modello nuovo di zecca ogni pochi anni.';
-        advice = 'Per i chilometri che fai e il tipo di utilizzo, una buona auto usata (o un’auto nuova ma base) ' +
-                 'di segmento sensato è spesso la soluzione più equilibrata. ' +
-                 'Confronta più modelli, guarda i costi reali di manutenzione, evita optional inutili e ragiona ' +
-                 'su quanto tempo vuoi tenerla. L’obiettivo è: costo per km sotto controllo, senza vivere in funzione dell’auto.';
+        titolo = 'Profilo: Auto non necessaria (o quasi)';
+        tagline = 'Per come la usi oggi, l’auto è più un costo fisso che una necessità quotidiana.';
+        advice =
+          'I numeri suggeriscono che stai pagando parecchio per un uso limitato. Valuta un esperimento di 30 giorni: ' +
+          'riduci al minimo l’uso dell’auto e prova una combinazione di mezzi, passaggi, taxi/ride solo quando serve. ' +
+          'Se in famiglia ci sono due auto, la prima domanda è: “possiamo scendere a una sola?”';
+      } else if ((kmAnnui >= 4000 && kmAnnui <= 15000 && punteggioNecessita >= 4 && punteggioNecessita <= 8) || (etaAuto >= 4)) {
+        titolo = 'Profilo: Auto usata furba';
+        tagline = 'Ti serve, ma non abbastanza da giustificare un nuovo di zecca “a prescindere”.';
+        advice =
+          'Con questi km e questo uso, di solito vince un’usata ben scelta: modello diffuso, manutenzione chiara, costi reali bassi. ' +
+          'Evita optional “status”, guarda consumi/assistenza e ragiona su quanto tempo vuoi tenerla: il vero risparmio è tenere l’auto più a lungo.';
       } else {
-        // Profilo: auto nuova o recente sensata
-        titolo = 'Profilo: Auto Nuova o Recente (sensata)';
-        tagline = 'L’auto per te è davvero uno strumento di lavoro o di vita quotidiana, non solo un vezzo.';
-        advice = 'Con chilometraggi medio-alti e una necessità forte (lavoro, salute, turni, famiglia), ' +
-                 'un’auto nuova o recente può avere senso, soprattutto se ti garantisce affidabilità e costi di gestione più stabili. ' +
-                 'Questo però non significa prendere il modello più costoso: ragiona su consumi, garanzia, assistenza e valore residuo. ' +
-                 'L’obiettivo è: tanta utilità, pochi fronzoli, niente rate che ti tolgono il sonno.';
+        titolo = 'Profilo: Auto nuova o recente (sensata)';
+        tagline = 'L’auto per te è uno strumento di lavoro/vita quotidiana: affidabilità e costi stabili contano.';
+        advice =
+          'Se l’uso è frequente e la necessità è alta, un’auto nuova o recente può avere senso per ridurre imprevisti e avere garanzia. ' +
+          'Ma “nuova” non vuol dire “più costosa”: punta a consumi, valore residuo, assistenza e una rata sostenibile.';
       }
 
-      // Stampa risultati
-      const fmt = (num) => num.toLocaleString('it-IT', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
-      const fmt2 = (num) => num.toLocaleString('it-IT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      const fmt0 = (n) => n.toLocaleString('it-IT', { maximumFractionDigits: 0 });
+      const fmt2 = (n) => n.toLocaleString('it-IT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
       document.getElementById('resultTitle').textContent = titolo;
       document.getElementById('resultTagline').textContent = tagline;
 
-      let numeriText = 'Costo annuo stimato della tua auto: circa ' + fmt(costoTotaleAnnuale) + ' €';
-      if (kmAnnui > 0) {
-        numeriText += ' (≈ ' + fmt2(costoPerKmRounded) + ' € per km su ' + fmt(kmAnnui) + ' km/anno).';
-      }
+      let numeriText = 'Costo annuo stimato: circa ' + fmt0(costoTotaleAnnuale) + ' €';
+      if (kmAnnui > 0) numeriText += ' (≈ ' + fmt2(costoPerKm) + ' € per km su ' + fmt0(kmAnnui) + ' km/anno).';
       document.getElementById('resultNumbers').textContent = numeriText;
-      document.getElementById('resultAdvice').textContent = advice;
 
+      document.getElementById('resultAdvice').textContent = advice;
       resultBox.style.display = 'block';
     }
-  </script>
 
-  <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR -->
-  <div id="cookie-banner">
-    <p>
-      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
-      (Google Analytics). Alcuni link potrebbero essere di affiliazione.
-      Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
-      <a href="privacy.html">Privacy Policy</a>.
-    </p>
-    <div style="display:flex; gap:10px; margin-top:8px;">
-      <button type="button" onclick="rejectCookies()">
-        Rifiuta
-      </button>
-      <button id="cookie-btn" type="button" onclick="acceptCookies()">
-        Accetta e continua
-      </button>
-    </div>
-  </div>
+    // Cookie + GA (GDPR/ePrivacy: GA solo dopo consenso + Consent Mode default denied)
+    (function () {
+      const GA_ID = 'G-CFTTCYDZ2P';
+      const CONSENT_KEY = 'syncras_cookie_consent';
 
-  <style>
-    #cookie-banner {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      max-width: 90%;
-      width: 420px;
-      background: #ffffff;
-      border: 2px solid #6C5CE7;
-      border-radius: 10px;
-      padding: 16px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-      z-index: 9999;
-      font-family: Arial, sans-serif;
-      display: none;
-    }
+      // Hard-block GA finché non c'è consenso
+      window['ga-disable-' + GA_ID] = true;
 
-    #cookie-banner p {
-      margin: 0 0 12px 0;
-      font-size: 0.95rem;
-      color: #333;
-      line-height: 1.4;
-    }
-
-    #cookie-banner a {
-      color: #6C5CE7;
-      font-weight: bold;
-      text-decoration: none;
-    }
-
-    #cookie-banner button[onclick="rejectCookies()"] {
-      flex: 1;
-      background: white !important;
-      color: #111827 !important;
-      border: 2px solid #6C5CE7 !important;
-      padding: 10px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-
-    #cookie-btn {
-      flex: 1;
-      background: #6C5CE7;
-      color: white;
-      border: 2px solid #6C5CE7;
-      padding: 10px 16px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 700;
-    }
-
-    #cookie-btn:hover {
-      background: #4B3ACB;
-    }
-  </style>
-
-  <script>
-  (function () {
-    const GA_ID = 'G-CFTTCYDZ2P';
-    const CONSENT_KEY = 'syncras_cookie_consent';
-
-    window['ga-disable-' + GA_ID] = true;
-
-    function loadGoogleAnalytics() {
-      if (window.__syncrasGaLoaded) return;
-      window.__syncrasGaLoaded = true;
-
-      window['ga-disable-' + GA_ID] = false;
-
-      const gaScript = document.createElement('script');
-      gaScript.async = true;
-      gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
-      document.head.appendChild(gaScript);
-
+      // Prepara gtag + Consent Mode (default: denied)
       window.dataLayer = window.dataLayer || [];
       function gtag(){ dataLayer.push(arguments); }
       window.gtag = gtag;
-      gtag('js', new Date());
-      gtag('config', GA_ID, { anonymize_ip: true });
-    }
 
-    function showBanner() {
-      const banner = document.getElementById('cookie-banner');
-      if (banner) banner.style.display = 'block';
-    }
+      gtag('consent', 'default', {
+        ad_storage: 'denied',
+        analytics_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied'
+      });
 
-    function hideBanner() {
-      const banner = document.getElementById('cookie-banner');
-      if (banner) banner.style.display = 'none';
-    }
+      function loadGoogleAnalytics() {
+        if (window.__syncrasGaLoaded) return;
+        window.__syncrasGaLoaded = true;
 
-    window.acceptCookies = function () {
-      localStorage.setItem(CONSENT_KEY, 'yes');
-      hideBanner();
-      loadGoogleAnalytics();
-    };
+        window['ga-disable-' + GA_ID] = false;
 
-    window.rejectCookies = function () {
-      localStorage.setItem(CONSENT_KEY, 'no');
-      hideBanner();
-      window['ga-disable-' + GA_ID] = true;
-    };
+        const gaScript = document.createElement('script');
+        gaScript.async = true;
+        gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+        document.head.appendChild(gaScript);
 
-    window.revokeCookies = function () {
-      localStorage.removeItem(CONSENT_KEY);
-      window['ga-disable-' + GA_ID] = true;
-      showBanner();
-    };
-
-    document.addEventListener('DOMContentLoaded', function () {
-      const consent = localStorage.getItem(CONSENT_KEY);
-
-      if (consent === 'yes') {
-        loadGoogleAnalytics();
-      } else if (consent === 'no') {
-        window['ga-disable-' + GA_ID] = true;
-      } else {
-        showBanner();
+        gtag('js', new Date());
+        gtag('config', GA_ID, { anonymize_ip: true });
       }
-    });
-  })();
+
+      function showBanner() {
+        const banner = document.getElementById('cookie-banner');
+        if (banner) banner.style.display = 'block';
+      }
+      function hideBanner() {
+        const banner = document.getElementById('cookie-banner');
+        if (banner) banner.style.display = 'none';
+      }
+
+      window.acceptCookies = function () {
+        localStorage.setItem(CONSENT_KEY, 'yes');
+        hideBanner();
+        gtag('consent', 'update', { analytics_storage: 'granted' });
+        loadGoogleAnalytics();
+      };
+
+      window.rejectCookies = function () {
+        localStorage.setItem(CONSENT_KEY, 'no');
+        hideBanner();
+        gtag('consent', 'update', { analytics_storage: 'denied' });
+        window['ga-disable-' + GA_ID] = true;
+      };
+
+      window.revokeCookies = function () {
+        localStorage.removeItem(CONSENT_KEY);
+        gtag('consent', 'update', { analytics_storage: 'denied' });
+        window['ga-disable-' + GA_ID] = true;
+        showBanner();
+      };
+
+      document.addEventListener('DOMContentLoaded', function () {
+        const consent = localStorage.getItem(CONSENT_KEY);
+        if (consent === 'yes') {
+          gtag('consent', 'update', { analytics_storage: 'granted' });
+          loadGoogleAnalytics();
+        } else if (consent === 'no') {
+          gtag('consent', 'update', { analytics_storage: 'denied' });
+          window['ga-disable-' + GA_ID] = true;
+        } else {
+          showBanner();
+        }
+      });
+    })();
   </script>
 
 </body>
 </html>
+
