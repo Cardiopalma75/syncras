@@ -1,6 +1,23 @@
-<div id="site-header"></div>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<main>
+  <title>Notifiche: chi comanda, tu o il telefono? | Syncras.App</title>
+  <meta name="description" content="La grande bugia nazionale: decido io quando guardarlo. Spoiler: quasi mai.">
+
+  <!-- CSS UNIFICATO SYNCRAS -->
+  <link rel="stylesheet" href="/css/syncras.css">
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <div id="site-header"></div>
+
+  <!-- CONTENUTO ARTICOLO -->
+  <main>
     <div class="back-links">
       ← <a href="blog.html">Torna al Blog</a> | <a href="smart-test.html">Vai agli Smart Test</a> | <a href="fast-cards.html">Vai alle Fast Cards</a>
     </div>
@@ -146,11 +163,24 @@
     <button class="shareBtn" id="shareBtnBottom">📎 Condividi questo articolo</button>
   </main>
 
-<div id="site-footer"></div>
-<div id="site-gdpr"></div>
+  <!-- FOOTER + GDPR -->
+  <div id="site-footer"></div>
+  <div id="site-gdpr"></div>
 
-<script>
-  fetch("/header.html").then(r=>r.text()).then(t=>document.getElementById("site-header").innerHTML=t);
-  fetch("/footer.html").then(r=>r.text()).then(t=>document.getElementById("site-footer").innerHTML=t);
-  fetch("/gdpr.html").then(r=>r.text()).then(t=>document.getElementById("site-gdpr").innerHTML=t);
-</script>
+  <script>
+    fetch("/header.html")
+      .then(r => r.text())
+      .then(t => document.getElementById("site-header").innerHTML = t);
+
+    fetch("/footer.html")
+      .then(r => r.text())
+      .then(t => document.getElementById("site-footer").innerHTML = t);
+
+    fetch("/gdpr.html")
+      .then(r => r.text())
+      .then(t => document.getElementById("site-gdpr").innerHTML = t);
+  </script>
+
+</body>
+</html>
+
