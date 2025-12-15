@@ -42,6 +42,7 @@
       font-size: 1.4rem;
       font-weight: bold;
     }
+<button class="menu-toggle" type="button" onclick="toggleMenu()">Menu ☰</button>
 
     #main-nav {
       display: flex;
@@ -56,6 +57,36 @@
     #main-nav a:hover {
       text-decoration: underline;
     }
+<style>
+/* ...resto del tuo CSS... */
+
+.menu-toggle{
+  display:none;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 6px;
+  color: white;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+@media (max-width: 768px){
+  #main-nav{
+    display:none;
+    position:absolute;
+    left:0; right:0;
+    top:56px;
+    flex-direction:column;
+    background-color: var(--violet-dark);
+    padding:12px;
+    z-index:50;
+  }
+  body.nav-open #main-nav{ display:flex; }
+  .menu-toggle{ display:inline-flex; align-items:center; }
+  .site-header{ position:relative; } /* importante per l'assoluto del menu */
+}
+</style>
 
     main {
       max-width: 900px;
