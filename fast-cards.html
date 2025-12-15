@@ -536,19 +536,8 @@
       });
     });
   </script>
-<script>
-document.querySelectorAll('.test-group-card').forEach(card => {
-  card.addEventListener('click', () => {
-    const url = card.getAttribute('data-href');
-    if (url) window.location.href = url;
-  });
-});
 
-// Per evitare che cliccare il link interno faccia partire due redirect
-document.querySelectorAll('.test-group-card a').forEach(a => {
-  a.addEventListener('click', (e) => e.stopPropagation());
-});
-</script>
+
 
   <footer>
     © 2025 Syncras.App — Tutti i diritti riservati<br>
