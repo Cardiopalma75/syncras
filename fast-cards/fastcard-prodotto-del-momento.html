@@ -8,88 +8,143 @@
   <meta name="robots" content="index,follow">
 
   <style>
-    :root {
-      --violet-main: #6C5CE7;
-      --violet-dark: #4B3ACB;
-      --bg-page: #F7F7FB;
-      --text-main: #403E43;
+    :root{
+      --violet-main:#6C5CE7;
+      --violet-dark:#4B3ACB;
+      --bg-page:#F7F7FB;
+      --text-main:#403E43;
+      --border:#E5E7EB;
     }
 
-    body {
+    *{ box-sizing:border-box; }
+
+    body{
       font-family: Arial, sans-serif;
       background: var(--bg-page);
-      margin: 0;
-      padding: 0;
-      line-height: 1.6;
+      margin:0;
+      padding:0;
+      line-height:1.6;
       color: var(--text-main);
     }
 
-    /* HEADER */
-    .site-header {
+    /* HEADER + MENU MOBILE */
+    .site-header{
       background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
-      color: white;
-      padding: 12px 14px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+      color:#fff;
+      padding:12px 14px;
+      box-shadow:0 2px 4px rgba(0,0,0,0.15);
+      position:relative;
+      z-index:60;
     }
-    .header-inner {
-      max-width: 1180px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
+    .header-inner{
+      max-width:1180px;
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      position:relative;
     }
-    .logo {
-      font-size: 1.4rem;
-      font-weight: bold;
+    .logo{
+      font-size:1.4rem;
+      font-weight:800;
+      letter-spacing:0.03em;
     }
-    #main-nav {
-      display: flex;
-      gap: 18px;
-      font-size: 0.95rem;
+
+    #main-nav{
+      display:flex;
+      gap:18px;
+      font-size:0.95rem;
     }
-    #main-nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: 600;
+    #main-nav a{
+      color:#fff;
+      text-decoration:none;
+      font-weight:700;
+      padding-bottom:2px;
     }
-    #main-nav a:hover {
-      text-decoration: underline;
+    #main-nav a:hover{ text-decoration: underline; }
+
+    .menu-toggle{
+      display:none;
+      background: rgba(255,255,255,0.12);
+      border:1px solid rgba(255,255,255,0.4);
+      border-radius:6px;
+      color:#fff;
+      padding:6px 10px;
+      font-size:0.9rem;
+      cursor:pointer;
+      align-items:center;
+      gap:6px;
+    }
+    .menu-toggle span{ font-size:1.1rem; line-height:1; }
+
+    @media (max-width:768px){
+      #main-nav{
+        display:none;
+        position:absolute;
+        left:0; right:0;
+        top:56px;
+        margin:0 auto;
+        max-width:1180px;
+        flex-direction:column;
+        background-color: var(--violet-dark);
+        padding:10px 16px 12px 16px;
+        border-radius:0 0 8px 8px;
+        box-shadow:0 3px 6px rgba(0,0,0,0.25);
+        z-index:70;
+      }
+      #main-nav a{ padding:6px 0; }
+      body.nav-open #main-nav{ display:flex; }
+      .menu-toggle{ display:inline-flex; }
     }
 
     /* MAIN */
-    main {
-      max-width: 900px;
-      margin: 30px auto;
-      padding: 25px;
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    main{
+      max-width:900px;
+      margin:30px auto;
+      padding:25px;
+      background:#fff;
+      border-radius:10px;
+      box-shadow:0 4px 6px rgba(0,0,0,0.1);
+    }
+    @media (max-width:600px){
+      main{ margin:16px auto; padding:16px 14px; }
     }
 
-    h1 {
+    h1{ color: var(--violet-dark); margin-top:0; }
+
+    .intro-tag{
+      display:inline-block;
+      background:#F3F4FF;
       color: var(--violet-dark);
-      margin-top: 0;
+      padding:4px 10px;
+      border-radius:999px;
+      font-size:0.8rem;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:0.06em;
+      margin-bottom:6px;
     }
 
-    .fastcard-box {
-      background: #F7F7FB;
-      border-left: 4px solid var(--violet-main);
-      padding: 16px 20px;
-      border-radius: 8px;
-      margin: 20px 0;
+    .fastcard-box{
+      background:#F7F7FB;
+      border-left:4px solid var(--violet-main);
+      border:1px solid var(--border);
+      padding:16px 20px;
+      border-radius:8px;
+      margin:20px 0;
     }
 
-    footer {
-      text-align: center;
-      margin-top: 40px;
-      padding: 20px;
-      background: #eee;
-      font-size: 0.9rem;
+    footer{
+      text-align:center;
+      margin-top:40px;
+      padding:20px;
+      background:#eee;
+      font-size:0.9rem;
     }
 
-    /* COOKIE BANNER */
-    #cookie-banner {
+    /* COOKIE BANNER (UNICO) */
+    #cookie-banner{
       position: fixed;
       bottom: 20px;
       left: 50%;
@@ -97,155 +152,242 @@
       max-width: 90%;
       width: 420px;
       background: #ffffff;
-      border: 2px solid #6C5CE7;
+      border: 2px solid var(--violet-main);
       border-radius: 10px;
       padding: 16px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.15);
       z-index: 9999;
+      font-family: Arial, sans-serif;
       display: none;
     }
-    #cookie-banner button {
-      flex: 1;
-      border-radius: 6px;
-      padding: 10px 12px;
-      cursor: pointer;
-      font-weight: 600;
+    #cookie-banner p{
+      margin: 0 0 12px 0;
+      font-size: 0.95rem;
+      color: #333;
+      line-height: 1.4;
     }
-    #cookie-btn {
-      background: #6C5CE7;
-      color: white;
-      border: 2px solid #6C5CE7;
+    #cookie-banner a{
+      color: var(--violet-main);
+      font-weight: 900;
+      text-decoration: none;
     }
-    #cookie-banner button[onclick="rejectCookies()"] {
-      background: white;
-      border: 2px solid #6C5CE7;
-      color: #111;
+    #cookie-banner a:hover{ text-decoration: underline; }
+
+    #cookie-banner .cookie-actions{
+      display:flex;
+      gap:10px;
+      margin-top:8px;
     }
+    #cookie-banner button{
+      flex:1;
+      border-radius:6px;
+      padding:10px 12px;
+      cursor:pointer;
+      font-weight:900;
+      border:2px solid var(--violet-main);
+    }
+    #cookie-reject{
+      background:#fff;
+      color:#111827;
+    }
+    #cookie-accept{
+      background: var(--violet-main);
+      color:#fff;
+    }
+    #cookie-accept:hover{ background: var(--violet-dark); border-color: var(--violet-dark); }
   </style>
 </head>
 
 <body>
 
-<header class="site-header">
-  <div class="header-inner">
-    <div class="logo">Syncras.App</div>
-    <nav id="main-nav">
-     <a href="index.html">Home</a>
-      <a href="blog.html">Blog</a>
-      <a href="smart-test.html">Smart Test</a>
-      <a href="calcolatori.html">Calcolatori</a>
-      <a href="fast-cards.html">Fast Card</a>
-      <a href="offerte.html">Prodotti Consapevoli</a>
-      <a href="curiosita.html">Curiosità</a>
-      <a href="misteri.html">Misteri</a>
-      <a href="chi.html">Chi siamo</a>
-    </nav>
-  </div>
-</header>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
 
-<main>
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
 
-  <span class="intro-tag">Fast Card Syncras</span>
-  <h1>Effetto “Lo prendono tutti”</h1>
+      <nav id="main-nav">
+        <a href="../index.html">Home</a>
+        <a href="../blog.html">Blog</a>
+        <a href="../smart-test.html">Smart Test</a>
+        <a href="../calcolatori.html">Calcolatori</a>
+        <a href="../fast-cards.html">Fast Card</a>
+        <a href="../offerte.html">Prodotti Consapevoli</a>
+        <a href="../curiosita.html">Curiosità</a>
+        <a href="../misteri.html">Misteri</a>
+        <a href="../chi.html">Chi siamo</a>
+      </nav>
+    </div>
+  </header>
 
-  <p>
-    🔍 <strong>Riassunto in una frase:</strong><br>
-    Quando un prodotto è ovunque, non è detto che sia adatto anche a te.  
-    Questa Fast Card ti aiuta a capirlo in 30 secondi.
-  </p>
+  <main>
+    <span class="intro-tag">Fast Card Syncras</span>
+    <h1>Effetto “Lo prendono tutti”</h1>
 
-  <div class="fastcard-box">
-    <h2>1️⃣ Chiediti: “Mi serve davvero o lo voglio perché lo hanno tutti?”</h2>
     <p>
-      L'effetto branco è potentissimo: se un prodotto è ovunque, il cervello lo interpreta come “giusto”.  
-      Ma la domanda chiave è un’altra: <strong>risolve un tuo problema reale?</strong>
+      🔍 <strong>Riassunto in una frase:</strong><br>
+      Quando un prodotto è ovunque, non è detto che sia adatto anche a te.
+      Questa Fast Card ti aiuta a capirlo in 30 secondi.
     </p>
-  </div>
 
-  <div class="fastcard-box">
-    <h2>2️⃣ Se non esistesse la moda del momento… lo compreresti?</h2>
+    <div class="fastcard-box">
+      <h2>1️⃣ Chiediti: “Mi serve davvero o lo voglio perché lo hanno tutti?”</h2>
+      <p>
+        L'effetto branco è potentissimo: se un prodotto è ovunque, il cervello lo interpreta come “giusto”.
+        Ma la domanda chiave è un’altra: <strong>risolve un tuo problema reale?</strong>
+      </p>
+    </div>
+
+    <div class="fastcard-box">
+      <h2>2️⃣ Se non esistesse la moda del momento… lo compreresti?</h2>
+      <p>
+        Un modo semplice per capire se sei influenzato dal trend è immaginare che il prodotto non sia virale.
+        Se la risposta è “no”, probabilmente è un acquisto impulsivo.
+      </p>
+    </div>
+
+    <div class="fastcard-box">
+      <h2>3️⃣ Guarda chi lo sta consigliando</h2>
+      <p>
+        Influencer? Pubblicità? Video sponsorizzati?
+        Quando un prodotto diventa una “onda”, i consigli non sono sempre neutrali.
+        Controlla: <strong>quanto è genuino l’entusiasmo?</strong>
+      </p>
+    </div>
+
     <p>
-      Un modo semplice per capire se sei influenzato dal trend è immaginare che il prodotto non sia virale.  
-      Se la risposta è “no”, probabilmente è un acquisto impulsivo.
+      Vuoi altre Fast Cards?<br>
+      👉 Torna alla pagina principale:
+      <a href="../fast-cards.html">tutte le Fast Cards Syncras</a>.
     </p>
-  </div>
+  </main>
 
-  <div class="fastcard-box">
-    <h2>3️⃣ Guarda chi lo sta consigliando</h2>
+  <footer>
+    © 2025 Syncras.App — Tutti i diritti riservati<br>
+    <div style="margin-top:8px;">
+      <a href="../privacy.html">Privacy Policy</a> |
+      <a href="../cookie.html">Cookie Policy</a> |
+      <a href="../disclaimer-amazon.html">Disclaimer Amazon</a> |
+      <a href="../note-legali.html">Note Legali</a> |
+      <a href="#" onclick="revokeCookies(); return false;">Gestisci cookie</a>
+    </div>
+    <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.
+      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+      senza alcun costo aggiuntivo per l’utente.
+      Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+      è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+    </p>
+  </footer>
+
+  <!-- COOKIE BANNER (GDPR 10/10 + Consent Mode) -->
+  <div id="cookie-banner" role="dialog" aria-live="polite" aria-label="Banner cookie">
     <p>
-      Influencer? Pubblicità? Video sponsorizzati?  
-      Quando un prodotto diventa una “onda”, i consigli non sono sempre neutrali.  
-      Controlla: <strong>quanto è genuino l’entusiasmo?</strong>
+      Usiamo cookie tecnici e, <strong>solo con consenso</strong>, strumenti di misurazione delle visite (Google Analytics).
+      Alcuni link potrebbero essere di affiliazione.
+      Dettagli in <a href="../cookie.html">Cookie Policy</a> e <a href="../privacy.html">Privacy Policy</a>.
     </p>
+    <div class="cookie-actions">
+      <button id="cookie-reject" type="button">Rifiuta</button>
+      <button id="cookie-accept" type="button">Accetta e continua</button>
+    </div>
   </div>
 
+  <script>
+    function toggleMenu(){ document.body.classList.toggle('nav-open'); }
+  </script>
 
-</main>
+  <script>
+    (function () {
+      const GA_ID = 'G-CFTTCYDZ2P';
+      const CONSENT_KEY = 'syncras_cookie_consent';
 
-<footer>
-  © 2025 Syncras.App — Tutti i diritti riservati<br>
-  <a href="../privacy.html">Privacy Policy</a> |
-  <a href="../cookie.html">Cookie Policy</a> |
-  <a href="../disclaimer-amazon.html">Disclaimer Amazon</a> |
-  <a href="../note-legali.html">Note Legali</a>
-</footer>
+      // Hard-block GA finché non c'è consenso
+      window['ga-disable-' + GA_ID] = true;
 
+      // gtag stub + Consent Mode default denied
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
 
-<!-- COOKIE + GA -->
-<div id="cookie-banner">
-  <p>
-    Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite (Google Analytics).
-    Leggi la <a href="../privacy.html">Privacy Policy</a>.
-  </p>
-  <div style="display:flex; gap:8px; margin-top:10px;">
-    <button onclick="rejectCookies()">Rifiuta</button>
-    <button id="cookie-btn" onclick="acceptCookies()">Accetta</button>
-  </div>
-</div>
+      gtag('consent', 'default', {
+        ad_storage: 'denied',
+        analytics_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied'
+      });
 
-<script>
-  const GA_ID = 'G-CFTTCYDZ2P';
-  const CONSENT_KEY = 'syncras_cookie_consent';
-  window['ga-disable-' + GA_ID] = true;
+      function loadGoogleAnalytics() {
+        if (window.__syncrasGaLoaded) return;
+        window.__syncrasGaLoaded = true;
 
-  function loadGA() {
-    if (window.__gaLoaded) return;
-    window.__gaLoaded = true;
-    window['ga-disable-' + GA_ID] = false;
+        window['ga-disable-' + GA_ID] = false;
 
-    const s = document.createElement('script');
-    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
-    s.async = true;
-    document.head.appendChild(s);
+        const gaScript = document.createElement('script');
+        gaScript.async = true;
+        gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+        document.head.appendChild(gaScript);
 
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){ dataLayer.push(arguments); }
-    window.gtag = gtag;
-    gtag('js', new Date());
-    gtag('config', GA_ID, { anonymize_ip: true });
-  }
+        gtag('js', new Date());
+        gtag('config', GA_ID, { anonymize_ip: true });
+      }
 
-  function acceptCookies() {
-    localStorage.setItem(CONSENT_KEY, 'yes');
-    document.getElementById('cookie-banner').style.display = 'none';
-    loadGA();
-  }
+      function showBanner() {
+        const banner = document.getElementById('cookie-banner');
+        if (banner) banner.style.display = 'block';
+      }
 
-  function rejectCookies() {
-    localStorage.setItem(CONSENT_KEY, 'no');
-    document.getElementById('cookie-banner').style.display = 'none';
-    window['ga-disable-' + GA_ID] = true;
-  }
+      function hideBanner() {
+        const banner = document.getElementById('cookie-banner');
+        if (banner) banner.style.display = 'none';
+      }
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const c = localStorage.getItem(CONSENT_KEY);
-    if (!c) {
-      document.getElementById('cookie-banner').style.display = 'block';
-    } else if (c === 'yes') {
-      loadGA();
-    }
-  });
-</script>
+      function acceptCookies() {
+        localStorage.setItem(CONSENT_KEY, 'yes');
+        hideBanner();
+        gtag('consent', 'update', { analytics_storage: 'granted' });
+        loadGoogleAnalytics();
+      }
+
+      function rejectCookies() {
+        localStorage.setItem(CONSENT_KEY, 'no');
+        hideBanner();
+        gtag('consent', 'update', { analytics_storage: 'denied' });
+        window['ga-disable-' + GA_ID] = true;
+      }
+
+      function revokeCookies() {
+        localStorage.removeItem(CONSENT_KEY);
+        gtag('consent', 'update', { analytics_storage: 'denied' });
+        window['ga-disable-' + GA_ID] = true;
+        showBanner();
+      }
+
+      // Espone per footer
+      window.revokeCookies = revokeCookies;
+
+      document.addEventListener('DOMContentLoaded', function () {
+        const btnA = document.getElementById('cookie-accept');
+        const btnR = document.getElementById('cookie-reject');
+        if (btnA) btnA.addEventListener('click', acceptCookies);
+        if (btnR) btnR.addEventListener('click', rejectCookies);
+
+        const consent = localStorage.getItem(CONSENT_KEY);
+        if (consent === 'yes') {
+          gtag('consent', 'update', { analytics_storage: 'granted' });
+          loadGoogleAnalytics();
+        } else if (consent === 'no') {
+          gtag('consent', 'update', { analytics_storage: 'denied' });
+          window['ga-disable-' + GA_ID] = true;
+        } else {
+          showBanner();
+        }
+      });
+    })();
+  </script>
 
 </body>
 </html>
+
