@@ -252,7 +252,8 @@ la risposta giusta dipende solo da come vivi davvero l’auto.
     <a href="privacy.html">Privacy Policy</a> |
     <a href="cookie.html">Cookie Policy</a> |
     <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
-    <a href="note-legali.html">Note Legali</a>
+    <a href="note-legali.html">Note Legali</a> |
+    <a href="#" onclick="revokeCookies(); return false;">Impostazioni cookie</a>
   </div>
   <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
     Syncras.App partecipa al Programma Affiliazione Amazon EU.  
@@ -263,7 +264,7 @@ la risposta giusta dipende solo da come vivi davvero l’auto.
   </p>
 </footer>
 
-<!-- ✅ SCRIPT SBLOCCO QUIZ (QUESTO ERA IL PEZZO MANCANTE) -->
+<!-- ✅ SCRIPT SBLOCCO QUIZ -->
 <script>
 (function(){
   const checkbox = document.getElementById('legalAccept');
@@ -287,8 +288,60 @@ la risposta giusta dipende solo da come vivi davvero l’auto.
 })();
 </script>
 
+<!-- ✅ SCRIPT RISULTATO QUIZ (FIX MINIMO: prima mancava) -->
+<script>
+(function(){
+  const btn = document.getElementById('submitQuiz');
+  const resultBox = document.getElementById('quiz-result');
+  if(!btn || !resultBox) return;
+
+  function getVal(name){
+    const el = document.querySelector('input[name="'+name+'"]:checked');
+    return el ? Number(el.value) : null;
+  }
+
+  btn.addEventListener('click', function(){
+    // verifica risposte
+    let sum = 0;
+    for (let i = 1; i <= 7; i++){
+      const v = getVal('q'+i);
+      if (v === null){
+        resultBox.style.display = 'block';
+        resultBox.style.background = '#FFFBEA';
+        resultBox.style.borderColor = '#FBBF24';
+        resultBox.innerHTML = '<strong>Ti manca qualcosa:</strong> rispondi a tutte le 7 domande per ottenere il risultato.';
+        return;
+      }
+      sum += v;
+    }
+
+    // logica semplice e coerente con le domande (0=pro plug-in/ottimizzazione, 2=pro termico/nessuna)
+    // range: 0..14
+    let title = '';
+    let text = '';
+
+    if (sum <= 4) {
+      title = 'Verdetto: Plug-in (se ricarichi davvero).';
+      text = 'Nel tuo profilo ha senso sfruttare elettrico + ricarica. Attenzione: la plug-in conviene solo se la ricarichi spesso (altrimenti diventa solo “pesante”).';
+    } else if (sum <= 9) {
+      title = 'Verdetto: Ibrida classica (equilibrio e zero sbatti).';
+      text = 'Fai un mix di percorrenze e praticità: l’ibrida “normale” è spesso la scelta più sensata se non vuoi dipendere dalla ricarica.';
+    } else {
+      title = 'Verdetto: Nessuna delle due (o valuta altro).';
+      text = 'Se ricaricare ti pesa o fai spesso lunghi viaggi, potresti non sfruttare i vantaggi della plug-in e nemmeno sentire davvero quelli dell’ibrida. Qui conviene confrontare bene costi reali e alternative.';
+    }
+
+    resultBox.style.display = 'block';
+    resultBox.style.background = '#ECFEFF';
+    resultBox.style.borderColor = '#22C3D6';
+    resultBox.innerHTML = '<strong>' + title + '</strong><br><br>' + text + '<br><br><em>P.S. Syncras: la scelta giusta è quella che userai davvero, non quella “bella sulla carta”.</em>';
+    resultBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+})();
+</script>
+
 <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
-<div id="cookie-banner">
+<div id="cookie-banner" role="dialog" aria-modal="true" aria-label="Preferenze cookie">
   <p>
     Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
     (Google Analytics). Alcuni link potrebbero essere di affiliazione.
@@ -428,4 +481,6 @@ la risposta giusta dipende solo da come vivi davvero l’auto.
 
 </body>
 </html>
+
+
 
