@@ -13,7 +13,10 @@
       --violet-dark:#4B3ACB;
       --bg-page:#F7F7FB;
       --text-main:#403E43;
+      --border:#E5E7EB;
     }
+
+    *{ box-sizing:border-box; }
 
     body{
       font-family:Arial, sans-serif;
@@ -40,6 +43,7 @@
       align-items:center;
       justify-content:space-between;
       gap:16px;
+      position:relative;
     }
     .logo{
       font-size:1.4rem;
@@ -84,13 +88,14 @@
         padding:10px 16px 12px;
         border-radius:0 0 8px 8px;
         box-shadow:0 3px 6px rgba(0,0,0,.25);
-        z-index:50;
+        z-index:70;
       }
       #main-nav a{ padding:6px 0; }
       body.nav-open #main-nav{ display:flex; }
       .menu-toggle{ display:inline-flex; align-items:center; }
     }
 
+    /* MAIN */
     main{
       max-width:900px;
       margin:30px auto;
@@ -99,6 +104,10 @@
       border-radius:10px;
       box-shadow:0 4px 6px rgba(0,0,0,.1);
     }
+    @media (max-width:600px){
+      main{ margin:16px auto; padding:16px 14px; }
+    }
+
     h1,h2,h3{ color:var(--violet-dark); }
     p{ margin-bottom:15px; }
 
@@ -113,6 +122,18 @@
     }
     .back-links a:hover{ text-decoration:underline; }
 
+    .btn-share{
+      background: var(--violet-main);
+      color:white;
+      padding:10px 15px;
+      border:none;
+      border-radius:6px;
+      cursor:pointer;
+      margin:12px 0 18px;
+      font-weight:800;
+    }
+    .btn-share:hover{ background: var(--violet-dark); }
+
     .tip-box{
       background:#F6F4FF;
       border-left:4px solid var(--violet-main);
@@ -122,13 +143,13 @@
       font-size:.95rem;
     }
 
-    /* LEGAL + QUIZ */
+    /* NOTE LEGALI */
     .legal-box{
       background:#F9FAFB;
-      border:1px solid #E5E7EB;
+      border:1px solid var(--border);
       border-radius:8px;
       padding:14px;
-      margin:20px 0;
+      margin:18px 0 10px;
       font-size:.9rem;
     }
     .legal-box a{
@@ -137,43 +158,53 @@
       text-decoration:none;
     }
     .legal-box a:hover{ text-decoration:underline; }
+    .legal-box label{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      cursor:pointer;
+    }
+    .legal-box input{ margin-top:2px; }
 
+    /* QUIZ */
     .quiz-wrapper{
       position:relative;
-      margin-top:18px;
+      margin-top:14px;
     }
 
     .quiz-section{
       background:#F7F7FB;
       border-radius:10px;
       padding:18px 16px;
-      border:1px solid #E5E7EB;
+      border:1px solid var(--border);
       transition:opacity .2s ease;
     }
     .quiz-disabled{
-      opacity:.4;
+      opacity:.38;
       pointer-events:none;
+      filter: grayscale(0.05);
     }
 
     #quiz-overlay-message{
       position:absolute;
       inset:0;
-      display:flex;
+      display:none;
       align-items:center;
       justify-content:center;
       text-align:center;
       padding:16px;
-      background:rgba(255,255,255,.7);
+      background:rgba(255,255,255,.78);
       color:#111827;
       font-size:.95rem;
       border-radius:10px;
       pointer-events:none;
+      z-index:5;
     }
 
     .question{
       margin-bottom:18px;
       padding-bottom:12px;
-      border-bottom:1px solid #E5E7EB;
+      border-bottom:1px solid var(--border);
     }
     .question:last-of-type{
       border-bottom:none;
@@ -187,10 +218,10 @@
     .question label{
       display:block;
       font-size:.92rem;
-      margin-bottom:6px;
+      margin:7px 0;
       cursor:pointer;
     }
-    .question input[type="radio"]{ margin-right:6px; }
+    .question input[type="radio"]{ margin-right:8px; }
 
     #submitQuiz{
       margin-top:10px;
@@ -200,13 +231,13 @@
       padding:10px 16px;
       border-radius:6px;
       cursor:pointer;
-      font-weight:700;
+      font-weight:800;
       font-size:.95rem;
     }
     #submitQuiz:hover{ background:var(--violet-dark); }
 
     #quiz-result{
-      margin-top:18px;
+      margin-top:16px;
       padding:14px;
       border-radius:8px;
       background:#ECFEFF;
@@ -229,7 +260,7 @@
       padding:16px;
       border-radius:10px;
       background:#F7F7FB;
-      border:1px solid #E5E7EB;
+      border:1px solid var(--border);
     }
     .related-grid{
       display:grid;
@@ -241,15 +272,16 @@
       background:#fff;
       border-radius:8px;
       padding:10px 12px;
-      border:1px solid #E5E7EB;
+      border:1px solid var(--border);
       font-size:.9rem;
     }
     .related-item h3{ margin:0 0 6px; font-size:1rem; }
     .related-item a{
       text-decoration:none;
       color:var(--violet-dark);
-      font-weight:700;
+      font-weight:800;
     }
+    .related-item a:hover{ text-decoration:underline; }
 
     footer{
       text-align:center;
@@ -284,7 +316,7 @@
     }
     #cookie-banner a{
       color:var(--violet-main);
-      font-weight:800;
+      font-weight:900;
       text-decoration:none;
     }
     #cookie-banner a:hover{ text-decoration:underline; }
@@ -299,19 +331,18 @@
       padding:10px 12px;
       border-radius:6px;
       cursor:pointer;
-      font-weight:800;
+      font-weight:900;
+      border:2px solid var(--violet-main);
     }
     #cookie-reject{
       background:#fff;
       color:#111827;
-      border:2px solid var(--violet-main);
     }
     #cookie-accept{
       background:var(--violet-main);
       color:#fff;
-      border:2px solid var(--violet-main);
     }
-    #cookie-accept:hover{ background:var(--violet-dark); }
+    #cookie-accept:hover{ background:var(--violet-dark); border-color:var(--violet-dark); }
   </style>
 </head>
 
@@ -327,15 +358,15 @@
       </button>
 
       <nav id="main-nav">
-       <a href="index.html">Home</a>
-      <a href="blog.html">Blog</a>
-      <a href="smart-test.html">Smart Test</a>
-      <a href="calcolatori.html">Calcolatori</a>
-      <a href="fast-card.html">Fast Card</a>
-      <a href="offerte.html">Prodotti Consapevoli</a>
-      <a href="curiosita.html">Curiosità</a>
-      <a href="misteri.html">Misteri</a>
-      <a href="chi.html">Chi siamo</a>
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="smart-test.html">Smart Test</a>
+        <a href="calcolatori.html">Calcolatori</a>
+        <a href="fast-cards.html">Fast Card</a>
+        <a href="offerte.html">Prodotti Consapevoli</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="chi.html">Chi siamo</a>
       </nav>
     </div>
   </header>
@@ -348,11 +379,7 @@
 
     <h1>Smart Test – Ha senso l’auto elettrica per te?</h1>
 
-    <button id="shareBtnTop"
-      style="background: var(--violet-main); color:white; padding:10px 15px; border:none;
-             border-radius:6px; cursor:pointer; margin-bottom:18px; font-weight:700;">
-      📎 Condividi questo test
-    </button>
+    <button id="shareBtnTop" class="btn-share" type="button">📎 Condividi questo test</button>
 
     <p>
       L’auto elettrica può essere una svolta… oppure un incubo se la tua vita reale non è compatibile
@@ -388,7 +415,7 @@
         Spunta la casella qui sopra per accettare le Note Legali e sbloccare il test.
       </div>
 
-      <section id="quiz-section" class="quiz-section quiz-disabled">
+      <section id="quiz-section" class="quiz-section quiz-disabled" aria-live="polite">
 
         <div class="question">
           <h3>1) Quanti km fai in un giorno “normale”?</h3>
@@ -439,7 +466,7 @@
           <label><input type="radio" name="q7" value="2"> Molto: sono sempre in emergenza e senza tempo</label>
         </div>
 
-        <button id="submitQuiz">Calcola risultato</button>
+        <button id="submitQuiz" type="button">Calcola risultato</button>
         <div id="quiz-result"></div>
 
       </section>
@@ -469,9 +496,7 @@
     </section>
 
     <div style="text-align:center; margin:24px 0 8px;">
-      <button id="shareBtnBottom"
-        style="background: var(--violet-main); color:white; padding:10px 18px; border:none;
-               border-radius:6px; cursor:pointer; font-weight:700; font-size:1rem;">
+      <button id="shareBtnBottom" class="btn-share" type="button" style="padding:10px 18px; font-size:1rem;">
         📎 Condividi questo test
       </button>
     </div>
@@ -484,9 +509,8 @@
       <a href="privacy.html">Privacy Policy</a> |
       <a href="cookie.html">Cookie Policy</a> |
       <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
-      <a href="note-legali.html">Note Legali</a>
-      <a href="#" onclick="revokeCookies();return false;">Cambia consenso cookie</a>
-
+      <a href="note-legali.html">Note Legali</a> |
+      <a href="#" onclick="revokeCookies(); return false;">Gestisci consenso cookie</a>
     </div>
     <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
       Syncras.App partecipa al Programma Affiliazione Amazon EU.
@@ -497,12 +521,12 @@
     </p>
   </footer>
 
-  <!-- COOKIE BANNER -->
+  <!-- COOKIE BANNER (GDPR strong: GA bloccato finché non accetti + Consent Mode) -->
   <div id="cookie-banner" role="dialog" aria-live="polite" aria-label="Banner cookie">
     <p>
-      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite (Google Analytics).
+      Usiamo cookie tecnici e, <strong>solo con consenso</strong>, strumenti di misurazione delle visite (Google Analytics).
       Alcuni link potrebbero essere di affiliazione.
-      Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la <a href="privacy.html">Privacy Policy</a>.
+      Dettagli in <a href="cookie.html">Cookie Policy</a> e <a href="privacy.html">Privacy Policy</a>.
     </p>
     <div class="cookie-row">
       <button id="cookie-reject" type="button">Rifiuta</button>
@@ -515,184 +539,238 @@
   </script>
 
   <script>
-  (function () {
-    const GA_ID = 'G-CFTTCYDZ2P';
-    const CONSENT_KEY = 'syncras_cookie_consent';
-
-    // GA disabilitato finché non c'è consenso
-    window['ga-disable-' + GA_ID] = true;
-
-    function loadGoogleAnalytics(){
-      if (window.__syncrasGaLoaded) return;
-      window.__syncrasGaLoaded = true;
-
-      window['ga-disable-' + GA_ID] = false;
-
-      const gaScript = document.createElement('script');
-      gaScript.async = true;
-      gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
-      document.head.appendChild(gaScript);
-
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){ dataLayer.push(arguments); }
-      window.gtag = gtag;
-      gtag('js', new Date());
-      gtag('config', GA_ID, { anonymize_ip: true });
-    }
-
-    function showBanner(){
-      const banner = document.getElementById('cookie-banner');
-      if (banner) banner.style.display = 'block';
-    }
-    function hideBanner(){
-      const banner = document.getElementById('cookie-banner');
-      if (banner) banner.style.display = 'none';
-    }
-
-    function acceptCookies(){
-      localStorage.setItem(CONSENT_KEY, 'yes');
-      hideBanner();
-      loadGoogleAnalytics();
-    }
-    function rejectCookies(){
-      localStorage.setItem(CONSENT_KEY, 'no');
-      hideBanner();
-      window['ga-disable-' + GA_ID] = true;
-    }
-
-    // wiring bottoni
-    document.getElementById('cookie-accept').addEventListener('click', acceptCookies);
-    document.getElementById('cookie-reject').addEventListener('click', rejectCookies);
-
-    document.addEventListener('DOMContentLoaded', function(){
-      const consent = localStorage.getItem(CONSENT_KEY);
-      if (consent === 'yes') loadGoogleAnalytics();
-      else if (consent === 'no') window['ga-disable-' + GA_ID] = true;
-      else showBanner();
-    });
-  })();
-  </script>
-
-  <script>
-  // Sblocco test dopo accettazione Note Legali
-  (function(){
-    const checkbox = document.getElementById('legalAccept');
-    const quizSection = document.getElementById('quiz-section');
-    const overlayMsg = document.getElementById('quiz-overlay-message');
-
-    if (!checkbox || !quizSection || !overlayMsg) return;
-
-    checkbox.addEventListener('change', function(){
-      if (this.checked){
-        quizSection.classList.remove('quiz-disabled');
-        overlayMsg.style.display = 'none';
-      } else {
-        quizSection.classList.add('quiz-disabled');
-        overlayMsg.style.display = 'flex';
-      }
-    });
-  })();
-  </script>
-
-  <script>
-  // Logica punteggio
-  (function(){
-    const submitBtn = document.getElementById('submitQuiz');
-    const resultBox = document.getElementById('quiz-result');
-    if (!submitBtn || !resultBox) return;
-
-    submitBtn.addEventListener('click', function(){
-      let total = 0;
-      let allAnswered = true;
-
-      for (let i=1; i<=7; i++){
-        const checked = document.querySelector('input[name="q'+i+'"]:checked');
-        if (!checked){ allAnswered = false; break; }
-        total += parseInt(checked.value, 10);
-      }
-
-      resultBox.style.display = 'block';
-
-      if (!allAnswered){
-        resultBox.style.background = '#FEF2F2';
-        resultBox.style.borderColor = '#F97373';
-        resultBox.innerHTML = `<strong>Rispondi a tutte le domande.</strong><br>Altrimenti questo test è come comprare l’auto “a sentimento” 😄`;
-        return;
-      }
-
-      let titolo = '';
-      let testo = '';
-
-      if (total <= 4){
-        titolo = '⚡ Sì: per te l’elettrica ha molto senso';
-        testo = `
-          Hai il profilo tipico “compatibile”: tragitti gestibili, possibilità di ricarica sensata e poca ansia da pianificazione.
-          <br><br>
-          <strong>Consiglio pratico:</strong> se puoi ricaricare spesso “a casa o al lavoro”, l’elettrica tende a semplificare e a ridurre manutenzione.
-        `;
-      } else if (total <= 8){
-        titolo = '⚖️ Dipende: può avere senso, ma con due condizioni';
-        testo = `
-          Non sei fuori gioco, però ci sono variabili che possono rendere l’esperienza ottima o irritante.
-          <br><br>
-          <strong>Per farla funzionare:</strong>
-          <ul>
-            <li>assicurati di avere almeno un punto ricarica affidabile vicino (casa/lavoro/colonnine comode);</li>
-            <li>se fai viaggi lunghi ogni tanto, scegli un modello e una rete di ricarica che non ti facciano odiare la domenica.</li>
-          </ul>
-        `;
-      } else if (total <= 11){
-        titolo = '⚠️ Rischio frustrazione: oggi potresti trovarti scomodo';
-        testo = `
-          L’elettrica potrebbe funzionare, ma probabilmente <strong>ti costerebbe “energia mentale”</strong> tra ricariche e imprevisti.
-          <br><br>
-          <strong>Alternative sensate:</strong> valuta ibrida/plug-in (se ricarichi davvero) o rimanda finché la tua logistica non migliora (box, colonnine, abitudini).
-        `;
-      } else {
-        titolo = '🧨 Al momento: meglio evitare (o cambiare prima scenario)';
-        testo = `
-          Con la tua routine reale, l’elettrica rischia di diventare un “progetto” più che un’auto.
-          <br><br>
-          <strong>Se vuoi arrivarci lo stesso:</strong> prima risolvi il punto cruciale: <em>ricarica comoda</em> (casa/lavoro) e tempi gestibili.
-          Senza quello, ti farà solo arrabbiare.
-        `;
-      }
-
-      resultBox.style.background = '#ECFEFF';
-      resultBox.style.borderColor = '#22C3D6';
-      resultBox.innerHTML = `
-        <strong>${titolo}</strong><br><br>
-        ${testo}
-        <br><br>
-        <span style="font-size:0.85rem; opacity:0.85;">
-          Questo test è un supporto “da realtà”, non una consulenza tecnica o finanziaria.
-        </span>
-      `;
-    });
-  })();
-  </script>
-
-  <script>
-  // Share API (top e bottom)
-  (function(){
-    function attachShare(btn){
-      if (!btn) return;
-      if (navigator.share){
-        btn.addEventListener('click', () => {
+    // Share (top + bottom) con fallback copia link
+    (function(){
+      function sharePage(){
+        const url = window.location.href;
+        const title = document.title;
+        if (navigator.share) {
           navigator.share({
             title: 'Smart Test – Ha senso l’auto elettrica per te?',
             text: 'Ho fatto il test Syncras: “Ha senso l’auto elettrica per te?”. Provalo anche tu.',
-            url: window.location.href
-          });
-        });
-      } else {
-        btn.style.display = 'none';
+            url
+          }).catch(() => {});
+        } else if (navigator.clipboard) {
+          navigator.clipboard.writeText(url).then(() => alert("Link copiato negli appunti ✅"));
+        }
       }
-    }
-    attachShare(document.getElementById('shareBtnTop'));
-    attachShare(document.getElementById('shareBtnBottom'));
-  })();
+      const t = document.getElementById('shareBtnTop');
+      const b = document.getElementById('shareBtnBottom');
+      if (t) t.addEventListener('click', sharePage);
+      if (b) b.addEventListener('click', sharePage);
+    })();
+  </script>
+
+  <script>
+    // Sblocco test dopo accettazione Note Legali (stato sync anche al load)
+    (function(){
+      const checkbox = document.getElementById('legalAccept');
+      const quizSection = document.getElementById('quiz-section');
+      const overlayMsg = document.getElementById('quiz-overlay-message');
+      if (!checkbox || !quizSection || !overlayMsg) return;
+
+      function syncState(){
+        const unlocked = !!checkbox.checked;
+        if (unlocked){
+          quizSection.classList.remove('quiz-disabled');
+          overlayMsg.style.display = 'none';
+        } else {
+          quizSection.classList.add('quiz-disabled');
+          overlayMsg.style.display = 'flex';
+        }
+      }
+
+      checkbox.addEventListener('change', syncState);
+      document.addEventListener('DOMContentLoaded', syncState);
+      syncState();
+    })();
+  </script>
+
+  <script>
+    // Logica punteggio (7 domande)
+    (function(){
+      const submitBtn = document.getElementById('submitQuiz');
+      const resultBox = document.getElementById('quiz-result');
+      if (!submitBtn || !resultBox) return;
+
+      submitBtn.addEventListener('click', function(){
+        let total = 0;
+        let allAnswered = true;
+
+        for (let i=1; i<=7; i++){
+          const checked = document.querySelector('input[name="q'+i+'"]:checked');
+          if (!checked){ allAnswered = false; break; }
+          total += parseInt(checked.value, 10);
+        }
+
+        resultBox.style.display = 'block';
+
+        if (!allAnswered){
+          resultBox.style.background = '#FEF2F2';
+          resultBox.style.borderColor = '#F97373';
+          resultBox.innerHTML =
+            `<strong>Rispondi a tutte le domande.</strong><br>` +
+            `Altrimenti questo test è come comprare l’auto “a sentimento” 😄`;
+          return;
+        }
+
+        let titolo = '';
+        let testo = '';
+
+        if (total <= 4){
+          titolo = '⚡ Sì: per te l’elettrica ha molto senso';
+          testo = `
+            Hai il profilo tipico “compatibile”: tragitti gestibili, possibilità di ricarica sensata e poca ansia da pianificazione.
+            <br><br>
+            <strong>Consiglio pratico:</strong> se puoi ricaricare spesso “a casa o al lavoro”, l’elettrica tende a semplificare e a ridurre manutenzione.
+          `;
+        } else if (total <= 8){
+          titolo = '⚖️ Dipende: può avere senso, ma con due condizioni';
+          testo = `
+            Non sei fuori gioco, però ci sono variabili che possono rendere l’esperienza ottima o irritante.
+            <br><br>
+            <strong>Per farla funzionare:</strong>
+            <ul>
+              <li>assicurati di avere almeno un punto ricarica affidabile vicino (casa/lavoro/colonnine comode);</li>
+              <li>se fai viaggi lunghi ogni tanto, scegli un modello e una rete di ricarica che non ti facciano odiare la domenica.</li>
+            </ul>
+          `;
+        } else if (total <= 11){
+          titolo = '⚠️ Rischio frustrazione: oggi potresti trovarti scomodo';
+          testo = `
+            L’elettrica potrebbe funzionare, ma probabilmente <strong>ti costerebbe “energia mentale”</strong> tra ricariche e imprevisti.
+            <br><br>
+            <strong>Alternative sensate:</strong> valuta ibrida/plug-in (se ricarichi davvero) o rimanda finché la tua logistica non migliora (box, colonnine, abitudini).
+          `;
+        } else {
+          titolo = '🧨 Al momento: meglio evitare (o cambiare prima scenario)';
+          testo = `
+            Con la tua routine reale, l’elettrica rischia di diventare un “progetto” più che un’auto.
+            <br><br>
+            <strong>Se vuoi arrivarci lo stesso:</strong> prima risolvi il punto cruciale: <em>ricarica comoda</em> (casa/lavoro) e tempi gestibili.
+            Senza quello, ti farà solo arrabbiare.
+          `;
+        }
+
+        resultBox.style.background = '#ECFEFF';
+        resultBox.style.borderColor = '#22C3D6';
+        resultBox.innerHTML = `
+          <strong>${titolo}</strong><br><br>
+          ${testo}
+          <br><br>
+          <span style="font-size:0.85rem; opacity:0.85;">
+            Questo test è un supporto “da realtà”, non una consulenza tecnica o finanziaria.
+          </span>
+        `;
+      });
+    })();
+  </script>
+
+  <script>
+    // Cookie + GA4 (GDPR strong):
+    // - GA bloccato finché non accetti
+    // - Consent Mode default denied
+    // - Revoca consenso funzionante dal footer
+    (function () {
+      const GA_ID = 'G-CFTTCYDZ2P';
+      const CONSENT_KEY = 'syncras_cookie_consent';
+
+      // Hard-block GA finché non c'è consenso
+      window['ga-disable-' + GA_ID] = true;
+
+      // Prepara gtag + Consent Mode (default: denied)
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+
+      gtag('consent', 'default', {
+        ad_storage: 'denied',
+        analytics_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied'
+      });
+
+      function loadGoogleAnalytics(){
+        if (window.__syncrasGaLoaded) return;
+        window.__syncrasGaLoaded = true;
+
+        // Sblocca GA e carica lo script solo dopo consenso
+        window['ga-disable-' + GA_ID] = false;
+
+        const gaScript = document.createElement('script');
+        gaScript.async = true;
+        gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+        document.head.appendChild(gaScript);
+
+        gtag('js', new Date());
+        gtag('config', GA_ID, { anonymize_ip: true });
+      }
+
+      function showBanner(){
+        const banner = document.getElementById('cookie-banner');
+        if (banner) banner.style.display = 'block';
+      }
+      function hideBanner(){
+        const banner = document.getElementById('cookie-banner');
+        if (banner) banner.style.display = 'none';
+      }
+
+      function acceptCookies(){
+        localStorage.setItem(CONSENT_KEY, 'yes');
+        hideBanner();
+
+        // abilita analytics_storage
+        gtag('consent', 'update', { analytics_storage: 'granted' });
+
+        loadGoogleAnalytics();
+      }
+
+      function rejectCookies(){
+        localStorage.setItem(CONSENT_KEY, 'no');
+        hideBanner();
+
+        // resta negato
+        gtag('consent', 'update', { analytics_storage: 'denied' });
+        window['ga-disable-' + GA_ID] = true;
+      }
+
+      function revokeCookies(){
+        localStorage.removeItem(CONSENT_KEY);
+
+        // torna a denied + riblocca GA
+        gtag('consent', 'update', { analytics_storage: 'denied' });
+        window['ga-disable-' + GA_ID] = true;
+
+        showBanner();
+      }
+
+      // espone funzioni (serve anche per link footer)
+      window.acceptCookies = acceptCookies;
+      window.rejectCookies = rejectCookies;
+      window.revokeCookies = revokeCookies;
+
+      // wiring bottoni
+      document.addEventListener('DOMContentLoaded', function(){
+        const btnA = document.getElementById('cookie-accept');
+        const btnR = document.getElementById('cookie-reject');
+        if (btnA) btnA.addEventListener('click', acceptCookies);
+        if (btnR) btnR.addEventListener('click', rejectCookies);
+
+        const consent = localStorage.getItem(CONSENT_KEY);
+
+        if (consent === 'yes'){
+          gtag('consent', 'update', { analytics_storage: 'granted' });
+          loadGoogleAnalytics();
+        } else if (consent === 'no'){
+          gtag('consent', 'update', { analytics_storage: 'denied' });
+          window['ga-disable-' + GA_ID] = true;
+        } else {
+          showBanner();
+        }
+      });
+    })();
   </script>
 
 </body>
 </html>
+
