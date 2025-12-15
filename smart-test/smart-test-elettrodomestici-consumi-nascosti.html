@@ -15,6 +15,8 @@
       --text-main: #403E43;
     }
 
+    * { box-sizing: border-box; }
+
     body {
       font-family: Arial, sans-serif;
       background: var(--bg-page);
@@ -30,6 +32,8 @@
       color: white;
       padding: 12px 14px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+      position: relative;
+      z-index: 60;
     }
     .header-inner {
       max-width: 1180px;
@@ -45,6 +49,7 @@
       font-weight: bold;
       letter-spacing: 0.03em;
     }
+
     #main-nav {
       display: flex;
       gap: 18px;
@@ -54,10 +59,10 @@
       color: white;
       text-decoration: none;
       font-weight: 600;
+      padding-bottom: 2px;
     }
-    #main-nav a:hover {
-      text-decoration: underline;
-    }
+    #main-nav a:hover { text-decoration: underline; }
+
     .menu-toggle {
       display: none;
       background: rgba(255,255,255,0.12);
@@ -66,24 +71,28 @@
       color: white;
       padding: 6px 10px;
       cursor: pointer;
+      font-weight: 700;
     }
 
     @media (max-width: 768px) {
       #main-nav {
         display: none;
         position: absolute;
-        left: 12px;
-        right: 12px;
+        left: 0;
+        right: 0;
         top: 56px;
+        margin: 0 auto;
+        max-width: 1180px;
         flex-direction: column;
         background-color: var(--violet-dark);
-        padding: 10px 16px;
+        padding: 10px 16px 12px 16px;
         border-radius: 0 0 8px 8px;
         z-index: 50;
         box-shadow: 0 3px 6px rgba(0,0,0,0.25);
       }
-      .menu-toggle { display: inline-flex; align-items: center; gap: 8px; }
+      #main-nav a { padding: 8px 0; }
       body.nav-open #main-nav { display: flex; }
+      .menu-toggle { display: inline-flex; align-items: center; gap: 8px; }
     }
 
     /* MAIN */
@@ -137,16 +146,14 @@
     }
     .legal-box a {
       color: var(--violet-dark);
-      font-weight: 600;
+      font-weight: 700;
       text-decoration: none;
     }
     .legal-box a:hover { text-decoration: underline; }
+    .legal-box label { cursor: pointer; }
 
     /* QUIZ */
-    .quiz-wrapper {
-      position: relative;
-      margin-top: 16px;
-    }
+    .quiz-wrapper { position: relative; margin-top: 16px; }
 
     .quiz-section {
       background: #F7F7FB;
@@ -155,11 +162,7 @@
       border: 1px solid #E5E7EB;
       transition: opacity .2s ease;
     }
-
-    .quiz-disabled {
-      opacity: 0.4;
-      pointer-events: none;
-    }
+    .quiz-disabled { opacity: 0.4; pointer-events: none; }
 
     #quiz-overlay-message {
       position: absolute;
@@ -186,22 +189,14 @@
       margin-bottom: 10px;
       padding-bottom: 0;
     }
-
-    .question h3 {
-      font-size: 1rem;
-      margin-bottom: 8px;
-    }
-
+    .question h3 { font-size: 1rem; margin-bottom: 8px; }
     .question label {
       display: block;
       font-size: 0.92rem;
       margin-bottom: 6px;
       cursor: pointer;
     }
-
-    .question input[type="radio"] {
-      margin-right: 6px;
-    }
+    .question input[type="radio"] { margin-right: 6px; }
 
     #quiz-result {
       margin-top: 18px;
@@ -221,7 +216,7 @@
       padding: 10px 16px;
       border-radius: 6px;
       cursor: pointer;
-      font-weight: 700;
+      font-weight: 800;
       font-size: 0.95rem;
     }
     #submitQuiz:hover { background: var(--violet-dark); }
@@ -247,14 +242,11 @@
       border:1px solid #E5E7EB;
       font-size:0.9rem;
     }
-    .related-item h3 {
-      margin-top:0;
-      font-size:1rem;
-    }
+    .related-item h3 { margin-top:0; font-size:1rem; }
     .related-item a {
       text-decoration:none;
       color:var(--violet-dark);
-      font-weight:700;
+      font-weight:800;
     }
 
     /* FOOTER */
@@ -283,32 +275,35 @@
       font-family: Arial, sans-serif;
       display: none;
     }
-
     #cookie-banner p {
       margin: 0 0 12px 0;
       font-size: 0.95rem;
       color: #333;
       line-height: 1.4;
     }
-
     #cookie-banner a {
       color: #6C5CE7;
-      font-weight: bold;
+      font-weight: 800;
       text-decoration: none;
     }
+    #cookie-banner a:hover { text-decoration: underline; }
 
-    #cookie-banner button[onclick="rejectCookies()"] {
+    #cookie-banner .cookie-actions {
+      display:flex;
+      gap:10px;
+      margin-top:8px;
+    }
+    #cookie-reject {
       flex: 1;
-      background: white !important;
-      color: #111827 !important;
-      border: 2px solid #6C5CE7 !important;
+      background: white;
+      color: #111827;
+      border: 2px solid #6C5CE7;
       padding: 10px 12px;
       border-radius: 6px;
       cursor: pointer;
-      font-weight: 700;
+      font-weight: 800;
     }
-
-    #cookie-btn {
+    #cookie-accept {
       flex: 1;
       background: #6C5CE7;
       color: white;
@@ -316,10 +311,9 @@
       padding: 10px 16px;
       border-radius: 6px;
       cursor: pointer;
-      font-weight: 800;
+      font-weight: 900;
     }
-    #cookie-btn:hover { background: #4B3ACB; }
-
+    #cookie-accept:hover { background: #4B3ACB; }
   </style>
 </head>
 
@@ -329,40 +323,41 @@
     <div class="header-inner">
       <div class="logo">Syncras.App</div>
 
-      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+      <button class="menu-toggle" id="menuBtn" type="button" aria-label="Apri o chiudi il menu di navigazione" aria-expanded="false">
         Menu <span>☰</span>
       </button>
 
       <nav id="main-nav">
         <a href="index.html">Home</a>
-      <a href="blog.html">Blog</a>
-      <a href="smart-test.html">Smart Test</a>
-      <a href="calcolatori.html">Calcolatori</a>
-      <a href="fast-card.html">Fast Card</a>
-      <a href="offerte.html">Prodotti Consapevoli</a>
-      <a href="curiosita.html">Curiosità</a>
-      <a href="misteri.html">Misteri</a>
-      <a href="chi.html">Chi siamo</a>
+        <a href="blog.html">Blog</a>
+        <a href="smart-test.html">Smart Test</a>
+        <a href="calcolatori.html">Calcolatori</a>
+        <a href="fast-cards.html">Fast Card</a>
+        <a href="offerte.html">Prodotti Consapevoli</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="chi.html">Chi siamo</a>
       </nav>
     </div>
   </header>
 
   <main>
     <div class="back-links">
-      ← <a href="index.html">Torna alla Home</a> |
-      <a href="quiz.html">Vai ai Test</a>
+      ← <a href="smart-test.html">Torna a Smart Test</a> |
+      <a href="index.html">Home</a>
     </div>
 
     <h1>Smart Test – Elettrodomestici e consumi nascosti: stai pagando più del dovuto?</h1>
 
     <button id="shareBtnTop"
+      type="button"
       style="background: var(--violet-main); color:white; padding:10px 15px; border:none;
-             border-radius:6px; cursor:pointer; margin:12px 0 18px; font-weight:700;">
+             border-radius:6px; cursor:pointer; margin:12px 0 18px; font-weight:800;">
       📎 Condividi questo test
     </button>
 
     <p>
-      In bolletta non paghi solo “gli elettrodomestici”.  
+      In bolletta non paghi solo “gli elettrodomestici”.
       Paghi anche <strong>abitudini</strong>, <strong>stand-by</strong>, <strong>cicli sbagliati</strong> e quella frase classica:
       “Vabbè, tanto lo fa da solo”.
     </p>
@@ -454,7 +449,7 @@
 
     <div class="mini-test">
       <strong>Mini-verità Syncras:</strong><br>
-      Se vuoi tagliare davvero i consumi, spesso non serve “comprare cose nuove”.  
+      Se vuoi tagliare davvero i consumi, spesso non serve “comprare cose nuove”.
       Serve <strong>togliere sprechi</strong> e usare meglio quello che hai già.
     </div>
 
@@ -470,16 +465,16 @@
           <p>Perché a volte non perdi soldi… perdi tempo. E il tempo vale più dei soldi.</p>
         </article>
         <article class="related-item">
-          <h3><a href="quiz.html">Altri Smart Test</a></h3>
+          <h3><a href="smart-test.html">Altri Smart Test</a></h3>
           <p>Test rapidi e ironici per non farti fregare da offerte, abitudini e marketing.</p>
         </article>
       </div>
     </section>
 
     <div style="text-align:center; margin:28px 0 10px;">
-      <button id="shareBtnBottom"
+      <button id="shareBtnBottom" type="button"
         style="background: var(--violet-main); color:white; padding:10px 18px; border:none;
-               border-radius:6px; cursor:pointer; font-weight:800; font-size:1rem;">
+               border-radius:6px; cursor:pointer; font-weight:900; font-size:1rem;">
         📎 Condividi questo test
       </button>
     </div>
@@ -491,110 +486,45 @@
       <a href="privacy.html">Privacy Policy</a> |
       <a href="cookie.html">Cookie Policy</a> |
       <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
-      <a href="note-legali.html">Note Legali</a>
-      <a href="#" onclick="revokeCookies();return false;">Cambia consenso cookie</a>
-
+      <a href="note-legali.html">Note Legali</a> |
+      <a href="#" onclick="revokeCookies();return false;">Gestisci consenso cookie</a>
     </div>
     <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
-      Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.
       Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
       senza alcun costo aggiuntivo per l’utente.
     </p>
   </footer>
 
-  <!-- Cookie Banner + Blocco Google Analytics – GDPR -->
-  <div id="cookie-banner">
+  <!-- COOKIE BANNER (unico) -->
+  <div id="cookie-banner" role="dialog" aria-live="polite">
     <p>
-      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
-      (Google Analytics). Alcuni link potrebbero essere di affiliazione.
-      Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
-      <a href="privacy.html">Privacy Policy</a>.
+      Usiamo cookie tecnici e, <strong>solo se acconsenti</strong>, cookie di misurazione per statistiche sulle visite (Google Analytics).
+      Alcuni link potrebbero essere di affiliazione.
+      Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la <a href="privacy.html">Privacy Policy</a>.
     </p>
-    <div style="display:flex; gap:10px; margin-top:8px;">
-      <button type="button" onclick="rejectCookies()">
-        Rifiuta
-      </button>
-      <button id="cookie-btn" type="button" onclick="acceptCookies()">
-        Accetta e continua
-      </button>
+    <div class="cookie-actions">
+      <button id="cookie-reject" type="button">Rifiuta</button>
+      <button id="cookie-accept" type="button">Accetta e continua</button>
     </div>
   </div>
 
   <script>
-    function toggleMenu() {
-      document.body.classList.toggle('nav-open');
-    }
-  </script>
+    /* MENU */
+    (function(){
+      const btn = document.getElementById('menuBtn');
+      const toggle = () => {
+        const open = document.body.classList.toggle('nav-open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      };
+      if(btn) btn.addEventListener('click', toggle);
+    })();
 
-  <script>
-  (function () {
-    const GA_ID = 'G-CFTTCYDZ2P';
-    const CONSENT_KEY = 'syncras_cookie_consent';
-
-    // GA disabilitato finché non c'è consenso
-    window['ga-disable-' + GA_ID] = true;
-
-    function loadGoogleAnalytics() {
-      if (window.__syncrasGaLoaded) return;
-      window.__syncrasGaLoaded = true;
-
-      window['ga-disable-' + GA_ID] = false;
-
-      const gaScript = document.createElement('script');
-      gaScript.async = true;
-      gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
-      document.head.appendChild(gaScript);
-
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){ dataLayer.push(arguments); }
-      window.gtag = gtag;
-      gtag('js', new Date());
-      gtag('config', GA_ID, { anonymize_ip: true });
-    }
-
-    function showBanner() {
-      const banner = document.getElementById('cookie-banner');
-      if (banner) banner.style.display = 'block';
-    }
-
-    function hideBanner() {
-      const banner = document.getElementById('cookie-banner');
-      if (banner) banner.style.display = 'none';
-    }
-
-    window.acceptCookies = function () {
-      localStorage.setItem(CONSENT_KEY, 'yes');
-      hideBanner();
-      loadGoogleAnalytics();
-    };
-
-    window.rejectCookies = function () {
-      localStorage.setItem(CONSENT_KEY, 'no');
-      hideBanner();
-      window['ga-disable-' + GA_ID] = true;
-    };
-
-    document.addEventListener('DOMContentLoaded', function () {
-      const consent = localStorage.getItem(CONSENT_KEY);
-
-      if (consent === 'yes') {
-        loadGoogleAnalytics();
-      } else if (consent === 'no') {
-        window['ga-disable-' + GA_ID] = true;
-      } else {
-        showBanner();
-      }
-    });
-  })();
-  </script>
-
-  <!-- Sblocco quiz dopo accettazione Note Legali -->
-  <script>
+    /* SBLOCCO QUIZ */
     (function () {
       const checkbox = document.getElementById('legalAccept');
       const quizSection = document.getElementById('quiz-section');
       const overlayMsg = document.getElementById('quiz-overlay-message');
-
       if (!checkbox || !quizSection || !overlayMsg) return;
 
       checkbox.addEventListener('change', function () {
@@ -607,14 +537,11 @@
         }
       });
     })();
-  </script>
 
-  <!-- Logica Quiz -->
-  <script>
+    /* LOGICA QUIZ */
     (function () {
       const submitBtn = document.getElementById('submitQuiz');
       const resultBox = document.getElementById('quiz-result');
-
       if (!submitBtn || !resultBox) return;
 
       submitBtn.addEventListener('click', function () {
@@ -645,10 +572,7 @@
 
         if (total <= 4) {
           titolo = '✅ Casa “quasi efficiente”: sprechi sotto controllo';
-          testo = `
-            Non stai buttando energia a caso: ottimo.  
-            Qualche miglioramento è sempre possibile, ma sei già sopra la media.
-          `;
+          testo = `Non stai buttando energia a caso: ottimo. Qualche miglioramento è sempre possibile, ma sei già sopra la media.`;
           azioni = `
             <ul>
               <li>Continua con multiprese e stand-by sotto controllo.</li>
@@ -658,10 +582,7 @@
           `;
         } else if (total <= 8) {
           titolo = '⚠️ Zona gialla: consumi “invisibili” probabili';
-          testo = `
-            Non sei messo male, ma ci sono segnali classici: stand-by, cicli non ottimali,
-            clima usato “a scatti”, apertura frigo stile conferenza stampa.
-          `;
+          testo = `Non sei messo male, ma ci sono segnali classici: stand-by, cicli non ottimali, clima usato “a scatti”, apertura frigo stile conferenza stampa.`;
           azioni = `
             <ul>
               <li>Fai una “settimana anti-standby” (TV/decoder/console).</li>
@@ -671,10 +592,7 @@
           `;
         } else if (total <= 11) {
           titolo = '🧯 Zona arancione: bolletta a rischio (ma recuperabile)';
-          testo = `
-            Qui i consumi nascosti potrebbero pesare davvero.  
-            La buona notizia? Spesso si risolve con 3 abitudini, non con 3 acquisti.
-          `;
+          testo = `Qui i consumi nascosti potrebbero pesare davvero. La buona notizia? Spesso si risolve con 3 abitudini, non con 3 acquisti.`;
           azioni = `
             <ul>
               <li>1) Taglia lo stand-by con una multipresa “seria”.</li>
@@ -684,10 +602,7 @@
           `;
         } else {
           titolo = '🧨 Consumi nascosti ovunque: i “vampiri” stanno vincendo';
-          testo = `
-            Probabile mix di stand-by, mezzi carichi e uso poco efficiente degli apparecchi.
-            Non è colpa tua: è il modo in cui siamo abituati a vivere “comodi”.
-          `;
+          testo = `Probabile mix di stand-by, mezzi carichi e uso poco efficiente degli apparecchi. Non è colpa tua: è il modo in cui siamo abituati a vivere “comodi”.`;
           azioni = `
             <ul>
               <li>Fai una lista di 5 dispositivi sempre accesi e spegnine almeno 2.</li>
@@ -712,10 +627,8 @@
         `;
       });
     })();
-  </script>
 
-  <!-- Share API -->
-  <script>
+    /* SHARE */
     (function () {
       const shareTop = document.getElementById('shareBtnTop');
       const shareBottom = document.getElementById('shareBtnBottom');
@@ -738,7 +651,74 @@
       attachShare(shareTop);
       attachShare(shareBottom);
     })();
+
+    /* COOKIE + GA + REVOCA */
+    (function () {
+      const GA_ID = 'G-CFTTCYDZ2P';
+      const CONSENT_KEY = 'syncras_cookie_consent';
+
+      // GA disabilitato finché non c'è consenso
+      window['ga-disable-' + GA_ID] = true;
+
+      function loadGoogleAnalytics() {
+        if (window.__syncrasGaLoaded) return;
+        window.__syncrasGaLoaded = true;
+
+        window['ga-disable-' + GA_ID] = false;
+
+        const gaScript = document.createElement('script');
+        gaScript.async = true;
+        gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+        document.head.appendChild(gaScript);
+
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){ dataLayer.push(arguments); }
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', GA_ID, { anonymize_ip: true });
+      }
+
+      function showBanner() {
+        const banner = document.getElementById('cookie-banner');
+        if (banner) banner.style.display = 'block';
+      }
+      function hideBanner() {
+        const banner = document.getElementById('cookie-banner');
+        if (banner) banner.style.display = 'none';
+      }
+
+      window.acceptCookies = function () {
+        localStorage.setItem(CONSENT_KEY, 'yes');
+        hideBanner();
+        loadGoogleAnalytics();
+      };
+
+      window.rejectCookies = function () {
+        localStorage.setItem(CONSENT_KEY, 'no');
+        hideBanner();
+        window['ga-disable-' + GA_ID] = true;
+      };
+
+      window.revokeCookies = function () {
+        localStorage.removeItem(CONSENT_KEY);
+        window['ga-disable-' + GA_ID] = true;
+        showBanner();
+      };
+
+      document.addEventListener('DOMContentLoaded', function () {
+        const consent = localStorage.getItem(CONSENT_KEY);
+        if (consent === 'yes') loadGoogleAnalytics();
+        else if (consent === 'no') window['ga-disable-' + GA_ID] = true;
+        else showBanner();
+
+        const btnA = document.getElementById('cookie-accept');
+        const btnR = document.getElementById('cookie-reject');
+        if (btnA) btnA.addEventListener('click', window.acceptCookies);
+        if (btnR) btnR.addEventListener('click', window.rejectCookies);
+      });
+    })();
   </script>
 
 </body>
 </html>
+
