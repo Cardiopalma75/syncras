@@ -1,6 +1,4 @@
 <!-- GDPR / Cookie banner centralizzato Syncras -->
-
-<!-- Banner -->
 <div id="cookie-banner" role="dialog" aria-live="polite" aria-label="Preferenze cookie">
   <p>
     Usiamo cookie tecnici per il funzionamento del sito e, solo con il tuo consenso,
@@ -10,12 +8,8 @@
   </p>
 
   <div class="cookie-actions">
-    <button type="button" class="cookie-reject" id="cookie-reject">
-      Rifiuta
-    </button>
-    <button type="button" class="cookie-accept" id="cookie-accept">
-      Accetta e continua
-    </button>
+    <button type="button" class="cookie-reject" id="cookie-reject">Rifiuta</button>
+    <button type="button" class="cookie-accept" id="cookie-accept">Accetta e continua</button>
   </div>
 
   <p class="cookie-mini">
@@ -53,30 +47,16 @@
   }
   #cookie-banner a:hover{ text-decoration:underline; }
 
-  .cookie-actions{
-    display:flex;
-    gap:10px;
-    margin-top:8px;
-  }
+  .cookie-actions{ display:flex; gap:10px; margin-top:8px; }
   .cookie-reject{
-    flex:1;
-    background:#fff;
-    color:#111827;
-    border:2px solid #6C5CE7;
-    padding:10px 12px;
-    border-radius:8px;
-    cursor:pointer;
-    font-weight:800;
+    flex:1; background:#fff; color:#111827;
+    border:2px solid #6C5CE7; padding:10px 12px; border-radius:8px;
+    cursor:pointer; font-weight:800;
   }
   .cookie-accept{
-    flex:1;
-    background:#6C5CE7;
-    color:#fff;
-    border:2px solid #6C5CE7;
-    padding:10px 16px;
-    border-radius:8px;
-    cursor:pointer;
-    font-weight:900;
+    flex:1; background:#6C5CE7; color:#fff;
+    border:2px solid #6C5CE7; padding:10px 16px; border-radius:8px;
+    cursor:pointer; font-weight:900;
   }
   .cookie-accept:hover{ background:#4B3ACB; }
 
@@ -87,86 +67,6 @@
   }
 </style>
 
-<script>
-(function(){
-  const GA_ID = 'G-CFTTCYDZ2P';
-  const CONSENT_KEY = 'syncras_cookie_consent';
-
-  // blocco preventivo: GA disabilitato finché non c'è consenso
-  window['ga-disable-' + GA_ID] = true;
-
-  function loadGoogleAnalytics(){
-    if (window.__syncrasGaLoaded) return;
-    window.__syncrasGaLoaded = true;
-
-    window['ga-disable-' + GA_ID] = false;
-
-    const gaScript = document.createElement('script');
-    gaScript.async = true;
-    gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
-    document.head.appendChild(gaScript);
-
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){ dataLayer.push(arguments); }
-    window.gtag = gtag;
-
-    gtag('js', new Date());
-    gtag('config', GA_ID, { anonymize_ip: true });
-  }
-
-  function showBanner(){
-    const b = document.getElementById('cookie-banner');
-    if (b) b.style.display = 'block';
-  }
-  function hideBanner(){
-    const b = document.getElementById('cookie-banner');
-    if (b) b.style.display = 'none';
-  }
-
-  function setConsent(val){
-    localStorage.setItem(CONSENT_KEY, val);
-  }
-
-  // espone API globale (serve al footer: “Modifica consenso”)
-  window.revokeCookies = function(){
-    localStorage.removeItem(CONSENT_KEY);
-    window['ga-disable-' + GA_ID] = true;
-    showBanner();
-  };
-
-  window.__syncrasInitGdpr = function(){
-    const acceptBtn = document.getElementById('cookie-accept');
-    const rejectBtn = document.getElementById('cookie-reject');
-
-    if (acceptBtn && !acceptBtn.dataset.bound){
-      acceptBtn.dataset.bound = "1";
-      acceptBtn.addEventListener('click', () => {
-        setConsent('yes');
-        hideBanner();
-        loadGoogleAnalytics();
-      });
-    }
-
-    if (rejectBtn && !rejectBtn.dataset.bound){
-      rejectBtn.dataset.bound = "1";
-      rejectBtn.addEventListener('click', () => {
-        setConsent('no');
-        hideBanner();
-        window['ga-disable-' + GA_ID] = true;
-      });
-    }
-
-    const consent = localStorage.getItem(CONSENT_KEY);
-    if (consent === 'yes'){
-      loadGoogleAnalytics();
-    } else if (consent === 'no'){
-      window['ga-disable-' + GA_ID] = true;
-    } else {
-      showBanner();
-    }
-  };
-})();
-</script>
 
 
 
