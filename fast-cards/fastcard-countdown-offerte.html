@@ -13,7 +13,10 @@
       --violet-dark: #4B3ACB;
       --bg-page: #F7F7FB;
       --text-main: #403E43;
+      --border: #E5E7EB;
     }
+
+    *{ box-sizing:border-box; }
 
     body {
       font-family: Arial, sans-serif;
@@ -24,11 +27,14 @@
       color: var(--text-main);
     }
 
+    /* HEADER VIOLA UNIFICATO + MENU MOBILE */
     .site-header {
       background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
       color: white;
       padding: 12px 14px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+      position: relative;
+      z-index: 60;
     }
     .header-inner {
       max-width: 1180px;
@@ -37,10 +43,12 @@
       align-items: center;
       justify-content: space-between;
       gap: 16px;
+      position: relative;
     }
     .logo {
       font-size: 1.4rem;
       font-weight: bold;
+      letter-spacing: 0.03em;
     }
 
     #main-nav {
@@ -52,11 +60,46 @@
       color: white;
       text-decoration: none;
       font-weight: 600;
+      padding-bottom: 2px;
     }
-    #main-nav a:hover {
-      text-decoration: underline;
+    #main-nav a:hover { text-decoration: underline; }
+
+    .menu-toggle{
+      display:none;
+      background: rgba(255,255,255,0.12);
+      border:1px solid rgba(255,255,255,0.4);
+      border-radius:6px;
+      color:#fff;
+      padding:6px 10px;
+      font-size:0.9rem;
+      cursor:pointer;
+      align-items:center;
+      gap:6px;
+    }
+    .menu-toggle span{ font-size:1.1rem; line-height:1; }
+
+    @media (max-width:768px){
+      #main-nav{
+        display:none;
+        position:absolute;
+        left:0;
+        right:0;
+        top:56px;
+        margin:0 auto;
+        max-width:1180px;
+        flex-direction:column;
+        background-color: var(--violet-dark);
+        padding:10px 16px 12px 16px;
+        border-radius:0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index:70;
+      }
+      #main-nav a{ padding:6px 0; }
+      body.nav-open #main-nav{ display:flex; }
+      .menu-toggle{ display:inline-flex; }
     }
 
+    /* MAIN */
     main {
       max-width: 900px;
       margin: 30px auto;
@@ -65,11 +108,11 @@
       border-radius: 10px;
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
-
-    h1 {
-      color: var(--violet-dark);
-      margin-top: 0;
+    @media (max-width:600px){
+      main{ margin:16px auto; padding:16px 14px; }
     }
+
+    h1 { color: var(--violet-dark); margin-top: 0; }
 
     .intro-tag {
       display: inline-block;
@@ -78,7 +121,7 @@
       padding: 4px 10px;
       border-radius: 999px;
       font-size: 0.8rem;
-      font-weight: 600;
+      font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.06em;
       margin-bottom: 6px;
@@ -91,6 +134,7 @@
       border-radius: 8px;
       font-size: 1rem;
       margin: 20px 0;
+      border: 1px solid var(--border);
     }
 
     footer {
@@ -100,6 +144,58 @@
       background: #eee;
       font-size: 0.9rem;
     }
+
+    /* COOKIE BANNER (UNICO) */
+    #cookie-banner{
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 90%;
+      width: 420px;
+      background: #ffffff;
+      border: 2px solid var(--violet-main);
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      z-index: 9999;
+      font-family: Arial, sans-serif;
+      display: none;
+    }
+    #cookie-banner p{
+      margin: 0 0 12px 0;
+      font-size: 0.95rem;
+      color: #333;
+      line-height: 1.4;
+    }
+    #cookie-banner a{
+      color: var(--violet-main);
+      font-weight: 900;
+      text-decoration: none;
+    }
+    #cookie-banner a:hover{ text-decoration: underline; }
+    #cookie-banner .cookie-actions{
+      display:flex;
+      gap:10px;
+      margin-top:8px;
+    }
+    #cookie-banner button{
+      flex:1;
+      border-radius:6px;
+      padding:10px 12px;
+      cursor:pointer;
+      font-weight:900;
+      border:2px solid var(--violet-main);
+    }
+    #cookie-reject{
+      background:#fff;
+      color:#111827;
+    }
+    #cookie-accept{
+      background: var(--violet-main);
+      color:#fff;
+    }
+    #cookie-accept:hover{ background: var(--violet-dark); border-color: var(--violet-dark); }
   </style>
 </head>
 
@@ -108,16 +204,21 @@
   <header class="site-header">
     <div class="header-inner">
       <div class="logo">Syncras.App</div>
+
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
+
       <nav id="main-nav">
-       <a href="index.html">Home</a>
-      <a href="blog.html">Blog</a>
-      <a href="smart-test.html">Smart Test</a>
-      <a href="calcolatori.html">Calcolatori</a>
-      <a href="fast-cards.html">Fast Card</a>
-      <a href="offerte.html">Prodotti Consapevoli</a>
-      <a href="curiosita.html">Curiosità</a>
-      <a href="misteri.html">Misteri</a>
-      <a href="chi.html">Chi siamo</a>
+        <a href="../index.html">Home</a>
+        <a href="../blog.html">Blog</a>
+        <a href="../smart-test.html">Smart Test</a>
+        <a href="../calcolatori.html">Calcolatori</a>
+        <a href="../fast-cards.html">Fast Card</a>
+        <a href="../offerte.html">Prodotti Consapevoli</a>
+        <a href="../curiosita.html">Curiosità</a>
+        <a href="../misteri.html">Misteri</a>
+        <a href="../chi.html">Chi siamo</a>
       </nav>
     </div>
   </header>
@@ -134,31 +235,23 @@
 
     <div class="fastcard-box">
       <h2>1️⃣ Chiediti: mi serviva già prima?</h2>
-      <p>
-        Il modo più semplice per smontare un countdown è fare una domanda onesta:
-      </p>
+      <p>Il modo più semplice per smontare un countdown è fare una domanda onesta:</p>
       <p>
         <strong>“Questo prodotto mi serviva già ieri?”</strong><br>
         – Se la risposta è sì, il timer è solo un dettaglio.<br>
         – Se la risposta è no, il timer sta provando a creare un bisogno che non c’era.
       </p>
-      <p>
-        Un acquisto sensato resta sensato anche senza un cronometro che lampeggia.
-      </p>
+      <p>Un acquisto sensato resta sensato anche senza un cronometro che lampeggia.</p>
     </div>
 
     <div class="fastcard-box">
       <h2>2️⃣ Fai il test del “domani”</h2>
-      <p>
-        Prima di cliccare su “Compra ora”, prova questo trucco:
-      </p>
+      <p>Prima di cliccare su “Compra ora”, prova questo trucco:</p>
       <p>
         👉 <strong>Immagina che la stessa offerta ci sia anche domani.</strong><br>
         Se sapendo questo ti rilassi subito, è un segnale che stavi decidendo più per ansia che per utilità.
       </p>
-      <p>
-        Le decisioni buone superano sempre la notte. Quelle di impulso no.
-      </p>
+      <p>Le decisioni buone superano sempre la notte. Quelle di impulso no.</p>
     </div>
 
     <div class="fastcard-box">
@@ -176,7 +269,7 @@
 
     <p>
       Vuoi altre Fast Cards?<br>
-      👉 Torna alla pagina principale:  
+      👉 Torna alla pagina principale:
       <a href="../fast-cards.html">tutte le Fast Cards Syncras</a>.
     </p>
   </main>
@@ -187,152 +280,128 @@
       <a href="../privacy.html">Privacy Policy</a> |
       <a href="../cookie.html">Cookie Policy</a> |
       <a href="../disclaimer-amazon.html">Disclaimer Amazon</a> |
-      <a href="../note-legali.html">Note Legali</a>
+      <a href="../note-legali.html">Note Legali</a> |
+      <a href="#" onclick="revokeCookies(); return false;">Gestisci cookie</a>
     </div>
+    <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.
+      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+      senza alcun costo aggiuntivo per l’utente.
+      Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+      è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+    </p>
   </footer>
 
-  <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
-  <div id="cookie-banner">
+  <!-- COOKIE BANNER (GDPR strong + Consent Mode) -->
+  <div id="cookie-banner" role="dialog" aria-live="polite" aria-label="Banner cookie">
     <p>
-      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
-      (Google Analytics). Alcuni link potrebbero essere di affiliazione.
-      Per dettagli leggi la <a href="../cookie.html">Cookie Policy</a> e la
-      <a href="../privacy.html">Privacy Policy</a>.
+      Usiamo cookie tecnici e, <strong>solo con consenso</strong>, strumenti di misurazione delle visite (Google Analytics).
+      Alcuni link potrebbero essere di affiliazione.
+      Dettagli in <a href="../cookie.html">Cookie Policy</a> e <a href="../privacy.html">Privacy Policy</a>.
     </p>
-    <div style="display:flex; gap:10px; margin-top:8px;">
-      <button type="button" onclick="rejectCookies()">
-        Rifiuta
-      </button>
-      <button id="cookie-btn" type="button" onclick="acceptCookies()">
-        Accetta e continua
-      </button>
+    <div class="cookie-actions">
+      <button id="cookie-reject" type="button">Rifiuta</button>
+      <button id="cookie-accept" type="button">Accetta e continua</button>
     </div>
   </div>
 
-  <style>
-    #cookie-banner {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      max-width: 90%;
-      width: 420px;
-      background: #ffffff;
-      border: 2px solid #6C5CE7;
-      border-radius: 10px;
-      padding: 16px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-      z-index: 9999;
-      font-family: Arial, sans-serif;
-      display: none;
-    }
-
-    #cookie-banner p {
-      margin: 0 0 12px 0;
-      font-size: 0.95rem;
-      color: #333;
-      line-height: 1.4;
-    }
-
-    #cookie-banner a {
-      color: #6C5CE7;
-      font-weight: bold;
-      text-decoration: none;
-    }
-
-    #cookie-banner button[onclick="rejectCookies()"] {
-      flex: 1;
-      background: white !important;
-      color: #111827 !important;
-      border: 2px solid #6C5CE7 !important;
-      padding: 10px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-
-    #cookie-btn {
-      flex: 1;
-      background: #6C5CE7;
-      color: white;
-      border: 2px solid #6C5CE7;
-      padding: 10px 16px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 700;
-    }
-
-    #cookie-btn:hover {
-      background: #4B3ACB;
-    }
-  </style>
+  <script>
+    function toggleMenu(){ document.body.classList.toggle('nav-open'); }
+  </script>
 
   <script>
-  (function () {
-    const GA_ID = 'G-CFTTCYDZ2P';
-    const CONSENT_KEY = 'syncras_cookie_consent';
+    // Cookie + GA4 (GDPR strong):
+    // - GA bloccato finché non accetti
+    // - Consent Mode default denied + update
+    // - Revoca consenso dal footer
+    (function () {
+      const GA_ID = 'G-CFTTCYDZ2P';
+      const CONSENT_KEY = 'syncras_cookie_consent';
 
-    window['ga-disable-' + GA_ID] = true;
+      // Hard-block GA finché non c'è consenso
+      window['ga-disable-' + GA_ID] = true;
 
-    function loadGoogleAnalytics() {
-      if (window.__syncrasGaLoaded) return;
-      window.__syncrasGaLoaded = true;
-
-      window['ga-disable-' + GA_ID] = false;
-
-      const gaScript = document.createElement('script');
-      gaScript.async = true;
-      gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
-      document.head.appendChild(gaScript);
-
+      // gtag stub + Consent Mode default denied
       window.dataLayer = window.dataLayer || [];
       function gtag(){ dataLayer.push(arguments); }
       window.gtag = gtag;
-      gtag('js', new Date());
-      gtag('config', GA_ID, { anonymize_ip: true });
-    }
 
-    function showBanner() {
-      const banner = document.getElementById('cookie-banner');
-      if (banner) banner.style.display = 'block';
-    }
+      gtag('consent', 'default', {
+        ad_storage: 'denied',
+        analytics_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied'
+      });
 
-    function hideBanner() {
-      const banner = document.getElementById('cookie-banner');
-      if (banner) banner.style.display = 'none';
-    }
+      function loadGoogleAnalytics() {
+        if (window.__syncrasGaLoaded) return;
+        window.__syncrasGaLoaded = true;
 
-    window.acceptCookies = function () {
-      localStorage.setItem(CONSENT_KEY, 'yes');
-      hideBanner();
-      loadGoogleAnalytics();
-    };
+        window['ga-disable-' + GA_ID] = false;
 
-    window.rejectCookies = function () {
-      localStorage.setItem(CONSENT_KEY, 'no');
-      hideBanner();
-      window['ga-disable-' + GA_ID] = true;
-    };
+        const gaScript = document.createElement('script');
+        gaScript.async = true;
+        gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+        document.head.appendChild(gaScript);
 
-    window.revokeCookies = function () {
-      localStorage.removeItem(CONSENT_KEY);
-      window['ga-disable-' + GA_ID] = true;
-      showBanner();
-    };
+        gtag('js', new Date());
+        gtag('config', GA_ID, { anonymize_ip: true });
+      }
 
-    document.addEventListener('DOMContentLoaded', function () {
-      const consent = localStorage.getItem(CONSENT_KEY);
-      
-      if (consent === 'yes') {
+      function showBanner() {
+        const banner = document.getElementById('cookie-banner');
+        if (banner) banner.style.display = 'block';
+      }
+
+      function hideBanner() {
+        const banner = document.getElementById('cookie-banner');
+        if (banner) banner.style.display = 'none';
+      }
+
+      function acceptCookies() {
+        localStorage.setItem(CONSENT_KEY, 'yes');
+        hideBanner();
+        gtag('consent', 'update', { analytics_storage: 'granted' });
         loadGoogleAnalytics();
-      } else if (consent === 'no') {
+      }
+
+      function rejectCookies() {
+        localStorage.setItem(CONSENT_KEY, 'no');
+        hideBanner();
+        gtag('consent', 'update', { analytics_storage: 'denied' });
         window['ga-disable-' + GA_ID] = true;
-      } else {
+      }
+
+      function revokeCookies() {
+        localStorage.removeItem(CONSENT_KEY);
+        gtag('consent', 'update', { analytics_storage: 'denied' });
+        window['ga-disable-' + GA_ID] = true;
         showBanner();
       }
-    });
-  })();
+
+      // Espone per footer link
+      window.revokeCookies = revokeCookies;
+
+      document.addEventListener('DOMContentLoaded', function () {
+        const btnA = document.getElementById('cookie-accept');
+        const btnR = document.getElementById('cookie-reject');
+        if (btnA) btnA.addEventListener('click', acceptCookies);
+        if (btnR) btnR.addEventListener('click', rejectCookies);
+
+        const consent = localStorage.getItem(CONSENT_KEY);
+        if (consent === 'yes') {
+          gtag('consent', 'update', { analytics_storage: 'granted' });
+          loadGoogleAnalytics();
+        } else if (consent === 'no') {
+          gtag('consent', 'update', { analytics_storage: 'denied' });
+          window['ga-disable-' + GA_ID] = true;
+        } else {
+          showBanner();
+        }
+      });
+    })();
   </script>
 
 </body>
 </html>
+
