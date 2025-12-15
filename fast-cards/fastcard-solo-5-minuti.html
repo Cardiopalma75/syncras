@@ -8,14 +8,17 @@
   <meta name="robots" content="index,follow">
 
   <style>
-    :root {
-      --violet-main: #6C5CE7;
-      --violet-dark: #4B3ACB;
-      --bg-page: #F7F7FB;
-      --text-main: #403E43;
+    :root{
+      --violet-main:#6C5CE7;
+      --violet-dark:#4B3ACB;
+      --bg-page:#F7F7FB;
+      --text-main:#403E43;
+      --border:#E5E7EB;
     }
 
-    body {
+    *{ box-sizing:border-box; }
+
+    body{
       font-family: Arial, sans-serif;
       background: var(--bg-page);
       margin: 0;
@@ -24,40 +27,80 @@
       color: var(--text-main);
     }
 
-    .site-header {
+    /* HEADER + MENU MOBILE */
+    .site-header{
       background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
       color: white;
       padding: 12px 14px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+      position: relative;
+      z-index: 60;
     }
-    .header-inner {
+    .header-inner{
       max-width: 1180px;
       margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 16px;
+      position: relative;
     }
-    .logo {
+    .logo{
       font-size: 1.4rem;
-      font-weight: bold;
+      font-weight: 800;
+      letter-spacing: 0.03em;
     }
 
-    #main-nav {
+    #main-nav{
       display: flex;
       gap: 18px;
       font-size: 0.95rem;
     }
-    #main-nav a {
+    #main-nav a{
       color: white;
       text-decoration: none;
-      font-weight: 600;
+      font-weight: 700;
+      padding-bottom: 2px;
     }
-    #main-nav a:hover {
-      text-decoration: underline;
+    #main-nav a:hover{ text-decoration: underline; }
+
+    .menu-toggle{
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      align-items: center;
+      gap: 6px;
+    }
+    .menu-toggle span{ font-size: 1.1rem; line-height: 1; }
+
+    @media (max-width: 768px){
+      #main-nav{
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        margin: 0 auto;
+        max-width: 1180px;
+        flex-direction: column;
+        background-color: var(--violet-dark);
+        padding: 10px 16px 12px 16px;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 70;
+      }
+      #main-nav a{ padding: 6px 0; }
+      body.nav-open #main-nav{ display: flex; }
+      .menu-toggle{ display: inline-flex; }
     }
 
-    main {
+    /* MAIN */
+    main{
       max-width: 900px;
       margin: 30px auto;
       padding: 25px;
@@ -65,40 +108,100 @@
       border-radius: 10px;
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
+    @media (max-width: 600px){
+      main{ margin: 16px auto; padding: 16px 14px; }
+    }
 
-    h1 {
+    h1{
       color: var(--violet-dark);
       margin-top: 0;
     }
 
-    .intro-tag {
+    .intro-tag{
       display: inline-block;
       background: #F3F4FF;
       color: var(--violet-dark);
       padding: 4px 10px;
       border-radius: 999px;
       font-size: 0.8rem;
-      font-weight: 600;
+      font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.06em;
       margin-bottom: 6px;
     }
 
-    .fastcard-box {
+    .fastcard-box{
       background: #F7F7FB;
       border-left: 4px solid var(--violet-main);
+      border: 1px solid var(--border);
       padding: 16px 20px;
       border-radius: 8px;
       font-size: 1rem;
       margin: 20px 0;
     }
 
-    footer {
+    footer{
       text-align: center;
       margin-top: 40px;
       padding: 20px;
       background: #eee;
       font-size: 0.9rem;
+    }
+
+    /* COOKIE BANNER */
+    #cookie-banner{
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 90%;
+      width: 420px;
+      background: #ffffff;
+      border: 2px solid var(--violet-main);
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      z-index: 9999;
+      font-family: Arial, sans-serif;
+      display: none;
+    }
+    #cookie-banner p{
+      margin: 0 0 12px 0;
+      font-size: 0.95rem;
+      color: #333;
+      line-height: 1.4;
+    }
+    #cookie-banner a{
+      color: var(--violet-main);
+      font-weight: 900;
+      text-decoration: none;
+    }
+    #cookie-banner a:hover{ text-decoration: underline; }
+
+    #cookie-banner .cookie-actions{
+      display: flex;
+      gap: 10px;
+      margin-top: 8px;
+    }
+    #cookie-banner button{
+      flex: 1;
+      border-radius: 6px;
+      padding: 10px 12px;
+      cursor: pointer;
+      font-weight: 900;
+      border: 2px solid var(--violet-main);
+    }
+    #cookie-reject{
+      background: white;
+      color: #111827;
+    }
+    #cookie-accept{
+      background: var(--violet-main);
+      color: white;
+    }
+    #cookie-accept:hover{
+      background: var(--violet-dark);
+      border-color: var(--violet-dark);
     }
   </style>
 </head>
@@ -108,16 +211,21 @@
   <header class="site-header">
     <div class="header-inner">
       <div class="logo">Syncras.App</div>
+
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
+
       <nav id="main-nav">
         <a href="index.html">Home</a>
-      <a href="blog.html">Blog</a>
-      <a href="smart-test.html">Smart Test</a>
-      <a href="calcolatori.html">Calcolatori</a>
-      <a href="fast-cards.html">Fast Card</a>
-      <a href="offerte.html">Prodotti Consapevoli</a>
-      <a href="curiosita.html">Curiosità</a>
-      <a href="misteri.html">Misteri</a>
-      <a href="chi.html">Chi siamo</a>
+        <a href="blog.html">Blog</a>
+        <a href="smart-test.html">Smart Test</a>
+        <a href="calcolatori.html">Calcolatori</a>
+        <a href="fast-cards.html">Fast Card</a>
+        <a href="offerte.html">Prodotti Consapevoli</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="chi.html">Chi siamo</a>
       </nav>
     </div>
   </header>
@@ -135,7 +243,7 @@
     <div class="fastcard-box">
       <h2>1️⃣ Conta quante volte lo dici in un giorno</h2>
       <p>
-        Fai una prova per 24 ore:  
+        Fai una prova per 24 ore:
         quante volte ti dici (o dici a qualcuno) <strong>“solo 5 minuti”</strong>?
       </p>
       <p>
@@ -153,9 +261,7 @@
       <p>
         I “5 minuti” detti a voce valgono poco contro una piattaforma progettata per trattenerti.
       </p>
-      <p>
-        Prova così:
-      </p>
+      <p>Prova così:</p>
       <p>
         – imposta un <strong>timer fisico</strong> (sveglia, timer del telefono, smartwatch)<br>
         – quando suona, chiudi davvero, anche se “ti manca un pezzo”<br>
@@ -181,7 +287,7 @@
 
     <p>
       Vuoi altre Fast Cards?<br>
-      👉 Torna alla pagina principale:  
+      👉 Torna alla pagina principale:
       <a href="../fast-cards.html">tutte le Fast Cards Syncras</a>.
     </p>
   </main>
@@ -192,150 +298,116 @@
       <a href="../privacy.html">Privacy Policy</a> |
       <a href="../cookie.html">Cookie Policy</a> |
       <a href="../disclaimer-amazon.html">Disclaimer Amazon</a> |
-      <a href="../note-legali.html">Note Legali</a>
+      <a href="../note-legali.html">Note Legali</a> |
+      <a href="#" onclick="revokeCookies(); return false;">Gestisci cookie</a>
     </div>
   </footer>
 
-  <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
-  <div id="cookie-banner">
+  <!-- COOKIE BANNER (GDPR 10/10 + Consent Mode) -->
+  <div id="cookie-banner" role="dialog" aria-live="polite" aria-label="Banner cookie">
     <p>
-      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
-      (Google Analytics). Alcuni link potrebbero essere di affiliazione.
-      Per dettagli leggi la <a href="../cookie.html">Cookie Policy</a> e la
-      <a href="../privacy.html">Privacy Policy</a>.
+      Usiamo cookie tecnici e, <strong>solo con consenso</strong>, strumenti di misurazione delle visite (Google Analytics).
+      Alcuni link potrebbero essere di affiliazione.
+      Dettagli in <a href="../cookie.html">Cookie Policy</a> e <a href="../privacy.html">Privacy Policy</a>.
     </p>
-    <div style="display:flex; gap:10px; margin-top:8px;">
-      <button type="button" onclick="rejectCookies()">
-        Rifiuta
-      </button>
-      <button id="cookie-btn" type="button" onclick="acceptCookies()">Accetta e continua</button>
+    <div class="cookie-actions">
+      <button id="cookie-reject" type="button">Rifiuta</button>
+      <button id="cookie-accept" type="button">Accetta e continua</button>
     </div>
   </div>
 
-  <style>
-    #cookie-banner {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      max-width: 90%;
-      width: 420px;
-      background: #ffffff;
-      border: 2px solid #6C5CE7;
-      border-radius: 10px;
-      padding: 16px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-      z-index: 9999;
-      font-family: Arial, sans-serif;
-      display: none;
-    }
-
-    #cookie-banner p {
-      margin: 0 0 12px 0;
-      font-size: 0.95rem;
-      color: #333;
-      line-height: 1.4;
-    }
-
-    #cookie-banner a {
-      color: #6C5CE7;
-      font-weight: bold;
-      text-decoration: none;
-    }
-
-    #cookie-banner button[onclick="rejectCookies()"] {
-      flex: 1;
-      background: white !important;
-      color: #111827 !important;
-      border: 2px solid #6C5CE7 !important;
-      padding: 10px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-
-    #cookie-btn {
-      flex: 1;
-      background: #6C5CE7;
-      color: white;
-      border: 2px solid #6C5CE7;
-      padding: 10px 16px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 700;
-    }
-
-    #cookie-btn:hover {
-      background: #4B3ACB;
-    }
-  </style>
+  <script>
+    function toggleMenu(){ document.body.classList.toggle('nav-open'); }
+  </script>
 
   <script>
-  (function () {
-    const GA_ID = 'G-CFTTCYDZ2P';
-    const CONSENT_KEY = 'syncras_cookie_consent';
+    (function () {
+      const GA_ID = 'G-CFTTCYDZ2P';
+      const CONSENT_KEY = 'syncras_cookie_consent';
 
-    window['ga-disable-' + GA_ID] = true;
+      // Hard-block GA finché non c'è consenso
+      window['ga-disable-' + GA_ID] = true;
 
-    function loadGoogleAnalytics() {
-      if (window.__syncrasGaLoaded) return;
-      window.__syncrasGaLoaded = true;
-
-      window['ga-disable-' + GA_ID] = false;
-
-      const gaScript = document.createElement('script');
-      gaScript.async = true;
-      gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
-      document.head.appendChild(gaScript);
-
+      // gtag stub + Consent Mode default denied
       window.dataLayer = window.dataLayer || [];
       function gtag(){ dataLayer.push(arguments); }
-      window.gtag = gtag;
-      gtag('js', new Date());
-      gtag('config', GA_ID, { anonymize_ip: true });
-    }
+      window.gtag = window.gtag || gtag;
 
-    function showBanner() {
-      const banner = document.getElementById('cookie-banner');
-      if (banner) banner.style.display = 'block';
-    }
+      window.gtag('consent', 'default', {
+        ad_storage: 'denied',
+        analytics_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied'
+      });
 
-    function hideBanner() {
-      const banner = document.getElementById('cookie-banner');
-      if (banner) banner.style.display = 'none';
-    }
+      function loadGoogleAnalytics() {
+        if (window.__syncrasGaLoaded) return;
+        window.__syncrasGaLoaded = true;
 
-    window.acceptCookies = function () {
-      localStorage.setItem(CONSENT_KEY, 'yes');
-      hideBanner();
-      loadGoogleAnalytics();
-    };
+        window['ga-disable-' + GA_ID] = false;
 
-    window.rejectCookies = function () {
-      localStorage.setItem(CONSENT_KEY, 'no');
-      hideBanner();
-      window['ga-disable-' + GA_ID] = true;
-    };
+        const gaScript = document.createElement('script');
+        gaScript.async = true;
+        gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+        document.head.appendChild(gaScript);
 
-    window.revokeCookies = function () {
-      localStorage.removeItem(CONSENT_KEY);
-      window['ga-disable-' + GA_ID] = true;
-      showBanner();
-    };
+        window.gtag('js', new Date());
+        window.gtag('config', GA_ID, { anonymize_ip: true });
+      }
 
-    document.addEventListener('DOMContentLoaded', function () {
-      const consent = localStorage.getItem(CONSENT_KEY);
-      
-      if (consent === 'yes') {
+      function showBanner() {
+        const banner = document.getElementById('cookie-banner');
+        if (banner) banner.style.display = 'block';
+      }
+
+      function hideBanner() {
+        const banner = document.getElementById('cookie-banner');
+        if (banner) banner.style.display = 'none';
+      }
+
+      function acceptCookies() {
+        localStorage.setItem(CONSENT_KEY, 'yes');
+        hideBanner();
+        window.gtag('consent', 'update', { analytics_storage: 'granted' });
         loadGoogleAnalytics();
-      } else if (consent === 'no') {
+      }
+
+      function rejectCookies() {
+        localStorage.setItem(CONSENT_KEY, 'no');
+        hideBanner();
+        window.gtag('consent', 'update', { analytics_storage: 'denied' });
         window['ga-disable-' + GA_ID] = true;
-      } else {
+      }
+
+      function revokeCookies() {
+        localStorage.removeItem(CONSENT_KEY);
+        window.gtag('consent', 'update', { analytics_storage: 'denied' });
+        window['ga-disable-' + GA_ID] = true;
         showBanner();
       }
-    });
-  })();
+
+      window.revokeCookies = revokeCookies;
+
+      document.addEventListener('DOMContentLoaded', function () {
+        const btnA = document.getElementById('cookie-accept');
+        const btnR = document.getElementById('cookie-reject');
+        if (btnA) btnA.addEventListener('click', acceptCookies);
+        if (btnR) btnR.addEventListener('click', rejectCookies);
+
+        const consent = localStorage.getItem(CONSENT_KEY);
+        if (consent === 'yes') {
+          window.gtag('consent', 'update', { analytics_storage: 'granted' });
+          loadGoogleAnalytics();
+        } else if (consent === 'no') {
+          window.gtag('consent', 'update', { analytics_storage: 'denied' });
+          window['ga-disable-' + GA_ID] = true;
+        } else {
+          showBanner();
+        }
+      });
+    })();
   </script>
 
 </body>
 </html>
+
