@@ -8,14 +8,16 @@
   <meta name="robots" content="index,follow">
 
   <style>
-    :root {
-      --violet-main: #6C5CE7;
-      --violet-dark: #4B3ACB;
-      --bg-page: #F7F7FB;
-      --text-main: #403E43;
+    :root{
+      --violet-main:#6C5CE7;
+      --violet-dark:#4B3ACB;
+      --bg-page:#F7F7FB;
+      --text-main:#403E43;
     }
 
-    body {
+    *{ box-sizing:border-box; }
+
+    body{
       font-family: Arial, sans-serif;
       background: var(--bg-page);
       margin: 0;
@@ -24,13 +26,15 @@
       color: var(--text-main);
     }
 
-    .site-header {
+    /* HEADER */
+    .site-header{
       background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
       color: white;
       padding: 12px 14px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+      position: relative;
     }
-    .header-inner {
+    .header-inner{
       max-width: 1180px;
       margin: 0 auto;
       display: flex;
@@ -38,26 +42,55 @@
       justify-content: space-between;
       gap: 16px;
     }
-    .logo {
+    .logo{
       font-size: 1.4rem;
       font-weight: bold;
     }
 
-    #main-nav {
+    #main-nav{
       display: flex;
       gap: 18px;
       font-size: 0.95rem;
     }
-    #main-nav a {
+    #main-nav a{
       color: white;
       text-decoration: none;
       font-weight: 600;
+      padding-bottom: 2px;
     }
-    #main-nav a:hover {
-      text-decoration: underline;
+    #main-nav a:hover{ text-decoration: underline; }
+
+    .menu-toggle{
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      font-weight: 700;
     }
 
-    main {
+    /* MOBILE MENU */
+    @media (max-width: 768px){
+      #main-nav{
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        flex-direction: column;
+        background-color: var(--violet-dark);
+        padding: 12px 16px;
+        z-index: 50;
+      }
+      #main-nav a{ padding: 6px 0; }
+      body.nav-open #main-nav{ display: flex; }
+      .menu-toggle{ display: inline-flex; align-items: center; }
+    }
+
+    main{
       max-width: 900px;
       margin: 30px auto;
       padding: 25px;
@@ -66,12 +99,12 @@
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
 
-    h1 {
+    h1{
       color: var(--violet-dark);
       margin-top: 0;
     }
 
-    .intro-tag {
+    .intro-tag{
       display: inline-block;
       background: #F3F4FF;
       color: var(--violet-dark);
@@ -84,7 +117,7 @@
       margin-bottom: 6px;
     }
 
-    .fastcard-box {
+    .fastcard-box{
       background: #F7F7FB;
       border-left: 4px solid var(--violet-main);
       padding: 16px 20px;
@@ -93,13 +126,72 @@
       margin: 20px 0;
     }
 
-    footer {
+    footer{
       text-align: center;
       margin-top: 40px;
       padding: 20px;
       background: #eee;
       font-size: 0.9rem;
     }
+
+    /* COOKIE BANNER */
+    #cookie-banner{
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 90%;
+      width: 420px;
+      background: #ffffff;
+      border: 2px solid #6C5CE7;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      z-index: 9999;
+      font-family: Arial, sans-serif;
+      display: none;
+    }
+
+    #cookie-banner p{
+      margin: 0 0 12px 0;
+      font-size: 0.95rem;
+      color: #333;
+      line-height: 1.4;
+    }
+
+    #cookie-banner a{
+      color: #6C5CE7;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    #cookie-banner .btn-row{
+      display:flex;
+      gap:10px;
+      margin-top:8px;
+    }
+
+    #cookie-banner button{
+      flex: 1;
+      padding: 10px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    #cookie-banner .btn-reject{
+      background: white;
+      color: #111827;
+      border: 2px solid #6C5CE7;
+    }
+
+    #cookie-btn{
+      background: #6C5CE7;
+      color: white;
+      border: 2px solid #6C5CE7;
+    }
+
+    #cookie-btn:hover{ background:#4B3ACB; }
   </style>
 </head>
 
@@ -108,16 +200,21 @@
   <header class="site-header">
     <div class="header-inner">
       <div class="logo">Syncras.App</div>
+
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu">
+        Menu ☰
+      </button>
+
       <nav id="main-nav">
         <a href="index.html">Home</a>
-      <a href="blog.html">Blog</a>
-      <a href="smart-test.html">Smart Test</a>
-      <a href="calcolatori.html">Calcolatori</a>
-      <a href="fast-cards.html">Fast Card</a>
-      <a href="offerte.html">Prodotti Consapevoli</a>
-      <a href="curiosita.html">Curiosità</a>
-      <a href="misteri.html">Misteri</a>
-      <a href="chi.html">Chi siamo</a>
+        <a href="blog.html">Blog</a>
+        <a href="smart-test.html">Smart Test</a>
+        <a href="calcolatori.html">Calcolatori</a>
+        <a href="fast-cards.html">Fast Card</a>
+        <a href="offerte.html">Prodotti Consapevoli</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="chi.html">Chi siamo</a>
       </nav>
     </div>
   </header>
@@ -138,9 +235,7 @@
         Prima spia rossa: una sfilza di 5 stelle con frasi fotocopia tipo
         “Ottimo prodotto!”, “Consigliato!”, “Perfetto in tutto!”.
       </p>
-      <p>
-        Le recensioni vere di solito:
-      </p>
+      <p>Le recensioni vere di solito:</p>
       <p>
         – citano <strong>dettagli specifici</strong> (misure, uso reale, contesto)<br>
         – hanno qualche difetto (“avrei preferito se…”)<br>
@@ -154,41 +249,30 @@
         Le 1 stella spesso sono sfoghi. Le 5 stelle possono essere entusiasmo o promozione.
         Le recensioni a <strong>3 stelle</strong> però sono spesso le più oneste.
       </p>
-      <p>
-        👉 Vai direttamente su 3★ e 4★ e chiediti:
-      </p>
+      <p>👉 Vai direttamente su 3★ e 4★ e chiediti:</p>
       <p>
         – cosa piace davvero a chi lo usa?<br>
         – quali sono i limiti ripetuti più volte?<br>
         – sono difetti gestibili per <strong>il tuo uso</strong>?
       </p>
-      <p>
-        Se un problema compare in tante recensioni diverse, non è sfortuna: è caratteristica.
-      </p>
+      <p>Se un problema compare in tante recensioni diverse, non è sfortuna: è caratteristica.</p>
     </div>
 
     <div class="fastcard-box">
       <h2>3️⃣ Verifica il profilo di chi scrive</h2>
-      <p>
-        Quando hai un dubbio su una recensione, apri il profilo di chi l’ha scritta (se la piattaforma lo permette).
-      </p>
-      <p>
-        Segnali di recensioni sospette:
-      </p>
+      <p>Quando hai un dubbio, apri il profilo di chi l’ha scritta (se la piattaforma lo permette).</p>
+      <p>Segnali di recensioni sospette:</p>
       <p>
         – stesso utente che recensisce tanti prodotti simili tutti con 5 stelle<br>
         – recensioni tutte nello stesso giorno<br>
         – frasi generiche che potrebbero andare bene per qualunque oggetto
       </p>
-      <p>
-        Nessun sistema è perfetto, ma con questi tre controlli eviti
-        almeno le situazioni più plateali.
-      </p>
+      <p>Nessun sistema è perfetto, ma con questi tre controlli eviti le situazioni più plateali.</p>
     </div>
 
     <p>
       Vuoi altre Fast Cards?<br>
-      👉 Torna alla pagina principale:  
+      👉 Torna alla pagina principale:
       <a href="../fast-cards.html">tutte le Fast Cards Syncras</a>.
     </p>
   </main>
@@ -199,91 +283,36 @@
       <a href="../privacy.html">Privacy Policy</a> |
       <a href="../cookie.html">Cookie Policy</a> |
       <a href="../disclaimer-amazon.html">Disclaimer Amazon</a> |
-      <a href="../note-legali.html">Note Legali</a>
+      <a href="../note-legali.html">Note Legali</a> |
+      <a href="#" onclick="revokeCookies();return false;">Gestisci cookie</a>
     </div>
   </footer>
 
-  <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
+  <!-- COOKIE BANNER -->
   <div id="cookie-banner">
     <p>
-      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
-      (Google Analytics). Alcuni link potrebbero essere di affiliazione.
-      Per dettagli leggi la <a href="../cookie.html">Cookie Policy</a> e la
-      <a href="../privacy.html">Privacy Policy</a>.
+      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite (Google Analytics).
+      Alcuni link potrebbero essere di affiliazione.
+      Leggi <a href="../cookie.html">Cookie Policy</a> e <a href="../privacy.html">Privacy Policy</a>.
     </p>
-    <div style="display:flex; gap:10px; margin-top:8px;">
-      <button type="button" onclick="rejectCookies()">
-        Rifiuta
-      </button>
-      <button id="cookie-btn" type="button" onclick="acceptCookies()">
-        Accetta e continua
-      </button>
+    <div class="btn-row">
+      <button type="button" class="btn-reject" onclick="rejectCookies()">Rifiuta</button>
+      <button id="cookie-btn" type="button" onclick="acceptCookies()">Accetta e continua</button>
     </div>
   </div>
 
-  <style>
-    #cookie-banner {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      max-width: 90%;
-      width: 420px;
-      background: #ffffff;
-      border: 2px solid #6C5CE7;
-      border-radius: 10px;
-      padding: 16px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-      z-index: 9999;
-      font-family: Arial, sans-serif;
-      display: none;
+  <script>
+    function toggleMenu(){
+      document.body.classList.toggle('nav-open');
     }
-
-    #cookie-banner p {
-      margin: 0 0 12px 0;
-      font-size: 0.95rem;
-      color: #333;
-      line-height: 1.4;
-    }
-
-    #cookie-banner a {
-      color: #6C5CE7;
-      font-weight: bold;
-      text-decoration: none;
-    }
-
-    #cookie-banner button[onclick="rejectCookies()"] {
-      flex: 1;
-      background: white !important;
-      color: #111827 !important;
-      border: 2px solid #6C5CE7 !important;
-      padding: 10px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-
-    #cookie-btn {
-      flex: 1;
-      background: #6C5CE7;
-      color: white;
-      border: 2px solid #6C5CE7;
-      padding: 10px 16px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 700;
-    }
-
-    #cookie-btn:hover {
-      background: #4B3ACB;
-    }
-  </style>
+  </script>
 
   <script>
   (function () {
     const GA_ID = 'G-CFTTCYDZ2P';
     const CONSENT_KEY = 'syncras_cookie_consent';
 
+    // BLOCCO PREVENTIVO
     window['ga-disable-' + GA_ID] = true;
 
     function loadGoogleAnalytics() {
@@ -304,14 +333,14 @@
       gtag('config', GA_ID, { anonymize_ip: true });
     }
 
-    function showBanner() {
-      const banner = document.getElementById('cookie-banner');
-      if (banner) banner.style.display = 'block';
+    function showBanner(){
+      const b = document.getElementById('cookie-banner');
+      if (b) b.style.display = 'block';
     }
 
-    function hideBanner() {
-      const banner = document.getElementById('cookie-banner');
-      if (banner) banner.style.display = 'none';
+    function hideBanner(){
+      const b = document.getElementById('cookie-banner');
+      if (b) b.style.display = 'none';
     }
 
     window.acceptCookies = function () {
@@ -334,7 +363,7 @@
 
     document.addEventListener('DOMContentLoaded', function () {
       const consent = localStorage.getItem(CONSENT_KEY);
-      
+
       if (consent === 'yes') {
         loadGoogleAnalytics();
       } else if (consent === 'no') {
@@ -348,3 +377,4 @@
 
 </body>
 </html>
+
