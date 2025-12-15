@@ -16,6 +16,8 @@
       --border:#E5E7EB;
     }
 
+    *{ box-sizing:border-box; }
+
     body{
       font-family: Arial, sans-serif;
       background: var(--bg-page);
@@ -186,7 +188,7 @@
     #quiz-overlay-message{
       position:absolute;
       inset:0;
-      display:none;            /* visibile solo se bloccato */
+      display:none;
       align-items:center;
       justify-content:center;
       text-align:center;
@@ -359,15 +361,15 @@
       </button>
 
       <nav id="main-nav">
-       <a href="index.html">Home</a>
-      <a href="blog.html">Blog</a>
-      <a href="smart-test.html">Smart Test</a>
-      <a href="calcolatori.html">Calcolatori</a>
-      <a href="fast-cards.html">Fast Card</a>
-      <a href="offerte.html">Prodotti Consapevoli</a>
-      <a href="curiosita.html">Curiosità</a>
-      <a href="misteri.html">Misteri</a>
-      <a href="chi.html">Chi siamo</a>
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="smart-test.html">Smart Test</a>
+        <a href="calcolatori.html">Calcolatori</a>
+        <a href="fast-cards.html">Fast Card</a>
+        <a href="offerte.html">Prodotti Consapevoli</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="chi.html">Chi siamo</a>
       </nav>
     </div>
   </header>
@@ -495,7 +497,8 @@
           <p>Test rapidi per capire dove perdi soldi/tempo senza accorgertene.</p>
         </article>
         <article class="related-item">
-          <h3><a href="fast-card.html">Fast Card</a></h3>
+          <!-- FIX: allineato al menu (fast-cards.html) -->
+          <h3><a href="fast-cards.html">Fast Card</a></h3>
           <p>Schede da 30 secondi anti-fregatura: offerte, marketing, psicologia del prezzo.</p>
         </article>
       </div>
@@ -514,7 +517,8 @@
       <a href="privacy.html">Privacy Policy</a> |
       <a href="cookie.html">Cookie Policy</a> |
       <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
-      <a href="note-legali.html">Note Legali</a>
+      <a href="note-legali.html">Note Legali</a> |
+      <a href="#" onclick="window.revokeCookies(); return false;">Gestisci cookie</a>
     </div>
     <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
       Syncras.App partecipa al Programma Affiliazione Amazon EU.
@@ -621,17 +625,32 @@
       });
     })();
 
-    // Cookie + GA (GDPR: GA bloccato finché non accetti)
+    // Cookie + GA (GDPR/ePrivacy: GA bloccato finché non accetti + Consent Mode default denied)
     (function () {
       const GA_ID = 'G-CFTTCYDZ2P';
       const CONSENT_KEY = 'syncras_cookie_consent';
 
+      // Hard-block GA finché non c'è consenso
       window['ga-disable-' + GA_ID] = true;
+
+      // Prepara gtag + Consent Mode (default: denied)
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+
+      // Best practice: tutto negato di default
+      gtag('consent', 'default', {
+        ad_storage: 'denied',
+        analytics_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied'
+      });
 
       function loadGoogleAnalytics() {
         if (window.__syncrasGaLoaded) return;
         window.__syncrasGaLoaded = true;
 
+        // Sblocca GA e carica lo script solo dopo consenso
         window['ga-disable-' + GA_ID] = false;
 
         const gaScript = document.createElement('script');
@@ -639,9 +658,7 @@
         gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
         document.head.appendChild(gaScript);
 
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){ dataLayer.push(arguments); }
-        window.gtag = gtag;
+        // Config GA (IP anonymized)
         gtag('js', new Date());
         gtag('config', GA_ID, { anonymize_ip: true });
       }
@@ -658,18 +675,30 @@
       window.acceptCookies = function () {
         localStorage.setItem(CONSENT_KEY, 'yes');
         hideBanner();
+
+        // Aggiorna consenso: Analytics consentito
+        gtag('consent', 'update', { analytics_storage: 'granted' });
+
         loadGoogleAnalytics();
       };
 
       window.rejectCookies = function () {
         localStorage.setItem(CONSENT_KEY, 'no');
         hideBanner();
+
+        // Mantieni negato
+        gtag('consent', 'update', { analytics_storage: 'denied' });
         window['ga-disable-' + GA_ID] = true;
       };
 
+      // Revoca: facile e visibile (link in footer)
       window.revokeCookies = function () {
         localStorage.removeItem(CONSENT_KEY);
+
+        // Torna a denied e riblocca GA
+        gtag('consent', 'update', { analytics_storage: 'denied' });
         window['ga-disable-' + GA_ID] = true;
+
         showBanner();
       };
 
@@ -677,10 +706,15 @@
         const consent = localStorage.getItem(CONSENT_KEY);
 
         if (consent === 'yes') {
+          // Se già accettato in passato
+          gtag('consent', 'update', { analytics_storage: 'granted' });
           loadGoogleAnalytics();
         } else if (consent === 'no') {
+          // Se rifiutato
+          gtag('consent', 'update', { analytics_storage: 'denied' });
           window['ga-disable-' + GA_ID] = true;
         } else {
+          // Nessuna scelta ancora
           showBanner();
         }
       });
