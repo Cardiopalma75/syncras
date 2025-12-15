@@ -179,6 +179,8 @@
     fetch("/gdpr.html")
       .then(r => r.text())
       .then(t => document.getElementById("site-gdpr").innerHTML = t);
+    if (window.__syncrasInitGdpr) window.__syncrasInitGdpr();
+
   </script>
 
 </body>
