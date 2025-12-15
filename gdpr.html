@@ -8,12 +8,8 @@
   </p>
 
   <div class="cookie-actions">
-    <button type="button" class="cookie-reject" onclick="rejectCookies()">
-      Rifiuta
-    </button>
-    <button id="cookie-btn" type="button" class="cookie-accept" onclick="acceptCookies()">
-      Accetta e continua
-    </button>
+    <button type="button" class="cookie-reject" onclick="rejectCookies()">Rifiuta</button>
+    <button id="cookie-btn" type="button" class="cookie-accept" onclick="acceptCookies()">Accetta e continua</button>
   </div>
 
   <p class="cookie-mini">
@@ -139,16 +135,39 @@
     showBanner();
   };
 
-  document.addEventListener('DOMContentLoaded', function(){
+  // ✅ INIT richiamabile dopo fetch()
+  window.__syncrasInitGdpr = function(){
+    // assicura blocco preventivo anche se richiamato più volte
+    window['ga-disable-' + GA_ID] = true;
+
+    // aggancio link "Modifica consenso cookie" nel footer (se presente)
+    const link = document.getElementById('syncras-consent-link');
+    if (link && link.dataset.bound !== '1'){
+      link.dataset.bound = '1';
+      link.addEventListener('click', function(e){
+        e.preventDefault();
+        window.revokeCookies();
+      });
+    }
+
     const consent = localStorage.getItem(CONSENT_KEY);
 
     if (consent === 'yes'){
       loadGoogleAnalytics();
     } else if (consent === 'no'){
       window['ga-disable-' + GA_ID] = true;
+      // banner resta chiuso
     } else {
-      showBanner();
+      showBanner(); // incognito => banner appare
     }
-  });
+  };
+
+  // fallback: se gdpr.html NON viene caricato via fetch (vecchie pagine)
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', () => window.__syncrasInitGdpr && window.__syncrasInitGdpr());
+  } else {
+    window.__syncrasInitGdpr && window.__syncrasInitGdpr();
+  }
 })();
 </script>
+
