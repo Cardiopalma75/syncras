@@ -2,9 +2,9 @@
   <div class="header-inner">
     <div class="logo"><a href="/index.html" style="color:white; text-decoration:none;">Syncras.App</a></div>
 
-   <button class="menu-toggle" type="button" aria-label="Apri o chiudi il menu di navigazione">
-  Menu <span>☰</span>
-</button>
+    <button class="menu-toggle" type="button" aria-label="Apri o chiudi il menu di navigazione">
+      Menu <span>☰</span>
+    </button>
 
     <nav id="main-nav">
       <a href="/index.html">Home</a>
@@ -103,32 +103,3 @@
   }
 </style>
 
-<script>
-  function toggleMenu(){
-    document.body.classList.toggle('nav-open');
-  }
-
-  // Chiudi menu se clicchi fuori (mobile)
-  document.addEventListener('click', function(e){
-    const nav = document.getElementById('main-nav');
-    const btn = document.querySelector('.menu-toggle');
-    if(!nav || !btn) return;
-
-    const isOpen = document.body.classList.contains('nav-open');
-    if(!isOpen) return;
-
-    const clickedInside = nav.contains(e.target) || btn.contains(e.target);
-    if(!clickedInside){
-      document.body.classList.remove('nav-open');
-    }
-  });
-
-  // Chiudi menu quando selezioni un link (mobile)
-  document.addEventListener('DOMContentLoaded', function(){
-    const nav = document.getElementById('main-nav');
-    if(!nav) return;
-    nav.querySelectorAll('a').forEach(a=>{
-      a.addEventListener('click', ()=> document.body.classList.remove('nav-open'));
-    });
-  });
-</script>
