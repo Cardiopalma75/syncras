@@ -25,30 +25,29 @@
   <div id="site-footer"></div>
   <div id="site-gdpr"></div>
 
-  <!-- CARICAMENTO HEADER / FOOTER / GDPR -->
-  <script>
-  Promise.all([
-    fetch("/header.html")
-      .then(r => r.text())
-      .then(t => document.getElementById("site-header").innerHTML = t),
-
-    fetch("/footer.html")
-      .then(r => r.text())
-      .then(t => document.getElementById("site-footer").innerHTML = t),
-
-    fetch("/gdpr.html")
-      .then(r => r.text())
-      .then(t => document.getElementById("site-gdpr").innerHTML = t),
-  ]).then(() => {
-    // RIAGGANCIA MENU E CONDIVIDI DOPO IL CARICAMENTO
-    if (window.__syncrasBindAll) window.__syncrasBindAll();
-  });
-</script>
-
-
   <!-- JS UNICO (menu + share + copia link fallback) -->
   <script src="/js/syncras.js"></script>
 
+  <!-- CARICAMENTO HEADER / FOOTER / GDPR -->
+  <script>
+    Promise.all([
+      fetch("/header.html")
+        .then(r => r.text())
+        .then(t => document.getElementById("site-header").innerHTML = t),
+
+      fetch("/footer.html")
+        .then(r => r.text())
+        .then(t => document.getElementById("site-footer").innerHTML = t),
+
+      fetch("/gdpr.html")
+        .then(r => r.text())
+        .then(t => document.getElementById("site-gdpr").innerHTML = t),
+    ]).then(() => {
+      if (window.__syncrasBindAll) window.__syncrasBindAll();
+    });
+  </script>
+
 </body>
 </html>
+
 
