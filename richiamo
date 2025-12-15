@@ -7,10 +7,6 @@
   <title>TITOLO PAGINA | Syncras.App</title>
   <meta name="description" content="Descrizione SEO della pagina.">
 
-
-<script src="/js/syncras.js"></script>
-
-
   <!-- CSS UNICO SYNCRAS (PC + MOBILE) -->
   <link rel="stylesheet" href="/css/syncras.css">
 </head>
@@ -44,5 +40,9 @@
       .then(t => document.getElementById("site-gdpr").innerHTML = t);
   </script>
 
+  <!-- JS UNICO (menu + share + copia link fallback) -->
+  <script src="/js/syncras.js"></script>
+
 </body>
 </html>
+
