@@ -22,12 +22,19 @@
     </p>
 
     <p class="footer-mini">
-      <a href="#" id="cookie-settings">Modifica consenso cookie</a>
+      <a href="#" id="cookie-settings-link">Modifica consenso cookie</a>
 
     </p>
   </div>
 </footer>
-
+<script>
+document.addEventListener("click", function(e){
+  const a = e.target.closest("#cookie-settings-link");
+  if(!a) return;
+  e.preventDefault();
+  if (window.revokeCookies) window.revokeCookies();
+});
+</script>
 <style>
   .site-footer{
     margin-top:40px;
