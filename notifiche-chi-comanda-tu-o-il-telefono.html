@@ -167,21 +167,30 @@
   <div id="site-footer"></div>
   <div id="site-gdpr"></div>
 
-  <script>
+ <script src="/js/syncras.js"></script>
+
+<script>
+  Promise.all([
     fetch("/header.html")
       .then(r => r.text())
-      .then(t => document.getElementById("site-header").innerHTML = t);
+      .then(t => document.getElementById("site-header").innerHTML = t),
 
     fetch("/footer.html")
       .then(r => r.text())
-      .then(t => document.getElementById("site-footer").innerHTML = t);
+      .then(t => document.getElementById("site-footer").innerHTML = t),
 
     fetch("/gdpr.html")
       .then(r => r.text())
-      .then(t => document.getElementById("site-gdpr").innerHTML = t);
-    if (window.__syncrasInitGdpr) window.__syncrasInitGdpr();
+      .then(t => document.getElementById("site-gdpr").innerHTML = t)
+  ]).then(() => {
+    // menu + share
+    if (window.__syncrasBindAll) window.__syncrasBindAll();
 
-  </script>
+    // cookie banner + revoke
+    if (window.__syncrasInitGdpr) window.__syncrasInitGdpr();
+  });
+</script>
+
 
 </body>
 </html>
