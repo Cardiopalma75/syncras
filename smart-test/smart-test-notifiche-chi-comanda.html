@@ -13,7 +13,11 @@
       --violet-dark: #4B3ACB;
       --bg-page: #F7F7FB;
       --text-main: #403E43;
+      --shadow: 0 6px 16px rgba(0,0,0,0.18);
+      --border: 1px solid #E5E7EB;
     }
+
+    *{ box-sizing:border-box; }
 
     body {
       font-family: Arial, sans-serif;
@@ -30,6 +34,8 @@
       color: white;
       padding: 12px 14px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+      position: relative;
+      z-index: 9999;
     }
     .header-inner {
       max-width: 1180px;
@@ -41,8 +47,9 @@
     }
     .logo {
       font-size: 1.4rem;
-      font-weight: bold;
+      font-weight: 800;
       letter-spacing: 0.03em;
+      white-space: nowrap;
     }
 
     #main-nav {
@@ -53,54 +60,51 @@
     #main-nav a {
       color: white;
       text-decoration: none;
-      font-weight: 600;
+      font-weight: 700;
       padding-bottom: 2px;
     }
-    #main-nav a:hover {
-      text-decoration: underline;
-    }
+    #main-nav a:hover { text-decoration: underline; }
 
     .menu-toggle {
       display: none;
       background: rgba(255,255,255,0.12);
       border: 1px solid rgba(255,255,255,0.4);
-      border-radius: 6px;
+      border-radius: 8px;
       color: white;
-      padding: 6px 10px;
-      font-size: 0.9rem;
+      padding: 8px 12px;
+      font-size: 0.95rem;
+      font-weight: 800;
       cursor: pointer;
+      line-height: 1;
+      user-select: none;
     }
-    .menu-toggle span {
-      margin-left: 4px;
-      font-size: 1.1rem;
-    }
+    .menu-toggle span { margin-left: 6px; font-size: 1.1rem; }
 
     @media (max-width: 768px) {
+      .menu-toggle { display: inline-flex; align-items: center; }
+
       #main-nav {
         display: none;
         position: absolute;
         left: 0;
         right: 0;
-        top: 56px;
-        margin: 0 auto;
-        max-width: 1180px;
+        top: 100%;
+        margin: 0;
         flex-direction: column;
         background-color: var(--violet-dark);
-        padding: 10px 16px 12px 16px;
-        border-radius: 0 0 8px 8px;
-        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
-        z-index: 50;
+        padding: 12px 16px;
+        border-radius: 0 0 10px 10px;
+        box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+        z-index: 10000;
       }
       #main-nav a {
-        padding: 6px 0;
+        padding: 10px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.14);
       }
-      body.nav-open #main-nav {
-        display: flex;
-      }
-      .menu-toggle {
-        display: inline-flex;
-        align-items: center;
-      }
+      #main-nav a:last-child { border-bottom: none; }
+
+      body.nav-open #main-nav { display: flex; }
+      body.nav-open { overflow-x: hidden; }
     }
 
     main {
@@ -112,15 +116,9 @@
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
 
-    h1, h2, h3 {
-      color: var(--violet-dark);
-    }
-    p {
-      margin-bottom: 15px;
-    }
-    ul {
-      margin-left: 20px;
-    }
+    h1, h2, h3 { color: var(--violet-dark); }
+    p { margin-bottom: 15px; }
+    ul { margin-left: 20px; }
 
     .back-links {
       margin-bottom: 20px;
@@ -129,16 +127,9 @@
     .back-links a {
       color: var(--violet-dark);
       text-decoration: none;
-      font-weight: 600;
+      font-weight: 700;
     }
-    .back-links a:hover {
-      text-decoration: underline;
-    }
-
-    .small {
-      font-size: 0.9rem;
-      color: #555;
-    }
+    .back-links a:hover { text-decoration: underline; }
 
     .tip-box {
       background: #F6F4FF;
@@ -169,12 +160,10 @@
     }
     .legal-box label a {
       color: var(--violet-dark);
-      font-weight: 600;
+      font-weight: 800;
       text-decoration: none;
     }
-    .legal-box label a:hover {
-      text-decoration: underline;
-    }
+    .legal-box label a:hover { text-decoration: underline; }
 
     .quiz-wrapper {
       position: relative;
@@ -214,33 +203,23 @@
       padding-bottom: 12px;
       border-bottom: 1px solid #E5E7EB;
     }
-
     .question:last-of-type {
       border-bottom: none;
       margin-bottom: 10px;
       padding-bottom: 0;
     }
-
     .question h3 {
       font-size: 1rem;
       margin-bottom: 8px;
     }
-
-    .question p {
-      margin-bottom: 8px;
-      font-size: 0.95rem;
-    }
-
+    .question p { margin-bottom: 8px; font-size: 0.95rem; }
     .question label {
       display: block;
       font-size: 0.9rem;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
       cursor: pointer;
     }
-
-    .question input[type="radio"] {
-      margin-right: 6px;
-    }
+    .question input[type="radio"] { margin-right: 6px; }
 
     #quiz-result {
       margin-top: 18px;
@@ -258,15 +237,12 @@
       color: white;
       border: none;
       padding: 10px 16px;
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
-      font-weight: 600;
+      font-weight: 800;
       font-size: 0.95rem;
     }
-
-    #submitQuiz:hover {
-      background: var(--violet-dark);
-    }
+    #submitQuiz:hover { background: var(--violet-dark); }
 
     /* BOX ARTICOLI CORRELATI */
     .related-box {
@@ -289,14 +265,11 @@
       border:1px solid #E5E7EB;
       font-size:0.9rem;
     }
-    .related-item h3 {
-      margin-top:0;
-      font-size:1rem;
-    }
+    .related-item h3 { margin-top:0; font-size:1rem; }
     .related-item a {
       text-decoration:none;
       color:var(--violet-dark);
-      font-weight:600;
+      font-weight:800;
     }
 
     footer {
@@ -307,103 +280,245 @@
       font-size: 0.9rem;
     }
 
-    /* COOKIE BANNER */
-    #cookie-banner {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      max-width: 90%;
-      width: 420px;
-      background: #ffffff;
-      border: 2px solid #6C5CE7;
-      border-radius: 10px;
-      padding: 16px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-      z-index: 9999;
-      font-family: Arial, sans-serif;
-      display: none;
+    /* Share buttons */
+    .share-btn{
+      background: var(--violet-main);
+      color:white;
+      padding:10px 15px;
+      border:none;
+      border-radius:8px;
+      cursor:pointer;
+      margin-bottom:20px;
+      font-weight:800;
+    }
+    .share-btn:hover{ background: var(--violet-dark); }
+
+    /**********************
+     * COOKIE UI (Banner + Modal)
+     **********************/
+    #cookie-overlay{
+      position:fixed;
+      inset:0;
+      background:rgba(17,24,39,0.55);
+      z-index:99998;
+      display:none;
     }
 
-    #cookie-banner p {
-      margin: 0 0 12px 0;
-      font-size: 0.95rem;
-      color: #333;
-      line-height: 1.4;
+    #cookie-banner{
+      position:fixed;
+      bottom:20px;
+      left:50%;
+      transform:translateX(-50%);
+      max-width:92%;
+      width:520px;
+      background:#fff;
+      border:2px solid var(--violet-main);
+      border-radius:12px;
+      padding:16px;
+      box-shadow: var(--shadow);
+      z-index:99999;
+      display:none;
     }
 
-    #cookie-banner a {
-      color: #6C5CE7;
-      font-weight: bold;
-      text-decoration: none;
+    #cookie-banner p{
+      margin:0 0 12px 0;
+      font-size:0.95rem;
+      color:#111827;
+      line-height:1.4;
     }
 
-    #cookie-banner button[onclick="rejectCookies()"] {
-      flex: 1;
-      background: white !important;
-      color: #111827 !important;
-      border: 2px solid #6C5CE7 !important;
-      padding: 10px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
+    #cookie-banner a{
+      color:var(--violet-main);
+      font-weight:800;
+      text-decoration:none;
+    }
+    #cookie-banner a:hover{ text-decoration: underline; }
+
+    .cookie-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:10px;
     }
 
-    #cookie-btn {
-      flex: 1;
-      background: #6C5CE7;
-      color: white;
-      border: 2px solid #6C5CE7;
-      padding: 10px 16px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 700;
+    .cookie-btn{
+      flex:1;
+      min-width:150px;
+      padding:10px 12px;
+      border-radius:8px;
+      cursor:pointer;
+      font-weight:800;
+      border:2px solid var(--violet-main);
+      background:#fff;
+      color:#111827;
     }
 
-    #cookie-btn:hover {
-      background: #4B3ACB;
+    .cookie-btn.primary{
+      background:var(--violet-main);
+      color:#fff;
+    }
+    .cookie-btn.primary:hover{ background:var(--violet-dark); }
+
+    .cookie-note{
+      font-size:0.82rem;
+      color:#6B7280;
+      margin-top:10px;
+      line-height:1.35;
+    }
+
+    #cookie-modal{
+      position:fixed;
+      left:50%;
+      top:50%;
+      transform:translate(-50%,-50%);
+      width:min(680px, 92%);
+      background:#fff;
+      border-radius:14px;
+      border:2px solid var(--violet-main);
+      box-shadow: var(--shadow);
+      z-index:100000;
+      display:none;
+      overflow:hidden;
+    }
+
+    .cookie-modal-head{
+      padding:14px 16px;
+      background:linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+
+    .cookie-modal-head strong{
+      font-size:1.02rem;
+      letter-spacing:0.02em;
+    }
+
+    .cookie-close{
+      background: rgba(255,255,255,0.14);
+      border:1px solid rgba(255,255,255,0.45);
+      color:#fff;
+      border-radius:10px;
+      padding:8px 10px;
+      cursor:pointer;
+      font-weight:800;
+    }
+
+    .cookie-modal-body{
+      padding:16px;
+      color:#111827;
+    }
+
+    .cookie-modal-body p{
+      margin-top:0;
+      color:#374151;
+      font-size:0.95rem;
+    }
+
+    .cookie-pref{
+      border: var(--border);
+      border-radius:12px;
+      padding:12px;
+      background:#F9FAFB;
+      margin-top:12px;
+    }
+
+    .cookie-pref h3{
+      margin:0 0 6px 0;
+      font-size:0.98rem;
+      color: var(--violet-dark);
+    }
+
+    .cookie-pref .row{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .cookie-pref small{
+      color:#6B7280;
+      display:block;
+      margin-top:6px;
+      line-height:1.35;
+    }
+
+    .switch{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-weight:800;
+      cursor:pointer;
+      user-select:none;
+    }
+    .switch input{ transform: scale(1.1); }
+
+    .cookie-modal-actions{
+      padding:14px 16px 16px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      border-top: var(--border);
+      background:#fff;
+    }
+
+    /* Always-visible settings button */
+    #cookie-settings-btn{
+      position:fixed;
+      left:16px;
+      bottom:16px;
+      z-index:99997;
+      border:1px solid rgba(0,0,0,0.12);
+      background:#fff;
+      color:#111827;
+      border-radius:999px;
+      padding:10px 12px;
+      font-weight:800;
+      cursor:pointer;
+      box-shadow:0 6px 14px rgba(0,0,0,0.12);
+      display:none;
+    }
+    #cookie-settings-btn:hover{
+      border-color: rgba(108,92,231,0.55);
     }
   </style>
 </head>
 
 <body>
 
-  <!-- HEADER UNIFICATO -->
   <header class="site-header">
     <div class="header-inner">
       <div class="logo">Syncras.App</div>
 
-      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+      <button class="menu-toggle" type="button" id="menuBtn" aria-controls="main-nav" aria-expanded="false">
         Menu <span>☰</span>
       </button>
 
       <nav id="main-nav">
         <a href="index.html">Home</a>
-      <a href="blog.html">Blog</a>
-      <a href="smart-test.html">Smart Test</a>
-      <a href="calcolatori.html">Calcolatori</a>
-      <a href="fast-cards.html">Fast Card</a>
-      <a href="offerte.html">Prodotti Consapevoli</a>
-      <a href="curiosita.html">Curiosità</a>
-      <a href="misteri.html">Misteri</a>
-      <a href="chi.html">Chi siamo</a>
+        <a href="blog.html">Blog</a>
+        <a href="smart-test.html">Smart Test</a>
+        <a href="calcolatori.html">Calcolatori</a>
+        <a href="fast-cards.html">Fast Card</a>
+        <a href="offerte.html">Prodotti Consapevoli</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="chi.html">Chi siamo</a>
       </nav>
     </div>
   </header>
 
   <main>
     <div class="back-links">
-      ← <a href="index.html">Torna alla Home</a> |
-   
+      ← <a href="index.html">Torna alla Home</a>
     </div>
 
     <h1>Smart Test Notifiche: chi comanda, tu o il telefono?</h1>
 
-    <button id="shareBtnTop"
-      style="background: var(--violet-main); color:white; padding:10px 15px; border:none;
-             border-radius:6px; cursor:pointer; margin-bottom:20px; font-weight:600;">
-      📎 Condividi questo test
-    </button>
+    <button id="shareBtnTop" class="share-btn">📎 Condividi questo test</button>
 
     <p>
       Notifiche, vibrazioni, schermi che si accendono da soli:
@@ -444,151 +559,64 @@
 
       <section id="quiz-section" class="quiz-section quiz-disabled">
 
-        <!-- DOMANDE (7) -->
         <div class="question">
           <h3>1. Suona una notifica mentre stai parlando con qualcuno. Che fai?</h3>
-          <label>
-            <input type="radio" name="q1" value="0">
-            Continuo a parlare, la guarderò dopo.
-          </label>
-          <label>
-            <input type="radio" name="q1" value="1">
-            Do solo un’occhiata veloce allo schermo.
-          </label>
-          <label>
-            <input type="radio" name="q1" value="2">
-            Dico “un secondo” e controllo subito.
-          </label>
-          <label>
-            <input type="radio" name="q1" value="3">
-            La mano va al telefono in automatico, quasi senza accorgermene.
-          </label>
+          <label><input type="radio" name="q1" value="0"> Continuo a parlare, la guarderò dopo.</label>
+          <label><input type="radio" name="q1" value="1"> Do solo un’occhiata veloce allo schermo.</label>
+          <label><input type="radio" name="q1" value="2"> Dico “un secondo” e controllo subito.</label>
+          <label><input type="radio" name="q1" value="3"> La mano va al telefono in automatico, quasi senza accorgermene.</label>
         </div>
 
         <div class="question">
           <h3>2. A cena il telefono si illumina sul tavolo. Reazione?</h3>
-          <label>
-            <input type="radio" name="q2" value="0">
-            Lo ignoro: a tavola non si tocca.
-          </label>
-          <label>
-            <input type="radio" name="q2" value="1">
-            Ci penso un attimo… ma poi lo lascio lì.
-          </label>
-          <label>
-            <input type="radio" name="q2" value="2">
-            Lo giro a faccia in giù ma l’ho già guardato.
-          </label>
-          <label>
-            <input type="radio" name="q2" value="3">
-            “Aspettate un attimo”: controllo subito chi è.
-          </label>
+          <label><input type="radio" name="q2" value="0"> Lo ignoro: a tavola non si tocca.</label>
+          <label><input type="radio" name="q2" value="1"> Ci penso un attimo… ma poi lo lascio lì.</label>
+          <label><input type="radio" name="q2" value="2"> Lo giro a faccia in giù ma l’ho già guardato.</label>
+          <label><input type="radio" name="q2" value="3"> “Aspettate un attimo”: controllo subito chi è.</label>
         </div>
 
         <div class="question">
           <h3>3. Un’ora senza controllare il telefono…</h3>
-          <label>
-            <input type="radio" name="q3" value="0">
-            Normale: capita spesso, non ci penso.
-          </label>
-          <label>
-            <input type="radio" name="q3" value="1">
-            Ogni tanto mi viene in mente, ma resisto.
-          </label>
-          <label>
-            <input type="radio" name="q3" value="2">
-            Inizio a chiedermi cosa mi sto perdendo.
-          </label>
-          <label>
-            <input type="radio" name="q3" value="3">
-            Impossibile: dopo poco lo prendo “solo per un attimo”.
-          </label>
+          <label><input type="radio" name="q3" value="0"> Normale: capita spesso, non ci penso.</label>
+          <label><input type="radio" name="q3" value="1"> Ogni tanto mi viene in mente, ma resisto.</label>
+          <label><input type="radio" name="q3" value="2"> Inizio a chiedermi cosa mi sto perdendo.</label>
+          <label><input type="radio" name="q3" value="3"> Impossibile: dopo poco lo prendo “solo per un attimo”.</label>
         </div>
 
         <div class="question">
           <h3>4. Quante notifiche ricevi in media in una giornata?</h3>
-          <label>
-            <input type="radio" name="q4" value="0">
-            Meno di 10: ho disattivato quasi tutto.
-          </label>
-          <label>
-            <input type="radio" name="q4" value="1">
-            Tra 10 e 40: gestibili, ma si fanno sentire.
-          </label>
-          <label>
-            <input type="radio" name="q4" value="2">
-            Tra 40 e 90: spesso è un susseguirsi di ping e vibrazioni.
-          </label>
-          <label>
-            <input type="radio" name="q4" value="3">
-            Più di 90: praticamente un sottofondo costante.
-          </label>
+          <label><input type="radio" name="q4" value="0"> Meno di 10: ho disattivato quasi tutto.</label>
+          <label><input type="radio" name="q4" value="1"> Tra 10 e 40: gestibili, ma si fanno sentire.</label>
+          <label><input type="radio" name="q4" value="2"> Tra 40 e 90: spesso è un susseguirsi di ping e vibrazioni.</label>
+          <label><input type="radio" name="q4" value="3"> Più di 90: praticamente un sottofondo costante.</label>
         </div>
 
         <div class="question">
           <h3>5. Vibrazione in tasca mentre sei concentrato su qualcos’altro. Cosa fai?</h3>
-          <label>
-            <input type="radio" name="q5" value="0">
-            Finisco ciò che sto facendo, poi eventualmente guardo.
-          </label>
-          <label>
-            <input type="radio" name="q5" value="1">
-            Aspetto un paio di minuti e poi controllo.
-          </label>
-          <label>
-            <input type="radio" name="q5" value="2">
-            Lo prendo in mano non appena posso.
-          </label>
-          <label>
-            <input type="radio" name="q5" value="3">
-            Mi è già partita la mano in automatico appena ho sentito la vibrazione.
-          </label>
+          <label><input type="radio" name="q5" value="0"> Finisco ciò che sto facendo, poi eventualmente guardo.</label>
+          <label><input type="radio" name="q5" value="1"> Aspetto un paio di minuti e poi controllo.</label>
+          <label><input type="radio" name="q5" value="2"> Lo prendo in mano non appena posso.</label>
+          <label><input type="radio" name="q5" value="3"> Mi è già partita la mano in automatico appena ho sentito la vibrazione.</label>
         </div>
 
         <div class="question">
           <h3>6. Quante app hanno il permesso di inviarti notifiche?</h3>
-          <label>
-            <input type="radio" name="q6" value="0">
-            Solo quelle essenziali (messaggi, poche altre).
-          </label>
-          <label>
-            <input type="radio" name="q6" value="1">
-            Diverse, ma ogni tanto faccio pulizia.
-          </label>
-          <label>
-            <input type="radio" name="q6" value="2">
-            Moltissime: social, giochi, offerte, app varie.
-          </label>
-          <label>
-            <input type="radio" name="q6" value="3">
-            Praticamente tutte: di solito clicco “consenti” senza pensarci troppo.
-          </label>
+          <label><input type="radio" name="q6" value="0"> Solo quelle essenziali (messaggi, poche altre).</label>
+          <label><input type="radio" name="q6" value="1"> Diverse, ma ogni tanto faccio pulizia.</label>
+          <label><input type="radio" name="q6" value="2"> Moltissime: social, giochi, offerte, app varie.</label>
+          <label><input type="radio" name="q6" value="3"> Praticamente tutte: di solito clicco “consenti” senza pensarci troppo.</label>
         </div>
 
         <div class="question">
           <h3>7. Quando il telefono non notifica per un po’, ti capita di…</h3>
-          <label>
-            <input type="radio" name="q7" value="0">
-            Godermela: è bello non essere interrotto.
-          </label>
-          <label>
-            <input type="radio" name="q7" value="1">
-            Controllarlo ogni tanto “per sicurezza”.
-          </label>
-          <label>
-            <input type="radio" name="q7" value="2">
-            Pensare “che strano, non arriva niente…”.
-          </label>
-          <label>
-            <input type="radio" name="q7" value="3">
-            Toccare lo schermo o aprire un’app “tanto per”.
-          </label>
+          <label><input type="radio" name="q7" value="0"> Godermela: è bello non essere interrotto.</label>
+          <label><input type="radio" name="q7" value="1"> Controllarlo ogni tanto “per sicurezza”.</label>
+          <label><input type="radio" name="q7" value="2"> Pensare “che strano, non arriva niente…”.</label>
+          <label><input type="radio" name="q7" value="3"> Toccare lo schermo o aprire un’app “tanto per”.</label>
         </div>
 
-        <button id="submitQuiz">Calcola risultato</button>
-
+        <button id="submitQuiz" type="button">Calcola risultato</button>
         <div id="quiz-result"></div>
-
       </section>
     </div>
 
@@ -603,191 +631,276 @@
       <h2 style="margin-top:0;">Ti possono interessare anche:</h2>
       <div class="related-grid">
         <article class="related-item">
-          <h3>
-            <a href="quanto-tempo-ruba-lo-smartphone.html">
-              Quanto tempo ti ruba davvero lo smartphone?
-            </a>
-          </h3>
-          <p>
-            Un approfondimento sul tempo perso tra scroll, notifiche e “solo un secondo”.
-          </p>
+          <h3><a href="quanto-tempo-ruba-lo-smartphone.html">Quanto tempo ti ruba davvero lo smartphone?</a></h3>
+          <p>Un approfondimento sul tempo perso tra scroll, notifiche e “solo un secondo”.</p>
         </article>
-
         <article class="related-item">
-          <h3>
-            <a href="smart-test-anti-algoritmo.html">
-              Smart Test Anti-Algoritmo
-            </a>
-          </h3>
-          <p>
-            Per capire quanto il feed decide cosa vedi e cosa pensi di volere.
-          </p>
+          <h3><a href="smart-test-anti-algoritmo.html">Smart Test Anti-Algoritmo</a></h3>
+          <p>Per capire quanto il feed decide cosa vedi e cosa pensi di volere.</p>
         </article>
-
         <article class="related-item">
-          <h3>
-            <a href="calcolatori.html">
-              Calcolatori Syncras
-            </a>
-          </h3>
-          <p>
-            Strumenti pratici per misurare l’impatto reale di scelte, consumi e abitudini.
-          </p>
+          <h3><a href="calcolatori.html">Calcolatori Syncras</a></h3>
+          <p>Strumenti pratici per misurare l’impatto reale di scelte, consumi e abitudini.</p>
         </article>
       </div>
     </section>
 
     <div style="text-align:center; margin:30px 0 10px;">
-      <button id="shareBtnBottom"
-        style="background: var(--violet-main); color:white; padding:10px 18px; border:none;
-               border-radius:6px; cursor:pointer; font-weight:600; font-size:1rem;">
+      <button id="shareBtnBottom" class="share-btn" style="padding:10px 18px; font-size:1rem;">
         📎 Condividi questo test
       </button>
     </div>
   </main>
 
-  <script>
-    // Toggle menu mobile
-    function toggleMenu() {
-      document.body.classList.toggle('nav-open');
-    }
+  <footer>
+    © 2025 Syncras.App — Tutti i diritti riservati<br>
+    <div style="margin-top:8px;">
+      <a href="privacy.html">Privacy Policy</a> |
+      <a href="cookie.html">Cookie Policy</a> |
+      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
+      <a href="note-legali.html">Note Legali</a> |
+      <a href="#" id="footerCookieSettings">Impostazioni cookie</a>
+    </div>
+    <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.
+      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+      senza alcun costo aggiuntivo per l’utente.
+      Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+      è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+    </p>
+  </footer>
 
-    // Sblocco test dopo accettazione Note Legali
-    (function() {
+  <!-- Always visible cookie settings -->
+  <button id="cookie-settings-btn" type="button" aria-label="Impostazioni cookie">🍪 Impostazioni cookie</button>
+
+  <!-- Cookie overlay + banner + modal -->
+  <div id="cookie-overlay" aria-hidden="true"></div>
+
+  <div id="cookie-banner" role="dialog" aria-modal="true" aria-label="Preferenze cookie">
+    <p>
+      Usiamo cookie <strong>tecnici</strong> per far funzionare il sito.
+      <br>
+      <strong>Solo se acconsenti</strong>, usiamo cookie di <strong>misurazione</strong> (Google Analytics)
+      per statistiche sulle visite.
+      <br>
+      Alcuni link potrebbero essere di affiliazione.
+      Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la <a href="privacy.html">Privacy Policy</a>.
+    </p>
+
+    <div class="cookie-actions">
+      <button type="button" class="cookie-btn" id="cookieReject">Rifiuta</button>
+      <button type="button" class="cookie-btn" id="cookieCustomize">Personalizza</button>
+      <button type="button" class="cookie-btn primary" id="cookieAcceptAll">Accetta</button>
+    </div>
+
+    <div class="cookie-note">
+      Puoi cambiare idea in qualsiasi momento con “Impostazioni cookie”.
+    </div>
+  </div>
+
+  <div id="cookie-modal" role="dialog" aria-modal="true" aria-label="Personalizza cookie">
+    <div class="cookie-modal-head">
+      <strong>Personalizza cookie</strong>
+      <button class="cookie-close" type="button" id="cookieModalClose">Chiudi</button>
+    </div>
+
+    <div class="cookie-modal-body">
+      <p>
+        Qui puoi decidere quali cookie permettere. I cookie tecnici sono necessari per il funzionamento del sito.
+        I cookie di misurazione (Analytics) sono facoltativi e vengono attivati solo con il tuo consenso.
+      </p>
+
+      <div class="cookie-pref">
+        <div class="row">
+          <div>
+            <h3>Cookie tecnici (necessari)</h3>
+            <div style="font-weight:800; color:#111827;">Sempre attivi</div>
+            <small>Servono per funzionalità essenziali (es. memorizzare le preferenze cookie).</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="cookie-pref">
+        <div class="row">
+          <div>
+            <h3>Cookie di misurazione (Google Analytics)</h3>
+            <small>
+              Ci aiutano a capire in modo statistico quali pagine funzionano meglio. Se disattivi, non carichiamo Google Analytics.
+            </small>
+          </div>
+
+          <label class="switch">
+            <input type="checkbox" id="prefAnalytics">
+            Analytics ON
+          </label>
+        </div>
+      </div>
+
+      <div class="cookie-note" style="margin-top:12px;">
+        Maggiori dettagli nelle pagine <a href="cookie.html">Cookie Policy</a> e <a href="privacy.html">Privacy Policy</a>.
+      </div>
+    </div>
+
+    <div class="cookie-modal-actions">
+      <button type="button" class="cookie-btn" id="cookieSaveReject">Salva: Rifiuta</button>
+      <button type="button" class="cookie-btn primary" id="cookieSaveChoices">Salva preferenze</button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      /**********************
+       * MENU MOBILE
+       **********************/
+      const menuBtn = document.getElementById('menuBtn');
+      const nav = document.getElementById('main-nav');
+
+      function setExpanded(isOpen){
+        if (menuBtn) menuBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      }
+      function openMenu(){
+        document.body.classList.add('nav-open'); setExpanded(true);
+      }
+      function closeMenu(){
+        document.body.classList.remove('nav-open'); setExpanded(false);
+      }
+      function toggleMenu(){
+        if (document.body.classList.contains('nav-open')) closeMenu(); else openMenu();
+      }
+      if (menuBtn) menuBtn.addEventListener('click', toggleMenu);
+      if (nav) nav.addEventListener('click', (e) => { if (e.target && e.target.tagName === 'A') closeMenu(); });
+      document.addEventListener('click', (e) => {
+        if (!document.body.classList.contains('nav-open')) return;
+        const isInsideHeader = e.target.closest('.site-header');
+        if (!isInsideHeader) closeMenu();
+      });
+
+      /**********************
+       * BLOCCO QUIZ FINCHÉ NON ACCETTI NOTE LEGALI
+       **********************/
       const checkbox = document.getElementById('legalAccept');
       const quizSection = document.getElementById('quiz-section');
       const overlayMsg = document.getElementById('quiz-overlay-message');
 
-      if (!checkbox || !quizSection || !overlayMsg) return;
+      if (checkbox && quizSection && overlayMsg){
+        checkbox.addEventListener('change', function() {
+          if (this.checked) {
+            quizSection.classList.remove('quiz-disabled');
+            overlayMsg.style.display = 'none';
+          } else {
+            quizSection.classList.add('quiz-disabled');
+            overlayMsg.style.display = 'flex';
+          }
+        });
+      }
 
-      checkbox.addEventListener('change', function() {
-        if (this.checked) {
-          quizSection.classList.remove('quiz-disabled');
-          overlayMsg.style.display = 'none';
-        } else {
-          quizSection.classList.add('quiz-disabled');
-          overlayMsg.style.display = 'flex';
-        }
-      });
-    })();
-
-    // Logica punteggio Smart Test Notifiche
-    (function() {
+      /**********************
+       * LOGICA PUNTEGGIO QUIZ
+       **********************/
       const submitBtn = document.getElementById('submitQuiz');
       const resultBox = document.getElementById('quiz-result');
 
-      if (!submitBtn || !resultBox) return;
+      if (submitBtn && resultBox){
+        submitBtn.addEventListener('click', function() {
+          let total = 0;
+          let allAnswered = true;
 
-      submitBtn.addEventListener('click', function() {
-        let total = 0;
-        let allAnswered = true;
-
-        for (let i = 1; i <= 7; i++) {
-          const answers = document.querySelectorAll('input[name="q' + i + '"]');
-          let answered = false;
-          answers.forEach(a => {
-            if (a.checked) {
-              total += parseInt(a.value, 10);
-              answered = true;
-            }
-          });
-          if (!answered) {
-            allAnswered = false;
+          for (let i = 1; i <= 7; i++) {
+            const answers = document.querySelectorAll('input[name="q' + i + '"]');
+            let answered = false;
+            answers.forEach(a => {
+              if (a.checked) {
+                total += parseInt(a.value, 10);
+                answered = true;
+              }
+            });
+            if (!answered) allAnswered = false;
           }
-        }
 
-        if (!allAnswered) {
+          if (!allAnswered) {
+            resultBox.style.display = 'block';
+            resultBox.style.background = '#FEF2F2';
+            resultBox.style.borderColor = '#F97373';
+            resultBox.innerHTML = `
+              <strong>Prima rispondi a tutte le domande.</strong><br>
+              Lo Smart Test Notifiche funziona solo se completi tutte le risposte.
+            `;
+            return;
+          }
+
+          let titolo, testo;
+
+          if (total <= 5) {
+            titolo = '📊 Sei tu a comandare (per ora)';
+            testo = `
+              Le notifiche per te sono uno strumento, non un capo.
+              <strong>Decidi tu quando guardare il telefono</strong>.
+              <br><br>
+              Continua così:
+              <ul>
+                <li>mantieni poche app con notifiche attive;</li>
+                <li>tieni momenti “no schermo” (cena, conversazioni, hobby);</li>
+                <li>usa “non disturbare” quando devi concentrarti.</li>
+              </ul>
+            `;
+          } else if (total <= 11) {
+            titolo = '⚖️ Equilibrio fragile: a volte comandi tu, a volte il telefono';
+            testo = `
+              Te la cavi, ma <strong>le notifiche riescono ancora a rubarti attenzione</strong>.
+              <br><br>
+              Puoi migliorare così:
+              <ul>
+                <li>disattiva le notifiche delle app non essenziali;</li>
+                <li>tieni il telefono lontano quando parli o lavori;</li>
+                <li>crea “finestre orarie” per controllarlo.</li>
+              </ul>
+            `;
+          } else if (total <= 16) {
+            titolo = '🧲 Semi-dipendenza: il telefono decide più di quanto pensi';
+            testo = `
+              Le notifiche hanno una presa forte: <strong>ti interrompono spesso</strong>.
+              <br><br>
+              Per invertire il rapporto:
+              <ul>
+                <li>disattiva le notifiche non essenziali per una settimana;</li>
+                <li>tieni il telefono in un’altra stanza a cena o la sera;</li>
+                <li>quando vibra, conta fino a 30 prima di prenderlo.</li>
+              </ul>
+            `;
+          } else {
+            titolo = '📱 Il telefono comanda, tu esegui';
+            testo = `
+              Sei in modalità “notifiche al comando”.
+              <br><br>
+              Puoi riprendere terreno:
+              <ul>
+                <li>attiva “non disturbare” in fasce orarie fisse;</li>
+                <li>togli vibrazione alle app non essenziali;</li>
+                <li>scegli un momento fisso per rispondere ai messaggi;</li>
+                <li>tieni lo smartphone lontano dal letto la notte.</li>
+              </ul>
+              L’obiettivo è <strong>rimettere al centro il tuo tempo</strong>.
+            `;
+          }
+
           resultBox.style.display = 'block';
-          resultBox.style.background = '#FEF2F2';
-          resultBox.style.borderColor = '#F97373';
+          resultBox.style.background = '#ECFEFF';
+          resultBox.style.borderColor = '#22C3D6';
           resultBox.innerHTML = `
-            <strong>Prima rispondi a tutte le domande.</strong><br>
-            Lo Smart Test Notifiche funziona solo se completi tutte le risposte
-            (sì, anche quelle a cui “non sai cosa mettere” 😄).
-          `;
-          return;
-        }
-
-        let titolo, testo;
-
-        if (total <= 5) {
-          titolo = '📊 Sei tu a comandare (per ora)';
-          testo = `
-            Le notifiche per te sono uno strumento, non un capo.
-            <strong>Decidi tu quando guardare il telefono</strong> e in molti momenti della giornata
-            riesci a tenerlo al suo posto.
+            <strong>${titolo}</strong><br><br>
+            ${testo}
             <br><br>
-            Continua così:
-            <ul>
-              <li>mantieni poche app con notifiche attive;</li>
-              <li>tieni momenti “no schermo” (cena, conversazioni, hobby);</li>
-              <li>usa le modalità silenziose o non disturbare quando devi concentrarti.</li>
-            </ul>
+            <span style="font-size:0.85rem; opacity:0.85;">
+              Questo Smart Test è solo uno strumento ludico per riflettere sulle tue abitudini digitali.
+            </span>
           `;
-        } else if (total <= 11) {
-          titolo = '⚖️ Equilibrio fragile: a volte comandi tu, a volte il telefono';
-          testo = `
-            In generale te la cavi, ma <strong>le notifiche riescono ancora a rubarti attenzione</strong>
-            nei momenti sbagliati.
-            <br><br>
-            Puoi migliorare così:
-            <ul>
-              <li>disattiva le notifiche di app che non ti servono davvero (offerte, giochi, social secondari);</li>
-              <li>tieni il telefono lontano fisicamente quando parli con qualcuno o lavori su qualcosa di importante;</li>
-              <li>crea “finestre orarie” in cui lo controlli, invece di rispondere a ogni ping in tempo reale.</li>
-            </ul>
-          `;
-        } else if (total <= 16) {
-          titolo = '🧲 Semi-dipendenza: il telefono decide più di quanto pensi';
-          testo = `
-            Le notifiche hanno una presa forte: <strong>ti interrompono spesso</strong> e la mano va al telefono
-            quasi da sola.
-            <br><br>
-            Per invertire il rapporto di forza:
-            <ul>
-              <li>disattiva tutte le notifiche non essenziali per una settimana (puoi sempre riattivarle dopo);</li>
-              <li>prova a tenere il telefono in un’altra stanza durante i pasti o la sera;</li>
-              <li>quando senti una vibrazione, prova a contare fino a 30 prima di prenderlo.</li>
-            </ul>
-            Piccoli cambiamenti ripetuti valgono più di una “disintossicazione” di un giorno.
-          `;
-        } else {
-          titolo = '📱 Il telefono comanda, tu esegui';
-          testo = `
-            Sei in modalità “notifiche al comando”: <strong>il telefono decide quando ti fermi,
-            quando ti distrai, quando guardi lo schermo</strong>.
-            <br><br>
-            Non è colpa tua: è il modo in cui sono progettate le app. Ma puoi riprendere terreno:
-            <ul>
-              <li>attiva la modalità “non disturbare” in alcune fasce orarie ogni giorno;</li>
-              <li>togli la vibrazione per le app non essenziali (o silenzia quasi tutto);</li>
-              <li>scegli un momento fisso per rispondere a messaggi e notifiche invece di farlo sempre subito;</li>
-              <li>tieni lo smartphone lontano dal letto la notte (usa una sveglia normale se serve).</li>
-            </ul>
-            L’obiettivo non è vivere senza telefono, ma <strong>rimettere al centro il tuo tempo e la tua attenzione</strong>.
-          `;
-        }
+        });
+      }
 
-        resultBox.style.display = 'block';
-        resultBox.style.background = '#ECFEFF';
-        resultBox.style.borderColor = '#22C3D6';
-        resultBox.innerHTML = `
-          <strong>${titolo}</strong><br><br>
-          ${testo}
-          <br><br>
-          <span style="font-size:0.85rem; opacity:0.85;">
-            Questo Smart Test è solo uno strumento ludico per riflettere sulle tue abitudini digitali.
-          </span>
-        `;
-      });
-    })();
-
-    // Condivisione test (top e bottom)
-    (function() {
-      const shareTop = document.getElementById('shareBtnTop');
-      const shareBottom = document.getElementById('shareBtnBottom');
-
-      function attachShare(btn) {
+      /**********************
+       * CONDIVISIONE
+       **********************/
+      function attachShare(btn){
         if (!btn) return;
         if (navigator.share) {
           btn.addEventListener('click', () => {
@@ -798,180 +911,184 @@
             });
           });
         } else {
-          btn.style.display = 'none';
+          // fallback: copia link
+          btn.addEventListener('click', async () => {
+            try{
+              await navigator.clipboard.writeText(window.location.href);
+              btn.textContent = '✅ Link copiato!';
+              setTimeout(()=> btn.textContent = '📎 Condividi questo test', 1400);
+            }catch(e){
+              alert('Copia non supportata: seleziona e copia l’URL dalla barra in alto.');
+            }
+          });
         }
       }
+      attachShare(document.getElementById('shareBtnTop'));
+      attachShare(document.getElementById('shareBtnBottom'));
 
-      attachShare(shareTop);
-      attachShare(shareBottom);
-    })();
-  </script>
+      /**********************
+       * COOKIE + ANALYTICS (GDPR “strong”)
+       **********************/
+      const GA_ID = 'G-CFTTCYDZ2P';
+      const CONSENT_KEY = 'syncras_consent_v1';
+      const PREF_KEY = 'syncras_prefs_v1';
 
-  <footer>
-    © 2025 Syncras.App — Tutti i diritti riservati<br>
-    <div style="margin-top:8px;">
-      <a href="privacy.html">Privacy Policy</a> |
-      <a href="cookie.html">Cookie Policy</a> |
-      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
-      <a href="note-legali.html">Note Legali</a>
-    </div>
-    <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
-      Syncras.App partecipa al Programma Affiliazione Amazon EU.  
-      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
-      senza alcun costo aggiuntivo per l’utente.  
-      Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
-      è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
-    </p>
-  </footer>
-
-  <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
-  <div id="cookie-banner">
-    <p>
-      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
-      (Google Analytics). Alcuni link potrebbero essere di affiliazione.
-      Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
-      <a href="privacy.html">Privacy Policy</a>.
-    </p>
-    <div style="display:flex; gap:10px; margin-top:8px;">
-      <button type="button" onclick="rejectCookies()">
-        Rifiuta
-      </button>
-      <button id="cookie-btn" type="button" onclick="acceptCookies()">
-        Accetta e continua
-      </button>
-    </div>
-  </div>
-
-  <style>
-    #cookie-banner {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      max-width: 90%;
-      width: 420px;
-      background: #ffffff;
-      border: 2px solid #6C5CE7;
-      border-radius: 10px;
-      padding: 16px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-      z-index: 9999;
-      font-family: Arial, sans-serif;
-      display: none;
-    }
-
-    #cookie-banner p {
-      margin: 0 0 12px 0;
-      font-size: 0.95rem;
-      color: #333;
-      line-height: 1.4;
-    }
-
-    #cookie-banner a {
-      color: #6C5CE7;
-      font-weight: bold;
-      text-decoration: none;
-    }
-
-    /* Pulsante RIFIUTA – pari importanza al pulsante ACCETTA */
-    #cookie-banner button[onclick="rejectCookies()"] {
-      flex: 1;
-      background: white !important;
-      color: #111827 !important;
-      border: 2px solid #6C5CE7 !important;
-      padding: 10px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-
-    /* Pulsante ACCETTA */
-    #cookie-btn {
-      flex: 1;
-      background: #6C5CE7;
-      color: white;
-      border: 2px solid #6C5CE7;
-      padding: 10px 16px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 700;
-    }
-
-    #cookie-btn:hover {
-      background: #4B3ACB;
-    }
-  </style>
-
-  <script>
-  (function () {
-    const GA_ID = 'G-CFTTCYDZ2P';
-    const CONSENT_KEY = 'syncras_cookie_consent'; // chiave unica per tutto il sito
-
-    // 1️⃣ BLOCCO PREVENTIVO: GA disabilitato finché non c'è consenso
-    window['ga-disable-' + GA_ID] = true;
-
-    function loadGoogleAnalytics() {
-      if (window.__syncrasGaLoaded) return;
-      window.__syncrasGaLoaded = true;
-
-      // Riabilita GA solo dopo il consenso
-      window['ga-disable-' + GA_ID] = false;
-
-      const gaScript = document.createElement('script');
-      gaScript.async = true;
-      gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
-      document.head.appendChild(gaScript);
-
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){ dataLayer.push(arguments); }
-      window.gtag = gtag;
-      gtag('js', new Date());
-      gtag('config', GA_ID, { anonymize_ip: true });
-    }
-
-    function showBanner() {
-      const banner = document.getElementById('cookie-banner');
-      if (banner) banner.style.display = 'block';
-    }
-
-    function hideBanner() {
-      const banner = document.getElementById('cookie-banner');
-      if (banner) banner.style.display = 'none';
-    }
-
-    window.acceptCookies = function () {
-      localStorage.setItem(CONSENT_KEY, 'yes');
-      hideBanner();
-      loadGoogleAnalytics();
-    };
-
-    window.rejectCookies = function () {
-      localStorage.setItem(CONSENT_KEY, 'no');
-      hideBanner();
-      // GA resta bloccato
       window['ga-disable-' + GA_ID] = true;
-    };
 
-    // 2️⃣ FUNZIONE DI REVOCA – per cambiare idea dopo
-    window.revokeCookies = function () {
-      localStorage.removeItem(CONSENT_KEY);
-      window['ga-disable-' + GA_ID] = true;   // blocca subito GA
-      showBanner();                           // ri-mostra il banner
-    };
+      const overlay = document.getElementById('cookie-overlay');
+      const banner = document.getElementById('cookie-banner');
+      const modal = document.getElementById('cookie-modal');
 
-    document.addEventListener('DOMContentLoaded', function () {
-      const consent = localStorage.getItem(CONSENT_KEY);
+      const btnAcceptAll = document.getElementById('cookieAcceptAll');
+      const btnReject = document.getElementById('cookieReject');
+      const btnCustomize = document.getElementById('cookieCustomize');
 
-      if (consent === 'yes') {
-        loadGoogleAnalytics();
-      } else if (consent === 'no') {
-        window['ga-disable-' + GA_ID] = true;
-      } else {
-        showBanner();
+      const btnModalClose = document.getElementById('cookieModalClose');
+      const btnSaveReject = document.getElementById('cookieSaveReject');
+      const btnSaveChoices = document.getElementById('cookieSaveChoices');
+
+      const prefAnalytics = document.getElementById('prefAnalytics');
+
+      const cookieSettingsBtn = document.getElementById('cookie-settings-btn');
+      const footerCookieSettings = document.getElementById('footerCookieSettings');
+
+      function showOverlay(){ if (overlay) overlay.style.display = 'block'; }
+      function hideOverlay(){ if (overlay) overlay.style.display = 'none'; }
+
+      function showBanner(){
+        if (banner) banner.style.display = 'block';
+        showOverlay();
       }
-    });
-  })();
-  </script>
+      function hideBanner(){
+        if (banner) banner.style.display = 'none';
+        if (modal && modal.style.display !== 'block') hideOverlay();
+      }
 
+      function openModal(){
+        if (modal) modal.style.display = 'block';
+        showOverlay();
+        hideBanner();
+      }
+      function closeModal(){
+        if (modal) modal.style.display = 'none';
+        hideOverlay();
+      }
+
+      function getPrefs(){
+        try{
+          const raw = localStorage.getItem(PREF_KEY);
+          if (!raw) return { analytics: false };
+          const obj = JSON.parse(raw);
+          return { analytics: !!obj.analytics };
+        }catch(e){
+          return { analytics: false };
+        }
+      }
+      function setPrefs(prefs){
+        localStorage.setItem(PREF_KEY, JSON.stringify({ analytics: !!prefs.analytics }));
+      }
+      function setConsent(status){
+        localStorage.setItem(CONSENT_KEY, status); // accepted | rejected | custom
+      }
+      function getConsent(){
+        return localStorage.getItem(CONSENT_KEY);
+      }
+
+      function ensureSettingsButtonVisible(){
+        if (cookieSettingsBtn) cookieSettingsBtn.style.display = 'inline-flex';
+      }
+
+      function loadGA(){
+        if (window.__syncrasGaLoaded) return;
+        window.__syncrasGaLoaded = true;
+
+        window['ga-disable-' + GA_ID] = false;
+
+        const gaScript = document.createElement('script');
+        gaScript.async = true;
+        gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+        document.head.appendChild(gaScript);
+
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){ dataLayer.push(arguments); }
+        window.gtag = gtag;
+
+        gtag('js', new Date());
+        gtag('config', GA_ID, { anonymize_ip: true });
+      }
+
+      function applyPrefs(){
+        const prefs = getPrefs();
+        if (prefs.analytics) loadGA();
+        else window['ga-disable-' + GA_ID] = true;
+      }
+
+      function openSettings(){
+        const prefs = getPrefs();
+        if (prefAnalytics) prefAnalytics.checked = !!prefs.analytics;
+        openModal();
+      }
+
+      const consent = getConsent();
+      if (!consent){
+        showBanner();
+      } else {
+        ensureSettingsButtonVisible();
+        applyPrefs();
+      }
+
+      if (btnAcceptAll) btnAcceptAll.addEventListener('click', () => {
+        setConsent('accepted');
+        setPrefs({ analytics: true });
+        hideBanner();
+        ensureSettingsButtonVisible();
+        applyPrefs();
+      });
+
+      if (btnReject) btnReject.addEventListener('click', () => {
+        setConsent('rejected');
+        setPrefs({ analytics: false });
+        hideBanner();
+        ensureSettingsButtonVisible();
+        applyPrefs();
+      });
+
+      if (btnCustomize) btnCustomize.addEventListener('click', () => {
+        const prefs = getPrefs();
+        if (prefAnalytics) prefAnalytics.checked = !!prefs.analytics;
+        openModal();
+      });
+
+      if (btnModalClose) btnModalClose.addEventListener('click', closeModal);
+
+      if (btnSaveReject) btnSaveReject.addEventListener('click', () => {
+        setConsent('rejected');
+        setPrefs({ analytics: false });
+        closeModal();
+        ensureSettingsButtonVisible();
+        applyPrefs();
+      });
+
+      if (btnSaveChoices) btnSaveChoices.addEventListener('click', () => {
+        const analyticsOn = prefAnalytics ? prefAnalytics.checked : false;
+        setConsent('custom');
+        setPrefs({ analytics: analyticsOn });
+        closeModal();
+        ensureSettingsButtonVisible();
+        applyPrefs();
+      });
+
+      if (overlay) overlay.addEventListener('click', () => {
+        if (modal && modal.style.display === 'block') closeModal();
+      });
+
+      if (cookieSettingsBtn) cookieSettingsBtn.addEventListener('click', openSettings);
+      if (footerCookieSettings) footerCookieSettings.addEventListener('click', (e) => {
+        e.preventDefault();
+        openSettings();
+      });
+    });
+  </script>
 </body>
 </html>
+
