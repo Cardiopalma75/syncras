@@ -521,6 +521,8 @@
       <a href="cookie.html">Cookie Policy</a> |
       <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
       <a href="note-legali.html">Note Legali</a>
+       | <a href="#" onclick="revokeCookies(); return false;">Impostazioni cookie</a>
+
     </div>
     <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
       Syncras.App partecipa al Programma Affiliazione Amazon EU.  
@@ -531,26 +533,31 @@
     </p>
   </footer>
 
-  <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
-  <div id="cookie-banner">
+   <!-- Cookie Banner + Google Analytics (GDPR) -->
+  <div id="cookie-banner" role="dialog" aria-modal="true" aria-label="Preferenze cookie">
     <p>
-      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
-      (Google Analytics). Alcuni link potrebbero essere di affiliazione.
+      Usiamo cookie <strong>tecnici</strong> per far funzionare il sito.
+      <br>
+      <strong>Solo se acconsenti</strong>, useremo cookie di <strong>misurazione</strong> (Google Analytics)
+      per statistiche sulle visite.
+      <br>
+      Alcuni link potrebbero essere di affiliazione.
       Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
       <a href="privacy.html">Privacy Policy</a>.
     </p>
+
     <div style="display:flex; gap:10px; margin-top:8px;">
-      <button type="button" onclick="rejectCookies()">
+      <button type="button" onclick="rejectCookies()" style="flex:1;background:#fff;color:#111827;border:2px solid #6C5CE7;padding:10px 12px;border-radius:6px;cursor:pointer;font-weight:700;">
         Rifiuta
       </button>
-      <button id="cookie-btn" type="button" onclick="acceptCookies()">
-        Accetta e continua
+      <button type="button" onclick="acceptCookies()" style="flex:1;background:#6C5CE7;color:#fff;border:2px solid #6C5CE7;padding:10px 16px;border-radius:6px;cursor:pointer;font-weight:800;">
+        Accetta
       </button>
     </div>
   </div>
 
   <style>
-    #cookie-banner {
+    #cookie-banner{
       position: fixed;
       bottom: 20px;
       left: 50%;
@@ -566,62 +573,32 @@
       font-family: Arial, sans-serif;
       display: none;
     }
-
-    #cookie-banner p {
+    #cookie-banner p{
       margin: 0 0 12px 0;
       font-size: 0.95rem;
-      color: #333;
+      color: #111827;
       line-height: 1.4;
     }
-
-    #cookie-banner a {
+    #cookie-banner a{
       color: #6C5CE7;
-      font-weight: bold;
+      font-weight: 800;
       text-decoration: none;
     }
-
-    /* Pulsante RIFIUTA – pari importanza al pulsante ACCETTA */
-    #cookie-banner button[onclick="rejectCookies()"] {
-      flex: 1;
-      background: white !important;
-      color: #111827 !important;
-      border: 2px solid #6C5CE7 !important;
-      padding: 10px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-
-    /* Pulsante ACCETTA */
-    #cookie-btn {
-      flex: 1;
-      background: #6C5CE7;
-      color: white;
-      border: 2px solid #6C5CE7;
-      padding: 10px 16px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 700;
-    }
-
-    #cookie-btn:hover {
-      background: #4B3ACB;
-    }
+    #cookie-banner a:hover{ text-decoration: underline; }
   </style>
 
   <script>
   (function () {
     const GA_ID = 'G-CFTTCYDZ2P';
-    const CONSENT_KEY = 'syncras_cookie_consent'; // chiave unica per tutto il sito
+    const CONSENT_KEY = 'syncras_cookie_consent';
 
-    // 1️⃣ BLOCCO PREVENTIVO: GA disabilitato finché non c'è consenso
+    // Blocca GA finché non c'è consenso
     window['ga-disable-' + GA_ID] = true;
 
     function loadGoogleAnalytics() {
       if (window.__syncrasGaLoaded) return;
       window.__syncrasGaLoaded = true;
 
-      // Riabilita GA solo dopo il consenso
       window['ga-disable-' + GA_ID] = false;
 
       const gaScript = document.createElement('script');
@@ -632,6 +609,7 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){ dataLayer.push(arguments); }
       window.gtag = gtag;
+
       gtag('js', new Date());
       gtag('config', GA_ID, { anonymize_ip: true });
     }
@@ -655,15 +633,14 @@
     window.rejectCookies = function () {
       localStorage.setItem(CONSENT_KEY, 'no');
       hideBanner();
-      // GA resta bloccato
       window['ga-disable-' + GA_ID] = true;
     };
 
-    // 2️⃣ FUNZIONE DI REVOCA – per cambiare idea dopo
+    // Revoca / modifica: la richiami dal footer (niente pulsanti fissi)
     window.revokeCookies = function () {
       localStorage.removeItem(CONSENT_KEY);
-      window['ga-disable-' + GA_ID] = true;   // blocca subito GA
-      showBanner();                           // ri-mostra il banner
+      window['ga-disable-' + GA_ID] = true;
+      showBanner();
     };
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -679,6 +656,7 @@
     });
   })();
   </script>
+
 
 </body>
 </html>
