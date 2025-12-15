@@ -41,11 +41,13 @@
       align-items: center;
       justify-content: space-between;
       gap: 16px;
+      position: relative;
     }
 
     .logo {
       font-size: 1.4rem;
       font-weight: bold;
+      letter-spacing: 0.03em;
     }
 
     #main-nav {
@@ -58,7 +60,9 @@
       color: white;
       text-decoration: none;
       font-weight: 600;
+      padding-bottom: 2px;
     }
+    #main-nav a:hover { text-decoration: underline; }
 
     .menu-toggle {
       display: none;
@@ -68,7 +72,9 @@
       color: white;
       padding: 6px 10px;
       cursor: pointer;
+      font-size: 0.9rem;
     }
+    .menu-toggle span { margin-left: 4px; font-size: 1.1rem; }
 
     @media (max-width: 768px) {
       #main-nav {
@@ -77,10 +83,16 @@
         left: 0;
         right: 0;
         top: 56px;
+        margin: 0 auto;
+        max-width: 1180px;
         flex-direction: column;
         background-color: var(--violet-dark);
-        padding: 12px;
+        padding: 12px 16px;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
       }
+      #main-nav a { padding: 6px 0; }
       body.nav-open #main-nav { display: flex; }
       .menu-toggle { display: inline-flex; align-items: center; }
     }
@@ -94,7 +106,7 @@
       box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
 
-    h1, h2 { color: var(--violet-dark); }
+    h1, h2, h3 { color: var(--violet-dark); }
     p { margin-bottom: 14px; }
 
     .intro-tag {
@@ -105,6 +117,8 @@
       border-radius: 999px;
       font-size: 0.8rem;
       font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
       margin-bottom: 8px;
     }
 
@@ -113,7 +127,7 @@
     .disclaimer-box {
       background: #FFFBEA;
       border-left: 4px solid #FBBF24;
-      padding: 12px;
+      padding: 12px 14px;
       border-radius: 8px;
       font-size: 0.92rem;
       margin: 16px 0;
@@ -123,6 +137,7 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 16px;
+      margin-top: 12px;
     }
 
     .card {
@@ -136,29 +151,51 @@
       display: block;
       font-weight: 700;
       margin: 10px 0 6px;
+      color: #2F2D33;
     }
 
     input, select {
       width: 100%;
-      padding: 10px;
+      padding: 10px 10px;
       border-radius: 8px;
       border: 1px solid #D1D5DB;
-      font-size: 0.95rem;
+      font-size: 0.98rem;
+      outline: none;
+      background: white;
+      box-sizing: border-box;
+    }
+
+    .hint {
+      font-size: 0.86rem;
+      color: #6B7280;
+      margin-top: 6px;
+      line-height: 1.35;
     }
 
     .legal-gate {
       background: #F3F4FF;
       border: 1px solid #DAD9FF;
       border-radius: 10px;
-      padding: 12px;
+      padding: 12px 12px;
       margin-top: 14px;
+      font-size: 0.95rem;
     }
+    .legal-gate label {
+      font-weight: 600;
+      margin: 0;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      color: #2F2D33;
+    }
+    .legal-gate input { margin-top: 3px; }
 
     .actions {
       margin-top: 14px;
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
+      align-items: center;
     }
 
     .btn {
@@ -169,15 +206,17 @@
       border-radius: 10px;
       font-weight: 800;
       cursor: pointer;
+      font-size: 0.98rem;
     }
-
-    .btn:hover { background: var(--violet-dark); }
+    .btn:hover { background: var(--violet-dark); border-color: var(--violet-dark); }
 
     .btn-ghost {
       background: white;
       color: #111827;
       border: 2px solid var(--violet-main);
+      font-weight: 800;
     }
+    .btn-ghost:hover { background: #F3F4FF; }
 
     .result {
       display: none;
@@ -194,7 +233,7 @@
       border: 1px solid #FECDD3;
       color: #7F1D1D;
       border-radius: 10px;
-      padding: 10px;
+      padding: 10px 12px;
       font-weight: 700;
       margin-top: 10px;
     }
@@ -206,6 +245,40 @@
       background: #eee;
       font-size: 0.9rem;
     }
+
+    /* Cookie banner */
+    #cookie-banner{
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 90%;
+      width: 420px;
+      background: #ffffff;
+      border: 2px solid #6C5CE7;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      z-index: 9999;
+      font-family: Arial, sans-serif;
+      display: none;
+    }
+    #cookie-banner p{
+      margin: 0 0 12px 0;
+      font-size: 0.95rem;
+      color: #111827;
+      line-height: 1.4;
+    }
+    #cookie-banner a{
+      color: #6C5CE7;
+      font-weight: 800;
+      text-decoration: none;
+    }
+    #cookie-banner a:hover{ text-decoration: underline; }
+
+    @media (max-width: 600px) {
+      main { margin: 16px auto; padding: 16px 14px; }
+    }
   </style>
 </head>
 
@@ -213,7 +286,11 @@
 <header class="site-header">
   <div class="header-inner">
     <div class="logo">Syncras.App</div>
-    <button class="menu-toggle" onclick="toggleMenu()">Menu ☰</button>
+
+    <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+      Menu <span>☰</span>
+    </button>
+
     <nav id="main-nav">
       <a href="index.html">Home</a>
       <a href="blog.html">Blog</a>
@@ -233,56 +310,64 @@
   <h1>Smart Test – Usare l’auto o alternative?</h1>
 
   <p class="lead">
-    L’auto è comoda, sì.  
-    Ma è sempre la scelta più sensata?  
+    L’auto è comoda, sì. Ma è sempre la scelta più sensata?
     Questo test confronta <strong>auto privata</strong> con <strong>alternative reali</strong>:
-    mezzi pubblici, bici, car sharing, taxi.
+    mezzi pubblici, bici, car sharing e taxi.
   </p>
 
   <div class="disclaimer-box">
-    Test basato su stime realistiche.  
-    Non è consulenza professionale.  
-    Condizioni complete nelle <a href="note-legali.html">Note Legali</a>.
+    <strong>Promemoria:</strong> sono stime basate sui dati che inserisci. Non è consulenza professionale.
+    Le condizioni complete sono nelle
+    <a href="note-legali.html" target="_blank" rel="noopener">Note Legali</a>.
   </div>
 
   <section class="grid">
     <div class="card">
-      <h2>1) La tua situazione</h2>
+      <h2 style="margin-top:0;">1) La tua situazione</h2>
 
-      <label>Kilometri medi al mese</label>
-      <input id="km" type="number" value="800" />
+      <label for="km">Kilometri medi al mese</label>
+      <input id="km" type="number" min="0" step="10" value="800" />
 
-      <label>Costo stimato dell’auto (€/mese)</label>
-      <input id="autoCost" type="number" value="450" />
-      <p style="font-size:0.85rem;color:#6B7280;">
-        Include tutto: carburante, assicurazione, manutenzione, svalutazione.
-      </p>
+      <label for="autoCost">Costo stimato dell’auto (€/mese)</label>
+      <input id="autoCost" type="number" min="0" step="10" value="450" />
+      <div class="hint">
+        Include tutto: carburante, assicurazione, manutenzione, svalutazione (stima “tutto compreso”).
+      </div>
 
-      <label>Giorni in cui ti sposti (al mese)</label>
-      <input id="days" type="number" value="20" />
+      <label for="days">Giorni in cui ti sposti (al mese)</label>
+      <input id="days" type="number" min="0" step="1" value="20" />
+      <div class="hint">
+        Serve solo come “realtà check” mentale: non cambia il calcolo base, ma ti aiuta a ragionare sui costi per uscita.
+      </div>
     </div>
 
     <div class="card">
-      <h2>2) Alternative disponibili</h2>
+      <h2 style="margin-top:0;">2) Alternative disponibili</h2>
 
-      <label>Abbonamento mezzi pubblici (€/mese)</label>
-      <input id="public" type="number" value="40" />
+      <label for="public">Abbonamento mezzi pubblici (€/mese)</label>
+      <input id="public" type="number" min="0" step="1" value="40" />
 
-      <label>Spesa media taxi / car sharing (€/mese)</label>
-      <input id="taxi" type="number" value="120" />
+      <label for="taxi">Spesa media taxi / car sharing (€/mese)</label>
+      <input id="taxi" type="number" min="0" step="5" value="120" />
 
-      <label>Usi bici / piedi spesso?</label>
+      <label for="bike">Usi bici / a piedi spesso?</label>
       <select id="bike">
         <option value="no">No</option>
         <option value="yes">Sì</option>
       </select>
+
+      <div class="hint">
+        Se rispondi “Sì”, stimiamo un taglio prudente del 20% sul costo delle alternative (meno corse/meno taxi).
+      </div>
     </div>
   </section>
 
   <div class="legal-gate">
     <label>
       <input type="checkbox" id="legalAccept" />
-      Ho letto e accetto le <a href="note-legali.html">Note Legali</a>
+      Prima di procedere: ho letto e accetto le
+      <a href="note-legali.html" target="_blank" rel="noopener">Note Legali</a>
+      (limitazione di responsabilità e uso a mio rischio).
     </label>
   </div>
 
@@ -291,13 +376,13 @@
   </div>
 
   <div class="actions">
-    <button class="btn" onclick="calculate()">Confronta</button>
-    <button class="btn btn-ghost" onclick="resetForm()">Reset</button>
+    <button class="btn" type="button" onclick="calculate()">Confronta</button>
+    <button class="btn btn-ghost" type="button" onclick="resetForm()">Reset</button>
   </div>
 
-  <div class="result" id="result">
-    <h3>Risultato</h3>
-    <p id="output"></p>
+  <div class="result" id="result" aria-live="polite">
+    <h3 style="margin-top:0;">Risultato</h3>
+    <p id="output" style="margin-bottom:0;"></p>
   </div>
 </main>
 
@@ -310,18 +395,23 @@
     <a href="note-legali.html">Note Legali</a> |
     <a href="#" onclick="revokeCookies(); return false;">Gestisci consenso cookie</a>
   </div>
+
   <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
-      Syncras.App partecipa al Programma Affiliazione Amazon EU.  
-      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
-      senza alcun costo aggiuntivo per l’utente.  
-      Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
-      è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
-    </p>
+    Syncras.App partecipa al Programma Affiliazione Amazon EU.
+    Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+    senza alcun costo aggiuntivo per l’utente.
+    Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+    è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+  </p>
 </footer>
 
 <script>
 function toggleMenu() {
   document.body.classList.toggle('nav-open');
+}
+
+function euro(x){
+  return x.toLocaleString('it-IT', { style: 'currency', currency: 'EUR' });
 }
 
 function calculate() {
@@ -331,79 +421,98 @@ function calculate() {
   }
   document.getElementById('warn').style.display = 'none';
 
-  const autoCost = Number(document.getElementById('autoCost').value);
-  const publicT = Number(document.getElementById('public').value);
-  const taxi = Number(document.getElementById('taxi').value);
+  const km = Math.max(0, Number(document.getElementById('km').value || 0));
+  const autoCost = Math.max(0, Number(document.getElementById('autoCost').value || 0));
+  const publicT = Math.max(0, Number(document.getElementById('public').value || 0));
+  const taxi = Math.max(0, Number(document.getElementById('taxi').value || 0));
   const bike = document.getElementById('bike').value;
 
   let altCost = publicT + taxi;
-  if (bike === "yes") altCost *= 0.8;
+  if (bike === "yes") altCost = altCost * 0.8;
+
+  const diff = altCost - autoCost;
 
   let msg = "";
   if (altCost < autoCost * 0.6) {
-    msg = "Le alternative sono MOLTO più convenienti della tua auto.";
+    msg = "Le alternative sono <strong>molto</strong> più convenienti della tua auto.";
   } else if (altCost < autoCost) {
-    msg = "Le alternative costano meno dell’auto.";
+    msg = "Le alternative costano meno dell’auto (nel tuo scenario).";
+  } else if (Math.abs(diff) < 40) {
+    msg = "Siamo lì: la differenza è piccola. Qui contano più comfort e praticità che puro costo.";
   } else {
-    msg = "L’auto resta più comoda, ma stai pagando per questa comodità.";
+    msg = "L’auto resta la scelta più costosa: stai pagando la comodità (e la disponibilità immediata).";
   }
 
+  const perKmAuto = km > 0 ? (autoCost / km) : 0;
+  const perKmAlt = km > 0 ? (altCost / km) : 0;
+
   document.getElementById('output').innerHTML =
-    `Auto: <strong>${autoCost.toFixed(0)} € / mese</strong><br>
-     Alternative: <strong>${altCost.toFixed(0)} € / mese</strong><br><br>
-     ${msg}`;
+    `Auto: <strong>${euro(autoCost)} / mese</strong><br>
+     Alternative: <strong>${euro(altCost)} / mese</strong><br>
+     Differenza: <strong>${diff >= 0 ? "+" : "-"}${euro(Math.abs(diff))} / mese</strong><br><br>
+     ${msg}
+     ${km > 0 ? `<br><br><span style="color:#374151; font-size:0.92rem;">Costo stimato per km: Auto ~ <strong>${euro(perKmAuto)}</strong>/km | Alternative ~ <strong>${euro(perKmAlt)}</strong>/km</span>` : ""}`;
 
   document.getElementById('result').style.display = 'block';
+  document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function resetForm() {
+  document.getElementById('km').value = 800;
+  document.getElementById('autoCost').value = 450;
+  document.getElementById('days').value = 20;
+  document.getElementById('public').value = 40;
+  document.getElementById('taxi').value = 120;
+  document.getElementById('bike').value = "no";
+  document.getElementById('legalAccept').checked = false;
   document.getElementById('result').style.display = 'none';
   document.getElementById('warn').style.display = 'none';
 }
 </script>
 
 <!-- COOKIE BANNER + GOOGLE ANALYTICS (GDPR) -->
-<div id="cookie-banner">
+<div id="cookie-banner" role="dialog" aria-modal="true" aria-label="Preferenze cookie">
   <p>
-    Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
-    (Google Analytics). Alcuni link potrebbero essere di affiliazione.
+    Usiamo cookie <strong>tecnici</strong> per far funzionare il sito.<br>
+    <strong>Solo se acconsenti</strong>, useremo cookie di <strong>misurazione</strong> (Google Analytics)
+    per statistiche sulle visite.<br>
+    Alcuni link potrebbero essere di affiliazione.
     Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
     <a href="privacy.html">Privacy Policy</a>.
   </p>
   <div style="display:flex; gap:10px; margin-top:8px;">
-    <button onclick="rejectCookies()">Rifiuta</button>
-    <button id="cookie-btn" onclick="acceptCookies()">Accetta e continua</button>
+    <button type="button" onclick="rejectCookies()" style="flex:1;background:#fff;color:#111827;border:2px solid #6C5CE7;padding:10px 12px;border-radius:6px;cursor:pointer;font-weight:700;">
+      Rifiuta
+    </button>
+    <button type="button" onclick="acceptCookies()" style="flex:1;background:#6C5CE7;color:#fff;border:2px solid #6C5CE7;padding:10px 16px;border-radius:6px;cursor:pointer;font-weight:800;">
+      Accetta
+    </button>
   </div>
 </div>
-
-<style>
-#cookie-banner {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 420px;
-  max-width: 90%;
-  background: white;
-  border: 2px solid #6C5CE7;
-  border-radius: 10px;
-  padding: 16px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-  z-index: 9999;
-  display: none;
-}
-</style>
 
 <script>
 (function () {
   const GA_ID = 'G-CFTTCYDZ2P';
   const CONSENT_KEY = 'syncras_cookie_consent';
 
+  // Blocca GA finché non c'è consenso
   window['ga-disable-' + GA_ID] = true;
 
+  // Consent Mode: default denied (GDPR “alto livello”)
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  window.gtag = gtag;
+
+  gtag('consent','default',{
+    ad_storage:'denied',
+    analytics_storage:'denied',
+    ad_user_data:'denied',
+    ad_personalization:'denied'
+  });
+
   function loadGA() {
-    if (window.__gaLoaded) return;
-    window.__gaLoaded = true;
+    if (window.__syncrasGaLoaded) return;
+    window.__syncrasGaLoaded = true;
 
     window['ga-disable-' + GA_ID] = false;
 
@@ -412,48 +521,56 @@ function resetForm() {
     s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
     document.head.appendChild(s);
 
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){ dataLayer.push(arguments); }
-    window.gtag = gtag;
     gtag('js', new Date());
     gtag('config', GA_ID, { anonymize_ip: true });
   }
 
   function showBanner() {
-    document.getElementById('cookie-banner').style.display = 'block';
+    const b = document.getElementById('cookie-banner');
+    if (b) b.style.display = 'block';
   }
-
   function hideBanner() {
-    document.getElementById('cookie-banner').style.display = 'none';
+    const b = document.getElementById('cookie-banner');
+    if (b) b.style.display = 'none';
   }
 
   window.acceptCookies = function () {
     localStorage.setItem(CONSENT_KEY, 'yes');
     hideBanner();
+    gtag('consent','update',{ analytics_storage:'granted' });
     loadGA();
   };
 
   window.rejectCookies = function () {
     localStorage.setItem(CONSENT_KEY, 'no');
     hideBanner();
+    gtag('consent','update',{ analytics_storage:'denied' });
     window['ga-disable-' + GA_ID] = true;
   };
 
   window.revokeCookies = function () {
     localStorage.removeItem(CONSENT_KEY);
+    gtag('consent','update',{ analytics_storage:'denied' });
     window['ga-disable-' + GA_ID] = true;
     showBanner();
   };
 
   document.addEventListener('DOMContentLoaded', () => {
     const c = localStorage.getItem(CONSENT_KEY);
-    if (c === 'yes') loadGA();
-    else if (c === 'no') window['ga-disable-' + GA_ID] = true;
-    else showBanner();
+    if (c === 'yes') {
+      gtag('consent','update',{ analytics_storage:'granted' });
+      loadGA();
+    } else if (c === 'no') {
+      gtag('consent','update',{ analytics_storage:'denied' });
+      window['ga-disable-' + GA_ID] = true;
+    } else {
+      showBanner();
+    }
   });
 })();
 </script>
 
 </body>
 </html>
+
 
