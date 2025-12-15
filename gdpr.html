@@ -1,9 +1,98 @@
+<!-- GDPR / Cookie banner centralizzato Syncras -->
+
+<!-- Banner -->
+<div id="cookie-banner" role="dialog" aria-live="polite" aria-label="Preferenze cookie">
+  <p>
+    Usiamo cookie tecnici per il funzionamento del sito e, solo con il tuo consenso,
+    misuriamo le visite con Google Analytics (dati anonimizzati).
+    Alcuni link potrebbero essere di affiliazione.
+    Leggi <a href="/cookie.html">Cookie Policy</a> e <a href="/privacy.html">Privacy Policy</a>.
+  </p>
+
+  <div class="cookie-actions">
+    <button type="button" class="cookie-reject" id="cookie-reject">
+      Rifiuta
+    </button>
+    <button type="button" class="cookie-accept" id="cookie-accept">
+      Accetta e continua
+    </button>
+  </div>
+
+  <p class="cookie-mini">
+    Puoi cambiare idea quando vuoi dal link “Modifica consenso cookie” nel footer.
+  </p>
+</div>
+
+<style>
+  #cookie-banner{
+    position:fixed;
+    bottom:20px;
+    left:50%;
+    transform:translateX(-50%);
+    max-width:90%;
+    width:460px;
+    background:#fff;
+    border:2px solid #6C5CE7;
+    border-radius:12px;
+    padding:16px;
+    box-shadow:0 8px 18px rgba(0,0,0,0.18);
+    z-index:9999;
+    font-family: Arial, sans-serif;
+    display:none;
+  }
+  #cookie-banner p{
+    margin:0 0 12px 0;
+    font-size:0.95rem;
+    color:#111827;
+    line-height:1.45;
+  }
+  #cookie-banner a{
+    color:#4B3ACB;
+    font-weight:800;
+    text-decoration:none;
+  }
+  #cookie-banner a:hover{ text-decoration:underline; }
+
+  .cookie-actions{
+    display:flex;
+    gap:10px;
+    margin-top:8px;
+  }
+  .cookie-reject{
+    flex:1;
+    background:#fff;
+    color:#111827;
+    border:2px solid #6C5CE7;
+    padding:10px 12px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:800;
+  }
+  .cookie-accept{
+    flex:1;
+    background:#6C5CE7;
+    color:#fff;
+    border:2px solid #6C5CE7;
+    padding:10px 16px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:900;
+  }
+  .cookie-accept:hover{ background:#4B3ACB; }
+
+  .cookie-mini{
+    margin-top:10px !important;
+    font-size:0.82rem !important;
+    opacity:0.9;
+  }
+</style>
+
 <script>
 (function(){
   const GA_ID = 'G-CFTTCYDZ2P';
   const CONSENT_KEY = 'syncras_cookie_consent';
 
-  // GA bloccato di default
+  // blocco preventivo: GA disabilitato finché non c'è consenso
   window['ga-disable-' + GA_ID] = true;
 
   function loadGoogleAnalytics(){
@@ -34,55 +123,50 @@
     if (b) b.style.display = 'none';
   }
 
-  window.acceptCookies = function(){
-    localStorage.setItem(CONSENT_KEY, 'yes');
-    hideBanner();
-    loadGoogleAnalytics();
-  };
+  function setConsent(val){
+    localStorage.setItem(CONSENT_KEY, val);
+  }
 
-  window.rejectCookies = function(){
-    localStorage.setItem(CONSENT_KEY, 'no');
-    hideBanner();
-    window['ga-disable-' + GA_ID] = true;
-  };
-
+  // espone API globale (serve al footer: “Modifica consenso”)
   window.revokeCookies = function(){
     localStorage.removeItem(CONSENT_KEY);
     window['ga-disable-' + GA_ID] = true;
     showBanner();
   };
 
-  // ✅ Questa funzione deve funzionare sia “a pagina pronta” sia “dopo fetch”
-  function initGdpr(){
-    // collega il link "Modifica consenso cookie" nel footer
-    const settings = document.getElementById('cookie-settings');
-    if (settings && settings.dataset.bound !== "1") {
-      settings.dataset.bound = "1";
-      settings.addEventListener('click', (e) => {
-        e.preventDefault();
-        window.revokeCookies();
+  window.__syncrasInitGdpr = function(){
+    const acceptBtn = document.getElementById('cookie-accept');
+    const rejectBtn = document.getElementById('cookie-reject');
+
+    if (acceptBtn && !acceptBtn.dataset.bound){
+      acceptBtn.dataset.bound = "1";
+      acceptBtn.addEventListener('click', () => {
+        setConsent('yes');
+        hideBanner();
+        loadGoogleAnalytics();
       });
     }
 
-    // mostra banner se non c’è scelta salvata
+    if (rejectBtn && !rejectBtn.dataset.bound){
+      rejectBtn.dataset.bound = "1";
+      rejectBtn.addEventListener('click', () => {
+        setConsent('no');
+        hideBanner();
+        window['ga-disable-' + GA_ID] = true;
+      });
+    }
+
     const consent = localStorage.getItem(CONSENT_KEY);
     if (consent === 'yes'){
       loadGoogleAnalytics();
     } else if (consent === 'no'){
       window['ga-disable-' + GA_ID] = true;
-      hideBanner();
     } else {
       showBanner();
     }
-  }
-
-  // esponi init per chiamarlo dopo il fetch
-  window.__syncrasInitGdpr = initGdpr;
-
-  // se lo script viene caricato “normale”, prova anche subito
-  initGdpr();
-
+  };
 })();
 </script>
+
 
 
