@@ -4,31 +4,50 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- =========================
+       META VARIABILI (CAMBIA QUI)
+       ========================= -->
   <title>TITOLO PAGINA | Syncras.App</title>
   <meta name="description" content="Descrizione SEO della pagina.">
+  <meta name="robots" content="index,follow">
 
-  <!-- CSS UNICO SYNCRAS (PC + MOBILE) -->
+  <!-- =========================
+       CSS UNICO SYNCRAS
+       ========================= -->
   <link rel="stylesheet" href="/css/syncras.css">
 </head>
 
 <body>
 
-  <!-- HEADER CENTRALIZZATO -->
+  <!-- =========================
+       HEADER (CENTRALIZZATO)
+       ========================= -->
   <div id="site-header"></div>
 
-  <!-- CONTENUTO VARIABILE -->
+  <!-- =========================
+       CONTENUTO PAGINA
+       👉 QUI CAMBI SOLO QUESTO
+       ========================= -->
   <main>
-    <!-- QUI SOLO IL TUO CONTENUTO -->
+    <!-- CONTENUTO SPECIFICO PAGINA -->
   </main>
 
-  <!-- FOOTER + GDPR CENTRALIZZATI -->
+  <!-- =========================
+       FOOTER + GDPR (CENTRALIZZATI)
+       ========================= -->
   <div id="site-footer"></div>
   <div id="site-gdpr"></div>
 
-  <!-- JS UNICO (menu + share + copia link fallback) -->
+  <!-- =========================
+       JS UNICO SYNCRAS
+       (menu + share + binding)
+       ========================= -->
   <script src="/js/syncras.js"></script>
 
-  <!-- CARICAMENTO HEADER / FOOTER / GDPR -->
+  <!-- =========================
+       CARICAMENTO COMPONENTI
+       + INIZIALIZZAZIONE
+       ========================= -->
   <script>
     Promise.all([
       fetch("/header.html")
@@ -43,11 +62,24 @@
         .then(r => r.text())
         .then(t => document.getElementById("site-gdpr").innerHTML = t),
     ]).then(() => {
-      if (window.__syncrasBindAll) window.__syncrasBindAll();
+
+      /* menu + share + link footer */
+      if (window.__syncrasBindAll) {
+        window.__syncrasBindAll();
+      }
+
+      /* GDPR: mostra banner o carica GA */
+      if (window.__syncrasInitGdpr) {
+        window.__syncrasInitGdpr();
+      }
+
+    }).catch(err => {
+      console.error("Errore caricamento componenti Syncras:", err);
     });
   </script>
 
 </body>
 </html>
+
 
 
