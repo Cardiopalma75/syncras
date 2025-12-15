@@ -1,451 +1,555 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Smart Test – Quanto tempo ti ruba davvero lo smartphone? | Syncras.App</title>
   <meta name="description" content="Scopri quante ore e quanti giorni all’anno ti ruba davvero lo smartphone tra social, chat e scroll infinito. Test ibrido numerico + comportamentale, in stile Syncras.">
   <meta name="robots" content="index,follow">
 
   <style>
-    :root {
-      --violet-main: #6C5CE7;
-      --violet-dark: #4B3ACB;
-      --bg-page: #F7F7FB;
-      --text-main: #403E43;
-      --danger: #DC2626;
-      --ok: #16A34A;
-      --warn: #D97706;
+    :root{
+      --violet-main:#6C5CE7;
+      --violet-dark:#4B3ACB;
+      --bg-page:#F7F7FB;
+      --text-main:#403E43;
+      --danger:#DC2626;
+      --ok:#16A34A;
+      --warn:#D97706;
+      --shadow: 0 6px 16px rgba(0,0,0,0.18);
+      --border: 1px solid #E5E7EB;
     }
 
-    body {
+    *{ box-sizing:border-box; }
+
+    body{
       font-family: Arial, sans-serif;
       background: var(--bg-page);
-      margin: 0;
-      padding: 0;
-      line-height: 1.6;
-      color: var(--text-main);
+      margin:0;
+      padding:0;
+      line-height:1.6;
+      color:var(--text-main);
     }
 
-    /* HEADER VIOLA UNIFICATO */
-.site-header{
-  background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
-  color:#fff;
-  padding: 12px 14px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-  position: relative;     /* fondamentale */
-  z-index: 60;            /* fondamentale */
-}
-
-.header-inner{
-  max-width: 1180px;
-  margin: 0 auto;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:16px;
-}
-
-.logo{
-  font-size:1.4rem;
-  font-weight:bold;
-  letter-spacing:0.03em;
-}
-
-#main-nav{
-  display:flex;
-  gap:18px;
-  font-size:0.95rem;
-}
-
-#main-nav a{
-  color:#fff;
-  text-decoration:none;
-  font-weight:600;
-  padding-bottom:2px;
-}
-
-#main-nav a:hover{ text-decoration: underline; }
-
-.menu-toggle{
-  display:none;
-  background: rgba(255,255,255,0.12);
-  border:1px solid rgba(255,255,255,0.4);
-  border-radius:6px;
-  color:#fff;
-  padding: 6px 10px;
-  font-size:0.9rem;
-  cursor:pointer;
-}
-
-.menu-toggle span{ margin-left:4px; font-size:1.1rem; }
-
-@media (max-width:768px){
-  #main-nav{
-    display:none;
-    position:absolute;
-    left:0; right:0;
-    top:56px;
-    flex-direction:column;
-    background-color: var(--violet-dark);
-    padding: 10px 16px 12px 16px;
-    border-radius: 0 0 8px 8px;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.25);
-    z-index:9999;
-  }
-
-  #main-nav a{ padding: 8px 0; }
-
-  body.nav-open #main-nav{ display:flex; }
-
-  .menu-toggle{
-    display:inline-flex;
-    align-items:center;
-  }
-}
-
-
-
-    main {
-      max-width: 980px;
-      margin: 30px auto;
-      padding: 20px;
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    /* HEADER */
+    .site-header{
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color:#fff;
+      padding:12px 14px;
+      box-shadow:0 2px 4px rgba(0,0,0,0.15);
+      position:relative;
+      z-index:9999;
     }
 
-    @media (max-width: 600px) {
-      main {
-        margin: 16px auto;
-        padding: 16px 14px;
+    .header-inner{
+      max-width:1180px;
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+    }
+
+    .logo{
+      font-size:1.4rem;
+      font-weight:800;
+      letter-spacing:0.03em;
+      white-space:nowrap;
+    }
+
+    #main-nav{
+      display:flex;
+      gap:18px;
+      font-size:0.95rem;
+    }
+
+    #main-nav a{
+      color:#fff;
+      text-decoration:none;
+      font-weight:700;
+      padding-bottom:2px;
+    }
+    #main-nav a:hover{ text-decoration:underline; }
+
+    .menu-toggle{
+      display:none;
+      background: rgba(255,255,255,0.12);
+      border:1px solid rgba(255,255,255,0.45);
+      border-radius:8px;
+      color:#fff;
+      padding:8px 12px;
+      font-size:0.95rem;
+      font-weight:700;
+      cursor:pointer;
+      line-height:1;
+      user-select:none;
+    }
+
+    .menu-toggle span{ margin-left:6px; font-size:1.1rem; }
+
+    @media (max-width:768px){
+      .menu-toggle{ display:inline-flex; align-items:center; }
+
+      #main-nav{
+        display:none;
+        position:absolute;
+        left:0;
+        right:0;
+        top:100%;
+        margin:0;
+        flex-direction:column;
+        background: var(--violet-dark);
+        padding:12px 16px;
+        border-radius: 0 0 10px 10px;
+        box-shadow:0 6px 16px rgba(0,0,0,0.25);
+        z-index:10000;
       }
+
+      #main-nav a{
+        padding:10px 0;
+        border-bottom:1px solid rgba(255,255,255,0.14);
+      }
+      #main-nav a:last-child{ border-bottom:none; }
+
+      body.nav-open #main-nav{ display:flex; }
+      body.nav-open{ overflow-x:hidden; }
     }
 
-    h1, h2, h3 {
-      color: var(--violet-dark);
+    /* MAIN */
+    main{
+      max-width:980px;
+      margin:30px auto;
+      padding:20px;
+      background:#fff;
+      border-radius:10px;
+      box-shadow:0 4px 6px rgba(0,0,0,0.10);
     }
 
-    p {
-      margin-bottom: 15px;
+    @media (max-width:600px){
+      main{ margin:16px auto; padding:16px 14px; }
     }
 
-    .back-links {
-      margin-bottom: 18px;
-      font-size: 0.9rem;
-    }
-    .back-links a {
-      color: var(--violet-dark);
-      text-decoration: none;
-      font-weight: 600;
-    }
-    .back-links a:hover {
-      text-decoration: underline;
+    h1,h2,h3{ color: var(--violet-dark); }
+    p{ margin-bottom:15px; }
+
+    .intro-tag{
+      display:inline-block;
+      background:#F3F4FF;
+      color:var(--violet-dark);
+      padding:4px 10px;
+      border-radius:999px;
+      font-size:0.8rem;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:0.06em;
+      margin-bottom:6px;
     }
 
-    .intro-tag {
-      display: inline-block;
-      background: #F3F4FF;
-      color: var(--violet-dark);
-      padding: 4px 10px;
-      border-radius: 999px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-bottom: 6px;
-    }
+    .lead{ font-size:1.02rem; }
+    .highlight-inline{ background:#EEF2FF; padding:0 4px; border-radius:4px; }
 
-    .lead {
-      font-size: 1.02rem;
-    }
-
-    .highlight-inline {
-      background: #EEF2FF;
-      padding: 0 4px;
-      border-radius: 4px;
-    }
-
-    .test-layout {
-      margin-top: 20px;
-      display: grid;
+    .test-layout{
+      margin-top:20px;
+      display:grid;
       grid-template-columns: minmax(0, 3fr) minmax(0, 2.4fr);
-      gap: 22px;
-      align-items: flex-start;
+      gap:22px;
+      align-items:flex-start;
     }
 
-    @media (max-width: 900px) {
-      .test-layout {
-        grid-template-columns: 1fr;
-      }
+    @media (max-width:900px){
+      .test-layout{ grid-template-columns:1fr; }
     }
 
-    .test-card {
-      background: #F9FAFB;
-      border-radius: 10px;
-      padding: 16px 16px 18px;
-      border: 1px solid #E5E7EB;
+    .test-card, .result-card{
+      background:#F9FAFB;
+      border-radius:10px;
+      padding:16px 16px 18px;
+      border:1px solid #E5E7EB;
     }
 
-    .test-card h2 {
-      margin-top: 0;
+    .test-card h2{ margin-top:0; }
+
+    .question-block{
+      margin-bottom:14px;
+      padding-bottom:10px;
+      border-bottom:1px dashed #E5E7EB;
+    }
+    .question-block:last-of-type{
+      border-bottom:none;
+      margin-bottom:8px;
+      padding-bottom:0;
     }
 
-    .question-block {
-      margin-bottom: 14px;
-      padding-bottom: 10px;
-      border-bottom: 1px dashed #E5E7EB;
+    .question-title{ font-weight:800; margin-bottom:4px; }
+    .question-help{ font-size:0.88rem; color:#6B7280; margin-bottom:6px; }
+
+    .field-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+      margin-top:4px;
     }
 
-    .question-block:last-of-type {
-      border-bottom: none;
-      margin-bottom: 8px;
-      padding-bottom: 0;
+    .input-number{
+      width:92px;
+      padding:6px 8px;
+      border-radius:6px;
+      border:1px solid #D1D5DB;
+      font-size:0.95rem;
     }
 
-    .question-title {
-      font-weight: 600;
-      margin-bottom: 4px;
+    .input-number:focus{
+      outline:2px solid var(--violet-main);
+      border-color:var(--violet-main);
     }
 
-    .question-help {
-      font-size: 0.88rem;
-      color: #6B7280;
-      margin-bottom: 6px;
+    .radio-group{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:4px;
+      font-size:0.9rem;
     }
 
-    .field-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-      margin-top: 4px;
+    .radio-group label{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      cursor:pointer;
     }
 
-    .field-row label {
-      font-size: 0.9rem;
+    .small-note{ font-size:0.8rem; color:#6B7280; margin-top:2px; }
+
+    .legal-box{
+      margin-top:14px;
+      padding:10px 12px;
+      background:#FEF3C7;
+      border-radius:8px;
+      border-left:4px solid #F59E0B;
+      font-size:0.88rem;
     }
 
-    .input-number {
-      width: 90px;
-      padding: 6px 8px;
-      border-radius: 6px;
-      border: 1px solid #D1D5DB;
-      font-size: 0.95rem;
+    .legal-box p{ margin:0 0 8px 0; }
+
+    .legal-box label{
+      display:flex;
+      align-items:flex-start;
+      gap:8px;
+      cursor:pointer;
+      font-size:0.86rem;
     }
 
-    .input-number:focus {
-      outline: 2px solid var(--violet-main);
-      border-color: var(--violet-main);
+    .legal-box input[type="checkbox"]{
+      margin-top:2px;
+      transform:scale(1.05);
     }
 
-    .radio-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 4px;
-      font-size: 0.9rem;
+    .legal-box a{
+      color:var(--violet-dark);
+      font-weight:800;
+      text-decoration:none;
+    }
+    .legal-box a:hover{ text-decoration:underline; }
+
+    .btn-row{
+      margin-top:14px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
     }
 
-    .radio-group label {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      cursor: pointer;
+    .btn-primary{
+      background:var(--violet-main);
+      color:#fff;
+      border:none;
+      border-radius:999px;
+      padding:10px 20px;
+      font-size:0.98rem;
+      font-weight:800;
+      cursor:pointer;
+      box-shadow:0 2px 4px rgba(0,0,0,0.12);
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
     }
 
-    .small-note {
-      font-size: 0.8rem;
-      color: #6B7280;
-      margin-top: 2px;
+    .btn-primary[disabled]{
+      opacity:0.6;
+      cursor:not-allowed;
+      box-shadow:none;
     }
 
-    .legal-box {
-      margin-top: 14px;
-      padding: 10px 12px;
-      background: #FEF3C7;
-      border-radius: 8px;
-      border-left: 4px solid #F59E0B;
-      font-size: 0.88rem;
+    .btn-primary:hover:not([disabled]){ background:var(--violet-dark); }
+
+    .btn-secondary-link{
+      font-size:0.88rem;
+      color:#6B7280;
+      text-decoration:underline;
+      cursor:pointer;
+      background:none;
+      border:none;
+      padding:0;
+      font-weight:700;
     }
 
-    .legal-box p {
-      margin: 0 0 8px 0;
+    .result-placeholder{ font-size:0.9rem; color:#6B7280; }
+
+    .result-level{
+      font-size:0.95rem;
+      font-weight:800;
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:4px 10px;
+      border-radius:999px;
+      margin-bottom:6px;
     }
 
-    .legal-box label {
-      display: flex;
-      align-items: flex-start;
-      gap: 6px;
-      cursor: pointer;
-      font-size: 0.86rem;
+    .result-level.ok{ background:#DCFCE7; color:#166534; }
+    .result-level.warn{ background:#FEF3C7; color:#92400E; }
+    .result-level.high{ background:#FEE2E2; color:#B91C1C; }
+
+    .result-main-number{ font-size:1.05rem; margin-bottom:8px; }
+    .result-main-number strong{ font-size:1.15rem; }
+    .result-sub{ font-size:0.92rem; margin-bottom:6px; }
+
+    .result-advices{ font-size:0.9rem; margin-top:8px; }
+    .result-advices ul{ padding-left:18px; margin:4px 0 0; }
+    .result-advices li{ margin-bottom:4px; }
+
+    footer{
+      text-align:center;
+      margin-top:40px;
+      padding:20px;
+      background:#eee;
+      font-size:0.9rem;
     }
 
-    .legal-box input[type="checkbox"] {
-      margin-top: 2px;
-      transform: scale(1.05);
+    /* COOKIE UI (Banner + Modal) */
+    #cookie-overlay{
+      position:fixed;
+      inset:0;
+      background:rgba(17,24,39,0.55);
+      z-index:99998;
+      display:none;
     }
 
-    .legal-box a {
+    #cookie-banner{
+      position:fixed;
+      bottom:20px;
+      left:50%;
+      transform:translateX(-50%);
+      max-width:92%;
+      width:520px;
+      background:#fff;
+      border:2px solid var(--violet-main);
+      border-radius:12px;
+      padding:16px;
+      box-shadow: var(--shadow);
+      z-index:99999;
+      display:none;
+    }
+
+    #cookie-banner p{
+      margin:0 0 12px 0;
+      font-size:0.95rem;
+      color:#111827;
+      line-height:1.4;
+    }
+
+    #cookie-banner a{
+      color:var(--violet-main);
+      font-weight:800;
+      text-decoration:none;
+    }
+    #cookie-banner a:hover{ text-decoration:underline; }
+
+    .cookie-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+
+    .cookie-btn{
+      flex:1;
+      min-width:150px;
+      padding:10px 12px;
+      border-radius:8px;
+      cursor:pointer;
+      font-weight:800;
+      border:2px solid var(--violet-main);
+      background:#fff;
+      color:#111827;
+    }
+
+    .cookie-btn.primary{
+      background:var(--violet-main);
+      color:#fff;
+    }
+    .cookie-btn.primary:hover{ background:var(--violet-dark); }
+
+    .cookie-btn.ghost{
+      background:#fff;
+    }
+
+    .cookie-note{
+      font-size:0.82rem;
+      color:#6B7280;
+      margin-top:10px;
+      line-height:1.35;
+    }
+
+    /* Preferences Modal */
+    #cookie-modal{
+      position:fixed;
+      left:50%;
+      top:50%;
+      transform:translate(-50%,-50%);
+      width:min(680px, 92%);
+      background:#fff;
+      border-radius:14px;
+      border:2px solid var(--violet-main);
+      box-shadow: var(--shadow);
+      z-index:100000;
+      display:none;
+      overflow:hidden;
+    }
+
+    .cookie-modal-head{
+      padding:14px 16px;
+      background:linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+
+    .cookie-modal-head strong{
+      font-size:1.02rem;
+      letter-spacing:0.02em;
+    }
+
+    .cookie-close{
+      background: rgba(255,255,255,0.14);
+      border:1px solid rgba(255,255,255,0.45);
+      color:#fff;
+      border-radius:10px;
+      padding:8px 10px;
+      cursor:pointer;
+      font-weight:800;
+    }
+
+    .cookie-modal-body{
+      padding:16px;
+      color:#111827;
+    }
+
+    .cookie-modal-body p{
+      margin-top:0;
+      color:#374151;
+      font-size:0.95rem;
+    }
+
+    .cookie-pref{
+      border: var(--border);
+      border-radius:12px;
+      padding:12px;
+      background:#F9FAFB;
+      margin-top:12px;
+    }
+
+    .cookie-pref h3{
+      margin:0 0 6px 0;
+      font-size:0.98rem;
       color: var(--violet-dark);
-      font-weight: 600;
-      text-decoration: none;
     }
 
-    .legal-box a:hover {
-      text-decoration: underline;
+    .cookie-pref .row{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
     }
 
-    .btn-row {
-      margin-top: 14px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
+    .cookie-pref small{
+      color:#6B7280;
+      display:block;
+      margin-top:6px;
+      line-height:1.35;
     }
 
-    .btn-primary {
-      background: var(--violet-main);
-      color: white;
-      border: none;
-      border-radius: 999px;
-      padding: 10px 20px;
-      font-size: 0.98rem;
-      font-weight: 600;
-      cursor: pointer;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.12);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+    .switch{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-weight:800;
+      cursor:pointer;
+      user-select:none;
     }
 
-    .btn-primary[disabled] {
-      opacity: 0.6;
-      cursor: not-allowed;
-      box-shadow: none;
+    .switch input{ transform: scale(1.1); }
+
+    .cookie-modal-actions{
+      padding:14px 16px 16px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      border-top: var(--border);
+      background:#fff;
     }
 
-    .btn-primary:hover:not([disabled]) {
-      background: var(--violet-dark);
+    /* Always-visible settings button */
+    #cookie-settings-btn{
+      position:fixed;
+      left:16px;
+      bottom:16px;
+      z-index:99997;
+      border:1px solid rgba(0,0,0,0.12);
+      background:#fff;
+      color:#111827;
+      border-radius:999px;
+      padding:10px 12px;
+      font-weight:800;
+      cursor:pointer;
+      box-shadow:0 6px 14px rgba(0,0,0,0.12);
+      display:none; /* shown after first choice */
     }
-
-    .btn-secondary-link {
-      font-size: 0.88rem;
-      color: #6B7280;
-      text-decoration: underline;
-      cursor: pointer;
-      background: none;
-      border: none;
-      padding: 0;
-    }
-
-    .result-card {
-      background: #F9FAFB;
-      border-radius: 10px;
-      padding: 16px 16px 18px;
-      border: 1px solid #E5E7EB;
-      min-height: 120px;
-    }
-
-    .result-placeholder {
-      font-size: 0.9rem;
-      color: #6B7280;
-    }
-
-    .result-level {
-      font-size: 0.95rem;
-      font-weight: 600;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 10px;
-      border-radius: 999px;
-      margin-bottom: 6px;
-    }
-
-    .result-level.ok {
-      background: #DCFCE7;
-      color: #166534;
-    }
-
-    .result-level.warn {
-      background: #FEF3C7;
-      color: #92400E;
-    }
-
-    .result-level.high {
-      background: #FEE2E2;
-      color: #B91C1C;
-    }
-
-    .result-main-number {
-      font-size: 1.05rem;
-      margin-bottom: 8px;
-    }
-
-    .result-main-number strong {
-      font-size: 1.15rem;
-    }
-
-    .result-sub {
-      font-size: 0.92rem;
-      margin-bottom: 6px;
-    }
-
-    .result-advices {
-      font-size: 0.9rem;
-      margin-top: 8px;
-    }
-
-    .result-advices ul {
-      padding-left: 18px;
-      margin: 4px 0 0;
-    }
-
-    .result-advices li {
-      margin-bottom: 4px;
-    }
-
-    footer {
-      text-align: center;
-      margin-top: 40px;
-      padding: 20px;
-      background: #eee;
-      font-size: 0.9rem;
+    #cookie-settings-btn:hover{
+      border-color: rgba(108,92,231,0.55);
     }
   </style>
 </head>
 
 <body>
 
-  <!-- HEADER UNIFICATO -->
   <header class="site-header">
     <div class="header-inner">
       <div class="logo">Syncras.App</div>
 
-      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+      <button class="menu-toggle" type="button" id="menuBtn" aria-controls="main-nav" aria-expanded="false">
         Menu <span>☰</span>
       </button>
 
       <nav id="main-nav">
         <a href="index.html">Home</a>
-      <a href="blog.html">Blog</a>
-      <a href="smart-test.html">Smart Test</a>
-      <a href="calcolatori.html">Calcolatori</a>
-      <a href="fast-cards.html">Fast Card</a>
-      <a href="offerte.html">Prodotti Consapevoli</a>
-      <a href="curiosita.html">Curiosità</a>
-      <a href="misteri.html">Misteri</a>
-      <a href="chi.html">Chi siamo</a>
+        <a href="blog.html">Blog</a>
+        <a href="smart-test.html">Smart Test</a>
+        <a href="calcolatori.html">Calcolatori</a>
+        <a href="fast-cards.html">Fast Card</a>
+        <a href="offerte.html">Prodotti Consapevoli</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="chi.html">Chi siamo</a>
       </nav>
     </div>
   </header>
 
   <main>
-    <div class="back-links">
-      ← 
-    </div>
-
     <span class="intro-tag">Smart Test – Abitudini digitali</span>
     <h1>Quanto tempo ti ruba davvero lo smartphone?</h1>
 
@@ -462,61 +566,44 @@
     </p>
 
     <div class="test-layout">
-      <!-- COLONNA SINISTRA – DOMANDE -->
       <section class="test-card" aria-label="Domande del test">
         <h2>1) La parte numerica – il tempo “misurabile”</h2>
 
-        <!-- Q1: SOCIAL -->
         <div class="question-block">
           <div class="question-title">1. Minuti al giorno su social, video e scroll infinito</div>
-          <div class="question-help">
-            Somma più o meno il tempo su Instagram, TikTok, Facebook, YouTube Shorts, Reels, ecc.
-          </div>
+          <div class="question-help">Somma più o meno il tempo su Instagram, TikTok, Facebook, YouTube Shorts, Reels, ecc.</div>
           <div class="field-row">
             <label for="minutesSocial">Tempo totale:</label>
             <input type="number" id="minutesSocial" class="input-number" min="0" step="5" placeholder="min">
             <span>minuti al giorno</span>
           </div>
-          <div class="small-note">
-            Se non sei sicuro, guarda il report “Tempo di utilizzo” del telefono e fai una media.
-          </div>
+          <div class="small-note">Se non sei sicuro, guarda il report “Tempo di utilizzo” del telefono e fai una media.</div>
         </div>
 
-        <!-- Q2: CHAT NON ESSENZIALI -->
         <div class="question-block">
           <div class="question-title">2. Chat non strettamente necessarie</div>
-          <div class="question-help">
-            Qui non contiamo il messaggio di lavoro o “arrivo tra 5 minuti”, ma le chat “per stare sul gruppo”.
-          </div>
+          <div class="question-help">Qui non contiamo il messaggio di lavoro o “arrivo tra 5 minuti”, ma le chat “per stare sul gruppo”.</div>
           <div class="field-row">
             <label for="minutesChat">Tempo totale:</label>
             <input type="number" id="minutesChat" class="input-number" min="0" step="5" placeholder="min">
             <span>minuti al giorno</span>
           </div>
-          <div class="small-note">
-            Gruppi WhatsApp/Telegram in cui scrolli e commenti per abitudine più che per reale necessità.
-          </div>
+          <div class="small-note">Gruppi WhatsApp/Telegram in cui scrolli e commenti per abitudine più che per reale necessità.</div>
         </div>
 
-        <!-- Q3: SBLOCCO “AL VOLO” -->
         <div class="question-block">
           <div class="question-title">3. Quante volte al giorno sblocchi il telefono “solo per vedere”?</div>
-          <div class="question-help">
-            Non quando devi davvero fare qualcosa. Solo le volte in cui lo prendi in mano per riflesso.
-          </div>
+          <div class="question-help">Non quando devi davvero fare qualcosa. Solo le volte in cui lo prendi in mano per riflesso.</div>
           <div class="field-row">
             <label for="unlockCount">Sblocchi “al volo”:</label>
             <input type="number" id="unlockCount" class="input-number" min="0" step="1" placeholder="es. 20">
             <span>volte al giorno</span>
           </div>
-          <div class="small-note">
-            In media considereremo <strong>30 secondi</strong> “bruciati” ad ogni sblocco di questo tipo.
-          </div>
+          <div class="small-note">In media considereremo <strong>30 secondi</strong> “bruciati” ad ogni sblocco di questo tipo.</div>
         </div>
 
         <h2 style="margin-top:18px;">2) La parte comportamentale – le abitudini</h2>
 
-        <!-- B1: APPENA SVEGLIO -->
         <div class="question-block">
           <div class="question-title">4. Appena sveglio guardi subito il telefono?</div>
           <div class="radio-group">
@@ -525,7 +612,6 @@
           </div>
         </div>
 
-        <!-- B2: A TAVOLA -->
         <div class="question-block">
           <div class="question-title">5. A tavola il telefono è presente?</div>
           <div class="radio-group">
@@ -535,12 +621,9 @@
           </div>
         </div>
 
-        <!-- B3: GUIDA / STRADA -->
         <div class="question-block">
           <div class="question-title">6. Lo usi mentre guidi o attraversi?</div>
-          <div class="question-help">
-            Qui non è solo tempo: è anche rischio. Risposta sincera, non c’è giudizio, solo realtà.
-          </div>
+          <div class="question-help">Qui non è solo tempo: è anche rischio. Risposta sincera, non c’è giudizio, solo realtà.</div>
           <div class="radio-group">
             <label><input type="radio" name="qDrive" value="often"> Sì, spesso</label>
             <label><input type="radio" name="qDrive" value="sometimes"> Qualche volta</label>
@@ -548,7 +631,6 @@
           </div>
         </div>
 
-        <!-- B4: PRIMA DI DORMIRE -->
         <div class="question-block">
           <div class="question-title">7. Vai a letto con il telefono in mano?</div>
           <div class="radio-group">
@@ -558,10 +640,9 @@
           </div>
         </div>
 
-        <!-- BOX LEGALE -->
         <div class="legal-box">
           <p>
-            <strong>Prima di procedere, un promemoria:</strong>  
+            <strong>Prima di procedere, un promemoria:</strong>
             I risultati di questo test sono <strong>stime indicative</strong> e non sono consulenza
             psicologica, medica o professionale. L’uso del test e le decisioni che ne derivano
             sono a tuo esclusivo rischio.
@@ -569,28 +650,21 @@
           <label for="legalAccept">
             <input type="checkbox" id="legalAccept">
             Confermo di aver letto e compreso le condizioni riportate nelle
-            <a href="note-legali.html" target="_blank">Note Legali</a> e nelle pagine
-            <a href="privacy.html" target="_blank">Privacy</a> e
-            <a href="cookie.html" target="_blank">Cookie</a>.
+            <a href="note-legali.html" target="_blank" rel="noopener">Note Legali</a> e nelle pagine
+            <a href="privacy.html" target="_blank" rel="noopener">Privacy</a> e
+            <a href="cookie.html" target="_blank" rel="noopener">Cookie</a>.
           </label>
         </div>
 
         <div class="btn-row">
-          <button type="button" class="btn-primary" id="calcBtn" disabled>
-            Calcola il tempo che ti ruba 📱
-          </button>
-          <button type="button" class="btn-secondary-link" id="resetBtn">
-            Azzera tutto e riparti
-          </button>
+          <button type="button" class="btn-primary" id="calcBtn" disabled>Calcola il tempo che ti ruba 📱</button>
+          <button type="button" class="btn-secondary-link" id="resetBtn">Azzera tutto e riparti</button>
         </div>
       </section>
 
-      <!-- COLONNA DESTRA – RISULTATO -->
       <aside class="result-card" aria-label="Risultato del test" id="resultBox">
         <div id="resultContent" class="result-placeholder">
-          Compila i campi a sinistra e clicca su
-          <strong>“Calcola il tempo che ti ruba”</strong>.  
-          Vedrai:
+          Compila i campi a sinistra e clicca su <strong>“Calcola il tempo che ti ruba”</strong>.
           <ul style="margin-top:6px; padding-left:18px;">
             <li>quanti minuti / ore al giorno “mangia” lo smartphone;</li>
             <li>quanti <strong>giorni pieni all’anno</strong> equivalgono;</li>
@@ -604,7 +678,6 @@
       Questo Smart Test non sostituisce strumenti di <em>Digital Wellbeing</em>, ma può essere
       un buon punto di partenza per decidere se cambiare qualcosa nelle tue abitudini.
     </p>
-
   </main>
 
   <footer>
@@ -613,110 +686,245 @@
       <a href="privacy.html">Privacy Policy</a> |
       <a href="cookie.html">Cookie Policy</a> |
       <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
-      <a href="note-legali.html">Note Legali</a>
+      <a href="note-legali.html">Note Legali</a> |
+      <a href="#" id="footerCookieSettings">Impostazioni cookie</a>
     </div>
     <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
-      Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.
       Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
-      senza alcun costo aggiuntivo per l’utente.  
+      senza alcun costo aggiuntivo per l’utente.
       Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
       è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
     </p>
   </footer>
 
-  <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
-  <div id="cookie-banner">
+  <!-- Always visible cookie settings -->
+  <button id="cookie-settings-btn" type="button" aria-label="Impostazioni cookie">🍪 Impostazioni cookie</button>
+
+  <!-- Cookie overlay + banner + modal -->
+  <div id="cookie-overlay" aria-hidden="true"></div>
+
+  <div id="cookie-banner" role="dialog" aria-modal="true" aria-label="Preferenze cookie">
     <p>
-      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
-      (Google Analytics). Alcuni link potrebbero essere di affiliazione.
-      Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
-      <a href="privacy.html">Privacy Policy</a>.
+      Usiamo cookie <strong>tecnici</strong> per far funzionare il sito.
+      <br>
+      <strong>Solo se acconsenti</strong>, usiamo cookie di <strong>misurazione</strong> (Google Analytics)
+      per statistiche sulle visite.
+      <br>
+      Alcuni link potrebbero essere di affiliazione.
+      Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la <a href="privacy.html">Privacy Policy</a>.
     </p>
-    <div style="display:flex; gap:10px; margin-top:8px;">
-      <button type="button" onclick="rejectCookies()">
-        Rifiuta
-      </button>
-      <button id="cookie-btn" type="button" onclick="acceptCookies()">
-        Accetta e continua
-      </button>
+
+    <div class="cookie-actions">
+      <button type="button" class="cookie-btn ghost" id="cookieReject">Rifiuta</button>
+      <button type="button" class="cookie-btn" id="cookieCustomize">Personalizza</button>
+      <button type="button" class="cookie-btn primary" id="cookieAcceptAll">Accetta</button>
+    </div>
+
+    <div class="cookie-note">
+      Puoi cambiare idea in qualsiasi momento con “Impostazioni cookie”.
     </div>
   </div>
 
-  <style>
-    #cookie-banner {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      max-width: 90%;
-      width: 420px;
-      background: #ffffff;
-      border: 2px solid #6C5CE7;
-      border-radius: 10px;
-      padding: 16px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-      z-index: 9999;
-      font-family: Arial, sans-serif;
-      display: none;
-    }
+  <div id="cookie-modal" role="dialog" aria-modal="true" aria-label="Personalizza cookie">
+    <div class="cookie-modal-head">
+      <strong>Personalizza cookie</strong>
+      <button class="cookie-close" type="button" id="cookieModalClose">Chiudi</button>
+    </div>
 
-    #cookie-banner p {
-      margin: 0 0 12px 0;
-      font-size: 0.95rem;
-      color: #333;
-      line-height: 1.4;
-    }
+    <div class="cookie-modal-body">
+      <p>
+        Qui puoi decidere quali cookie permettere. I cookie tecnici sono necessari per il funzionamento del sito.
+        I cookie di misurazione (Analytics) sono facoltativi e vengono attivati solo con il tuo consenso.
+      </p>
 
-    #cookie-banner a {
-      color: #6C5CE7;
-      font-weight: bold;
-      text-decoration: none;
-    }
+      <div class="cookie-pref">
+        <div class="row">
+          <div>
+            <h3>Cookie tecnici (necessari)</h3>
+            <div style="font-weight:800; color:#111827;">Sempre attivi</div>
+            <small>Servono per funzionalità essenziali (es. memorizzare le preferenze cookie).</small>
+          </div>
+        </div>
+      </div>
 
-    /* Pulsante RIFIUTA – pari importanza al pulsante ACCETTA */
-    #cookie-banner button[onclick="rejectCookies()"] {
-      flex: 1;
-      background: white !important;
-      color: #111827 !important;
-      border: 2px solid #6C5CE7 !important;
-      padding: 10px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-    }
+      <div class="cookie-pref">
+        <div class="row">
+          <div>
+            <h3>Cookie di misurazione (Google Analytics)</h3>
+            <small>
+              Ci aiutano a capire in modo statistico quali pagine funzionano meglio. Se disattivi, non carichiamo Google Analytics.
+            </small>
+          </div>
 
-    /* Pulsante ACCETTA */
-    #cookie-btn {
-      flex: 1;
-      background: #6C5CE7;
-      color: white;
-      border: 2px solid #6C5CE7;
-      padding: 10px 16px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 700;
-    }
+          <label class="switch">
+            <input type="checkbox" id="prefAnalytics">
+            Analytics ON
+          </label>
+        </div>
+      </div>
 
-    #cookie-btn:hover {
-      background: #4B3ACB;
-    }
-  </style>
+      <div class="cookie-note" style="margin-top:12px;">
+        Maggiori dettagli nelle pagine <a href="cookie.html">Cookie Policy</a> e <a href="privacy.html">Privacy Policy</a>.
+      </div>
+    </div>
+
+    <div class="cookie-modal-actions">
+      <button type="button" class="cookie-btn ghost" id="cookieSaveReject">Salva: Rifiuta</button>
+      <button type="button" class="cookie-btn primary" id="cookieSaveChoices">Salva preferenze</button>
+    </div>
+  </div>
 
   <script>
-    // Toggle menu mobile
-    function toggleMenu() {
-      document.body.classList.toggle('nav-open');
-    }
+    /**********************
+     * MENU MOBILE
+     **********************/
+    document.addEventListener('DOMContentLoaded', () => {
+      const menuBtn = document.getElementById('menuBtn');
+      const nav = document.getElementById('main-nav');
 
-    // Logica Cookie + Google Analytics (stessa di Smart Test)
-    (function () {
+      function setExpanded(isOpen){
+        if (menuBtn) menuBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      }
+
+      function openMenu(){
+        document.body.classList.add('nav-open');
+        setExpanded(true);
+      }
+
+      function closeMenu(){
+        document.body.classList.remove('nav-open');
+        setExpanded(false);
+      }
+
+      function toggleMenu(){
+        if (document.body.classList.contains('nav-open')) closeMenu();
+        else openMenu();
+      }
+
+      if (menuBtn) menuBtn.addEventListener('click', toggleMenu);
+
+      if (nav) {
+        nav.addEventListener('click', (e) => {
+          if (e.target && e.target.tagName === 'A') closeMenu();
+        });
+      }
+
+      document.addEventListener('click', (e) => {
+        if (!document.body.classList.contains('nav-open')) return;
+        const isInsideHeader = e.target.closest('.site-header');
+        if (!isInsideHeader) closeMenu();
+      });
+
+      /**********************
+       * TEST: abilita calcolo con spunta legale
+       **********************/
+      const legalCheckbox = document.getElementById('legalAccept');
+      const calcBtn = document.getElementById('calcBtn');
+      const resetBtn = document.getElementById('resetBtn');
+
+      if (legalCheckbox && calcBtn) {
+        legalCheckbox.addEventListener('change', () => {
+          calcBtn.disabled = !legalCheckbox.checked;
+        });
+      }
+      if (calcBtn) calcBtn.addEventListener('click', calculateSmartphoneTime);
+      if (resetBtn) resetBtn.addEventListener('click', resetForm);
+
+      /**********************
+       * COOKIE + ANALYTICS (GDPR “strong”)
+       * - GA caricato solo dopo consenso esplicito
+       * - Preferenze granulari (Analytics ON/OFF)
+       * - Revoca/modifica sempre disponibile
+       **********************/
       const GA_ID = 'G-CFTTCYDZ2P';
-      const CONSENT_KEY = 'syncras_cookie_consent'; // chiave unica per tutto il sito
 
-      // GA disabilitato finché non c'è consenso
+      const CONSENT_KEY = 'syncras_consent_v1'; // stato generale
+      const PREF_KEY = 'syncras_prefs_v1';       // JSON preferenze
+
+      // Default: blocca GA
       window['ga-disable-' + GA_ID] = true;
 
-      function loadGoogleAnalytics() {
+      const overlay = document.getElementById('cookie-overlay');
+      const banner = document.getElementById('cookie-banner');
+      const modal = document.getElementById('cookie-modal');
+
+      const btnAcceptAll = document.getElementById('cookieAcceptAll');
+      const btnReject = document.getElementById('cookieReject');
+      const btnCustomize = document.getElementById('cookieCustomize');
+
+      const btnModalClose = document.getElementById('cookieModalClose');
+      const btnSaveReject = document.getElementById('cookieSaveReject');
+      const btnSaveChoices = document.getElementById('cookieSaveChoices');
+
+      const prefAnalytics = document.getElementById('prefAnalytics');
+
+      const cookieSettingsBtn = document.getElementById('cookie-settings-btn');
+      const footerCookieSettings = document.getElementById('footerCookieSettings');
+
+      function showOverlay(){
+        if (overlay) overlay.style.display = 'block';
+      }
+      function hideOverlay(){
+        if (overlay) overlay.style.display = 'none';
+      }
+
+      function showBanner(){
+        if (banner) banner.style.display = 'block';
+        showOverlay();
+      }
+      function hideBanner(){
+        if (banner) banner.style.display = 'none';
+        // overlay resta se è aperto il modal
+        if (modal && modal.style.display !== 'block') hideOverlay();
+      }
+
+      function openModal(){
+        if (modal) modal.style.display = 'block';
+        showOverlay();
+        // chiudi banner se aperto
+        hideBanner();
+      }
+
+      function closeModal(){
+        if (modal) modal.style.display = 'none';
+        // se banner non visibile, togli overlay
+        hideOverlay();
+      }
+
+      function getPrefs(){
+        try{
+          const raw = localStorage.getItem(PREF_KEY);
+          if (!raw) return { analytics: false };
+          const obj = JSON.parse(raw);
+          return {
+            analytics: !!obj.analytics
+          };
+        }catch(e){
+          return { analytics: false };
+        }
+      }
+
+      function setPrefs(prefs){
+        localStorage.setItem(PREF_KEY, JSON.stringify({
+          analytics: !!prefs.analytics
+        }));
+      }
+
+      function setConsent(status){
+        // status: 'accepted' | 'rejected' | 'custom'
+        localStorage.setItem(CONSENT_KEY, status);
+      }
+
+      function getConsent(){
+        return localStorage.getItem(CONSENT_KEY); // null se mai scelto
+      }
+
+      function ensureSettingsButtonVisible(){
+        if (cookieSettingsBtn) cookieSettingsBtn.style.display = 'inline-flex';
+      }
+
+      function loadGA(){
         if (window.__syncrasGaLoaded) return;
         window.__syncrasGaLoaded = true;
 
@@ -730,98 +938,119 @@
         window.dataLayer = window.dataLayer || [];
         function gtag(){ dataLayer.push(arguments); }
         window.gtag = gtag;
+
         gtag('js', new Date());
+        // NB: GA4 non rende “anonimo” in senso GDPR; qui è solo impostazione utile.
         gtag('config', GA_ID, { anonymize_ip: true });
       }
 
-      function showBanner() {
-        const banner = document.getElementById('cookie-banner');
-        if (banner) banner.style.display = 'block';
-      }
-
-      function hideBanner() {
-        const banner = document.getElementById('cookie-banner');
-        if (banner) banner.style.display = 'none';
-      }
-
-      window.acceptCookies = function () {
-        localStorage.setItem(CONSENT_KEY, 'yes');
-        hideBanner();
-        loadGoogleAnalytics();
-      };
-
-      window.rejectCookies = function () {
-        localStorage.setItem(CONSENT_KEY, 'no');
-        hideBanner();
-        window['ga-disable-' + GA_ID] = true;
-      };
-
-      window.revokeCookies = function () {
-        localStorage.removeItem(CONSENT_KEY);
-        window['ga-disable-' + GA_ID] = true;
-        showBanner();
-      };
-
-      document.addEventListener('DOMContentLoaded', function () {
-        const consent = localStorage.getItem(CONSENT_KEY);
-
-        if (consent === 'yes') {
-          loadGoogleAnalytics();
-        } else if (consent === 'no') {
-          window['ga-disable-' + GA_ID] = true;
+      function applyPrefs(){
+        const prefs = getPrefs();
+        if (prefs.analytics){
+          loadGA();
         } else {
-          showBanner();
+          // blocca GA
+          window['ga-disable-' + GA_ID] = true;
         }
+      }
+
+      function openSettings(){
+        // carica preferenze correnti nel modal
+        const prefs = getPrefs();
+        if (prefAnalytics) prefAnalytics.checked = !!prefs.analytics;
+        openModal();
+      }
+
+      // Prima visita: mostra banner
+      const consent = getConsent();
+      if (!consent){
+        showBanner();
+      } else {
+        ensureSettingsButtonVisible();
+        applyPrefs();
+      }
+
+      // Click banner: Accetta tutto (qui equivale a Analytics ON)
+      if (btnAcceptAll) btnAcceptAll.addEventListener('click', () => {
+        setConsent('accepted');
+        setPrefs({ analytics: true });
+        hideBanner();
+        ensureSettingsButtonVisible();
+        applyPrefs();
       });
-    })();
 
-    // Abilita / disabilita pulsante in base alla spunta legale
-    document.addEventListener('DOMContentLoaded', function () {
-      const legalCheckbox = document.getElementById('legalAccept');
-      const calcBtn = document.getElementById('calcBtn');
-      const resetBtn = document.getElementById('resetBtn');
+      // Click banner: Rifiuta (Analytics OFF)
+      if (btnReject) btnReject.addEventListener('click', () => {
+        setConsent('rejected');
+        setPrefs({ analytics: false });
+        hideBanner();
+        ensureSettingsButtonVisible();
+        applyPrefs();
+      });
 
-      if (legalCheckbox && calcBtn) {
-        legalCheckbox.addEventListener('change', function () {
-          calcBtn.disabled = !legalCheckbox.checked;
-        });
-      }
+      // Click banner: Personalizza
+      if (btnCustomize) btnCustomize.addEventListener('click', () => {
+        // default prudente: analytics OFF finché non salva
+        const prefs = getPrefs();
+        if (prefAnalytics) prefAnalytics.checked = !!prefs.analytics;
+        openModal();
+      });
 
-      if (calcBtn) {
-        calcBtn.addEventListener('click', calculateSmartphoneTime);
-      }
+      // Modal: chiudi
+      if (btnModalClose) btnModalClose.addEventListener('click', closeModal);
 
-      if (resetBtn) {
-        resetBtn.addEventListener('click', resetForm);
-      }
+      // Modal: Salva rifiuto
+      if (btnSaveReject) btnSaveReject.addEventListener('click', () => {
+        setConsent('rejected');
+        setPrefs({ analytics: false });
+        closeModal();
+        ensureSettingsButtonVisible();
+        applyPrefs();
+      });
+
+      // Modal: Salva preferenze
+      if (btnSaveChoices) btnSaveChoices.addEventListener('click', () => {
+        const analyticsOn = prefAnalytics ? prefAnalytics.checked : false;
+        setConsent('custom');
+        setPrefs({ analytics: analyticsOn });
+        closeModal();
+        ensureSettingsButtonVisible();
+        applyPrefs();
+      });
+
+      // Overlay click: chiudi modal (se aperto)
+      if (overlay) overlay.addEventListener('click', () => {
+        if (modal && modal.style.display === 'block') closeModal();
+      });
+
+      // Pulsante sempre visibile + link footer
+      if (cookieSettingsBtn) cookieSettingsBtn.addEventListener('click', openSettings);
+      if (footerCookieSettings) footerCookieSettings.addEventListener('click', (e) => {
+        e.preventDefault();
+        openSettings();
+      });
     });
 
-    function parseNumberField(id) {
+    function parseNumberField(id){
       const el = document.getElementById(id);
       if (!el) return 0;
-      const value = parseFloat(el.value.replace(',', '.'));
+      const value = parseFloat(String(el.value).replace(',', '.'));
       if (isNaN(value) || value < 0) return 0;
       return value;
     }
 
-    function calculateSmartphoneTime() {
-      const resultBox = document.getElementById('resultBox');
+    function calculateSmartphoneTime(){
       const resultContent = document.getElementById('resultContent');
+      if (!resultContent) return;
 
-      if (!resultBox || !resultContent) return;
+      const minutesSocial = parseNumberField('minutesSocial');
+      const minutesChat = parseNumberField('minutesChat');
+      const unlockCount = parseNumberField('unlockCount');
 
-      // Numerici
-      const minutesSocial = parseNumberField('minutesSocial');   // min
-      const minutesChat = parseNumberField('minutesChat');       // min
-      const unlockCount = parseNumberField('unlockCount');       // count
+      const minutesUnlock = unlockCount * 0.5; // 30 sec = 0.5 min
+      const baseMinutes = minutesSocial + minutesChat + minutesUnlock;
 
-      const minutesUnlock = unlockCount * 0.5; // 30 secondi per sblocco
-
-      let baseMinutes = minutesSocial + minutesChat + minutesUnlock;
-
-      // Comportamentali – punteggio 0–8
       let behaviorScore = 0;
-
       const qMorning = document.querySelector('input[name="qMorning"]:checked');
       const qMeal = document.querySelector('input[name="qMeal"]:checked');
       const qDrive = document.querySelector('input[name="qDrive"]:checked');
@@ -844,65 +1073,53 @@
         else if (qNight.value === 'mid') behaviorScore += 1;
       }
 
-      // Se comportamento alto, aumentiamo leggermente il tempo stimato
       let behaviorMultiplier = 1;
       if (behaviorScore >= 6) behaviorMultiplier = 1.25;
       else if (behaviorScore >= 3) behaviorMultiplier = 1.1;
 
-      const adjustedMinutes = baseMinutes * behaviorMultiplier;
+      const minutesPerDay = baseMinutes * behaviorMultiplier;
 
-      // Evita 0 totale: se tutto vuoto, mostriamo messaggio
-      if (adjustedMinutes <= 0) {
-        resultBox.classList.remove('empty');
+      if (minutesPerDay <= 0){
         resultContent.innerHTML = `
           <div class="result-main-number">
             Per ora i numeri sono tutti a <strong>zero</strong> (o quasi).
           </div>
           <div class="result-sub">
-            Inserisci qualche valore realistico a sinistra per vedere
-            quante ore e quanti giorni all’anno ti porta via lo smartphone.
+            Inserisci qualche valore realistico a sinistra per vedere quante ore e quanti giorni all’anno ti porta via lo smartphone.
           </div>
         `;
         return;
       }
 
-      const minutesPerDay = adjustedMinutes;
       const hoursPerDay = minutesPerDay / 60;
-
-      const minutesPerYear = minutesPerDay * 365;
-      const hoursPerYear = minutesPerYear / 60;
+      const hoursPerYear = (minutesPerDay * 365) / 60;
       const daysPerYear = hoursPerYear / 24;
 
-      // Livelli
       let levelClass = 'ok';
       let levelLabel = 'Livello 1 – Smartphone sotto controllo (ma da tenere d’occhio)';
       let shortComment = 'Sei ancora tu a decidere quando usarlo, non il contrario.';
 
-      if (minutesPerDay >= 60 && minutesPerDay < 120) {
+      if (minutesPerDay >= 60 && minutesPerDay < 120){
         levelClass = 'warn';
         levelLabel = 'Livello 2 – Equilibrio fragile';
         shortComment = 'Lo smartphone pesa già come un secondo hobby quotidiano.';
-      } 
-      if (minutesPerDay >= 120 && minutesPerDay < 240) {
+      }
+      if (minutesPerDay >= 120 && minutesPerDay < 240){
         levelClass = 'high';
         levelLabel = 'Livello 3 – Scrollatore seriale';
         shortComment = 'Una fetta importante della tua giornata passa dentro lo schermo.';
       }
-      if (minutesPerDay >= 240) {
+      if (minutesPerDay >= 240){
         levelClass = 'high';
         levelLabel = 'Livello 4 – Lo smartphone detta il ritmo';
         shortComment = 'Per il telefono dedichi tempo paragonabile a un part-time.';
       }
 
-      // Se usi il telefono spesso alla guida, inseriamo un alert aggiuntivo
-      const qDrive = document.querySelector('input[name="qDrive"]:checked');
       let driveWarning = '';
-      if (qDrive && (qDrive.value === 'often' || qDrive.value === 'sometimes')) {
+      if (qDrive && (qDrive.value === 'often' || qDrive.value === 'sometimes')){
         driveWarning = `
           <p class="result-sub" style="color:#B91C1C; margin-top:8px;">
-            <strong>Nota seria:</strong> hai indicato che usi spesso il telefono
-            mentre guidi o attraversi. Qui non è solo una questione di tempo:
-            valuta seriamente di togliere questa abitudine, è uno dei punti più rischiosi.
+            <strong>Nota seria:</strong> hai indicato che usi il telefono mentre guidi o attraversi. Qui non è solo tempo: è rischio.
           </p>
         `;
       }
@@ -910,26 +1127,19 @@
       const advices = buildAdviceList(minutesPerDay, behaviorScore);
 
       resultContent.innerHTML = `
-        <div class="result-level ${levelClass}">
-          ${levelLabel}
-        </div>
+        <div class="result-level ${levelClass}">${levelLabel}</div>
 
         <div class="result-main-number">
-          Il tuo smartphone ti ruba circa
-          <strong>${minutesPerDay.toFixed(0)} minuti al giorno</strong>
+          Il tuo smartphone ti ruba circa <strong>${minutesPerDay.toFixed(0)} minuti al giorno</strong>
           (${hoursPerDay.toFixed(1)} ore).
         </div>
 
         <div class="result-sub">
-          In un anno significa circa
-          <strong>${hoursPerYear.toFixed(0)} ore</strong>,
-          cioè più o meno <strong>${daysPerYear.toFixed(1)} giorni pieni</strong>
-          passati dentro allo schermo.
+          In un anno significa circa <strong>${hoursPerYear.toFixed(0)} ore</strong>,
+          cioè più o meno <strong>${daysPerYear.toFixed(1)} giorni pieni</strong>.
         </div>
 
-        <div class="result-sub">
-          <em>${shortComment}</em>
-        </div>
+        <div class="result-sub"><em>${shortComment}</em></div>
 
         ${driveWarning}
 
@@ -940,44 +1150,34 @@
       `;
     }
 
-    function buildAdviceList(minutesPerDay, behaviorScore) {
+    function buildAdviceList(minutesPerDay, behaviorScore){
       const tips = [];
 
-      if (minutesPerDay > 180) {
+      if (minutesPerDay > 180){
         tips.push('Imposta un limite giornaliero per social/video (es. 60 minuti) usando le impostazioni del telefono.');
         tips.push('Scegli una “fascia oraria senza schermo” la sera (anche solo 30–45 minuti prima di dormire).');
-      } else if (minutesPerDay > 90) {
+      } else if (minutesPerDay > 90){
         tips.push('Sposta le app più “pericolose” (social, video) fuori dalla schermata principale.');
-        tips.push('Decidi due momenti al giorno per rispondere alle chat, invece di aprirle ogni volta che arriva una notifica.');
+        tips.push('Decidi due momenti al giorno per rispondere alle chat, invece di aprirle a raffica.');
       } else {
         tips.push('Mantieni questa impostazione, ma controlla ogni tanto il tuo “Tempo di utilizzo” per non farti fregare dalla routine.');
       }
 
-      if (behaviorScore >= 5) {
-        tips.push('Prova per una settimana a non tenere il telefono sul tavolo a pranzo/cena.');
-      }
-
-      if (behaviorScore >= 3) {
-        tips.push('Metti il telefono lontano dal letto e usa una sveglia vera per ridurre lo scroll notturno.');
-      }
-
-      if (tips.length === 0) {
-        tips.push('Continua così: il punto non è demonizzare il telefono, ma usarlo con intenzione.');
-      }
+      if (behaviorScore >= 5) tips.push('Prova per una settimana a non tenere il telefono sul tavolo a pranzo/cena.');
+      if (behaviorScore >= 3) tips.push('Metti il telefono lontano dal letto e usa una sveglia vera per ridurre lo scroll notturno.');
 
       const listItems = tips.map(t => `<li>${t}</li>`).join('');
       return `<ul>${listItems}</ul>`;
     }
 
-    function resetForm() {
+    function resetForm(){
       ['minutesSocial','minutesChat','unlockCount'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.value = '';
       });
 
       ['qMorning','qMeal','qDrive','qNight'].forEach(name => {
-        const checked = document.querySelectorAll('input[name="'+name+'"]:checked');
-        checked.forEach(r => r.checked = false);
+        document.querySelectorAll(`input[name="${name}"]:checked`).forEach(r => r.checked = false);
       });
 
       const legalCheckbox = document.getElementById('legalAccept');
@@ -986,12 +1186,10 @@
       if (calcBtn) calcBtn.disabled = true;
 
       const resultContent = document.getElementById('resultContent');
-      if (resultContent) {
+      if (resultContent){
         resultContent.innerHTML = `
           <div class="result-placeholder">
-            Compila i campi a sinistra e clicca su
-            <strong>“Calcola il tempo che ti ruba”</strong>.  
-            Vedrai:
+            Compila i campi a sinistra e clicca su <strong>“Calcola il tempo che ti ruba”</strong>.
             <ul style="margin-top:6px; padding-left:18px;">
               <li>quanti minuti / ore al giorno “mangia” lo smartphone;</li>
               <li>quanti <strong>giorni pieni all’anno</strong> equivalgono;</li>
@@ -1002,7 +1200,8 @@
       }
     }
   </script>
-
 </body>
 </html>
+
+
 
