@@ -27,6 +27,12 @@
       color: var(--text-main);
     }
 
+    a:focus-visible, button:focus-visible, input:focus-visible{
+      outline: 3px solid rgba(108,92,231,0.35);
+      outline-offset: 2px;
+      border-radius: 6px;
+    }
+
     /* HEADER VIOLA UNIFICATO */
     .site-header{
       background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
@@ -73,6 +79,7 @@
       padding:6px 10px;
       font-size:0.9rem;
       cursor:pointer;
+      font-weight:700;
     }
     .menu-toggle span{ margin-left:4px; font-size:1.1rem; }
 
@@ -128,7 +135,7 @@
       border-radius:6px;
       cursor:pointer;
       margin-bottom:18px;
-      font-weight:600;
+      font-weight:700;
     }
     .btn-share:hover{ background: var(--violet-dark); }
 
@@ -152,7 +159,7 @@
     }
     .legal-box a{
       color: var(--violet-dark);
-      font-weight:600;
+      font-weight:700;
       text-decoration:none;
     }
     .legal-box a:hover{ text-decoration: underline; }
@@ -177,18 +184,16 @@
       border:1px solid var(--border);
     }
 
-    /* Blocco vero: niente opacità residua dopo sblocco */
     .quiz-disabled{
       opacity: 0.35;
       pointer-events: none;
       filter: grayscale(0.05);
     }
 
-    /* Overlay solo quando bloccato */
     #quiz-overlay-message{
       position:absolute;
       inset:0;
-      display:none;
+      display:flex;
       align-items:center;
       justify-content:center;
       text-align:center;
@@ -231,7 +236,7 @@
       padding:10px 16px;
       border-radius:6px;
       cursor:pointer;
-      font-weight:700;
+      font-weight:800;
       font-size:0.95rem;
     }
     #submitQuiz:hover{ background: var(--violet-dark); }
@@ -280,7 +285,7 @@
     .related-item a{
       text-decoration:none;
       color: var(--violet-dark);
-      font-weight:700;
+      font-weight:800;
     }
     .related-item a:hover{ text-decoration: underline; }
 
@@ -321,9 +326,10 @@
     }
     #cookie-banner a{
       color: var(--violet-main);
-      font-weight: bold;
+      font-weight: 800;
       text-decoration: none;
     }
+    #cookie-banner a:hover{ text-decoration: underline; }
     #cookie-banner .cookie-actions{
       display:flex;
       gap:10px;
@@ -334,7 +340,7 @@
       border-radius:6px;
       padding:10px 12px;
       cursor:pointer;
-      font-weight:700;
+      font-weight:800;
       border:2px solid var(--violet-main);
     }
     #cookie-reject{
@@ -356,7 +362,8 @@
     <div class="header-inner">
       <div class="logo">Syncras.App</div>
 
-      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+      <button class="menu-toggle" id="menuBtn" type="button"
+        aria-label="Apri o chiudi il menu di navigazione" aria-expanded="false">
         Menu <span>☰</span>
       </button>
 
@@ -497,7 +504,6 @@
           <p>Test rapidi per capire dove perdi soldi/tempo senza accorgertene.</p>
         </article>
         <article class="related-item">
-          <!-- FIX: allineato al menu (fast-cards.html) -->
           <h3><a href="fast-cards.html">Fast Card</a></h3>
           <p>Schede da 30 secondi anti-fregatura: offerte, marketing, psicologia del prezzo.</p>
         </article>
@@ -532,30 +538,45 @@
   <!-- COOKIE BANNER (UNICO) -->
   <div id="cookie-banner" role="dialog" aria-live="polite" aria-label="Banner cookie">
     <p>
-      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite (Google Analytics).
+      Usiamo cookie tecnici e, <strong>solo se acconsenti</strong>, cookie di misurazione per statistiche sulle visite (Google Analytics).
       Alcuni link potrebbero essere di affiliazione.
-      Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
-      <a href="privacy.html">Privacy Policy</a>.
+      Per dettagli leggi la <a href="cookie.html" rel="noopener noreferrer">Cookie Policy</a> e la
+      <a href="privacy.html" rel="noopener noreferrer">Privacy Policy</a>.
     </p>
     <div class="cookie-actions">
-      <button id="cookie-reject" type="button" onclick="rejectCookies()">Rifiuta</button>
-      <button id="cookie-accept" type="button" onclick="acceptCookies()">Accetta e continua</button>
+      <button id="cookie-reject" type="button">Rifiuta</button>
+      <button id="cookie-accept" type="button">Accetta e continua</button>
     </div>
   </div>
 
   <script>
-    // Menu mobile
-    function toggleMenu(){ document.body.classList.toggle('nav-open'); }
+    // Menu mobile (con aria-expanded)
+    (function(){
+      const btn = document.getElementById('menuBtn');
+      function toggleMenu(){
+        const open = document.body.classList.toggle('nav-open');
+        if (btn) btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      }
+      window.toggleMenu = toggleMenu;
+      if (btn) btn.addEventListener('click', toggleMenu);
+    })();
 
-    // Share (top + bottom)
+    // Share (top + bottom) con fallback robusto
     (function(){
       function sharePage(){
         const url = window.location.href;
         const title = document.title;
         if (navigator.share) {
           navigator.share({ title, url }).catch(() => {});
+          return;
+        }
+        // Clipboard può fallire (http, permessi): fallback prompt
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(url)
+            .then(() => alert("Link copiato negli appunti ✅"))
+            .catch(() => window.prompt("Copia il link:", url));
         } else {
-          navigator.clipboard.writeText(url).then(() => alert("Link copiato negli appunti ✅"));
+          window.prompt("Copia il link:", url);
         }
       }
       const t = document.getElementById('shareBtnTop');
@@ -564,11 +585,12 @@
       if (b) b.addEventListener('click', sharePage);
     })();
 
-    // Sblocco quiz (NO opacità residua)
+    // Sblocco quiz (stato coerente subito)
     (function(){
       const checkbox = document.getElementById('legalAccept');
       const quizSection = document.getElementById('quiz-section');
       const overlayMsg = document.getElementById('quiz-overlay-message');
+      if (!checkbox || !quizSection || !overlayMsg) return;
 
       function syncState(){
         const unlocked = !!checkbox.checked;
@@ -582,7 +604,6 @@
       }
 
       checkbox.addEventListener('change', syncState);
-      window.addEventListener('DOMContentLoaded', syncState);
       syncState();
     })();
 
@@ -590,6 +611,7 @@
     (function(){
       const btn = document.getElementById('submitQuiz');
       const out = document.getElementById('quiz-result');
+      if (!btn || !out) return;
 
       btn.addEventListener('click', function(){
         let sum = 0;
@@ -600,8 +622,9 @@
           if (sel){ sum += Number(sel.value); answered++; }
         }
 
+        out.style.display = 'block';
+
         if (answered < 7){
-          out.style.display = 'block';
           out.innerHTML = "<strong>⚠️ Ti manca qualche risposta:</strong> completa tutte le domande e riprova.";
           return;
         }
@@ -611,21 +634,20 @@
 
         if (sum <= 4){
           titolo = "✅ Profilo: Termostato zen (pochi sprechi)";
-          testo = "Gestisci temperature e orari in modo abbastanza coerente. Se vuoi migliorare ancora, lavora sulla riduzione notturna e su 1 sola temperatura base.";
+          testo = "Gestisci temperature e orari in modo coerente. Se vuoi migliorare ancora, lavora sulla riduzione notturna e su una temperatura base stabile.";
         } else if (sum <= 8){
           titolo = "⚖️ Profilo: Comfort ok, ma puoi tagliare sprechi";
-          testo = "Non sei messo male, ma ogni tanto il termostato diventa impulsivo. Riduci i “boost” e prova 7 giorni di routine stabile.";
+          testo = "Non sei messo male, ma ogni tanto il termostato diventa impulsivo. Riduci i “boost” e prova 7 giorni di routine più stabile.";
         } else {
           titolo = "🔥 Profilo: Termostato joystick (alto rischio sprechi)";
-          testo = "Molte variazioni e scelte di pancia: la bolletta ringrazia… ma in senso ironico. La strategia migliore: meno scatti, più programmazione e abbasso quando esci.";
+          testo = "Molte variazioni e scelte di pancia: la bolletta ringrazia… ma in senso ironico. Meno scatti, più programmazione e abbasso quando esci.";
         }
 
-        out.style.display = 'block';
         out.innerHTML = "<strong>"+titolo+"</strong><br><br>"+testo+"<br><br><em>Punteggio totale:</em> "+sum+" / 14";
       });
     })();
 
-    // Cookie + GA (GDPR/ePrivacy: GA bloccato finché non accetti + Consent Mode default denied)
+    // Cookie + GA (blocco finché non accetti + Consent Mode default denied)
     (function () {
       const GA_ID = 'G-CFTTCYDZ2P';
       const CONSENT_KEY = 'syncras_cookie_consent';
@@ -633,24 +655,23 @@
       // Hard-block GA finché non c'è consenso
       window['ga-disable-' + GA_ID] = true;
 
-      // Prepara gtag + Consent Mode (default: denied)
+      // Prepara gtag + Consent Mode
       window.dataLayer = window.dataLayer || [];
       function gtag(){ dataLayer.push(arguments); }
       window.gtag = gtag;
 
-      // Best practice: tutto negato di default
       gtag('consent', 'default', {
         ad_storage: 'denied',
         analytics_storage: 'denied',
         ad_user_data: 'denied',
-        ad_personalization: 'denied'
+        ad_personalization: 'denied',
+        wait_for_update: 500
       });
 
       function loadGoogleAnalytics() {
         if (window.__syncrasGaLoaded) return;
         window.__syncrasGaLoaded = true;
 
-        // Sblocca GA e carica lo script solo dopo consenso
         window['ga-disable-' + GA_ID] = false;
 
         const gaScript = document.createElement('script');
@@ -658,7 +679,6 @@
         gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
         document.head.appendChild(gaScript);
 
-        // Config GA (IP anonymized)
         gtag('js', new Date());
         gtag('config', GA_ID, { anonymize_ip: true });
       }
@@ -675,46 +695,39 @@
       window.acceptCookies = function () {
         localStorage.setItem(CONSENT_KEY, 'yes');
         hideBanner();
-
-        // Aggiorna consenso: Analytics consentito
         gtag('consent', 'update', { analytics_storage: 'granted' });
-
         loadGoogleAnalytics();
       };
 
       window.rejectCookies = function () {
         localStorage.setItem(CONSENT_KEY, 'no');
         hideBanner();
-
-        // Mantieni negato
         gtag('consent', 'update', { analytics_storage: 'denied' });
         window['ga-disable-' + GA_ID] = true;
       };
 
-      // Revoca: facile e visibile (link in footer)
       window.revokeCookies = function () {
         localStorage.removeItem(CONSENT_KEY);
-
-        // Torna a denied e riblocca GA
         gtag('consent', 'update', { analytics_storage: 'denied' });
         window['ga-disable-' + GA_ID] = true;
-
         showBanner();
       };
 
       document.addEventListener('DOMContentLoaded', function () {
         const consent = localStorage.getItem(CONSENT_KEY);
 
+        const acceptBtn = document.getElementById('cookie-accept');
+        const rejectBtn = document.getElementById('cookie-reject');
+        if (acceptBtn) acceptBtn.addEventListener('click', window.acceptCookies);
+        if (rejectBtn) rejectBtn.addEventListener('click', window.rejectCookies);
+
         if (consent === 'yes') {
-          // Se già accettato in passato
           gtag('consent', 'update', { analytics_storage: 'granted' });
           loadGoogleAnalytics();
         } else if (consent === 'no') {
-          // Se rifiutato
           gtag('consent', 'update', { analytics_storage: 'denied' });
           window['ga-disable-' + GA_ID] = true;
         } else {
-          // Nessuna scelta ancora
           showBanner();
         }
       });
