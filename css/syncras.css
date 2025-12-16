@@ -126,6 +126,69 @@ h1{ margin-top:0; }
 a{ color: var(--violet-dark); }
 a:hover{ text-decoration:underline; }
 
+/* =========================
+   RELATED (stile "Ti possono interessare anche")
+========================= */
+.related-wrap{
+  margin: 28px 0 18px;
+  padding: 18px 0 0;
+  border-top: 1px solid rgba(0,0,0,0.06);
+}
+
+.related-title{
+  font-size: 26px;
+  line-height: 1.2;
+  margin: 0 0 14px;
+  color: var(--violet-main);
+  font-weight: 800;
+  letter-spacing: -0.2px;
+}
+
+.related-grid{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 26px;
+  margin-top: 6px; /* micro polish: più aria */
+}
+
+.related-card{
+  text-decoration: none;
+  display: block;
+}
+
+.related-card:hover{ text-decoration: none; } /* evita underline globale sul box */
+
+.related-card h3{
+  margin: 0 0 10px;
+  font-size: 16px;
+  line-height: 1.35;
+  color: var(--violet-dark);
+  font-weight: 800;
+}
+
+.related-card p{
+  margin: 0;
+  color: rgba(64,62,67,0.8);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.related-card:hover h3{
+  text-decoration: underline;
+}
+
+.related-actions{
+  display: flex;
+  justify-content: center;
+  margin-top: 18px;
+}
+
+/* Responsive */
+@media (max-width: 900px){
+  .related-grid{ grid-template-columns: 1fr; gap: 14px; }
+  .related-title{ font-size: 22px; }
+}
+
 /* Navigazione “back-links” */
 .back-links{
   margin-bottom:20px;
@@ -322,4 +385,3 @@ footer{
   font-weight:800;
 }
 #cookie-btn:hover{ background: var(--violet-dark); }
-
