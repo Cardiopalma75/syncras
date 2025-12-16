@@ -8,13 +8,11 @@
   <meta name="description" content="Smart Test ironico Syncras: scopri se stai scaldando casa o il pianerottolo. 7 domande sulle abitudini col termostato + consigli pratici." />
   <meta name="robots" content="index,follow" />
 
-  <!-- CSS unico Syncras -->
   <link rel="stylesheet" href="/css/syncras.css" />
 </head>
 
 <body>
 
-  <!-- HEADER CENTRALIZZATO -->
   <div id="site-header"></div>
 
   <main>
@@ -37,6 +35,7 @@
       In Italia d’inverno ci sono tre certezze:
       <strong>fa freddo “più dell’anno scorso”</strong>, la bolletta è sempre <strong>“una mazzata”</strong>,
       e tutti dicono: <strong>“Il termostato lo so usare”</strong>.
+      (Tranquillo: lo diciamo tutti. È proprio quello il bello.)
     </p>
 
     <div class="tip-box">
@@ -51,6 +50,7 @@
       Questa convinzione è dura a morire. Ma il riscaldamento non è un turbo:
       <strong>non accelera</strong>. Se alzi la temperatura, di solito ottieni solo una cosa:
       <strong>rimane acceso più a lungo</strong>.
+      Quindi sì: ti sembra “più potente”… ma è solo <em>più tempo acceso</em>.
     </p>
 
     <div class="quote">
@@ -81,7 +81,7 @@
       <ul class="list">
         <li><strong>0–1 SÌ:</strong> raro. Sei tra quelli che scaldano casa, non il quartiere.</li>
         <li><strong>2–3 SÌ:</strong> sprechi “invisibili”: poca roba al giorno, tanta roba in bolletta.</li>
-        <li><strong>4–5 SÌ:</strong> il termostato decide. Tu paghi.</li>
+        <li><strong>4–5 SÌ:</strong> il termostato decide. Tu paghi. (Ma si recupera, tranquillo.)</li>
         <li><strong>6–7 SÌ:</strong> versione “nonna aveva ragione”: ti serve un piano di 7 giorni.</li>
       </ul>
     </div>
@@ -117,15 +117,15 @@
       <div class="related-grid">
         <a class="related-card" href="/smart-test/riscaldamento-elettrico-vs-gas.html">
           <h3>Riscaldamento elettrico vs gas</h3>
-          <p>Capisci quando conviene e quando stai solo spostando il problema sulla bolletta elettrica.</p>
+          <p>Quando conviene davvero e quando stai solo spostando il problema sulla bolletta elettrica.</p>
         </a>
 
-        <a class="related-card" href="smart-test/smart-test-standby-consumi-serali.html">
+        <a class="related-card" href="/smart-test/smart-test-standby-consumi-seriali.html">
           <h3>Stand-by e consumi seriali</h3>
           <p>Il classico “non consuma niente” che poi a fine mese diventa “ma che è successo?”.</p>
         </a>
 
-        <a class="related-card" href="smart-test/smart-test-elettrodomestici-consumi-nascosti.html">
+        <a class="related-card" href="/smart-test/smart-test-elettrodomestici-consumi-nascosti.html">
           <h3>Elettrodomestici e consumi nascosti</h3>
           <p>7 domande per scovare gli sprechi invisibili: cicli, temperature, abitudini, vecchi modelli.</p>
         </a>
@@ -144,15 +144,12 @@
     </button>
   </main>
 
-  <!-- FOOTER + GDPR CENTRALIZZATI -->
   <div id="site-footer"></div>
   <div id="site-gdpr"></div>
 
-  <!-- JS -->
   <script src="/js/syncras.js"></script>
   <script src="/js/gdpr-logic.js"></script>
 
-  <!-- Caricamento Header / Footer / GDPR -->
   <script>
     Promise.all([
       fetch("/header.html").then(r => r.text()).then(t => (document.getElementById("site-header").innerHTML = t)),
@@ -166,4 +163,5 @@
 
 </body>
 </html>
+
 
