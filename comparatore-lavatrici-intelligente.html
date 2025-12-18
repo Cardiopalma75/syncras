@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Comparatore Lavatrice Intelligente | Syncras.App</title>
+  <meta name="description" content="Comparatore intelligente Syncras per lavatrici: scegli la priorità (prezzo, consumi, spazio, capacità, silenzio) e ottieni le migliori 3 scelte spiegate semplice." />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://syncras.app/comparatore-lavatrici-intelligente.html" />
+
+  <style>
+    :root{
+      --violet-main:#6C5CE7;
+      --violet-dark:#4B3ACB;
+      --bg-page:#F7F7FB;
+      --text-main:#403E43;
+      --card:#ffffff;
+      --border:#E5E7EB;
+      --soft:#F6F4FF;
+      --warn:#D97706;
+      --ok:#16A34A;
+      --danger:#DC2626;
+    }
+
+    body{
+      font-family: Arial, sans-serif;
+      background: var(--bg-page);
+      margin:0;
+      color: var(--text-main);
+      line-height:1.6;
+    }
+
+    /* Header semplice stile Syncras */
+    .site-header{
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color:#fff;
+      padding:12px 14px;
+      box-shadow:0 2px 4px rgba(0,0,0,0.15);
+    }
+    .header-inner{
+      max-width:1100px;
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+    }
+    .logo{ font-size:1.35rem; font-weight:800; letter-spacing:0.02em; }
+    .nav a{ color:#fff; text-decoration:none; font-weight:600; margin-left:14px; }
+    .nav a:hover{ text-decoration:underline; }
+
+    main{
+      max-width: 980px;
+      margin: 22px auto;
+      padding: 0 14px 30px;
+    }
+
+    .hero{
+      background: var(--card);
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:18px 18px;
+      box-shadow:0 4px 6px rgba(0,0,0,0.06);
+    }
+    .hero h1{
+      margin:0 0 6px 0;
+      color: var(--violet-dark);
+      font-size: 1.45rem;
+    }
+    .hero p{ margin:8px 0 0 0; }
+
+    .controls{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns: 1.2fr 0.8fr 0.8fr;
+      gap:10px;
+    }
+    @media (max-width: 860px){
+      .controls{ grid-template-columns: 1fr; }
+    }
+
+    .control{
+      background: var(--card);
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:14px;
+    }
+    label{
+      display:block;
+      font-weight:700;
+      margin-bottom:6px;
+      color: var(--violet-dark);
+    }
+    select, input{
+      width:100%;
+      padding:10px 10px;
+      border-radius:10px;
+      border:1px solid var(--border);
+      font-size: 0.98rem;
+      background:#fff;
+    }
+
+    .btn{
+      width:100%;
+      padding:13px 14px; /* più pollice-friendly */
+      border-radius:10px;
+      border:2px solid var(--violet-main);
+      background: var(--violet-main);
+      color:#fff;
+      font-weight:800;
+      cursor:pointer;
+      margin-top:10px;
+    }
+    .btn:hover{ background: var(--violet-dark); border-color: var(--violet-dark); }
+
+    .btn-link{
+      display:block;
+      width:100%;
+      text-align:center;
+      text-decoration:none;
+      padding:12px 14px;
+      border-radius:10px;
+      border:2px solid var(--violet-main);
+      background: #fff;
+      color: var(--violet-dark);
+      font-weight:800;
+      margin-top:10px;
+    }
+    .btn-link:hover{
+      background: var(--soft);
+    }
+
+    .results-wrap{
+      margin-top:16px;
+    }
+
+    .results-grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap:12px;
+    }
+
+    .card{
+      background: var(--card);
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:14px 14px;
+      box-shadow:0 4px 10px rgba(0,0,0,0.06);
+      position:relative;
+      overflow:hidden;
+    }
+    .rank{
+      position:absolute;
+      top:10px;
+      right:10px;
+      background: var(--soft);
+      border:1px solid #DDD7FF;
+      color: var(--violet-dark);
+      font-weight:800;
+      font-size:0.78rem;
+      padding:4px 8px;
+      border-radius:999px;
+    }
+    .title{
+      margin:0;
+      font-size:1.05rem;
+      color: var(--violet-dark);
+    }
+    .price{
+      font-size:1.35rem;
+      font-weight:900;
+      color: var(--violet-dark);
+      margin:6px 0 8px 0;
+    }
+    .meta{
+      font-size:0.92rem;
+      margin:0;
+      color:#4b5563;
+    }
+    .chips{
+      display:flex;
+      flex-wrap:wrap;
+      gap:6px;
+      margin-top:10px;
+    }
+    .chip{
+      background: var(--soft);
+      border:1px solid #DDD7FF;
+      border-radius:999px;
+      padding:4px 8px;
+      font-size:0.82rem;
+      color:#2f2a44;
+      font-weight:700;
+    }
+    .why{
+      margin-top:10px;
+      background: #FAFAFF;
+      border:1px dashed #DDD7FF;
+      border-radius:10px;
+      padding:10px 10px;
+      font-size:0.92rem;
+    }
+    .why strong{ color: var(--violet-dark); }
+
+    .note{
+      margin-top:14px;
+      font-size:0.9rem;
+      background: #fff;
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:12px;
+      color:#4b5563;
+    }
+
+    .small{
+      font-size:0.85rem;
+      opacity:0.9;
+    }
+
+    footer{
+      margin-top:18px;
+      text-align:center;
+      padding:18px 12px;
+      background:#eee;
+      font-size:0.9rem;
+    }
+    footer a{ color: var(--violet-dark); font-weight:700; text-decoration:none; }
+    footer a:hover{ text-decoration:underline; }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="calcolatori.html">Calcolatori</a>
+        <a href="blog.html">Blog</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Comparatore intelligente lavatrici: scegli la priorità e ti dico le 3 più sensate</h1>
+      <p>
+        Non è un elenco infinito di modelli: è un <strong>filtro mentale</strong>.
+        Tu dici cosa ti importa (prezzo, consumi, spazio, capacità, silenzio) e Syncras ordina in modo coerente.
+      </p>
+
+      <div class="controls">
+        <div class="control">
+          <label for="priority">La tua priorità principale</label>
+          <select id="priority">
+            <option value="price">Risparmio (prezzo più basso)</option>
+            <option value="kwh100">Efficienza (minor consumo)</option>
+            <option value="depth">Spazio (minore profondità)</option>
+            <option value="kg">Capacità (più kg)</option>
+            <option value="noise">Silenzio (meno rumore)</option>
+          </select>
+          <button class="btn" type="button" onclick="run()">Trova le mie Top 3</button>
+          <div class="small" style="margin-top:8px;">
+            Suggerimento: se hai un bagno “stretto”, imposta anche la profondità massima.
+          </div>
+        </div>
+
+        <div class="control">
+          <label for="maxDepth">Profondità massima (cm) – opzionale</label>
+          <input id="maxDepth" type="number" inputmode="numeric" min="30" max="80" placeholder="Es. 55" />
+          <div class="small" style="margin-top:8px;">
+            Se la inserisci, scartiamo i modelli troppo profondi prima del ranking.
+          </div>
+        </div>
+
+        <div class="control">
+          <label>Metodo Syncras</label>
+          <div class="small">
+            Trasformiamo ogni valore (euro, kWh, dB, cm, kg) in un punteggio 0–1.
+            Poi diamo <strong>peso 50%</strong> alla tua priorità e il resto si divide tra gli altri parametri.
+            Risultato: scelta “sensata”, non “perfetta sulla carta”.
+          </div>
+          <div class="small" style="margin-top:8px;">
+            Bonus: stimiamo anche il <strong>risparmio annuo</strong> (indicativo) rispetto alla media del gruppo.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="results-wrap">
+      <div id="results" class="results-grid"></div>
+
+      <div class="note">
+        <strong>Nota prezzi:</strong> i prezzi sono <strong>medi e indicativi</strong>, usati solo come riferimento.
+        Possono variare in base a offerte e rivenditori. <strong>Ultimo aggiornamento:</strong> Dicembre 2025.<br>
+        <span class="small">Le stime energetiche sono orientative e dipendono da cicli/anno e costo kWh.</span>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 Syncras.App — Tutti i diritti riservati<br>
+    <div style="margin-top:8px;">
+      <a href="privacy.html">Privacy Policy</a> |
+      <a href="cookie.html">Cookie Policy</a> |
+      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
+      <a href="note-legali.html">Note Legali</a>
+    </div>
+  </footer>
+
+  <script>
+    // ✅ Dataset MVP (5 modelli) + link ricerca Amazon (CTA non legata al prezzo)
+    const data = [
+      {"brand":"Samsung","model":"Series 5 AI","price":545,"kwh100":44,"kg":9,"depth":55,"noise":72,
+       "url":"https://www.amazon.it/s?k=Samsung+Series+5+AI+lavatrice"},
+      {"brand":"LG","model":"V3 Turbo","price":430,"kwh100":48,"kg":8,"depth":47,"noise":73,
+       "url":"https://www.amazon.it/s?k=LG+V3+Turbo+lavatrice"},
+      {"brand":"Bosch","model":"Serie 6","price":690,"kwh100":40,"kg":9,"depth":59,"noise":70,
+       "url":"https://www.amazon.it/s?k=Bosch+Serie+6+lavatrice"},
+      {"brand":"Candy","model":"Smart Pro","price":300,"kwh100":55,"kg":7,"depth":45,"noise":77,
+       "url":"https://www.amazon.it/s?k=Candy+Smart+Pro+lavatrice"},
+      {"brand":"Haier","model":"I-Pro Series 7","price":600,"kwh100":42,"kg":10,"depth":60,"noise":67,
+       "url":"https://www.amazon.it/s?k=Haier+I-Pro+Series+7+lavatrice"}
+    ];
+
+    const fields = ["price","kwh100","kg","depth","noise"];
+
+    // Parametri della "chicca" bolletta (modificabili)
+    const COST_PER_KWH = 0.25;     // €/kWh (stima)
+    const CYCLES_PER_YEAR = 220;   // cicli/anno (stima)
+
+    function safeNorm(value, min, max, higherIsBetter){
+      // Evita divisione per zero
+      if (max === min) return 1;
+      if (higherIsBetter){
+        return (value - min) / (max - min);
+      }
+      return (max - value) / (max - min);
+    }
+
+    function labelForPriority(p){
+      switch(p){
+        case "price": return "Risparmio (prezzo)";
+        case "kwh100": return "Efficienza (consumi)";
+        case "depth": return "Spazio (profondità)";
+        case "kg": return "Capacità (kg)";
+        case "noise": return "Silenzio (rumore)";
+        default: return "Priorità";
+      }
+    }
+
+    function buildWhyText(item, priority, bounds, avgKwh100){
+      const pretty = {
+        price: v => `€${v} (prezzo medio)`,
+        kwh100: v => `${v} kWh/100 cicli`,
+        kg: v => `${v} kg`,
+        depth: v => `${v} cm`,
+        noise: v => `${v} dB`
+      };
+
+      // Normalizzati (0–1)
+      const norms = {};
+      for (const f of fields){
+        const higher = (f === "kg");
+        norms[f] = safeNorm(item[f], bounds[f].min, bounds[f].max, higher);
+      }
+
+      // 1) priorità
+      const pLine = `Hai scelto <strong>${labelForPriority(priority)}</strong>: qui sei messo bene con <strong>${pretty[priority](item[priority])}</strong>.`;
+
+      // 2) secondo punto forte tra gli altri
+      const others = fields.filter(f => f !== priority);
+      others.sort((a,b) => norms[b] - norms[a]);
+      const bestOther = others[0];
+      const otherLine = `In più ti aiuta anche su <strong>${labelForPriority(bestOther)}</strong>: valore solido con <strong>${pretty[bestOther](item[bestOther])}</strong>.`;
+
+      // 3) tip Syncras
+      let advice = "";
+      if (priority === "price"){
+        advice = "Se vuoi risparmiare senza rimpianti, controlla che misure e rumore siano compatibili con casa tua.";
+      } else if (priority === "kwh100"){
+        advice = "Se la userai spesso, il consumo basso è un vantaggio reale nel tempo, non solo un numerino in etichetta.";
+      } else if (priority === "depth"){
+        advice = "Qui vince lo spazio: meglio una lavatrice che entra bene, che una perfetta che resta nel corridoio.";
+      } else if (priority === "noise"){
+        advice = "Se vivi in appartamento (o fai lavatrici la sera), qualche dB in meno si sente davvero.";
+      } else if (priority === "kg"){
+        advice = "Più kg non è sempre meglio: scegli capacità in base a famiglia e frequenza dei lavaggi.";
+      }
+
+      // 4) chicca bolletta (rispetto alla media del gruppo)
+      let energyLine = "";
+      if (typeof avgKwh100 === "number" && Number.isFinite(avgKwh100)) {
+        const diffKwh100 = avgKwh100 - item.kwh100; // positivo = meglio della media
+        const diffKwhYear = (diffKwh100 / 100) * CYCLES_PER_YEAR;
+        const euroYear = diffKwhYear * COST_PER_KWH;
+
+        if (Math.abs(euroYear) >= 1) {
+          const verb = (euroYear > 0) ? "risparmiare" : "spendere";
+          energyLine =
+            `<br><span class="small">Bolletta: rispetto alla media del gruppo, questa fa ${verb} circa <strong>${Math.abs(euroYear).toFixed(0)}€ / anno</strong> (stima).</span>`;
+        }
+      }
+
+      return `${pLine}<br>${otherLine}<br><span class="small">Syncras tip: ${advice}</span>${energyLine}`;
+    }
+
+    function run(){
+      const priority = document.getElementById("priority").value;
+      const maxDepthRaw = document.getElementById("maxDepth").value;
+      const maxDepth = maxDepthRaw ? parseFloat(maxDepthRaw) : null;
+
+      const resultsDiv = document.getElementById("results");
+      resultsDiv.innerHTML = "";
+
+      // 1) filtro per misure (opzionale)
+      let filtered = [...data];
+      if (maxDepth !== null && !Number.isNaN(maxDepth)){
+        filtered = filtered.filter(x => x.depth <= maxDepth);
+      }
+
+      if (filtered.length === 0){
+        resultsDiv.innerHTML = `
+          <article class="card">
+            <h3 class="title">Nessun modello compatibile</h3>
+            <p class="meta">Con quella profondità massima non entra nulla nel dataset MVP. Prova ad aumentare di qualche cm oppure lascia vuoto.</p>
+          </article>
+        `;
+        return;
+      }
+
+      // Media kWh/100 cicli (per “chicca” bolletta)
+      const avgKwh100 = filtered.reduce((s,x)=>s + x.kwh100, 0) / filtered.length;
+
+      // 2) bounds per normalizzazione
+      const bounds = {};
+      for (const f of fields){
+        const values = filtered.map(d => d[f]);
+        bounds[f] = { min: Math.min(...values), max: Math.max(...values) };
+      }
+
+      // 3) scoring: 50% priorità, restante 50% distribuito
+      const otherWeight = (fields.length > 1) ? (0.5 / (fields.length - 1)) : 0;
+
+      const scored = filtered.map(item => {
+        let score = 0;
+        for (const f of fields){
+          const higher = (f === "kg");
+          const n = safeNorm(item[f], bounds[f].min, bounds[f].max, higher);
+          const w = (f === priority) ? 0.5 : otherWeight;
+          score += n * w;
+        }
+        return { ...item, score };
+      });
+
+      scored.sort((a,b) => b.score - a.score);
+      const top3 = scored.slice(0, 3);
+
+      // 4) render
+      top3.forEach((item, idx) => {
+        const why = buildWhyText(item, priority, bounds, avgKwh100);
+
+        resultsDiv.innerHTML += `
+          <article class="card">
+            <div class="rank">#${idx+1} Scelta</div>
+            <h3 class="title">${item.brand} ${item.model}</h3>
+            <div class="price">€ ${item.price}</div>
+            <p class="meta">
+              Consumo: <strong>${item.kwh100}</strong> kWh/100 cicli<br>
+              Capacità: <strong>${item.kg}</strong> kg • Profondità: <strong>${item.depth}</strong> cm • Rumore: <strong>${item.noise}</strong> dB
+            </p>
+            <div class="chips">
+              <span class="chip">Score: ${(item.score*100).toFixed(1)}%</span>
+              <span class="chip">Priorità: ${labelForPriority(priority)}</span>
+              ${maxDepth ? `<span class="chip">Filtro: ≤ ${maxDepth} cm</span>` : ``}
+            </div>
+            <div class="why">${why}</div>
+            ${item.url ? `<a class="btn-link" href="${item.url}" target="_blank" rel="noopener">Verifica disponibilità</a>` : ``}
+          </article>
+        `;
+      });
+    }
+
+    run();
+  </script>
+
+  <!-- ========================================================= -->
+  <!-- INCOLLA QUI IL TUO BLOCCO GDPR (cookie banner + GA) IDENTICO -->
+  <!-- ========================================================= -->
+
+
+  <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
+  <div id="cookie-banner">
+    <p>
+      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
+      (Google Analytics). Alcuni link potrebbero essere di affiliazione.
+      Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
+      <a href="privacy.html">Privacy Policy</a>.
+    </p>
+    <div style="display:flex; gap:10px; margin-top:8px;">
+      <button type="button" onclick="rejectCookies()">
+        Rifiuta
+      </button>
+      <button id="cookie-btn" type="button" onclick="acceptCookies()">
+        Accetta e continua
+      </button>
+    </div>
+  </div>
+
+  <style>
+    #cookie-banner {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 90%;
+      width: 420px;
+      background: #ffffff;
+      border: 2px solid #6C5CE7;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      z-index: 9999;
+      font-family: Arial, sans-serif;
+      display: none;
+    }
+
+    #cookie-banner p {
+      margin: 0 0 12px 0;
+      font-size: 0.95rem;
+      color: #333;
+      line-height: 1.4;
+    }
+
+    #cookie-banner a {
+      color: #6C5CE7;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    /* Pulsante RIFIUTA – pari importanza al pulsante ACCETTA */
+    #cookie-banner button[onclick="rejectCookies()"] {
+      flex: 1;
+      background: white !important;
+      color: #111827 !important;
+      border: 2px solid #6C5CE7 !important;
+      padding: 10px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    /* Pulsante ACCETTA */
+    #cookie-btn {
+      flex: 1;
+      background: #6C5CE7;
+      color: white;
+      border: 2px solid #6C5CE7;
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    #cookie-btn:hover {
+      background: #4B3ACB;
+    }
+  </style>
+
+  <script>
+    (function () {
+      const GA_ID = 'G-CFTTCYDZ2P';
+      const CONSENT_KEY = 'syncras_cookie_consent'; // chiave unica per tutto il sito
+
+      // 1️⃣ BLOCCO PREVENTIVO: GA disabilitato finché non c'è consenso
+      window['ga-disable-' + GA_ID] = true;
+
+      function loadGoogleAnalytics() {
+        if (window.__syncrasGaLoaded) return;
+        window.__syncrasGaLoaded = true;
+
+        // Riabilita GA solo dopo il consenso
+        window['ga-disable-' + GA_ID] = false;
+
+        const gaScript = document.createElement('script');
+        gaScript.async = true;
+        gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+        document.head.appendChild(gaScript);
+
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){ dataLayer.push(arguments); }
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', GA_ID, { anonymize_ip: true });
+      }
+
+      function showBanner() {
+        const banner = document.getElementById('cookie-banner');
+        if (banner) banner.style.display = 'block';
+      }
+
+      function hideBanner() {
+        const banner = document.getElementById('cookie-banner');
+        if (banner) banner.style.display = 'none';
+      }
+
+      window.acceptCookies = function () {
+        localStorage.setItem(CONSENT_KEY, 'yes');
+        hideBanner();
+        loadGoogleAnalytics();
+      };
+
+      window.rejectCookies = function () {
+        localStorage.setItem(CONSENT_KEY, 'no');
+        hideBanner();
+        // GA resta bloccato
+        window['ga-disable-' + GA_ID] = true;
+      };
+
+      // 2️⃣ FUNZIONE DI REVOCA – per cambiare idea dopo
+      window.revokeCookies = function () {
+        localStorage.removeItem(CONSENT_KEY);
+        window['ga-disable-' + GA_ID] = true;   // blocca subito GA
+        showBanner();                           // ri-mostra il banner
+      };
+
+      document.addEventListener('DOMContentLoaded', function () {
+        const consent = localStorage.getItem(CONSENT_KEY);
+
+        if (consent === 'yes') {
+          loadGoogleAnalytics();
+        } else if (consent === 'no') {
+          window['ga-disable-' + GA_ID] = true;
+        } else {
+          showBanner();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
