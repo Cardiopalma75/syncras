@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Comparatore Lavatrice Intelligente | Syncras.App</title>
-  <meta name="description" content="Comparatore intelligente Syncras per lavatrici: scegli la priorità (prezzo, consumi, spazio, capacità, silenzio) e ottieni le migliori 3 scelte spiegate semplice." />
+  <title>Comparatore Intelligente Lavatrici | Syncras.App</title>
+  <meta name="description" content="Comparatore intelligente Syncras: scegli la lavatrice migliore per la tua priorità (prezzo, consumo, spazio, capacità, silenzio) con spiegazione umana del perché vince." />
   <meta name="robots" content="index,follow" />
-  <link rel="canonical" href="https://syncras.app/comparatore-lavatrici-intelligente.html" />
 
   <style>
     :root{
@@ -17,476 +16,636 @@
       --card:#ffffff;
       --border:#E5E7EB;
       --soft:#F6F4FF;
+      --chip:#EDE9FE;
       --warn:#D97706;
       --ok:#16A34A;
-      --danger:#DC2626;
+      --bad:#DC2626;
     }
 
     body{
       font-family: Arial, sans-serif;
       background: var(--bg-page);
       margin:0;
-      color: var(--text-main);
+      padding:0;
       line-height:1.6;
+      color: var(--text-main);
     }
 
-    /* Header semplice stile Syncras */
+    /* HEADER Syncras */
     .site-header{
       background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
       color:#fff;
       padding:12px 14px;
       box-shadow:0 2px 4px rgba(0,0,0,0.15);
+      position: sticky;
+      top:0;
+      z-index: 1000;
     }
     .header-inner{
-      max-width:1100px;
+      max-width:1180px;
       margin:0 auto;
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:16px;
+      position:relative;
     }
-    .logo{ font-size:1.35rem; font-weight:800; letter-spacing:0.02em; }
-    .nav a{ color:#fff; text-decoration:none; font-weight:600; margin-left:14px; }
-    .nav a:hover{ text-decoration:underline; }
+    .logo{
+      font-size:1.35rem;
+      font-weight:800;
+      letter-spacing:0.02em;
+    }
+    #main-nav{
+      display:flex;
+      gap:18px;
+      font-size:0.95rem;
+    }
+    #main-nav a{
+      color:#fff;
+      text-decoration:none;
+      font-weight:700;
+      padding-bottom:2px;
+    }
+    #main-nav a:hover{ text-decoration: underline; }
 
+    .menu-toggle{
+      display:none;
+      background: rgba(255,255,255,0.12);
+      border:1px solid rgba(255,255,255,0.4);
+      border-radius:6px;
+      color:white;
+      padding:6px 10px;
+      font-size:0.9rem;
+      cursor:pointer;
+    }
+    .menu-toggle span{ margin-left:4px; font-size:1.1rem; }
+
+    @media (max-width:768px){
+      #main-nav{
+        display:none;
+        position:absolute;
+        left:0; right:0;
+        top:56px;
+        margin:0 auto;
+        max-width:1180px;
+        flex-direction:column;
+        background: var(--violet-dark);
+        padding:10px 16px 12px 16px;
+        border-radius:0 0 8px 8px;
+        box-shadow:0 3px 6px rgba(0,0,0,0.25);
+        z-index:50;
+      }
+      #main-nav a{ padding:6px 0; }
+      body.nav-open #main-nav{ display:flex; }
+      .menu-toggle{ display:inline-flex; align-items:center; }
+    }
+
+    /* MAIN */
     main{
       max-width: 980px;
-      margin: 22px auto;
-      padding: 0 14px 30px;
+      margin: 26px auto;
+      padding: 18px;
     }
 
-    .hero{
+    .page-card{
       background: var(--card);
       border:1px solid var(--border);
-      border-radius:12px;
-      padding:18px 18px;
-      box-shadow:0 4px 6px rgba(0,0,0,0.06);
+      border-radius: 12px;
+      padding: 18px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.06);
     }
-    .hero h1{
-      margin:0 0 6px 0;
+
+    h1{
+      margin: 0 0 8px 0;
       color: var(--violet-dark);
-      font-size: 1.45rem;
+      font-size: 1.35rem;
     }
-    .hero p{ margin:8px 0 0 0; }
+    .sub{
+      margin:0;
+      opacity:0.9;
+    }
 
     .controls{
-      margin-top:14px;
-      display:grid;
-      grid-template-columns: 1.2fr 0.8fr 0.8fr;
-      gap:10px;
-    }
-    @media (max-width: 860px){
-      .controls{ grid-template-columns: 1fr; }
+      margin-top: 14px;
+      background: var(--soft);
+      border: 1px solid #DDD7FF;
+      border-radius: 12px;
+      padding: 14px;
     }
 
-    .control{
-      background: var(--card);
-      border:1px solid var(--border);
-      border-radius:12px;
-      padding:14px;
+    .grid{
+      display:grid;
+      grid-template-columns: 1.2fr 0.8fr 0.8fr;
+      gap: 10px;
+      align-items:end;
     }
+    @media (max-width:860px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+
     label{
       display:block;
-      font-weight:700;
-      margin-bottom:6px;
+      font-weight: 700;
+      margin-bottom: 6px;
       color: var(--violet-dark);
+      font-size: 0.95rem;
     }
-    select, input{
+
+    input, select{
       width:100%;
-      padding:10px 10px;
-      border-radius:10px;
-      border:1px solid var(--border);
-      font-size: 0.98rem;
+      padding: 10px 10px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      outline:none;
       background:#fff;
+      font-size: 0.98rem;
     }
 
     .btn{
       width:100%;
-      padding:13px 14px; /* più pollice-friendly */
-      border-radius:10px;
-      border:2px solid var(--violet-main);
+      padding: 11px 12px;
+      border-radius: 10px;
+      border: 2px solid var(--violet-main);
       background: var(--violet-main);
       color:#fff;
-      font-weight:800;
+      font-weight: 800;
       cursor:pointer;
-      margin-top:10px;
+      font-size: 0.98rem;
     }
     .btn:hover{ background: var(--violet-dark); border-color: var(--violet-dark); }
 
-    .btn-link{
-      display:block;
-      width:100%;
-      text-align:center;
-      text-decoration:none;
-      padding:12px 14px;
-      border-radius:10px;
-      border:2px solid var(--violet-main);
-      background: #fff;
+    .chips{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 16px 0 6px 0;
+    }
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      background: var(--chip);
       color: var(--violet-dark);
-      font-weight:800;
-      margin-top:10px;
+      border: 1px solid #DDD7FF;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 0.86rem;
     }
-    .btn-link:hover{
-      background: var(--soft);
+    .chip strong{ font-weight: 900; }
+
+    .hint{
+      margin: 0 0 14px 0;
+      font-size: 0.95rem;
+      opacity: 0.92;
     }
 
-    .results-wrap{
-      margin-top:16px;
-    }
-
-    .results-grid{
+    .results{
       display:grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap:12px;
+      gap: 14px;
+      margin-top: 10px;
     }
 
     .card{
-      background: var(--card);
-      border:1px solid var(--border);
-      border-radius:12px;
-      padding:14px 14px;
-      box-shadow:0 4px 10px rgba(0,0,0,0.06);
-      position:relative;
-      overflow:hidden;
-    }
-    .rank{
-      position:absolute;
-      top:10px;
-      right:10px;
-      background: var(--soft);
-      border:1px solid #DDD7FF;
-      color: var(--violet-dark);
-      font-weight:800;
-      font-size:0.78rem;
-      padding:4px 8px;
-      border-radius:999px;
-    }
-    .title{
-      margin:0;
-      font-size:1.05rem;
-      color: var(--violet-dark);
-    }
-    .price{
-      font-size:1.35rem;
-      font-weight:900;
-      color: var(--violet-dark);
-      margin:6px 0 8px 0;
-    }
-    .meta{
-      font-size:0.92rem;
-      margin:0;
-      color:#4b5563;
-    }
-    .chips{
-      display:flex;
-      flex-wrap:wrap;
-      gap:6px;
-      margin-top:10px;
-    }
-    .chip{
-      background: var(--soft);
-      border:1px solid #DDD7FF;
-      border-radius:999px;
-      padding:4px 8px;
-      font-size:0.82rem;
-      color:#2f2a44;
-      font-weight:700;
-    }
-    .why{
-      margin-top:10px;
-      background: #FAFAFF;
-      border:1px dashed #DDD7FF;
-      border-radius:10px;
-      padding:10px 10px;
-      font-size:0.92rem;
-    }
-    .why strong{ color: var(--violet-dark); }
-
-    .note{
-      margin-top:14px;
-      font-size:0.9rem;
       background: #fff;
       border:1px solid var(--border);
-      border-radius:12px;
-      padding:12px;
-      color:#4b5563;
+      border-radius: 14px;
+      padding: 14px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+      position: relative;
+      overflow:hidden;
+    }
+    .rank-tag{
+      font-weight: 900;
+      color: var(--warn);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .card h3{
+      margin: 6px 0 6px 0;
+      color: var(--violet-dark);
+      font-size: 1.05rem;
+    }
+    .badges{
+      display:flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+    .badge{
+      background: #F7F7FB;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 4px 8px;
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+
+    .price{
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: var(--violet-dark);
+      margin: 6px 0 6px 0;
+    }
+    .meta{
+      font-size: 0.93rem;
+      margin: 0 0 10px 0;
+      opacity: 0.95;
+    }
+
+    .why{
+      background: var(--soft);
+      border: 1px solid #DDD7FF;
+      border-radius: 12px;
+      padding: 10px 10px;
+      font-size: 0.92rem;
+      margin-top: 10px;
+    }
+    .why b{ color: var(--violet-dark); }
+
+    .cta-row{
+      display:flex;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .cta{
+      flex:1;
+      padding: 10px 10px;
+      border-radius: 10px;
+      border: 2px solid var(--violet-main);
+      background:#fff;
+      font-weight: 900;
+      color: var(--violet-dark);
+      cursor:pointer;
+    }
+    .cta.primary{
+      background: var(--violet-main);
+      color:#fff;
+    }
+    .cta.primary:hover{ background: var(--violet-dark); border-color: var(--violet-dark); }
+    .cta:hover{ border-color: var(--violet-dark); }
+
+    .note{
+      margin-top: 14px;
+      font-size: 0.9rem;
+      opacity: 0.92;
+      border-top: 1px solid var(--border);
+      padding-top: 12px;
     }
 
     .small{
-      font-size:0.85rem;
-      opacity:0.9;
+      font-size: 0.9rem;
+      opacity: 0.9;
+      margin-top: 10px;
+    }
+
+    .empty{
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px dashed #C7BFFF;
+      background: #fff;
+      opacity: 0.95;
     }
 
     footer{
-      margin-top:18px;
       text-align:center;
-      padding:18px 12px;
+      padding: 20px;
       background:#eee;
+      font-family:Arial;
       font-size:0.9rem;
+      margin-top: 40px;
     }
-    footer a{ color: var(--violet-dark); font-weight:700; text-decoration:none; }
-    footer a:hover{ text-decoration:underline; }
   </style>
 </head>
 
 <body>
+
   <header class="site-header">
     <div class="header-inner">
       <div class="logo">Syncras.App</div>
-      <nav class="nav">
+
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
+
+      <nav id="main-nav">
         <a href="index.html">Home</a>
-        <a href="calcolatori.html">Calcolatori</a>
         <a href="blog.html">Blog</a>
+        <a href="smart-test.html">Smart Test</a>
+        <a href="calcolatori.html">Calcolatori</a>
+        <a href="fast-cards.html">Fast Card</a>
+        <a href="offerte.html">Prodotti Consapevoli</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="chi.html">Chi siamo</a>
       </nav>
     </div>
   </header>
 
   <main>
-    <section class="hero">
-      <h1>Comparatore intelligente lavatrici: scegli la priorità e ti dico le 3 più sensate</h1>
-      <p>
-        Non è un elenco infinito di modelli: è un <strong>filtro mentale</strong>.
-        Tu dici cosa ti importa (prezzo, consumi, spazio, capacità, silenzio) e Syncras ordina in modo coerente.
+    <div class="page-card">
+      <h1>Comparatore Intelligente Lavatrici</h1>
+      <p class="sub">
+        Scegli la priorità che conta per te (prezzo, consumi, spazio, capacità, silenzio).
+        Syncras ti mostra <b>solo 3 scelte sensate</b> e ti spiega <b>perché</b>.
       </p>
 
       <div class="controls">
-        <div class="control">
-          <label for="priority">La tua priorità principale</label>
-          <select id="priority">
-            <option value="price">Risparmio (prezzo più basso)</option>
-            <option value="kwh100">Efficienza (minor consumo)</option>
-            <option value="depth">Spazio (minore profondità)</option>
-            <option value="kg">Capacità (più kg)</option>
-            <option value="noise">Silenzio (meno rumore)</option>
-          </select>
-          <button class="btn" type="button" onclick="run()">Trova le mie Top 3</button>
-          <div class="small" style="margin-top:8px;">
-            Suggerimento: se hai un bagno “stretto”, imposta anche la profondità massima.
+        <div class="grid">
+          <div>
+            <label for="priority">La tua priorità principale</label>
+            <select id="priority">
+              <option value="price">Risparmio (prezzo più basso)</option>
+              <option value="kwh100">Efficienza (minor consumo)</option>
+              <option value="depth">Spazio (minore profondità)</option>
+              <option value="kg">Capacità (più kg)</option>
+              <option value="noise_db">Silenzio (meno dB)</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="maxDepth">Profondità massima (cm)</label>
+            <input id="maxDepth" type="number" inputmode="numeric" placeholder="Es. 55" min="0" step="0.1" />
+          </div>
+
+          <div>
+            <button class="btn" type="button" onclick="calculateRanking()">Trova le mie 3 scelte</button>
           </div>
         </div>
 
-        <div class="control">
-          <label for="maxDepth">Profondità massima (cm) – opzionale</label>
-          <input id="maxDepth" type="number" inputmode="numeric" min="30" max="80" placeholder="Es. 55" />
-          <div class="small" style="margin-top:8px;">
-            Se la inserisci, scartiamo i modelli troppo profondi prima del ranking.
-          </div>
-        </div>
-
-        <div class="control">
-          <label>Metodo Syncras</label>
-          <div class="small">
-            Trasformiamo ogni valore (euro, kWh, dB, cm, kg) in un punteggio 0–1.
-            Poi diamo <strong>peso 50%</strong> alla tua priorità e il resto si divide tra gli altri parametri.
-            Risultato: scelta “sensata”, non “perfetta sulla carta”.
-          </div>
-          <div class="small" style="margin-top:8px;">
-            Bonus: stimiamo anche il <strong>risparmio annuo</strong> (indicativo) rispetto alla media del gruppo.
-          </div>
-        </div>
+        <p class="small">
+          Tip Syncras: se hai un bagno stretto, inserisci la profondità massima. Il ranking considererà
+          <b>solo</b> i modelli compatibili.
+        </p>
       </div>
-    </section>
 
-    <section class="results-wrap">
-      <div id="results" class="results-grid"></div>
+      <!-- ✅ Chip dinamiche (aggiornate via JS) -->
+      <div class="chips" id="chips"></div>
+      <p class="hint" id="hint"></p>
+
+      <div class="results" id="results"></div>
 
       <div class="note">
-        <strong>Nota prezzi:</strong> i prezzi sono <strong>medi e indicativi</strong>, usati solo come riferimento.
-        Possono variare in base a offerte e rivenditori. <strong>Ultimo aggiornamento:</strong> Dicembre 2025.<br>
-        <span class="small">Le stime energetiche sono orientative e dipendono da cicli/anno e costo kWh.</span>
+        <b>Metodo Syncras (trasparente):</b> normalizziamo i valori (0–1) perché euro, kWh e cm non sono confrontabili “a occhio”.
+        La priorità scelta pesa <b>50%</b>, le altre metriche si dividono l’altro <b>50%</b>.
+        Così non vince “il più economico in assoluto”, ma quello che ha più senso <b>per te</b>.
       </div>
-    </section>
+    </div>
+
+    <footer>
+      © 2025 Syncras.App — Tutti i diritti riservati<br>
+      <div style="margin-top:8px;">
+        <a href="privacy.html">Privacy Policy</a> |
+        <a href="cookie.html">Cookie Policy</a> |
+        <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
+        <a href="note-legali.html">Note Legali</a>
+      </div>
+    </footer>
   </main>
 
-  <footer>
-    © 2025 Syncras.App — Tutti i diritti riservati<br>
-    <div style="margin-top:8px;">
-      <a href="privacy.html">Privacy Policy</a> |
-      <a href="cookie.html">Cookie Policy</a> |
-      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
-      <a href="note-legali.html">Note Legali</a>
-    </div>
-  </footer>
-
   <script>
-    // ✅ Dataset MVP (5 modelli) + link ricerca Amazon (CTA non legata al prezzo)
+    function toggleMenu() { document.body.classList.toggle('nav-open'); }
+
+    // ✅ DATASET: 20 lavatrici (price/noise_db sono stime, ok per MVP)
     const data = [
-      {"brand":"Samsung","model":"Series 5 AI","price":545,"kwh100":44,"kg":9,"depth":55,"noise":72,
-       "url":"https://www.amazon.it/s?k=Samsung+Series+5+AI+lavatrice"},
-      {"brand":"LG","model":"V3 Turbo","price":430,"kwh100":48,"kg":8,"depth":47,"noise":73,
-       "url":"https://www.amazon.it/s?k=LG+V3+Turbo+lavatrice"},
-      {"brand":"Bosch","model":"Serie 6","price":690,"kwh100":40,"kg":9,"depth":59,"noise":70,
-       "url":"https://www.amazon.it/s?k=Bosch+Serie+6+lavatrice"},
-      {"brand":"Candy","model":"Smart Pro","price":300,"kwh100":55,"kg":7,"depth":45,"noise":77,
-       "url":"https://www.amazon.it/s?k=Candy+Smart+Pro+lavatrice"},
-      {"brand":"Haier","model":"I-Pro Series 7","price":600,"kwh100":42,"kg":10,"depth":60,"noise":67,
-       "url":"https://www.amazon.it/s?k=Haier+I-Pro+Series+7+lavatrice"}
+      {"id":1, "brand":"BEKO", "model":"WM710", "price":429, "kwh100":34, "kg":9.0, "depth":58.0, "noise_db":72, "rpm":1400, "noise_class":"B"},
+      {"id":2, "brand":"V-ZUG", "model":"AdoraWaschen V6000", "price":1899, "kwh100":44, "kg":8.0, "depth":66.0, "noise_db":70, "rpm":1600, "noise_class":"A"},
+      {"id":3, "brand":"BEKO", "model":"WM520", "price":379, "kwh100":44, "kg":9.0, "depth":58.0, "noise_db":72, "rpm":1400, "noise_class":"B"},
+      {"id":4, "brand":"V-ZUG", "model":"AdoraWaschen V4000", "price":1599, "kwh100":44, "kg":8.0, "depth":62.5, "noise_db":69, "rpm":1600, "noise_class":"A"},
+      {"id":5, "brand":"SIEMENS", "model":"WG44G2A9CH", "price":899, "kwh100":46, "kg":9.0, "depth":60.0, "noise_db":70, "rpm":1400, "noise_class":"A"},
+      {"id":6, "brand":"HAIER", "model":"HW80-B14636N-S", "price":549, "kwh100":46, "kg":8.0, "depth":55.0, "noise_db":69, "rpm":1400, "noise_class":"A"},
+      {"id":7, "brand":"BOSCH", "model":"WAVH8E41CH", "price":999, "kwh100":48, "kg":9.0, "depth":59.0, "noise_db":69, "rpm":1400, "noise_class":"A"},
+      {"id":8, "brand":"Miele", "model":"WWG 600-60 CH", "price":1199, "kwh100":49, "kg":9.0, "depth":60.0, "noise_db":69, "rpm":1400, "noise_class":"A"},
+      {"id":9, "brand":"Haier", "model":"HW120-B14979-S", "price":699, "kwh100":54, "kg":12.0, "depth":60.0, "noise_db":69, "rpm":1400, "noise_class":"A"},
+      {"id":10, "brand":"Miele", "model":"WWG 700-60 CH Warmwasser", "price":1399, "kwh100":49, "kg":9.0, "depth":60.0, "noise_db":69, "rpm":1400, "noise_class":"A"},
+      {"id":11, "brand":"GRUNDIG", "model":"GWM5100", "price":449, "kwh100":47, "kg":8.0, "depth":55.0, "noise_db":69, "rpm":1400, "noise_class":"A"},
+      {"id":12, "brand":"BEKO", "model":"WM205", "price":329, "kwh100":44, "kg":7.0, "depth":49.0, "noise_db":69, "rpm":1400, "noise_class":"A"},
+      {"id":13, "brand":"BEKO", "model":"WM305", "price":339, "kwh100":52, "kg":7.0, "depth":49.6, "noise_db":69, "rpm":1400, "noise_class":"A"},
+      {"id":14, "brand":"BEKO", "model":"WM325", "price":399, "kwh100":49, "kg":9.0, "depth":58.0, "noise_db":69, "rpm":1400, "noise_class":"A"},
+      {"id":15, "brand":"BEKO", "model":"WM530", "price":449, "kwh100":47, "kg":10.0, "depth":58.0, "noise_db":72, "rpm":1400, "noise_class":"B"},
+      {"id":16, "brand":"BEKO", "model":"50081466CH1", "price":419, "kwh100":47, "kg":8.0, "depth":59.0, "noise_db":69, "rpm":1400, "noise_class":"A"},
+      {"id":17, "brand":"Miele", "model":"PWM 300-08 CH", "price":2499, "kwh100":47, "kg":8.0, "depth":71.4, "noise_db":69, "rpm":1600, "noise_class":"A"},
+      {"id":18, "brand":"Miele", "model":"WDD 131 WPS GuideLine", "price":999, "kwh100":47, "kg":8.0, "depth":60.0, "noise_db":69, "rpm":1400, "noise_class":"A"},
+      {"id":19, "brand":"Electrolux", "model":"WASL3IE500", "price":899, "kwh100":51, "kg":10.0, "depth":60.0, "noise_db":72, "rpm":1600, "noise_class":"B"},
+      {"id":20, "brand":"Schulthess", "model":"Superforte 710", "price":2199, "kwh100":47, "kg":8.0, "depth":72.0, "noise_db":72, "rpm":1500, "noise_class":"B"}
     ];
 
-    const fields = ["price","kwh100","kg","depth","noise"];
+    const FIELDS = ["price", "kwh100", "kg", "depth", "noise_db"];
 
-    // Parametri della "chicca" bolletta (modificabili)
-    const COST_PER_KWH = 0.25;     // €/kWh (stima)
-    const CYCLES_PER_YEAR = 220;   // cicli/anno (stima)
-
-    function safeNorm(value, min, max, higherIsBetter){
-      // Evita divisione per zero
-      if (max === min) return 1;
-      if (higherIsBetter){
-        return (value - min) / (max - min);
-      }
-      return (max - value) / (max - min);
+    function safeNorm(val, min, max, higherIsBetter){
+      if (max === min) return 1; // ex-aequo: tutti uguali su quel campo
+      return higherIsBetter
+        ? (val - min) / (max - min)
+        : (max - val) / (max - min);
     }
 
-    function labelForPriority(p){
-      switch(p){
-        case "price": return "Risparmio (prezzo)";
-        case "kwh100": return "Efficienza (consumi)";
-        case "depth": return "Spazio (profondità)";
-        case "kg": return "Capacità (kg)";
-        case "noise": return "Silenzio (rumore)";
-        default: return "Priorità";
-      }
-    }
+    function buildWhyText(item, priority, maxDepth, compatibleCount, totalCount){
+      const p = item.price;
+      const k = item.kwh100;
+      const d = item.depth;
+      const kg = item.kg;
+      const n = item.noise_db;
 
-    function buildWhyText(item, priority, bounds, avgKwh100){
-      const pretty = {
-        price: v => `€${v} (prezzo medio)`,
-        kwh100: v => `${v} kWh/100 cicli`,
-        kg: v => `${v} kg`,
-        depth: v => `${v} cm`,
-        noise: v => `${v} dB`
-      };
+      const depthMsg = maxDepth
+        ? `Hai imposto <b>${maxDepth} cm</b>: su <b>${totalCount}</b> modelli, ne restano <b>${compatibleCount}</b> compatibili. `
+        : `Abbiamo analizzato <b>${totalCount}</b> modelli. `;
 
-      // Normalizzati (0–1)
-      const norms = {};
-      for (const f of fields){
-        const higher = (f === "kg");
-        norms[f] = safeNorm(item[f], bounds[f].min, bounds[f].max, higher);
-      }
-
-      // 1) priorità
-      const pLine = `Hai scelto <strong>${labelForPriority(priority)}</strong>: qui sei messo bene con <strong>${pretty[priority](item[priority])}</strong>.`;
-
-      // 2) secondo punto forte tra gli altri
-      const others = fields.filter(f => f !== priority);
-      others.sort((a,b) => norms[b] - norms[a]);
-      const bestOther = others[0];
-      const otherLine = `In più ti aiuta anche su <strong>${labelForPriority(bestOther)}</strong>: valore solido con <strong>${pretty[bestOther](item[bestOther])}</strong>.`;
-
-      // 3) tip Syncras
-      let advice = "";
       if (priority === "price"){
-        advice = "Se vuoi risparmiare senza rimpianti, controlla che misure e rumore siano compatibili con casa tua.";
-      } else if (priority === "kwh100"){
-        advice = "Se la userai spesso, il consumo basso è un vantaggio reale nel tempo, non solo un numerino in etichetta.";
-      } else if (priority === "depth"){
-        advice = "Qui vince lo spazio: meglio una lavatrice che entra bene, che una perfetta che resta nel corridoio.";
-      } else if (priority === "noise"){
-        advice = "Se vivi in appartamento (o fai lavatrici la sera), qualche dB in meno si sente davvero.";
-      } else if (priority === "kg"){
-        advice = "Più kg non è sempre meglio: scegli capacità in base a famiglia e frequenza dei lavaggi.";
+        return depthMsg + `Se vuoi <b>spendere meno senza rimpianti</b>, questo modello è tra i più forti sul prezzo senza essere “a caso”: resta equilibrato su consumi e caratteristiche.`;
       }
-
-      // 4) chicca bolletta (rispetto alla media del gruppo)
-      let energyLine = "";
-      if (typeof avgKwh100 === "number" && Number.isFinite(avgKwh100)) {
-        const diffKwh100 = avgKwh100 - item.kwh100; // positivo = meglio della media
-        const diffKwhYear = (diffKwh100 / 100) * CYCLES_PER_YEAR;
-        const euroYear = diffKwhYear * COST_PER_KWH;
-
-        if (Math.abs(euroYear) >= 1) {
-          const verb = (euroYear > 0) ? "risparmiare" : "spendere";
-          energyLine =
-            `<br><span class="small">Bolletta: rispetto alla media del gruppo, questa fa ${verb} circa <strong>${Math.abs(euroYear).toFixed(0)}€ / anno</strong> (stima).</span>`;
-        }
+      if (priority === "kwh100"){
+        return depthMsg + `Se vuoi <b>tagliare i consumi</b>, qui paghi meno kWh per 100 cicli. È la scelta “bolletta-friendly” tra quelle compatibili.`;
       }
-
-      return `${pLine}<br>${otherLine}<br><span class="small">Syncras tip: ${advice}</span>${energyLine}`;
+      if (priority === "depth"){
+        return depthMsg + `Se il problema è <b>lo spazio</b>, questo modello è tra i più “snelli” in profondità. Meno cm = meno bestemmie in bagno.`;
+      }
+      if (priority === "kg"){
+        return depthMsg + `Se vuoi <b>più carico</b>, qui porti a casa più kg. È la scelta “famiglia / lavaggi grandi” tra le compatibili.`;
+      }
+      if (priority === "noise_db"){
+        return depthMsg + `Se odi il rumore, questo modello sta meglio sul lato <b>silenzio</b> (meno dB). Ideale se lavi la sera o in casa piccola.`;
+      }
+      return depthMsg + `Scelta bilanciata in base alle tue priorità.`;
     }
 
-    function run(){
+    function updateChips(totalCount, compatibleCount){
+      const chips = document.getElementById("chips");
+      chips.innerHTML = `
+        <span class="chip"><strong>${totalCount}</strong> modelli analizzati</span>
+        <span class="chip"><strong>${compatibleCount}</strong> compatibili con lo spazio</span>
+        <span class="chip">Mostrate le <strong>3</strong> scelte più sensate</span>
+      `;
+    }
+
+    function updateHint(totalCount, compatibleCount, maxDepth, priorityLabel){
+      const hint = document.getElementById("hint");
+      if (maxDepth){
+        hint.innerHTML = `Stai vedendo un ranking su <b>${compatibleCount}</b> lavatrici compatibili (su <b>${totalCount}</b> analizzate), priorità: <b>${priorityLabel}</b>.`;
+      } else {
+        hint.innerHTML = `Stai vedendo un ranking su <b>${totalCount}</b> lavatrici analizzate, priorità: <b>${priorityLabel}</b>.`;
+      }
+    }
+
+    function priorityToLabel(p){
+      switch(p){
+        case "price": return "Prezzo";
+        case "kwh100": return "Consumi";
+        case "depth": return "Spazio";
+        case "kg": return "Capacità";
+        case "noise_db": return "Silenzio";
+        default: return "Ranking";
+      }
+    }
+
+    function amazonSearchUrl(brand, model){
+      const q = encodeURIComponent(`${brand} ${model} lavatrice`);
+      return `https://www.amazon.it/s?k=${q}`;
+    }
+
+    function calculateRanking(){
       const priority = document.getElementById("priority").value;
-      const maxDepthRaw = document.getElementById("maxDepth").value;
-      const maxDepth = maxDepthRaw ? parseFloat(maxDepthRaw) : null;
+      const priorityLabel = priorityToLabel(priority);
+
+      const maxDepthRaw = (document.getElementById("maxDepth").value || "").trim();
+      const maxDepth = maxDepthRaw ? Number(maxDepthRaw) : null;
+
+      const totalCount = data.length;
+
+      // 1) filtro compatibilità spazio
+      let filtered = data.slice();
+      if (maxDepth && !Number.isNaN(maxDepth)){
+        filtered = filtered.filter(x => Number(x.depth) <= maxDepth);
+      }
+      const compatibleCount = filtered.length;
+
+      updateChips(totalCount, compatibleCount);
+      updateHint(totalCount, compatibleCount, maxDepth, priorityLabel);
 
       const resultsDiv = document.getElementById("results");
       resultsDiv.innerHTML = "";
 
-      // 1) filtro per misure (opzionale)
-      let filtered = [...data];
-      if (maxDepth !== null && !Number.isNaN(maxDepth)){
-        filtered = filtered.filter(x => x.depth <= maxDepth);
-      }
-
-      if (filtered.length === 0){
+      if (!compatibleCount){
         resultsDiv.innerHTML = `
-          <article class="card">
-            <h3 class="title">Nessun modello compatibile</h3>
-            <p class="meta">Con quella profondità massima non entra nulla nel dataset MVP. Prova ad aumentare di qualche cm oppure lascia vuoto.</p>
-          </article>
+          <div class="empty">
+            Nessun modello compatibile con <b>${maxDepth} cm</b>. Prova ad aumentare di qualche cm
+            (anche 2–3 cm fanno miracoli) o lascia vuoto.
+          </div>
         `;
         return;
       }
 
-      // Media kWh/100 cicli (per “chicca” bolletta)
-      const avgKwh100 = filtered.reduce((s,x)=>s + x.kwh100, 0) / filtered.length;
-
-      // 2) bounds per normalizzazione
+      // 2) bounds per normalizzazione (sui compatibili, così è “giusto”)
       const bounds = {};
-      for (const f of fields){
-        const values = filtered.map(d => d[f]);
-        bounds[f] = { min: Math.min(...values), max: Math.max(...values) };
-      }
+      FIELDS.forEach(f => {
+        const vals = filtered.map(x => Number(x[f]));
+        bounds[f] = { min: Math.min(...vals), max: Math.max(...vals) };
+      });
 
-      // 3) scoring: 50% priorità, restante 50% distribuito
-      const otherWeight = (fields.length > 1) ? (0.5 / (fields.length - 1)) : 0;
+      // 3) score pesato (50% priorità + resto)
+      const weightPriority = 0.5;
+      const otherFields = FIELDS.filter(f => f !== priority);
+      const weightOther = otherFields.length ? (0.5 / otherFields.length) : 0;
 
       const scored = filtered.map(item => {
         let score = 0;
-        for (const f of fields){
-          const higher = (f === "kg");
-          const n = safeNorm(item[f], bounds[f].min, bounds[f].max, higher);
-          const w = (f === priority) ? 0.5 : otherWeight;
-          score += n * w;
-        }
-        return { ...item, score };
+
+        FIELDS.forEach(f => {
+          const higherIsBetter = (f === "kg"); // solo kg: più alto meglio
+          const norm = safeNorm(Number(item[f]), bounds[f].min, bounds[f].max, higherIsBetter);
+          const w = (f === priority) ? weightPriority : weightOther;
+          score += norm * w;
+        });
+
+        return { ...item, finalScore: score };
       });
 
-      scored.sort((a,b) => b.score - a.score);
-      const top3 = scored.slice(0, 3);
+      scored.sort((a,b) => b.finalScore - a.finalScore);
+      const top = scored.slice(0, 3);
 
-      // 4) render
-      top3.forEach((item, idx) => {
-        const why = buildWhyText(item, priority, bounds, avgKwh100);
+      top.forEach((item, idx) => {
+        const url = amazonSearchUrl(item.brand, item.model);
+        const why = buildWhyText(item, priority, maxDepth, compatibleCount, totalCount);
 
         resultsDiv.innerHTML += `
-          <article class="card">
-            <div class="rank">#${idx+1} Scelta</div>
-            <h3 class="title">${item.brand} ${item.model}</h3>
-            <div class="price">€ ${item.price}</div>
-            <p class="meta">
-              Consumo: <strong>${item.kwh100}</strong> kWh/100 cicli<br>
-              Capacità: <strong>${item.kg}</strong> kg • Profondità: <strong>${item.depth}</strong> cm • Rumore: <strong>${item.noise}</strong> dB
-            </p>
-            <div class="chips">
-              <span class="chip">Score: ${(item.score*100).toFixed(1)}%</span>
-              <span class="chip">Priorità: ${labelForPriority(priority)}</span>
-              ${maxDepth ? `<span class="chip">Filtro: ≤ ${maxDepth} cm</span>` : ``}
+          <div class="card">
+            <div class="rank-tag">#${idx + 1} Miglior Scelta</div>
+            <h3>${item.brand} ${item.model}</h3>
+
+            <div class="badges">
+              <span class="badge">${item.kg} kg</span>
+              <span class="badge">${item.kwh100} kWh/100 cicli</span>
+              <span class="badge">${item.depth} cm</span>
+              <span class="badge">${item.noise_db} dB</span>
+              <span class="badge">${item.rpm} rpm</span>
             </div>
-            <div class="why">${why}</div>
-            ${item.url ? `<a class="btn-link" href="${item.url}" target="_blank" rel="noopener">Verifica disponibilità</a>` : ``}
-          </article>
+
+            <div class="price">€ ${item.price}</div>
+
+            <p class="meta">
+              Punteggio Syncras: <b>${(item.finalScore * 100).toFixed(1)}%</b>
+            </p>
+
+            <div class="why">
+              <b>Perché è qui:</b> ${why}
+            </div>
+
+            <div class="cta-row">
+              <button class="cta primary" type="button" onclick="window.open('${url}','_blank')">
+                Verifica offerte
+              </button>
+              <button class="cta" type="button" onclick="copySummary(${item.id}, '${priorityLabel}', ${maxDepth ? maxDepth : 'null'}, ${compatibleCount}, ${totalCount})">
+                Copia testo
+              </button>
+            </div>
+          </div>
         `;
       });
     }
 
-    run();
+    function copySummary(id, priorityLabel, maxDepth, compatibleCount, totalCount){
+      const item = data.find(x => x.id === id);
+      if (!item) return;
+
+      const spaceLine = (maxDepth && !Number.isNaN(maxDepth))
+        ? `Filtro spazio: max ${maxDepth} cm → compatibili ${compatibleCount}/${totalCount}\n`
+        : `Analisi: ${totalCount} modelli\n`;
+
+      const text =
+`Syncras Smart Picker — Lavatrici
+Priorità: ${priorityLabel}
+${spaceLine}
+Scelta: ${item.brand} ${item.model}
+• Prezzo stimato: € ${item.price}
+• Consumo: ${item.kwh100} kWh/100 cicli
+• Carico: ${item.kg} kg
+• Profondità: ${item.depth} cm
+• Rumore stimato: ${item.noise_db} dB
+• Centrifuga: ${item.rpm} rpm
+
+Note: prezzi/rumore sono indicativi (MVP).`;
+
+      navigator.clipboard.writeText(text).then(() => {
+        alert("Testo copiato ✅ Incollalo su WhatsApp/Telegram quando vuoi.");
+      }).catch(() => {
+        // fallback per browser vecchi
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+        alert("Testo copiato ✅");
+      });
+    }
+
+    // Auto-run al primo avvio
+    document.addEventListener("DOMContentLoaded", calculateRanking);
   </script>
 
-  <!-- ========================================================= -->
-  <!-- INCOLLA QUI IL TUO BLOCCO GDPR (cookie banner + GA) IDENTICO -->
-  <!-- ========================================================= -->
+  <!-- ✅ QUI INCOLLERAI IL TUO BLOCCO GDPR (cookie banner + GA) -->
+
 
 
   <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
