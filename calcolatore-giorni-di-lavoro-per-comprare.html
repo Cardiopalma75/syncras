@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quanti giorni di lavoro servono per comprare qualcosa? | Calcolatore Syncras.App</title>
+  <meta name="description" content="Calcolatore Syncras: scopri quante ore, giorni, mesi e anni di lavoro servono per comprare un oggetto, in base al tuo stipendio e alle ore lavorate." />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://syncras.app/calcolatore-giorni-di-lavoro-per-comprare.html" />
+
+  <style>
+    :root{
+      --violet-main:#6C5CE7;
+      --violet-dark:#4B3ACB;
+      --bg-page:#F7F7FB;
+      --text-main:#403E43;
+      --card:#ffffff;
+      --muted:#6B7280;
+      --border:#E5E7EB;
+      --soft:#F6F4FF;
+      --soft-border:#DDD7FF;
+      --danger:#DC2626;
+      --ok:#16A34A;
+      --warn:#D97706;
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      font-family: Arial, sans-serif;
+      background: var(--bg-page);
+      margin:0;
+      padding:0;
+      line-height:1.6;
+      color: var(--text-main);
+    }
+
+    /* HEADER VIOLA UNIFICATO */
+    .site-header{
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color:#fff;
+      padding:12px 14px;
+      box-shadow:0 2px 4px rgba(0,0,0,0.15);
+      position: sticky;
+      top: 0;
+      z-index: 60;
+    }
+    .header-inner{
+      max-width:1180px;
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      position: relative;
+    }
+    .logo{
+      font-size:1.35rem;
+      font-weight:800;
+      letter-spacing:.03em;
+    }
+    #main-nav{
+      display:flex;
+      gap:18px;
+      font-size:.95rem;
+    }
+    #main-nav a{
+      color:#fff;
+      text-decoration:none;
+      font-weight:700;
+      padding-bottom:2px;
+    }
+    #main-nav a:hover{ text-decoration:underline; }
+
+    .menu-toggle{
+      display:none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .menu-toggle span{ margin-left:4px; font-size:1.1rem; }
+
+    @media (max-width: 768px){
+      #main-nav{
+        display:none;
+        position:absolute;
+        left:0;
+        right:0;
+        top:56px;
+        margin:0 auto;
+        max-width:1180px;
+        flex-direction:column;
+        background-color: var(--violet-dark);
+        padding: 10px 16px 12px 16px;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
+      }
+      #main-nav a{ padding: 6px 0; }
+      body.nav-open #main-nav{ display:flex; }
+      .menu-toggle{ display:inline-flex; align-items:center; }
+    }
+
+    /* TG ticker */
+    #news-ticker{
+      background: var(--violet-dark);
+      color:#fff;
+      padding: 6px 0;
+      overflow:hidden;
+      white-space:nowrap;
+    }
+    .news-ticker-track{
+      display:inline-block;
+      padding-left:100%;
+      animation: ticker-scroll 110s linear infinite;
+    }
+    .news-ticker-item{
+      color:#fff;
+      text-decoration:none;
+      margin-right: 28px;
+      font-size:.9rem;
+      font-weight:600;
+      opacity:.95;
+    }
+    .news-ticker-item:hover{ text-decoration:underline; }
+    .news-ticker-separator{ margin:0 10px; opacity:.65; }
+    @keyframes ticker-scroll{
+      0%{ transform: translateX(0%); }
+      100%{ transform: translateX(-100%); }
+    }
+    #news-ticker:hover .news-ticker-track{ animation-play-state: paused; }
+
+    main{
+      max-width: 980px;
+      margin: 22px auto;
+      padding: 0 14px 30px 14px;
+    }
+
+    .panel{
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+      padding: 18px;
+    }
+
+    .hero{
+      margin-top: 14px;
+      background: linear-gradient(180deg, #FFFFFF 0%, #F6F4FF 100%);
+      border: 1px solid var(--soft-border);
+      border-radius: 14px;
+      padding: 18px;
+    }
+    .hero h1{
+      margin: 0 0 8px 0;
+      color: var(--violet-dark);
+      line-height: 1.25;
+      font-size: 1.55rem;
+    }
+    .hero p{ margin: 8px 0 0 0; color: var(--muted); }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+    @media (max-width: 900px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+
+    .section-title{
+      margin: 0 0 10px 0;
+      color: var(--violet-dark);
+      font-size: 1.1rem;
+    }
+
+    .form-row{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    @media (max-width: 700px){
+      .form-row{ grid-template-columns: 1fr; }
+    }
+
+    label{
+      display:block;
+      font-weight:700;
+      font-size: .92rem;
+      margin: 0 0 6px 0;
+    }
+    .hint{
+      font-size:.85rem;
+      color: var(--muted);
+      margin-top: -2px;
+      margin-bottom: 8px;
+    }
+
+    input[type="text"], input[type="number"]{
+      width: 100%;
+      padding: 11px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 1rem;
+      outline: none;
+      background: #fff;
+    }
+    input:focus{
+      border-color: var(--violet-main);
+      box-shadow: 0 0 0 3px rgba(108,92,231,0.15);
+    }
+
+    .actions{
+      display:flex;
+      gap:10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+      align-items: center;
+    }
+    button{
+      appearance:none;
+      border: 2px solid var(--violet-main);
+      background: var(--violet-main);
+      color:#fff;
+      font-weight:800;
+      padding: 10px 14px;
+      border-radius: 10px;
+      cursor:pointer;
+      font-size: 1rem;
+    }
+    button:hover{ background: var(--violet-dark); border-color: var(--violet-dark); }
+    .btn-secondary{
+      background:#fff;
+      color:#111827;
+      border:2px solid var(--violet-main);
+      font-weight:800;
+    }
+    .btn-secondary:hover{
+      background:#F6F4FF;
+      border-color: var(--violet-dark);
+    }
+
+    .legal-box{
+      margin-top: 12px;
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px;
+    }
+    .legal-box label{
+      font-weight:700;
+      margin: 0;
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      cursor:pointer;
+    }
+    .legal-box input{ transform: translateY(3px); }
+
+    .results{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    @media (max-width: 700px){
+      .results{ grid-template-columns: 1fr; }
+    }
+    .result-card{
+      background: var(--soft);
+      border: 1px solid var(--soft-border);
+      border-radius: 12px;
+      padding: 12px;
+    }
+    .result-card .k{
+      color: var(--muted);
+      font-size: .9rem;
+      margin-bottom: 4px;
+      font-weight: 700;
+    }
+    .result-card .v{
+      font-size: 1.25rem;
+      font-weight: 900;
+      color: #111827;
+    }
+
+    .big-verdict{
+      margin-top: 12px;
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+    }
+    .big-verdict h3{
+      margin:0 0 8px 0;
+      color: var(--violet-dark);
+      font-size: 1.05rem;
+    }
+    .verdict-line{
+      font-size: 1rem;
+      margin: 6px 0;
+    }
+    .badge{
+      display:inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: .85rem;
+      margin-left: 8px;
+      border: 1px solid transparent;
+    }
+    .badge.ok{ background: rgba(22,163,74,0.12); color: var(--ok); border-color: rgba(22,163,74,0.25); }
+    .badge.warn{ background: rgba(217,119,6,0.12); color: var(--warn); border-color: rgba(217,119,6,0.25); }
+    .badge.danger{ background: rgba(220,38,38,0.12); color: var(--danger); border-color: rgba(220,38,38,0.25); }
+
+    .share-box{
+      margin-top: 10px;
+      background: #fff;
+      border: 1px dashed rgba(108,92,231,0.6);
+      border-radius: 12px;
+      padding: 12px;
+    }
+    .share-box textarea{
+      width: 100%;
+      min-height: 92px;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      resize: vertical;
+      font-family: Arial, sans-serif;
+    }
+
+    .mini-note{
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    footer{
+      text-align:center;
+      padding: 20px 14px;
+      background:#eee;
+      font-family: Arial, sans-serif;
+      font-size: .92rem;
+      margin-top: 30px;
+    }
+    footer a{
+      color: var(--violet-dark);
+      font-weight: 800;
+      text-decoration: none;
+    }
+    footer a:hover{ text-decoration: underline; }
+
+    /* Cookie banner */
+    #cookie-banner{
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 92%;
+      width: 460px;
+      background: #ffffff;
+      border: 2px solid var(--violet-main);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: 0 10px 22px rgba(0,0,0,0.18);
+      z-index: 9999;
+      display: none;
+    }
+    #cookie-banner p{
+      margin: 0 0 12px 0;
+      font-size: .95rem;
+      color: #333;
+      line-height: 1.45;
+    }
+    #cookie-banner a{
+      color: var(--violet-main);
+      font-weight: 900;
+      text-decoration: none;
+    }
+    #cookie-banner a:hover{ text-decoration: underline; }
+
+    #cookie-actions{
+      display:flex;
+      gap:10px;
+      margin-top: 8px;
+    }
+    #cookie-actions button{
+      flex:1;
+      padding: 10px 12px;
+      border-radius: 10px;
+    }
+    #cookie-reject{
+      background:#fff !important;
+      color:#111827 !important;
+      border:2px solid var(--violet-main) !important;
+      font-weight: 900;
+    }
+    #cookie-accept{
+      background: var(--violet-main);
+      color:#fff;
+      border:2px solid var(--violet-main);
+      font-weight: 900;
+    }
+    #cookie-accept:hover{ background: var(--violet-dark); border-color: var(--violet-dark); }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">Syncras.App</div>
+
+      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+        Menu <span>☰</span>
+      </button>
+
+      <nav id="main-nav">
+        <a href="index.html">Home</a>
+        <a href="blog.html">Blog</a>
+        <a href="smart-test.html">Smart Test</a>
+        <a href="calcolatori.html">Calcolatori</a>
+        <a href="fast-cards.html">Fast Card</a>
+        <a href="offerte.html">Prodotti Consapevoli</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="chi.html">Chi siamo</a>
+      </nav>
+    </div>
+  </header>
+
+  <div id="news-ticker">
+    <div class="news-ticker-track">
+      <a class="news-ticker-item" href="calcolatori.html">Calcolatori SmartShop: numeri veri, scelte furbe</a>
+      <span class="news-ticker-separator">•</span>
+      <a class="news-ticker-item" href="smart-test.html">Smart Test: ti serve davvero o è solo “voglia”?</a>
+      <span class="news-ticker-separator">•</span>
+      <a class="news-ticker-item" href="blog.html">Blog: storie comiche + consigli pratici</a>
+      <span class="news-ticker-separator">•</span>
+      <a class="news-ticker-item" href="offerte.html">Prodotti consapevoli: poche scelte, ma buone</a>
+    </div>
+  </div>
+
+  <main>
+    <div class="hero">
+      <h1>Quanti giorni della tua vita lavori per comprare un oggetto?</h1>
+      <p>
+        Inserisci stipendio, ore lavorate e prezzo: Syncras ti traduce l’acquisto in <strong>tempo</strong>.
+        (Spoiler: spesso il vero costo è proprio quello.)
+      </p>
+    </div>
+
+    <div class="grid">
+      <!-- INPUT -->
+      <section class="panel">
+        <h2 class="section-title">Dati di partenza</h2>
+
+        <div class="form-row">
+          <div>
+            <label for="netMonthly">Reddito netto mensile (€)</label>
+            <div class="hint">Esempio: 1600</div>
+            <input id="netMonthly" type="number" inputmode="decimal" min="0" step="0.01" placeholder="es. 1600" />
+          </div>
+          <div>
+            <label for="price">Prezzo dell’oggetto (€)</label>
+            <div class="hint">Esempio: 499</div>
+            <input id="price" type="number" inputmode="decimal" min="0" step="0.01" placeholder="es. 499" />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div>
+            <label for="hoursPerMonth">Ore lavorate al mese</label>
+            <div class="hint">Default realistico: 160 (8h × 20gg)</div>
+            <input id="hoursPerMonth" type="number" inputmode="numeric" min="1" step="1" value="160" />
+          </div>
+          <div>
+            <label for="hoursPerDay">Ore di lavoro al giorno</label>
+            <div class="hint">Default: 8</div>
+            <input id="hoursPerDay" type="number" inputmode="numeric" min="1" step="1" value="8" />
+          </div>
+        </div>
+
+        <div class="legal-box">
+          <label for="legalAccept">
+            <input type="checkbox" id="legalAccept" />
+            <span>
+              Prima di procedere: i risultati sono <strong>stime</strong> e non costituiscono consulenza.
+              L’uso è a tuo rischio, come specificato nelle
+              <a href="note-legali.html" target="_blank" rel="noopener">Note Legali</a>.
+            </span>
+          </label>
+        </div>
+
+        <div class="actions">
+          <button type="button" id="btnCalc" onclick="runCalc()">Calcola</button>
+          <button type="button" class="btn-secondary" onclick="resetAll()">Reset</button>
+          <span id="msg" class="hint" style="margin:0;"></span>
+        </div>
+
+        <p class="mini-note">
+          Tip Syncras: se vuoi essere ancora più “realista”, puoi inserire un reddito netto già “ripulito” da
+          spese fisse che ti drenano (abbonamenti, rate, ecc.). Ma anche la versione semplice è già rivelatrice.
+        </p>
+      </section>
+
+      <!-- OUTPUT -->
+      <section class="panel">
+        <h2 class="section-title">Risultato in tempo</h2>
+
+        <div class="results">
+          <div class="result-card">
+            <div class="k">Paga oraria stimata</div>
+            <div class="v" id="outHourly">—</div>
+          </div>
+
+          <div class="result-card">
+            <div class="k">Ore di lavoro necessarie</div>
+            <div class="v" id="outHours">—</div>
+          </div>
+
+          <div class="result-card">
+            <div class="k">Giorni lavorativi</div>
+            <div class="v" id="outDays">—</div>
+          </div>
+
+          <div class="result-card">
+            <div class="k">Mesi di lavoro</div>
+            <div class="v" id="outMonths">—</div>
+          </div>
+
+          <div class="result-card">
+            <div class="k">Anni di lavoro</div>
+            <div class="v" id="outYears">—</div>
+          </div>
+
+          <div class="result-card">
+            <div class="k">“Sforzo” sul tuo mese</div>
+            <div class="v" id="outPct">—</div>
+          </div>
+        </div>
+
+        <div class="big-verdict" id="verdictBox" style="display:none;">
+          <h3>Verdetto Syncras</h3>
+          <div class="verdict-line" id="verdictLine">—</div>
+          <div class="verdict-line" style="color:var(--muted);" id="verdictNote">—</div>
+
+          <div class="share-box">
+            <label for="shareText" style="margin-bottom:8px;">Testo pronto da copiare (WhatsApp/Telegram)</label>
+            <textarea id="shareText" readonly></textarea>
+            <div class="actions" style="margin-top:10px;">
+              <button type="button" class="btn-secondary" onclick="copyShare()">Copia testo</button>
+              <span class="hint" id="copyMsg" style="margin:0;"></span>
+            </div>
+          </div>
+        </div>
+
+        <p class="mini-note">
+          Nota: qui contiamo solo “tempo di lavoro”. Non include interessi, manutenzione, accessori, abbonamenti o “effetto domino”
+          (es. compri l’oggetto e poi spendi per usarlo). Ma come shock iniziale… funziona fin troppo bene.
+        </p>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 Syncras.App — Tutti i diritti riservati<br>
+    <div style="margin-top:8px;">
+      <a href="privacy.html">Privacy Policy</a> |
+      <a href="cookie.html">Cookie Policy</a> |
+      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
+      <a href="note-legali.html">Note Legali</a> |
+      <a href="#" id="cookie-settings">Modifica consenso cookie</a>
+    </div>
+    <p style="font-size:0.8rem; opacity:0.85; max-width:860px; margin:10px auto 0;">
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.
+      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+      senza alcun costo aggiuntivo per l’utente.
+    </p>
+  </footer>
+
+  <!-- Cookie Banner (GDPR) -->
+  <div id="cookie-banner" role="dialog" aria-label="Gestione consenso cookie">
+    <p>
+      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite (Google Analytics).
+      Alcuni link potrebbero essere di affiliazione.
+      Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la <a href="privacy.html">Privacy Policy</a>.
+    </p>
+    <div id="cookie-actions">
+      <button id="cookie-reject" type="button" onclick="rejectCookies()">Rifiuta</button>
+      <button id="cookie-accept" type="button" onclick="acceptCookies()">Accetta e continua</button>
+    </div>
+  </div>
+
+  <script>
+    function toggleMenu(){ document.body.classList.toggle('nav-open'); }
+
+    // ---- Calcolatore ----
+    function fmtEuro(v){
+      if (!isFinite(v)) return '—';
+      return new Intl.NumberFormat('it-IT', { style:'currency', currency:'EUR' }).format(v);
+    }
+    function fmtNum(v, digits=2){
+      if (!isFinite(v)) return '—';
+      return new Intl.NumberFormat('it-IT', { minimumFractionDigits: digits, maximumFractionDigits: digits }).format(v);
+    }
+
+    function setMsg(text, kind){
+      const el = document.getElementById('msg');
+      el.textContent = text || '';
+      el.style.color = kind === 'err' ? 'var(--danger)' : 'var(--muted)';
+    }
+
+    function runCalc(){
+      setMsg('', '');
+      document.getElementById('copyMsg').textContent = '';
+
+      const legal = document.getElementById('legalAccept').checked;
+      if (!legal){
+        setMsg('Spunta la casella delle Note Legali per attivare il calcolo.', 'err');
+        return;
+      }
+
+      const netMonthly = parseFloat(document.getElementById('netMonthly').value);
+      const price = parseFloat(document.getElementById('price').value);
+      const hoursPerMonth = parseFloat(document.getElementById('hoursPerMonth').value);
+      const hoursPerDay = parseFloat(document.getElementById('hoursPerDay').value);
+
+      if (!(netMonthly > 0) || !(price > 0) || !(hoursPerMonth > 0) || !(hoursPerDay > 0)){
+        setMsg('Inserisci valori validi (tutti maggiori di zero).', 'err');
+        return;
+      }
+
+      const hourly = netMonthly / hoursPerMonth;
+      if (!(hourly > 0)){
+        setMsg('Controlla ore/mese: la paga oraria risulta non valida.', 'err');
+        return;
+      }
+
+      const hoursNeeded = price / hourly;
+      const daysNeeded = hoursNeeded / hoursPerDay;
+      const monthsNeeded = hoursNeeded / hoursPerMonth;
+      const yearsNeeded = monthsNeeded / 12;
+      const pctOfMonth = (price / netMonthly) * 100;
+
+      // Output
+      document.getElementById('outHourly').textContent = fmtEuro(hourly) + ' / h';
+      document.getElementById('outHours').textContent = fmtNum(hoursNeeded, 1) + ' h';
+      document.getElementById('outDays').textContent = fmtNum(daysNeeded, 1) + ' gg';
+      document.getElementById('outMonths').textContent = fmtNum(monthsNeeded, 2) + ' mesi';
+      document.getElementById('outYears').textContent = fmtNum(yearsNeeded, 2) + ' anni';
+      document.getElementById('outPct').textContent = fmtNum(pctOfMonth, 1) + '%';
+
+      // Verdict badge
+      let badgeClass = 'ok';
+      let badgeText = 'OK';
+      let note = 'Se lo vuoi davvero, almeno ora sai che prezzo ha in tempo.';
+
+      if (monthsNeeded >= 1 && monthsNeeded < 3){
+        badgeClass = 'warn';
+        badgeText = 'ATTENZIONE';
+        note = 'Non è un “capriccio”: è un pezzo consistente del tuo mese. Valuta alternative o usato.';
+      } else if (monthsNeeded >= 3){
+        badgeClass = 'danger';
+        badgeText = 'ALLARME';
+        note = 'Qui stai convertendo mesi della tua vita in un oggetto. Fai un giro con il cervello acceso.';
+      }
+
+      const prettyDays = fmtNum(daysNeeded, 1);
+      const prettyHours = fmtNum(hoursNeeded, 1);
+      const prettyPrice = fmtEuro(price);
+      const prettyNet = fmtEuro(netMonthly);
+
+      const verdictLine =
+        `Per comprare <strong>${prettyPrice}</strong> con un netto mensile di <strong>${prettyNet}</strong>, ti servono circa <strong>${prettyHours} ore</strong> (≈ <strong>${prettyDays} giorni</strong> di lavoro).` +
+        ` <span class="badge ${badgeClass}">${badgeText}</span>`;
+
+      document.getElementById('verdictLine').innerHTML = verdictLine;
+      document.getElementById('verdictNote').textContent = note;
+
+      // Share text
+      const share =
+`📌 Syncras – Calcolo “tempo di lavoro”
+Prezzo: ${prettyPrice}
+Netto mensile: ${prettyNet}
+Ore/mese: ${fmtNum(hoursPerMonth,0)}
+Ore/giorno: ${fmtNum(hoursPerDay,0)}
+
+➡️ Tempo necessario: ${prettyHours} ore ≈ ${prettyDays} giorni
+🧠 Nota: ${note}
+
+https://syncras.app/calcolatori.html`;
+
+      document.getElementById('shareText').value = share;
+      document.getElementById('verdictBox').style.display = 'block';
+    }
+
+    function resetAll(){
+      document.getElementById('netMonthly').value = '';
+      document.getElementById('price').value = '';
+      document.getElementById('hoursPerMonth').value = '160';
+      document.getElementById('hoursPerDay').value = '8';
+      document.getElementById('legalAccept').checked = false;
+
+      document.getElementById('outHourly').textContent = '—';
+      document.getElementById('outHours').textContent = '—';
+      document.getElementById('outDays').textContent = '—';
+      document.getElementById('outMonths').textContent = '—';
+      document.getElementById('outYears').textContent = '—';
+      document.getElementById('outPct').textContent = '—';
+
+      document.getElementById('verdictBox').style.display = 'none';
+      document.getElementById('shareText').value = '';
+      document.getElementById('copyMsg').textContent = '';
+      setMsg('', '');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    async function copyShare(){
+      const t = document.getElementById('shareText').value || '';
+      if (!t.trim()) return;
+      try{
+        await navigator.clipboard.writeText(t);
+        document.getElementById('copyMsg').textContent = 'Copiato ✅';
+      }catch(e){
+        document.getElementById('copyMsg').textContent = 'Copia non riuscita: seleziona il testo manualmente.';
+      }
+      setTimeout(()=>{ document.getElementById('copyMsg').textContent=''; }, 2500);
+    }
+  </script>
+
+  <!-- GDPR + Google Analytics: carica SOLO dopo consenso + modifica consenso -->
+  <script>
+    (function(){
+      const GA_ID = 'G-CFTTCYDZ2P';
+      const CONSENT_KEY = 'syncras_cookie_consent';
+
+      // blocco preventivo
+      window['ga-disable-' + GA_ID] = true;
+
+      function loadGoogleAnalytics(){
+        if (window.__syncrasGaLoaded) return;
+        window.__syncrasGaLoaded = true;
+
+        // sblocco
+        window['ga-disable-' + GA_ID] = false;
+
+        const gaScript = document.createElement('script');
+        gaScript.async = true;
+        gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+        document.head.appendChild(gaScript);
+
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){ dataLayer.push(arguments); }
+        window.gtag = gtag;
+
+        gtag('js', new Date());
+        gtag('config', GA_ID, { anonymize_ip: true });
+      }
+
+      function showBanner(){
+        const b = document.getElementById('cookie-banner');
+        if (b) b.style.display = 'block';
+      }
+      function hideBanner(){
+        const b = document.getElementById('cookie-banner');
+        if (b) b.style.display = 'none';
+      }
+
+      window.acceptCookies = function(){
+        localStorage.setItem(CONSENT_KEY, 'yes');
+        hideBanner();
+        loadGoogleAnalytics();
+      };
+
+      window.rejectCookies = function(){
+        localStorage.setItem(CONSENT_KEY, 'no');
+        hideBanner();
+        window['ga-disable-' + GA_ID] = true;
+      };
+
+      // Modifica consenso (revoca) – richiesto da te
+      window.revokeCookies = function(){
+        localStorage.removeItem(CONSENT_KEY);
+        window['ga-disable-' + GA_ID] = true;
+        showBanner();
+      };
+
+      document.addEventListener('DOMContentLoaded', function(){
+        // link footer "Modifica consenso"
+        const link = document.getElementById('cookie-settings');
+        if (link){
+          link.addEventListener('click', function(e){
+            e.preventDefault();
+            window.revokeCookies();
+          });
+        }
+
+        const consent = localStorage.getItem(CONSENT_KEY);
+        if (consent === 'yes'){
+          loadGoogleAnalytics();
+        } else if (consent === 'no'){
+          window['ga-disable-' + GA_ID] = true;
+        } else {
+          showBanner();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
