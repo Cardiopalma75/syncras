@@ -3,40 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Confronto costi auto 2025: benzina, diesel, GPL, metano, elettrica (Calcolatore) | Syncras.App</title>
-  <meta name="description" content="👉 Calcola e confronta in pochi secondi il COSTO REALE per 100 km e su base annua della tua auto (benzina, diesel, GPL, metano) con un'auto elettrica o ibrida. Lo strumento definitivo per capire la convenienza.">
+  <title>Calcolatore Tempo di Ritorno Elettrodomestico | Syncras.App</title>
+  <meta name="description" content="Calcola in quanti anni si ripaga un nuovo elettrodomestico a basso consumo rispetto a quello vecchio, partendo dai consumi annui o dalla potenza in Watt e dalle ore di utilizzo. Stima indicativa, non consulenza.">
   <meta name="robots" content="index,follow">
-  <link rel="canonical" href="https://syncras.app/calcolatore-consumi-auto.html">
+  <link rel="canonical" href="https://syncras.app/calcolatore-tempo-ritorno-elettrodomestico.html">
 
   <style>
     :root {
       --violet-main: #6C5CE7;
       --violet-dark: #4B3ACB;
       --violet-soft: #A29BFE;
-      --text-main: #403E43;
       --bg-page: #F7F7FB;
+      --text-main: #403E43;
+    }
+
+    * {
+      box-sizing: border-box;
     }
 
     body {
-      font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background-color: var(--bg-page);
+      font-family: Arial, sans-serif;
+      background: var(--bg-page);
       color: var(--text-main);
       line-height: 1.6;
     }
 
     /* HEADER */
-
     .site-header {
       background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
-      color: white;
+      color: #fff;
       padding: 12px 14px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.15);
     }
 
     .header-inner {
-      max-width: 1180px;
+      max-width: 980px;
       margin: 0 auto;
       display: flex;
       align-items: center;
@@ -52,12 +55,12 @@
 
     #main-nav {
       display: flex;
-      gap: 18px;
+      gap: 14px;
       font-size: 0.95rem;
     }
 
     #main-nav a {
-      color: white;
+      color: #fff;
       text-decoration: none;
       font-weight: 600;
       padding-bottom: 2px;
@@ -96,7 +99,7 @@
         right: 0;
         top: 56px;
         margin: 0 auto;
-        max-width: 1180px;
+        max-width: 980px;
         flex-direction: column;
         background-color: var(--violet-dark);
         padding: 10px 16px 12px 16px;
@@ -104,15 +107,12 @@
         box-shadow: 0 3px 6px rgba(0,0,0,0.25);
         z-index: 50;
       }
-
       #main-nav a {
         padding: 6px 0;
       }
-
       body.nav-open #main-nav {
         display: flex;
       }
-
       .menu-toggle {
         display: inline-flex;
         align-items: center;
@@ -120,14 +120,13 @@
     }
 
     /* MAIN */
-
     main {
-      max-width: 1180px;
-      margin: 30px auto;
-      padding: 20px;
-      background-color: #ffffff;
-      border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.08);
+      max-width: 980px;
+      margin: 24px auto 32px;
+      padding: 18px 16px 24px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.08);
     }
 
     h1, h2, h3 {
@@ -135,10 +134,25 @@
       margin-top: 0;
     }
 
+    .back-links {
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+    }
+
+    .back-links a {
+      color: var(--violet-dark);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .back-links a:hover {
+      text-decoration: underline;
+    }
+
     .page-intro {
-      margin-bottom: 20px;
+      margin-bottom: 16px;
       border-bottom: 1px solid #e5e7eb;
-      padding-bottom: 10px;
+      padding-bottom: 12px;
     }
 
     .badge-page {
@@ -146,146 +160,179 @@
       font-size: 0.75rem;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      background: rgba(108, 92, 231, 0.08);
-      border: 1px solid rgba(108, 92, 231, 0.35);
+      background: rgba(108,92,231,0.08);
+      border: 1px solid rgba(108,92,231,0.35);
       border-radius: 999px;
       padding: 2px 8px;
       color: #3730a3;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .intro-text {
       font-size: 0.95rem;
       color: #4b5563;
+      margin-top: 6px;
     }
 
-    /* GRIGLIA CARD INFO */
-
-    .calc-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 18px;
-      margin: 18px 0 26px;
-    }
-
-    .calc-card {
-      background: #f4f5ff;
-      border-radius: 16px;
-      padding: 16px 18px 14px;
-      border: 1px solid #d4d7ff;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-    }
-
-    .calc-card-label {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.09em;
-      color: #6b7280;
-      margin-bottom: 4px;
-    }
-
-    .calc-card h3 {
-      margin: 0 0 6px;
-      font-size: 1rem;
-      color: #1f2937;
-    }
-
-    .calc-card p {
-      margin: 0 0 10px;
-      font-size: 0.9rem;
-      color: #4b5563;
-    }
-
-    @media (max-width: 768px) {
-      .calc-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    /* SEZIONE CALCOLATORE */
-
-    .calc-section {
-      margin: 32px 0;
-      padding: 20px;
-      border-radius: 16px;
-      background: #f9fafb;
-      border: 1px solid #e5e7eb;
-    }
-
-    .calc-section h2 {
-      margin-top: 0;
-      margin-bottom: 6px;
-      font-size: 1.25rem;
-    }
-
-    .calc-section p {
+    /* Share buttons */
+    .share-btn-new {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(90deg, #6C5CE7, #4B3ACB);
+      color: white;
+      font-weight: 600;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 12px;
       font-size: 0.95rem;
-      color: #4b5563;
+      cursor: pointer;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+      transition: 0.25s ease;
+      margin-bottom: 10px;
     }
 
-    .calc-grid-inputs {
+    .share-btn-new:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.20);
+    }
+
+    .share-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      border: none;
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      box-shadow: 0 3px 8px rgba(15, 23, 42, 0.25);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
+      margin: 10px 0 2px;
+    }
+
+    .share-btn span.icon {
+      font-size: 1.1rem;
+    }
+
+    .share-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 5px 14px rgba(15, 23, 42, 0.30);
+      opacity: 0.96;
+    }
+
+    .share-btn:active {
+      transform: translateY(1px);
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.18);
+    }
+
+    /* Sezione calcolatore */
+    .calc-section {
+      margin: 24px 0;
+      padding: 18px 16px 16px;
+      border-radius: 12px;
+      background: #f8f9ff;
+      border: 1px solid #e0e7ff;
+    }
+
+    .calc-header {
       display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 10px;
       flex-wrap: wrap;
-      gap: 16px;
-      margin-top: 14px;
     }
 
-    .calc-field {
-      flex: 1 1 220px;
+    .calc-header small {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    .calc-group {
+      margin-bottom: 16px;
+    }
+
+    .calc-group h3 {
+      margin-top: 16px;
+      margin-bottom: 6px;
+      font-size: 1.05rem;
+      color: var(--violet-dark);
     }
 
     .calc-field label {
       font-size: 0.9rem;
       font-weight: 600;
+      display: block;
+      margin-bottom: 4px;
     }
 
-    .calc-field input,
-    .calc-field select {
+    .calc-field input[type="number"] {
       width: 100%;
-      padding: 8px;
-      margin-top: 4px;
+      max-width: 260px;
+      padding: 7px 8px;
       border-radius: 6px;
       border: 1px solid #d1d5db;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
     }
 
-    .calc-btn {
-      margin-top: 18px;
-      background: var(--violet-main);
-      color: #fff;
-      padding: 9px 16px;
-      border-radius: 7px;
-      border: none;
+    .calc-field span {
+      font-size: 0.85rem;
+      color: #4b5563;
+    }
+
+    .mode-row label {
+      font-size: 0.88rem;
+      display: block;
+      margin-bottom: 4px;
       cursor: pointer;
-      font-size: 0.95rem;
-      font-weight: 600;
     }
 
-    .calc-btn:hover {
+    .btn-calcola {
+      background: var(--violet-main);
+      color: #FFF;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      margin-top: 10px;
+      font-size: 0.95rem;
+    }
+
+    .btn-calcola:hover {
       background: var(--violet-dark);
     }
 
-    .calc-result {
+    #resultAppliancePayback {
       margin-top: 16px;
-      padding: 14px;
+      padding: 10px 12px;
+      border-radius: 8px;
       background: #ffffff;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.06);
-      display: none;
-      font-size: 0.95rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      font-size: 0.9rem;
     }
 
-    .small-note {
-      font-size: 0.8rem;
-      color: #6b7280;
-      margin-top: 8px;
-    }
-
-    /* 🔹 Blocco accettazione Note Legali per il calcolatore */
-    .legal-box-avviso {
+    .disclaimer-box {
       margin-top: 18px;
-      margin-bottom: 10px;
-      padding: 12px 14px;
+      font-size: 0.85rem;
+      background: #F7F7FB;
+      padding: 10px 12px;
+      border-radius: 8px;
+    }
+
+    .disclaimer-box a {
+      color: var(--violet-main);
+      text-decoration: underline;
+    }
+
+    /* 🔹 BLOCCO ACCETTAZIONE NOTE LEGALI PER QUESTO CALCOLATORE */
+    .legal-box-avviso {
+      margin-top: 14px;
+      padding: 10px 12px;
       background: #ffffff;
       border-radius: 8px;
       border: 1px solid #e5e7eb;
@@ -305,23 +352,60 @@
       color: #6b7280;
     }
 
-    a {
-      color: var(--violet-dark);
-      text-decoration: none;
+    .tags {
+      font-size: 0.8rem;
+      color: #6b7280;
+      margin-top: 18px;
     }
 
-    a:hover {
-      text-decoration: underline;
+    /* Amazon / nota consigli */
+    .amazon-box {
+      margin-top: 12px;
+      padding: 14px 14px 12px;
+      border-radius: 14px;
+      background: #f5f3ff;
+      border: 1px solid #ddd6fe;
+      font-size: 0.85rem;
+      box-shadow: 0 3px 10px rgba(15,23,42,0.08);
+    }
+
+    .amazon-box strong {
+      display: block;
+      margin-bottom: 4px;
+      color: #4c1d95;
+    }
+
+    .amazon-box a {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-decoration: none;
+      box-shadow: 0 2px 7px rgba(15,23,42,0.25);
+    }
+
+    .amazon-box a:hover {
+      box-shadow: 0 4px 10px rgba(15,23,42,0.30);
+      transform: translateY(-1px);
+    }
+
+    @media (max-width: 600px) {
+      main {
+        margin: 16px auto 24px;
+        padding: 14px 10px 20px;
+      }
     }
 
     /* FOOTER */
-
     .syncras-footer {
-      margin-top: 40px;
+      margin-top: 32px;
       padding: 2.5rem 1.5rem 1.5rem;
       background: #2b1840;
       color: #f3eaff;
-      font-family: Arial, sans-serif;
       font-size: 0.9rem;
     }
 
@@ -335,7 +419,7 @@
     }
 
     .footer-inner {
-      max-width: 1180px;
+      max-width: 980px;
       margin: 0 auto 1.5rem auto;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -365,7 +449,7 @@
     }
 
     .footer-bottom {
-      max-width: 1180px;
+      max-width: 980px;
       margin: 0 auto;
       text-align: center;
       font-size: 0.8rem;
@@ -374,6 +458,27 @@
 
     .footer-bottom p {
       margin: 4px 0;
+    }
+
+    /* STAMPA */
+    @media print {
+      body {
+        background: #ffffff;
+      }
+      .site-header,
+      .syncras-footer,
+      .menu-toggle,
+      #main-nav,
+      #shareTop,
+      #shareBottom {
+        display: none !important;
+      }
+      main {
+        box-shadow: none;
+        margin: 0;
+        padding: 0;
+        max-width: 100%;
+      }
     }
   </style>
 </head>
@@ -401,215 +506,194 @@
   </header>
 
   <main>
+    <div class="back-links">
+      ← <a href="index.html">Torna alla Home</a> |
+      <a href="calcolatori.html">Vai alla pagina Calcolatori</a>
+    </div>
+
     <div class="page-intro">
-      <span class="badge-page">Area strumenti</span>
-      <h1>🚗 Confronto costi auto: benzina, diesel, GPL, metano o elettrica?</h1>
-      <div style="background:#FEF6D8; padding:10px 14px; border-left:4px solid #EAB308; border-radius:6px; margin:15px 0; font-size:0.9rem;">
-        ⚠️ <strong>Avviso importante:</strong> le simulazioni di questo calcolatore auto sono <strong>stime orientative</strong> basate sui dati inseriti.  
-        Non tengono conto di tutte le variabili economiche, tecniche, fiscali, regionali o assicurative.  
-        Per valutazioni precise sui costi reali, rientri economici, tasse o scelte di mobilità, è sempre opportuno rivolgersi a un <strong>professionista o consulente competente</strong>.
+      <span class="badge-page">Area Calcoli – Elettrodomestici</span>
+      <h1>Calcolatore tempo di ritorno di un elettrodomestico a basso consumo</h1>
+
+      <div style="background:#FFF4D6; padding:10px 14px; border-left:4px solid #F59E0B; border-radius:6px; margin:10px 0; font-size:0.9rem;">
+        💡 <strong>Avviso:</strong> Questo calcolatore fornisce una <strong>stima indicativa</strong> del tempo di ritorno
+        di un nuovo elettrodomestico rispetto a quello vecchio, sulla base dei consumi annui o della potenza in Watt e delle ore di utilizzo.
+        Non è un preventivo ufficiale né una consulenza professionale.
       </div>
 
       <p class="intro-text">
-        Inserisci consumi, prezzi dei carburanti e chilometri annui.  
-        Il calcolatore ti mostra il costo per 100 km e per tutta la distanza scelta, confrontando due auto (A e B).
+        Puoi usarlo in due modi: se hai già i consumi in <strong>kWh/anno</strong> li inserisci direttamente, altrimenti
+        puoi partire dalla <strong>potenza in Watt</strong> e dalle ore di utilizzo.  
+        L’obiettivo è capire se il cambio elettrodomestico ha senso economico, non prevedere il futuro al centesimo.
       </p>
     </div>
 
-    <!-- Pulsante CONDIVIDI in alto -->
-    <button id="shareBtnTop"
-      style="background: var(--violet-main); color:white; padding:10px 15px; border:none;
-             border-radius:6px; cursor:pointer; margin-bottom:20px; font-weight:600;">
-      📎 Condividi questa pagina
+    <!-- 🔹 BLOCCO ACCETTAZIONE NOTE LEGALI -->
+    <div class="legal-box-avviso" id="legal-box">
+      <label>
+        <input type="checkbox" id="legalAccept">
+        Prima di procedere, un promemoria: i risultati di questo test sono solo <strong>stime indicative</strong>
+        e non forniamo alcuna garanzia di accuratezza. Non si tratta di consulenza tecnica, energetica o finanziaria.
+        L’utilizzo di questo strumento è a tuo esclusivo rischio e la responsabilità delle decisioni è solo tua, come
+        specificato nelle <a href="note-legali.html" target="_blank">Note Legali</a>.
+      </label>
+      <p class="legal-note-small">
+        I risultati non tengono conto di tutte le variabili reali (prezzi futuri dell’energia, guasti, manutenzione straordinaria,
+        incentivi futuri, ecc.). Per decisioni importanti è sempre opportuno confrontarsi con un tecnico o un consulente qualificato.
+      </p>
+    </div>
+    <!-- 🔹 FINE BLOCCO ACCETTAZIONE -->
+
+    <button id="shareTop" class="share-btn-new">
+      <span>📤</span> Condividi questo calcolatore
     </button>
 
-    <!-- CARD DI SPIEGAZIONE -->
-    <section aria-label="Informazioni sul confronto">
-      <h2>Come funziona il confronto dei costi auto</h2>
-      <div class="calc-grid">
-        <article class="calc-card">
-          <div class="calc-card-label">AUTO A</div>
-          <h3>Auto A (qualsiasi alimentazione)</h3>
-          <p>
-            Puoi impostare un’auto a benzina, diesel, GPL, metano o elettrica.  
-            Inserisci i consumi in <strong>litri/100 km</strong> o <strong>kWh/100 km</strong> e il relativo prezzo.
-          </p>
-        </article>
+    <!-- SEZIONE CALCOLATORE TEMPO DI RITORNO -->
+    <section class="calc-section" id="calc-elettrodomestico">
+      <div class="calc-header">
+        <h2>Tra quanto si ripaga il nuovo elettrodomestico?</h2>
+        <small>Numeri semplici, per capire se il cambio ha senso economico.</small>
+      </div>
 
-        <article class="calc-card">
-          <div class="calc-card-label">AUTO B</div>
-          <h3>Auto B (di solito il “nuovo acquisto”)</h3>
-          <p>
-            Qui spesso si mette l’auto che vorresti comprare (es. elettrica) per capire se ti conviene davvero  
-            rispetto a quella attuale.
-          </p>
-        </article>
+      <p style="font-size:0.9rem;">
+        Tieni a portata di mano l’etichetta energetica o almeno la potenza in Watt e le ore di utilizzo.  
+        Il calcolatore funziona anche se non conosci i kWh/anno.
+      </p>
+
+      <form id="appliancePaybackForm">
+        <!-- DATI ECONOMICI -->
+        <div class="calc-group">
+          <h3>1. Dati economici del nuovo elettrodomestico</h3>
+          <div class="calc-field">
+            <label for="prezzoNuovo">Prezzo di acquisto del nuovo elettrodomestico</label>
+            <input type="number" id="prezzoNuovo" min="1" max="10000" step="10" required>
+            <span>€ (solo il nuovo elettrodomestico, senza sconti futuri ipotetici)</span>
+          </div>
+
+          <div class="calc-field">
+            <label for="costoInstallazione">Altri costi (installazione, ritiro usato, ecc.)</label>
+            <input type="number" id="costoInstallazione" min="0" max="2000" step="10" value="0">
+            <span>€ (lascia 0 se non sai o se non ci sono costi extra)</span>
+          </div>
+
+          <div class="calc-field">
+            <label for="incentivi">Contributi / incentivi / sconti già certi</label>
+            <input type="number" id="incentivi" min="0" max="5000" step="10" value="0">
+            <span>€ da sottrarre al costo totale (es. bonus, rottamazione, sconto diretto in fattura)</span>
+          </div>
+        </div>
+
+        <!-- MODALITÀ DI INPUT CONSUMI -->
+        <div class="calc-group">
+          <h3>2. Come vuoi inserire i consumi?</h3>
+          <div class="mode-row">
+            <label>
+              <input type="radio" name="modeConsumi" value="kwh" checked>
+              Ho già i consumi annui in <strong>kWh/anno</strong> (dall’etichetta o da una scheda tecnica)
+            </label>
+            <label>
+              <input type="radio" name="modeConsumi" value="watt">
+              Non ho i kWh: uso la <strong>potenza in Watt</strong> e le ore di utilizzo
+            </label>
+          </div>
+        </div>
+
+        <!-- CONSUMI ANNUALI DIRETTI -->
+        <div class="calc-group" id="blocKwh">
+          <h3>2A. Consumi annui (se hai i kWh/anno)</h3>
+          <div class="calc-field">
+            <label for="consumoVecchio">Consumo annuo del VECCHIO elettrodomestico</label>
+            <input type="number" id="consumoVecchio" min="1" max="10000" step="10">
+            <span>kWh/anno (puoi stimarlo dalla bolletta o da vecchie etichette)</span>
+          </div>
+
+          <div class="calc-field">
+            <label for="consumoNuovo">Consumo annuo del NUOVO elettrodomestico</label>
+            <input type="number" id="consumoNuovo" min="1" max="10000" step="10">
+            <span>kWh/anno (di solito è scritto chiaramente sull’etichetta energetica)</span>
+          </div>
+        </div>
+
+        <!-- CONSUMI DA WATT + ORE -->
+        <div class="calc-group" id="blocWatt" style="display:none;">
+          <h3>2B. Non so i kWh: parto da Watt e ore di utilizzo</h3>
+
+          <div class="calc-field">
+            <label for="potenzaVecchio">Potenza del VECCHIO elettrodomestico</label>
+            <input type="number" id="potenzaVecchio" min="1" max="10000" step="10">
+            <span>Watt (es. 2000 W per un vecchio forno o asciugatrice)</span>
+          </div>
+
+          <div class="calc-field">
+            <label for="potenzaNuovo">Potenza del NUOVO elettrodomestico</label>
+            <input type="number" id="potenzaNuovo" min="1" max="10000" step="10">
+            <span>Watt (dal libretto o dall’etichetta tecnica)</span>
+          </div>
+
+          <div class="calc-field">
+            <label for="oreGiornaliere">Ore medie di utilizzo al giorno</label>
+            <input type="number" id="oreGiornaliere" min="0.1" max="24" step="0.1" value="1">
+            <span>ore/giorno (media, anche 0.5 se lo usi un’ora ogni due giorni)</span>
+          </div>
+
+          <div class="calc-field">
+            <label for="giorniAnno">Giorni di utilizzo all’anno</label>
+            <input type="number" id="giorniAnno" min="1" max="365" step="1" value="300">
+            <span>giorni/anno (es. 300 se non lo usi tutti i giorni)</span>
+          </div>
+        </div>
+
+        <!-- PREZZO ENERGIA (COMUNE ALLE DUE MODALITÀ) -->
+        <div class="calc-group">
+          <h3>3. Prezzo dell’energia elettrica</h3>
+          <div class="calc-field">
+            <label for="prezzoKwh">Prezzo dell’energia elettrica</label>
+            <input type="number" id="prezzoKwh" min="0.05" max="1" step="0.01" value="0.30" required>
+            <span>€/kWh (usa il valore medio in bolletta, es. 0,30 €/kWh)</span>
+          </div>
+        </div>
+
+        <!-- DURATA PREVISTA -->
+        <div class="calc-group">
+          <h3>4. Durata prevista del nuovo elettrodomestico (opzionale)</h3>
+          <div class="calc-field">
+            <label for="anniDurata">Per quanti anni pensi di usarlo?</label>
+            <input type="number" id="anniDurata" min="1" max="30" step="1" value="10">
+            <span>anni (serve solo per capire se il tempo di ritorno è entro la vita utile)</span>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-calcola">Calcola il tempo di ritorno</button>
+      </form>
+
+      <div id="resultAppliancePayback"></div>
+
+      <p class="disclaimer-box">
+        🔔 <strong>Nota importante:</strong> i risultati dipendono molto da come usi davvero l’elettrodomestico
+        (frequenza di utilizzo, programmi scelti, temperatura ambiente, ecc.) e dai prezzi futuri dell’energia.
+        Questo strumento ti aiuta a ragionare sull’ordine di grandezza, non a prevedere il futuro con precisione al centesimo.
+      </p>
+
+      <div class="amazon-box">
+        <strong>Prima di cambiare elettrodomestico, fai due conti:</strong>
+        <span>
+          Spesso non è il modello “più nuovo” a fare la differenza, ma il rapporto tra <strong>costo</strong>,
+          <strong>consumo annuo</strong> e <strong>anni di utilizzo previsto</strong>.
+        </span>
+       
       </div>
     </section>
 
-    <!-- CALCOLATORE CONFRONTO AUTO -->
-    <section class="calc-section" id="calc-auto">
-      <h2>Calcolatore confronto costi carburante/energia Auto A vs Auto B</h2>
-      <p>
-        I campi “Consumo” si intendono <strong>ogni 100 km</strong>.  
-        Puoi usare litri/100 km (benzina, diesel, GPL, metano) oppure kWh/100 km (elettrica).
-      </p>
+    <p class="tags">
+      <strong>Tag:</strong> calcolatore tempo di ritorno elettrodomestico, payback elettrodomestico, conviene cambiare frigo,
+      conviene cambiare lavatrice, consumo kWh anno, Syncras calcolatori.
+    </p>
 
-      <div class="calc-grid-inputs">
-        <div class="calc-field">
-          <label>Chilometri considerati (es. 20000 km/anno)</label>
-          <input id="kmTot" type="number" min="1000" max="100000" value="20000">
-        </div>
-      </div>
-
-      <h3>Auto A</h3>
-      <div class="calc-grid-inputs">
-        <div class="calc-field">
-          <label>Alimentazione Auto A</label>
-          <select id="tipoA">
-            <option value="Benzina">Benzina</option>
-            <option value="Diesel">Diesel</option>
-            <option value="GPL" selected>GPL</option>
-            <option value="Metano">Metano</option>
-            <option value="Elettrica">Elettrica</option>
-          </select>
-        </div>
-
-        <div class="calc-field">
-          <label for="consA">Consumo Auto A (litri o kWh / 100 km)</label>
-          <input id="consA" type="number" step="0.1" min="1" max="40" value="8">
-        </div>
-
-        <div class="calc-field">
-          <label for="prezzoA">Prezzo carburante/energia Auto A (€/litro o €/kWh)</label>
-          <input id="prezzoA" type="number" step="0.01" min="0.1" max="5" value="0.90">
-        </div>
-      </div>
-
-      <h3>Auto B</h3>
-      <div class="calc-grid-inputs">
-        <div class="calc-field">
-          <label>Alimentazione Auto B</label>
-          <select id="tipoB">
-            <option value="Benzina">Benzina</option>
-            <option value="Diesel">Diesel</option>
-            <option value="GPL">GPL</option>
-            <option value="Metano">Metano</option>
-            <option value="Elettrica" selected>Elettrica</option>
-          </select>
-        </div>
-
-        <div class="calc-field">
-          <label for="consB">Consumo Auto B (litri o kWh / 100 km)</label>
-          <input id="consB" type="number" step="0.1" min="1" max="40" value="15">
-        </div>
-
-        <div class="calc-field">
-          <label for="prezzoB">Prezzo carburante/energia Auto B (€/litro o €/kWh)</label>
-          <input id="prezzoB" type="number" step="0.01" min="0.1" max="5" value="0.20">
-        </div>
-      </div>
-
-      <!-- 🔹 BLOCCO ACCETTAZIONE NOTE LEGALI PRIMA DEL BOTTONE -->
-      <div class="legal-box-avviso">
-        <label>
-          <input type="checkbox" id="legalAccept">
-           Prima di procedere, ricorda che i risultati di questo test sono solo stime indicative e non sostituiscono
-  una valutazione professionale. Ogni scelta resta personale e basata sulle tue esigenze reali. Per tutti i
-  dettagli, consulta le <a href="note-legali.html" target="_blank">Note Legali</a>.
-</label>
-        <p class="legal-note-small">
-          I risultati di questo calcolatore sono indicativi e non costituiscono consulenza professionale.
-          Per decisioni economiche, fiscali o tecniche fai sempre riferimento a un professionista qualificato.
-        </p>
-      </div>
-      <!-- 🔹 FINE BLOCCO ACCETTAZIONE -->
-
-      <button class="calc-btn" type="button" onclick="calcolaAuto()">Calcola confronto auto</button>
-
-      <div id="autoResult" class="calc-result"></div>
-
-      <!-- Pulsante CONDIVIDI in basso -->
-      <div style="text-align:center; margin:20px 0;">
-        <button id="shareBtnBottom"
-          style="background: var(--violet-main); color:white; padding:10px 18px; border:none;
-                 border-radius:6px; cursor:pointer; font-weight:600; font-size:1rem;">
-          📎 Condividi il risultato
-        </button>
-      </div>
-
-      <p class="small-note">
-        Il calcolatore considera solo il costo “carburante/energia”.  
-        Non tiene conto di assicurazione, bollo, manutenzione, pedaggi, parcheggi, ecc.
-      </p>
-
-
-      <!-- RICHIAMO AD ALTRI CONTENUTI CORRELATI -->
-<section style="margin-top:30px; padding:16px; border-radius:10px; background:#F7F7FB; border:1px solid #E5E7EB;">
-  <h2 style="margin-top:0;">Ti possono interessare anche:</h2>
-
-  <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-top:10px;">
-
-    <!-- CALCOLATORE AUTO -->
-    <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
-      <a href="https://syncras.app/calcolatore-consumi-auto.html" style="text-decoration:none; color:var(--violet-dark); display:block;">
-        <h3 style="margin-top:0; font-size:1rem;">
-          Quanto costa davvero usare un’auto?
-        </h3>
-        <p style="font-size:0.9rem; margin:0;">
-          Confronta i costi reali di benzina, diesel, GPL, metano ed elettrico
-          in base a chilometri e consumi reali.
-        </p>
-      </a>
-    </article>
-
-    <!-- FOTOVOLTAICO AMMORTAMENTO -->
-    <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
-      <a href="https://syncras.app/calcolatore-fotovoltaico-ammortamento.html" style="text-decoration:none; color:var(--violet-dark); display:block;">
-        <h3 style="margin-top:0; font-size:1rem;">
-          In quanto tempo si ripaga il fotovoltaico?
-        </h3>
-        <p style="font-size:0.9rem; margin:0;">
-          Scopri dopo quanti anni recuperi l’investimento
-          in base a consumi, autoconsumo e produzione stimata.
-        </p>
-      </a>
-    </article>
-
-    <!-- SMART TEST AUTO ELETTRICA -->
-    <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
-      <a href="https://syncras.app/smart-test/smart-test-auto-elettrica-per-te.html" style="text-decoration:none; color:var(--violet-dark); display:block;">
-        <h3 style="margin-top:0; font-size:1rem;">
-          Ha senso l’auto elettrica per te?
-        </h3>
-        <p style="font-size:0.9rem; margin:0;">
-          Non per tutti è la scelta giusta.
-          Questo test ti aiuta a capirlo in base al tuo uso reale.
-        </p>
-      </a>
-    </article>
-
-    <!-- SMART TEST IBRIDA -->
-    <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
-      <a href="https://syncras.app/smart-test/smart-test-ibrida-plugin-o-nessuna.html" style="text-decoration:none; color:var(--violet-dark); display:block;">
-        <h3 style="margin-top:0; font-size:1rem;">
-          Ibrida, plug-in o nessuna delle due?
-        </h3>
-        <p style="font-size:0.9rem; margin:0;">
-          Tra marketing e realtà quotidiana,
-          qui capisci quale tecnologia ha davvero senso per te.
-        </p>
-      </a>
-    </article>
-
-  </div>
-</section>
-
-
-
-
-      
-    </section>
+    <div style="text-align:center; margin-top:18px;">
+      <button id="shareBottom" class="share-btn">
+        <span class="icon">📎</span> Condividi questa pagina
+      </button>
+    </div>
   </main>
 
   <footer class="syncras-footer">
@@ -626,14 +710,13 @@
         <h4>Link utili</h4>
         <ul>
           <li><a href="blog.html">Tutte le guide SmartShop</a></li>
-          <li><a href="offerte.html">Offerte Amazon selezionate</a></li>
-          <li><a href="smart-tv-economica-o-tv-buona-con-box.html">Guida Smart TV</a></li>
-          <li><a href="fotovoltaico-4kw-accumulo-10kwh-quanto-costa-davvero-nel-2025.html">Guida fotovoltaico 4 kW</a></li>
+          <li><a href="calcolatori.html">Tutti i calcolatori</a></li>
+          <li><a href="fotovoltaico-4-kw-con-accumulo-10-kwh-quanto-costa-davvero-nel-2025.html">Caso reale fotovoltaico</a></li>
         </ul>
       </div>
 
       <div class="footer-column">
-        <h4>Legale & Privacy</h4>
+        <h4>Legale &amp; Privacy</h4>
         <ul>
           <li><a href="privacy.html">Privacy Policy</a></li>
           <li><a href="cookie.html">Cookie Policy</a></li>
@@ -651,8 +734,8 @@
         senza alcun costo aggiuntivo per l’utente.
       </p>
       <p>
-        Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
-        è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+        Per ordini, resi, spedizioni o dati relativi agli acquisti, è necessario rivolgersi
+        direttamente al servizio clienti Amazon tramite il proprio account.
       </p>
     </div>
   </footer>
@@ -662,146 +745,188 @@
       document.body.classList.toggle('nav-open');
     }
 
-    // FORMATTAZIONE EURO
-    function euro(val) {
-      return val.toFixed(2).replace('.', ',');
-    }
+    function sharePage() {
+      const url = window.location.href;
+      const title = 'Calcolatore tempo di ritorno elettrodomestico | Syncras.App';
 
-    // LABEL DINAMICHE in base al tipo (Gemini)
-    function updateLabels(suffix) {
-      const tipo = document.getElementById(`tipo${suffix}`).value;
-      const consLabel = document.querySelector(`label[for="cons${suffix}"]`);
-      const prezzoLabel = document.querySelector(`label[for="prezzo${suffix}"]`);
-      if (!consLabel || !prezzoLabel) return;
-
-      if (tipo === 'Elettrica') {
-        consLabel.textContent = `Consumo Auto ${suffix} (kWh / 100 km)`;
-        prezzoLabel.textContent = `Prezzo energia Auto ${suffix} (€/kWh)`;
+      if (navigator.share) {
+        navigator.share({ title, url }).catch(() => {});
+      } else if (navigator.clipboard) {
+        navigator.clipboard.writeText(url).then(function() {
+          alert('Link copiato negli appunti. Puoi incollarlo dove vuoi.');
+        }, function() {
+          alert('Non sono riuscito a copiare il link, ma puoi usare la barra degli indirizzi.');
+        });
       } else {
-        consLabel.textContent = `Consumo Auto ${suffix} (litri / 100 km)`;
-        prezzoLabel.textContent = `Prezzo carburante Auto ${suffix} (€/litro)`;
+        alert('Condivisione non supportata dal browser, copia il link dalla barra degli indirizzi.');
       }
     }
 
-    // CALCOLO CONFRONTO AUTO
-    function calcolaAuto() {
-      // ✅ Controllo accettazione Note Legali
+    document.getElementById('shareTop').addEventListener('click', sharePage);
+    document.getElementById('shareBottom').addEventListener('click', sharePage);
+
+    // FUNZIONE DI SUPPORTO FORMATTAZIONE EURO (arrotonda all'intero)
+    function euro(val) {
+      return val.toFixed(0).replace('.', ',');
+    }
+
+    // ✅ Controllo accettazione Note Legali con scroll automatico
+    function checkLegalAccept() {
       const legalCheckbox = document.getElementById('legalAccept');
       if (legalCheckbox && !legalCheckbox.checked) {
-        alert('Per usare il calcolatore devi dichiarare di aver letto e accettato le Note Legali.');
-        return;
+        alert('Per usare questo calcolatore devi dichiarare di aver letto e accettato le Note Legali.');
+        const legalBox = document.getElementById('legal-box');
+        if (legalBox && legalBox.scrollIntoView) {
+          legalBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+        return false;
       }
-
-      const kmTot = parseFloat(document.getElementById('kmTot').value) || 0;
-
-      const tipoA = document.getElementById('tipoA').value;
-      const consA = parseFloat(document.getElementById('consA').value) || 0;      // litri o kWh /100 km
-      const prezzoA = parseFloat(document.getElementById('prezzoA').value) || 0;  // €/litro o €/kWh
-
-      const tipoB = document.getElementById('tipoB').value;
-      const consB = parseFloat(document.getElementById('consB').value) || 0;
-      const prezzoB = parseFloat(document.getElementById('prezzoB').value) || 0;
-
-      if (kmTot <= 0 || consA <= 0 || consB <= 0 || prezzoA <= 0 || prezzoB <= 0) {
-        alert('Controlla di aver inserito tutti i valori maggiori di zero.');
-        return;
-      }
-
-      // costo per 100 km = consumo(100km) * prezzo unitario
-      const costo100A = consA * prezzoA;
-      const costoKmA = costo100A / 100;
-      const costoTotA = costoKmA * kmTot;
-
-      const costo100B = consB * prezzoB;
-      const costoKmB = costo100B / 100;
-      const costoTotB = costoKmB * kmTot;
-
-      const diffTot = costoTotA - costoTotB;
-
-      let piuEconomica, testoDiff;
-      if (Math.abs(diffTot) < 0.01) {
-        piuEconomica = 'Le due auto hanno un costo molto simile sui chilometri inseriti.';
-        testoDiff = '';
-      } else if (diffTot > 0) {
-        piuEconomica = `Auto B (${tipoB}) è più economica.`;
-        testoDiff = `Su <strong>${kmTot.toLocaleString('it-IT')} km</strong> Auto B (${tipoB}) ti farebbe risparmiare circa <strong>${euro(diffTot)} €</strong> solo di "pieno".`;
-      } else {
-        piuEconomica = `Auto A (${tipoA}) è più economica.`;
-        testoDiff = `Su <strong>${kmTot.toLocaleString('it-IT')} km</strong> Auto A (${tipoA}) ti farebbe risparmiare circa <strong>${euro(-diffTot)} €</strong> solo di "pieno".`;
-      }
-
-      const box = document.getElementById('autoResult');
-      box.innerHTML = `
-        <strong>Risultato del confronto:</strong>
-
-        <p><u>Auto A (${tipoA})</u><br>
-        – Costo per 100 km: <strong>${euro(costo100A)} €</strong><br>
-        – Costo per ${kmTot.toLocaleString('it-IT')} km: <strong>${euro(costoTotA)} €</strong></p>
-
-        <p><u>Auto B (${tipoB})</u><br>
-        – Costo per 100 km: <strong>${euro(costo100B)} €</strong><br>
-        – Costo per ${kmTot.toLocaleString('it-IT')} km: <strong>${euro(costoTotB)} €</strong></p>
-
-        <p>${piuEconomica}</p>
-        <p>${testoDiff}</p>
-
-        <p class="small-note">
-          Si tratta solo di un confronto "a parità di chilometri" sui costi di carburante/energia.
-          Nella realtà vanno considerati anche altri fattori (prezzo d'acquisto, manutenzione, tasse, assicurazione, ecc.).
-        </p>
-      `;
-      box.style.display = 'block';
+      return true;
     }
 
-    // FOOTER YEAR + label iniziali
+    // Toggle tra modalità kWh e Watt+ore
+    function updateMode() {
+      const mode = document.querySelector('input[name="modeConsumi"]:checked')?.value || 'kwh';
+      const blocKwh = document.getElementById('blocKwh');
+      const blocWatt = document.getElementById('blocWatt');
+
+      if (mode === 'kwh') {
+        if (blocKwh) blocKwh.style.display = 'block';
+        if (blocWatt) blocWatt.style.display = 'none';
+      } else {
+        if (blocKwh) blocKwh.style.display = 'none';
+        if (blocWatt) blocWatt.style.display = 'block';
+      }
+    }
+
+    document.querySelectorAll('input[name="modeConsumi"]').forEach(r => {
+      r.addEventListener('change', updateMode);
+    });
+
+    // Listener per il form del calcolatore elettrodomestico
+    document.getElementById('appliancePaybackForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      // Controllo Note Legali
+      if (!checkLegalAccept()) return;
+
+      const mode = document.querySelector('input[name="modeConsumi"]:checked')?.value || 'kwh';
+
+      const prezzoNuovo        = parseFloat(document.getElementById('prezzoNuovo').value || '0');
+      const costoInstallazione = parseFloat(document.getElementById('costoInstallazione').value || '0');
+      const incentivi          = parseFloat(document.getElementById('incentivi').value || '0');
+
+      const prezzoKwh      = parseFloat(document.getElementById('prezzoKwh').value || '0');
+      const anniDurata     = parseFloat(document.getElementById('anniDurata').value || '0');
+
+      const resultDiv = document.getElementById('resultAppliancePayback');
+
+      if (prezzoNuovo <= 0 || prezzoKwh <= 0) {
+        resultDiv.innerHTML = "Per favore inserisci almeno il costo del nuovo elettrodomestico e un prezzo dell’energia valido.";
+        return;
+      }
+
+      let consumoVecchio = 0;
+      let consumoNuovo   = 0;
+      let notaCalcoloConsumi = "";
+
+      if (mode === 'kwh') {
+        consumoVecchio = parseFloat(document.getElementById('consumoVecchio').value || '0');
+        consumoNuovo   = parseFloat(document.getElementById('consumoNuovo').value || '0');
+
+        if (consumoVecchio <= 0 || consumoNuovo <= 0) {
+          resultDiv.innerHTML = "Modalità kWh/anno: inserisci i consumi annui del vecchio e del nuovo elettrodomestico (in kWh/anno).";
+          return;
+        }
+      } else {
+        const potenzaVecchio   = parseFloat(document.getElementById('potenzaVecchio').value || '0');
+        const potenzaNuovo     = parseFloat(document.getElementById('potenzaNuovo').value || '0');
+        const oreGiornaliere   = parseFloat(document.getElementById('oreGiornaliere').value || '0');
+        const giorniAnno       = parseFloat(document.getElementById('giorniAnno').value || '0');
+
+        if (potenzaVecchio <= 0 || potenzaNuovo <= 0 || oreGiornaliere <= 0 || giorniAnno <= 0) {
+          resultDiv.innerHTML = "Modalità Watt + ore: inserisci potenza di vecchio e nuovo, ore di utilizzo giornaliere e giorni di utilizzo annui.";
+          return;
+        }
+
+        // kWh/anno = (Watt * ore/giorno * giorni/anno) / 1000
+        consumoVecchio = (potenzaVecchio * oreGiornaliere * giorniAnno) / 1000;
+        consumoNuovo   = (potenzaNuovo   * oreGiornaliere * giorniAnno) / 1000;
+
+        notaCalcoloConsumi =
+          `<br><br><span style="font-size:0.8rem; color:#4b5563;">
+            I consumi annui sono stati stimati a partire da Watt e ore di utilizzo:<br>
+            • Vecchio ≈ <strong>${consumoVecchio.toFixed(0)} kWh/anno</strong><br>
+            • Nuovo ≈ <strong>${consumoNuovo.toFixed(0)} kWh/anno</strong>
+          </span>`;
+      }
+
+      // Costo totale effettivo del nuovo elettrodomestico
+      let costoTotale = prezzoNuovo + Math.max(costoInstallazione, 0) - Math.max(incentivi, 0);
+      if (costoTotale < 0) costoTotale = 0;
+
+      // Costi energetici annui
+      const costoAnnualeVecchio = consumoVecchio * prezzoKwh;
+      const costoAnnualeNuovo   = consumoNuovo * prezzoKwh;
+
+      const risparmioAnnuo = costoAnnualeVecchio - costoAnnualeNuovo;
+
+      if (risparmioAnnuo <= 0) {
+        resultDiv.innerHTML = `
+          <strong>Attenzione:</strong> con i dati inseriti il nuovo elettrodomestico non genera un risparmio annuo
+          rispetto al vecchio (o addirittura costa di più in bolletta).<br>
+          In questi casi non esiste un vero <em>tempo di ritorno economico</em>: la scelta diventa soprattutto una
+          questione di comfort, affidabilità o altre esigenze personali.
+          ${notaCalcoloConsumi}
+        `;
+        return;
+      }
+
+      const anniRitorno = costoTotale > 0 ? (costoTotale / risparmioAnnuo) : 0;
+      const mesiRitorno = anniRitorno * 12;
+
+      let messDurata = "";
+      if (anniDurata > 0) {
+        if (anniRitorno <= anniDurata) {
+          messDurata =
+            `✅ Con una durata prevista di circa <strong>${anniDurata.toFixed(0)} anni</strong>, il nuovo elettrodomestico ha
+             tempo sufficiente per ripagarsi e iniziare a farti risparmiare davvero.`;
+        } else {
+          messDurata =
+            `⚠️ Se davvero lo userai per circa <strong>${anniDurata.toFixed(0)} anni</strong>, il tempo di ritorno
+             (<strong>${anniRitorno.toFixed(1)} anni</strong>) è più lungo della sua vita utile stimata.
+             Potrebbe non ripagarsi completamente prima di essere sostituito.`;
+        }
+      }
+
+      resultDiv.innerHTML = `
+        <strong>Riepilogo dei tuoi dati:</strong><br>
+        • Costo totale considerato per il nuovo elettrodomestico: <strong>${euro(costoTotale)} €</strong><br>
+        • Costo annuo del VECCHIO elettrodomestico: <strong>${euro(costoAnnualeVecchio)} €</strong><br>
+        • Costo annuo del NUOVO elettrodomestico: <strong>${euro(costoAnnualeNuovo)} €</strong><br>
+        • Risparmio annuo stimato in bolletta: <strong>${euro(risparmioAnnuo)} €</strong><br><br>
+
+        <strong>Tempo di ritorno stimato:</strong><br>
+        • Circa <strong>${anniRitorno.toFixed(1)} anni</strong> (≈ ${mesiRitorno.toFixed(0)} mesi) per rientrare dell’investimento con il solo risparmio in bolletta.<br><br>
+
+        ${messDurata ? messDurata + "<br><br>" : ""}
+
+        <span style="font-size:0.8rem; color:#4b5563;">
+          Nota: non sono considerati eventuali guasti, manutenzioni straordinarie, cambi di tariffa, né possibili aumenti o cali
+          futuri del prezzo dell’energia. Usa questi numeri come bussola, non come verità assoluta.
+        </span>
+        ${notaCalcoloConsumi}
+      `;
+    });
+
+    // FOOTER YEAR
     document.addEventListener('DOMContentLoaded', function() {
       var span = document.getElementById('year-span');
       if (span) {
         span.textContent = new Date().getFullYear();
       }
-
-      // inizializza le label in base ai default (GPL + Elettrica)
-      updateLabels('A');
-      updateLabels('B');
-
-      // listener sui select per aggiornare al cambio
-      const tipoASelect = document.getElementById('tipoA');
-      const tipoBSelect = document.getElementById('tipoB');
-      if (tipoASelect) {
-        tipoASelect.addEventListener('change', function() {
-          updateLabels('A');
-        });
-      }
-      if (tipoBSelect) {
-        tipoBSelect.addEventListener('change', function() {
-          updateLabels('B');
-        });
-      }
+      updateMode(); // Assicura che la modalità visualizzata sia corretta all’avvio
     });
-
-    // CONDIVISIONE (top + bottom)
-    (function() {
-      const shareTop = document.getElementById('shareBtnTop');
-      const shareBottom = document.getElementById('shareBtnBottom');
-
-      function attachShare(btn) {
-        if (!btn) return;
-        if (navigator.share) {
-          btn.addEventListener('click', () => {
-            navigator.share({
-              title: 'Confronto consumi e costi auto – Syncras.App',
-              text: 'Ho confrontato i costi tra due auto (benzina, diesel, GPL, metano o elettrica). Guarda il risultato qui:',
-              url: window.location.href
-            });
-          });
-        } else {
-          btn.style.display = 'none';
-        }
-      }
-
-      attachShare(shareTop);
-      attachShare(shareBottom);
-    })();
   </script>
 
   <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
@@ -884,15 +1009,18 @@
 
   <script>
     (function () {
-      // 👉 ID Google Analytics di Tiziana
       const GA_ID = 'G-CFTTCYDZ2P';
+      const CONSENT_KEY = 'syncras_cookie_consent'; // chiave unica per tutto il sito
 
-      // 👉 Chiave locale per memorizzare la scelta
-      const CONSENT_KEY = "syncras_cookie_consent";
+      // 1️⃣ BLOCCO PREVENTIVO: GA disabilitato finché non c'è consenso
+      window['ga-disable-' + GA_ID] = true;
 
       function loadGoogleAnalytics() {
-        if (window.__tizianaGaLoaded) return;
-        window.__tizianaGaLoaded = true;
+        if (window.__syncrasGaLoaded) return;
+        window.__syncrasGaLoaded = true;
+
+        // Riabilita GA solo dopo il consenso
+        window['ga-disable-' + GA_ID] = false;
 
         const gaScript = document.createElement('script');
         gaScript.async = true;
@@ -925,6 +1053,15 @@
       window.rejectCookies = function () {
         localStorage.setItem(CONSENT_KEY, 'no');
         hideBanner();
+        // GA resta bloccato
+        window['ga-disable-' + GA_ID] = true;
+      };
+
+      // 2️⃣ FUNZIONE DI REVOCA – per cambiare idea dopo
+      window.revokeCookies = function () {
+        localStorage.removeItem(CONSENT_KEY);
+        window['ga-disable-' + GA_ID] = true;   // blocca subito GA
+        showBanner();                           // ri-mostra il banner
       };
 
       document.addEventListener('DOMContentLoaded', function () {
@@ -933,7 +1070,7 @@
         if (consent === 'yes') {
           loadGoogleAnalytics();
         } else if (consent === 'no') {
-          // niente GA, niente banner
+          window['ga-disable-' + GA_ID] = true;
         } else {
           showBanner();
         }
@@ -943,6 +1080,7 @@
 
 </body>
 </html>
+
 
 
 
