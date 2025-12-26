@@ -680,10 +680,54 @@
           Spesso non è il modello “più nuovo” a fare la differenza, ma il rapporto tra <strong>costo</strong>,
           <strong>consumo annuo</strong> e <strong>anni di utilizzo previsto</strong>.
         </span>
-       
+        
       </div>
     </section>
 
+
+    <!-- RICHIAMO AD ALTRI CONTENUTI CORRELATI -->
+<section style="margin-top:30px; padding:16px; border-radius:10px; background:#F7F7FB; border:1px solid #E5E7EB;">
+  <h2 style="margin-top:0;">Ti possono interessare anche:</h2>
+
+  <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-top:10px;">
+
+    <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
+      <a href="https://syncras.app/calcolatore-caldaia-condensazione.html" style="text-decoration:none; color:var(--violet-dark); display:block;">
+        <h3 style="margin-top:0; font-size:1rem;">
+          Caldaia tradizionale vs caldaia a condensazione: quanto risparmi davvero?
+        </h3>
+        <p style="font-size:0.9rem; margin:0;">
+          Inserisci consumi e prezzi reali e scopri se la condensazione
+          ripaga davvero il costo iniziale o se il risparmio è solo teorico.
+        </p>
+      </a>
+    </article>
+
+    <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
+      <a href="https://syncras.app/calcolatore-consumi-elettrodomestici.html" style="text-decoration:none; color:var(--violet-dark); display:block;">
+        <h3 style="margin-top:0; font-size:1rem;">
+          Calcolatore consumi elettrodomestici: scopri dove se ne va la corrente
+        </h3>
+        <p style="font-size:0.9rem; margin:0;">
+          Dal frigorifero alla lavatrice: calcola il consumo reale annuo
+          e individua subito gli elettrodomestici che pesano di più in bolletta.
+        </p>
+      </a>
+    </article>
+
+    <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
+      <a href="https://syncras.app/smart-test/riscaldamento-elettrico-vs-gas.html" style="text-decoration:none; color:var(--violet-dark); display:block;">
+        <h3 style="margin-top:0; font-size:1rem;">
+          Smart Test – Riscaldamento elettrico vs gas: quale conviene davvero?
+        </h3>
+        <p style="font-size:0.9rem; margin:0;">
+          Pompa di calore, gas o resistenze elettriche?
+          Rispondi a poche domande e scopri cosa ha davvero senso a casa tua.
+        </p>
+      </a>
+    </article>
+
+    
     <p class="tags">
       <strong>Tag:</strong> calcolatore tempo di ritorno elettrodomestico, payback elettrodomestico, conviene cambiare frigo,
       conviene cambiare lavatrice, consumo kWh anno, Syncras calcolatori.
@@ -1080,7 +1124,6 @@
 
 </body>
 </html>
-
 
 
 
