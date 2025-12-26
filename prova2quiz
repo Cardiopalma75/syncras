@@ -11,7 +11,7 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
+  "@type": "WebApplication",
   "name": "Calcolatore Consumi Elettrodomestici",
   "applicationCategory": "UtilitiesApplication",
   "operatingSystem": "All",
@@ -1099,9 +1099,25 @@
     </section>
 
     <p class="tags">
-      <strong>Tag:</strong> calcolatore consumi elettrodomestici, stufetta elettrica kWh, consumo TV,
-      lavatrice kWh, forno elettrico quanto consuma, lavastoviglie consumi, asciugatrice pompa di calore,
-      calcolatore fotovoltaico, auto elettrica fotovoltaico, risparmio bolletta.
+      <strong>Tag:</strong><section style="max-width: 800px; margin: 40px auto; padding: 20px; font-family: sans-serif; line-height: 1.6; color: #333;">
+    <h2>Come usare il calcolatore di consumi elettrici?</h2>
+    <p>Capire <strong>quanto consuma un elettrodomestico</strong> è fondamentale per ridurre i costi in bolletta. Il nostro tool ti permette di inserire la potenza (Watt) e le ore di utilizzo per ottenere immediatamente il costo stimato in Euro.</p>
+
+    <h3>Consumi medi dei principali elettrodomestici</h3>
+    <p>Se non conosci la potenza del tuo apparecchio, ecco alcuni valori medi di riferimento che puoi inserire nel calcolatore:</p>
+    <ul>
+        <li><strong>Stufetta elettrica:</strong> 1000W - 2000W (Uno degli apparecchi più costosi).</li>
+        <li><strong>Condizionatore:</strong> 800W - 1200W (In modalità raffreddamento).</li>
+        <li><strong>Lavatrice/Lavastoviglie:</strong> 2000W - 2500W (Durante la fase di riscaldamento acqua).</li>
+        <li><strong>Frigorifero:</strong> 100W - 200W (Ma rimane acceso 24 ore su 24).</li>
+        <li><strong>TV LED:</strong> 50W - 150W.</li>
+    </ul>
+
+    <h3>Risparmiare con il Fotovoltaico</h3>
+    <p>Se possiedi un impianto <strong>fotovoltaico</strong>, il costo reale in bolletta si riduce drasticamente durante le ore diurne. Inserendo la percentuale di autoconsumo nel calcolatore, potrai vedere quanto stai effettivamente risparmiando grazie all'energia solare.</p>
+    
+    <p><small>Nota: I risultati sono stime basate sui dati inseriti. Il costo finale dipende dal proprio contratto luce e dall'efficienza energetica dei dispositivi.</small></p>
+</section>
     </p>
 
     <div style="text-align:center; margin-top:18px;">
