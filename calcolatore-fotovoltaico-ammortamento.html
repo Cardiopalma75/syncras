@@ -1,6 +1,9 @@
 <!DOCTYPE html>
-<meta charset="UTF-8">
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Calcolatore Ammortamento Fotovoltaico 2025: Calcola il Rientro Economico</title>
   <meta name="description" content="Scopri in quanto tempo si ripaga il tuo impianto fotovoltaico. Calcola produzione, risparmio annuo in bolletta e tabella di ammortamento completa. Gratuito e preciso.">
   <meta name="robots" content="index,follow">
@@ -13,16 +16,12 @@
     "name": "Calcolatore Ammortamento e Risparmio Fotovoltaico",
     "applicationCategory": "FinancialApplication",
     "operatingSystem": "All",
-    "description": "Strumento per calcolare il tempo di rientro dell'investimento (payback period) di un impianto fotovoltaico basato su produzione, autoconsumo e costi energetici.",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "EUR"
-    },
+    "description": "Strumento per calcolare il tempo di rientro dell'investimento (payback period) di un impianto fotovoltaico basato su produzione, autoconsumo, consumi reali e costi energetici.",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
     "url": "https://syncras.app/calcolatore-fotovoltaico-ammortamento.html"
-}
- </script>
-    
+  }
+  </script>
+
   <style>
     :root {
       --violet-main: #6C5CE7;
@@ -32,9 +31,7 @@
       --text-main: #403E43;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -51,8 +48,10 @@
       color: #fff;
       padding: 12px 14px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
-
     .header-inner {
       max-width: 980px;
       margin: 0 auto;
@@ -60,36 +59,27 @@
       align-items: center;
       justify-content: space-between;
       gap: 16px;
+      position: relative;
     }
-
     .logo {
       font-size: 1.4rem;
       font-weight: bold;
       letter-spacing: 0.03em;
     }
-
     #main-nav {
       display: flex;
       gap: 14px;
       font-size: 0.95rem;
     }
-
     #main-nav a {
       color: #fff;
       text-decoration: none;
       font-weight: 600;
       padding-bottom: 2px;
       border-bottom: 2px solid transparent;
+      opacity: 0.95;
     }
-
-    #main-nav a:hover {
-      text-decoration: underline;
-    }
-
-    #main-nav a.active {
-      border-bottom-color: rgba(255,255,255,0.9);
-    }
-
+    #main-nav a:hover { text-decoration: underline; opacity: 1; }
     .menu-toggle {
       display: none;
       background: rgba(255,255,255,0.12);
@@ -100,11 +90,7 @@
       font-size: 0.9rem;
       cursor: pointer;
     }
-
-    .menu-toggle span {
-      margin-left: 4px;
-      font-size: 1.1rem;
-    }
+    .menu-toggle span { margin-left: 4px; font-size: 1.1rem; }
 
     @media (max-width: 768px) {
       #main-nav {
@@ -112,7 +98,7 @@
         position: absolute;
         left: 0;
         right: 0;
-        top: 56px;
+        top: 52px;
         margin: 0 auto;
         max-width: 980px;
         flex-direction: column;
@@ -122,16 +108,9 @@
         box-shadow: 0 3px 6px rgba(0,0,0,0.25);
         z-index: 50;
       }
-      #main-nav a {
-        padding: 6px 0;
-      }
-      body.nav-open #main-nav {
-        display: flex;
-      }
-      .menu-toggle {
-        display: inline-flex;
-        align-items: center;
-      }
+      #main-nav a { padding: 6px 0; }
+      body.nav-open #main-nav { display: flex; }
+      .menu-toggle { display: inline-flex; align-items: center; }
     }
 
     /* MAIN */
@@ -143,33 +122,17 @@
       border-radius: 12px;
       box-shadow: 0 4px 8px rgba(0,0,0,0.08);
     }
+    h1, h2, h3 { color: var(--violet-dark); margin-top: 0; }
 
-    h1, h2, h3 {
-      color: var(--violet-dark);
-      margin-top: 0;
-    }
-
-    .back-links {
-      font-size: 0.9rem;
-      margin-bottom: 10px;
-    }
-
-    .back-links a {
-      color: var(--violet-dark);
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    .back-links a:hover {
-      text-decoration: underline;
-    }
+    .back-links { font-size: 0.9rem; margin-bottom: 10px; }
+    .back-links a { color: var(--violet-dark); text-decoration: none; font-weight: 600; }
+    .back-links a:hover { text-decoration: underline; }
 
     .page-intro {
       margin-bottom: 16px;
       border-bottom: 1px solid #e5e7eb;
       padding-bottom: 12px;
     }
-
     .badge-page {
       display: inline-block;
       font-size: 0.75rem;
@@ -182,7 +145,6 @@
       color: #3730a3;
       margin-bottom: 6px;
     }
-
     .intro-text {
       font-size: 0.95rem;
       color: #4b5563;
@@ -206,11 +168,7 @@
       transition: 0.25s ease;
       margin-bottom: 10px;
     }
-
-    .share-btn-new:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 14px rgba(0,0,0,0.20);
-    }
+    .share-btn-new:hover { transform: translateY(-2px); box-shadow: 0 6px 14px rgba(0,0,0,0.20); }
 
     .share-btn {
       display: inline-flex;
@@ -228,21 +186,9 @@
       transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
       margin: 10px 0 2px;
     }
-
-    .share-btn span.icon {
-      font-size: 1.1rem;
-    }
-
-    .share-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 5px 14px rgba(15, 23, 42, 0.30);
-      opacity: 0.96;
-    }
-
-    .share-btn:active {
-      transform: translateY(1px);
-      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.18);
-    }
+    .share-btn span.icon { font-size: 1.1rem; }
+    .share-btn:hover { transform: translateY(-1px); box-shadow: 0 5px 14px rgba(15, 23, 42, 0.30); opacity: 0.96; }
+    .share-btn:active { transform: translateY(1px); box-shadow: 0 2px 6px rgba(15, 23, 42, 0.18); }
 
     /* Blocchi calcolatore */
     .calc-section {
@@ -252,7 +198,6 @@
       background: #f8f9ff;
       border: 1px solid #e0e7ff;
     }
-
     .calc-header {
       display: flex;
       justify-content: space-between;
@@ -261,11 +206,7 @@
       margin-bottom: 10px;
       flex-wrap: wrap;
     }
-
-    .calc-header small {
-      font-size: 0.8rem;
-      color: #6b7280;
-    }
+    .calc-header small { font-size: 0.8rem; color: #6b7280; }
 
     .pv-subsection {
       margin-top: 12px;
@@ -274,12 +215,7 @@
       background: #eef2ff;
       border: 1px dashed #c7d2fe;
     }
-
-    .pv-subsection h3 {
-      margin-top: 0;
-      margin-bottom: 6px;
-      font-size: 1rem;
-    }
+    .pv-subsection h3 { margin-top: 0; margin-bottom: 6px; font-size: 1rem; }
 
     .pv-grid {
       display: grid;
@@ -287,14 +223,12 @@
       gap: 10px 12px;
       margin-top: 4px;
     }
-
     .calc-field label {
       font-size: 0.85rem;
       font-weight: 600;
       display: block;
       margin-bottom: 2px;
     }
-
     .calc-field input,
     .calc-field select {
       width: 100%;
@@ -303,7 +237,6 @@
       border: 1px solid #d1d5db;
       font-size: 0.9rem;
     }
-
     .calc-button {
       margin-top: 14px;
       padding: 9px 15px;
@@ -315,10 +248,7 @@
       font-size: 0.9rem;
       cursor: pointer;
     }
-
-    .calc-button:hover {
-      background: var(--violet-dark);
-    }
+    .calc-button:hover { background: var(--violet-dark); }
 
     .calc-result {
       margin-top: 12px;
@@ -329,20 +259,10 @@
       font-size: 0.9rem;
       display: none;
     }
+    .calc-note { font-size: 0.8rem; color: #6b7280; margin-top: 6px; }
+    .tags { font-size: 0.8rem; color: #6b7280; margin-top: 18px; }
 
-    .calc-note {
-      font-size: 0.8rem;
-      color: #6b7280;
-      margin-top: 6px;
-    }
-
-    .tags {
-      font-size: 0.8rem;
-      color: #6b7280;
-      margin-top: 18px;
-    }
-
-    /* 🔹 BLOCCO ACCETTAZIONE NOTE LEGALI PER QUESTO CALCOLATORE */
+    /* BLOCCO NOTE LEGALI */
     .legal-box-avviso {
       margin-top: 14px;
       padding: 10px 12px;
@@ -352,60 +272,26 @@
       font-size: 0.9rem;
       color: #374151;
     }
-
     .legal-box-avviso a {
       color: var(--violet-main);
       text-decoration: underline;
       font-weight: 600;
     }
-
-    .legal-note-small {
-      margin: 6px 0 0;
-      font-size: 0.8rem;
-      color: #6b7280;
-    }
+    .legal-note-small { margin: 6px 0 0; font-size: 0.8rem; color: #6b7280; }
 
     /* Tabella ammortamento */
-    .amort-wrapper {
-      margin-top: 14px;
-      overflow-x: auto;
-    }
-
-    .amort-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.85rem;
-    }
-
-    .amort-table th,
-    .amort-table td {
+    .amort-wrapper { margin-top: 14px; overflow-x: auto; }
+    .amort-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    .amort-table th, .amort-table td {
       border: 1px solid #d1d5db;
       padding: 6px 8px;
       text-align: right;
       white-space: nowrap;
     }
-
-    .amort-table th {
-      background: #e0e7ff;
-      font-weight: 600;
-      text-align: center;
-    }
-
-    .amort-table td:first-child,
-    .amort-table th:first-child {
-      text-align: center;
-    }
-
-    .row-break-even {
-      background: #dcfce7;
-      font-weight: 600;
-    }
-
-    .amort-legend {
-      font-size: 0.8rem;
-      color: #4b5563;
-      margin-top: 6px;
-    }
+    .amort-table th { background: #e0e7ff; font-weight: 600; text-align: center; }
+    .amort-table td:first-child, .amort-table th:first-child { text-align: center; }
+    .row-break-even { background: #dcfce7; font-weight: 600; }
+    .amort-legend { font-size: 0.8rem; color: #4b5563; margin-top: 6px; }
 
     /* Bottone stampa */
     .print-btn {
@@ -417,11 +303,9 @@
       cursor: pointer;
       font-size: 0.85rem;
       font-weight: 600;
+      margin-left: 8px;
     }
-
-    .print-btn:hover {
-      background: #f3f4ff;
-    }
+    .print-btn:hover { background: #f3f4ff; }
 
     /* Amazon box */
     .amazon-box {
@@ -433,50 +317,14 @@
       font-size: 0.85rem;
       box-shadow: 0 3px 10px rgba(15,23,42,0.08);
     }
-
-    .amazon-box strong {
-      display: block;
-      margin-bottom: 4px;
-      color: #4c1d95;
-    }
-
-    .amazon-box span {
-      display: inline-block;
-      margin-top: 2px;
-    }
-
-    .amazon-box a {
-      display: inline-block;
-      margin-top: 8px;
-      padding: 7px 14px;
-      border-radius: 999px;
-      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
-      color: #ffffff;
-      font-weight: 600;
-      font-size: 0.85rem;
-      text-decoration: none;
-      box-shadow: 0 2px 7px rgba(15,23,42,0.25);
-    }
-
-    .amazon-box a:hover {
-      box-shadow: 0 4px 10px rgba(15,23,42,0.30);
-      transform: translateY(-1px);
-    }
+    .amazon-box strong { display: block; margin-bottom: 4px; color: #4c1d95; }
 
     @media (max-width: 920px) {
-      .pv-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
+      .pv-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
-
     @media (max-width: 600px) {
-      main {
-        margin: 16px auto 24px;
-        padding: 14px 10px 20px;
-      }
-      .pv-grid {
-        grid-template-columns: 1fr;
-      }
+      main { margin: 16px auto 24px; padding: 14px 10px 20px; }
+      .pv-grid { grid-template-columns: 1fr; }
     }
 
     /* FOOTER */
@@ -487,15 +335,8 @@
       color: #f3eaff;
       font-size: 0.9rem;
     }
-
-    .syncras-footer a {
-      color: #f3eaff;
-      text-decoration: none;
-    }
-
-    .syncras-footer a:hover {
-      text-decoration: underline;
-    }
+    .syncras-footer a { color: #f3eaff; text-decoration: none; }
+    .syncras-footer a:hover { text-decoration: underline; }
 
     .footer-inner {
       max-width: 980px;
@@ -504,76 +345,71 @@
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 2rem;
     }
-
-    .footer-column h4 {
-      margin-top: 0;
-      margin-bottom: 0.7rem;
-      font-size: 1rem;
-    }
-
-    .footer-column p {
-      margin: 0;
-      font-size: 0.85rem;
-    }
-
-    .footer-column ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .footer-column li {
-      margin-bottom: 0.4rem;
-      font-size: 0.85rem;
-    }
-
-    .footer-bottom {
-      max-width: 980px;
-      margin: 0 auto;
-      text-align: center;
-      font-size: 0.8rem;
-      opacity: 0.9;
-    }
-
-    .footer-bottom p {
-      margin: 4px 0;
-    }
+    .footer-column h4 { margin-top: 0; margin-bottom: 0.7rem; font-size: 1rem; }
+    .footer-column p { margin: 0; font-size: 0.85rem; }
+    .footer-column ul { list-style: none; padding: 0; margin: 0; }
+    .footer-column li { margin-bottom: 0.4rem; font-size: 0.85rem; }
+    .footer-bottom { max-width: 980px; margin: 0 auto; text-align: center; font-size: 0.8rem; opacity: 0.9; }
+    .footer-bottom p { margin: 4px 0; }
 
     /* STAMPA */
     @media print {
-      body {
-        background: #ffffff;
-      }
-      .site-header,
-      .syncras-footer,
-      .menu-toggle,
-      #main-nav,
-      #shareTop,
-      #shareBottom {
+      body { background: #ffffff; }
+      .site-header, .syncras-footer, .menu-toggle, #main-nav, #shareTop, #shareBottom, #cookie-banner {
         display: none !important;
       }
-      main {
-        box-shadow: none;
-        margin: 0;
-        padding: 0;
-        max-width: 100%;
-      }
-      .print-btn {
-        display: none !important;
-      }
-      .calc-section {
-        border: none;
-        background: #ffffff;
-        padding: 0;
-        margin: 0 0 12px 0;
-      }
-      .pv-subsection {
-        border: 1px solid #d1d5db;
-        background: #ffffff;
-      }
+      main { box-shadow: none; margin: 0; padding: 0; max-width: 100%; }
+      .print-btn { display: none !important; }
+      .calc-section { border: none; background: #ffffff; padding: 0; margin: 0 0 12px 0; }
+      .pv-subsection { border: 1px solid #d1d5db; background: #ffffff; }
     }
+
+    /* Cookie Banner */
+    #cookie-banner {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 90%;
+      width: 420px;
+      background: #ffffff;
+      border: 2px solid #6C5CE7;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      z-index: 9999;
+      font-family: Arial, sans-serif;
+      display: none;
+    }
+    #cookie-banner p { margin: 0 0 12px 0; font-size: 0.95rem; color: #333; line-height: 1.4; }
+    #cookie-banner a { color: #6C5CE7; font-weight: bold; text-decoration: none; }
+
+    #cookie-banner .btn-row { display:flex; gap:10px; margin-top:8px; }
+
+    #cookie-banner button.reject {
+      flex: 1;
+      background: white;
+      color: #111827;
+      border: 2px solid #6C5CE7;
+      padding: 10px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    #cookie-banner button.accept {
+      flex: 1;
+      background: #6C5CE7;
+      color: white;
+      border: 2px solid #6C5CE7;
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+    #cookie-banner button.accept:hover { background: #4B3ACB; }
   </style>
 </head>
+
 <body>
   <header class="site-header">
     <div class="header-inner">
@@ -585,14 +421,14 @@
 
       <nav id="main-nav">
         <a href="index.html">Home</a>
-      <a href="blog.html">Blog</a>
-      <a href="smart-test.html">Smart Test</a>
-      <a href="calcolatori.html">Calcolatori</a>
-      <a href="fast-cards.html">Fast Card</a>
-      <a href="offerte.html">Prodotti Consapevoli</a>
-      <a href="curiosita.html">Curiosità</a>
-      <a href="misteri.html">Misteri</a>
-      <a href="chi.html">Chi siamo</a>
+        <a href="blog.html">Blog</a>
+        <a href="smart-test.html">Smart Test</a>
+        <a href="calcolatori.html">Calcolatori</a>
+        <a href="fast-cards.html">Fast Card</a>
+        <a href="offerte.html">Prodotti Consapevoli</a>
+        <a href="curiosita.html">Curiosità</a>
+        <a href="misteri.html">Misteri</a>
+        <a href="chi.html">Chi siamo</a>
       </nav>
     </div>
   </header>
@@ -606,40 +442,38 @@
     <div class="page-intro">
       <span class="badge-page">Area Calcoli – Fotovoltaico</span>
       <h1>Calcolatore Fotovoltaico con Ammortamento: rientro anno per anno</h1>
+
       <div style="background:#FFF4D6; padding:10px 14px; border-left:4px solid #F59E0B; border-radius:6px; margin:10px 0; font-size:0.9rem;">
         💡 <strong>Avviso:</strong> Questo calcolo rappresenta una <strong>stima indicativa</strong> basata sui dati inseriti dall’utente e su ipotesi semplificate.
         Non costituisce consulenza professionale e non tiene conto di tutti i fattori fiscali, tecnici, energetici o climatici reali.
-        Per approfondire l’argomento, valutare incentivi, costi, impianti o normative specifiche, è sempre opportuno rivolgersi a un <strong>professionista competente</strong> o a un tecnico abilitato.
+        Per approfondire l’argomento è sempre opportuno rivolgersi a un <strong>professionista competente</strong> o a un tecnico abilitato.
       </div>
 
       <p class="intro-text">
         Questo strumento ti permette di stimare la <strong>produzione annua</strong> del tuo impianto fotovoltaico,
         il <strong>risparmio in bolletta</strong> e in quanti anni potresti rientrare dell’investimento.
-        Puoi anche aggiungere una <strong>auto elettrica</strong> per vedere come accelera il rientro.
-        Alla fine puoi <strong>stampare o salvare in PDF</strong> il risultato per mostrarlo a clienti o familiari.
+        Puoi anche aggiungere una <strong>auto elettrica</strong> per vedere come cambia il rientro.
+        Alla fine puoi <strong>stampare o salvare in PDF</strong> il risultato.
       </p>
     </div>
 
-    <!-- 🔹 BLOCCO ACCETTAZIONE NOTE LEGALI (valido per tutti i calcoli FV di questa pagina) -->
+    <!-- Note legali accettazione -->
     <div class="legal-box-avviso">
       <label>
         <input type="checkbox" id="legalAccept">
-         Prima di procedere, ricorda che i risultati di questo test sono solo stime indicative e non sostituiscono
-  una valutazione professionale. Ogni scelta resta personale e basata sulle tue esigenze reali. Per tutti i
-  dettagli, consulta le <a href="note-legali.html" target="_blank">Note Legali</a>.
-</label>
+        Prima di procedere, ricorda che i risultati sono solo stime indicative e non sostituiscono una valutazione professionale.
+        Per tutti i dettagli, consulta le <a href="note-legali.html" target="_blank" rel="noopener">Note Legali</a>.
+      </label>
       <p class="legal-note-small">
         I risultati sono <strong>stime orientative</strong> basate sui dati inseriti e su ipotesi semplificate.
         Non costituiscono consulenza tecnica, energetica, fiscale o finanziaria, né un preventivo ufficiale.
       </p>
     </div>
-    <!-- 🔹 FINE BLOCCO ACCETTAZIONE -->
 
     <button id="shareTop" class="share-btn-new">
       <span>📤</span> Condividi questo calcolatore
     </button>
 
-    <!-- SEZIONE CALCOLATORE FV -->
     <section class="calc-section" id="calc-fotovoltaico">
       <div class="calc-header">
         <h2>Calcolatore fotovoltaico: produzione, risparmio e rientro</h2>
@@ -647,18 +481,20 @@
       </div>
 
       <p style="font-size:0.9rem;">
-        Compila prima il <strong>Blocco A</strong> con i dati dell’impianto, poi se vuoi aggiungi il <strong>Blocco B</strong>
-        con la tua auto elettrica. Infine genera la <strong>tabella di ammortamento</strong> anno per anno.
+        Compila prima il <strong>Blocco A</strong> con i dati dell’impianto. Poi, se vuoi, aggiungi il <strong>Blocco B</strong>.
+        Infine genera la <strong>tabella di ammortamento</strong> anno per anno.
       </p>
 
-      <!-- BLOCCO A: IMPIANTO -->
+      <!-- BLOCCO A -->
       <div class="pv-subsection">
         <h3>Blocco A – Impianto fotovoltaico</h3>
+
         <div class="pv-grid">
           <div class="calc-field">
             <label>Potenza impianto (kW)</label>
             <input type="number" id="pvKw" min="1" max="20" step="0.1" value="4">
           </div>
+
           <div class="calc-field">
             <label>Zona geografica</label>
             <select id="pvZona">
@@ -667,22 +503,32 @@
               <option value="1500">Sud / Isole (≈1500 kWh/kW anno)</option>
             </select>
           </div>
+
+          <div class="calc-field">
+            <label>Consumo annuo casa (kWh)</label>
+            <input type="number" id="pvConsumoCasa" min="0" max="20000" step="100" value="3000">
+          </div>
+
           <div class="calc-field">
             <label>Autoconsumo stimato (%)</label>
-            <input type="number" id="pvAutoconsumo" min="10" max="100" value="50">
+            <input type="number" id="pvAutoconsumo" min="0" max="100" value="50">
           </div>
+
           <div class="calc-field">
             <label>Prezzo energia (€/kWh)</label>
-            <input type="number" id="pvPrezzo" min="0.1" max="1" step="0.01" value="0.30">
+            <input type="number" id="pvPrezzo" min="0.05" max="1" step="0.01" value="0.30">
           </div>
+
           <div class="calc-field">
             <label>Costo impianto (€)</label>
             <input type="number" id="pvCosto" min="1000" max="40000" step="100" value="10000">
           </div>
+
           <div class="calc-field">
             <label>Anni di incentivo / detrazione</label>
             <input type="number" id="pvAnniDetrazione" min="0" max="20" value="10">
           </div>
+
           <div class="calc-field">
             <label>Quota costo detraibile (%)</label>
             <input type="number" id="pvQuotaDetrazione" min="0" max="100" value="50">
@@ -692,61 +538,68 @@
         <button class="calc-button" type="button" onclick="calcolaFotovoltaicoImpianto()">
           Calcola impianto fotovoltaico
         </button>
+
         <div id="pvResultImpianto" class="calc-result"></div>
       </div>
 
-      <!-- BLOCCO B: AUTO ELETTRICA -->
+      <!-- BLOCCO B -->
       <div class="pv-subsection" style="margin-top:16px;">
         <h3>Blocco B – Se hai (o avrai) un’auto elettrica</h3>
         <p style="font-size:0.85rem; margin-top:0;">
-          Qui stimiamo quanta parte dei chilometri annui dell’auto può essere coperta dal tuo fotovoltaico,
-          e quanto questo ti aiuta a rientrare prima dell’investimento.
+          Qui stimiamo quanta parte dei km annui può essere coperta dal fotovoltaico, e quanto questo può aiutare il rientro.
         </p>
+
         <div class="pv-grid">
           <div class="calc-field">
             <label>Km annui con l’auto elettrica</label>
-            <input type="number" id="evKm" min="1000" max="60000" step="500" value="12000">
+            <input type="number" id="evKm" min="0" max="60000" step="500" value="12000">
           </div>
+
           <div class="calc-field">
             <label>Consumo auto (kWh/100 km)</label>
-            <input type="number" id="evConsumo" min="10" max="25" step="0.5" value="16">
+            <input type="number" id="evConsumo" min="0" max="30" step="0.5" value="16">
           </div>
+
           <div class="calc-field">
             <label>% ricarica da fotovoltaico</label>
             <input type="number" id="evQuotaPv" min="0" max="100" value="50">
           </div>
+
           <div class="calc-field">
             <label>Prezzo energia (€/kWh)</label>
-            <input type="number" id="evPrezzo" min="0.1" max="1" step="0.01" value="0.30">
+            <input type="number" id="evPrezzo" min="0.05" max="1" step="0.01" value="0.30">
           </div>
         </div>
 
         <button class="calc-button" type="button" onclick="calcolaFotovoltaicoAuto()">
           Calcola risparmio auto elettrica
         </button>
+
         <div id="pvResultAuto" class="calc-result"></div>
 
         <p class="calc-note">
           Spunta qui sotto se vuoi includere anche il risparmio dell’auto elettrica nel calcolo di ammortamento.
         </p>
+
         <label style="font-size:0.85rem;">
           <input type="checkbox" id="includeAutoInAmort" checked>
           Includi il risparmio dell’auto elettrica nella tabella di rientro.
         </label>
       </div>
 
-      <!-- BLOCCO C: AMMORTAMENTO -->
+      <!-- BLOCCO C -->
       <div class="pv-subsection" style="margin-top:20px;">
         <h3>Blocco C – Tabella di ammortamento anno per anno</h3>
+
         <p style="font-size:0.9rem; margin-top:0;">
-          Ora genera la tabella di rientro. Useremo:
-          <strong>risparmio annuo da fotovoltaico</strong> +
-          (eventuale) <strong>risparmio da auto elettrica</strong> +
-          <strong>detrazioni fiscali</strong> per gli anni indicati.
+          La tabella usa:
+          <strong>risparmio annuo da FV (limitato dal consumo reale della casa)</strong> +
+          (eventuale) <strong>risparmio da auto</strong> +
+          <strong>detrazioni</strong> per gli anni indicati.
         </p>
 
         <div class="calc-note">
-          Suggerimento: per un’analisi “realistica ma semplice” puoi considerare <strong>15–20 anni</strong> come orizzonte temporale.
+          Suggerimento: per un’analisi “realistica ma semplice” considera <strong>15–20 anni</strong>.
         </div>
 
         <div class="calc-field" style="margin-top:10px; max-width:220px;">
@@ -757,6 +610,7 @@
         <button class="calc-button" type="button" onclick="calcolaAmmortamento()">
           Genera tabella di ammortamento
         </button>
+
         <button class="print-btn" type="button" onclick="window.print()">
           🖨️ Stampa o salva in PDF
         </button>
@@ -765,107 +619,78 @@
       </div>
 
       <p class="calc-note">
-        I risultati non sono preventivi ufficiali ma strumenti per ragionare:
-        per decisioni reali serve sempre un tecnico abilitato e un preventivo dettagliato.
+        I risultati non sono preventivi ufficiali ma strumenti per ragionare: per decisioni reali serve un tecnico e un preventivo dettagliato.
       </p>
 
       <div class="amazon-box">
-        <strong>Per il fotovoltaico chiedi al tuo tecnico installatore:</strong>
-        <span>
-          Per un impianto solare è sempre meglio confrontare almeno <strong>2–3 preventivi reali</strong>
-          con ditte abilitate. Questo calcolatore ti aiuta ad arrivare al colloquio con le idee chiare.
-        </span>
+        <strong>Consiglio SmartShop:</strong>
+        Confronta almeno <strong>2–3 preventivi reali</strong> con ditte abilitate. Questo calcolatore ti aiuta ad arrivare al colloquio con le idee chiare.
       </div>
     </section>
 
-
     <!-- RICHIAMO AD ALTRI CONTENUTI CORRELATI -->
-<section style="margin-top:30px; padding:16px; border-radius:10px; background:#F7F7FB; border:1px solid #E5E7EB;">
-  <h2 style="margin-top:0;">Ti possono interessare anche:</h2>
+    <section style="margin-top:30px; padding:16px; border-radius:10px; background:#F7F7FB; border:1px solid #E5E7EB;">
+      <h2 style="margin-top:0;">Ti possono interessare anche:</h2>
 
-  <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-top:10px;">
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-top:10px;">
 
-    <!-- CALCOLATORE AUTO -->
-    <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
-      <a href="https://syncras.app/calcolatore-consumi-auto.html" style="text-decoration:none; color:var(--violet-dark); display:block;">
-        <h3 style="margin-top:0; font-size:1rem;">
-          Quanto costa davvero usare un’auto?
-        </h3>
-        <p style="font-size:0.9rem; margin:0;">
-          Confronta i costi reali di benzina, diesel, GPL, metano ed elettrico
-          in base a chilometri e consumi reali.
-        </p>
-      </a>
-    </article>
+        <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
+          <a href="https://syncras.app/calcolatore-consumi-auto.html" style="text-decoration:none; color:var(--violet-dark); display:block;">
+            <h3 style="margin-top:0; font-size:1rem;">Quanto costa davvero usare un’auto?</h3>
+            <p style="font-size:0.9rem; margin:0;">
+              Confronta i costi reali di benzina, diesel, GPL, metano ed elettrico in base a chilometri e consumi.
+            </p>
+          </a>
+        </article>
 
-   
+        <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
+          <a href="https://syncras.app/smart-test/smart-test-auto-elettrica-per-te.html" style="text-decoration:none; color:var(--violet-dark); display:block;">
+            <h3 style="margin-top:0; font-size:1rem;">Ha senso l’auto elettrica per te?</h3>
+            <p style="font-size:0.9rem; margin:0;">Test rapido per capire se è una scelta sensata per il tuo uso reale.</p>
+          </a>
+        </article>
 
-    <!-- SMART TEST AUTO ELETTRICA -->
-    <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
-      <a href="https://syncras.app/smart-test/smart-test-auto-elettrica-per-te.html" style="text-decoration:none; color:var(--violet-dark); display:block;">
-        <h3 style="margin-top:0; font-size:1rem;">
-          Ha senso l’auto elettrica per te?
-        </h3>
-        <p style="font-size:0.9rem; margin:0;">
-          Non per tutti è la scelta giusta.
-          Questo test ti aiuta a capirlo in base al tuo uso reale.
-        </p>
-      </a>
-    </article>
+        <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
+          <a href="https://syncras.app/smart-test/smart-test-ibrida-plugin-o-nessuna.html" style="text-decoration:none; color:var(--violet-dark); display:block;">
+            <h3 style="margin-top:0; font-size:1rem;">Ibrida, plug-in o nessuna?</h3>
+            <p style="font-size:0.9rem; margin:0;">Tra marketing e realtà quotidiana: quale tecnologia ha senso davvero?</p>
+          </a>
+        </article>
 
-    <!-- SMART TEST IBRIDA -->
-    <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
-      <a href="https://syncras.app/smart-test/smart-test-ibrida-plugin-o-nessuna.html" style="text-decoration:none; color:var(--violet-dark); display:block;">
-        <h3 style="margin-top:0; font-size:1rem;">
-          Ibrida, plug-in o nessuna delle due?
-        </h3>
-        <p style="font-size:0.9rem; margin:0;">
-          Tra marketing e realtà quotidiana,
-          qui capisci quale tecnologia ha davvero senso per te.
-        </p>
-      </a>
-    </article>
+      </div>
 
+      <p class="tags">
+        <strong>Tag:</strong> calcolatore fotovoltaico, ammortamento impianto fotovoltaico, rientro investimento,
+        auto elettrica fotovoltaico, risparmio bolletta, produzione kWh anno, simulatore fotovoltaico.
+      </p>
 
+      <div style="text-align:center; margin-top:18px;">
+        <button id="shareBottom" class="share-btn">
+          <span class="icon">📎</span> Condividi questa pagina
+        </button>
+      </div>
+    </section>
 
-    
-    <p class="tags">
-      <strong>Tag:</strong> calcolatore fotovoltaico, ammortamento impianto fotovoltaico, rientro investimento,
-      auto elettrica fotovoltaico, risparmio bolletta, produzione kWh anno, simulatore fotovoltaico.
-    </p>
+    <!-- CONTENUTO SEO EXTRA -->
+    <section style="max-width: 900px; margin: 40px auto 0; padding: 20px; font-family: sans-serif; line-height: 1.6; color: #333; border-top: 1px solid #eee;">
+      <h2>Come calcolare il rientro dell'investimento del fotovoltaico?</h2>
+      <p>
+        Installare un <strong>impianto fotovoltaico</strong> è un ottimo modo per abbattere le bollette, ma l'analisi dell'ammortamento è cruciale.
+        Questo tool considera anche un punto spesso ignorato: <strong>l’autoconsumo reale non può superare i consumi della casa</strong>.
+      </p>
 
-    <div style="text-align:center; margin-top:18px;">
-      <button id="shareBottom" class="share-btn">
-        <span class="icon">📎</span> Condividi questa pagina
-      </button>
-    </div>
+      <h3>Fattori che influenzano l'ammortamento</h3>
+      <ul>
+        <li><strong>Potenza dell'impianto (kWp):</strong> più potenza = più produzione.</li>
+        <li><strong>Consumo annuo reale (kWh):</strong> limita il risparmio ottenibile.</li>
+        <li><strong>Quota di autoconsumo:</strong> più energia usi di giorno, più risparmi.</li>
+        <li><strong>Detrazioni e incentivi:</strong> accorciano (o aiutano) il rientro.</li>
+      </ul>
+
+      <p><small>Nota: i calcoli sono semplificati. Se vuoi, in una versione “pro” possiamo aggiungere degradazione pannelli e aumento costo energia.</small></p>
+    </section>
   </main>
 
-
-
-<section style="max-width: 900px; margin: 40px auto; padding: 20px; font-family: sans-serif; line-height: 1.6; color: #333; border-top: 1px solid #eee;">
-    <h2>Come calcolare il rientro dell'investimento del fotovoltaico?</h2>
-    <p>Installare un <strong>impianto fotovoltaico</strong> è uno dei modi migliori per abbattere le bollette, ma l'analisi dell'ammortamento è cruciale. Per ottenere un calcolo preciso, il nostro tool considera non solo il costo iniziale, ma anche il <strong>tasso di autoconsumo</strong>, ovvero quanta energia prodotta viene effettivamente consumata in casa invece di essere immessa in rete.</p>
-
-    <h3>Fattori che influenzano l'ammortamento</h3>
-    <ul>
-        <li><strong>Potenza dell'impianto (kWp):</strong> Un impianto tipico da 3kW o 6kW copre i fabbisogni di una famiglia media.</li>
-        <li><strong>Quota di Autoconsumo:</strong> Più alta è la percentuale di energia usata durante il giorno, più veloce sarà il rientro economico.</li>
-        <li><strong>Scambio sul Posto o Ritiro Dedicato:</strong> I contributi del GSE aiutano a ripagare l'investimento più velocemente.</li>
-        <li><strong>Manutenzione:</strong> Considera una piccola quota annua per la pulizia dei pannelli e l'eventuale sostituzione dell'inverter dopo 10-12 anni.</li>
-    </ul>
-
-    <h3>Tabella di ammortamento personalizzata</h3>
-    <p>Il calcolatore genera una <strong>proiezione anno per anno</strong> che ti permette di visualizzare il "punto di pareggio" (break-even point). Questo è il momento esatto in cui i risparmi accumulati superano l'investimento iniziale, rendendo l'energia prodotta totalmente gratuita per i restanti anni di vita dell'impianto (solitamente 25-30 anni).</p>
-    
-    <p><small>Nota: I calcoli includono stime sulla degradazione annuale dei pannelli e sull'aumento del costo dell'energia elettrica.</small></p>
-</section>
-
-    
-
-
-
-    
   <footer class="syncras-footer">
     <div class="footer-inner">
       <div class="footer-column">
@@ -899,7 +724,7 @@
     <div class="footer-bottom">
       <p>© <span id="year-span"></span> Syncras.App — Tutti i diritti riservati.</p>
       <p>
-        Syncras.App partecipa al Programma Affiliazione Amazon EU.  
+        Syncras.App partecipa al Programma Affiliazione Amazon EU.
         Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
         senza alcun costo aggiuntivo per l’utente.
       </p>
@@ -909,6 +734,19 @@
       </p>
     </div>
   </footer>
+
+  <!-- Cookie Banner + GA (consenso) -->
+  <div id="cookie-banner" role="dialog" aria-label="Banner cookie">
+    <p>
+      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite (Google Analytics).
+      Alcuni link potrebbero essere di affiliazione.
+      Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la <a href="privacy.html">Privacy Policy</a>.
+    </p>
+    <div class="btn-row">
+      <button type="button" class="reject" onclick="rejectCookies()">Rifiuta</button>
+      <button type="button" class="accept" onclick="acceptCookies()">Accetta e continua</button>
+    </div>
+  </div>
 
   <script>
     function toggleMenu() {
@@ -922,97 +760,94 @@
       if (navigator.share) {
         navigator.share({ title, url }).catch(() => {});
       } else if (navigator.clipboard) {
-        navigator.clipboard.writeText(url).then(function() {
+        navigator.clipboard.writeText(url).then(() => {
           alert('Link copiato negli appunti. Puoi incollarlo dove vuoi.');
-        }, function() {
+        }).catch(() => {
           alert('Non sono riuscito a copiare il link, ma puoi usare la barra degli indirizzi.');
         });
       } else {
-        alert('Condivisione non supportata dal browser, copia il link dalla barra degli indirizzi.');
+        alert('Condivisione non supportata dal browser: copia il link dalla barra degli indirizzi.');
       }
     }
 
-    document.getElementById('shareTop').addEventListener('click', sharePage);
-    document.getElementById('shareBottom').addEventListener('click', sharePage);
+    document.addEventListener('DOMContentLoaded', function() {
+      const y = document.getElementById('year-span');
+      if (y) y.textContent = new Date().getFullYear();
 
-    // FUNZIONE DI SUPPORTO FORMATTAZIONE EURO
+      const top = document.getElementById('shareTop');
+      const bottom = document.getElementById('shareBottom');
+      if (top) top.addEventListener('click', sharePage);
+      if (bottom) bottom.addEventListener('click', sharePage);
+    });
+
     function euro(val) {
-      return val.toFixed(0).replace('.', ',');
+      const n = Number(val) || 0;
+      return n.toFixed(0).replace('.', ',');
     }
 
-    // ✅ Controllo accettazione Note Legali (unico per tutti i calcoli di questa pagina)
     function checkLegalAccept() {
-      const legalCheckbox = document.getElementById('legalAccept');
-      if (legalCheckbox && !legalCheckbox.checked) {
+      const cb = document.getElementById('legalAccept');
+      if (cb && !cb.checked) {
         alert('Per usare questo calcolatore devi dichiarare di aver letto e accettato le Note Legali.');
         return false;
       }
       return true;
     }
 
-    // ======== FOTOVOLTAICO – IMPIANTO (Blocco A) ========
+    // ======== BLOCCO A: IMPIANTO ========
     function calcolaFotovoltaicoImpianto() {
-      // Controllo Note Legali
       if (!checkLegalAccept()) return;
 
       const kw = parseFloat(document.getElementById('pvKw').value) || 0;
       const prodPerKw = parseFloat(document.getElementById('pvZona').value) || 0;
+
+      const consumoCasa = parseFloat(document.getElementById('pvConsumoCasa').value) || 0;
+
       const autoconsumoPerc = parseFloat(document.getElementById('pvAutoconsumo').value) || 0;
       const prezzo = parseFloat(document.getElementById('pvPrezzo').value) || 0;
+
       const costoImpianto = parseFloat(document.getElementById('pvCosto').value) || 0;
       const anniDetr = parseFloat(document.getElementById('pvAnniDetrazione').value) || 0;
       const quotaDetrPerc = parseFloat(document.getElementById('pvQuotaDetrazione').value) || 0;
 
       if (kw <= 0 || prodPerKw <= 0 || prezzo <= 0 || costoImpianto <= 0) {
-        alert('Controlla di aver inserito almeno potenza impianto, produzione zona, prezzo energia e costo impianto.');
+        alert('Controlla di aver inserito tutti i dati obbligatori (potenza, zona, prezzo, costo).');
         return;
       }
 
-      const autoconsumo = autoconsumoPerc / 100;
-      const quotaDetr = quotaDetrPerc / 100;
-
       const produzioneAnnua = kw * prodPerKw;
-      const autoconsumoKWh = produzioneAnnua * autoconsumo;
-      const risparmioAnnuale = autoconsumoKWh * prezzo;
 
-      const detrazioneTotale = costoImpianto * quotaDetr;
+      const autoconsumoPotenziale = produzioneAnnua * (autoconsumoPerc / 100);
+      const autoconsumoEffettivoKWh = Math.min(autoconsumoPotenziale, consumoCasa);
+
+      const risparmioAnnuale = autoconsumoEffettivoKWh * prezzo;
+
+      const detrazioneTotale = costoImpianto * (quotaDetrPerc / 100);
       const detrazioneAnnua = anniDetr > 0 ? detrazioneTotale / anniDetr : 0;
 
       const rientroSoloRisparmio = risparmioAnnuale > 0 ? (costoImpianto / risparmioAnnuale) : null;
-      const rientroConDetrazioni =
-        (risparmioAnnuale + detrazioneAnnua) > 0
-          ? (costoImpianto / (risparmioAnnuale + detrazioneAnnua))
-          : null;
-
-      let testoRientro = '';
-      if (rientroSoloRisparmio !== null) {
-        testoRientro += `• Rientro solo con risparmio in bolletta: <strong>${rientroSoloRisparmio.toFixed(1)} anni</strong><br>`;
-      }
-      if (rientroConDetrazioni !== null && detrazioneTotale > 0) {
-        testoRientro += `• Rientro considerando anche detrazioni (${quotaDetrPerc.toFixed(0)}% in ${anniDetr.toFixed(0)} anni): <strong>${rientroConDetrazioni.toFixed(1)} anni</strong><br>`;
-      }
+      const rientroConDetrazioni = (risparmioAnnuale + detrazioneAnnua) > 0
+        ? (costoImpianto / (risparmioAnnuale + detrazioneAnnua))
+        : null;
 
       const div = document.getElementById('pvResultImpianto');
+      div.style.display = 'block';
       div.innerHTML = `
         <strong>Produzione annua stimata:</strong> ${produzioneAnnua.toFixed(0)} kWh/anno<br>
-        • Autoconsumo stimato: <strong>${autoconsumoKWh.toFixed(0)} kWh/anno</strong> (${autoconsumoPerc.toFixed(0)}% della produzione)<br>
-        • Risparmio annuo in bolletta: <strong>${euro(risparmioAnnuale)} €</strong><br>
-        • Costo impianto considerato: <strong>${euro(costoImpianto)} €</strong><br>
-        ${detrazioneTotale > 0
-          ? `• Detrazioni totali ipotetiche: <strong>${euro(detrazioneTotale)} €</strong> (≈${euro(detrazioneAnnua)} €/anno)<br>`
-          : ''
-        }
-        ${testoRientro}
+        • Autoconsumo POTENZIALE: ${autoconsumoPotenziale.toFixed(0)} kWh/anno (${autoconsumoPerc.toFixed(0)}% della produzione)<br>
+        • Autoconsumo REALE (limitato dai consumi casa): <strong>${autoconsumoEffettivoKWh.toFixed(0)} kWh/anno</strong><br>
+        • Risparmio annuo stimato: <strong>${euro(risparmioAnnuale)} €</strong><br>
+        ${detrazioneTotale > 0 ? `• Detrazione ipotetica: <strong>${euro(detrazioneTotale)} €</strong> (≈ ${euro(detrazioneAnnua)} €/anno)<br>` : ''}
+        ${rientroSoloRisparmio !== null ? `• Rientro solo bolletta: <strong>${rientroSoloRisparmio.toFixed(1)} anni</strong><br>` : `• Rientro solo bolletta: <strong>---</strong><br>`}
+        ${rientroConDetrazioni !== null ? `• Rientro con detrazioni: <strong>${rientroConDetrazioni.toFixed(1)} anni</strong><br>` : `• Rientro con detrazioni: <strong>---</strong><br>`}
         <span style="font-size:0.8rem; color:#4b5563;">
-          Nota: non sono inclusi eventuali contributi aggiuntivi, scambio sul posto o ritiro dedicato.
+          Nota: non includiamo scambio sul posto / ritiro dedicato.
         </span>
       `;
-      div.style.display = 'block';
     }
 
-    // ======== FOTOVOLTAICO – AUTO ELETTRICA (Blocco B) ========
+    // ======== BLOCCO B: AUTO ELETTRICA ========
     function calcolaFotovoltaicoAuto() {
-      // Controllo Note Legali
       if (!checkLegalAccept()) return;
 
       const km = parseFloat(document.getElementById('evKm').value) || 0;
@@ -1025,54 +860,55 @@
         return;
       }
 
-      const quotaPv = quotaPvPerc / 100;
-
       const kWhAnnuiAuto = km * (consumo100 / 100);
-      const kWhDaPv = kWhAnnuiAuto * quotaPv;
+      const kWhDaPv = kWhAnnuiAuto * (quotaPvPerc / 100);
       const risparmio = kWhDaPv * prezzo;
 
       const div = document.getElementById('pvResultAuto');
+      div.style.display = 'block';
       div.innerHTML = `
         <strong>Consumo annuo stimato auto elettrica:</strong> ${kWhAnnuiAuto.toFixed(0)} kWh/anno<br>
         • Quota coperta dal fotovoltaico (${quotaPvPerc.toFixed(0)}%): <strong>${kWhDaPv.toFixed(0)} kWh/anno</strong><br>
-        • Risparmio annuo stimato grazie al FV: <strong>${euro(risparmio)} €</strong><br>
+        • Risparmio annuo stimato: <strong>${euro(risparmio)} €</strong><br>
         <span style="font-size:0.8rem; color:#4b5563;">
-          Il resto delle ricariche verrà comunque pagato al tuo fornitore di energia o alle colonnine pubbliche.
+          Il resto delle ricariche verrà pagato al tuo fornitore o alle colonnine pubbliche.
         </span>
       `;
-      div.style.display = 'block';
     }
 
-    // ======== AMMORTAMENTO (Blocco C) ========
+    // ======== BLOCCO C: AMMORTAMENTO ========
     function calcolaAmmortamento() {
-      // Controllo Note Legali
       if (!checkLegalAccept()) return;
 
       const kw = parseFloat(document.getElementById('pvKw').value) || 0;
       const prodPerKw = parseFloat(document.getElementById('pvZona').value) || 0;
+
+      const consumoCasa = parseFloat(document.getElementById('pvConsumoCasa').value) || 0;
+
       const autoconsumoPerc = parseFloat(document.getElementById('pvAutoconsumo').value) || 0;
       const prezzo = parseFloat(document.getElementById('pvPrezzo').value) || 0;
       const costoImpianto = parseFloat(document.getElementById('pvCosto').value) || 0;
+
       const anniDetr = parseFloat(document.getElementById('pvAnniDetrazione').value) || 0;
       const quotaDetrPerc = parseFloat(document.getElementById('pvQuotaDetrazione').value) || 0;
+
       const anniOrizzonte = parseFloat(document.getElementById('amortYears').value) || 0;
 
       if (kw <= 0 || prodPerKw <= 0 || prezzo <= 0 || costoImpianto <= 0 || anniOrizzonte <= 0) {
-        alert('Per la tabella di ammortamento servono almeno i dati dell’impianto e l’orizzonte di anni.');
+        alert('Per la tabella servono i dati dell’impianto e l’orizzonte di anni.');
         return;
       }
 
-      const autoconsumo = autoconsumoPerc / 100;
-      const quotaDetr = quotaDetrPerc / 100;
-
       const produzioneAnnua = kw * prodPerKw;
-      const autoconsumoKWh = produzioneAnnua * autoconsumo;
-      const risparmioAnnualeFV = autoconsumoKWh * prezzo;
 
-      const detrazioneTotale = costoImpianto * quotaDetr;
+      const autoconsumoPotenziale = produzioneAnnua * (autoconsumoPerc / 100);
+      const autoconsumoEffettivoKWh = Math.min(autoconsumoPotenziale, consumoCasa); // ✅ QUI È IL FIX CHIAVE
+      const risparmioAnnualeFV = autoconsumoEffettivoKWh * prezzo;
+
+      const detrazioneTotale = costoImpianto * (quotaDetrPerc / 100);
       const detrazioneAnnua = anniDetr > 0 ? detrazioneTotale / anniDetr : 0;
 
-      // Auto elettrica opzionale
+      // Auto opzionale
       let risparmioAnnualeAuto = 0;
       const includeAuto = document.getElementById('includeAutoInAmort').checked;
 
@@ -1083,9 +919,8 @@
         const prezzoEv = parseFloat(document.getElementById('evPrezzo').value) || 0;
 
         if (km > 0 && consumo100 > 0 && prezzoEv > 0) {
-          const quotaPv = quotaPvPerc / 100;
           const kWhAnnuiAuto = km * (consumo100 / 100);
-          const kWhDaPv = kWhAnnuiAuto * quotaPv;
+          const kWhDaPv = kWhAnnuiAuto * (quotaPvPerc / 100);
           risparmioAnnualeAuto = kWhDaPv * prezzoEv;
         }
       }
@@ -1093,7 +928,7 @@
       const risparmioAnnualeTotale = risparmioAnnualeFV + risparmioAnnualeAuto;
 
       if (risparmioAnnualeTotale <= 0 && detrazioneAnnua <= 0) {
-        alert('Con i dati inseriti il risparmio annuo risulta nullo: verifica i campi di impianto e auto.');
+        alert('Con i dati inseriti il beneficio annuo risulta nullo: verifica consumi casa, autoconsumo, prezzo e detrazioni.');
         return;
       }
 
@@ -1103,19 +938,16 @@
 
       for (let anno = 1; anno <= anniOrizzonte; anno++) {
         const beneficioRisparmio = risparmioAnnualeTotale;
-        const beneficioDetrazione = anno <= anniDetr ? detrazioneAnnua : 0;
+        const beneficioDetrazione = (anno <= anniDetr) ? detrazioneAnnua : 0;
         const beneficioAnno = beneficioRisparmio + beneficioDetrazione;
+
         cumulato += beneficioAnno;
         const capitaleResiduo = Math.max(costoImpianto - cumulato, 0);
 
-        if (annoBreakEven === null && cumulato >= costoImpianto) {
-          annoBreakEven = anno;
-        }
-
-        const classRow = (annoBreakEven === anno) ? ' class="row-break-even"' : '';
+        if (annoBreakEven === null && cumulato >= costoImpianto) annoBreakEven = anno;
 
         rows += `
-          <tr${classRow}>
+          <tr ${annoBreakEven === anno ? 'class="row-break-even"' : ''}>
             <td>${anno}</td>
             <td>${euro(beneficioRisparmio)} €</td>
             <td>${beneficioDetrazione > 0 ? euro(beneficioDetrazione) + ' €' : '-'}</td>
@@ -1127,19 +959,18 @@
       }
 
       const div = document.getElementById('pvResultAmort');
+      div.style.display = 'block';
       div.innerHTML = `
         <strong>Riepilogo parametri usati per la tabella:</strong><br>
         • Costo impianto: <strong>${euro(costoImpianto)} €</strong><br>
-        • Risparmio annuo da fotovoltaico: <strong>${euro(risparmioAnnualeFV)} €</strong><br>
-        ${risparmioAnnualeAuto > 0
-          ? `• Risparmio annuo da auto elettrica (incluso): <strong>${euro(risparmioAnnualeAuto)} €</strong><br>`
-          : `• Risparmio da auto elettrica: <strong>non considerato</strong><br>`
-        }
-        ${detrazioneAnnua > 0
-          ? `• Detrazioni fiscali: <strong>${euro(detrazioneAnnua)} €/anno</strong> per ${anniDetr.toFixed(0)} anni (totale ≈ ${euro(detrazioneTotale)} €)<br>`
-          : '• Detrazioni fiscali: <strong>non considerate</strong><br>'
-        }
-        • Orizzonte temporale: <strong>${anniOrizzonte.toFixed(0)} anni</strong><br><br>
+        • Produzione stimata: <strong>${produzioneAnnua.toFixed(0)} kWh/anno</strong><br>
+        • Autoconsumo reale (limitato dai consumi casa): <strong>${autoconsumoEffettivoKWh.toFixed(0)} kWh/anno</strong><br>
+        • Risparmio annuo FV: <strong>${euro(risparmioAnnualeFV)} €</strong><br>
+        ${risparmioAnnualeAuto > 0 ? `• Risparmio annuo auto (incluso): <strong>${euro(risparmioAnnualeAuto)} €</strong><br>` : `• Risparmio auto: <strong>non considerato</strong><br>`}
+        ${detrazioneAnnua > 0 ? `• Detrazioni: <strong>${euro(detrazioneAnnua)} €/anno</strong> per ${anniDetr.toFixed(0)} anni (totale ≈ ${euro(detrazioneTotale)} €)<br>` : `• Detrazioni: <strong>non considerate</strong><br>`}
+        • Orizzonte: <strong>${anniOrizzonte.toFixed(0)} anni</strong><br>
+        ${annoBreakEven !== null ? `• Break-even: <strong>anno ${annoBreakEven}</strong><br>` : `• Break-even: <strong>non raggiunto</strong> in ${anniOrizzonte.toFixed(0)} anni<br>`}
+        <br>
 
         <div class="amort-wrapper">
           <table class="amort-table">
@@ -1153,120 +984,28 @@
                 <th>Capitale ancora da recuperare</th>
               </tr>
             </thead>
-            <tbody>
-              ${rows}
-            </tbody>
+            <tbody>${rows}</tbody>
           </table>
         </div>
 
         <p class="amort-legend">
-          La riga in verde indica l’anno in cui, con questi parametri, il beneficio cumulato supera il costo totale dell’impianto.
-          Da lì in poi il fotovoltaico, di fatto, sta “guadagnando” per te.
+          La riga in verde indica l’anno in cui il beneficio cumulato supera il costo dell’impianto.
         </p>
       `;
-      div.style.display = 'block';
     }
 
-    // FOOTER YEAR
-    document.addEventListener('DOMContentLoaded', function() {
-      var span = document.getElementById('year-span');
-      if (span) {
-        span.textContent = new Date().getFullYear();
-      }
-    });
-  </script>
-
-  <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
-  <div id="cookie-banner">
-    <p>
-      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
-      (Google Analytics). Alcuni link potrebbero essere di affiliazione.
-      Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
-      <a href="privacy.html">Privacy Policy</a>.
-    </p>
-    <div style="display:flex; gap:10px; margin-top:8px;">
-      <button type="button" onclick="rejectCookies()">
-        Rifiuta
-      </button>
-      <button id="cookie-btn" type="button" onclick="acceptCookies()">
-        Accetta e continua
-      </button>
-    </div>
-  </div>
-
-  <style>
-    #cookie-banner {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      max-width: 90%;
-      width: 420px;
-      background: #ffffff;
-      border: 2px solid #6C5CE7;
-      border-radius: 10px;
-      padding: 16px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-      z-index: 9999;
-      font-family: Arial, sans-serif;
-      display: none;
-    }
-
-    #cookie-banner p {
-      margin: 0 0 12px 0;
-      font-size: 0.95rem;
-      color: #333;
-      line-height: 1.4;
-    }
-
-    #cookie-banner a {
-      color: #6C5CE7;
-      font-weight: bold;
-      text-decoration: none;
-    }
-
-    /* Pulsante RIFIUTA – pari importanza al pulsante ACCETTA */
-    #cookie-banner button[onclick="rejectCookies()"] {
-      flex: 1;
-      background: white !important;
-      color: #111827 !important;
-      border: 2px solid #6C5CE7 !important;
-      padding: 10px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-
-    /* Pulsante ACCETTA */
-    #cookie-btn {
-      flex: 1;
-      background: #6C5CE7;
-      color: white;
-      border: 2px solid #6C5CE7;
-      padding: 10px 16px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 700;
-    }
-
-    #cookie-btn:hover {
-      background: #4B3ACB;
-    }
-  </style>
-
-  <script>
+    // ======== GDPR COOKIE + GA (consenso) ========
     (function () {
       const GA_ID = 'G-CFTTCYDZ2P';
-      const CONSENT_KEY = 'syncras_cookie_consent'; // chiave unica per tutto il sito
+      const CONSENT_KEY = 'syncras_cookie_consent';
 
-      // 1️⃣ BLOCCO PREVENTIVO: GA disabilitato finché non c'è consenso
+      // blocco preventivo
       window['ga-disable-' + GA_ID] = true;
 
       function loadGoogleAnalytics() {
         if (window.__syncrasGaLoaded) return;
         window.__syncrasGaLoaded = true;
 
-        // Riabilita GA solo dopo il consenso
         window['ga-disable-' + GA_ID] = false;
 
         const gaScript = document.createElement('script');
@@ -1277,6 +1016,7 @@
         window.dataLayer = window.dataLayer || [];
         function gtag(){ dataLayer.push(arguments); }
         window.gtag = gtag;
+
         gtag('js', new Date());
         gtag('config', GA_ID, { anonymize_ip: true });
       }
@@ -1300,32 +1040,24 @@
       window.rejectCookies = function () {
         localStorage.setItem(CONSENT_KEY, 'no');
         hideBanner();
-        // GA resta bloccato
         window['ga-disable-' + GA_ID] = true;
       };
 
-      // 2️⃣ FUNZIONE DI REVOCA – per cambiare idea dopo
       window.revokeCookies = function () {
         localStorage.removeItem(CONSENT_KEY);
-        window['ga-disable-' + GA_ID] = true;   // blocca subito GA
-        showBanner();                           // ri-mostra il banner
+        window['ga-disable-' + GA_ID] = true;
+        showBanner();
       };
 
       document.addEventListener('DOMContentLoaded', function () {
         const consent = localStorage.getItem(CONSENT_KEY);
 
-        if (consent === 'yes') {
-          loadGoogleAnalytics();
-        } else if (consent === 'no') {
-          window['ga-disable-' + GA_ID] = true;
-        } else {
-          showBanner();
-        }
+        if (consent === 'yes') loadGoogleAnalytics();
+        else if (consent === 'no') window['ga-disable-' + GA_ID] = true;
+        else showBanner();
       });
     })();
   </script>
-
 </body>
 </html>
-
 
