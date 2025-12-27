@@ -516,6 +516,19 @@
 
           <div class="calc-field">
             <label>Prezzo energia (€/kWh)</label>
+<div class="calc-field">
+  <label>Tipo di impianto</label>
+  <select id="pvTipoImpianto">
+    <option value="offgrid" selected>OFF-GRID (nessuna cessione)</option>
+    <option value="ongrid">ON-GRID (Scambio / Ritiro)</option>
+  </select>
+</div>
+
+<div class="calc-field">
+  <label>Prezzo cessione energia (€/kWh)</label>
+  <input type="number" id="pvPrezzoCessione" min="0" max="0.5" step="0.01" value="0.10">
+</div>
+
             <input type="number" id="pvPrezzo" min="0.05" max="1" step="0.01" value="0.30">
           </div>
 
@@ -796,55 +809,66 @@
 
     // ======== BLOCCO A: IMPIANTO ========
     function calcolaFotovoltaicoImpianto() {
-      if (!checkLegalAccept()) return;
+     function calcolaFotovoltaicoImpianto() {
+  if (!checkLegalAccept()) return;
 
-      const kw = parseFloat(document.getElementById('pvKw').value) || 0;
-      const prodPerKw = parseFloat(document.getElementById('pvZona').value) || 0;
+  const kw = parseFloat(document.getElementById('pvKw').value) || 0;
+  const prodPerKw = parseFloat(document.getElementById('pvZona').value) || 0;
+  const consumoCasa = parseFloat(document.getElementById('pvConsumoCasa').value) || 0;
+  const autoconsumoPerc = parseFloat(document.getElementById('pvAutoconsumo').value) || 0;
+  const prezzo = parseFloat(document.getElementById('pvPrezzo').value) || 0;
 
-      const consumoCasa = parseFloat(document.getElementById('pvConsumoCasa').value) || 0;
+  const tipoImpianto = document.getElementById('pvTipoImpianto').value;
+  const prezzoCessione = parseFloat(document.getElementById('pvPrezzoCessione').value) || 0;
 
-      const autoconsumoPerc = parseFloat(document.getElementById('pvAutoconsumo').value) || 0;
-      const prezzo = parseFloat(document.getElementById('pvPrezzo').value) || 0;
+  const costoImpianto = parseFloat(document.getElementById('pvCosto').value) || 0;
+  const anniDetr = parseFloat(document.getElementById('pvAnniDetrazione').value) || 0;
+  const quotaDetrPerc = parseFloat(document.getElementById('pvQuotaDetrazione').value) || 0;
 
-      const costoImpianto = parseFloat(document.getElementById('pvCosto').value) || 0;
-      const anniDetr = parseFloat(document.getElementById('pvAnniDetrazione').value) || 0;
-      const quotaDetrPerc = parseFloat(document.getElementById('pvQuotaDetrazione').value) || 0;
+  if (kw <= 0 || prodPerKw <= 0 || prezzo <= 0 || costoImpianto <= 0) {
+    alert('Controlla i dati dell’impianto.');
+    return;
+  }
 
-      if (kw <= 0 || prodPerKw <= 0 || prezzo <= 0 || costoImpianto <= 0) {
-        alert('Controlla di aver inserito tutti i dati obbligatori (potenza, zona, prezzo, costo).');
-        return;
-      }
+  const produzioneAnnua = kw * prodPerKw;
 
-      const produzioneAnnua = kw * prodPerKw;
+  const autoconsumoPotenziale = produzioneAnnua * (autoconsumoPerc / 100);
+  const autoconsumoEffettivo = Math.min(autoconsumoPotenziale, consumoCasa);
+  const risparmioAutoconsumo = autoconsumoEffettivo * prezzo;
 
-      const autoconsumoPotenziale = produzioneAnnua * (autoconsumoPerc / 100);
-      const autoconsumoEffettivoKWh = Math.min(autoconsumoPotenziale, consumoCasa);
+  let energiaCeduta = 0;
+  let ricavoCessione = 0;
 
-      const risparmioAnnuale = autoconsumoEffettivoKWh * prezzo;
+  if (tipoImpianto === 'ongrid') {
+    energiaCeduta = Math.max(produzioneAnnua - autoconsumoEffettivo, 0);
+    ricavoCessione = energiaCeduta * prezzoCessione;
+  }
 
-      const detrazioneTotale = costoImpianto * (quotaDetrPerc / 100);
-      const detrazioneAnnua = anniDetr > 0 ? detrazioneTotale / anniDetr : 0;
+  const risparmioTotaleFV = risparmioAutoconsumo + ricavoCessione;
 
-      const rientroSoloRisparmio = risparmioAnnuale > 0 ? (costoImpianto / risparmioAnnuale) : null;
-      const rientroConDetrazioni = (risparmioAnnuale + detrazioneAnnua) > 0
-        ? (costoImpianto / (risparmioAnnuale + detrazioneAnnua))
-        : null;
+  const detrazioneTotale = costoImpianto * (quotaDetrPerc / 100);
+  const detrazioneAnnua = anniDetr > 0 ? detrazioneTotale / anniDetr : 0;
 
-      const div = document.getElementById('pvResultImpianto');
-      div.style.display = 'block';
-      div.innerHTML = `
-        <strong>Produzione annua stimata:</strong> ${produzioneAnnua.toFixed(0)} kWh/anno<br>
-        • Autoconsumo POTENZIALE: ${autoconsumoPotenziale.toFixed(0)} kWh/anno (${autoconsumoPerc.toFixed(0)}% della produzione)<br>
-        • Autoconsumo REALE (limitato dai consumi casa): <strong>${autoconsumoEffettivoKWh.toFixed(0)} kWh/anno</strong><br>
-        • Risparmio annuo stimato: <strong>${euro(risparmioAnnuale)} €</strong><br>
-        ${detrazioneTotale > 0 ? `• Detrazione ipotetica: <strong>${euro(detrazioneTotale)} €</strong> (≈ ${euro(detrazioneAnnua)} €/anno)<br>` : ''}
-        ${rientroSoloRisparmio !== null ? `• Rientro solo bolletta: <strong>${rientroSoloRisparmio.toFixed(1)} anni</strong><br>` : `• Rientro solo bolletta: <strong>---</strong><br>`}
-        ${rientroConDetrazioni !== null ? `• Rientro con detrazioni: <strong>${rientroConDetrazioni.toFixed(1)} anni</strong><br>` : `• Rientro con detrazioni: <strong>---</strong><br>`}
-        <span style="font-size:0.8rem; color:#4b5563;">
-          Nota: non includiamo scambio sul posto / ritiro dedicato.
-        </span>
-      `;
+  const rientro =
+    (risparmioTotaleFV + detrazioneAnnua) > 0
+      ? (costoImpianto / (risparmioTotaleFV + detrazioneAnnua))
+      : null;
+
+  const div = document.getElementById('pvResultImpianto');
+  div.style.display = 'block';
+  div.innerHTML = `
+    <strong>Produzione annua:</strong> ${produzioneAnnua.toFixed(0)} kWh<br>
+    • Autoconsumo reale: <strong>${autoconsumoEffettivo.toFixed(0)} kWh</strong><br>
+    ${tipoImpianto === 'ongrid'
+      ? `• Energia ceduta: <strong>${energiaCeduta.toFixed(0)} kWh</strong><br>
+         • Ricavo cessione (@${prezzoCessione.toFixed(2)} €/kWh): <strong>${euro(ricavoCessione)} €</strong><br>`
+      : `• Impianto OFF-GRID: <strong>nessuna cessione</strong><br>`
     }
+    • Risparmio annuo totale FV: <strong>${euro(risparmioTotaleFV)} €</strong><br>
+    • Rientro stimato: <strong>${rientro ? rientro.toFixed(1) : '---'} anni</strong>
+  `;
+}
+
 
     // ======== BLOCCO B: AUTO ELETTRICA ========
     function calcolaFotovoltaicoAuto() {
@@ -903,7 +927,21 @@
 
       const autoconsumoPotenziale = produzioneAnnua * (autoconsumoPerc / 100);
       const autoconsumoEffettivoKWh = Math.min(autoconsumoPotenziale, consumoCasa); // ✅ QUI È IL FIX CHIAVE
-      const risparmioAnnualeFV = autoconsumoEffettivoKWh * prezzo;
+      const tipoImpianto = document.getElementById('pvTipoImpianto').value;
+const prezzoCessione = parseFloat(document.getElementById('pvPrezzoCessione').value) || 0;
+
+const autoconsumoPotenziale = produzioneAnnua * (autoconsumoPerc / 100);
+const autoconsumoEffettivoKWh = Math.min(autoconsumoPotenziale, consumoCasa);
+const risparmioAutoconsumo = autoconsumoEffettivoKWh * prezzo;
+
+let ricavoCessione = 0;
+if (tipoImpianto === 'ongrid') {
+  const energiaCeduta = Math.max(produzioneAnnua - autoconsumoEffettivoKWh, 0);
+  ricavoCessione = energiaCeduta * prezzoCessione;
+}
+
+const risparmioAnnualeFV = risparmioAutoconsumo + ricavoCessione;
+
 
       const detrazioneTotale = costoImpianto * (quotaDetrPerc / 100);
       const detrazioneAnnua = anniDetr > 0 ? detrazioneTotale / anniDetr : 0;
