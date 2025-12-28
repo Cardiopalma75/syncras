@@ -1112,29 +1112,63 @@
     }
 
     // ===== BLOCCO A =====
-    function renderSchoolSum(r){
-      const box = document.getElementById('pvSchoolSum');
-      if (!box) return;
+   function renderSchoolSum(r){
+  const box = document.getElementById('pvSchoolSum');
+  if (!box) return;
 
-      const total = (r.risparmioAutoconsumoCasa + r.ricavoCessione);
+  // Totale FV “operativo” (bolletta + cessione)
+  const beneficioFvOperativo = (Number(r.risparmioAutoconsumoCasa) || 0) + (Number(r.ricavoCessione) || 0);
 
-      box.innerHTML = `
-        <div class="title">Conti “come a scuola”</div>
-        <div class="sum-grid">
-          <div class="label">Risparmio bolletta (energia usata in casa)</div>
-          <div class="val">${euro0(r.risparmioAutoconsumoCasa)} €</div>
+  // Rimborso/Detrazione (50% in 10 anni) → la tua logica già lo calcola
+  const detrazioneAnnua = Number(r.detrazioneAnnua) || 0;
+  const anniDetr = Number(r.anniDetr) || 0;
+  const detrazioneTotale = Number(r.detrazioneTotale) || 0;
 
-          <div class="label">Ricavo cessione (energia venduta)</div>
-          <div class="val">${euro0(r.ricavoCessione)} €</div>
+  // Totale “beneficio + rimborso annuo” (solo per evidenza, NON è energia)
+  const totaleConRimborso = beneficioFvOperativo + detrazioneAnnua;
 
-          <div class="sum-line"></div>
+  box.innerHTML = `
+    <div class="title">Conti “come a scuola”</div>
 
-          <div class="label sum-total">Totale beneficio FV annuo</div>
-          <div class="val sum-total">${euro0(total)} €</div>
-        </div>
-      `;
-      box.classList.remove('hidden');
-    }
+    <div class="sum-grid">
+      <div class="label">Risparmio bolletta (energia usata in casa)</div>
+      <div class="val">${euro0(r.risparmioAutoconsumoCasa)} €</div>
+
+      <div class="label">Ricavo cessione (energia venduta)</div>
+      <div class="val">${euro0(r.ricavoCessione)} €</div>
+
+      <div class="sum-line"></div>
+
+      <div class="label sum-total">Totale beneficio FV annuo (casa + cessione)</div>
+      <div class="val sum-total">${euro0(beneficioFvOperativo)} €</div>
+
+      ${
+        detrazioneAnnua > 0
+          ? `
+            <div class="label">Rimborso Stato (detrazione ${euro0(r.quotaDetrPerc)}% / ${euro0(anniDetr)} anni)</div>
+            <div class="val">+ ${euro0(detrazioneAnnua)} €/anno</div>
+
+            <div class="sum-line"></div>
+
+            <div class="label sum-total">Totale annuo (beneficio FV + rimborso)</div>
+            <div class="val sum-total">${euro0(totaleConRimborso)} €</div>
+
+            <div class="label" style="font-size:.8rem;color:#6b7280;grid-column:1/-1;">
+              (Totale rimborso stimato: ${euro0(detrazioneTotale)} €)
+            </div>
+          `
+          : `
+            <div class="label" style="font-size:.85rem;color:#6b7280;grid-column:1/-1;">
+              Rimborso/detrazione non considerati (attiva Modalità Precisa).
+            </div>
+          `
+      }
+    </div>
+  `;
+
+  box.classList.remove('hidden');
+}
+
 
     function calcolaFotovoltaicoImpianto(){
       if (!checkLegalAccept()) return;
