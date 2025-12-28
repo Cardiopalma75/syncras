@@ -1156,27 +1156,33 @@
       const scPercNice = Math.round((r.scPerc || 0) * 100);
 
       div.innerHTML = `
-        <strong>Produzione annua:</strong> ${r.produzioneAnnua.toFixed(0)} kWh/anno<br>
-        • Batteria: <strong>${(r.batteria || 0).toString().replace('.', ',')} kWh</strong> → stima “energia trattenuta” ≈ <strong>${scPercNice}%</strong> (poi limitata dai tuoi consumi)<br>
-        • Energia usata in casa (limitata dai consumi casa): <strong>${r.autoconsumoCasaKWh.toFixed(0)} kWh/anno</strong><br>
-        • Risparmio bolletta: <strong>${euro0(r.risparmioAutoconsumoCasa)} €</strong><br>
-        ${
-          r.tipoImpianto === 'ongrid'
-            ? `• Energia ceduta: <strong>${r.energiaCedutaKWh.toFixed(0)} kWh/anno</strong><br>
-            `
-• Ricavo cessione (@${euro2(r.prezzoCessione)} €/kWh): <strong>${euro(r.ricavoCessione)} €</strong><br>
-• Beneficio annuo FV totale (casa + cessione): <strong>${euro(r.beneficioAnnualeFV)} €</strong><br>
+  <strong>Produzione annua:</strong> ${r.produzioneAnnua.toFixed(0)} kWh/anno<br>
+  • Batteria: <strong>${(r.batteria || 0).toString().replace('.', ',')} kWh</strong> → stima “energia trattenuta” ≈ <strong>${scPercNice}%</strong> (poi limitata dai tuoi consumi)<br>
+  • Energia usata in casa (limitata dai consumi casa): <strong>${r.autoconsumoCasaKWh.toFixed(0)} kWh/anno</strong><br>
+  • Risparmio bolletta: <strong>${euro0(r.risparmioAutoconsumoCasa)} €</strong><br>
 
-            : `• Impianto OFF-GRID: <strong>nessuna cessione</strong><br>`
-        }
-        • Beneficio FV annuo totale (bolletta + cessione): <strong>${euro0(r.beneficioAnnualeFV)} €</strong><br>
-        ${r.detrazioneTotale > 0 ? `• Detrazione ipotetica: <strong>${euro0(r.detrazioneTotale)} €</strong> (≈ ${euro0(r.detrazioneAnnua)} €/anno)<br>` : ''}
-        • Rientro solo con beneficio annuo: <strong>${rientroSoloBeneficio ? rientroSoloBeneficio.toFixed(1) : '---'} anni</strong><br>
-        • Rientro con detrazioni: <strong>${rientroConDetrazioni ? rientroConDetrazioni.toFixed(1) : '---'} anni</strong><br>
-        <span style="font-size:0.8rem; color:#4b5563;">
-          Nota: Scambio sul Posto / Ritiro Dedicato sono stimati tramite il prezzo di cessione impostato.
-        </span>
-      `;
+  ${
+    r.tipoImpianto === 'ongrid'
+      ? `• Energia ceduta: <strong>${r.energiaCedutaKWh.toFixed(0)} kWh/anno</strong><br>
+         • Ricavo cessione (@${euro2(r.prezzoCessione)} €/kWh): <strong>${euro0(r.ricavoCessione)} €</strong><br>`
+      : `• Impianto OFF-GRID: <strong>nessuna cessione</strong><br>`
+  }
+
+  • Beneficio annuo FV totale (casa + cessione): <strong>${euro0(r.beneficioAnnualeFV)} €</strong><br>
+
+  ${r.detrazioneTotale > 0
+    ? `• Detrazione ipotetica: <strong>${euro0(r.detrazioneTotale)} €</strong> (≈ ${euro0(r.detrazioneAnnua)} €/anno)<br>`
+    : ''
+  }
+
+  • Rientro solo con beneficio annuo: <strong>${rientroSoloBeneficio ? rientroSoloBeneficio.toFixed(1) : '---'} anni</strong><br>
+  • Rientro con detrazioni: <strong>${rientroConDetrazioni ? rientroConDetrazioni.toFixed(1) : '---'} anni</strong><br>
+
+  <span style="font-size:0.8rem; color:#4b5563;">
+    Nota: Scambio sul Posto / Ritiro Dedicato sono stimati tramite il prezzo di cessione impostato.
+  </span>
+`;
+
 
       renderSchoolSum(r);
       window.__lastPv = { blockA: r, blockB: null, summaryText: buildPvShareText(r, null) };
