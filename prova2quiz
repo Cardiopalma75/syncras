@@ -1163,7 +1163,10 @@
         ${
           r.tipoImpianto === 'ongrid'
             ? `• Energia ceduta: <strong>${r.energiaCedutaKWh.toFixed(0)} kWh/anno</strong><br>
-               • Ricavo cessione (@${euro2(r.prezzoCessione)} €/kWh): <strong>${euro0(r.ricavoCessione)} €</strong><br>`
+            `
+• Ricavo cessione (@${euro2(r.prezzoCessione)} €/kWh): <strong>${euro(r.ricavoCessione)} €</strong><br>
+• Beneficio annuo FV totale (casa + cessione): <strong>${euro(r.beneficioAnnualeFV)} €</strong><br>
+
             : `• Impianto OFF-GRID: <strong>nessuna cessione</strong><br>`
         }
         • Beneficio FV annuo totale (bolletta + cessione): <strong>${euro0(r.beneficioAnnualeFV)} €</strong><br>
