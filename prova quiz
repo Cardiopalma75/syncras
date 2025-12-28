@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Calcolatore Ammortamento Fotovoltaico 2025: Calcola il Rientro Economico</title>
-  <meta name="description" content="Scopri in quanto tempo si ripaga il tuo impianto fotovoltaico. Calcola produzione, risparmio annuo in bolletta, cessione energia (on-grid) e tabella di ammortamento completa.">
+  <meta name="description" content="Scopri in quanto tempo si ripaga il tuo impianto fotovoltaico. Calcola produzione, autoconsumo reale, cessione energia (on-grid) e tabella di ammortamento completa.">
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://syncras.app/calcolatore-fotovoltaico-ammortamento.html">
 
@@ -16,7 +16,7 @@
     "name": "Calcolatore Ammortamento e Risparmio Fotovoltaico",
     "applicationCategory": "FinancialApplication",
     "operatingSystem": "All",
-    "description": "Strumento per stimare produzione, autoconsumo reale, cessione energia on-grid e tempo di rientro (payback) di un impianto fotovoltaico.",
+    "description": "Strumento per stimare produzione, autoconsumo reale, cessione energia (on-grid) e tempo di rientro (payback) di un impianto fotovoltaico.",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
     "url": "https://syncras.app/calcolatore-fotovoltaico-ammortamento.html"
   }
@@ -194,6 +194,15 @@
       border:1px solid #d1d5db;
       font-size:.9rem;
     }
+
+    .field-help{
+      display:block;
+      margin-top:4px;
+      font-size:.78rem;
+      color:#6b7280;
+      line-height:1.25;
+    }
+
     .calc-button{
       margin-top:14px;
       padding:9px 15px;
@@ -390,14 +399,13 @@
       <h1>Calcolatore Fotovoltaico con Ammortamento: rientro anno per anno</h1>
 
       <div style="background:#FFF4D6; padding:10px 14px; border-left:4px solid #F59E0B; border-radius:6px; margin:10px 0; font-size:0.9rem;">
-        💡 <strong>Avviso:</strong> Questo calcolo rappresenta una <strong>stima indicativa</strong> basata sui dati inseriti dall’utente e su ipotesi semplificate.
-        Non costituisce consulenza professionale e non tiene conto di tutti i fattori fiscali, tecnici o energetici reali.
-        Per decisioni reali, confronta preventivi e consulta un <strong>tecnico abilitato</strong>.
+        💡 <strong>Avviso:</strong> questo calcolo è una <strong>stima indicativa</strong> basata sui dati inseriti dall’utente e su ipotesi semplificate.
+        Non sostituisce una valutazione tecnica/fiscale/finanziaria reale. Per scelte importanti, confronta preventivi e consulta un <strong>tecnico abilitato</strong>.
       </div>
 
       <p class="intro-text">
         Stima produzione annua, autoconsumo reale (limitato dai consumi casa), <strong>cessione energia ON-GRID</strong> e rientro.
-        Se includi un’auto elettrica, il calcolo scala i kWh ceduti: <strong>o li vendi o li usi per caricare</strong>.
+        Se includi un’auto elettrica, il calcolo rende coerenti i kWh: <strong>o li usi per caricare o li cedi</strong>.
       </p>
     </div>
 
@@ -420,7 +428,7 @@
     <section class="calc-section" id="calc-fotovoltaico">
       <div class="calc-header">
         <h2>Calcolatore fotovoltaico: produzione, risparmio e rientro</h2>
-        <small>Numeri semplificati ma coerenti (con consumo casa, auto e cessione).</small>
+        <small>Numeri semplificati ma coerenti (consumi casa, auto e cessione).</small>
       </div>
 
       <p style="font-size:0.9rem;">
@@ -455,6 +463,10 @@
           <div class="calc-field">
             <label>Autoconsumo stimato (%)</label>
             <input type="number" id="pvAutoconsumo" min="0" max="100" value="50">
+            <small class="field-help">
+              Quanta energia FV riesci a <strong>usare in casa</strong> invece di cederla.
+              <br>• Senza batteria spesso 20–40% • con accumulo può salire 50–80 (dipende dagli orari e dai carichi).
+            </small>
           </div>
 
           <div class="calc-field">
@@ -468,7 +480,7 @@
           </div>
 
           <div class="calc-field">
-            <label>Tipo impianto</label>
+            <label>Sistema</label>
             <select id="pvTipoImpianto">
               <option value="offgrid" selected>OFF-GRID (nessuna cessione)</option>
               <option value="ongrid">ON-GRID (Scambio / Ritiro)</option>
@@ -498,7 +510,7 @@
         <div id="pvResultImpianto" class="calc-result"></div>
 
         <div class="calc-note" style="margin-top:10px;">
-          Nota: ON-GRID = la quota non autoconsumata può essere ceduta. OFF-GRID = nessuna cessione.
+          ON-GRID: la quota non autoconsumata può essere ceduta (stimata col prezzo di cessione). OFF-GRID: nessuna cessione.
         </div>
       </div>
 
@@ -507,6 +519,7 @@
         <h3>Blocco B – Se hai (o avrai) un’auto elettrica</h3>
         <p style="font-size:0.85rem; margin-top:0;">
           La quota “ricarica da FV” usa energia che altrimenti potresti cedere: quindi <strong>riduce i kWh ceduti</strong> (se ON-GRID).
+          Se chiedi più energia di quella prodotta, te lo segnaliamo.
         </p>
 
         <div class="pv-grid">
@@ -664,7 +677,7 @@
     </div>
   </footer>
 
-  <!-- Cookie Banner + GA -->
+  <!-- Cookie Banner (GDPR: consenso preventivo) -->
   <div id="cookie-banner" role="dialog" aria-label="Banner cookie">
     <p>
       Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite (Google Analytics).
@@ -719,18 +732,15 @@
       const prezzoEv = parseFloat(document.getElementById('evPrezzo').value) || 0;
 
       if (km <= 0 || consumo100 <= 0 || prezzoEv <= 0) {
-        return { ok:false, kWhAnnuiAuto:0, autoPvKWhWanted:0, risparmioAuto:0, prezzoEv };
+        return { ok:false, kWhAnnuiAuto:0, autoPvKWhWanted:0, prezzoEv:0 };
       }
 
       const kWhAnnuiAuto = km * (consumo100 / 100);
       const autoPvKWhWanted = kWhAnnuiAuto * (quotaPvPerc / 100);
-      const risparmioAuto = autoPvKWhWanted * prezzoEv;
-
-      return { ok:true, kWhAnnuiAuto, autoPvKWhWanted, risparmioAuto, prezzoEv };
+      return { ok:true, kWhAnnuiAuto, autoPvKWhWanted, prezzoEv };
     }
 
-    // ===== FV base: QUI è dove rendiamo coerente "auto vs cessione" =====
-    // autoPvKWhWanted: kWh che l'utente vorrebbe prendere dal FV per l'auto
+    // ===== FV base: coerente "casa -> auto -> cessione" =====
     function computeFotovoltaicoBase(autoPvKWhWanted){
       const kw = parseFloat(document.getElementById('pvKw').value) || 0;
       const prodPerKw = parseFloat(document.getElementById('pvZona').value) || 0;
@@ -749,18 +759,18 @@
 
       const produzioneAnnua = kw * prodPerKw;
 
-      // Autoconsumo casa: potenziale % ma limitato dai consumi casa
+      // Autoconsumo casa: potenziale % ma limitato dal consumo casa
       const autoconsumoPotenziale = produzioneAnnua * (autoconsumoPerc / 100);
       const autoconsumoCasaKWh = Math.min(autoconsumoPotenziale, consumoCasa);
 
       // FV residuo dopo casa
       const fvResiduoDopoCasa = Math.max(produzioneAnnua - autoconsumoCasaKWh, 0);
 
-      // Auto: può prendere FV solo da quello che resta dopo casa
+      // Auto: può prendere FV solo da residuo dopo casa
       const autoWanted = Math.max(0, Number(autoPvKWhWanted) || 0);
       const autoPvEffettivoKWh = Math.min(autoWanted, fvResiduoDopoCasa);
 
-      // Cessione: è ciò che resta dopo casa + auto (se ON-GRID)
+      // Cessione: ciò che resta dopo casa + auto (solo se ON-GRID)
       let energiaCedutaKWh = 0;
       let ricavoCessione = 0;
       if (tipoImpianto === 'ongrid') {
@@ -782,6 +792,7 @@
         produzioneAnnua,
         autoconsumoPotenziale,
         autoconsumoCasaKWh,
+        fvResiduoDopoCasa,
         autoPvEffettivoKWh,
         energiaCedutaKWh,
         risparmioAutoconsumoCasa,
@@ -796,12 +807,17 @@
     function calcolaFotovoltaicoImpianto(){
       if (!checkLegalAccept()) return;
 
-      // In Blocco A facciamo il calcolo "solo impianto" (auto non inclusa qui)
+      // calcolo solo impianto (auto esclusa)
       const r = computeFotovoltaicoBase(0);
       if (!r.ok){ alert(r.error || 'Dati non validi.'); return; }
 
-      const rientroSoloRisparmio = (r.costoImpianto > 0 && r.risparmioAnnualeFV > 0) ? (r.costoImpianto / r.risparmioAnnualeFV) : null;
-      const rientroConDetrazioni = (r.costoImpianto > 0 && (r.risparmioAnnualeFV + r.detrazioneAnnua) > 0)
+      if (r.prezzo <= 0 || r.costoImpianto <= 0) {
+        alert('Inserisci anche prezzo energia e costo impianto per stimare il rientro.');
+        return;
+      }
+
+      const rientroSoloRisparmio = (r.risparmioAnnualeFV > 0) ? (r.costoImpianto / r.risparmioAnnualeFV) : null;
+      const rientroConDetrazioni = ((r.risparmioAnnualeFV + r.detrazioneAnnua) > 0)
         ? (r.costoImpianto / (r.risparmioAnnualeFV + r.detrazioneAnnua))
         : null;
 
@@ -817,11 +833,11 @@
           r.tipoImpianto === 'ongrid'
             ? `• Energia ceduta: <strong>${r.energiaCedutaKWh.toFixed(0)} kWh/anno</strong><br>
                • Ricavo cessione (@${r.prezzoCessione.toFixed(2)} €/kWh): <strong>${euro(r.ricavoCessione)} €</strong><br>`
-            : `• Impianto OFF-GRID: <strong>nessuna cessione</strong><br>`
+            : `• Sistema OFF-GRID: <strong>nessuna cessione</strong><br>`
         }
-        • Risparmio annuo FV totale: <strong>${euro(r.risparmioAnnualeFV)} €</strong><br>
+        • Beneficio annuo FV totale (casa + cessione): <strong>${euro(r.risparmioAnnualeFV)} €</strong><br>
         ${r.detrazioneTotale > 0 ? `• Detrazione ipotetica: <strong>${euro(r.detrazioneTotale)} €</strong> (≈ ${euro(r.detrazioneAnnua)} €/anno)<br>` : ''}
-        • Rientro solo con risparmio: <strong>${rientroSoloRisparmio ? rientroSoloRisparmio.toFixed(1) : '---'} anni</strong><br>
+        • Rientro solo con beneficio annuo: <strong>${rientroSoloRisparmio ? rientroSoloRisparmio.toFixed(1) : '---'} anni</strong><br>
         • Rientro con detrazioni: <strong>${rientroConDetrazioni ? rientroConDetrazioni.toFixed(1) : '---'} anni</strong><br>
         <span style="font-size:0.8rem; color:#4b5563;">
           Nota: Scambio sul Posto / Ritiro Dedicato sono stimati tramite il prezzo di cessione impostato.
@@ -829,7 +845,7 @@
       `;
     }
 
-    // ======== BLOCCO B ========
+    // ======== BLOCCO B (con controllo “stai chiedendo troppo FV”) ========
     function calcolaFotovoltaicoAuto(){
       if (!checkLegalAccept()) return;
 
@@ -839,179 +855,68 @@
         return;
       }
 
+      // contesto FV (auto non sottratta qui) per vedere il residuo dopo la casa
+      const base = computeFotovoltaicoBase(0);
+      if (!base.ok){
+        alert(base.error || 'Dati impianto non validi nel Blocco A.');
+        return;
+      }
+
+      const fvResiduoDopoCasa = base.fvResiduoDopoCasa;
+      const autoWanted = ev.autoPvKWhWanted;
+      const autoMaxPossibile = Math.min(autoWanted, fvResiduoDopoCasa);
+
+      const risparmioTeorico = autoWanted * ev.prezzoEv;
+      const risparmioRealisticoMax = autoMaxPossibile * ev.prezzoEv;
+
+      let warn = '';
+      if (autoWanted > fvResiduoDopoCasa + 1) {
+        warn = `
+          <div style="margin-top:8px; padding:8px 10px; border-left:4px solid #F59E0B; background:#FFF4D6; border-radius:6px;">
+            ⚠️ <strong>Attenzione:</strong> stai chiedendo <strong>${autoWanted.toFixed(0)} kWh/anno</strong> da FV per l’auto,
+            ma dopo i consumi casa l’impianto lascia disponibili al massimo <strong>${fvResiduoDopoCasa.toFixed(0)} kWh/anno</strong>.
+            <br>👉 Quindi la ricarica FV “realistica” per l’auto è <strong>${autoMaxPossibile.toFixed(0)} kWh/anno</strong> (non ${autoWanted.toFixed(0)}).
+          </div>
+        `;
+      }
+
       const div = document.getElementById('pvResultAuto');
       div.style.display = 'block';
-     div.innerHTML = `
+      div.innerHTML = `
         <strong>Consumo annuo auto elettrica:</strong> ${ev.kWhAnnuiAuto.toFixed(0)} kWh/anno<br>
-        • Quota che vorresti caricare da FV: <strong>${ev.autoPvKWhWanted.toFixed(0)} kWh/anno</strong><br>
-        • Risparmio stimato (rispetto a ricarica pagata): <strong>${euro(ev.risparmioAuto)} €</strong><br>
-        <span style="font-size:0.8rem; color:#4b5563;">
-          Nota: Questo risparmio è reale se i kWh usati per l'auto sono effettivamente prodotti dal sole e non prelevati dalla rete. 
-          Nella tabella (Blocco C) calcoleremo l'effettiva disponibilità di energia residua.
+        • Quota che vorresti caricare da FV: <strong>${autoWanted.toFixed(0)} kWh/anno</strong><br>
+        • FV disponibile massimo (dopo casa): <strong>${fvResiduoDopoCasa.toFixed(0)} kWh/anno</strong><br>
+        • Quota FV “realistica” per l’auto (max): <strong>${autoMaxPossibile.toFixed(0)} kWh/anno</strong><br>
+        <br>
+        • Risparmio teorico (se quei kWh esistessero): <strong>${euro(risparmioTeorico)} €</strong><br>
+        • Risparmio realistico massimo (limitato dalla produzione): <strong>${euro(risparmioRealisticoMax)} €</strong><br>
+        ${warn}
+        <span style="font-size:0.8rem; color:#4b5563; display:block; margin-top:8px;">
+          Nota: nella tabella (Blocco C) useremo l’energia FV effettivamente disponibile e ridurremo anche i kWh ceduti (se ON-GRID).
         </span>
       `;
     }
 
-    // ======== BLOCCO C - LOGICA AMMORTAMENTO ========
-    function calcolaAmmortamento() {
-      if (!checkLegalAccept()) return;
-
-      const includeAuto = document.getElementById('includeAutoInAmort').checked;
-      const ev = includeAuto ? computeEv() : { ok: false, autoPvKWhWanted: 0, risparmioAuto: 0, prezzoEv: 0 };
-      
-      // Calcolo base con eventuale sottrazione di kWh per l'auto
-      const r = computeFotovoltaicoBase(includeAuto ? ev.autoPvKWhWanted : 0);
-      
-      if (!r.ok) { alert('Dati impianto non validi nel Blocco A.'); return; }
-
-      const anniOrizzonte = parseInt(document.getElementById('amortYears').value) || 20;
-      const div = document.getElementById('pvResultAmort');
-      div.style.display = 'block';
-
-      let html = `
-        <div class="amort-wrapper">
-          <table class="amort-table">
-            <thead>
-              <tr>
-                <th>Anno</th>
-                <th>Risparmio Casa + Cessione (€)</th>
-                ${includeAuto ? '<th>Risparmio Auto (€)</th>' : ''}
-                <th>Detrazione (€)</th>
-                <th>Totale Annuo (€)</th>
-                <th>Cumulativo (€)</th>
-              </tr>
-            </thead>
-            <tbody>
-      `;
-
-      let cumulativo = -r.costoImpianto;
-      let breakEvenAnno = -1;
-
-      for (let i = 1; i <= anniOrizzonte; i++) {
-        // Ipotizziamo un degrado pannelli dello 0.5% annuo
-        const degrado = Math.pow(0.995, i - 1);
-        const rispCasaCessione = r.risparmioAnnualeFV * degrado;
-        const rispAuto = includeAuto ? (ev.risparmioAuto * degrado) : 0;
-        const detr = (i <= r.anniDetr) ? r.detrazioneAnnua : 0;
-        
-        const totaleAnnuo = rispCasaCessione + rispAuto + detr;
-        cumulativo += totaleAnnuo;
-
-        let rowClass = "";
-        if (cumulativo >= 0 && breakEvenAnno === -1) {
-          breakEvenAnno = i;
-          rowClass = "row-break-even";
-        }
-
-        html += `
-          <tr class="${rowClass}">
-            <td>${i}</td>
-            <td>${euro(rispCasaCessione)}</td>
-            ${includeAuto ? `<td>${euro(rispAuto)}</td>` : ''}
-            <td>${euro(detr)}</td>
-            <td><strong>${euro(totaleAnnuo)}</strong></td>
-            <td style="color: ${cumulativo >= 0 ? 'green' : '#b91c1c'}">${euro(cumulativo)}</td>
-          </tr>
-        `;
-      }
-
-      html += `</tbody></table></div>`;
-
-      let riepilogoFinal = `<div style="margin-top:15px; padding:10px; border:1px solid #6C5CE7; border-radius:8px; background:#f3f0ff;">`;
-      if (breakEvenAnno !== -1) {
-        riepilogoFinal += `<strong>✅ Tempo di rientro stimato: circa ${breakEvenAnno} anni.</strong>`;
-      } else {
-        riepilogoFinal += `<strong>⚠️ Con questi dati, l'impianto non si ripaga entro ${anniOrizzonte} anni.</strong>`;
-      }
-      riepilogoFinal += `</div>`;
-
-      div.innerHTML = riepilogoFinal + html + `
-        <div class="amort-legend">
-          * La tabella include un degrado dei pannelli dello 0.5% annuo. <br>
-          * I valori sono calcolati a prezzi dell'energia costanti.
-        </div>
-      `;
-    }
-
-    // ===== GESTIONE COOKIE & ANNO =====
-    document.getElementById('year-span').textContent = new Date().getFullYear();
-
-    window.onload = function() {
-      if (!localStorage.getItem('cookieConsent')) {
-        document.getElementById('cookie-banner').style.display = 'block';
-      }
-    };
-
-    function acceptCookies() {
-      localStorage.setItem('cookieConsent', 'accepted');
-      document.getElementById('cookie-banner').style.display = 'none';
-    }
-
-    function rejectCookies() {
-      localStorage.setItem('cookieConsent', 'rejected');
-      document.getElementById('cookie-banner').style.display = 'none';
-    }
-
-    document.getElementById('cookie-settings')?.addEventListener('click', (e) => {
-      e.preventDefault();
-      document.getElementById('cookie-banner').style.display = 'block';
-    });
-
-    // Share buttons
-    document.getElementById('shareTop').onclick = sharePage;
-    document.getElementById('shareBottom').onclick = sharePage;
-  </script>
-</body>
-</html>
-
-    // ===== GESTIONE COOKIE & ANNO =====
-    document.getElementById('year-span').textContent = new Date().getFullYear();
-
-    window.onload = function() {
-      if (!localStorage.getItem('cookieConsent')) {
-        document.getElementById('cookie-banner').style.display = 'block';
-      }
-    };
-
-    function acceptCookies() {
-      localStorage.setItem('cookieConsent', 'accepted');
-      document.getElementById('cookie-banner').style.display = 'none';
-      // Qui caricheresti i tuoi script di tracking (GA)
-    }
-
-    function rejectCookies() {
-      localStorage.setItem('cookieConsent', 'rejected');
-      document.getElementById('cookie-banner').style.display = 'none';
-    }
-
-    document.getElementById('cookie-settings')?.addEventListener('click', (e) => {
-      e.preventDefault();
-      document.getElementById('cookie-banner').style.display = 'block';
-    });
-
-    // Share buttons
-    document.getElementById('shareTop').onclick = sharePage;
-    document.getElementById('shareBottom').onclick = sharePage;
-  </script>
-</body>
-</html>
     // ======== BLOCCO C ========
     function calcolaAmmortamento(){
       if (!checkLegalAccept()) return;
 
-      const anniOrizzonte = parseFloat(document.getElementById('amortYears').value) || 0;
+      const anniOrizzonte = parseInt(document.getElementById('amortYears').value) || 0;
       if (anniOrizzonte <= 0){ alert('Inserisci un orizzonte di calcolo valido.'); return; }
 
-      // Auto: se inclusa, usa FV e riduce cessione
       const includeAuto = document.getElementById('includeAutoInAmort').checked;
-      const ev = includeAuto ? computeEv() : { ok:false, autoPvKWhWanted:0, risparmioAuto:0, prezzoEv:0 };
+      const ev = includeAuto ? computeEv() : { ok:false, autoPvKWhWanted:0, prezzoEv:0 };
 
-      // Calcolo FV base CON autoPvKWhWanted → così energia ceduta cala
-      const r = computeFotovoltaicoBase(ev.ok ? ev.autoPvKWhWanted : 0);
-      if (!r.ok){ alert(r.error || 'Dati non validi.'); return; }
+      // FV base con eventuale sottrazione kWh per l’auto -> così cessione cala
+      const r = computeFotovoltaicoBase((includeAuto && ev.ok) ? ev.autoPvKWhWanted : 0);
+      if (!r.ok){ alert(r.error || 'Dati impianto non validi nel Blocco A.'); return; }
 
-      // Risparmio auto reale: dipende da quanta FV è riuscita DAVVERO a finire nell'auto (limitata dal residuo FV)
-      // valore = kWh FV effettivi sull'auto * prezzo EV
+      if (r.prezzo <= 0 || r.costoImpianto <= 0) {
+        alert('Per la tabella servono prezzo energia e costo impianto.');
+        return;
+      }
+
+      // Risparmio auto REALE: dipende da quanta FV è finita DAVVERO nell’auto
       const risparmioAnnualeAuto = (includeAuto && ev.ok) ? (r.autoPvEffettivoKWh * ev.prezzoEv) : 0;
 
       const risparmioAnnualeTotale = r.risparmioAnnualeFV + risparmioAnnualeAuto;
@@ -1059,16 +964,16 @@
           r.tipoImpianto === 'ongrid'
           ? `• Energia ceduta (dopo casa+auto): <strong>${r.energiaCedutaKWh.toFixed(0)} kWh/anno</strong><br>
              • Ricavo cessione: <strong>${euro(r.ricavoCessione)} €</strong> (@${r.prezzoCessione.toFixed(2)} €/kWh)<br>`
-          : `• Impianto OFF-GRID: <strong>nessuna cessione</strong><br>`
+          : `• Sistema OFF-GRID: <strong>nessuna cessione</strong><br>`
         }
-        • Risparmio FV (casa + cessione): <strong>${euro(r.risparmioAnnualeFV)} €</strong><br>
+        • Beneficio FV (casa + cessione): <strong>${euro(r.risparmioAnnualeFV)} €</strong><br>
         • Risparmio auto (da FV): <strong>${euro(risparmioAnnualeAuto)} €</strong><br>
         ${r.detrazioneAnnua > 0
           ? `• Detrazioni: <strong>${euro(r.detrazioneAnnua)} €/anno</strong> per ${r.anniDetr.toFixed(0)} anni (totale ≈ ${euro(r.detrazioneTotale)} €)<br>`
           : `• Detrazioni: <strong>non considerate</strong><br>`
         }
-        • Orizzonte: <strong>${anniOrizzonte.toFixed(0)} anni</strong><br>
-        ${annoBreakEven !== null ? `• Break-even: <strong>anno ${annoBreakEven}</strong><br>` : `• Break-even: <strong>non raggiunto</strong> in ${anniOrizzonte.toFixed(0)} anni<br>`}
+        • Orizzonte: <strong>${anniOrizzonte} anni</strong><br>
+        ${annoBreakEven !== null ? `• Break-even: <strong>anno ${annoBreakEven}</strong><br>` : `• Break-even: <strong>non raggiunto</strong> in ${anniOrizzonte} anni<br>`}
         <br>
 
         <div class="amort-wrapper">
@@ -1093,7 +998,7 @@
       `;
     }
 
-    // ===== DOMContentLoaded init =====
+    // ===== Init DOM =====
     document.addEventListener('DOMContentLoaded', function(){
       const y = document.getElementById('year-span');
       if (y) y.textContent = new Date().getFullYear();
@@ -1111,10 +1016,12 @@
         inpCessione.disabled = !ongrid;
         inpCessione.style.opacity = ongrid ? '1' : '0.6';
       }
-      tipo.addEventListener('change', syncCessioneUI);
-      syncCessioneUI();
+      if (tipo && inpCessione) {
+        tipo.addEventListener('change', syncCessioneUI);
+        syncCessioneUI();
+      }
 
-      // Link impostazioni cookie
+      // Link impostazioni cookie: richiama revokeCookies()
       const cs = document.getElementById('cookie-settings');
       if (cs) {
         cs.addEventListener('click', function(e){
@@ -1124,12 +1031,12 @@
       }
     });
 
-    // ======== GDPR COOKIE + GA (consenso preventivo) ========
+    // ======== GDPR COOKIE + GA (consenso preventivo, “10/10”) ========
     (function(){
       const GA_ID = 'G-CFTTCYDZ2P';
       const CONSENT_KEY = 'syncras_cookie_consent';
 
-      // Blocca GA preventivamente
+      // Blocca GA preventivamente (prima del consenso)
       window['ga-disable-' + GA_ID] = true;
 
       function loadGoogleAnalytics(){
@@ -1170,7 +1077,8 @@
       window.rejectCookies = function(){
         localStorage.setItem(CONSENT_KEY, 'no');
         hideBanner();
-        window['ga-disable-' + GA_ID] = true; // resta bloccato
+        // GA resta bloccato
+        window['ga-disable-' + GA_ID] = true;
       };
 
       // Revoca: rimuove scelta e ri-mostra banner
