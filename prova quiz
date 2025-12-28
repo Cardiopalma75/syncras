@@ -841,7 +841,7 @@
 
       const div = document.getElementById('pvResultAuto');
       div.style.display = 'block';
-      div.innerHTML = `
+     div.innerHTML = `
         <strong>Consumo annuo auto elettrica:</strong> ${ev.kWhAnnuiAuto.toFixed(0)} kWh/anno<br>
         • Quota che vorresti caricare da FV: <strong>${ev.autoPvKWhWanted.toFixed(0)} kWh/anno</strong><br>
         • Risparmio stimato (rispetto a ricarica pagata): <strong>${euro(ev.risparmioAuto)} €</strong><br>
@@ -932,6 +932,37 @@
         </div>
       `;
     }
+
+    // ===== GESTIONE COOKIE & ANNO =====
+    document.getElementById('year-span').textContent = new Date().getFullYear();
+
+    window.onload = function() {
+      if (!localStorage.getItem('cookieConsent')) {
+        document.getElementById('cookie-banner').style.display = 'block';
+      }
+    };
+
+    function acceptCookies() {
+      localStorage.setItem('cookieConsent', 'accepted');
+      document.getElementById('cookie-banner').style.display = 'none';
+    }
+
+    function rejectCookies() {
+      localStorage.setItem('cookieConsent', 'rejected');
+      document.getElementById('cookie-banner').style.display = 'none';
+    }
+
+    document.getElementById('cookie-settings')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      document.getElementById('cookie-banner').style.display = 'block';
+    });
+
+    // Share buttons
+    document.getElementById('shareTop').onclick = sharePage;
+    document.getElementById('shareBottom').onclick = sharePage;
+  </script>
+</body>
+</html>
 
     // ===== GESTIONE COOKIE & ANNO =====
     document.getElementById('year-span').textContent = new Date().getFullYear();
