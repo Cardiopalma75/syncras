@@ -1,411 +1,472 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calcolatore Fotovoltaico Ammortamento Reale | Syncras.App</title>
-<meta name="description" content="Calcola il ritorno economico reale di un impianto fotovoltaico con batteria. Autoconsumo dinamico, detrazione 50% e tabella anno per anno.">
-<meta name="robots" content="index,follow">
-<link rel="canonical" href="https://syncras.app/calcolatore-fotovoltaico-ammortamento.html">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Test Autoconsumo Dinamico - FV + Batteria</title>
+  <style>
+    :root{
+      --violet:#6C5CE7;
+      --violet-dark:#4B3ACB;
+      --bg:#F7F7FB;
+      --text:#1f2937;
+      --muted:#6b7280;
+      --card:#ffffff;
+      --border:#e5e7eb;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+    }
+    .wrap{
+      max-width:920px;
+      margin:18px auto;
+      padding:16px;
+    }
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:14px;
+      box-shadow:0 6px 16px rgba(15,23,42,.06);
+      padding:16px;
+    }
+    h1{
+      margin:0 0 6px 0;
+      color:var(--violet-dark);
+      font-size:1.35rem;
+    }
+    .sub{
+      margin:0 0 14px 0;
+      color:var(--muted);
+      font-size:.95rem;
+      line-height:1.4;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:12px;
+      margin-top:10px;
+    }
+    @media (max-width:840px){
+      .grid{grid-template-columns:1fr}
+    }
+    label{
+      display:block;
+      font-weight:800;
+      font-size:.9rem;
+      margin-bottom:6px;
+      color:#374151;
+    }
+    input[type="number"]{
+      width:100%;
+      padding:10px 10px;
+      border:1px solid #d1d5db;
+      border-radius:10px;
+      font-size:1rem;
+      outline:none;
+    }
+    input[type="number"]:focus{
+      border-color:rgba(108,92,231,.6);
+      box-shadow:0 0 0 3px rgba(108,92,231,.15);
+    }
 
-<style>
-:root{
-  --violet:#6C5CE7;
-  --violet-dark:#4B3ACB;
-  --bg:#F7F7FB;
-  --text:#403E43;
-  --ok:#16A34A;
-  --warn:#D97706;
-  --bad:#DC2626;
-}
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:var(--bg);
-  color:var(--text);
-}
-main{
-  max-width:1000px;
-  margin:30px auto;
-  background:#fff;
-  padding:24px;
-  border-radius:12px;
-  box-shadow:0 4px 10px rgba(0,0,0,.08);
-}
-h1,h2,h3{color:var(--violet-dark)}
-.calc-box{
-  background:#f9fafb;
-  border:1px solid #e5e7eb;
-  border-radius:12px;
-  padding:18px;
-  margin-bottom:20px;
-}
-.calc-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:14px;
-}
-label{
-  font-weight:600;
-  font-size:.9rem;
-}
-input,select{
-  width:100%;
-  padding:8px;
-  border-radius:6px;
-  border:1px solid #d1d5db;
-  margin-top:4px;
-}
-button{
-  background:var(--violet);
-  color:#fff;
-  border:none;
-  padding:10px 18px;
-  border-radius:8px;
-  cursor:pointer;
-  font-weight:700;
-}
-button:hover{background:var(--violet-dark)}
-.result{
-  display:none;
-  background:#fff;
-  border-radius:10px;
-  padding:16px;
-  margin-top:16px;
-  box-shadow:0 2px 6px rgba(0,0,0,.08);
-}
-.legal-box{
-  background:#fff;
-  border:1px solid #e5e7eb;
-  border-radius:8px;
-  padding:12px;
-  margin-top:14px;
-}
-.legal-box.focus{
-  outline:3px solid #f59e0b;
-}
-.small{
-  font-size:.85rem;
-  color:#6b7280;
-}
-.center{text-align:center}
-hr{border:none;border-top:1px solid #e5e7eb;margin:14px 0}
+    .box{
+      margin-top:14px;
+      padding:12px;
+      border-radius:14px;
+      border:1px dashed #c7d2fe;
+      background:#f7f7fb;
+    }
+    .row{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .big{
+      font-weight:900;
+      font-size:1.05rem;
+      color:#3730a3;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      color:#fff;
+      font-weight:900;
+      font-size:.9rem;
+      user-select:none;
+    }
 
-.table-wrap{overflow-x:auto;margin-top:12px}
-table{width:100%;border-collapse:collapse;font-size:.9rem}
-th,td{border:1px solid #d1d5db;padding:8px 10px;text-align:right;white-space:nowrap}
-th{text-align:center;background:#eef2ff}
-td:first-child, th:first-child{text-align:center}
-.row-break{background:#dcfce7;font-weight:800}
-.badge{
-  display:inline-block;
-  padding:6px 10px;
-  border-radius:999px;
-  color:#fff;
-  font-weight:800;
-  font-size:.85rem;
-}
-.badge-ok{background:var(--ok)}
-.badge-warn{background:var(--warn)}
-.badge-bad{background:var(--bad)}
-</style>
+    .barWrap{
+      height:14px;
+      border-radius:999px;
+      background:#eee;
+      margin-top:10px;
+      overflow:hidden;
+      border:1px solid var(--border);
+    }
+    .bar{
+      height:100%;
+      width:0%;
+      background:#DC2626;
+      transition:width .25s ease, background .25s ease;
+    }
+
+    .tips{
+      margin:10px 0 0 0;
+      padding-left:18px;
+      color:#374151;
+      line-height:1.4;
+    }
+    .out{
+      margin-top:14px;
+      padding:12px;
+      border:1px solid var(--border);
+      border-radius:14px;
+      background:#fff;
+    }
+    .kpi{
+      font-size:1.05rem;
+      line-height:1.5;
+    }
+    .kpi strong{color:var(--violet-dark)}
+    .quota{
+      font-size:1.6rem;
+      font-weight:900;
+      color:var(--violet-dark);
+    }
+    .mini{
+      margin-top:8px;
+      color:#374151;
+      font-size:.95rem;
+      line-height:1.45;
+    }
+    .muted{color:var(--muted); font-size:.9rem}
+    .divider{
+      height:1px;
+      background:var(--border);
+      margin:14px 0;
+    }
+
+    input[type="range"]{
+      width:100%;
+      margin-top:8px;
+    }
+    .btnRow{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:12px;
+    }
+    .btn{
+      border:none;
+      border-radius:12px;
+      padding:10px 14px;
+      cursor:pointer;
+      font-weight:900;
+      background:linear-gradient(90deg,var(--violet-dark),var(--violet));
+      color:#fff;
+      box-shadow:0 6px 14px rgba(0,0,0,.10);
+    }
+    .btn2{
+      border:1px solid rgba(108,92,231,.35);
+      border-radius:12px;
+      padding:10px 14px;
+      cursor:pointer;
+      font-weight:900;
+      background:#fff;
+      color:#3730a3;
+    }
+  </style>
 </head>
 
 <body>
-<main>
+  <div class="wrap">
+    <div class="card">
+      <h1>Test Autoconsumo Dinamico (FV + Batteria + Consumi)</h1>
+      <p class="sub">
+        Qui verifichi che la percentuale <strong>non resti fissa</strong>: se aumenti la produzione senza aumentare consumi/carichi spostabili, la quota di autoconsumo deve scendere.
+      </p>
 
-<h1>☀️ Calcolatore Fotovoltaico – Ammortamento Reale</h1>
+      <div class="grid">
+        <div>
+          <label for="prod">Produzione annua FV (kWh)</label>
+          <input id="prod" type="number" value="13000" step="100" min="0">
+          <div class="muted">Esempio: 2600 → 13000</div>
+        </div>
 
-<div class="calc-box">
-<h2>Dati impianto</h2>
-<div class="calc-grid">
-  <div>
-    <label>Potenza impianto (kW)</label>
-    <input id="potenza" type="number" value="6" min="1" max="20" step="0.1">
-  </div>
-  <div>
-    <label>Zona geografica</label>
-    <select id="zona">
-      <option value="1100">Nord Italia (~1100 kWh/kW)</option>
-      <option value="1300" selected>Centro Italia (~1300 kWh/kW)</option>
-      <option value="1500">Sud Italia (~1500 kWh/kW)</option>
-    </select>
-  </div>
-  <div>
-    <label>Consumo annuo casa (kWh)</label>
-    <input id="consumoCasa" type="number" value="3000" min="0" step="50">
-  </div>
-  <div>
-    <label>Batteria (kWh) — libera 5–50</label>
-    <input id="batteria" type="number" value="10" min="5" max="50" step="0.5">
-  </div>
-</div>
-</div>
+        <div>
+          <label for="cons">Consumo annuo casa (kWh)</label>
+          <input id="cons" type="number" value="3000" step="100" min="0">
+          <div class="muted">Esempio: 3000 / 5000</div>
+        </div>
 
-<div class="calc-box">
-<h2>Costi e incentivi</h2>
-<div class="calc-grid">
-  <div>
-    <label>Prezzo energia acquistata (€/kWh)</label>
-    <input id="prezzoAcquisto" type="number" value="0.30" step="0.01" min="0">
-  </div>
-  <div>
-    <label>Prezzo cessione (€/kWh)</label>
-    <input id="prezzoCessione" type="number" value="0.10" step="0.01" min="0">
-  </div>
-  <div>
-    <label>Costo impianto (€)</label>
-    <input id="costoImpianto" type="number" value="10000" step="100" min="0">
-  </div>
-  <div>
-    <label>Orizzonte ammortamento (anni)</label>
-    <input id="anni" type="number" value="20" min="5" max="30">
-  </div>
-</div>
-<p class="small" style="margin:10px 0 0">
-Detrazione: <strong>50%</strong> ripartita su <strong>10 anni</strong> (valore indicativo: non sostituisce un tecnico/commercialista).
-Degrado pannelli: <strong>0,5% annuo</strong>.
-</p>
-</div>
+        <div>
+          <label for="batt">Batteria (kWh) — libera (0–50)</label>
+          <input id="batt" type="number" value="15" step="0.5" min="0" max="50">
+          <div class="muted">Esempio: 7,5 / 15 / 30</div>
+        </div>
+      </div>
 
-<div class="legal-box" id="legalBox">
-<label>
-<input type="checkbox" id="legalCheck">
- Confermo di aver letto le <a href="note-legali.html" target="_blank" rel="noopener">Note Legali</a>
-</label>
-<p class="small">I risultati sono stime indicative e non costituiscono consulenza professionale.</p>
-</div>
+      <div class="box">
+        <div class="row">
+          <div class="big">Carichi spostabili di giorno (kWh/giorno)</div>
+          <div class="big"><span id="shiftVal">3.0</span></div>
+        </div>
+        <input id="shift" type="range" min="0" max="12" step="0.5" value="3">
+        <div class="muted" style="margin-top:6px;">
+          Slider = “disciplina” nel far lavorare casa/impianti nelle ore di sole (lavatrice, lavastoviglie, boiler, PDC, ecc.).
+        </div>
+      </div>
 
-<div class="center" style="margin-top:18px">
-<button onclick="calcola()">Calcola (con ammortamento)</button>
-</div>
+      <div class="divider"></div>
 
-<div id="result" class="result"></div>
+      <div class="row">
+        <div class="big">Bilanciamento impianto</div>
+        <div id="badge" class="pill">—</div>
+      </div>
+      <div class="barWrap"><div id="bar" class="bar"></div></div>
+      <ul id="tips" class="tips"></ul>
 
-<div class="center" style="margin-top:18px">
-<button id="shareBtn" style="display:none">📎 Condividi il risultato</button>
-</div>
+      <div class="out">
+        <div class="kpi">
+          <div><strong>Quota autoconsumo stimata (dinamica):</strong> <span id="quota" class="quota">—%</span></div>
+          <div class="mini" id="details"></div>
+        </div>
 
-</main>
+        <div class="btnRow">
+          <button class="btn" type="button" id="copyBtn">📋 Copia testo risultato</button>
+          <button class="btn2" type="button" id="resetBtn">↩︎ Reset esempi</button>
+        </div>
+        <div class="muted" style="margin-top:8px;">Copia serve solo per test veloce (WhatsApp/Note).</div>
+      </div>
 
-<script>
-function euro0(v){ return (Number(v)||0).toFixed(0).replace('.',','); }
-function euro2(v){ return (Number(v)||0).toFixed(2).replace('.',','); }
-
-function scrollToLegal(){
-  const box=document.getElementById('legalBox');
-  box.classList.add('focus');
-  box.scrollIntoView({behavior:'smooth',block:'center'});
-  setTimeout(()=>box.classList.remove('focus'),2500);
-}
-
-// === AUTOCONSUMO DINAMICO ===
-// idea: autoconsumo = istantaneo (base) + quota spostabile con batteria (limitata da batteria vs produzione giornaliera)
-// poi limitato da: consumi casa e cap fisico 90% della produzione
-function computeDynamicAutoconsumo(produzioneAnnua, consumoCasaAnnua, batteriaKWh){
-  const prodGiorno = produzioneAnnua / 365;
-
-  // autoconsumo istantaneo base (media)
-  const baseInstant = produzioneAnnua * 0.25;
-
-  // fattore batteria: se batteria >= produzione giornaliera, "sposta" bene; se è piccola, sposta poco
-  const fattoreBat = Math.min(1, (batteriaKWh / Math.max(prodGiorno, 0.001)));
-
-  // quota differita massima teorica (euristica) * fattoreBat
-  const differita = produzioneAnnua * 0.45 * fattoreBat;
-
-  // somma e limiti reali
-  let autoc = baseInstant + differita;
-  autoc = Math.min(autoc, produzioneAnnua);            // non può superare la produzione
-  autoc = Math.min(autoc, consumoCasaAnnua);           // non può superare i consumi casa annui
-  autoc = Math.min(autoc, produzioneAnnua * 0.90);     // cap fisico (perdite, mismatch, ecc.)
-
-  return { autoconsumoKWh: autoc, fattoreBat };
-}
-
-function calcola(){
-  if(!document.getElementById('legalCheck').checked){
-    scrollToLegal();
-    return;
-  }
-
-  const potenza = +document.getElementById('potenza').value || 0;
-  const zona = +document.getElementById('zona').value || 0;
-  const consumo = +document.getElementById('consumoCasa').value || 0;
-  const batteria = +document.getElementById('batteria').value || 0;
-
-  const prezzoAcq = +document.getElementById('prezzoAcquisto').value || 0;
-  const prezzoCes = +document.getElementById('prezzoCessione').value || 0;
-
-  const costo = +document.getElementById('costoImpianto').value || 0;
-  const anni = parseInt(document.getElementById('anni').value) || 20;
-
-  if(potenza<=0 || zona<=0){
-    alert("Inserisci almeno potenza e zona.");
-    return;
-  }
-
-  const produzione = potenza * zona;
-
-  const dyn = computeDynamicAutoconsumo(produzione, consumo, batteria);
-  const autoconsumo = dyn.autoconsumoKWh;
-
-  const cessione = Math.max(0, produzione - autoconsumo);
-
-  const risparmioCasa = autoconsumo * prezzoAcq;
-  const ricavoCessione = cessione * prezzoCes;
-
-  const beneficioFV = risparmioCasa + ricavoCessione;
-
-  // detrazione: 50% del costo, spalmata su 10 anni
-  const detrazioneTot = costo * 0.50;
-  const detrazioneAnnua = detrazioneTot / 10;
-
-  // === Ammortamento anno per anno ===
-  let cumul = -costo;
-  let breakYear = -1;
-
-  let rows = "";
-  for(let i=1;i<=anni;i++){
-    const degr = Math.pow(0.995, i-1); // 0,5% annuo
-    const benefAnno = beneficioFV * degr;
-
-    const detr = (i<=10) ? detrazioneAnnua : 0;
-
-    const totaleAnno = benefAnno + detr;
-    cumul += totaleAnno;
-
-    if(breakYear===-1 && cumul>=0) breakYear=i;
-
-    rows += `
-      <tr class="${(i===breakYear)?'row-break':''}">
-        <td>${i}</td>
-        <td>${euro0(benefAnno)} €</td>
-        <td>${euro0(detr)} €</td>
-        <td><strong>${euro0(totaleAnno)} €</strong></td>
-        <td style="color:${cumul>=0?'var(--ok)':'#b91c1c'}"><strong>${euro0(cumul)} €</strong></td>
-        <td>${euro0(Math.max(0,-cumul))} €</td>
-      </tr>
-    `;
-  }
-
-  const badge = (breakYear!==-1)
-    ? `<span class="badge badge-ok">✅ Rientro stimato: ~ ${breakYear} anni</span>`
-    : `<span class="badge badge-warn">⚠️ Non si ripaga entro ${anni} anni</span>`;
-
-  const resultHtml = `
-    <h3>Risultato annuale</h3>
-    ${badge}
-    <p class="small" style="margin-top:10px">
-      Autoconsumo calcolato in modo dinamico (dipende da batteria vs produzione giornaliera) e limitato da consumi reali + cap fisico.
-    </p>
-
-    <p>Produzione stimata: <strong>${euro0(produzione)} kWh/anno</strong></p>
-    <p>Energia autoconsumata: <strong>${euro0(autoconsumo)} kWh/anno</strong></p>
-    <p>Energia ceduta: <strong>${euro0(cessione)} kWh/anno</strong></p>
-
-    <hr>
-
-    <h3>Somma “in colonna”</h3>
-    <p>Risparmio bolletta (energia usata in casa): <strong>${euro0(risparmioCasa)} €</strong></p>
-    <p>Ricavo cessione (energia venduta): <strong>${euro0(ricavoCessione)} €</strong></p>
-    <p><strong>Totale beneficio FV annuo (casa + cessione): ${euro0(beneficioFV)} €</strong></p>
-    <p class="small">Detrazione 50%: <strong>${euro0(detrazioneTot)} €</strong> totali (≈ ${euro0(detrazioneAnnua)} €/anno per 10 anni)</p>
-
-    <hr>
-
-    <h3>Ammortamento anno per anno</h3>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Anno</th>
-            <th>Beneficio FV (degrado incluso)</th>
-            <th>Detrazione</th>
-            <th>Totale anno</th>
-            <th>Cumulativo</th>
-            <th>Capitale residuo</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${rows}
-        </tbody>
-      </table>
     </div>
-
-    <p class="small" style="margin-top:10px">
-      Note: degrado pannelli 0,5%/anno; prezzi energia considerati costanti; detrazione stimata in modo semplificato.
-    </p>
-  `;
-
-  const box=document.getElementById('result');
-  box.innerHTML = resultHtml;
-  box.style.display='block';
-
-  // share risultato: solo se supportato
-  const shareBtn = document.getElementById('shareBtn');
-  if(navigator.share){
-    shareBtn.style.display = 'inline-block';
-    shareBtn.onclick = async () => {
-      try{
-        await navigator.share({
-          title: 'Simulazione FV – Syncras.App',
-          text: `Risultato FV (stima):
-Produzione: ${euro0(produzione)} kWh/anno
-Autoconsumo: ${euro0(autoconsumo)} kWh/anno
-Risparmio: ${euro0(risparmioCasa)} €
-Cessione: ${euro0(ricavoCessione)} €
-Beneficio FV: ${euro0(beneficioFV)} €
-${breakYear!==-1 ? ('Rientro: ~'+breakYear+' anni') : ('Non si ripaga entro '+anni+' anni')}
-`,
-          url: window.location.href
-        });
-      }catch(e){}
-    };
-  } else {
-    shareBtn.style.display = 'none';
-  }
-}
-</script>
-
-<!-- GDPR banner + GA solo dopo consenso -->
-<div id="cookie-banner" style="display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
-background:#fff;border:2px solid #6C5CE7;border-radius:10px;padding:14px;z-index:9999;max-width:520px;width:92%">
-  <p class="small" style="margin:0 0 10px 0">
-    Usiamo cookie tecnici e Analytics anonimo (solo dopo consenso).
-    <a href="privacy.html">Privacy</a> – <a href="cookie.html">Cookie</a>
-  </p>
-  <div style="display:flex;gap:10px;flex-wrap:wrap">
-    <button style="background:#fff;color:#111827;border:2px solid #6C5CE7" onclick="reject()">Rifiuta</button>
-    <button onclick="accept()">Accetta</button>
   </div>
-</div>
 
 <script>
-const KEY="syncras_consent";
-const GA="G-CFTTCYDZ2P";
-function loadGA(){
-  if(window.__gaLoaded) return;
-  window.__gaLoaded = true;
-  const s=document.createElement('script');
-  s.async=true;
-  s.src="https://www.googletagmanager.com/gtag/js?id="+GA;
-  document.head.appendChild(s);
-  window.dataLayer=window.dataLayer||[];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js',new Date());
-  gtag('config',GA,{anonymize_ip:true});
-}
-function accept(){localStorage.setItem(KEY,'yes');loadGA();hide()}
-function reject(){localStorage.setItem(KEY,'no');hide()}
-function hide(){document.getElementById('cookie-banner').style.display='none'}
-document.addEventListener('DOMContentLoaded',()=>{
-  const c=localStorage.getItem(KEY);
-  if(c==='yes') loadGA();
-  if(!c) document.getElementById('cookie-banner').style.display='block';
-});
-</script>
+  // =========================
+  // 1) Autoconsumo dinamico
+  // =========================
+  // Idea:
+  // - una quota "base" (autoconsumo istantaneo) cresce se consumo≈produzione, scende se FV è enorme.
+  // - i "carichi spostabili" aumentano l'autoconsumo di giorno ma hanno limiti fisici (non puoi usare più di surplus e più del consumo).
+  // - la batteria contribuisce in modo saturante: se batteria è piccola rispetto a prod giornaliera, impatta poco.
+  // - cap realistico (perdite/limiti): max ~0.92 e comunque non oltre consumo/produzione.
 
+  function calcolaQuotaAutoconsumoDinamica(produzioneAnnua, batteriaKwh, consumoAnnuo, carichiSpostabiliKwhG){
+    produzioneAnnua = Math.max(0, Number(produzioneAnnua) || 0);
+    consumoAnnuo = Math.max(0, Number(consumoAnnuo) || 0);
+    batteriaKwh = Math.max(0, Number(batteriaKwh) || 0);
+    carichiSpostabiliKwhG = Math.max(0, Number(carichiSpostabiliKwhG) || 0);
+
+    if (produzioneAnnua <= 0) {
+      return { quota:0, prodG:0, consG:0, autocG:0, battG:0, ratio:0 };
+    }
+
+    const prodG = produzioneAnnua / 365; // kWh/g
+    const consG = consumoAnnuo / 365;    // kWh/g
+
+    // Base (0.18..0.38)
+    const rapportoConsProd = (produzioneAnnua > 0) ? (consumoAnnuo / produzioneAnnua) : 0;
+    let quotaBase = 0.18 + 0.18 * Math.min(1, rapportoConsProd);
+    quotaBase = Math.min(quotaBase, 0.38);
+
+    const baseKwhG = Math.min(prodG * quotaBase, consG);
+
+    // Carichi spostabili: limitati da consumo residuo e surplus FV residuo
+    const spostabiliKwhG = Math.min(
+      carichiSpostabiliKwhG,
+      Math.max(0, consG - baseKwhG),
+      Math.max(0, prodG - baseKwhG)
+    );
+
+    const autocGiorno = baseKwhG + spostabiliKwhG;
+
+    // Batteria: saturazione rispetto a prodG
+    const ratio = (prodG > 0) ? (batteriaKwh / prodG) : 0;   // batteria vs produzione giornaliera media
+    const sat = Math.tanh(ratio);                            // 0..~1, cresce e poi satura
+    const battCaricabileG = batteriaKwh * 0.90 * sat;        // efficienza + saturazione
+
+    const surplusDopoGiorno = Math.max(0, prodG - autocGiorno);
+    const consumoResiduo = Math.max(0, consG - autocGiorno);
+
+    const autocBatteria = Math.min(battCaricabileG, surplusDopoGiorno, consumoResiduo);
+
+    const autocTotG = autocGiorno + autocBatteria;
+
+    let quota = (prodG > 0) ? (autocTotG / prodG) : 0;
+
+    // cap realistico
+    quota = Math.min(quota, 0.92);
+
+    // non puoi autoconsumare più del consumo annuo
+    if (consumoAnnuo > 0) quota = Math.min(quota, consumoAnnuo / produzioneAnnua);
+
+    quota = Math.max(0, Math.min(1, quota));
+
+    return { quota, prodG, consG, autocG:autocTotG, battG:autocBatteria, ratio, quotaBase, spostabiliKwhG };
+  }
+
+  // =========================
+  // 2) Semaforo bilanciamento
+  // =========================
+  // Score 0..100: penalizza FV troppo grande/piccolo e batteria sproporzionata rispetto al consumo giornaliero.
+  function scoreBilanciamento(produzioneAnnua, consumoAnnuo, batteriaKwh){
+    produzioneAnnua = Math.max(0, Number(produzioneAnnua)||0);
+    consumoAnnuo = Math.max(0, Number(consumoAnnuo)||0);
+    batteriaKwh = Math.max(0, Number(batteriaKwh)||0);
+
+    const consG = (consumoAnnuo>0) ? (consumoAnnuo/365) : 0;
+
+    // FV vs consumi
+    const rFV = (consumoAnnuo>0) ? (produzioneAnnua/consumoAnnuo) : 99;
+
+    // Batteria target semplice: ~0.6 * consumo giornaliero
+    const battTarget = Math.max(0.1, consG * 0.6);
+    const rB = batteriaKwh / battTarget;
+
+    // penalità FV
+    let pFV = 0;
+    if (rFV > 2.2) pFV = Math.min(45, (rFV - 2.2) * 18);
+    else if (rFV < 0.7) pFV = Math.min(35, (0.7 - rFV) * 70);
+
+    // penalità batteria
+    let pB = 0;
+    if (rB > 2.0) pB = Math.min(45, (rB - 2.0) * 18);
+    else if (rB < 0.4) pB = Math.min(25, (0.4 - rB) * 60);
+
+    // bonus se "zona buona"
+    let bonus = 0;
+    if (rFV>=1 && rFV<=1.7) bonus += 8;
+    if (rB>=0.7 && rB<=1.6) bonus += 8;
+
+    const raw = 100 - pFV - pB + bonus;
+    return Math.max(0, Math.min(100, Math.round(raw)));
+  }
+
+  function colorFromScore(s){
+    const h = (s/100)*120; // 0=rosso, 120=verde
+    return `hsl(${h} 75% 45%)`;
+  }
+  function badgeText(s){
+    if (s >= 80) return "✅ Bilanciato";
+    if (s >= 55) return "⚠️ Quasi";
+    return "⛔ Sbilanciato";
+  }
+
+  function buildTips(produzioneAnnua, consumoAnnuo, batteriaKwh){
+    const tips = [];
+    const rFV = (consumoAnnuo>0) ? (produzioneAnnua/consumoAnnuo) : 99;
+
+    const consG = (consumoAnnuo>0) ? (consumoAnnuo/365) : 0;
+    const battTarget = Math.max(0.1, consG * 0.6);
+    const rB = (battTarget>0) ? (batteriaKwh / battTarget) : 0;
+
+    if (rFV > 2.2) tips.push("FV molto grande rispetto ai consumi: tanta energia finirà ceduta in rete. Per aumentare l’autoconsumo: sposta carichi di giorno (slider) o aumenta consumi utili (EV/PDC).");
+    if (rFV < 0.7) tips.push("FV piccolo rispetto ai consumi: autoconsumo % alto ma risparmio limitato dalla produzione. Potresti essere sottodimensionato.");
+    if (rB > 2.0) tips.push("Batteria probabilmente eccessiva per i tuoi consumi giornalieri: migliora poco il risultato, ma costa tanto.");
+    if (rB < 0.4 && produzioneAnnua>0) tips.push("Batteria piccola: ok, ma il surplus (soprattutto estivo) scapperà in rete. Se vuoi più sera/notte, aumenta moderatamente l’accumulo.");
+
+    if (!tips.length) tips.push("Configurazione plausibile: ora la differenza la fa la disciplina nel far lavorare i carichi nelle ore di sole (slider).");
+    return tips;
+  }
+
+  // =========================
+  // UI
+  // =========================
+  const elProd = document.getElementById('prod');
+  const elCons = document.getElementById('cons');
+  const elBatt = document.getElementById('batt');
+  const elShift = document.getElementById('shift');
+
+  const elShiftVal = document.getElementById('shiftVal');
+  const elBadge = document.getElementById('badge');
+  const elBar = document.getElementById('bar');
+  const elTips = document.getElementById('tips');
+  const elQuota = document.getElementById('quota');
+  const elDetails = document.getElementById('details');
+
+  function render(){
+    const produzione = Number(elProd.value)||0;
+    const consumo = Number(elCons.value)||0;
+    const batteria = Number(elBatt.value)||0;
+    const shift = Number(elShift.value)||0;
+
+    elShiftVal.textContent = shift.toFixed(1);
+
+    // calcolo dinamico
+    const r = calcolaQuotaAutoconsumoDinamica(produzione, batteria, consumo, shift);
+    const quotaPerc = Math.round(r.quota * 100);
+
+    // semaforo
+    const s = scoreBilanciamento(produzione, consumo, batteria);
+    const col = colorFromScore(s);
+
+    elBadge.textContent = badgeText(s);
+    elBadge.style.background = col;
+
+    elBar.style.width = s + "%";
+    elBar.style.background = col;
+
+    // tips
+    const tips = buildTips(produzione, consumo, batteria);
+    elTips.innerHTML = tips.map(t => `<li>${t}</li>`).join("");
+
+    // output
+    elQuota.textContent = quotaPerc + "%";
+    elDetails.innerHTML = `
+      <div style="margin-top:8px;">
+        Produzione media: <strong>${r.prodG.toFixed(1)} kWh/g</strong> · Consumo medio: <strong>${r.consG.toFixed(1)} kWh/g</strong><br>
+        Autoconsumo stimato: <strong>${r.autocG.toFixed(1)} kWh/g</strong>
+        (di cui batteria: <strong>${r.battG.toFixed(1)} kWh/g</strong>)<br>
+        Rapporto batteria / produzione giornaliera media: <strong>${r.ratio.toFixed(2)}</strong><br>
+        Quota base: <strong>${Math.round(r.quotaBase*100)}%</strong> · Carichi spostati: <strong>${r.spostabiliKwhG.toFixed(1)} kWh/g</strong>
+      </div>
+    `;
+
+    // testo share (solo test)
+    window.__shareText = [
+      "☀️ Test FV Syncras (stima dinamica)",
+      `Produzione: ${Math.round(produzione)} kWh/anno`,
+      `Consumo: ${Math.round(consumo)} kWh/anno`,
+      `Batteria: ${batteria.toFixed(1).replace('.',',')} kWh`,
+      `Carichi spostabili: ${shift.toFixed(1).replace('.',',')} kWh/g`,
+      `Quota autoconsumo stimata: ${quotaPerc}%`,
+      `Bilanciamento: ${badgeText(s)}`
+    ].join("\n");
+  }
+
+  [elProd, elCons, elBatt, elShift].forEach(el => el.addEventListener('input', render));
+
+  // Copy / reset
+  document.getElementById('copyBtn').addEventListener('click', async () => {
+    const txt = window.__shareText || "Nessun risultato.";
+    try{
+      await navigator.clipboard.writeText(txt);
+      alert("Testo copiato ✅");
+    }catch(e){
+      alert("Clipboard non disponibile: copia manualmente.");
+    }
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    elProd.value = 13000;
+    elCons.value = 3000;
+    elBatt.value = 15;
+    elShift.value = 3;
+    render();
+  });
+
+  render();
+</script>
 </body>
 </html>
 
