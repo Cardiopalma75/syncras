@@ -1,544 +1,576 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Misteri | Cose che sembrano strane ma hanno una spiegazione | Syncras.App</title>
-  <meta name="description" content="Misteri moderni su tecnologia, energia e vita quotidiana spiegati senza complotti e con molta ironia. Quando succede qualcosa di strano, qui proviamo a capirci qualcosa.">
-  <meta name="robots" content="index,follow">
-
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-59D9XRYKF3"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-59D9XRYKF3');
-  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calcolatori Elettrodomestici (modulo) – Syncras</title>
 
   <style>
-    :root {
-      --violet-main: #6C5CE7;
-      --violet-dark: #4B3ACB;
-      --bg-page: #F7F7FB;
-      --text-main: #403E43;
+    :root{
+      --violet-main:#6C5CE7;
+      --violet-dark:#4B3ACB;
+      --bg:#F7F7FB;
+      --text:#403E43;
+      --card:#ffffff;
+      --border:#e5e7eb;
+      --soft:#f8f9ff;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.6;
+    }
+    main{
+      max-width:980px;
+      margin:18px auto 28px;
+      padding:18px 16px 24px;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:12px;
+      box-shadow:0 4px 10px rgba(0,0,0,0.06);
+    }
+    h1,h2,h3{color:var(--violet-dark); margin:0 0 10px}
+    .intro{
+      border-bottom:1px solid #e5e7eb;
+      padding-bottom:12px;
+      margin-bottom:16px;
+    }
+    .badge{
+      display:inline-block;
+      font-size:.75rem;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      background:rgba(108,92,231,0.08);
+      border:1px solid rgba(108,92,231,0.35);
+      border-radius:999px;
+      padding:2px 8px;
+      color:#3730a3;
+      margin-bottom:6px;
     }
 
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: var(--bg-page);
-      color: var(--text-main);
-      line-height: 1.6;
+    .legal-box{
+      margin-top:12px;
+      padding:10px 12px;
+      background:#fff;
+      border-radius:10px;
+      border:1px solid #e5e7eb;
+      font-size:.92rem;
     }
+    .legal-box a{color:var(--violet-main); font-weight:700; text-decoration:underline}
+    .legal-small{margin:6px 0 0; font-size:.82rem; color:#6b7280}
 
-    .site-header {
-      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
-      color: white;
-      padding: 12px 14px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    .jump{
+      margin:14px 0 18px;
+      padding:10px 12px;
+      border-radius:10px;
+      background:#f3f4ff;
+      border:1px solid #d4d7ff;
+      font-size:.9rem;
     }
-    .header-inner {
-      max-width: 1180px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
+    .jump strong{display:block; margin-bottom:6px; color:#312e81}
+    .jump a{
+      display:inline-block;
+      margin:3px 6px 3px 0;
+      padding:4px 10px;
+      border-radius:999px;
+      background:#fff;
+      border:1px solid #d4d7ff;
+      text-decoration:none;
+      font-weight:700;
+      color:var(--violet-dark);
+      font-size:.85rem;
     }
-    .logo {
-      font-size: 1.4rem;
-      font-weight: bold;
-      letter-spacing: 0.03em;
-    }
+    .jump a:hover{background:#e5e7ff; border-color:#a5b4fc}
 
-    #main-nav {
-      display: flex;
-      gap: 18px;
-      font-size: 0.95rem;
+    .calc{
+      margin:22px 0;
+      padding:18px 16px 16px;
+      border-radius:12px;
+      background:var(--soft);
+      border:1px solid #e0e7ff;
     }
-    #main-nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: 600;
-      padding-bottom: 2px;
+    .calc-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:baseline;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:8px;
     }
-    #main-nav a:hover {
-      text-decoration: underline;
-    }
+    .calc-head small{color:#6b7280}
 
-    .menu-toggle {
-      display: none;
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.4);
-      border-radius: 6px;
-      color: white;
-      padding: 6px 10px;
-      font-size: 0.9rem;
-      cursor: pointer;
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(4, minmax(0, 1fr));
+      gap:12px 14px;
+      margin-top:10px;
     }
-    .menu-toggle span {
-      margin-left: 4px;
-      font-size: 1.1rem;
+    .field label{
+      display:block;
+      font-size:.85rem;
+      font-weight:700;
+      margin-bottom:2px;
     }
+    .field input, .field select{
+      width:100%;
+      padding:7px 8px;
+      border-radius:7px;
+      border:1px solid #d1d5db;
+      font-size:.92rem;
+      background:#fff;
+    }
+    .btn{
+      margin-top:14px;
+      padding:10px 16px;
+      border-radius:9px;
+      border:none;
+      background:var(--violet-main);
+      color:#fff;
+      font-weight:800;
+      font-size:.92rem;
+      cursor:pointer;
+    }
+    .btn:hover{background:var(--violet-dark)}
+    .result{
+      margin-top:12px;
+      padding:10px 12px;
+      border-radius:10px;
+      background:#fff;
+      border:1px solid #ede9fe;
+      box-shadow:0 2px 6px rgba(0,0,0,0.05);
+      font-size:.92rem;
+      display:none;
+    }
+    .note{margin-top:8px; font-size:.82rem; color:#6b7280}
 
-    @media (max-width: 768px) {
-      #main-nav {
-        display: none;
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 56px;
-        margin: 0 auto;
-        max-width: 1180px;
-        flex-direction: column;
-        background-color: var(--violet-dark);
-        padding: 10px 16px 12px 16px;
-        border-radius: 0 0 8px 8px;
-        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
-        z-index: 50;
-      }
-      #main-nav a {
-        padding: 6px 0;
-      }
-      body.nav-open #main-nav {
-        display: flex;
-      }
-      .menu-toggle {
-        display: inline-flex;
-        align-items: center;
-      }
+    @media (max-width: 920px){
+      .grid{grid-template-columns:repeat(2, minmax(0,1fr))}
     }
-
-    main {
-      max-width: 980px;
-      margin: 30px auto;
-      padding: 20px;
-      background-color: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-
-    h1, h2, h3 {
-      color: var(--violet-dark);
-    }
-
-    .back-links {
-      margin-bottom: 20px;
-      font-size: 0.9rem;
-    }
-    .back-links a {
-      color: var(--violet-dark);
-      text-decoration: none;
-      font-weight: 600;
-    }
-    .back-links a:hover {
-      text-decoration: underline;
-    }
-
-    .page-intro {
-      margin-bottom: 20px;
-      font-size: 0.98rem;
-    }
-
-    .page-intro-quote {
-      background: #FEF3C7;
-      border-left: 4px solid #F59E0B;
-      padding: 10px 12px;
-      border-radius: 6px;
-      font-size: 0.95rem;
-      margin-bottom: 22px;
-    }
-
-    .section-block {
-      margin-top: 26px;
-    }
-
-    .section-block h2 {
-      margin-bottom: 6px;
-    }
-
-    .section-sub {
-      font-size: 0.9rem;
-      color: #4b5563;
-      margin-top: 0;
-      margin-bottom: 14px;
-    }
-
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 14px;
-    }
-
-    .mistery-card {
-      background: #F9FAFB;
-      border-radius: 10px;
-      padding: 12px 14px;
-      border: 1px solid #E5E7EB;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-      font-size: 0.94rem;
-      transition: background-color 0.15s ease;
-      }
-.mistery-card:hover {
-      background-color: #EEF2FF; /* viola chiarissimo, appena accennato */
-      cursor: pointer;
-}
-
-    
-    
-
-    .mistery-tag {
-      font-size: 0.75rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: #6b7280;
-      margin-bottom: 4px;
-    }
-
-    .mistery-card h3 {
-      margin-top: 0;
-      margin-bottom: 6px;
-      font-size: 1.02rem;
-    }
-
-    .mistery-card p {
-      margin: 0 0 6px 0;
-    }
-
-    .mistery-note {
-      font-size: 0.8rem;
-      color: #6b7280;
-    }
-
-    .soon-label {
-      display: inline-block;
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--violet-dark);
-      background: #EDE9FE;
-      padding: 2px 8px;
-      border-radius: 999px;
-      margin-top: 4px;
-    }
-
-    .mini-tip {
-      margin-top: 22px;
-      font-size: 0.9rem;
-      background: #FEF9C3;
-      border-radius: 8px;
-      padding: 10px 12px;
-      border: 1px solid #FBBF24;
-    }
-
-    footer {
-      text-align: center;
-      padding: 20px;
-      background-color: #eee;
-      margin-top: 40px;
-      font-family: Arial;
-      font-size: 0.9rem;
+    @media (max-width: 600px){
+      main{margin:12px auto 20px; padding:14px 10px 18px}
+      .grid{grid-template-columns:1fr}
     }
   </style>
 </head>
+
 <body>
-
-  <header class="site-header">
-    <div class="header-inner">
-      <div class="logo">Syncras.App</div>
-
-      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
-        Menu <span>☰</span>
-      </button>
-
-      <nav id="main-nav">
-        <a href="index.html">Home</a>
-<a href="blog.html">Blog</a>
-<a href="offerte.html">Offerte Amazon</a>
-<a href="categorie.html">Categorie</a>
-<a href="curiosita.html">Curiosità</a>
-<a href="misteri.html">Misteri</a>
-<a href="quiz.html">Test SmartShop</a>
-<a href="chi.html">Chi siamo</a>
-
-      </nav>
-    </div>
-  </header>
-
   <main>
-    <div class="back-links">
-      ← <a href="index.html">Torna alla Home</a> |
-      <a href="curiosita.html">Vai alla pagina Curiosità</a>
-    </div>
-
-    <h1>Misteri</h1>
-    <p class="page-intro">
-      Qui non parliamo di fantasmi né di luci nel cielo. Parliamo dei <strong>misteri moderni</strong>:
-      quelli che ti fanno dire “ma ti sembra normale?” guardando la bolletta, il telefono o il traffico
-      proprio quando sei in ritardo.
-    </p>
-
-    <div class="page-intro-quote">
-      🕵️ <strong>Regola della casa:</strong> niente complotti, niente panico.
-      Se qualcosa sembra strano, prima di dare la colpa all’universo proviamo a capire se non sia solo
-      organizzazione, tecnologia o pura statistica che si diverte.
-    </div>
-
-    <!-- SEZIONE 1: TECNOLOGIA TROPPO "INTELLIGENTE" -->
-    <section class="section-block">
-      <h2>Tecnologia che sembra leggerti nel pensiero</h2>
-      <p class="section-sub">
-        Dispositivi che si attivano da soli, suggerimenti fin troppo precisi, notifiche puntuali come
-        il vicino curioso: a volte sembra tutto studiato per farti impressionare.
+    <section class="intro">
+      <span class="badge">Modulo – Calcolatori Elettrodomestici</span>
+      <h1>Calcolatori consumi elettrodomestici (solo tool)</h1>
+      <p style="margin:6px 0 0; color:#4b5563; font-size:.95rem;">
+        Versione temporanea “modulare”: qui ci sono solo i calcoli e l’interfaccia.
+        In seguito la integreremo nella pagina definitiva con GDPR, header/footer e SEO.
       </p>
 
-      <div class="card-grid">
-        
-      <a href="perche-frigorifero-fa-rumori-strani-di-notte-spiegazione-ironica-ma-scientifica.html" style="text-decoration:none; color:inherit;">
-  <article class="mistery-card">
-    <div class="mistery-tag">Mistero #1</div>
-    <h3>Perché il frigorifero fa rumori strani di notte?</h3>
-    <p>
-      Gorgoglii, tic, vibrazioni e scricchiolii improvvisi: il frigorifero di notte
-      sembra comunicare con l’aldilà. Una guida ironica ma scientifica per capire
-      cosa succede davvero e quando preoccuparsi.
-    </p>
-    <p class="mistery-note">
-      Clicca per leggere l’articolo completo.
-    </p>
-  </article>
-</a>
-
-
-        <article class="mistery-card">
-          <div class="mistery-tag">Mistero #2</div>
-          <h3>Perché ti arrivano annunci sulle cose di cui hai appena parlato?</h3>
-          <p>
-            Sembra che qualcuno ascolti le conversazioni, in realtà di solito è più semplice:
-            ricerche, siti visitati, posizione, abitudini d’acquisto… tutto contribuisce a creare il tuo “profilo”.
-          </p>
-          <p class="mistery-note">
-            Analizzeremo come funzionano questi profili pubblicitari e cosa puoi fare per limitarli un minimo.
-          </p>
-          <span class="soon-label">Articolo in arrivo</span>
-        </article>
-
-        <article class="mistery-card">
-          <div class="mistery-tag">Mistero #3</div>
-          <h3>Perché certi video sembrano fatti apposta per te?</h3>
-          <p>
-            Non è magia, è algoritmo: se resti a guardare certi contenuti più di altri, il sistema pensa che ti piacciano.
-            E ti riempie la bacheca di copie. Come un amico che ha capito male la battuta e continua a ripeterla.
-          </p>
-          <p class="mistery-note">
-            Più avanti vedremo come “raddrizzare” i suggerimenti quando iniziano a diventare tutti uguali.
-          </p>
-          <span class="soon-label">Articolo in arrivo</span>
-        </article>
+      <div class="legal-box">
+        <label>
+          <input type="checkbox" id="legalAccept">
+          Prima di procedere, ricorda che i risultati sono <strong>stime indicative</strong>.
+          Per i dettagli consulta le <a href="note-legali.html" target="_blank" rel="noopener">Note Legali</a>.
+        </label>
+        <p class="legal-small">
+          I risultati dipendono dai dati inseriti e da ipotesi semplificate. Non costituiscono consulenza professionale.
+        </p>
       </div>
     </section>
 
-    <!-- SEZIONE 2: ENERGIA & BOLLETTE -->
-    <section class="section-block">
-      <h2>Misteri di energia, bollette e contatori</h2>
-      <p class="section-sub">
-        Perché la bolletta è più alta del previsto? Perché il contatore scatta proprio quando cucini?
-        Perché di notte qualcosa consuma comunque? Non è complotto, è spesso cattiva organizzazione.
-      </p>
+    <nav class="jump">
+      <strong>Vai al calcolatore:</strong>
+      <a href="#calc-stufetta">Stufetta</a>
+      <a href="#calc-tv">TV</a>
+      <a href="#calc-lavatrice">Lavatrice</a>
+      <a href="#calc-forno">Forno</a>
+      <a href="#calc-lavastoviglie">Lavastoviglie</a>
+      <a href="#calc-asciugatrice">Asciugatrice</a>
+    </nav>
 
-      <div class="card-grid">
-        <article class="mistery-card">
-          <div class="mistery-tag">Mistero #4</div>
-          <h3>Perché la bolletta sale anche se “non hai acceso quasi niente”?</h3>
-          <p>
-            Frigorifero, caldaia, pompe, stand-by, caricabatterie… tutti fanno finta di niente,
-            ma intanto divorano kWh giorno dopo giorno. È la versione energetica delle briciole che
-            diventano pagnotta.
-          </p>
-          <p class="mistery-note">
-            Stiamo preparando un articolo con esempi numerici reali per capire chi consuma cosa, senza formula shock.
-          </p>
-          <span class="soon-label">Articolo in arrivo</span>
-        </article>
-
-        <article class="mistery-card">
-          <div class="mistery-tag">Mistero #5</div>
-          <h3>Perché il contatore salta sempre “quando hai ospiti”?</h3>
-          <p>
-            Non è sfortuna, è statistica: più persone, più luci, più forno, più phon, più tutto.
-            Il contatore non ce l’ha con tua suocera, è solo che quel giorno va al massimo.
-          </p>
-          <p class="mistery-note">
-            Più avanti vedremo come distribuire i carichi in modo furbo, senza trasformare la casa in una centrale.
-          </p>
-          <span class="soon-label">Articolo in arrivo</span>
-        </article>
-
-        <article class="mistery-card">
-          <div class="mistery-tag">Mistero #6</div>
-          <h3>Perché alcuni apparecchi consumano anche da spenti?</h3>
-          <p>
-            La lucina che resta accesa non è solo decorazione: spesso indica che dentro c’è ancora
-            qualcosa in funzione. È il famoso “consumo di stand-by”, quello che nessuno considera ma
-            alla fine dell’anno presenta il conto.
-          </p>
-          <p class="mistery-note">
-            In un prossimo articolo parleremo di quanto incide davvero e quando conviene usare prese con interruttore.
-          </p>
-          <span class="soon-label">Articolo in arrivo</span>
-        </article>
+    <!-- STUFETTA -->
+    <section class="calc" id="calc-stufetta">
+      <div class="calc-head">
+        <h2>Stufetta elettrica</h2>
+        <small>“Solo 10 minuti” spesso non sono solo 10 minuti.</small>
       </div>
+
+      <div class="grid">
+        <div class="field">
+          <label>Potenza (W)</label>
+          <input type="number" id="stufettaWatt" min="200" max="3000" value="2000">
+        </div>
+        <div class="field">
+          <label>Ore al giorno</label>
+          <input type="number" id="stufettaOre" min="0.25" max="24" step="0.25" value="2">
+        </div>
+        <div class="field">
+          <label>Giorni al mese</label>
+          <input type="number" id="stufettaGiorni" min="1" max="31" value="20">
+        </div>
+        <div class="field">
+          <label>Prezzo energia (€/kWh)</label>
+          <input type="number" id="stufettaPrezzo" min="0.1" max="1" step="0.01" value="0.30">
+        </div>
+      </div>
+
+      <button class="btn" type="button" onclick="calcolaStufetta()">Calcola</button>
+      <div id="stufettaResult" class="result"></div>
+      <div class="note">Nota: stima semplificata, non considera termostati/timer e dispersioni della stanza.</div>
     </section>
 
-    <!-- SEZIONE 3: MISTERI DELLA VITA QUOTIDIANA -->
-    <section class="section-block">
-      <h2>Misteri spicci della vita di tutti i giorni</h2>
-      <p class="section-sub">
-        Non tutto si spiega con la fisica: alcune cose sono proprio leggi non scritte dell’universo domestico.
-        Qui ci ridiamo sopra, ma ogni tanto una soluzione pratica salta fuori.
-      </p>
-
-      <div class="card-grid">
-        <article class="mistery-card">
-          <div class="mistery-tag">Mistero #7</div>
-          <h3>Perché il corriere suona sempre quando sei in bagno?</h3>
-          <p>
-            È una delle grandi leggi dell’universo: se hai aspettato tutto il giorno, suonerà
-            esattamente nei trenta secondi in cui non puoi aprire. Non c’è spiegazione scientifica,
-            ma una cosa è certa: non è mai quando sei tranquillo sul divano.
-          </p>
-          <p class="mistery-note">
-            Articolo semi-serio in arrivo su tempi di consegna, notifiche e come organizzarsi per non impazzire.
-          </p>
-          <span class="soon-label">Articolo in arrivo</span>
-        </article>
-
-        
-<a href="perche-telecomando-sparisce-proprio-quando-serve.html" style="text-decoration:none; color:inherit;">
-  <article class="mistery-card">
-    <div class="mistery-tag">Mistero #8</div>
-    <h3>Perché il telecomando sparisce sempre quando serve?</h3>
-
-    <p>
-      In giornate normali è sempre lì. Quando finalmente trasmettono qualcosa che ti piace,
-      si volatilizza tra cuscini, plaid e dimensioni parallele. Alla fine è solo disordine,
-      ma intanto fai più movimento che in palestra.
-    </p>
-
-    <p class="mistery-note">
-      Clicca per leggere l’articolo completo.
-    </p>
-  </article>
-</a>
-
-
-        <a href="perche-telefono-si-scalda-anche-senza-usarlo-guida-ironica-che-nessuno-ti-dice.html" style="text-decoration:none; color:inherit;">
-  <article class="mistery-card">
-    <div class="mistery-tag">Mistero #9</div>
-    <h3>Perché il telefono si scalda anche senza usarlo?</h3>
-
-    <p>
-      Lui è lì sul tavolo, tu non lo stai nemmeno usando… eppure diventa caldo come una
-      brioche appena sfornata. Una spiegazione ironica per capire quando è normale e quando
-      conviene farlo controllare.
-    </p>
-
-    <p class="mistery-note">
-      Clicca per leggere l’articolo completo.
-    </p>
-  </article>
-</a>
-
-        
+    <!-- TV -->
+    <section class="calc" id="calc-tv">
+      <div class="calc-head">
+        <h2>TV (LED / OLED / Plasma / CRT)</h2>
+        <small>La TV che “fa compagnia” spesso costa più di quanto pensi.</small>
       </div>
+
+      <div class="grid">
+        <div class="field">
+          <label>Potenza base (W)</label>
+          <input type="number" id="tvWatt" min="20" max="400" value="100">
+        </div>
+        <div class="field">
+          <label>Ore al giorno</label>
+          <input type="number" id="tvHours" min="0.25" max="24" step="0.25" value="3">
+        </div>
+        <div class="field">
+          <label>Prezzo energia (€/kWh)</label>
+          <input type="number" id="tvPrice" min="0.10" max="1" step="0.01" value="0.30">
+        </div>
+        <div class="field">
+          <label>Tipo / Età TV</label>
+          <select id="tvType">
+            <option value="1">LED / LCD moderno (2015–oggi)</option>
+            <option value="1.1">OLED moderno (2017–oggi)</option>
+            <option value="2.5">Plasma (2005–2013)</option>
+            <option value="3">CRT / Tubo catodico (fino al 2005)</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="btn" type="button" onclick="calcolaTV()">Calcola</button>
+      <div id="tvResult" class="result"></div>
+      <div class="note">Nota: stima semplificata; luminosità e contenuti influenzano i consumi reali.</div>
     </section>
 
+    <!-- LAVATRICE -->
+    <section class="calc" id="calc-lavatrice">
+      <div class="calc-head">
+        <h2>Lavatrice</h2>
+        <small>Stima costo per ciclo + mese + anno.</small>
+      </div>
 
-<!-- SEZIONE AUTOMATICA MISTERI DA BLOG -->
-<h2>Misteri dal Blog</h2>
-<p class="section-sub">Articoli reali pescati automaticamente dal Blog Syncras.</p>
+      <div class="grid">
+        <div class="field">
+          <label>Consumo ciclo (kWh)</label>
+          <input type="number" id="lavCiclo" min="0.3" max="3" step="0.1" value="1.0">
+        </div>
+        <div class="field">
+          <label>Temperatura / Programma</label>
+          <select id="lavTemp">
+            <option value="0.8">30° / Eco</option>
+            <option value="1">40° / Normale</option>
+            <option value="1.3">60° / Intenso</option>
+            <option value="1.6">90° / Molto caldo</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Lavaggi a settimana</label>
+          <input type="number" id="lavSettimana" min="1" max="30" value="5">
+        </div>
+        <div class="field">
+          <label>Prezzo energia (€/kWh)</label>
+          <input type="number" id="lavPrezzo" min="0.1" max="1" step="0.01" value="0.30">
+        </div>
+      </div>
 
-<ul id="lista-misteri-auto" class="post-list">
-  <li>Caricamento misteri in corso…</li>
-</ul>
-<!-- FINE SEZIONE AUTOMATICA -->
+      <button class="btn" type="button" onclick="calcolaLavatrice()">Calcola</button>
+      <div id="lavResult" class="result"></div>
+      <div class="note">Nota: include solo elettricità (non acqua/detersivo).</div>
+    </section>
 
+    <!-- FORNO -->
+    <section class="calc" id="calc-forno">
+      <div class="calc-head">
+        <h2>Forno elettrico</h2>
+        <small>“Lo accendo solo un attimo” — e poi arriva la bolletta.</small>
+      </div>
 
+      <div class="grid">
+        <div class="field">
+          <label>Potenza (W)</label>
+          <input type="number" id="fornoWatt" min="800" max="3500" value="2000">
+        </div>
+        <div class="field">
+          <label>Durata cottura (ore)</label>
+          <input type="number" id="fornoOre" min="0.25" max="4" step="0.25" value="1">
+        </div>
+        <div class="field">
+          <label>Cotture a settimana</label>
+          <input type="number" id="fornoSettimana" min="1" max="21" value="3">
+        </div>
+        <div class="field">
+          <label>Prezzo energia (€/kWh)</label>
+          <input type="number" id="fornoPrezzo" min="0.1" max="1" step="0.01" value="0.30">
+        </div>
+      </div>
 
+      <button class="btn" type="button" onclick="calcolaForno()">Calcola</button>
+      <div id="fornoResult" class="result"></div>
+      <div class="note">Nota: usa un fattore 0,7 perché il forno non resta sempre a potenza massima.</div>
+    </section>
 
-    <div class="mini-tip">
-      🧩 <strong>Morale della storia:</strong> nella maggior parte dei casi non c’è nessun “grande piano segreto”.
-      Ci sono abitudini, algoritmi, abitudini sbagliate e un po’ di caso. Se riusciamo a ridere dei misteri
-      quotidiani, abbiamo già fatto metà del lavoro per viverli meglio.
-    </div>
+    <!-- LAVASTOVIGLIE -->
+    <section class="calc" id="calc-lavastoviglie">
+      <div class="calc-head">
+        <h2>Lavastoviglie</h2>
+        <small>“Conviene o no?” Qui la parte elettrica la vedi subito.</small>
+      </div>
 
-    <p style="font-size:0.85rem; color:#666; margin-top:30px;">
-      <strong>Nota:</strong> i contenuti di questa pagina sono volutamente ironici e semplificati.
-      Non sostituiscono analisi tecniche, legali o professionali. Per problemi seri legati a sicurezza,
-      impianti o contratti, rivolgiti sempre a professionisti qualificati e a fonti ufficiali.
-    </p>
+      <div class="grid">
+        <div class="field">
+          <label>Consumo ciclo (kWh)</label>
+          <input type="number" id="lavaCiclo" min="0.5" max="3" step="0.1" value="1.0">
+        </div>
+        <div class="field">
+          <label>Programma principale</label>
+          <select id="lavaProg">
+            <option value="0.8">Eco 50°</option>
+            <option value="1">Normale</option>
+            <option value="1.2">Intensivo / Pentole</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Cicli a settimana</label>
+          <input type="number" id="lavaSettimana" min="1" max="28" value="5">
+        </div>
+        <div class="field">
+          <label>Prezzo energia (€/kWh)</label>
+          <input type="number" id="lavaPrezzo" min="0.1" max="1" step="0.01" value="0.30">
+        </div>
+      </div>
+
+      <button class="btn" type="button" onclick="calcolaLavastoviglie()">Calcola</button>
+      <div id="lavaResult" class="result"></div>
+      <div class="note">Nota: include solo elettricità; non considera consumo acqua.</div>
+    </section>
+
+    <!-- ASCIUGATRICE -->
+    <section class="calc" id="calc-asciugatrice">
+      <div class="calc-head">
+        <h2>Asciugatrice</h2>
+        <small>“Solo d’inverno” può pesare parecchio.</small>
+      </div>
+
+      <div class="grid">
+        <div class="field">
+          <label>Consumo ciclo (kWh)</label>
+          <input type="number" id="asciCiclo" min="0.8" max="5" step="0.1" value="2.0">
+        </div>
+        <div class="field">
+          <label>Tipo asciugatrice</label>
+          <select id="asciTipo">
+            <option value="0.7">Pompa di calore</option>
+            <option value="1">Resistenza tradizionale</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Cicli a settimana</label>
+          <input type="number" id="asciSettimana" min="1" max="21" value="4">
+        </div>
+        <div class="field">
+          <label>Prezzo energia (€/kWh)</label>
+          <input type="number" id="asciPrezzo" min="0.1" max="1" step="0.01" value="0.30">
+        </div>
+      </div>
+
+      <button class="btn" type="button" onclick="calcolaAsciugatrice()">Calcola</button>
+      <div id="asciResult" class="result"></div>
+      <div class="note">Nota: la pompa di calore consuma meno ma spesso dura di più; qui stimiamo con una media indicativa.</div>
+    </section>
+
   </main>
 
   <script>
-    function toggleMenu() {
-      document.body.classList.toggle('nav-open');
+    // =========================
+    // Helpers
+    // =========================
+    function checkLegalAccept() {
+      const cb = document.getElementById('legalAccept');
+      if (cb && !cb.checked) {
+        alert('Per usare questi calcolatori devi dichiarare di aver letto e accettato le Note Legali.');
+        return false;
+      }
+      return true;
+    }
+
+    function euro(v) {
+      // formato "12,34 €"
+      const n = Number(v);
+      if (!isFinite(n)) return '—';
+      return n.toFixed(2).replace('.', ',') + ' €';
+    }
+
+    function showResult(id, html) {
+      const div = document.getElementById(id);
+      div.innerHTML = html;
+      div.style.display = 'block';
+    }
+
+    // =========================
+    // STUFETTA
+    // =========================
+    function calcolaStufetta() {
+      if (!checkLegalAccept()) return;
+
+      const watt = parseFloat(document.getElementById('stufettaWatt').value) || 0;
+      const ore = parseFloat(document.getElementById('stufettaOre').value) || 0;
+      const giorni = parseFloat(document.getElementById('stufettaGiorni').value) || 0;
+      const prezzo = parseFloat(document.getElementById('stufettaPrezzo').value) || 0;
+
+      const kWhOra = watt / 1000;
+      const costoOra = kWhOra * prezzo;
+      const costoGiorno = costoOra * ore;
+      const costoMese = costoGiorno * giorni;
+
+      showResult('stufettaResult', `
+        <strong>Risultato stimato:</strong><br>
+        • Consumo orario: <strong>${kWhOra.toFixed(2)} kWh</strong><br>
+        • Costo per 1 ora: <strong>${euro(costoOra)}</strong><br>
+        • Costo giornaliero (${ore} h): <strong>${euro(costoGiorno)}</strong><br>
+        • Costo mensile (${giorni} giorni): <strong>${euro(costoMese)}</strong>
+      `);
+    }
+
+    // =========================
+    // TV
+    // =========================
+    function calcolaTV() {
+      if (!checkLegalAccept()) return;
+
+      const wattBase = parseFloat(document.getElementById('tvWatt').value) || 0;
+      const ore = parseFloat(document.getElementById('tvHours').value) || 0;
+      const prezzo = parseFloat(document.getElementById('tvPrice').value) || 0;
+      const tipo = parseFloat(document.getElementById('tvType').value) || 1;
+
+      const wattReali = wattBase * tipo;
+      const kWhOra = wattReali / 1000;
+      const costoOra = kWhOra * prezzo;
+      const costoGiorno = costoOra * ore;
+      const costoMese = costoGiorno * 30;
+      const costoAnno = costoGiorno * 365;
+
+      showResult('tvResult', `
+        <strong>Potenza reale stimata:</strong> ${wattReali.toFixed(0)} W<br>
+        • Consumo orario: <strong>${kWhOra.toFixed(2)} kWh</strong><br>
+        • Costo per 1 ora: <strong>${euro(costoOra)}</strong><br>
+        • Spesa mensile (~30 giorni): <strong>${euro(costoMese)}</strong><br>
+        • Spesa annua (~365 giorni): <strong>${euro(costoAnno)}</strong>
+      `);
+    }
+
+    // =========================
+    // LAVATRICE
+    // =========================
+    function calcolaLavatrice() {
+      if (!checkLegalAccept()) return;
+
+      const ciclo = parseFloat(document.getElementById('lavCiclo').value) || 0;
+      const fattore = parseFloat(document.getElementById('lavTemp').value) || 1;
+      const lavSettimana = parseFloat(document.getElementById('lavSettimana').value) || 0;
+      const prezzo = parseFloat(document.getElementById('lavPrezzo').value) || 0;
+
+      const kWhReali = ciclo * fattore;
+      const costoCiclo = kWhReali * prezzo;
+      const lavMese = lavSettimana * 4;
+      const costoMese = costoCiclo * lavMese;
+      const costoAnno = costoCiclo * lavSettimana * 52;
+
+      showResult('lavResult', `
+        <strong>Consumo stimato per ciclo:</strong> ${kWhReali.toFixed(2)} kWh<br>
+        • Costo per 1 lavaggio: <strong>${euro(costoCiclo)}</strong><br>
+        • Lavaggi mensili (~${lavMese}): <strong>${euro(costoMese)}</strong><br>
+        • Spesa annua (~${lavSettimana} lavaggi/settimana): <strong>${euro(costoAnno)}</strong>
+      `);
+    }
+
+    // =========================
+    // FORNO
+    // =========================
+    function calcolaForno() {
+      if (!checkLegalAccept()) return;
+
+      const watt = parseFloat(document.getElementById('fornoWatt').value) || 0;
+      const ore = parseFloat(document.getElementById('fornoOre').value) || 0;
+      const cottureSettimana = parseFloat(document.getElementById('fornoSettimana').value) || 0;
+      const prezzo = parseFloat(document.getElementById('fornoPrezzo').value) || 0;
+
+      const kWhUso = (watt / 1000) * ore * 0.7; // fattore 0.7: non sempre al massimo
+      const costoUso = kWhUso * prezzo;
+      const cottureMese = cottureSettimana * 4;
+      const costoMese = costoUso * cottureMese;
+      const costoAnno = costoUso * cottureSettimana * 52;
+
+      showResult('fornoResult', `
+        <strong>Consumo medio per cottura:</strong> ${kWhUso.toFixed(2)} kWh<br>
+        • Costo per 1 utilizzo: <strong>${euro(costoUso)}</strong><br>
+        • Spesa mensile (~${cottureMese} cotture): <strong>${euro(costoMese)}</strong><br>
+        • Spesa annua (~${cottureSettimana} cotture/settimana): <strong>${euro(costoAnno)}</strong>
+      `);
+    }
+
+    // =========================
+    // LAVASTOVIGLIE
+    // =========================
+    function calcolaLavastoviglie() {
+      if (!checkLegalAccept()) return;
+
+      const ciclo = parseFloat(document.getElementById('lavaCiclo').value) || 0;
+      const fattore = parseFloat(document.getElementById('lavaProg').value) || 1;
+      const cicliSettimana = parseFloat(document.getElementById('lavaSettimana').value) || 0;
+      const prezzo = parseFloat(document.getElementById('lavaPrezzo').value) || 0;
+
+      const kWhReali = ciclo * fattore;
+      const costoCiclo = kWhReali * prezzo;
+      const cicliMese = cicliSettimana * 4;
+      const costoMese = costoCiclo * cicliMese;
+      const costoAnno = costoCiclo * cicliSettimana * 52;
+
+      showResult('lavaResult', `
+        <strong>Consumo stimato per ciclo:</strong> ${kWhReali.toFixed(2)} kWh<br>
+        • Costo per 1 ciclo: <strong>${euro(costoCiclo)}</strong><br>
+        • Spesa mensile (~${cicliMese} cicli): <strong>${euro(costoMese)}</strong><br>
+        • Spesa annua (~${cicliSettimana} cicli/settimana): <strong>${euro(costoAnno)}</strong>
+      `);
+    }
+
+    // =========================
+    // ASCIUGATRICE
+    // =========================
+    function calcolaAsciugatrice() {
+      if (!checkLegalAccept()) return;
+
+      const ciclo = parseFloat(document.getElementById('asciCiclo').value) || 0;
+      const fattore = parseFloat(document.getElementById('asciTipo').value) || 1;
+      const cicliSettimana = parseFloat(document.getElementById('asciSettimana').value) || 0;
+      const prezzo = parseFloat(document.getElementById('asciPrezzo').value) || 0;
+
+      const kWhReali = ciclo * fattore;
+      const costoCiclo = kWhReali * prezzo;
+      const cicliMese = cicliSettimana * 4;
+      const costoMese = costoCiclo * cicliMese;
+      const costoAnno = costoCiclo * cicliSettimana * 52;
+
+      showResult('asciResult', `
+        <strong>Consumo stimato per ciclo:</strong> ${kWhReali.toFixed(2)} kWh<br>
+        • Costo per 1 ciclo: <strong>${euro(costoCiclo)}</strong><br>
+        • Spesa mensile (~${cicliMese} cicli): <strong>${euro(costoMese)}</strong><br>
+        • Spesa annua (~${cicliSettimana} cicli/settimana): <strong>${euro(costoAnno)}</strong>
+      `);
     }
   </script>
-
-
-<script>
-async function caricaMisteriDalBlog() {
-  const container = document.getElementById('lista-misteri-auto');
-  try {
-    const response = await fetch('blog-test.html'); 
-    if (!response.ok) throw new Error('Non riesco a leggere il blog.');
-
-    const html = await response.text();
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(html, 'text/html');
-
-    const cards = doc.querySelectorAll('.post-card[data-cat="misteri"]');
-    container.innerHTML = '';
-
-    if (cards.length === 0) {
-      container.innerHTML = '<li>Nessun mistero trovato.</li>';
-      return;
-    }
-
-    cards.forEach(card => {
-      container.appendChild(card.cloneNode(true));
-    });
-
-  } catch (err) {
-    console.error(err);
-    container.innerHTML = '<li>Errore nel caricamento dei misteri.</li>';
-  }
-}
-
-document.addEventListener('DOMContentLoaded', caricaMisteriDalBlog);
-</script>
-
-
-
-  <footer>
-    © 2025 Syncras.App — Tutti i diritti riservati<br>
-
-    <div style="margin-top:8px;">
-      <a href="privacy.html">Privacy Policy</a> |
-      <a href="cookie.html">Cookie Policy</a> |
-      <a href="disclaimer-amazon.html">Disclaimer Amazon</a> |
-      <a href="note-legali.html">Note Legali</a>
-    </div>
-
-    <p style="font-size:0.8rem; opacity:0.85; max-width:800px; margin:10px auto 0;">
-      Syncras.App partecipa al Programma Affiliazione Amazon EU.  
-      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
-      senza alcun costo aggiuntivo per l’utente.  
-      Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
-      è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
-    </p>
-  </footer>
-
 </body>
 </html>
+
