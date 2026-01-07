@@ -1,1283 +1,258 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Syncras.App | Scelte furbe e guide ironiche agli acquisti</title>
-  <meta name="description" content="Syncras.App ti aiuta a scegliere cosa comprare: calcolatori per consumi e costi reali, Test Anti-Acquisto e guide leggere ma concrete su energia, tecnologia e offerte.">
-  <meta name="robots" content="index,follow">
-  <link rel="canonical" href="https://syncras.app/">
-
-  <!-- Google Analytics gestito tramite banner cookie in fondo alla pagina -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calcolatore Consumi Casa 2026 | Syncras.App</title>
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Calcolatore Consumi Casa per Stanze (Syncras.App)",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All",
+    "description": "Calcolatore gratuito per stimare i consumi elettrici per stanza con costo in tempo reale, grafico e monitor di potenza.",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+    "url": "https://syncras.app/calcolatore-consumi-casa-per-stanze.html"
+  }
+  </script>
 
   <style>
-    :root {
-      --violet-main: #6C5CE7;
-      --violet-dark: #4B3ACB;
-      --violet-soft: #A29BFE;
-      --bg-page: #F7F7FB;
-      --text-main: #111827;
-      --text-muted: #4B5563;
-      --card-bg: #FFFFFF;
-      --border-soft: #E5E7EB;
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-      background: var(--bg-page);
-      color: var(--text-main);
-      line-height: 1.6;
-    }
-
-    a {
-      color: var(--violet-dark);
-      text-decoration: none;
-    }
-    a:hover { text-decoration: underline; }
-
-    /* HEADER */
-    .site-header {
-      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
-      color: #fff;
-      padding: 12px 16px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-      position: sticky;
-      top: 0;
-      z-index: 50;
-    }
-
-    .header-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-    }
-
-    .logo {
-      font-size: 1.4rem;
-      font-weight: bold;
-      letter-spacing: 0.03em;
-    }
-
-    #main-nav {
-      display: flex;
-      gap: 18px;
-      font-size: 0.95rem;
-    }
-
-    #main-nav a {
-      color: #fff;
-      text-decoration: none;
-      font-weight: 600;
-      padding-bottom: 2px;
-      border-bottom: 2px solid transparent;
-    }
-
-    #main-nav a:hover {
-      text-decoration: underline;
-    }
-
-    #main-nav a.active {
-      border-bottom-color: rgba(255,255,255,0.9);
-    }
-
-    .menu-toggle {
-      display: none;
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.4);
-      border-radius: 6px;
-      color: white;
-      padding: 6px 10px;
-      font-size: 0.9rem;
-      cursor: pointer;
-    }
-    .menu-toggle span {
-      margin-left: 4px;
-      font-size: 1.1rem;
-    }
-
-    @media (max-width: 768px) {
-      #main-nav {
-        display: none;
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 56px;
-        margin: 0 auto;
-        max-width: 1100px;
-        flex-direction: column;
-        background-color: var(--violet-dark);
-        padding: 10px 16px 12px 16px;
-        border-radius: 0 0 8px 8px;
-        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
-      }
-      #main-nav a { padding: 6px 0; }
-      body.nav-open #main-nav { display: flex; }
-      .menu-toggle {
-        display: inline-flex;
-        align-items: center;
-      }
-    }
-
-    main {
-      max-width: 1100px;
-      margin: 24px auto 40px;
-      padding: 0 16px 0;
-    }
-
-    /* 🔹 NASTRO SCORREVOLE STILE TG SYNCRAS */
-    .news-ticker {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 8px 16px;
-      background: var(--violet-dark);
-      color: #fff;
-      font-family: inherit;
-      font-size: 0.95rem;
-      overflow: hidden;
-      border-bottom: 1px solid rgba(255,255,255,0.15);
-    }
-
-    .news-ticker-label {
-      flex-shrink: 0;
-      font-weight: 600;
-      white-space: nowrap;
-    }
-
-    .news-ticker-viewport {
-      overflow: hidden;
-      position: relative;
-      flex: 1;
-    }
-
-    .news-ticker-track {
-      display: inline-block;
-      white-space: nowrap;
-      /* velocità regolabile: aumenta/diminuisci i secondi */
-      animation: ticker-scroll 40s linear infinite;
-    }
-
-    .news-ticker-item {
-      display: inline-block;
-      color: #fff;
-      text-decoration: none;
-      padding: 0 6px;
-    }
-
-    .news-ticker-item:hover {
-      text-decoration: underline;
-    }
-
-    .news-ticker-separator {
-      opacity: 0.6;
-      padding: 0 4px;
-    }
-
-    /* Pausa animazione al passaggio del mouse (desktop) */
-    .news-ticker:hover .news-ticker-track {
-      animation-play-state: paused;
-    }
-
-    /* Animazione scorrimento da destra verso sinistra */
-    @keyframes ticker-scroll {
-      0% {
-        transform: translateX(0);
-      }
-      100% {
-        transform: translateX(-50%);
-      }
-    }
-
-    /* 🔹 Adattamento mobile */
-    @media (max-width: 600px) {
-      .news-ticker {
-        font-size: 0.85rem;
-        padding: 6px 10px;
-      }
-
-      .news-ticker-label {
-        display: none; /* se vuoi tenerla anche su mobile, commenta questa riga */
-      }
-    }
-
-    /* HERO */
-    .hero {
-      background: radial-gradient(circle at top left, #A29BFE 0, #4B3ACB 30%, #2D1B69 80%);
-      border-radius: 18px;
-      padding: 26px 22px 26px;
-      color: #F9FAFB;
-      box-shadow: 0 15px 35px rgba(15,23,42,0.35);
-      margin-bottom: 26px;
-    }
-
-    .hero-inner {
-      display: grid;
-      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.2fr);
-      gap: 28px;
-      align-items: center;
-    }
-
-    @media (max-width: 880px) {
-      .hero-inner {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .hero-logo-pill {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background: rgba(15,23,42,0.15);
-      border-radius: 16px;
-      padding: 8px 12px;
-      margin-bottom: 10px;
-      backdrop-filter: blur(8px);
-    }
-
-    .hero-logo-img {
-      width: 48px;
-      height: 48px;
-      border-radius: 16px;
-      background: #F9FAFB;
-      object-fit: contain;
-    }
-
-    .hero-pill-lines {
-      display: flex;
-      flex-direction: column;
-      font-size: 0.85rem;
-    }
-
-    .hero-pill-title {
-      font-weight: 700;
-    }
-
-    .hero-pill-sub {
-      opacity: 0.95;
-    }
-
-    .hero-badge {
-      display: inline-block;
-      margin-top: 4px;
-      margin-bottom: 8px;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.09em;
-      padding: 3px 9px;
-      border-radius: 999px;
-      border: 1px solid rgba(248,250,252,0.6);
-      background: rgba(15,23,42,0.18);
-    }
-
-    .hero-title {
-      font-size: 1.9rem;
-      line-height: 1.25;
-      margin: 6px 0 10px;
-    }
-
-    .hero-sub {
-      font-size: 0.97rem;
-      max-width: 540px;
-      opacity: 0.96;
-      margin: 0 0 14px;
-    }
-
-    .hero-cta-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 8px;
-    }
-
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 10px 18px;
-      border-radius: 999px;
-      background: #FACC15;
-      color: #1F2937;
-      font-weight: 700;
-      font-size: 0.95rem;
-      box-shadow: 0 8px 18px rgba(15,23,42,0.4);
-    }
-
-    .btn-primary:hover {
-      text-decoration: none;
-      filter: brightness(0.97);
-      transform: translateY(1px);
-    }
-
-    .btn-secondary {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 9px 16px;
-      border-radius: 999px;
-      border: 1px solid rgba(248,250,252,0.8);
-      color: #F9FAFB;
-      font-weight: 600;
-      font-size: 0.9rem;
-      background: transparent;
-    }
-
-    .btn-secondary:hover {
-      background: rgba(15,23,42,0.18);
-      text-decoration: none;
-    }
-
-    .hero-note {
-      font-size: 0.8rem;
-      opacity: 0.9;
-      margin: 6px 0 0;
-    }
-
-    .hero-right {
-      background: rgba(15,23,42,0.28);
-      border-radius: 16px;
-      padding: 14px 16px 16px;
-      border: 1px solid rgba(248,250,252,0.12);
-    }
-
-    .hero-right h2 {
-      margin-top: 0;
-      margin-bottom: 8px;
-      font-size: 1.1rem;
-    }
-
-    .hero-points {
-      list-style: none;
-      padding-left: 0;
-      margin: 0 0 8px;
-      font-size: 0.9rem;
-    }
-
-    .hero-points li {
-      margin-bottom: 6px;
-      padding-left: 18px;
-      position: relative;
-    }
-
-    .hero-points li::before {
-      content: "•";
-      position: absolute;
-      left: 0;
-      top: 0;
-      color: #FACC15;
-      font-size: 1.2rem;
-      line-height: 1;
-    }
-
-    .hero-small {
-      font-size: 0.8rem;
-      opacity: 0.92;
-      margin: 4px 0 0;
-    }
-
-    /* SECTIONS GENERALI */
-    .section {
-      margin-top: 32px;
-    }
-
-    .section h2 {
-      margin: 0 0 6px;
-      font-size: 1.3rem;
-      color: #111827;
-    }
-
-    .section-sub {
-      margin: 0 0 16px;
-      font-size: 0.95rem;
-      color: var(--text-muted);
-    }
-
-    /* GRIGLIE */
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
-      gap: 16px;
-    }
-
-    @media (max-width: 880px) {
-      .grid-3 {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .card {
-      background: var(--card-bg);
-      border-radius: 14px;
-      padding: 14px 14px 16px;
-      box-shadow: 0 3px 8px rgba(15,23,42,0.06);
-      border: 1px solid rgba(148,163,184,0.25);
-    }
-
-    .card-label {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.09em;
-      color: #6B7280;
-      margin-bottom: 4px;
-    }
-
-    .card h3 {
-      margin: 0 0 6px;
-      font-size: 1rem;
-      color: #111827;
-    }
-
-    .card p {
-      margin: 0 0 10px;
-      font-size: 0.9rem;
-      color: var(--text-muted);
-    }
-
-    .card-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 0.87rem;
-      font-weight: 600;
-      color: var(--violet-dark);
-    }
-
-    .card-link span.arrow {
-      font-size: 1rem;
-    }
-
-    /* CALCOLATORI IN EVIDENZA */
-    .calc-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
-      gap: 16px;
-    }
-
-    @media (max-width: 880px) {
-      .calc-grid { grid-template-columns: 1fr; }
-    }
-
-    .calc-card {
-      background: #FFFFFF;
-      border-radius: 14px;
-      padding: 14px 14px 16px;
-      border: 1px solid rgba(148,163,184,0.35);
-      box-shadow: 0 4px 10px rgba(15,23,42,0.06);
-    }
-
-    .calc-card h3 {
-      margin: 2px 0 6px;
-      font-size: 1rem;
-      color: #111827;
-    }
-
-    .calc-pill {
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.09em;
-      color: #6B7280;
-      margin-bottom: 4px;
-    }
-
-    .calc-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: 8px;
-      padding: 8px 13px;
-      border-radius: 999px;
-      border: none;
-      background: var(--violet-main);
-      color: #F9FAFB;
-      font-size: 0.9rem;
-      font-weight: 600;
-      box-shadow: 0 4px 10px rgba(88,80,236,0.5);
-    }
-
-    .calc-btn:hover {
-      text-decoration: none;
-      filter: brightness(0.97);
-    }
-
-    /* GUIDE IN EVIDENZA */
-    .guide-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
-      gap: 16px;
-    }
-
-    @media (max-width: 880px) {
-      .guide-grid { grid-template-columns: 1fr; }
-    }
-
-    .guide-card {
-      background: #FFFFFF;
-      border-radius: 14px;
-      padding: 14px 14px 16px;
-      border: 1px solid rgba(148,163,184,0.35);
-      box-shadow: 0 3px 8px rgba(15,23,42,0.06);
-    }
-
-    .guide-tag {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.09em;
-      color: #6B7280;
-      margin-bottom: 4px;
-    }
-
-    .guide-card h3 {
-      margin: 0 0 6px;
-      font-size: 1rem;
-      color: #111827;
-    }
-
-    .guide-card p {
-      margin: 0 0 8px;
-      font-size: 0.9rem;
-      color: var(--text-muted);
-    }
-
-    .guide-link {
-      font-size: 0.86rem;
-      font-weight: 600;
-      color: var(--violet-dark);
-    }
-
-    /* FOOTER */
-    .syncras-footer {
-      margin-top: 40px;
-      padding: 2.5rem 1.5rem 1.5rem;
-      background: #2b1840;
-      color: #f3eaff;
-      font-size: 0.9rem;
-    }
-
-    .syncras-footer a {
-      color: #f3eaff;
-      text-decoration: none;
-    }
-    .syncras-footer a:hover { text-decoration: underline; }
-
-    .footer-inner {
-      max-width: 1100px;
-      margin: 0 auto 1.5rem auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 2rem;
-    }
-
-    .footer-column h4 {
-      margin-top: 0;
-      margin-bottom: 0.7rem;
-      font-size: 1rem;
-    }
-
-    .footer-column p {
-      margin: 0;
-      font-size: 0.85rem;
-    }
-
-    .footer-column ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .footer-column li {
-      margin-bottom: 0.4rem;
-      font-size: 0.85rem;
-    }
-
-    .footer-bottom {
-      max-width: 1100px;
-      margin: 0 auto;
-      text-align: center;
-      font-size: 0.8rem;
-      opacity: 0.9;
-    }
-
-    .footer-bottom p {
-      margin: 4px 0;
-    }
-
-    /* ⭐⭐ NUOVI BLOCCHI: METEO + PUBBLICITÀ ⭐⭐ */
-
-    .energy-meteo-box {
-      background: #FFFFFF;
-      border: 2px solid rgba(108,92,231,0.25);
-      border-radius: 14px;
-      padding: 14px 18px;
-      margin: 26px 0;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.06);
-      font-size: 0.92rem;
-    }
-
-    .energy-meteo-box-emoji {
-      font-size: 1.4rem;
-    }
-
-    .energy-meteo-text {
-      flex: 1;
-    }
-
-    .syncras-adbox {
-      margin-bottom: 32px;
-    }
-
-    .adbox-inner {
-      background: #FFFFFF;
-      border: 2px solid rgba(108,92,231,0.30);
-      border-radius: 14px;
-      padding: 16px 20px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      box-shadow: 0 4px 10px rgba(15,23,42,0.08);
-    }
-
-    .adbox-logo {
-      width: 58px;
-      height: 58px;
-      object-fit: contain;
-      border-radius: 12px;
-      background: #fff;
-    }
-
-    .adbox-text h3 {
-      margin: 0;
-      font-size: 1rem;
-      color: var(--violet-dark);
-    }
-
-    .adbox-text p {
-      margin: 3px 0 0;
-      font-size: 0.85rem;
-      color: #4b5563;
-    }
-
-    .adbox-btn {
-      margin-left: auto;
-      background: var(--violet-main);
-      color: white;
-      padding: 9px 14px;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      text-decoration: none;
-    }
-
-    .adbox-btn:hover {
-      background: var(--violet-dark);
-    }
-
+    :root{
+      --violet:#6C5CE7; --violet-dark:#4B3ACB; --bg:#F7F7FB; --card:#ffffff;
+      --border:#e5e7eb; --text:#111827; --muted:#6b7280; --soft:#f3f4ff;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Arial, sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+
+    /* HEADER & NAV */
+    .site-header{ background:linear-gradient(90deg, var(--violet-dark), var(--violet)); color:#fff; padding:12px 14px; position:sticky; top:0; z-index:50; }
+    .header-inner{ max-width:980px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; }
+    .logo{font-size:1.35rem; font-weight:bold;}
+    #main-nav a{color:#fff; text-decoration:none; margin-left:15px; font-weight:700;}
+
+    /* MONITOR DI POTENZA */
+    .power-monitor {
+      background: #111827; color: #10b981; padding: 12px; border-radius: 12px;
+      margin: 10px 0; display: flex; justify-content: space-between; align-items: center;
+      font-family: monospace; font-size: 0.9rem; border: 2px solid #374151;
+    }
+    .power-monitor .warning { color: #ef4444; animation: blink 1s infinite; font-weight: bold; }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* CARD & TABLE */
+    main{ max-width:980px; margin:16px auto; padding:16px; background:var(--card); border-radius:14px; box-shadow:0 10px 22px rgba(0,0,0,.06); }
+    .badge{ display:inline-block; padding:3px 9px; border-radius:999px; background:rgba(108,92,231,.1); color:var(--violet-dark); font-weight:900; font-size:.78rem; text-transform:uppercase; }
+    table{width:100%; border-collapse:separate; border-spacing:0 8px}
+    td{background:#fafafa; padding:10px; border-radius:8px; border:1px solid #eee}
+    .rowInput{ width:100%; padding:8px; border-radius:8px; border:1px solid #d1d5db; }
+    .row-cost{ font-weight:bold; color:var(--violet); }
+
+    /* GDPR & WARNINGS */
+    .legal-warning{ display:block; background:#FFF4D6; padding:12px; border-left:4px solid #F59E0B; border-radius:8px; margin:12px 0; font-size:.9rem; }
+    .legal-box{ padding:12px; border:1px solid var(--border); border-radius:12px; margin-bottom:15px; }
+    
+    #cookie-banner{
+      position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
+      width:90%; max-width:420px; background:#fff; border:2px solid var(--violet);
+      padding:16px; border-radius:10px; box-shadow:0 4px 15px rgba(0,0,0,0.2); z-index:9999; display:none;
+    }
+
+    /* RESULTS */
+    .results-area{ display:none; margin-top:20px; padding:15px; background:var(--soft); border-radius:14px; }
+    .grid2{ display:grid; grid-template-columns: 1fr 1fr; gap:20px; }
+    @media (max-width:768px){ .grid2{grid-template-columns:1fr;} }
   </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="header-inner">
-      <div class="logo">Syncras.App</div>
 
-      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu">
-        Menu <span>☰</span>
-      </button>
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo">Syncras.App</div>
+    <nav id="main-nav">
+      <a href="index.html">Home</a>
+      <a href="calcolatori.html">Calcolatori</a>
+    </nav>
+  </div>
+</header>
 
-      <nav id="main-nav">
-        <a href="index.html" class="active">Home</a>
-        <a href="blog.html">Blog</a>
-        <a href="quiz.html">Test Anti-Acquisto</a>
-        <a href="calcolatori.html">Calcolatori</a>
-        <a href="curiosita.html">Curiosità</a>
-        <a href="misteri.html">Misteri</a>
-        <a href="offerte.html">Prodotti Consapevoli</a>
-        <a href="chi.html">Chi siamo</a>
-      </nav>
+<main>
+  <span class="badge">Analisi Energetica 2026</span>
+  <h1>Consumi di casa: chi ti svuota la bolletta? ⚡</h1>
+
+  <div class="power-monitor">
+    <div>POTENZA ISTANTANEA: <span id="instantWatts">0</span> W</div>
+    <div id="powerStatus">✅ Carico OK</div>
+  </div>
+
+  <div class="legal-warning" id="mainLegalWarning">
+    ⚠️ <strong>Attenzione:</strong> Accetta le note legali per sbloccare i risultati del calcolatore.
+  </div>
+
+  <div class="legal-box">
+    <label style="display:flex; gap:10px; cursor:pointer;">
+      <input type="checkbox" id="legalAccept" onchange="toggleCalc()">
+      <span>Dichiaro di aver letto le <a href="note-legali.html" target="_blank">Note Legali</a> e accetto che i risultati siano solo stime indicative.</span>
+    </label>
+  </div>
+
+  <div class="topbar" style="display:flex; gap:15px; margin-bottom:20px; flex-wrap:wrap;">
+    <div>
+      <label>Prezzo €/kWh:</label><br>
+      <input id="priceKwh" type="number" step="0.01" value="0.30" class="rowInput" style="width:100px">
     </div>
-  </header>
-
-  <!-- 🔹 NASTRO SCORREVOLE AUTOGENERATO DAL BLOG -->
-  <div class="news-ticker">
-    <div class="news-ticker-label">📰 Dal blog Syncras:</div>
-    <div class="news-ticker-viewport">
-      <!-- Verrà riempito in automatico via JS -->
-      <div class="news-ticker-track"></div>
+    <div>
+      <label>Giorni Mese:</label><br>
+      <input id="daysMonth" type="number" value="30" class="rowInput" style="width:80px">
     </div>
   </div>
 
-  <main>
-    <!-- HERO -->
-    <section class="hero">
-      <div class="hero-inner">
-        <div class="hero-left">
-          <div class="hero-logo-pill">
-            <!-- Logo senza scritta: carica il file con questo nome nella root -->
-            <img src="penso-ergo-logo.png" alt="Penso ergo..." class="hero-logo-img">
-            <div class="hero-pill-lines">
-              <span class="hero-pill-title">Penso ergo…</span>
-              <span class="hero-pill-sub">prima di cliccare “Compra ora”.</span>
-            </div>
-          </div>
+  <section class="section">
+    <h3>🍳 Cucina</h3>
+    <table>
+      <tr class="device-row" data-room="Cucina">
+        <td>Frigorifero/Congelatore</td>
+        <td><input type="number" class="w-input rowInput" value="70"> <small>Watt</small></td>
+        <td><input type="number" class="h-input rowInput" value="8"> <small>Ore/gg</small></td>
+        <td class="row-cost">€ 0.00</td>
+      </tr>
+      <tr class="device-row" data-room="Cucina">
+        <td>Lavastoviglie (ciclo)</td>
+        <td><input type="number" class="w-input rowInput" value="1200"> <small>Watt</small></td>
+        <td><input type="number" class="h-input rowInput" value="1.5"> <small>Ore/gg</small></td>
+        <td class="row-cost">€ 0.00</td>
+      </tr>
+    </table>
+  </section>
 
-          <span class="hero-badge">Metodo SmartShop</span>
-
-          <h1 class="hero-title">Il tuo alleato contro gli acquisti impulsivi.</h1>
-          <p class="hero-sub">
-            Qui non ti diciamo cosa comprare, ma ti aiutiamo a fare i conti, capire se ti serve davvero
-            e solo alla fine – forse – cliccare “aggiungi al carrello”.
-          </p>
-
-          <div class="hero-cta-row">
-            <a href="quiz.html" class="btn-primary">🧠 Fai il Test Anti-Acquisto</a>
-            <a href="calcolatori.html" class="btn-secondary">📊 Vai ai calcolatori</a>
-          </div>
-
-        </div>
-
-        <div class="hero-right">
-          <h2>Penso ergo… come funziona Syncras?</h2>
-          <ul class="hero-points">
-           <li>Calcola i consumi reali della tua auto, scopri quanta energia assorbono i tuoi elettrodomestici e valuta se un impianto fotovoltaico può davvero farti risparmiare.</li>
-           <li>Metti alla prova ogni acquisto con il Test Anti-Acquisto e i quiz che ti aiutano davvero a scegliere.</li>
-           <li>Leggi guide leggere ma concrete per evitare acquisti superflui e scegliere con più consapevolezza.</li>
-          </ul>
-          <p class="hero-small">
-            Nessun account, nessuna email obbligatoria. Solo numeri spiegati in modo semplice.
-          </p>
-        </div>
+  <div class="results-area" id="resultsArea">
+    <div class="grid2">
+      <div>
+        <h2 style="color:var(--violet-dark)">Totale: <span id="totalDisplay">€ 0.00</span></h2>
+        <canvas id="myChart" width="300" height="300"></canvas>
       </div>
-    </section>
-
-    <!-- ⭐ METEO ENERGETICO -->
-    <section class="energy-meteo-box">
-      <div class="energy-meteo-box-emoji">🌤️</div>
-      <div class="energy-meteo-text" id="energyMeteoLine">
-        <!-- Riempito via JS -->
+      <div>
+        <label>Testo da condividere:</label>
+        <textarea id="shareText" class="rowInput" style="height:120px; margin-bottom:10px;" readonly></textarea>
+        <button class="btn" style="background:var(--violet); color:white; border:none; padding:10px; border-radius:8px; cursor:pointer;" onclick="copyText()">📎 Copia Risultato</button>
       </div>
-    </section>
-
-    <!-- ⭐ BLOCCO PUBBLICITARIO STATICO -->
-    <section class="syncras-adbox">
-      <div class="adbox-inner">
-        <img src="penso-ergo-logo.png" alt="Syncras Logo" class="adbox-logo">
-        <div class="adbox-text">
-          <h3>Vuoi promuovere un prodotto?</h3>
-          <p>Banner statico e senza distrazioni, ben visibile in questa pagina di Syncras.</p>
-        </div>
-        <a href="chi.html" class="adbox-btn">Info sponsor</a>
-      </div>
-    </section>
-
-    <!-- COSA TROVI -->
-    <section class="section">
-      <h2>Cosa trovi su Syncras.App</h2>
-      <p class="section-sub">
-        Tre strumenti per far lavorare il cervello prima del portafoglio.
-      </p>
-
-      <div class="grid-3">
-        <article class="card">
-          <div class="card-label">Strumento n.1</div>
-          <h3>Calcolatori smart</h3>
-          <p>
-            Scopri i costi reali: consumi elettrici, rientro del fotovoltaico,
-            confronto fra auto e rate dei finanziamenti.
-          </p>
-          <a href="calcolatori.html" class="card-link">
-            Vai alla pagina dei calcolatori <span class="arrow">→</span>
-          </a>
-        </article>
-
-        <article class="card">
-          <div class="card-label">Strumento n.2</div>
-          <h3>Test Anti-Acquisto</h3>
-          <p>
-            Tre domande secche per evitare acquisti impulsivi, più una serie di quiz intelligenti che ti aiutano davvero a scegliere: il telefono giusto, la lavatrice adatta, la TV migliore per casa tua e molto altro.
-          </p>
-          <a href="quiz.html" class="card-link">
-            Fai il test adesso <span class="arrow">→</span>
-          </a>
-        </article>
-
-        <article class="card">
-          <div class="card-label">Strumento n.3</div>
-          <h3>Guide ironiche</h3>
-          <p>
-            Articoli leggeri ma concreti su energia, tecnologia e risparmio.
-            Si ride, ma i conti sono seri.
-          </p>
-          <a href="blog.html" class="card-link">
-            Vai alle guide <span class="arrow">→</span>
-          </a>
-        </article>
-      </div>
-    </section>
-
-    <!-- CALCOLATORI IN EVIDENZA -->
-    <section class="section">
-      <h2>Calcolatori in evidenza</h2>
-      <p class="section-sub">
-        Parti dai numeri: scegli uno strumento e fai subito i conti.
-      </p>
-
-      <div class="calc-grid">
-        <article class="calc-card">
-          <div class="calc-pill">Fotovoltaico &amp; Auto elettrica</div>
-          <h3>Calcolatore fotovoltaico con ammortamento</h3>
-          <p>
-            Produzione annua, risparmio in bolletta, rientro dell’investimento
-            e impatto della ricarica dell’auto elettrica, anno per anno.
-          </p>
-          <a href="calcolatore-fotovoltaico-ammortamento.html" class="calc-btn">
-            ☀️ Apri il calcolatore fotovoltaico
-          </a>
-        </article>
-
-        <article class="calc-card">
-          <div class="calc-pill">Casa &amp; elettrodomestici</div>
-          <h3>Consumi elettrodomestici</h3>
-          <p>
-            TV, forno, lavatrice e asciugatrice, con costo orario, mensile e annuale.
-            Perfetto per trovare i veri “mangia-corrente” di casa.
-          </p>
-          <a href="calcolatore-consumi-elettrodomestici.html" class="calc-btn">
-            🔌 Calcola i consumi in casa
-          </a>
-        </article>
-
-        <article class="calc-card">
-          <div class="calc-pill">Mobilità</div>
-          <h3>Confronto costi auto</h3>
-          <p>
-            Confronta due auto (benzina, diesel, GPL, metano, elettrica) e scopri
-            quanto spendi per 100 km e in un anno.
-          </p>
-          <a href="calcolatore-consumi-auto.html" class="calc-btn">
-            🚗 Confronta i costi di viaggio
-          </a>
-        </article>
-      </div>
-    </section>
-
-    <!-- GUIDE IN EVIDENZA (DINAMICHE DA blog.html) -->
-    <section class="section">
-      <h2>Guide che piacciono a chi pensa prima di comprare</h2>
-      <p class="section-sub">
-        Storie comiche, esempi reali e consigli pratici per non buttare via soldi e bollette.
-      </p>
-
-      <!-- Fallback statico: verrà sostituito via JS se il fetch va a buon fine -->
-      <div class="guide-grid" id="home-guides-grid">
-        <article class="guide-card">
-          <div class="guide-tag">Energia &amp; casa</div>
-          <h3><a href="la-tv-consuma-piu-di-quanto-pensi.html">Quanto consuma una TV 55 pollici?</a></h3>
-          <p>
-            Storia comica da salotto, tabella consumi reali e mini calcolatore
-            per capire quanto pesa davvero la TV in bolletta.
-          </p>
-          <a href="la-tv-consuma-piu-di-quanto-pensi.html" class="guide-link">Leggi l’articolo →</a>
-        </article>
-
-        <article class="guide-card">
-          <div class="guide-tag">Riscaldamento</div>
-          <h3><a href="temperatura-ideale-per-risparmiare-in-casa.html">Qual è la temperatura più economica in casa?</a></h3>
-          <p>
-            Zia tirchia, termotecnici e pinguini: guida ironica ai 19–20°C,
-            con consigli pratici per non sprecare gas e corrente.
-          </p>
-          <a href="temperatura-ideale-per-risparmiare-in-casa.html" class="guide-link">Scopri i 19–20°C furbi →</a>
-        </article>
-
-        <article class="guide-card">
-          <div class="guide-tag">SmartShop</div>
-          <h3><a href="come-scegliere-in-modo-intelligente.html">Come scegliere in modo intelligente</a></h3>
-          <p>
-            La guida al Metodo SmartShop: essenziale, valore, timing.
-            Per comprare solo ciò che migliora davvero la tua vita.
-          </p>
-          <a href="come-scegliere-in-modo-intelligente.html" class="guide-link">Vai alla guida completa →</a>
-        </article>
-      </div>
-    </section>
-
-  </main>
-
-  <footer class="syncras-footer">
-    <div class="footer-inner">
-      <div class="footer-column">
-        <h4>Syncras.App</h4>
-        <p>
-          Metodo SmartShop per fare acquisti con la testa (e con un po’ d’ironia).<br>
-          Niente tecnicismi inutili, solo esperienze reali e numeri spiegati semplice.
-        </p>
-      </div>
-
-      <div class="footer-column">
-        <h4>Link utili</h4>
-        <ul>
-          <li><a href="blog.html">Tutte le guide SmartShop</a></li>
-          <li><a href="offerte.html">Prodotti Consapevoli &amp; offerte Amazon</a></li>
-          <li><a href="calcolatori.html">Pagina dei calcolatori</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-column">
-        <h4>Legale &amp; Privacy</h4>
-        <ul>
-          <li><a href="privacy.html">Privacy Policy</a></li>
-          <li><a href="cookie.html">Cookie Policy</a></li>
-          <li><a href="disclaimer-amazon.html">Disclaimer Amazon</a></li>
-          <li><a href="note-legali.html">Note Legali</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="footer-bottom">
-      <p>© <span id="year-span"></span> Syncras.App — Tutti i diritti riservati.</p>
-      <p>
-        Syncras.App partecipa al Programma Affiliazione Amazon EU.
-        Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
-        senza alcun costo aggiuntivo per l’utente.
-      </p>
-      <p>
-        Per ordini, resi, spedizioni o dati relativi agli acquisti, è necessario rivolgersi
-        direttamente al servizio clienti Amazon tramite il proprio account.
-      </p>
-    </div>
-  </footer>
-
-  <script>
-    function toggleMenu() {
-      document.body.classList.toggle('nav-open');
-    }
-
-    // Footer year
-    document.addEventListener('DOMContentLoaded', function() {
-      var span = document.getElementById('year-span');
-      if (span) span.textContent = new Date().getFullYear();
-    });
-
-    // Sezione "Guide che piacciono..." dinamica da blog.html
-    document.addEventListener('DOMContentLoaded', function () {
-      const grid = document.getElementById('home-guides-grid');
-      if (!grid) return;
-
-      fetch('blog.html')
-        .then(response => response.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const doc = parser.parseFromString(html, 'text/html');
-
-          const cards = Array.from(doc.querySelectorAll('.post-list .post-card'));
-          if (!cards.length) {
-            return; // lascia il fallback statico
-          }
-
-          // Estrai i dati base da ogni post
-          const posts = cards.map(card => {
-            const linkEl = card.querySelector('a');
-            const titleEl = card.querySelector('h3');
-            const metaEl = card.querySelector('.post-meta');
-            const pEl = card.querySelector('p');
-
-            const metaText = metaEl ? metaEl.textContent.trim() : '';
-            // Cerco la "categoria" dopo il primo • se presente
-            let tag = 'Guida SmartShop';
-            if (metaText.includes('•')) {
-              const parts = metaText.split('•').map(s => s.trim());
-              if (parts.length >= 2) {
-                tag = parts[1]; // es. "Casa & Elettrodomestici"
-              }
-            }
-
-            return {
-              url: linkEl ? linkEl.getAttribute('href') : '#',
-              title: titleEl ? titleEl.textContent.trim() : '',
-              tag: tag,
-              excerpt: pEl ? pEl.textContent.trim() : ''
-            };
-          }).filter(p => p.url && p.title);
-
-          if (!posts.length) return;
-
-          // Mescolo e prendo i primi 3
-          posts.sort(() => Math.random() - 0.5);
-          const toShow = posts.slice(0, 3);
-
-          // Sostituisco il contenuto del grid con le 3 guide scelte
-          grid.innerHTML = '';
-          toShow.forEach(post => {
-            const article = document.createElement('article');
-            article.className = 'guide-card';
-
-            const tagDiv = document.createElement('div');
-            tagDiv.className = 'guide-tag';
-            tagDiv.textContent = post.tag;
-
-            const h3 = document.createElement('h3');
-            const aTitle = document.createElement('a');
-            aTitle.href = post.url;
-            aTitle.textContent = post.title;
-            h3.appendChild(aTitle);
-
-            const p = document.createElement('p');
-            p.textContent = post.excerpt;
-
-            const more = document.createElement('a');
-            more.href = post.url;
-            more.className = 'guide-link';
-            more.textContent = 'Leggi l’articolo →';
-
-            article.appendChild(tagDiv);
-            article.appendChild(h3);
-            article.appendChild(p);
-            article.appendChild(more);
-
-            grid.appendChild(article);
-          });
-        })
-        .catch(err => {
-          console.error('Errore nel caricamento delle guide dal blog per la home:', err);
-          // In caso di errore, rimane il fallback statico
-        });
-    });
-  </script>
-
-  <!-- 🔹 NASTRO SCORREVOLE: TITOLI DAL BLOG, CON FALLBACK PER USO LOCALE -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const track = document.querySelector('.news-ticker-track');
-      if (!track) return;
-
-      function buildFallback() {
-        // Link base sempre validi, così vedi qualcosa anche in locale
-        let base = `
-          <a href="blog.html" class="news-ticker-item">Tutte le guide SmartShop sul blog Syncras</a>
-          <span class="news-ticker-separator">•</span>
-          <a href="quiz.html" class="news-ticker-item">Fai il Test Anti-Acquisto</a>
-          <span class="news-ticker-separator">•</span>
-          <a href="calcolatori.html" class="news-ticker-item">Apri i calcolatori</a>
-        `;
-        // Duplichiamo per effetto nastro infinito
-        track.innerHTML = base + '<span class="news-ticker-separator">•</span>' + base;
-      }
-
-      fetch('blog.html')
-        .then(response => response.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const doc = parser.parseFromString(html, 'text/html');
-
-          const cards = Array.from(doc.querySelectorAll('.post-list .post-card'));
-
-          if (!cards.length) {
-            // Nessun post trovato → usiamo il fallback
-            buildFallback();
-            return;
-          }
-
-          const posts = cards.map(card => {
-            const linkEl = card.querySelector('a');
-            const titleEl = card.querySelector('h3');
-            return {
-              url: linkEl ? linkEl.getAttribute('href') : '#',
-              title: titleEl ? titleEl.textContent.trim() : ''
-            };
-          }).filter(p => p.url && p.title);
-
-          if (!posts.length) {
-            buildFallback();
-            return;
-          }
-
-          // Mescola in modo random
-          posts.sort(() => Math.random() - 0.5);
-
-          // Prende ad es. 8 titoli (puoi cambiare il numero)
-          const toShow = posts.slice(0, 8);
-
-          const tickerHTML = toShow
-            .map(p => `<a href="${p.url}" class="news-ticker-item">${p.title}</a>`)
-            .join('<span class="news-ticker-separator">•</span>');
-
-          // Duplica per effetto nastro infinito
-          track.innerHTML =
-            tickerHTML +
-            '<span class="news-ticker-separator">•</span>' +
-            tickerHTML;
-        })
-        .catch(err => {
-          console.error('Errore nel caricamento dei titoli per il nastro dal blog:', err);
-          // Se fetch fallisce (tipico in locale), usiamo il fallback
-          buildFallback();
-        });
-    });
-  </script>
-
-  <!-- ⭐ SCRIPT METEO ENERGETICO -->
-  <script>
-    const meteoLines = [
-      "Se oggi c’è sole, programma lavatrice tra le 10 e le 14: sfrutti meglio l’autoconsumo domestico.",
-      "Giornata nuvolosa? Mantieni temperatura costante se usi pompa di calore: evita ON/OFF frequenti.",
-      "Se hai fotovoltaico e batteria quasi piena, ricarica auto o fai asciugatrice: niente sprechi di energia.",
-      "Se fa freddo, evita la stufetta elettrica nelle ore di picco: è la più energivora.",
-      "Se vedi una giornata limpida, usa gli elettrodomestici energivori al mattino: meno dispersione e meno bolletta.",
-      "Se arriva pioggia e batteria è bassa, meglio caricare oggi: sfrutti l’energia mentre è disponibile."
-    ];
-
-    document.addEventListener("DOMContentLoaded", function() {
-      const el = document.getElementById("energyMeteoLine");
-      if (!el) return;
-      const random = meteoLines[Math.floor(Math.random()*meteoLines.length)];
-      el.textContent = random;
-    });
-  </script>
-
-  <!-- Banner Cookie + Google Analytics solo dopo consenso -->
-  <div id="cookie-banner">
-    <p>
-      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite
-      (Google Analytics). Alcuni link sono di affiliazione Amazon.
-      Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
-      <a href="privacy.html">Privacy Policy</a>.
-    </p>
-    <div style="display:flex; gap:10px; margin-top:8px;">
-      <button type="button"
-              onclick="rejectCookies()"
-              style="flex:1; background:#E5E7EB; color:#111827; border:none;
-                     padding:10px 12px; border-radius:6px; cursor:pointer; font-weight:600;">
-        Rifiuta
-      </button>
-      <button id="cookie-btn" type="button"
-              onclick="acceptCookies()"
-              style="flex:1;">
-        Accetta e continua
-      </button>
     </div>
   </div>
 
-  <style>
-    #cookie-banner {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      max-width: 90%;
-      width: 420px;
-      background: #ffffff;
-      border: 2px solid #6C5CE7;
-      border-radius: 10px;
-      padding: 16px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-      z-index: 9999;
-      font-family: Arial, sans-serif;
-      display: none;
+  <div style="text-align:center; margin-top:20px;">
+    <button class="btn" id="calcBtn" onclick="runCalculation()" style="padding:15px 30px; font-weight:bold; background:var(--violet); color:#fff; border-radius:50px; border:none; cursor:pointer; opacity:0.5;" disabled>📊 Calcola Ora</button>
+  </div>
+</main>
+
+<div id="cookie-banner">
+  <p>
+    Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite. 
+    Leggi la <a href="cookie.html">Cookie Policy</a>.
+  </p>
+  <div style="display:flex; gap:10px; margin-top:8px;">
+    <button onclick="rejectCookies()" style="flex:1; background:#fff; border:1px solid var(--violet); border-radius:5px; cursor:pointer;">Rifiuta</button>
+    <button onclick="acceptCookies()" style="flex:1; background:var(--violet); color:#fff; border:none; border-radius:5px; cursor:pointer; font-weight:bold;">Accetta</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+// --- LOGICA GDPR & NOTE LEGALI ---
+function toggleCalc() {
+  const isAccepted = document.getElementById('legalAccept').checked;
+  const btn = document.getElementById('calcBtn');
+  btn.disabled = !isAccepted;
+  btn.style.opacity = isAccepted ? "1" : "0.5";
+  if(isAccepted) document.getElementById('mainLegalWarning').style.display = 'none';
+}
+
+// Cookie Banner Logic
+if (!localStorage.getItem('cookieConsent')) {
+  document.getElementById('cookie-banner').style.display = 'block';
+}
+
+function acceptCookies() {
+  localStorage.setItem('cookieConsent', 'accepted');
+  document.getElementById('cookie-banner').style.display = 'none';
+}
+
+function rejectCookies() {
+  localStorage.setItem('cookieConsent', 'rejected');
+  document.getElementById('cookie-banner').style.display = 'none';
+}
+
+// --- LOGICA CALCOLATORE ---
+let chart;
+function runCalculation() {
+  const price = parseFloat(document.getElementById('priceKwh').value);
+  const days = parseInt(document.getElementById('daysMonth').value);
+  let totalMonth = 0;
+  let instantPower = 0;
+  let roomData = {};
+
+  document.querySelectorAll('.device-row').forEach(row => {
+    const w = parseFloat(row.querySelector('.w-input').value) || 0;
+    const h = parseFloat(row.querySelector('.h-input').value) || 0;
+    const room = row.getAttribute('data-room');
+    
+    const cost = (w * h / 1000) * price * days;
+    row.querySelector('.row-cost').innerText = `€ ${cost.toFixed(2)}`;
+    
+    totalMonth += cost;
+    instantPower += w;
+    roomData[room] = (roomData[room] || 0) + cost;
+  });
+
+  // Aggiorna UI
+  document.getElementById('resultsArea').style.display = 'block';
+  document.getElementById('totalDisplay').innerText = `€ ${totalMonth.toFixed(2)}`;
+  document.getElementById('instantWatts').innerText = instantPower;
+  
+  // Warning Potenza
+  const pStatus = document.getElementById('powerStatus');
+  if(instantPower > 3300) {
+    pStatus.innerText = "⚠️ SUPERAMENTO 3kW!";
+    pStatus.className = "warning";
+  } else {
+    pStatus.innerText = "✅ Carico OK";
+    pStatus.className = "";
+  }
+
+  updateChart(roomData);
+  updateShareText(totalMonth, roomData);
+  window.scrollTo({ top: document.getElementById('resultsArea').offsetTop - 100, behavior: 'smooth' });
+}
+
+function updateChart(data) {
+  const ctx = document.getElementById('myChart').getContext('2d');
+  if (chart) chart.destroy();
+  chart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: Object.keys(data),
+      datasets: [{
+        data: Object.values(data),
+        backgroundColor: ['#6C5CE7', '#FAB1A0', '#55E6C1', '#FF7675']
+      }]
     }
-    #cookie-banner p {
-      margin: 0 0 12px 0;
-      font-size: 0.95rem;
-      color: #333;
-      line-height: 1.4;
-    }
-    #cookie-banner a {
-      color: #6C5CE7;
-      font-weight: bold;
-      text-decoration: none;
-    }
-    #cookie-btn {
-      background: #6C5CE7;
-      color: white;
-      border: none;
-      padding: 10px 16px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    #cookie-btn:hover {
-      background: #4B3ACB;
-    }
-  </style>
+  });
+}
 
-  <script>
-  (function () {
-    const GA_ID = 'G-CFTTCYDZ2P';
-    const CONSENT_KEY = 'syncras_cookie_consent'; // chiave unica per tutto il sito
+function updateShareText(total, rooms) {
+  let t = `⚡ Ho calcolato i miei consumi su Syncras.App!\n💰 Totale stimato: €${total.toFixed(2)}/mese\n`;
+  for(let r in rooms) { t += `📍 ${r}: €${rooms[r].toFixed(2)}\n`; }
+  document.getElementById('shareText').value = t;
+}
 
-    // 1️⃣ BLOCCO PREVENTIVO: GA disabilitato finché non c'è consenso
-    window['ga-disable-' + GA_ID] = true;
-
-    function loadGoogleAnalytics() {
-      if (window.__syncrasGaLoaded) return;
-      window.__syncrasGaLoaded = true;
-
-      // Riabilita GA solo dopo il consenso
-      window['ga-disable-' + GA_ID] = false;
-
-      const gaScript = document.createElement('script');
-      gaScript.async = true;
-      gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
-      document.head.appendChild(gaScript);
-
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){ dataLayer.push(arguments); }
-      window.gtag = gtag;
-      gtag('js', new Date());
-      gtag('config', GA_ID, { anonymize_ip: true });
-    }
-
-    function showBanner() {
-      const banner = document.getElementById('cookie-banner');
-      if (banner) banner.style.display = 'block';
-    }
-
-    function hideBanner() {
-      const banner = document.getElementById('cookie-banner');
-      if (banner) banner.style.display = 'none';
-    }
-
-    window.acceptCookies = function () {
-      localStorage.setItem(CONSENT_KEY, 'yes');
-      hideBanner();
-      loadGoogleAnalytics();
-    };
-
-    window.rejectCookies = function () {
-      localStorage.setItem(CONSENT_KEY, 'no');
-      hideBanner();
-      // GA resta bloccato
-      window['ga-disable-' + GA_ID] = true;
-    };
-
-    // 2️⃣ FUNZIONE DI REVOCA – per cambiare idea dopo
-    window.revokeCookies = function () {
-      localStorage.removeItem(CONSENT_KEY);
-      window['ga-disable-' + GA_ID] = true;   // blocca subito GA
-      showBanner();                           // ri-mostra il banner
-    };
-
-    document.addEventListener('DOMContentLoaded', function () {
-      const consent = localStorage.getItem(CONSENT_KEY);
-
-      if (consent === 'yes') {
-        loadGoogleAnalytics();
-      } else if (consent === 'no') {
-        window['ga-disable-' + GA_ID] = true;
-      } else {
-        showBanner();
-      }
-    });
-  })();
-  </script>
+function copyText() {
+  const box = document.getElementById('shareText');
+  box.select();
+  document.execCommand('copy');
+  alert("Copiato negli appunti!");
+}
+</script>
 
 </body>
 </html>
-
 
