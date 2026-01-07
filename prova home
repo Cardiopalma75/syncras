@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Calcolatore Consumi Casa 2026 | Syncras.App</title>
+  <title>Calcolatore Consumi Elettrici Casa 2026: Analisi Bolletta per Stanza | Syncras.App</title>
+  <meta name="description" content="Calcola quanto spendi davvero di luce per stanza. Costo in tempo reale + grafico + monitor potenza.">
   
   <script type="application/ld+json">
   {
@@ -12,7 +13,7 @@
     "name": "Calcolatore Consumi Casa per Stanze (Syncras.App)",
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "All",
-    "description": "Calcolatore gratuito per stimare i consumi elettrici per stanza con costo in tempo reale, grafico e monitor di potenza.",
+    "description": "Calcolatore gratuito per stimare i consumi elettrici e il costo in bolletta per stanza.",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
     "url": "https://syncras.app/calcolatore-consumi-casa-per-stanze.html"
   }
@@ -26,43 +27,56 @@
     *{box-sizing:border-box}
     body{margin:0;font-family:Arial, sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
 
-    /* HEADER & NAV */
-    .site-header{ background:linear-gradient(90deg, var(--violet-dark), var(--violet)); color:#fff; padding:12px 14px; position:sticky; top:0; z-index:50; }
+    /* HEADER */
+    .site-header{ background:linear-gradient(90deg, var(--violet-dark), var(--violet)); color:#fff; padding:12px 14px; position:sticky; top:0; z-index:50; box-shadow:0 2px 4px rgba(0,0,0,.15); }
     .header-inner{ max-width:980px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; }
-    .logo{font-size:1.35rem; font-weight:bold;}
-    #main-nav a{color:#fff; text-decoration:none; margin-left:15px; font-weight:700;}
+    .logo{font-size:1.35rem; font-weight:bold; letter-spacing:.03em}
+    #main-nav{display:flex; gap:14px;}
+    #main-nav a{color:#fff; text-decoration:none; font-weight:700; font-size:.95rem}
 
-    /* MONITOR DI POTENZA */
+    /* MONITOR POTENZA */
     .power-monitor {
-      background: #111827; color: #10b981; padding: 12px; border-radius: 12px;
-      margin: 10px 0; display: flex; justify-content: space-between; align-items: center;
-      font-family: monospace; font-size: 0.9rem; border: 2px solid #374151;
+      background: #111827; color: #10b981; padding: 14px; border-radius: 14px;
+      margin: 15px 0; display: flex; justify-content: space-between; align-items: center;
+      font-family: 'Courier New', monospace; border: 2px solid #374151; box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
     }
     .power-monitor .warning { color: #ef4444; animation: blink 1s infinite; font-weight: bold; }
     @keyframes blink { 50% { opacity: 0; } }
 
-    /* CARD & TABLE */
-    main{ max-width:980px; margin:16px auto; padding:16px; background:var(--card); border-radius:14px; box-shadow:0 10px 22px rgba(0,0,0,.06); }
-    .badge{ display:inline-block; padding:3px 9px; border-radius:999px; background:rgba(108,92,231,.1); color:var(--violet-dark); font-weight:900; font-size:.78rem; text-transform:uppercase; }
-    table{width:100%; border-collapse:separate; border-spacing:0 8px}
-    td{background:#fafafa; padding:10px; border-radius:8px; border:1px solid #eee}
-    .rowInput{ width:100%; padding:8px; border-radius:8px; border:1px solid #d1d5db; }
-    .row-cost{ font-weight:bold; color:var(--violet); }
-
-    /* GDPR & WARNINGS */
-    .legal-warning{ display:block; background:#FFF4D6; padding:12px; border-left:4px solid #F59E0B; border-radius:8px; margin:12px 0; font-size:.9rem; }
-    .legal-box{ padding:12px; border:1px solid var(--border); border-radius:12px; margin-bottom:15px; }
+    /* LAYOUT MAIN */
+    main{ max-width:980px; margin:16px auto; padding:16px; background:var(--card); border:1px solid var(--border); border-radius:14px; box-shadow:0 10px 22px rgba(0,0,0,.06); }
+    .badge{ display:inline-block; padding:3px 9px; border-radius:999px; background:rgba(108,92,231,.1); border:1px solid rgba(108,92,231,.2); color:var(--violet-dark); font-weight:900; font-size:.78rem; text-transform:uppercase; margin-bottom:8px; }
+    h1{margin:0 0 8px; color:var(--violet-dark)}
     
-    #cookie-banner{
-      position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
-      width:90%; max-width:420px; background:#fff; border:2px solid var(--violet);
-      padding:16px; border-radius:10px; box-shadow:0 4px 15px rgba(0,0,0,0.2); z-index:9999; display:none;
-    }
+    .topbar{ display:flex; gap:12px; flex-wrap:wrap; padding:15px; background:var(--soft); border-radius:14px; margin:15px 0; border:1px solid rgba(108,92,231,.2); }
+    .field{ display:flex; flex-direction:column; gap:4px; }
+    .field label{ font-weight:900; font-size:.86rem; }
+    .field input{ padding:10px; border-radius:10px; border:1px solid #d1d5db; }
 
-    /* RESULTS */
-    .results-area{ display:none; margin-top:20px; padding:15px; background:var(--soft); border-radius:14px; }
-    .grid2{ display:grid; grid-template-columns: 1fr 1fr; gap:20px; }
-    @media (max-width:768px){ .grid2{grid-template-columns:1fr;} }
+    /* TABELLE */
+    .section{ margin-top:20px; padding:15px; border:1px solid var(--border); border-radius:14px; }
+    .section h2{ margin-top:0; font-size:1.1rem; color:var(--violet-dark); }
+    table{ width:100%; border-collapse:separate; border-spacing:0 10px; }
+    th{ font-size:.8rem; color:var(--muted); text-align:left; padding:0 8px; }
+    td{ background:#fafafa; border:1px solid #eee; padding:12px 10px; vertical-align:middle; }
+    tr td:first-child{ border-radius:12px 0 0 12px; font-weight:bold; }
+    tr td:last-child{ border-radius:0 12px 12px 0; }
+    .rowInput{ width:100%; padding:8px; border-radius:8px; border:1px solid #d1d5db; font-size:.9rem; }
+    .cost-cell{ font-weight:900; color:var(--violet); white-space:nowrap; text-align:right; }
+
+    /* COOKIE & LEGAL */
+    .legal-warning{ background:#FFF4D6; padding:14px; border-left:4px solid #F59E0B; border-radius:10px; margin:15px 0; font-size:.92rem; }
+    #cookie-banner{ position:fixed; bottom:20px; left:50%; transform:translateX(-50%); width:90%; max-width:420px; background:#fff; border:2px solid var(--violet); padding:20px; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.2); z-index:10000; display:none; }
+    
+    /* RISULTATI */
+    .results-box{ display:none; margin-top:25px; padding:20px; background:linear-gradient(135deg, #f3f4ff 0%, #ffffff 100%); border:2px solid var(--violet); border-radius:16px; }
+    .grid2{ display:grid; grid-template-columns: 1fr 1fr; gap:20px; align-items:center; }
+    @media (max-width:800px){ .grid2{grid-template-columns:1fr;} }
+    canvas{ max-width:100%; height:auto !important; }
+
+    .btn{ border:none; border-radius:50px; padding:12px 24px; font-weight:bold; cursor:pointer; transition:all 0.3s; }
+    .btn-main{ background:var(--violet); color:#fff; box-shadow:0 4px 15px rgba(108,92,231,0.4); }
+    .btn-main:disabled{ background:#ccc; box-shadow:none; cursor:not-allowed; }
   </style>
 </head>
 <body>
@@ -73,186 +87,289 @@
     <nav id="main-nav">
       <a href="index.html">Home</a>
       <a href="calcolatori.html">Calcolatori</a>
+      <a href="blog.html">Blog</a>
     </nav>
   </div>
 </header>
 
 <main>
-  <span class="badge">Analisi Energetica 2026</span>
-  <h1>Consumi di casa: chi ti svuota la bolletta? ⚡</h1>
-
+  <span class="badge">Analisi Dettagliata Stanze</span>
+  <h1>Chi consuma di più in casa? ⚡</h1>
+  
   <div class="power-monitor">
-    <div>POTENZA ISTANTANEA: <span id="instantWatts">0</span> W</div>
+    <div>POTENZA ISTANTANEA STIMATA: <span id="instantWatts">0</span> W</div>
     <div id="powerStatus">✅ Carico OK</div>
   </div>
 
-  <div class="legal-warning" id="mainLegalWarning">
-    ⚠️ <strong>Attenzione:</strong> Accetta le note legali per sbloccare i risultati del calcolatore.
+  <div class="topbar">
+    <div class="field">
+      <label>Prezzo €/kWh</label>
+      <input type="number" id="priceKwh" step="0.01" value="0.30" oninput="liveCalc()">
+    </div>
+    <div class="field">
+      <label>Giorni nel Mese</label>
+      <input type="number" id="daysMonth" value="30" oninput="liveCalc()">
+    </div>
+    <div style="flex-grow:1; text-align:right;">
+       <button class="btn" style="background:#fff; border:1px solid #ccc;" onclick="resetData()">↺ Reset</button>
+    </div>
   </div>
 
-  <div class="legal-box">
+  <div class="legal-warning" id="legalNag">
+    💡 <strong>Azione richiesta:</strong> Per visualizzare il grafico e il totale, accetta le note legali qui sotto.
+  </div>
+
+  <div style="padding:15px; border:1px solid var(--border); border-radius:14px; margin-bottom:20px;">
     <label style="display:flex; gap:10px; cursor:pointer;">
-      <input type="checkbox" id="legalAccept" onchange="toggleCalc()">
-      <span>Dichiaro di aver letto le <a href="note-legali.html" target="_blank">Note Legali</a> e accetto che i risultati siano solo stime indicative.</span>
+      <input type="checkbox" id="legalAccept" onchange="toggleLegal()">
+      <span>Accetto le <a href="note-legali.html" target="_blank">Note Legali</a>. Capisco che i dati sono <strong>stime indicative</strong>.</span>
     </label>
   </div>
 
-  <div class="topbar" style="display:flex; gap:15px; margin-bottom:20px; flex-wrap:wrap;">
-    <div>
-      <label>Prezzo €/kWh:</label><br>
-      <input id="priceKwh" type="number" step="0.01" value="0.30" class="rowInput" style="width:100px">
-    </div>
-    <div>
-      <label>Giorni Mese:</label><br>
-      <input id="daysMonth" type="number" value="30" class="rowInput" style="width:80px">
-    </div>
-  </div>
-
   <section class="section">
-    <h3>🍳 Cucina</h3>
+    <h2>🍳 Cucina</h2>
     <table>
-      <tr class="device-row" data-room="Cucina">
-        <td>Frigorifero/Congelatore</td>
-        <td><input type="number" class="w-input rowInput" value="70"> <small>Watt</small></td>
-        <td><input type="number" class="h-input rowInput" value="8"> <small>Ore/gg</small></td>
-        <td class="row-cost">€ 0.00</td>
-      </tr>
-      <tr class="device-row" data-room="Cucina">
-        <td>Lavastoviglie (ciclo)</td>
-        <td><input type="number" class="w-input rowInput" value="1200"> <small>Watt</small></td>
-        <td><input type="number" class="h-input rowInput" value="1.5"> <small>Ore/gg</small></td>
-        <td class="row-cost">€ 0.00</td>
-      </tr>
+      <thead><tr><th>Dispositivo</th><th>Watt</th><th>Ore/gg</th><th>Costo Mese</th></tr></thead>
+      <tbody id="cucina-rows">
+        <tr class="dev-row" data-room="Cucina">
+          <td>Frigorifero / Congelatore</td>
+          <td><input type="number" class="w-in rowInput" value="80"></td>
+          <td><input type="number" class="h-in rowInput" value="8"></td>
+          <td class="cost-cell">€ 0.00</td>
+        </tr>
+        <tr class="dev-row" data-room="Cucina">
+          <td>Forno Elettrico</td>
+          <td><input type="number" class="w-in rowInput" value="2200"></td>
+          <td><input type="number" class="h-in rowInput" value="0.5"></td>
+          <td class="cost-cell">€ 0.00</td>
+        </tr>
+        <tr class="dev-row" data-room="Cucina">
+          <td>Lavastoviglie</td>
+          <td><input type="number" class="w-in rowInput" value="1500"></td>
+          <td><input type="number" class="h-in rowInput" value="1.5"></td>
+          <td class="cost-cell">€ 0.00</td>
+        </tr>
+        <tr class="dev-row" data-room="Cucina">
+          <td>Piano Induzione (1 fuoco)</td>
+          <td><input type="number" class="w-in rowInput" value="1800"></td>
+          <td><input type="number" class="h-in rowInput" value="0.6"></td>
+          <td class="cost-cell">€ 0.00</td>
+        </tr>
+      </tbody>
     </table>
   </section>
 
-  <div class="results-area" id="resultsArea">
-    <div class="grid2">
-      <div>
-        <h2 style="color:var(--violet-dark)">Totale: <span id="totalDisplay">€ 0.00</span></h2>
-        <canvas id="myChart" width="300" height="300"></canvas>
-      </div>
-      <div>
-        <label>Testo da condividere:</label>
-        <textarea id="shareText" class="rowInput" style="height:120px; margin-bottom:10px;" readonly></textarea>
-        <button class="btn" style="background:var(--violet); color:white; border:none; padding:10px; border-radius:8px; cursor:pointer;" onclick="copyText()">📎 Copia Risultato</button>
-      </div>
-    </div>
+  <section class="section">
+    <h2>🚿 Bagno & Lavanderia</h2>
+    <table>
+      <tbody id="bagno-rows">
+        <tr class="dev-row" data-room="Bagno">
+          <td>Lavatrice</td>
+          <td><input type="number" class="w-in rowInput" value="2000"></td>
+          <td><input type="number" class="h-in rowInput" value="1"></td>
+          <td class="cost-cell">€ 0.00</td>
+        </tr>
+        <tr class="dev-row" data-room="Bagno">
+          <td>Asciugatrice</td>
+          <td><input type="number" class="w-in rowInput" value="900"></td>
+          <td><input type="number" class="h-in rowInput" value="1.2"></td>
+          <td class="cost-cell">€ 0.00</td>
+        </tr>
+        <tr class="dev-row" data-room="Bagno">
+          <td>Phon (Asciugacapelli)</td>
+          <td><input type="number" class="w-in rowInput" value="2000"></td>
+          <td><input type="number" class="h-in rowInput" value="0.2"></td>
+          <td class="cost-cell">€ 0.00</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section">
+    <h2>🛋️ Soggiorno & Office</h2>
+    <table>
+      <tbody id="soggiorno-rows">
+        <tr class="dev-row" data-room="Soggiorno">
+          <td>Televisore LED/OLED</td>
+          <td><input type="number" class="w-in rowInput" value="120"></td>
+          <td><input type="number" class="h-in rowInput" value="5"></td>
+          <td class="cost-cell">€ 0.00</td>
+        </tr>
+        <tr class="dev-row" data-room="Soggiorno">
+          <td>PC Desktop / Gaming</td>
+          <td><input type="number" class="w-in rowInput" value="350"></td>
+          <td><input type="number" class="h-in rowInput" value="3"></td>
+          <td class="cost-cell">€ 0.00</td>
+        </tr>
+        <tr class="dev-row" data-room="Soggiorno">
+          <td>Modem Router (24h)</td>
+          <td><input type="number" class="w-in rowInput" value="15"></td>
+          <td><input type="number" class="h-in rowInput" value="24"></td>
+          <td class="cost-cell">€ 0.00</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="section">
+    <h2>❄️ Climatizzazione</h2>
+    <table>
+      <tbody id="clima-rows">
+        <tr class="dev-row" data-room="Clima">
+          <td>Condizionatore (Inverter)</td>
+          <td><input type="number" class="w-in rowInput" value="800"></td>
+          <td><input type="number" class="h-in rowInput" value="4"></td>
+          <td class="cost-cell">€ 0.00</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div style="text-align:center; margin:30px 0;">
+    <button class="btn btn-main" id="calcBtn" onclick="generateResults()" disabled>📊 Genera Grafico & Totale</button>
   </div>
 
-  <div style="text-align:center; margin-top:20px;">
-    <button class="btn" id="calcBtn" onclick="runCalculation()" style="padding:15px 30px; font-weight:bold; background:var(--violet); color:#fff; border-radius:50px; border:none; cursor:pointer; opacity:0.5;" disabled>📊 Calcola Ora</button>
+  <div class="results-box" id="resBox">
+    <div class="grid2">
+      <div>
+        <h2 style="margin:0; font-size:1.8rem;">Totale: <span id="finalTotal">€ 0.00</span></h2>
+        <p class="muted">Stima mensile basata sui tuoi dati.</p>
+        <canvas id="ctxChart"></canvas>
+      </div>
+      <div style="background:#fff; padding:15px; border-radius:12px; border:1px solid #ddd;">
+        <h4 style="margin-top:0;">📤 Condividi Risultato</h4>
+        <textarea id="shareTxt" style="width:100%; height:150px; border:1px solid #ccc; border-radius:8px; padding:10px; font-size:.85rem;" readonly></textarea>
+        <button class="btn btn-main" style="width:100%; margin-top:10px;" onclick="copyOut()">Copia Testo</button>
+      </div>
+    </div>
   </div>
 </main>
 
 <div id="cookie-banner">
-  <p>
-    Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite. 
-    Leggi la <a href="cookie.html">Cookie Policy</a>.
-  </p>
-  <div style="display:flex; gap:10px; margin-top:8px;">
-    <button onclick="rejectCookies()" style="flex:1; background:#fff; border:1px solid var(--violet); border-radius:5px; cursor:pointer;">Rifiuta</button>
-    <button onclick="acceptCookies()" style="flex:1; background:var(--violet); color:#fff; border:none; border-radius:5px; cursor:pointer; font-weight:bold;">Accetta</button>
+  <p>Usiamo cookie tecnici e Google Analytics (anonimo) per migliorare Syncras.App. <a href="cookie.html">Info Privacy</a>.</p>
+  <div style="display:flex; gap:10px; margin-top:15px;">
+    <button onclick="handleCookie(false)" style="flex:1; background:#fff; border:1px solid #ccc; border-radius:8px; cursor:pointer; padding:8px;">Rifiuta</button>
+    <button onclick="handleCookie(true)" style="flex:1; background:var(--violet); color:#fff; border:none; border-radius:8px; cursor:pointer; padding:8px; font-weight:bold;">Accetta</button>
   </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-// --- LOGICA GDPR & NOTE LEGALI ---
-function toggleCalc() {
-  const isAccepted = document.getElementById('legalAccept').checked;
+// --- CORE LOGIC ---
+let chartInstance = null;
+
+function toggleLegal() {
+  const ok = document.getElementById('legalAccept').checked;
   const btn = document.getElementById('calcBtn');
-  btn.disabled = !isAccepted;
-  btn.style.opacity = isAccepted ? "1" : "0.5";
-  if(isAccepted) document.getElementById('mainLegalWarning').style.display = 'none';
+  btn.disabled = !ok;
+  document.getElementById('legalNag').style.display = ok ? 'none' : 'block';
 }
 
-// Cookie Banner Logic
-if (!localStorage.getItem('cookieConsent')) {
-  document.getElementById('cookie-banner').style.display = 'block';
+function liveCalc() {
+  const price = parseFloat(document.getElementById('priceKwh').value) || 0;
+  const days = parseInt(document.getElementById('daysMonth').value) || 30;
+  let instantW = 0;
+
+  document.querySelectorAll('.dev-row').forEach(row => {
+    const w = parseFloat(row.querySelector('.w-in').value) || 0;
+    const h = parseFloat(row.querySelector('.h-in').value) || 0;
+    const cost = (w * h / 1000) * price * days;
+    row.querySelector('.cost-cell').innerText = `€ ${cost.toFixed(2)}`;
+    instantW += w;
+  });
+
+  document.getElementById('instantWatts').innerText = instantW;
+  const status = document.getElementById('powerStatus');
+  if(instantW > 3300) {
+    status.innerText = "⚠️ SUPERAMENTO 3kW";
+    status.className = "warning";
+  } else {
+    status.innerText = "✅ Carico OK";
+    status.className = "";
+  }
 }
 
-function acceptCookies() {
-  localStorage.setItem('cookieConsent', 'accepted');
-  document.getElementById('cookie-banner').style.display = 'none';
-}
-
-function rejectCookies() {
-  localStorage.setItem('cookieConsent', 'rejected');
-  document.getElementById('cookie-banner').style.display = 'none';
-}
-
-// --- LOGICA CALCOLATORE ---
-let chart;
-function runCalculation() {
+function generateResults() {
   const price = parseFloat(document.getElementById('priceKwh').value);
   const days = parseInt(document.getElementById('daysMonth').value);
-  let totalMonth = 0;
-  let instantPower = 0;
-  let roomData = {};
+  let grandTotal = 0;
+  let roomTotals = {};
 
-  document.querySelectorAll('.device-row').forEach(row => {
-    const w = parseFloat(row.querySelector('.w-input').value) || 0;
-    const h = parseFloat(row.querySelector('.h-input').value) || 0;
+  document.querySelectorAll('.dev-row').forEach(row => {
+    const w = parseFloat(row.querySelector('.w-in').value) || 0;
+    const h = parseFloat(row.querySelector('.h-in').value) || 0;
     const room = row.getAttribute('data-room');
-    
     const cost = (w * h / 1000) * price * days;
-    row.querySelector('.row-cost').innerText = `€ ${cost.toFixed(2)}`;
     
-    totalMonth += cost;
-    instantPower += w;
-    roomData[room] = (roomData[room] || 0) + cost;
+    grandTotal += cost;
+    roomTotals[room] = (roomTotals[room] || 0) + cost;
   });
 
-  // Aggiorna UI
-  document.getElementById('resultsArea').style.display = 'block';
-  document.getElementById('totalDisplay').innerText = `€ ${totalMonth.toFixed(2)}`;
-  document.getElementById('instantWatts').innerText = instantPower;
+  document.getElementById('resBox').style.display = 'block';
+  document.getElementById('finalTotal').innerText = `€ ${grandTotal.toFixed(2)}`;
   
-  // Warning Potenza
-  const pStatus = document.getElementById('powerStatus');
-  if(instantPower > 3300) {
-    pStatus.innerText = "⚠️ SUPERAMENTO 3kW!";
-    pStatus.className = "warning";
-  } else {
-    pStatus.innerText = "✅ Carico OK";
-    pStatus.className = "";
-  }
-
-  updateChart(roomData);
-  updateShareText(totalMonth, roomData);
-  window.scrollTo({ top: document.getElementById('resultsArea').offsetTop - 100, behavior: 'smooth' });
-}
-
-function updateChart(data) {
-  const ctx = document.getElementById('myChart').getContext('2d');
-  if (chart) chart.destroy();
-  chart = new Chart(ctx, {
+  // Update Chart
+  const ctx = document.getElementById('ctxChart').getContext('2d');
+  if(chartInstance) chartInstance.destroy();
+  chartInstance = new Chart(ctx, {
     type: 'doughnut',
     data: {
-      labels: Object.keys(data),
+      labels: Object.keys(roomTotals),
       datasets: [{
-        data: Object.values(data),
-        backgroundColor: ['#6C5CE7', '#FAB1A0', '#55E6C1', '#FF7675']
+        data: Object.values(roomTotals),
+        backgroundColor: ['#6C5CE7', '#A29BFE', '#FAB1A0', '#55E6C1', '#FF7675']
       }]
-    }
+    },
+    options: { plugins: { legend: { position: 'bottom' } } }
   });
+
+  // Share Text
+  let txt = `⚡ Analisi Consumi Syncras.App\n💰 Spesa Mensile: €${grandTotal.toFixed(2)}\n\n`;
+  for(let r in roomTotals) {
+    txt += `▪️ ${r}: €${roomTotals[r].toFixed(2)}\n`;
+  }
+  document.getElementById('shareTxt').value = txt;
+  
+  window.scrollTo({ top: document.getElementById('resBox').offsetTop - 50, behavior: 'smooth' });
 }
 
-function updateShareText(total, rooms) {
-  let t = `⚡ Ho calcolato i miei consumi su Syncras.App!\n💰 Totale stimato: €${total.toFixed(2)}/mese\n`;
-  for(let r in rooms) { t += `📍 ${r}: €${rooms[r].toFixed(2)}\n`; }
-  document.getElementById('shareText').value = t;
-}
-
-function copyText() {
-  const box = document.getElementById('shareText');
-  box.select();
+// --- UTILS ---
+function copyOut() {
+  const t = document.getElementById('shareTxt');
+  t.select();
   document.execCommand('copy');
-  alert("Copiato negli appunti!");
+  alert("Copiato!");
+}
+
+function handleCookie(acc) {
+  localStorage.setItem('syncras_cookie', acc ? 'yes' : 'no');
+  document.getElementById('cookie-banner').style.display = 'none';
+}
+
+window.onload = () => {
+  if(!localStorage.getItem('syncras_cookie')) document.getElementById('cookie-banner').style.display = 'block';
+  liveCalc();
+  
+  // Auto-save/load input values
+  const inputs = document.querySelectorAll('input');
+  inputs.forEach(i => {
+    i.addEventListener('change', () => {
+       const data = {};
+       document.querySelectorAll('.dev-row').forEach((r, idx) => {
+         data[idx] = { w: r.querySelector('.w-in').value, h: r.querySelector('.h-in').value };
+       });
+       localStorage.setItem('syncras_state', JSON.stringify(data));
+    });
+  });
+};
+
+function resetData() {
+  if(confirm("Vuoi resettare tutti i valori?")) {
+    localStorage.removeItem('syncras_state');
+    location.reload();
+  }
 }
 </script>
 
 </body>
 </html>
-
