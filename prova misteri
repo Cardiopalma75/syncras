@@ -3,17 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Calcolatori Elettrodomestici (modulo) – Syncras</title>
+  <title>Modulo Calcolo Consumi Elettrodomestici – Syncras</title>
 
   <style>
     :root{
-      --violet-main:#6C5CE7;
+      --violet:#6C5CE7;
       --violet-dark:#4B3ACB;
       --bg:#F7F7FB;
-      --text:#403E43;
       --card:#ffffff;
       --border:#e5e7eb;
-      --soft:#f8f9ff;
+      --text:#1f2937;
+      --muted:#6b7280;
+      --soft:#f3f4ff;
     }
     *{box-sizing:border-box}
     body{
@@ -21,556 +22,978 @@
       font-family:Arial, sans-serif;
       background:var(--bg);
       color:var(--text);
-      line-height:1.6;
+      line-height:1.5;
     }
     main{
       max-width:980px;
-      margin:18px auto 28px;
-      padding:18px 16px 24px;
+      margin:16px auto 26px;
+      padding:16px 14px 22px;
       background:var(--card);
       border:1px solid var(--border);
+      border-radius:14px;
+      box-shadow:0 8px 18px rgba(0,0,0,.06);
+    }
+    h1,h2{margin:0 0 10px; color:var(--violet-dark)}
+    .sub{color:var(--muted); margin:0 0 12px; font-size:.95rem}
+
+    .topbar{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:flex-end;
+      justify-content:space-between;
+      margin:10px 0 14px;
+      padding:12px;
       border-radius:12px;
-      box-shadow:0 4px 10px rgba(0,0,0,0.06);
+      background:linear-gradient(90deg, rgba(108,92,231,.10), rgba(75,58,203,.08));
+      border:1px solid rgba(108,92,231,.25);
     }
-    h1,h2,h3{color:var(--violet-dark); margin:0 0 10px}
-    .intro{
-      border-bottom:1px solid #e5e7eb;
-      padding-bottom:12px;
-      margin-bottom:16px;
+    .priceBox{
+      display:flex;
+      align-items:end;
+      gap:10px;
+      flex-wrap:wrap;
     }
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+      min-width:210px;
+    }
+    .field label{font-weight:700; font-size:.86rem}
+    .field input{
+      padding:9px 10px;
+      border-radius:10px;
+      border:1px solid #d1d5db;
+      font-size:1rem;
+      background:#fff;
+    }
+    .hint{font-size:.82rem; color:var(--muted)}
+    .btn{
+      border:none;
+      border-radius:999px;
+      padding:10px 14px;
+      font-weight:800;
+      cursor:pointer;
+      background:linear-gradient(90deg, var(--violet-dark), var(--violet));
+      color:#fff;
+      box-shadow:0 6px 14px rgba(0,0,0,.12);
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+    }
+    .btn:active{transform:translateY(1px)}
+    .btn.secondary{
+      background:#fff;
+      color:var(--violet-dark);
+      border:2px solid rgba(108,92,231,.55);
+      box-shadow:none;
+      font-weight:800;
+    }
+
+    .legal{
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:#fff;
+      font-size:.92rem;
+    }
+    .legal a{color:var(--violet); font-weight:800; text-decoration:underline}
     .badge{
       display:inline-block;
-      font-size:.75rem;
-      text-transform:uppercase;
-      letter-spacing:.08em;
-      background:rgba(108,92,231,0.08);
-      border:1px solid rgba(108,92,231,0.35);
+      padding:3px 9px;
       border-radius:999px;
-      padding:2px 8px;
-      color:#3730a3;
+      background:rgba(108,92,231,.10);
+      border:1px solid rgba(108,92,231,.25);
+      color:#312e81;
+      font-weight:800;
+      font-size:.78rem;
+      letter-spacing:.05em;
+      text-transform:uppercase;
       margin-bottom:6px;
     }
 
-    .legal-box{
-      margin-top:12px;
-      padding:10px 12px;
+    .section{
+      margin-top:16px;
+      padding:14px;
+      border-radius:14px;
       background:#fff;
-      border-radius:10px;
-      border:1px solid #e5e7eb;
-      font-size:.92rem;
+      border:1px solid var(--border);
     }
-    .legal-box a{color:var(--violet-main); font-weight:700; text-decoration:underline}
-    .legal-small{margin:6px 0 0; font-size:.82rem; color:#6b7280}
-
-    .jump{
-      margin:14px 0 18px;
-      padding:10px 12px;
-      border-radius:10px;
-      background:#f3f4ff;
-      border:1px solid #d4d7ff;
-      font-size:.9rem;
-    }
-    .jump strong{display:block; margin-bottom:6px; color:#312e81}
-    .jump a{
-      display:inline-block;
-      margin:3px 6px 3px 0;
-      padding:4px 10px;
-      border-radius:999px;
-      background:#fff;
-      border:1px solid #d4d7ff;
-      text-decoration:none;
-      font-weight:700;
-      color:var(--violet-dark);
-      font-size:.85rem;
-    }
-    .jump a:hover{background:#e5e7ff; border-color:#a5b4fc}
-
-    .calc{
-      margin:22px 0;
-      padding:18px 16px 16px;
-      border-radius:12px;
-      background:var(--soft);
-      border:1px solid #e0e7ff;
-    }
-    .calc-head{
+    .sectionHead{
       display:flex;
-      justify-content:space-between;
       align-items:baseline;
+      justify-content:space-between;
       gap:10px;
       flex-wrap:wrap;
-      margin-bottom:8px;
+      margin-bottom:10px;
     }
-    .calc-head small{color:#6b7280}
-
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(4, minmax(0, 1fr));
-      gap:12px 14px;
-      margin-top:10px;
-    }
-    .field label{
-      display:block;
-      font-size:.85rem;
-      font-weight:700;
-      margin-bottom:2px;
-    }
-    .field input, .field select{
+    .sectionHead small{color:var(--muted)}
+    table{
       width:100%;
-      padding:7px 8px;
-      border-radius:7px;
-      border:1px solid #d1d5db;
-      font-size:.92rem;
-      background:#fff;
+      border-collapse:separate;
+      border-spacing:0 10px;
     }
-    .btn{
-      margin-top:14px;
-      padding:10px 16px;
-      border-radius:9px;
-      border:none;
-      background:var(--violet-main);
-      color:#fff;
+    th{
+      text-align:left;
+      font-size:.82rem;
+      color:var(--muted);
       font-weight:800;
-      font-size:.92rem;
-      cursor:pointer;
+      padding:0 8px;
     }
-    .btn:hover{background:var(--violet-dark)}
-    .result{
-      margin-top:12px;
-      padding:10px 12px;
+    td{
+      background:#fafafa;
+      border:1px solid #eee;
+      padding:10px 8px;
+      vertical-align:middle;
+    }
+    tr td:first-child{border-radius:12px 0 0 12px}
+    tr td:last-child{border-radius:0 12px 12px 0}
+    .nameCell{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:800;
+    }
+    .icon{
+      width:34px;
+      height:34px;
       border-radius:10px;
-      background:#fff;
-      border:1px solid #ede9fe;
-      box-shadow:0 2px 6px rgba(0,0,0,0.05);
-      font-size:.92rem;
-      display:none;
+      display:grid;
+      place-items:center;
+      background:var(--soft);
+      border:1px solid rgba(108,92,231,.18);
+      font-size:18px;
     }
-    .note{margin-top:8px; font-size:.82rem; color:#6b7280}
+    .mini{
+      font-size:.8rem;
+      color:var(--muted);
+      font-weight:700;
+      margin-top:2px;
+    }
 
-    @media (max-width: 920px){
-      .grid{grid-template-columns:repeat(2, minmax(0,1fr))}
+    .rowInput{
+      width:100%;
+      padding:8px 9px;
+      border-radius:10px;
+      border:1px solid #d1d5db;
+      background:#fff;
+      font-size:.95rem;
     }
-    @media (max-width: 600px){
-      main{margin:12px auto 20px; padding:14px 10px 18px}
-      .grid{grid-template-columns:1fr}
+    .rowSelect{
+      width:100%;
+      padding:8px 9px;
+      border-radius:10px;
+      border:1px solid #d1d5db;
+      background:#fff;
+      font-size:.95rem;
+      font-weight:700;
+    }
+
+    .costCell{
+      font-weight:900;
+      color:#111827;
+      white-space:nowrap;
+    }
+    .mutedCost{
+      display:block;
+      font-size:.8rem;
+      color:var(--muted);
+      font-weight:700;
+      margin-top:3px;
+    }
+
+    .toggleBox{
+      margin-top:12px;
+      padding:12px;
+      border-radius:14px;
+      background:#f3f4ff;
+      border:1px solid rgba(108,92,231,.25);
+    }
+    .toggleRow{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .toggleRow strong{color:#312e81}
+    .advanced{
+      display:none;
+      margin-top:12px;
+    }
+
+    .results{
+      margin-top:16px;
+      padding:14px;
+      border-radius:14px;
+      border:1px solid rgba(108,92,231,.25);
+      background:linear-gradient(90deg, rgba(108,92,231,.10), rgba(75,58,203,.08));
+    }
+    .grid2{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:14px;
+      align-items:center;
+    }
+    .bigNum{
+      font-size:1.25rem;
+      font-weight:900;
+      color:#111827;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      background:#fff;
+      border:1px solid rgba(108,92,231,.25);
+      font-weight:800;
+      margin:6px 6px 0 0;
+    }
+    canvas{
+      width:100%;
+      max-width:360px;
+      height:auto;
+      background:#fff;
+      border:1px solid rgba(108,92,231,.20);
+      border-radius:14px;
+      padding:6px;
+    }
+    .shareBox{
+      margin-top:12px;
+      padding:12px;
+      border-radius:14px;
+      background:#fff;
+      border:1px solid rgba(108,92,231,.22);
+    }
+    .shareText{
+      width:100%;
+      min-height:92px;
+      resize:vertical;
+      border-radius:12px;
+      border:1px solid #d1d5db;
+      padding:10px;
+      font-size:.92rem;
+    }
+
+    @media (max-width: 840px){
+      .grid2{grid-template-columns:1fr}
     }
   </style>
 </head>
 
 <body>
-  <main>
-    <section class="intro">
-      <span class="badge">Modulo – Calcolatori Elettrodomestici</span>
-      <h1>Calcolatori consumi elettrodomestici (solo tool)</h1>
-      <p style="margin:6px 0 0; color:#4b5563; font-size:.95rem;">
-        Versione temporanea “modulare”: qui ci sono solo i calcoli e l’interfaccia.
-        In seguito la integreremo nella pagina definitiva con GDPR, header/footer e SEO.
-      </p>
+<main>
+  <span class="badge">Simulazione rapida</span>
+  <h1>Scopri dove se ne va davvero la tua corrente ⚡</h1>
+  <p class="sub">Bastano 2 minuti. I valori sono <strong>suggeriti</strong>, ma puoi cambiarli. Il costo per riga si aggiorna mentre scrivi.</p>
 
-      <div class="legal-box">
-        <label>
-          <input type="checkbox" id="legalAccept">
-          Prima di procedere, ricorda che i risultati sono <strong>stime indicative</strong>.
-          Per i dettagli consulta le <a href="note-legali.html" target="_blank" rel="noopener">Note Legali</a>.
-        </label>
-        <p class="legal-small">
-          I risultati dipendono dai dati inseriti e da ipotesi semplificate. Non costituiscono consulenza professionale.
-        </p>
-      </div>
-    </section>
-
-    <nav class="jump">
-      <strong>Vai al calcolatore:</strong>
-      <a href="#calc-stufetta">Stufetta</a>
-      <a href="#calc-tv">TV</a>
-      <a href="#calc-lavatrice">Lavatrice</a>
-      <a href="#calc-forno">Forno</a>
-      <a href="#calc-lavastoviglie">Lavastoviglie</a>
-      <a href="#calc-asciugatrice">Asciugatrice</a>
-    </nav>
-
-    <!-- STUFETTA -->
-    <section class="calc" id="calc-stufetta">
-      <div class="calc-head">
-        <h2>Stufetta elettrica</h2>
-        <small>“Solo 10 minuti” spesso non sono solo 10 minuti.</small>
+  <div class="topbar">
+    <div class="priceBox">
+      <div class="field">
+        <label for="priceKwh">Prezzo energia (€/kWh)</label>
+        <input id="priceKwh" type="number" step="0.01" min="0.05" max="2" value="0.30" />
+        <div class="hint">Esempio: 0,30 €/kWh (modifica col tuo valore)</div>
       </div>
 
-      <div class="grid">
-        <div class="field">
-          <label>Potenza (W)</label>
-          <input type="number" id="stufettaWatt" min="200" max="3000" value="2000">
+      <div class="field" style="min-width:240px">
+        <label for="daysMonth">Giorni nel mese</label>
+        <input id="daysMonth" type="number" min="28" max="31" value="30" />
+        <div class="hint">Serve per i dispositivi “a ore/giorno”.</div>
+      </div>
+    </div>
+
+    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+      <button class="btn secondary" type="button" id="resetBtn">↺ Reset</button>
+      <button class="btn" type="button" id="calcBtn">📊 Calcola & Grafico</button>
+    </div>
+  </div>
+
+  <div class="legal">
+    <label style="display:flex; gap:10px; align-items:flex-start;">
+      <input type="checkbox" id="legalAccept" style="margin-top:4px;">
+      <span>
+        Prima di procedere: risultati = <strong>stime indicative</strong>. Dettagli nelle
+        <a href="note-legali.html" target="_blank" rel="noopener">Note Legali</a>.
+        <span style="display:block; margin-top:6px; color:var(--muted); font-size:.82rem;">
+          Non è consulenza professionale. Serve per capire “chi pesa davvero” nella tua bolletta.
+        </span>
+      </span>
+    </label>
+  </div>
+
+  <!-- ============= ESSENZIALE (DEFAULT) ============= -->
+  <section class="section" id="base">
+    <div class="sectionHead">
+      <h2>Analisi Rapida (Essenziale)</h2>
+      <small>11 righe = risultato veloce + affidabile</small>
+    </div>
+
+    <!-- CUCINA -->
+    <h3 style="margin:6px 0 8px; color:var(--violet-dark)">🍳 Cucina</h3>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:34%">Dispositivo</th>
+          <th style="width:18%">Watt (W)</th>
+          <th style="width:18%">Ore/giorno</th>
+          <th style="width:30%">Costo stimato</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-type="power" data-cat="Cucina">
+          <td>
+            <div class="nameCell">
+              <div class="icon">🧊</div>
+              <div>
+                Frigorifero / Congelatore
+                <div class="mini">Consumo medio “ciclico” (24h)</div>
+              </div>
+            </div>
+          </td>
+          <td><input class="rowInput watt" type="number" min="10" max="300" value="70"></td>
+          <td><input class="rowInput hours" type="number" min="0" max="24" step="0.25" value="24"></td>
+          <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
+        </tr>
+
+        <tr data-type="power" data-cat="Cucina">
+          <td>
+            <div class="nameCell">
+              <div class="icon">🔥</div>
+              <div>
+                Forno elettrico
+                <div class="mini">Media semplificata</div>
+              </div>
+            </div>
+          </td>
+          <td><input class="rowInput watt" type="number" min="500" max="3500" value="2200"></td>
+          <td><input class="rowInput hours" type="number" min="0" max="6" step="0.25" value="0.4"></td>
+          <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
+        </tr>
+
+        <tr data-type="cycle" data-cat="Cucina">
+          <td>
+            <div class="nameCell">
+              <div class="icon">🍽️</div>
+              <div>
+                Lavastoviglie
+                <div class="mini">kWh per ciclo</div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <input class="rowInput kwhCycle" type="number" min="0" max="5" step="0.1" value="1.0">
+            <div class="mini">kWh/ciclo</div>
+          </td>
+          <td>
+            <input class="rowInput cyclesW" type="number" min="0" max="21" step="1" value="5">
+            <div class="mini">cicli/settimana</div>
+          </td>
+          <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
+        </tr>
+
+        <tr data-type="power" data-cat="Cucina" data-alt="true">
+          <td>
+            <div class="nameCell">
+              <div class="icon">⚡</div>
+              <div>
+                Cottura rapida
+                <div class="mini">Scegli 1: induzione o microonde</div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <select class="rowSelect altSelect">
+              <option value="1800">Induzione (1 fuoco) ~ 1800 W</option>
+              <option value="1000">Microonde ~ 1000 W</option>
+            </select>
+            <div class="mini">W suggeriti</div>
+          </td>
+          <td><input class="rowInput hours" type="number" min="0" max="6" step="0.05" value="0.5"></td>
+          <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- BAGNO/LAVANDERIA -->
+    <h3 style="margin:14px 0 8px; color:var(--violet-dark)">🚿 Lavanderia & Bagno</h3>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:34%">Dispositivo</th>
+          <th style="width:18%">kWh/ciclo o W</th>
+          <th style="width:18%">Uso</th>
+          <th style="width:30%">Costo stimato</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-type="cycle" data-cat="Picchi">
+          <td>
+            <div class="nameCell">
+              <div class="icon">👕</div>
+              <div>
+                Lavatrice
+                <div class="mini">kWh per ciclo</div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <input class="rowInput kwhCycle" type="number" min="0" max="5" step="0.1" value="1.0">
+            <div class="mini">kWh/ciclo</div>
+          </td>
+          <td>
+            <input class="rowInput cyclesW" type="number" min="0" max="30" step="1" value="5">
+            <div class="mini">lavaggi/settimana</div>
+          </td>
+          <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
+        </tr>
+
+        <tr data-type="cycle" data-cat="Picchi">
+          <td>
+            <div class="nameCell">
+              <div class="icon">🌪️</div>
+              <div>
+                Asciugatrice
+                <div class="mini">Seleziona tipo</div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <select class="rowSelect dryerPreset">
+              <option value="2.0">Pompa di calore ~ 2,0 kWh/ciclo</option>
+              <option value="3.5">Resistenza ~ 3,5 kWh/ciclo</option>
+            </select>
+            <div class="mini">kWh/ciclo</div>
+          </td>
+          <td>
+            <input class="rowInput cyclesW" type="number" min="0" max="21" step="1" value="4">
+            <div class="mini">cicli/settimana</div>
+          </td>
+          <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
+        </tr>
+
+        <tr data-type="power" data-cat="Picchi">
+          <td>
+            <div class="nameCell">
+              <div class="icon">💨</div>
+              <div>
+                Phon
+                <div class="mini">Qui sorprende: alta potenza, poco tempo</div>
+              </div>
+            </div>
+          </td>
+          <td><input class="rowInput watt" type="number" min="200" max="3000" value="2000"></td>
+          <td><input class="rowInput hours" type="number" min="0" max="3" step="0.05" value="0.17"></td>
+          <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- SOGGIORNO / OFFICE -->
+    <h3 style="margin:14px 0 8px; color:var(--violet-dark)">🛋️ Soggiorno & Home Office</h3>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:34%">Dispositivo</th>
+          <th style="width:18%">Watt (W)</th>
+          <th style="width:18%">Ore/giorno</th>
+          <th style="width:30%">Costo stimato</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-type="power" data-cat="Vampiri">
+          <td>
+            <div class="nameCell">
+              <div class="icon">📺</div>
+              <div>
+                Televisore
+                <div class="mini">LED/OLED medio</div>
+              </div>
+            </div>
+          </td>
+          <td><input class="rowInput watt" type="number" min="20" max="500" value="120"></td>
+          <td><input class="rowInput hours" type="number" min="0" max="24" step="0.25" value="4"></td>
+          <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
+        </tr>
+
+        <tr data-type="power" data-cat="Vampiri">
+          <td>
+            <div class="nameCell">
+              <div class="icon">🌐</div>
+              <div>
+                Modem + Router
+                <div class="mini">Sempre acceso (24h)</div>
+              </div>
+            </div>
+          </td>
+          <td><input class="rowInput watt" type="number" min="2" max="60" value="15"></td>
+          <td><input class="rowInput hours" type="number" min="0" max="24" step="0.25" value="24"></td>
+          <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
+        </tr>
+
+        <tr data-type="power" data-cat="Vampiri">
+          <td>
+            <div class="nameCell">
+              <div class="icon">🖥️</div>
+              <div>
+                Computer
+                <div class="mini">Scegli 1: PC fisso o Laptop</div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <select class="rowSelect pcPreset">
+              <option value="400">PC fisso (medio) ~ 400 W</option>
+              <option value="50">Laptop ~ 50 W</option>
+            </select>
+            <div class="mini">W suggeriti</div>
+          </td>
+          <td><input class="rowInput hours" type="number" min="0" max="24" step="0.25" value="3"></td>
+          <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- CLIMA -->
+    <h3 style="margin:14px 0 8px; color:var(--violet-dark)">❄️🔥 Climatizzazione</h3>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:34%">Dispositivo</th>
+          <th style="width:18%">Watt (W)</th>
+          <th style="width:18%">Ore/giorno</th>
+          <th style="width:30%">Costo stimato</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-type="power" data-cat="Clima">
+          <td>
+            <div class="nameCell">
+              <div class="icon">❄️</div>
+              <div>
+                Condizionatore (inverter)
+                <div class="mini">Valore medio a regime</div>
+              </div>
+            </div>
+          </td>
+          <td><input class="rowInput watt" type="number" min="100" max="3000" value="800"></td>
+          <td><input class="rowInput hours" type="number" min="0" max="24" step="0.25" value="2"></td>
+          <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
+        </tr>
+
+        <tr data-type="power" data-cat="Clima">
+          <td>
+            <div class="nameCell">
+              <div class="icon">🔥</div>
+              <div>
+                Stufetta / Termoventilatore
+                <div class="mini">Mettila solo se la usi davvero</div>
+              </div>
+            </div>
+          </td>
+          <td><input class="rowInput watt" type="number" min="200" max="3000" value="0"></td>
+          <td><input class="rowInput hours" type="number" min="0" max="24" step="0.25" value="0"></td>
+          <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Toggle avanzato -->
+    <div class="toggleBox">
+      <div class="toggleRow">
+        <div>
+          <strong>➕ Vuoi un’analisi più dettagliata?</strong>
+          <div class="hint">Aggiungi consumi nascosti e standby (quelli che sorprendono).</div>
         </div>
-        <div class="field">
-          <label>Ore al giorno</label>
-          <input type="number" id="stufettaOre" min="0.25" max="24" step="0.25" value="2">
+        <button class="btn secondary" type="button" id="toggleAdvanced">Mostra consumi nascosti</button>
+      </div>
+
+      <div class="advanced" id="advancedBlock">
+        <h3 style="margin:10px 0 8px; color:var(--violet-dark)">🧛 Consumi nascosti (Avanzato)</h3>
+
+        <table>
+          <thead>
+            <tr>
+              <th style="width:34%">Dispositivo</th>
+              <th style="width:18%">Watt (W)</th>
+              <th style="width:18%">Ore/giorno</th>
+              <th style="width:30%">Costo stimato</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-type="power" data-cat="Standby">
+              <td>
+                <div class="nameCell">
+                  <div class="icon">📦</div>
+                  <div>
+                    Decoder / Box TV
+                    <div class="mini">spesso resta acceso “per comodità”</div>
+                  </div>
+                </div>
+              </td>
+              <td><input class="rowInput watt" type="number" min="0" max="200" value="20"></td>
+              <td><input class="rowInput hours" type="number" min="0" max="24" step="0.25" value="24"></td>
+              <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
+            </tr>
+
+            <tr data-type="power" data-cat="Standby">
+              <td>
+                <div class="nameCell">
+                  <div class="icon">🎮</div>
+                  <div>
+                    Console / Gaming
+                    <div class="mini">dipende dal gioco + standby</div>
+                  </div>
+                </div>
+              </td>
+              <td><input class="rowInput watt" type="number" min="0" max="800" value="180"></td>
+              <td><input class="rowInput hours" type="number" min="0" max="24" step="0.25" value="1"></td>
+              <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
+            </tr>
+
+            <tr data-type="power" data-cat="Cucina">
+              <td>
+                <div class="nameCell">
+                  <div class="icon">☕</div>
+                  <div>
+                    Macchina caffè (capsule)
+                    <div class="mini">picco alto, uso breve</div>
+                  </div>
+                </div>
+              </td>
+              <td><input class="rowInput watt" type="number" min="0" max="2000" value="1200"></td>
+              <td><input class="rowInput hours" type="number" min="0" max="6" step="0.05" value="0.10"></td>
+              <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
+            </tr>
+
+            <tr data-type="power" data-cat="Cucina">
+              <td>
+                <div class="nameCell">
+                  <div class="icon">🫖</div>
+                  <div>
+                    Bollitore
+                    <div class="mini">potente, ma per pochi minuti</div>
+                  </div>
+                </div>
+              </td>
+              <td><input class="rowInput watt" type="number" min="0" max="3000" value="2000"></td>
+              <td><input class="rowInput hours" type="number" min="0" max="2" step="0.05" value="0.08"></td>
+              <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
+            </tr>
+
+            <tr data-type="power" data-cat="Standby">
+              <td>
+                <div class="nameCell">
+                  <div class="icon">🔌</div>
+                  <div>
+                    “Standby generico” (se ci credi)
+                    <div class="mini">somma di lucine, alimentatori, ecc.</div>
+                  </div>
+                </div>
+              </td>
+              <td><input class="rowInput watt" type="number" min="0" max="200" value="15"></td>
+              <td><input class="rowInput hours" type="number" min="0" max="24" step="0.25" value="24"></td>
+              <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ============= RISULTATI ============= -->
+  <section class="results" id="results" style="display:none;">
+    <h2 style="margin-bottom:6px;">📍 La vera mappa della tua bolletta</h2>
+    <div class="grid2">
+      <div>
+        <div class="bigNum">Totale stimato: <span id="totalMonth">—</span> / mese</div>
+        <div class="hint" style="margin-top:6px;">
+          Percentuali per categoria (max 5 spicchi: se serve raggruppiamo).
         </div>
-        <div class="field">
-          <label>Giorni al mese</label>
-          <input type="number" id="stufettaGiorni" min="1" max="31" value="20">
-        </div>
-        <div class="field">
-          <label>Prezzo energia (€/kWh)</label>
-          <input type="number" id="stufettaPrezzo" min="0.1" max="1" step="0.01" value="0.30">
+
+        <div id="pills"></div>
+
+        <div class="shareBox">
+          <div style="font-weight:900; margin-bottom:8px;">📤 Condividi (stile “scoperta”, non pubblicità)</div>
+          <textarea id="shareText" class="shareText" readonly></textarea>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
+            <button class="btn" type="button" id="copyBtn">📎 Copia testo</button>
+            <button class="btn secondary" type="button" id="nativeShareBtn">📲 Condividi</button>
+          </div>
+          <div class="hint" style="margin-top:8px;">
+            Suggerimento: incolla su WhatsApp/Telegram/Quora come “esperienza personale”.
+          </div>
         </div>
       </div>
 
-      <button class="btn" type="button" onclick="calcolaStufetta()">Calcola</button>
-      <div id="stufettaResult" class="result"></div>
-      <div class="note">Nota: stima semplificata, non considera termostati/timer e dispersioni della stanza.</div>
-    </section>
-
-    <!-- TV -->
-    <section class="calc" id="calc-tv">
-      <div class="calc-head">
-        <h2>TV (LED / OLED / Plasma / CRT)</h2>
-        <small>La TV che “fa compagnia” spesso costa più di quanto pensi.</small>
+      <div style="display:flex; justify-content:center;">
+        <canvas id="pie" width="360" height="360"></canvas>
       </div>
+    </div>
+  </section>
+</main>
 
-      <div class="grid">
-        <div class="field">
-          <label>Potenza base (W)</label>
-          <input type="number" id="tvWatt" min="20" max="400" value="100">
-        </div>
-        <div class="field">
-          <label>Ore al giorno</label>
-          <input type="number" id="tvHours" min="0.25" max="24" step="0.25" value="3">
-        </div>
-        <div class="field">
-          <label>Prezzo energia (€/kWh)</label>
-          <input type="number" id="tvPrice" min="0.10" max="1" step="0.01" value="0.30">
-        </div>
-        <div class="field">
-          <label>Tipo / Età TV</label>
-          <select id="tvType">
-            <option value="1">LED / LCD moderno (2015–oggi)</option>
-            <option value="1.1">OLED moderno (2017–oggi)</option>
-            <option value="2.5">Plasma (2005–2013)</option>
-            <option value="3">CRT / Tubo catodico (fino al 2005)</option>
-          </select>
-        </div>
-      </div>
+<script>
+  // ===== Utils =====
+  function euro(n){
+    if (!isFinite(n)) return "—";
+    return n.toFixed(2).replace(".", ",") + " €";
+  }
+  function clamp(n, min, max){
+    return Math.max(min, Math.min(max, n));
+  }
 
-      <button class="btn" type="button" onclick="calcolaTV()">Calcola</button>
-      <div id="tvResult" class="result"></div>
-      <div class="note">Nota: stima semplificata; luminosità e contenuti influenzano i consumi reali.</div>
-    </section>
+  const priceKwhEl = document.getElementById("priceKwh");
+  const daysMonthEl = document.getElementById("daysMonth");
+  const legalEl = document.getElementById("legalAccept");
 
-    <!-- LAVATRICE -->
-    <section class="calc" id="calc-lavatrice">
-      <div class="calc-head">
-        <h2>Lavatrice</h2>
-        <small>Stima costo per ciclo + mese + anno.</small>
-      </div>
+  const calcBtn = document.getElementById("calcBtn");
+  const resetBtn = document.getElementById("resetBtn");
 
-      <div class="grid">
-        <div class="field">
-          <label>Consumo ciclo (kWh)</label>
-          <input type="number" id="lavCiclo" min="0.3" max="3" step="0.1" value="1.0">
-        </div>
-        <div class="field">
-          <label>Temperatura / Programma</label>
-          <select id="lavTemp">
-            <option value="0.8">30° / Eco</option>
-            <option value="1">40° / Normale</option>
-            <option value="1.3">60° / Intenso</option>
-            <option value="1.6">90° / Molto caldo</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Lavaggi a settimana</label>
-          <input type="number" id="lavSettimana" min="1" max="30" value="5">
-        </div>
-        <div class="field">
-          <label>Prezzo energia (€/kWh)</label>
-          <input type="number" id="lavPrezzo" min="0.1" max="1" step="0.01" value="0.30">
-        </div>
-      </div>
+  const toggleBtn = document.getElementById("toggleAdvanced");
+  const advancedBlock = document.getElementById("advancedBlock");
 
-      <button class="btn" type="button" onclick="calcolaLavatrice()">Calcola</button>
-      <div id="lavResult" class="result"></div>
-      <div class="note">Nota: include solo elettricità (non acqua/detersivo).</div>
-    </section>
+  const resultsBox = document.getElementById("results");
+  const totalMonthEl = document.getElementById("totalMonth");
+  const pillsEl = document.getElementById("pills");
+  const shareTextEl = document.getElementById("shareText");
+  const copyBtn = document.getElementById("copyBtn");
+  const nativeShareBtn = document.getElementById("nativeShareBtn");
 
-    <!-- FORNO -->
-    <section class="calc" id="calc-forno">
-      <div class="calc-head">
-        <h2>Forno elettrico</h2>
-        <small>“Lo accendo solo un attimo” — e poi arriva la bolletta.</small>
-      </div>
+  // map categorie -> colore (coerente con quanto detto)
+  const COLORS = {
+    "Cucina": "#ef4444",   // rosso
+    "Picchi": "#f59e0b",   // arancione
+    "Vampiri": "#3b82f6",  // blu
+    "Clima": "#6C5CE7",    // viola
+    "Standby": "#374151"   // grigio scuro
+  };
 
-      <div class="grid">
-        <div class="field">
-          <label>Potenza (W)</label>
-          <input type="number" id="fornoWatt" min="800" max="3500" value="2000">
-        </div>
-        <div class="field">
-          <label>Durata cottura (ore)</label>
-          <input type="number" id="fornoOre" min="0.25" max="4" step="0.25" value="1">
-        </div>
-        <div class="field">
-          <label>Cotture a settimana</label>
-          <input type="number" id="fornoSettimana" min="1" max="21" value="3">
-        </div>
-        <div class="field">
-          <label>Prezzo energia (€/kWh)</label>
-          <input type="number" id="fornoPrezzo" min="0.1" max="1" step="0.01" value="0.30">
-        </div>
-      </div>
+  function getRows(){
+    return Array.from(document.querySelectorAll("tr[data-type]"))
+      .filter(tr => {
+        // se avanzato nascosto, ignora righe dentro advancedBlock
+        if (advancedBlock.contains(tr) && advancedBlock.style.display !== "block") return false;
+        return true;
+      });
+  }
 
-      <button class="btn" type="button" onclick="calcolaForno()">Calcola</button>
-      <div id="fornoResult" class="result"></div>
-      <div class="note">Nota: usa un fattore 0,7 perché il forno non resta sempre a potenza massima.</div>
-    </section>
+  function rowMonthlyCost(tr, price, daysInMonth){
+    const type = tr.getAttribute("data-type");
+    if (type === "power"){
+      // costo mese = W/1000 * ore/giorno * giorni * prezzo
+      let watt;
+      const altSel = tr.querySelector(".altSelect");
+      const pcSel = tr.querySelector(".pcPreset");
+      if (altSel) watt = parseFloat(altSel.value) || 0;
+      else if (pcSel) watt = parseFloat(pcSel.value) || 0;
+      else watt = parseFloat(tr.querySelector(".watt")?.value) || 0;
 
-    <!-- LAVASTOVIGLIE -->
-    <section class="calc" id="calc-lavastoviglie">
-      <div class="calc-head">
-        <h2>Lavastoviglie</h2>
-        <small>“Conviene o no?” Qui la parte elettrica la vedi subito.</small>
-      </div>
+      const hours = parseFloat(tr.querySelector(".hours")?.value) || 0;
 
-      <div class="grid">
-        <div class="field">
-          <label>Consumo ciclo (kWh)</label>
-          <input type="number" id="lavaCiclo" min="0.5" max="3" step="0.1" value="1.0">
-        </div>
-        <div class="field">
-          <label>Programma principale</label>
-          <select id="lavaProg">
-            <option value="0.8">Eco 50°</option>
-            <option value="1">Normale</option>
-            <option value="1.2">Intensivo / Pentole</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Cicli a settimana</label>
-          <input type="number" id="lavaSettimana" min="1" max="28" value="5">
-        </div>
-        <div class="field">
-          <label>Prezzo energia (€/kWh)</label>
-          <input type="number" id="lavaPrezzo" min="0.1" max="1" step="0.01" value="0.30">
-        </div>
-      </div>
-
-      <button class="btn" type="button" onclick="calcolaLavastoviglie()">Calcola</button>
-      <div id="lavaResult" class="result"></div>
-      <div class="note">Nota: include solo elettricità; non considera consumo acqua.</div>
-    </section>
-
-    <!-- ASCIUGATRICE -->
-    <section class="calc" id="calc-asciugatrice">
-      <div class="calc-head">
-        <h2>Asciugatrice</h2>
-        <small>“Solo d’inverno” può pesare parecchio.</small>
-      </div>
-
-      <div class="grid">
-        <div class="field">
-          <label>Consumo ciclo (kWh)</label>
-          <input type="number" id="asciCiclo" min="0.8" max="5" step="0.1" value="2.0">
-        </div>
-        <div class="field">
-          <label>Tipo asciugatrice</label>
-          <select id="asciTipo">
-            <option value="0.7">Pompa di calore</option>
-            <option value="1">Resistenza tradizionale</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Cicli a settimana</label>
-          <input type="number" id="asciSettimana" min="1" max="21" value="4">
-        </div>
-        <div class="field">
-          <label>Prezzo energia (€/kWh)</label>
-          <input type="number" id="asciPrezzo" min="0.1" max="1" step="0.01" value="0.30">
-        </div>
-      </div>
-
-      <button class="btn" type="button" onclick="calcolaAsciugatrice()">Calcola</button>
-      <div id="asciResult" class="result"></div>
-      <div class="note">Nota: la pompa di calore consuma meno ma spesso dura di più; qui stimiamo con una media indicativa.</div>
-    </section>
-
-  </main>
-
-  <script>
-    // =========================
-    // Helpers
-    // =========================
-    function checkLegalAccept() {
-      const cb = document.getElementById('legalAccept');
-      if (cb && !cb.checked) {
-        alert('Per usare questi calcolatori devi dichiarare di aver letto e accettato le Note Legali.');
-        return false;
-      }
-      return true;
+      watt = clamp(watt, 0, 999999);
+      const kwhMonth = (watt/1000) * hours * daysInMonth;
+      return kwhMonth * price;
     }
 
-    function euro(v) {
-      // formato "12,34 €"
-      const n = Number(v);
-      if (!isFinite(n)) return '—';
-      return n.toFixed(2).replace('.', ',') + ' €';
+    if (type === "cycle"){
+      // costo mese = kWh/ciclo * cicli/settimana * 4 * prezzo
+      const preset = tr.querySelector(".dryerPreset");
+      const kwhCycle = preset ? (parseFloat(preset.value) || 0) : (parseFloat(tr.querySelector(".kwhCycle")?.value) || 0);
+      const cyclesW = parseFloat(tr.querySelector(".cyclesW")?.value) || 0;
+
+      const kwhMonth = kwhCycle * cyclesW * 4;
+      return kwhMonth * price;
     }
 
-    function showResult(id, html) {
-      const div = document.getElementById(id);
-      div.innerHTML = html;
-      div.style.display = 'block';
+    return 0;
+  }
+
+  function updateLiveCosts(){
+    const price = parseFloat(priceKwhEl.value) || 0;
+    const days = parseFloat(daysMonthEl.value) || 30;
+
+    const rows = getRows();
+    rows.forEach(tr => {
+      const cost = rowMonthlyCost(tr, price, days);
+      const costSpan = tr.querySelector(".cost");
+      if (costSpan) costSpan.textContent = euro(cost);
+    });
+  }
+
+  function checkLegal(){
+    if (!legalEl.checked){
+      alert("Per usare il simulatore devi dichiarare di aver letto e accettato le Note Legali.");
+      return false;
     }
+    return true;
+  }
 
-    // =========================
-    // STUFETTA
-    // =========================
-    function calcolaStufetta() {
-      if (!checkLegalAccept()) return;
+  // ===== Grafico a torta (canvas) =====
+  function drawPie(data){
+    const canvas = document.getElementById("pie");
+    const ctx = canvas.getContext("2d");
+    const w = canvas.width, h = canvas.height;
+    const cx = w/2, cy = h/2;
+    const r = Math.min(w,h)*0.38;
 
-      const watt = parseFloat(document.getElementById('stufettaWatt').value) || 0;
-      const ore = parseFloat(document.getElementById('stufettaOre').value) || 0;
-      const giorni = parseFloat(document.getElementById('stufettaGiorni').value) || 0;
-      const prezzo = parseFloat(document.getElementById('stufettaPrezzo').value) || 0;
+    ctx.clearRect(0,0,w,h);
 
-      const kWhOra = watt / 1000;
-      const costoOra = kWhOra * prezzo;
-      const costoGiorno = costoOra * ore;
-      const costoMese = costoGiorno * giorni;
+    // sfondo
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0,0,w,h);
 
-      showResult('stufettaResult', `
-        <strong>Risultato stimato:</strong><br>
-        • Consumo orario: <strong>${kWhOra.toFixed(2)} kWh</strong><br>
-        • Costo per 1 ora: <strong>${euro(costoOra)}</strong><br>
-        • Costo giornaliero (${ore} h): <strong>${euro(costoGiorno)}</strong><br>
-        • Costo mensile (${giorni} giorni): <strong>${euro(costoMese)}</strong>
-      `);
+    const total = Object.values(data).reduce((a,b)=>a+b,0) || 1;
+    let start = -Math.PI/2;
+
+    Object.entries(data).forEach(([k,v]) => {
+      const ang = (v/total) * Math.PI*2;
+      ctx.beginPath();
+      ctx.moveTo(cx,cy);
+      ctx.arc(cx,cy,r,start,start+ang);
+      ctx.closePath();
+      ctx.fillStyle = COLORS[k] || "#999";
+      ctx.fill();
+      start += ang;
+    });
+
+    // cerchio interno (donut)
+    ctx.beginPath();
+    ctx.arc(cx,cy,r*0.58,0,Math.PI*2);
+    ctx.fillStyle = "#fff";
+    ctx.fill();
+
+    // testo centrale
+    ctx.fillStyle = "#111827";
+    ctx.font = "900 20px Arial";
+    ctx.textAlign = "center";
+    ctx.fillText("Totale/mese", cx, cy - 6);
+    ctx.font = "900 22px Arial";
+    ctx.fillText(totalMonthEl.textContent.replace(" / mese",""), cx, cy + 22);
+  }
+
+  function buildResults(){
+    const price = parseFloat(priceKwhEl.value) || 0;
+    const days = parseFloat(daysMonthEl.value) || 30;
+
+    // raccogli costi per categoria
+    const rows = getRows();
+    const byCat = {};
+    let total = 0;
+
+    rows.forEach(tr => {
+      const cat = tr.getAttribute("data-cat") || "Altro";
+      const cost = rowMonthlyCost(tr, price, days);
+      total += cost;
+      byCat[cat] = (byCat[cat] || 0) + cost;
+    });
+
+    // limita a max 5 spicchi: se >5, raggruppa il resto in "Altro"
+    const entries = Object.entries(byCat).sort((a,b)=>b[1]-a[1]);
+    const limited = entries.slice(0,5);
+    const rest = entries.slice(5).reduce((s, [,v]) => s+v, 0);
+    const finalByCat = Object.fromEntries(limited);
+    if (rest > 0) finalByCat["Altro"] = rest;
+
+    totalMonthEl.textContent = euro(total) + " / mese";
+
+    // pills
+    pillsEl.innerHTML = "";
+    const sum = Object.values(finalByCat).reduce((a,b)=>a+b,0) || 1;
+    Object.entries(finalByCat).forEach(([cat, val]) => {
+      const pct = Math.round((val/sum)*100);
+      const pill = document.createElement("div");
+      pill.className = "pill";
+      const dot = document.createElement("span");
+      dot.style.width = "10px";
+      dot.style.height = "10px";
+      dot.style.borderRadius = "999px";
+      dot.style.display = "inline-block";
+      dot.style.background = COLORS[cat] || "#9ca3af";
+      pill.appendChild(dot);
+      pill.appendChild(document.createTextNode(`${cat}: ${pct}%`));
+      pillsEl.appendChild(pill);
+    });
+
+    // testo share “scoperta”
+    // prendi top 1-2 categorie
+    const top = Object.entries(finalByCat).sort((a,b)=>b[1]-a[1]).slice(0,2);
+    const topLine = top.map(([c,v]) => `${c} ${Math.round((v/sum)*100)}%`).join(" + ");
+    const urlHint = "syncras.app"; // poi lo agganci alla tua url definitiva
+    shareTextEl.value =
+`Ho scoperto dove se ne va davvero la mia corrente ⚡
+Top consumo: ${topLine} 😳
+
+Ho fatto la simulazione qui:
+👉 ${urlHint}
+
+(valori realistici, niente stime a caso)`;
+
+    // grafico
+    drawPie(finalByCat);
+
+    resultsBox.style.display = "block";
+    resultsBox.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+
+  // ===== Eventi =====
+  function bindLive(){
+    // aggiornamento costi in tempo reale
+    const inputs = document.querySelectorAll("input, select");
+    inputs.forEach(el => {
+      el.addEventListener("input", updateLiveCosts);
+      el.addEventListener("change", updateLiveCosts);
+    });
+  }
+
+  toggleBtn.addEventListener("click", () => {
+    const isOpen = advancedBlock.style.display === "block";
+    advancedBlock.style.display = isOpen ? "none" : "block";
+    toggleBtn.textContent = isOpen ? "Mostra consumi nascosti" : "Nascondi consumi nascosti";
+    updateLiveCosts();
+  });
+
+  calcBtn.addEventListener("click", () => {
+    if (!checkLegal()) return;
+    updateLiveCosts();
+    buildResults();
+  });
+
+  resetBtn.addEventListener("click", () => {
+    // reset veloce: ricarica la pagina
+    location.reload();
+  });
+
+  copyBtn.addEventListener("click", async () => {
+    try{
+      await navigator.clipboard.writeText(shareTextEl.value);
+      alert("Testo copiato negli appunti ✅");
+    }catch(e){
+      alert("Non riesco a copiare automaticamente. Seleziona e copia manualmente.");
     }
+  });
 
-    // =========================
-    // TV
-    // =========================
-    function calcolaTV() {
-      if (!checkLegalAccept()) return;
-
-      const wattBase = parseFloat(document.getElementById('tvWatt').value) || 0;
-      const ore = parseFloat(document.getElementById('tvHours').value) || 0;
-      const prezzo = parseFloat(document.getElementById('tvPrice').value) || 0;
-      const tipo = parseFloat(document.getElementById('tvType').value) || 1;
-
-      const wattReali = wattBase * tipo;
-      const kWhOra = wattReali / 1000;
-      const costoOra = kWhOra * prezzo;
-      const costoGiorno = costoOra * ore;
-      const costoMese = costoGiorno * 30;
-      const costoAnno = costoGiorno * 365;
-
-      showResult('tvResult', `
-        <strong>Potenza reale stimata:</strong> ${wattReali.toFixed(0)} W<br>
-        • Consumo orario: <strong>${kWhOra.toFixed(2)} kWh</strong><br>
-        • Costo per 1 ora: <strong>${euro(costoOra)}</strong><br>
-        • Spesa mensile (~30 giorni): <strong>${euro(costoMese)}</strong><br>
-        • Spesa annua (~365 giorni): <strong>${euro(costoAnno)}</strong>
-      `);
+  nativeShareBtn.addEventListener("click", async () => {
+    const text = shareTextEl.value;
+    if (navigator.share){
+      try{
+        await navigator.share({ text });
+      }catch(e){}
+    }else{
+      alert("Condivisione non supportata qui. Usa 'Copia testo' e incolla su WhatsApp/Telegram.");
     }
+  });
 
-    // =========================
-    // LAVATRICE
-    // =========================
-    function calcolaLavatrice() {
-      if (!checkLegalAccept()) return;
-
-      const ciclo = parseFloat(document.getElementById('lavCiclo').value) || 0;
-      const fattore = parseFloat(document.getElementById('lavTemp').value) || 1;
-      const lavSettimana = parseFloat(document.getElementById('lavSettimana').value) || 0;
-      const prezzo = parseFloat(document.getElementById('lavPrezzo').value) || 0;
-
-      const kWhReali = ciclo * fattore;
-      const costoCiclo = kWhReali * prezzo;
-      const lavMese = lavSettimana * 4;
-      const costoMese = costoCiclo * lavMese;
-      const costoAnno = costoCiclo * lavSettimana * 52;
-
-      showResult('lavResult', `
-        <strong>Consumo stimato per ciclo:</strong> ${kWhReali.toFixed(2)} kWh<br>
-        • Costo per 1 lavaggio: <strong>${euro(costoCiclo)}</strong><br>
-        • Lavaggi mensili (~${lavMese}): <strong>${euro(costoMese)}</strong><br>
-        • Spesa annua (~${lavSettimana} lavaggi/settimana): <strong>${euro(costoAnno)}</strong>
-      `);
-    }
-
-    // =========================
-    // FORNO
-    // =========================
-    function calcolaForno() {
-      if (!checkLegalAccept()) return;
-
-      const watt = parseFloat(document.getElementById('fornoWatt').value) || 0;
-      const ore = parseFloat(document.getElementById('fornoOre').value) || 0;
-      const cottureSettimana = parseFloat(document.getElementById('fornoSettimana').value) || 0;
-      const prezzo = parseFloat(document.getElementById('fornoPrezzo').value) || 0;
-
-      const kWhUso = (watt / 1000) * ore * 0.7; // fattore 0.7: non sempre al massimo
-      const costoUso = kWhUso * prezzo;
-      const cottureMese = cottureSettimana * 4;
-      const costoMese = costoUso * cottureMese;
-      const costoAnno = costoUso * cottureSettimana * 52;
-
-      showResult('fornoResult', `
-        <strong>Consumo medio per cottura:</strong> ${kWhUso.toFixed(2)} kWh<br>
-        • Costo per 1 utilizzo: <strong>${euro(costoUso)}</strong><br>
-        • Spesa mensile (~${cottureMese} cotture): <strong>${euro(costoMese)}</strong><br>
-        • Spesa annua (~${cottureSettimana} cotture/settimana): <strong>${euro(costoAnno)}</strong>
-      `);
-    }
-
-    // =========================
-    // LAVASTOVIGLIE
-    // =========================
-    function calcolaLavastoviglie() {
-      if (!checkLegalAccept()) return;
-
-      const ciclo = parseFloat(document.getElementById('lavaCiclo').value) || 0;
-      const fattore = parseFloat(document.getElementById('lavaProg').value) || 1;
-      const cicliSettimana = parseFloat(document.getElementById('lavaSettimana').value) || 0;
-      const prezzo = parseFloat(document.getElementById('lavaPrezzo').value) || 0;
-
-      const kWhReali = ciclo * fattore;
-      const costoCiclo = kWhReali * prezzo;
-      const cicliMese = cicliSettimana * 4;
-      const costoMese = costoCiclo * cicliMese;
-      const costoAnno = costoCiclo * cicliSettimana * 52;
-
-      showResult('lavaResult', `
-        <strong>Consumo stimato per ciclo:</strong> ${kWhReali.toFixed(2)} kWh<br>
-        • Costo per 1 ciclo: <strong>${euro(costoCiclo)}</strong><br>
-        • Spesa mensile (~${cicliMese} cicli): <strong>${euro(costoMese)}</strong><br>
-        • Spesa annua (~${cicliSettimana} cicli/settimana): <strong>${euro(costoAnno)}</strong>
-      `);
-    }
-
-    // =========================
-    // ASCIUGATRICE
-    // =========================
-    function calcolaAsciugatrice() {
-      if (!checkLegalAccept()) return;
-
-      const ciclo = parseFloat(document.getElementById('asciCiclo').value) || 0;
-      const fattore = parseFloat(document.getElementById('asciTipo').value) || 1;
-      const cicliSettimana = parseFloat(document.getElementById('asciSettimana').value) || 0;
-      const prezzo = parseFloat(document.getElementById('asciPrezzo').value) || 0;
-
-      const kWhReali = ciclo * fattore;
-      const costoCiclo = kWhReali * prezzo;
-      const cicliMese = cicliSettimana * 4;
-      const costoMese = costoCiclo * cicliMese;
-      const costoAnno = costoCiclo * cicliSettimana * 52;
-
-      showResult('asciResult', `
-        <strong>Consumo stimato per ciclo:</strong> ${kWhReali.toFixed(2)} kWh<br>
-        • Costo per 1 ciclo: <strong>${euro(costoCiclo)}</strong><br>
-        • Spesa mensile (~${cicliMese} cicli): <strong>${euro(costoMese)}</strong><br>
-        • Spesa annua (~${cicliSettimana} cicli/settimana): <strong>${euro(costoAnno)}</strong>
-      `);
-    }
-  </script>
+  // init
+  bindLive();
+  updateLiveCosts();
+</script>
 </body>
 </html>
+
 
