@@ -3,451 +3,491 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Calcolatore Ammortamento Fotovoltaico 2025: Calcola il Rientro Economico</title>
-  <meta name="description" content="Scopri in quanto tempo si ripaga il tuo impianto fotovoltaico. Calcola produzione, risparmio annuo in bolletta, cessione energia (on-grid) e tabella di ammortamento completa.">
+  <title>Confronto Costi Auto 2025: Benzina, Diesel vs Elettrica | Syncras.App</title>
+  <meta name="description" content="Conviene l'auto elettrica? Calcola e confronta il costo per 100km e il risparmio annuo tra benzina, diesel, GPL, metano ed elettrico. Tool aggiornato 2025.">
   <meta name="robots" content="index,follow">
-  <link rel="canonical" href="https://syncras.app/calcolatore-fotovoltaico-ammortamento.html">
+  <link rel="canonical" href="https://syncras.app/calcolatore-consumi-auto.html">
 
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Calcolatore Ammortamento e Risparmio Fotovoltaico",
-    "applicationCategory": "FinancialApplication",
+    "name": "Calcolatore Confronto Costi Carburante Auto",
+    "applicationCategory": "FinanceApplication",
     "operatingSystem": "All",
-    "description": "Strumento per stimare produzione, autoconsumo reale, cessione energia on-grid e tempo di rientro (payback) di un impianto fotovoltaico.",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
-    "url": "https://syncras.app/calcolatore-fotovoltaico-ammortamento.html"
+    "description": "Strumento per confrontare i costi di percorrenza tra auto a combustione (benzina, diesel, GPL, metano) e auto elettriche.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "EUR"
+    },
+    "url": "https://syncras.app/calcolatore-consumi-auto.html"
   }
   </script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {
+      "@type":"Question",
+      "name":"Quanto costa percorrere 100 km in elettrico?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Dipende dai kWh/100 km e dal prezzo €/kWh. Esempio: 15 kWh/100 km a 0,20 €/kWh = 3,00 € ogni 100 km."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Come si calcola il costo carburante per 100 km?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Si moltiplica il consumo (litri/100 km o kWh/100 km) per il prezzo unitario (€/litro o €/kWh)."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Il calcolatore include assicurazione, bollo e manutenzione?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"No. Il tool confronta solo il costo di carburante/energia sui km indicati. Altri costi dipendono dal veicolo e dal profilo di utilizzo."
+      }
+    }
+  ]
+}
+</script>
 
   <style>
-    :root{
-      --violet-main:#6C5CE7;
-      --violet-dark:#4B3ACB;
-      --bg-page:#F7F7FB;
-      --text-main:#403E43;
-      --ok:#16A34A;
-      --warn:#D97706;
-      --bad:#DC2626;
+    :root {
+      --violet-main: #6C5CE7;
+      --violet-dark: #4B3ACB;
+      --violet-soft: #A29BFE;
+      --text-main: #403E43;
+      --bg-page: #F7F7FB;
     }
-    *{box-sizing:border-box}
-    body{
-      margin:0; padding:0;
-      font-family:Arial,sans-serif;
-      background:var(--bg-page);
-      color:var(--text-main);
-      line-height:1.6;
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.6;
     }
 
     /* HEADER */
-    .site-header{
-      background:linear-gradient(90deg,var(--violet-dark),var(--violet-main));
-      color:#fff;
-      padding:12px 14px;
-      box-shadow:0 2px 4px rgba(0,0,0,.15);
-      position:sticky; top:0; z-index:100;
+    .site-header {
+      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+      color: white;
+      padding: 12px 14px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+      position: relative;
     }
-    .header-inner{
-      max-width:980px;
-      margin:0 auto;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
-      position:relative;
-    }
-    .logo{font-size:1.4rem;font-weight:bold;letter-spacing:.03em}
-    #main-nav{display:flex;gap:14px;font-size:.95rem}
-    #main-nav a{
-      color:#fff;text-decoration:none;font-weight:600;
-      padding-bottom:2px;border-bottom:2px solid transparent;opacity:.95;
-    }
-    #main-nav a:hover{ text-decoration:underline; opacity:1; }
 
-    .menu-toggle{
-      display:none;
-      background:rgba(255,255,255,.12);
-      border:1px solid rgba(255,255,255,.4);
-      border-radius:6px;
-      color:white;
-      padding:6px 10px;
-      font-size:.9rem;
-      cursor:pointer;
+    .header-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
     }
-    .menu-toggle span{margin-left:4px;font-size:1.1rem}
 
-    @media (max-width:768px){
-      #main-nav{
-        display:none;
-        position:absolute;
-        left:0; right:0;
-        top:52px;
-        margin:0 auto;
-        max-width:980px;
-        flex-direction:column;
-        background-color:var(--violet-dark);
-        padding:10px 16px 12px 16px;
-        border-radius:0 0 8px 8px;
-        box-shadow:0 3px 6px rgba(0,0,0,.25);
-        z-index:50;
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.03em;
+    }
+
+    #main-nav {
+      display: flex;
+      gap: 18px;
+      font-size: 0.95rem;
+    }
+
+    #main-nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      padding-bottom: 2px;
+      border-bottom: 2px solid transparent;
+    }
+
+    #main-nav a:hover { text-decoration: underline; }
+
+    .menu-toggle {
+      display: none;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 6px;
+      color: white;
+      padding: 6px 10px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .menu-toggle span { margin-left: 4px; font-size: 1.1rem; }
+
+    @media (max-width: 768px) {
+      #main-nav {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 56px;
+        margin: 0 auto;
+        max-width: 1180px;
+        flex-direction: column;
+        background-color: var(--violet-dark);
+        padding: 10px 16px 12px 16px;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+        z-index: 50;
       }
-      #main-nav a{padding:6px 0}
-      body.nav-open #main-nav{display:flex}
-      .menu-toggle{display:inline-flex;align-items:center}
+      #main-nav a { padding: 6px 0; }
+      body.nav-open #main-nav { display: flex; }
+      .menu-toggle { display: inline-flex; align-items: center; }
     }
 
     /* MAIN */
-    main{
-      max-width:980px;
-      margin:24px auto 32px;
-      padding:18px 16px 24px;
-      background:#fff;
-      border-radius:12px;
-      box-shadow:0 4px 8px rgba(0,0,0,.08);
+    main {
+      max-width: 1180px;
+      margin: 30px auto;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.08);
     }
-    h1,h2,h3{color:var(--violet-dark);margin-top:0}
-    .back-links{font-size:.9rem;margin-bottom:10px}
-    .back-links a{color:var(--violet-dark);text-decoration:none;font-weight:600}
-    .back-links a:hover{text-decoration:underline}
 
-    .page-intro{
-      margin-bottom:16px;
-      border-bottom:1px solid #e5e7eb;
-      padding-bottom:12px;
+    h1, h2, h3 {
+      color: var(--violet-dark);
+      margin-top: 0;
     }
-    .badge-page{
-      display:inline-block;
-      font-size:.75rem;
-      text-transform:uppercase;
-      letter-spacing:.08em;
-      background:rgba(108,92,231,.08);
-      border:1px solid rgba(108,92,231,.35);
-      border-radius:999px;
-      padding:2px 8px;
-      color:#3730a3;
-      margin-bottom:6px;
-    }
-    .intro-text{font-size:.95rem;color:#4b5563;margin-top:6px}
 
-    /* SHARE */
-    .share-btn-new{
-      display:inline-flex;align-items:center;gap:8px;
-      background:linear-gradient(90deg,#6C5CE7,#4B3ACB);
-      color:white;font-weight:600;
-      padding:10px 16px;border:none;border-radius:12px;
-      font-size:.95rem;cursor:pointer;
-      box-shadow:0 3px 10px rgba(0,0,0,.15);
-      transition:.25s ease;
-      margin-bottom:10px;
+    .page-intro {
+      margin-bottom: 20px;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 10px;
     }
-    .share-btn-new:hover{transform:translateY(-2px);box-shadow:0 6px 14px rgba(0,0,0,.20)}
 
-    .share-btn{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:10px 18px;border-radius:999px;border:none;
-      background:linear-gradient(90deg,var(--violet-dark),var(--violet-main));
-      color:#fff;font-weight:600;font-size:.95rem;
-      cursor:pointer;
-      box-shadow:0 3px 8px rgba(15,23,42,.25);
-      transition:transform .12s ease, box-shadow .12s ease, opacity .12s ease;
-      margin:10px 0 2px;
+    .badge-page {
+      display: inline-block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(108, 92, 231, 0.08);
+      border: 1px solid rgba(108, 92, 231, 0.35);
+      border-radius: 999px;
+      padding: 2px 8px;
+      color: #3730a3;
+      margin-bottom: 8px;
     }
-    .share-btn:hover{transform:translateY(-1px);box-shadow:0 5px 14px rgba(15,23,42,.30);opacity:.96}
-    .share-btn:active{transform:translateY(1px);box-shadow:0 2px 6px rgba(15,23,42,.18)}
 
-    /* CALC */
-    .calc-section{
-      margin:24px 0;
-      padding:18px 16px 16px;
-      border-radius:12px;
-      background:#f8f9ff;
-      border:1px solid #e0e7ff;
+    .intro-text {
+      font-size: 0.95rem;
+      color: #4b5563;
     }
-    .calc-header{
-      display:flex;justify-content:space-between;align-items:baseline;
-      gap:8px;margin-bottom:10px;flex-wrap:wrap;
-    }
-    .calc-header small{font-size:.8rem;color:#6b7280}
 
-    .pv-subsection{
-      margin-top:12px;
-      padding:12px 12px 10px;
-      border-radius:10px;
-      background:#eef2ff;
-      border:1px dashed #c7d2fe;
+    /* GRIGLIA CARD INFO */
+    .calc-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin: 18px 0 26px;
     }
-    .pv-subsection h3{margin-top:0;margin-bottom:6px;font-size:1rem}
 
-    .pv-grid{
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:10px 12px;
-      margin-top:4px;
+    .calc-card {
+      background: #f4f5ff;
+      border-radius: 16px;
+      padding: 16px 18px 14px;
+      border: 1px solid #d4d7ff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
     }
-    .calc-field label{
-      font-size:.85rem;font-weight:600;
-      display:flex;align-items:center;gap:6px;
-      margin-bottom:2px;
-    }
-    .calc-field input, .calc-field select{
-      width:100%;
-      padding:7px 8px;
-      border-radius:6px;
-      border:1px solid #d1d5db;
-      font-size:.9rem;
-    }
-    .calc-button{
-      margin-top:14px;
-      padding:9px 15px;
-      border-radius:7px;
-      border:none;
-      background:var(--violet-main);
-      color:#fff;
-      font-weight:600;
-      font-size:.9rem;
-      cursor:pointer;
-    }
-    .calc-button:hover{background:var(--violet-dark)}
 
-    .calc-result{
-      margin-top:12px;
-      padding:10px 12px;
-      border-radius:8px;
-      background:#fff;
-      box-shadow:0 2px 4px rgba(0,0,0,.05);
-      font-size:.9rem;
+    .calc-card-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #6b7280;
+      margin-bottom: 4px;
+    }
+
+    .calc-card h3 {
+      margin: 0 0 6px;
+      font-size: 1rem;
+      color: #1f2937;
+    }
+
+    .calc-card p {
+      margin: 0 0 10px;
+      font-size: 0.9rem;
+      color: #4b5563;
+    }
+
+    @media (max-width: 768px) {
+      .calc-grid { grid-template-columns: 1fr; }
+    }
+
+    /* SEZIONE CALCOLATORE */
+    .calc-section {
+      margin: 32px 0;
+      padding: 20px;
+      border-radius: 16px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+
+    .calc-section h2 {
+      margin-top: 0;
+      margin-bottom: 6px;
+      font-size: 1.25rem;
+    }
+
+    .calc-section p { font-size: 0.95rem; color: #4b5563; }
+
+    .calc-grid-inputs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 14px;
+    }
+
+    .calc-field { flex: 1 1 220px; }
+
+    .calc-field label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: inline-block;
+      margin-bottom: 4px;
+    }
+
+    .calc-field input, .calc-field select {
+      width: 100%;
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #d1d5db;
+      font-size: 0.95rem;
+      box-sizing: border-box;
+    }
+
+    .calc-btn {
+      margin-top: 18px;
+      background: var(--violet-main);
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 7px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.98rem;
+      font-weight: 700;
+      width: 100%;
+    }
+    .calc-btn:hover { background: var(--violet-dark); }
+
+    .calc-result {
+      margin-top: 16px;
+      padding: 14px;
+      background: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.06);
+      display: none;
+      font-size: 0.95rem;
+      border: 2px solid rgba(108,92,231,0.25);
+    }
+
+    .small-note {
+      font-size: 0.8rem;
+      color: #6b7280;
+      margin-top: 8px;
+    }
+
+    /* BLOCCO NOTE LEGALI */
+    .legal-box-avviso {
+      margin-top: 18px;
+      margin-bottom: 10px;
+      padding: 12px 14px;
+      background: #ffffff;
+      border-radius: 8px;
+      border: 1px solid #e5e7eb;
+      font-size: 0.9rem;
+      color: #374151;
+    }
+    .legal-box-avviso a {
+      color: var(--violet-main);
+      text-decoration: underline;
+      font-weight: 700;
+    }
+    .legal-note-small {
+      margin: 6px 0 0;
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    /* ✅ MODIFICA: evidenziazione box legale (10/10 UX) */
+    .legal-highlight{
+      outline: 3px solid rgba(108,92,231,0.8);
+      box-shadow: 0 0 0 6px rgba(108,92,231,0.12);
+      transition: box-shadow .2s ease, outline .2s ease;
+    }
+
+    /* BARRE GRAFICHE COSTI */
+    .bar-container {
+      height: 12px;
+      background: #eee;
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 6px 0 14px;
+    }
+    .bar-fill {
+      height: 100%;
+      background: var(--violet-main);
+      width: 0%;
+      transition: width .6s ease;
+    }
+
+    /* BOX RISPARMIO */
+    .saving-box{
+      margin-top: 10px;
+      padding: 12px 12px;
+      border-radius: 10px;
+      border: 1px solid #e5e7eb;
+      background: #f7f7ff;
+    }
+    .saving-box strong{ color: var(--violet-dark); }
+
+    /* SHARE BUTTONS */
+    .share-btn {
+      background: var(--violet-main);
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 800;
+    }
+    .share-btn:hover { background: var(--violet-dark); }
+    .share-row {
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-start;
+      margin: 8px 0 18px;
+    }
+    .share-fallback {
       display:none;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      margin-top: 8px;
     }
-    .calc-note{font-size:.8rem;color:#6b7280;margin-top:6px}
-
-    /* LEGAL ACCEPT */
-    .legal-box-avviso{
-      margin-top:14px;
-      padding:10px 12px;
-      background:#fff;
-      border-radius:8px;
-      border:1px solid #e5e7eb;
-      font-size:.9rem;
-      color:#374151;
+    .share-fallback input{
+      flex: 1 1 320px;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+      font-size: 0.95rem;
     }
-    .legal-box-avviso a{
-      color:var(--violet-main);
-      text-decoration:underline;
-      font-weight:600;
-    }
-    .legal-note-small{margin:6px 0 0;font-size:.8rem;color:#6b7280}
-
-    /* AMORT TABLE */
-    .amort-wrapper{margin-top:14px;overflow-x:auto}
-    .amort-table{width:100%;border-collapse:collapse;font-size:.85rem}
-    .amort-table th,.amort-table td{
-      border:1px solid #d1d5db;
-      padding:6px 8px;
-      text-align:right;
-      white-space:nowrap;
-    }
-    .amort-table th{background:#e0e7ff;font-weight:600;text-align:center}
-    .amort-table td:first-child, .amort-table th:first-child{ text-align:center; }
-    .row-break-even{background:#dcfce7;font-weight:600}
-    .amort-legend{font-size:.8rem;color:#4b5563;margin-top:6px}
-
-    .print-btn{
-      margin-top:10px;
-      padding:8px 14px;
-      border-radius:7px;
-      border:1px solid #d1d5db;
+    .copy-btn{
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(108,92,231,0.5);
       background:#fff;
       cursor:pointer;
-      font-size:.85rem;
-      font-weight:600;
-      margin-left:8px;
+      font-weight:800;
+      color: var(--violet-dark);
     }
-    .print-btn:hover{background:#f3f4ff}
-
-    /* Amazon box */
-    .amazon-box{
-      margin-top:12px;
-      padding:14px 14px 12px;
-      border-radius:14px;
-      background:#f5f3ff;
-      border:1px solid #ddd6fe;
-      font-size:.85rem;
-      box-shadow:0 3px 10px rgba(15,23,42,.08);
-    }
-    .amazon-box strong{display:block;margin-bottom:4px;color:#4c1d95}
-
-    @media (max-width:920px){ .pv-grid{grid-template-columns:repeat(2,minmax(0,1fr));} }
-    @media (max-width:600px){
-      main{margin:16px auto 24px;padding:14px 10px 20px}
-      .pv-grid{grid-template-columns:1fr}
-    }
+    .copy-btn:hover{ border-color: var(--violet-dark); }
 
     /* FOOTER */
-    .syncras-footer{
-      margin-top:32px;
-      padding:2.5rem 1.5rem 1.5rem;
-      background:#2b1840;
-      color:#f3eaff;
-      font-size:.9rem;
-    }
-    .syncras-footer a{color:#f3eaff;text-decoration:none}
-    .syncras-footer a:hover{text-decoration:underline}
-
-    .footer-inner{
-      max-width:980px;
-      margin:0 auto 1.5rem auto;
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-      gap:2rem;
-    }
-    .footer-column h4{margin-top:0;margin-bottom:.7rem;font-size:1rem}
-    .footer-column p{margin:0;font-size:.85rem}
-    .footer-column ul{list-style:none;padding:0;margin:0}
-    .footer-column li{margin-bottom:.4rem;font-size:.85rem}
-    .footer-bottom{max-width:980px;margin:0 auto;text-align:center;font-size:.8rem;opacity:.9}
-    .footer-bottom p{margin:4px 0}
-
-    /* PRINT */
-    @media print{
-      body{background:#fff}
-      .site-header,.syncras-footer,.menu-toggle,#main-nav,#shareTop,#shareBottom,#cookie-banner,.mode-row,.whatif-box,.coherence-box{display:none !important}
-      main{box-shadow:none;margin:0;padding:0;max-width:100%}
-      .print-btn{display:none !important}
-      .calc-section{border:none;background:#fff;padding:0;margin:0 0 12px 0}
-      .pv-subsection{border:1px solid #d1d5db;background:#fff}
+    .syncras-footer {
+      margin-top: 40px;
+      padding: 2.5rem 1.5rem 1.5rem;
+      background: #2b1840;
+      color: #f3eaff;
+      font-family: Arial, sans-serif;
+      font-size: 0.9rem;
     }
 
-    /* Cookie banner */
-    #cookie-banner{
-      position:fixed;
-      bottom:20px;
-      left:50%;
-      transform:translateX(-50%);
-      max-width:90%;
-      width:440px;
-      background:#fff;
-      border:2px solid #6C5CE7;
-      border-radius:10px;
-      padding:16px;
-      box-shadow:0 4px 8px rgba(0,0,0,.15);
-      z-index:9999;
-      font-family:Arial,sans-serif;
-      display:none;
-    }
-    #cookie-banner p{
-      margin:0 0 12px 0;
-      font-size:.95rem;
-      color:#333;
-      line-height:1.4;
-    }
-    #cookie-banner a{color:#6C5CE7;font-weight:bold;text-decoration:none}
-    #cookie-banner .btn-row{display:flex;gap:10px;margin-top:8px}
-    #cookie-banner button.reject{
-      flex:1;background:white;color:#111827;
-      border:2px solid #6C5CE7;
-      padding:10px 12px;border-radius:6px;
-      cursor:pointer;font-weight:600;
-    }
-    #cookie-banner button.accept{
-      flex:1;background:#6C5CE7;color:white;
-      border:2px solid #6C5CE7;
-      padding:10px 16px;border-radius:6px;
-      cursor:pointer;font-weight:700;
-    }
-    #cookie-banner button.accept:hover{background:#4B3ACB}
+    .syncras-footer a { color: #f3eaff; text-decoration: none; }
+    .syncras-footer a:hover { text-decoration: underline; }
 
-    /* NEW: small UI helpers */
-    .mode-row{
-      display:flex;gap:10px;flex-wrap:wrap;
-      margin:10px 0 12px;
+    .footer-inner {
+      max-width: 1180px;
+      margin: 0 auto 1.5rem auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
     }
-    .pill{
-      display:inline-flex;align-items:center;gap:8px;
-      border:1px solid rgba(108,92,231,.35);
-      background:rgba(108,92,231,.08);
-      color:#3730a3;
-      padding:8px 10px;border-radius:999px;
-      font-size:.85rem;font-weight:700;
-      cursor:pointer; user-select:none;
-    }
-    .pill.active{
-      background:rgba(108,92,231,.18);
-      border-color:rgba(108,92,231,.55);
-    }
-    .tip-i{
-      display:inline-flex;align-items:center;justify-content:center;
-      width:18px;height:18px;border-radius:999px;
-      border:1px solid #c7d2fe;
-      background:#fff;color:#3730a3;
-      font-size:.75rem;font-weight:800;
-      cursor:help;
-    }
-    .tiny-help{font-size:.8rem;color:#6b7280;margin-top:4px}
-    .hidden{display:none !important;}
 
-    .coherence-box{
-      margin-top:12px;
-      padding:12px 12px;
-      border-radius:10px;
-      border:1px solid #e5e7eb;
-      background:#fff;
-      box-shadow:0 2px 4px rgba(0,0,0,.04);
-    }
-    .coherence-title{
-      display:flex;align-items:center;justify-content:space-between;gap:10px;
-      margin:0 0 6px 0;
-    }
-    .badge-status{
-      display:inline-flex;align-items:center;gap:8px;
-      border-radius:999px;
-      padding:4px 10px;
-      font-size:.8rem;font-weight:800;
-      color:#fff;
-    }
-    .badge-ok{background:var(--ok)}
-    .badge-warn{background:var(--warn)}
-    .badge-bad{background:var(--bad)}
-    .coherence-list{margin:6px 0 0 18px;color:#374151;font-size:.9rem}
+    .footer-column h4 { margin-top: 0; margin-bottom: 0.7rem; font-size: 1rem; }
+    .footer-column p { margin: 0; font-size: 0.85rem; }
+    .footer-column ul { list-style: none; padding: 0; margin: 0; }
+    .footer-column li { margin-bottom: 0.4rem; font-size: 0.85rem; }
 
-    .math-box{
-      margin-top:10px;
-      padding:10px 12px;
-      border-radius:10px;
-      background:#fff;
-      border:1px dashed #c7d2fe;
-      font-size:.9rem;
-      color:#374151;
+    .footer-bottom {
+      max-width: 1180px;
+      margin: 0 auto;
+      text-align: center;
+      font-size: 0.8rem;
+      opacity: 0.95;
     }
-    .math-box code{
-      display:block;
-      background:#f7f7fb;
-      border:1px solid #e5e7eb;
-      padding:8px 10px;
-      border-radius:8px;
-      overflow-x:auto;
-      margin-top:6px;
-      font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
-      font-size:.85rem;
+    .footer-bottom p { margin: 6px 0; }
+
+    /* COOKIE BANNER (GDPR PERFETTO) */
+    #cookie-banner {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 90%;
+      width: 420px;
+      background: #ffffff;
+      border: 2px solid #6C5CE7;
+      border-radius: 10px;
+      padding: 16px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      z-index: 9999;
+      font-family: Arial, sans-serif;
+      display: none;
     }
-    .headline{
-      margin-top:12px;
-      padding:12px 12px;
-      border-radius:12px;
-      background:linear-gradient(90deg, rgba(108,92,231,.12), rgba(75,58,203,.08));
-      border:1px solid rgba(108,92,231,.35);
+
+    #cookie-banner p {
+      margin: 0 0 12px 0;
+      font-size: 0.95rem;
+      color: #333;
+      line-height: 1.4;
     }
-    .headline strong{font-size:1.15rem}
-    .whatif-box{
-      margin-top:12px;
-      padding:12px 12px;
-      border-radius:12px;
-      background:#fff;
-      border:1px solid #e5e7eb;
+
+    #cookie-banner a {
+      color: #6C5CE7;
+      font-weight: bold;
+      text-decoration: none;
     }
-    .whatif-box h4{margin:0 0 8px 0;color:#4b3acb}
-    .whatif-box ul{margin:0 0 0 18px}
+
+    /* Pulsante RIFIUTA – pari importanza al pulsante ACCETTA */
+    #cookie-banner button[onclick="rejectCookies()"] {
+      flex: 1;
+      background: white !important;
+      color: #111827 !important;
+      border: 2px solid #6C5CE7 !important;
+      padding: 10px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    /* Pulsante ACCETTA */
+    #cookie-btn {
+      flex: 1;
+      background: #6C5CE7;
+      color: white;
+      border: 2px solid #6C5CE7;
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 800;
+    }
+    #cookie-btn:hover { background: #4B3ACB; }
   </style>
 </head>
 
@@ -475,314 +515,214 @@
   </header>
 
   <main>
-    <div class="back-links">
-      ← <a href="index.html">Torna alla Home</a> |
-      <a href="calcolatori.html">Vai alla pagina Calcolatori</a>
-    </div>
-
     <div class="page-intro">
-      <span class="badge-page">Area Calcoli – Fotovoltaico</span>
-      <h1>Calcolatore Fotovoltaico con Ammortamento: rientro anno per anno</h1>
+      <span class="badge-page">Area strumenti</span>
+      <h1>🚗 Confronto costi auto: benzina, diesel, GPL, metano o elettrica?</h1>
 
-      <div style="background:#FFF4D6; padding:10px 14px; border-left:4px solid #F59E0B; border-radius:6px; margin:10px 0; font-size:0.9rem;">
-        💡 <strong>Avviso:</strong> Questo calcolo rappresenta una <strong>stima indicativa</strong> basata sui dati inseriti dall’utente e su ipotesi semplificate.
-        Non costituisce consulenza professionale e non tiene conto di tutti i fattori fiscali, tecnici o energetici reali.
-        Per decisioni reali, confronta preventivi e consulta un <strong>tecnico abilitato</strong>.
+      <div style="background:#FEF6D8; padding:10px 14px; border-left:4px solid #EAB308; border-radius:6px; margin:15px 0; font-size:0.9rem;">
+        ⚠️ <strong>Avviso importante:</strong> le simulazioni sono <strong>stime orientative</strong> basate sui dati inseriti.
+        Non tengono conto di tutte le variabili economiche, tecniche, fiscali, regionali o assicurative.
+        Per valutazioni precise sui costi reali, rientri economici, tasse o scelte di mobilità, è sempre opportuno rivolgersi a un <strong>professionista competente</strong>.
       </div>
 
       <p class="intro-text">
-        Stima produzione annua, autoconsumo reale (limitato dai consumi casa), <strong>cessione energia ON-GRID</strong> e rientro.
-        Se includi un’auto elettrica, il calcolo scala i kWh ceduti: <strong>o li vendi o li usi per caricare</strong>.
+        Inserisci consumi, prezzi dei carburanti e chilometri annui.
+        Il calcolatore ti mostra il costo per 100 km e per tutta la distanza scelta, confrontando due auto (A e B).
       </p>
     </div>
 
-    <!-- Note legali accettazione -->
-    <div class="legal-box-avviso">
-      <label>
-        <input type="checkbox" id="legalAccept">
-        Prima di procedere, confermo che i risultati sono stime e non sostituiscono una valutazione professionale.
-        Ho letto le <a href="note-legali.html" target="_blank" rel="noopener">Note Legali</a>.
-      </label>
-      <p class="legal-note-small">
-        I risultati sono <strong>stime orientative</strong> basate sui dati inseriti e su ipotesi semplificate.
-      </p>
+    <!-- SHARE TOP (pagina) -->
+    <div class="share-row">
+      <button id="sharePageBtn" class="share-btn" type="button">📎 Condividi questa pagina</button>
     </div>
 
-    <button id="shareTop" class="share-btn-new">
-      <span>📤</span> Condividi questo calcolatore
-    </button>
+    <!-- CARD DI SPIEGAZIONE -->
+    <section aria-label="Informazioni sul confronto">
+      <h2>Come funziona il confronto dei costi auto</h2>
+      <div class="calc-grid">
+        <article class="calc-card">
+          <div class="calc-card-label">AUTO A</div>
+          <h3>Auto A (qualsiasi alimentazione)</h3>
+          <p>
+            Puoi impostare un’auto a benzina, diesel, GPL, metano o elettrica.
+            Inserisci i consumi in <strong>litri/100 km</strong> o <strong>kWh/100 km</strong> e il relativo prezzo.
+          </p>
+        </article>
 
-    <section class="calc-section" id="calc-fotovoltaico">
-      <div class="calc-header">
-        <h2>Calcolatore fotovoltaico: produzione, risparmio e rientro</h2>
-        <small>Numeri semplificati ma coerenti (con consumo casa, auto e cessione).</small>
-      </div>
-
-      <!-- NEW: Modalità -->
-      <div class="mode-row" aria-label="Modalità di compilazione">
-        <div class="pill active" id="modePrecise" role="button" tabindex="0">Modalità Precisa (consigliata)</div>
-        <div class="pill" id="modeQuick" role="button" tabindex="0">Modalità Rapida (3 input)</div>
-      </div>
-      <div class="tiny-help" id="modeHelp">
-        In “Rapida” compiliamo valori medi dietro le quinte (zona Centro, autoconsumo 35%, prezzo energia 0,30, cessione 0,10). Puoi sempre tornare in “Precisa”.
-      </div>
-
-      <p style="font-size:0.9rem;">
-        Compila il <strong>Blocco A</strong>. Se vuoi, aggiungi il <strong>Blocco B</strong> (auto).
-        Poi genera la <strong>tabella di ammortamento</strong> (Blocco C).
-      </p>
-
-      <!-- NEW: Coerenza / semaforo -->
-      <div class="coherence-box" id="coherenceBox">
-        <div class="coherence-title">
-          <strong>Controllo coerenza dati</strong>
-          <span class="badge-status badge-warn" id="coherenceBadge">⚠️ In attesa…</span>
-        </div>
-        <ul class="coherence-list" id="coherenceList">
-          <li>Inserisci i dati e premi “Calcola impianto”.</li>
-        </ul>
-      </div>
-
-      <!-- BLOCCO A -->
-      <div class="pv-subsection">
-        <h3>Blocco A – Impianto fotovoltaico</h3>
-
-        <div class="pv-grid">
-          <div class="calc-field">
-            <label>Potenza impianto (kW)</label>
-            <input type="number" id="pvKw" min="0" max="20" step="0.1" value="4">
-          </div>
-
-          <div class="calc-field">
-            <label>Zona geografica</label>
-            <select id="pvZona">
-              <option value="1100">Nord Italia (≈1100 kWh/kW anno)</option>
-              <option value="1300" selected>Centro Italia (≈1300 kWh/kW anno)</option>
-              <option value="1500">Sud / Isole (≈1500 kWh/kW anno)</option>
-            </select>
-          </div>
-
-          <div class="calc-field">
-            <label>Consumo annuo casa (kWh)</label>
-            <input type="number" id="pvConsumoCasa" min="0" max="20000" step="100" value="3000">
-          </div>
-
-          <div class="calc-field">
-            <label>
-              Autoconsumo stimato (%)
-              <span class="tip-i" title="È la quota di produzione FV che riesci a usare davvero. Senza batteria spesso 20–40%. Con accumulo e buone abitudini può salire (dipende da orari e carichi).">ⓘ</span>
-            </label>
-            <input type="number" id="pvAutoconsumo" min="0" max="100" value="50">
-            <div class="tiny-help">In pratica: quanta energia “ti mangi” subito in casa (o via accumulo), invece di cederla.</div>
-          </div>
-
-          <div class="calc-field">
-            <label>
-              Prezzo energia (€/kWh)
-              <span class="tip-i" title="Inserisci un prezzo 'tutto incluso' medio in bolletta. Se metti solo PUN rischi di sottostimare.">ⓘ</span>
-            </label>
-            <input type="number" id="pvPrezzo" min="0.05" max="1" step="0.01" value="0.30">
-          </div>
-
-          <div class="calc-field">
-            <label>Costo impianto (€)</label>
-            <input type="number" id="pvCosto" min="0" max="40000" step="100" value="10000">
-          </div>
-
-          <div class="calc-field">
-            <label>
-              Sistema
-              <span class="tip-i" title="OFF-GRID: nessuna cessione. ON-GRID: la quota non autoconsumata può essere ceduta (stima via prezzo cessione).">ⓘ</span>
-            </label>
-            <select id="pvTipoImpianto">
-              <option value="offgrid">OFF-GRID (nessuna cessione)</option>
-              <option value="ongrid" selected>ON-GRID (Scambio / Ritiro)</option>
-            </select>
-          </div>
-
-          <div class="calc-field" id="fieldCessione">
-            <label>
-              Prezzo cessione energia (€/kWh)
-              <span class="tip-i" title="Stima semplificata: Scambio sul Posto / Ritiro Dedicato variano per periodo e contratto. Qui usiamo un valore medio per simulare il ricavo.">ⓘ</span>
-            </label>
-            <input type="number" id="pvPrezzoCessione" min="0" max="0.5" step="0.01" value="0.10">
-          </div>
-
-          <div class="calc-field">
-            <label>Anni di incentivo / detrazione</label>
-            <input type="number" id="pvAnniDetrazione" min="0" max="20" value="10">
-          </div>
-
-          <div class="calc-field">
-            <label>Quota costo detraibile (%)</label>
-            <input type="number" id="pvQuotaDetrazione" min="0" max="100" value="50">
-          </div>
-        </div>
-
-        <button class="calc-button" type="button" onclick="calcolaFotovoltaicoImpianto()">
-          Calcola impianto fotovoltaico
-        </button>
-
-        <div id="pvResultImpianto" class="calc-result"></div>
-
-        <!-- NEW: formule visibili -->
-        <div class="math-box" id="mathBoxA">
-          <strong>Come sommiamo i numeri (anti-panico):</strong>
-          <code>
-Produzione annua = kW × (kWh/kW zona)
-Autoconsumo POTENZIALE = Produzione × % autoconsumo
-Autoconsumo REALE = min(Autoconsumo POTENZIALE, Consumo casa)
-FV residuo = Produzione − Autoconsumo REALE
-Cessione (ON-GRID) = max(Produzione − Autoconsumo REALE − FV per auto, 0)
-Risparmio casa = Autoconsumo REALE × Prezzo energia
-Ricavo cessione = Cessione × Prezzo cessione
-Beneficio FV annuo = Risparmio casa + Ricavo cessione
-          </code>
-        </div>
-
-        <div class="calc-note" style="margin-top:10px;">
-          Nota: ON-GRID = la quota non autoconsumata può essere ceduta (stimata col prezzo di cessione). OFF-GRID = nessuna cessione.
-        </div>
-      </div>
-
-      <!-- BLOCCO B -->
-      <div class="pv-subsection" style="margin-top:16px;">
-        <h3>Blocco B – Se hai (o avrai) un’auto elettrica</h3>
-        <p style="font-size:0.85rem; margin-top:0;">
-          La quota “ricarica da FV” usa energia che altrimenti potresti cedere: quindi <strong>riduce i kWh ceduti</strong> (se ON-GRID).
-        </p>
-
-        <div class="pv-grid">
-          <div class="calc-field">
-            <label>Km annui con l’auto elettrica</label>
-            <input type="number" id="evKm" min="0" max="60000" step="500" value="12000">
-          </div>
-
-          <div class="calc-field">
-            <label>
-              Consumo auto (kWh/100 km)
-              <span class="tip-i" title="Esempio: 16 kWh/100 km significa 0,16 kWh per ogni km.">ⓘ</span>
-            </label>
-            <input type="number" id="evConsumo" min="0" max="30" step="0.5" value="16">
-          </div>
-
-          <div class="calc-field">
-            <label>% ricarica da fotovoltaico</label>
-            <input type="number" id="evQuotaPv" min="0" max="100" value="50">
-          </div>
-
-          <div class="calc-field">
-            <label>Prezzo energia (€/kWh)</label>
-            <input type="number" id="evPrezzo" min="0.05" max="1" step="0.01" value="0.30">
-          </div>
-        </div>
-
-        <button class="calc-button" type="button" onclick="calcolaFotovoltaicoAuto()">
-          Calcola risparmio auto elettrica
-        </button>
-
-        <div id="pvResultAuto" class="calc-result"></div>
-
-        <!-- NEW: formule auto -->
-        <div class="math-box" id="mathBoxB">
-          <strong>Formula auto (semplice):</strong>
-          <code>
-kWh annui auto = km annui × (kWh/100km ÷ 100)
-kWh FV richiesti per auto = kWh annui auto × (% FV auto)
-kWh FV effettivi per auto = min(kWh FV richiesti, FV residuo dopo casa)
-Risparmio auto (solo FV effettivo) = kWh FV effettivi × prezzo energia
-          </code>
-        </div>
-
-        <p class="calc-note">
-          Spunta qui sotto se vuoi includere anche l’auto nella tabella di ammortamento (Blocco C).
-        </p>
-
-        <label style="font-size:0.85rem;">
-          <input type="checkbox" id="includeAutoInAmort" checked>
-          Includi l’auto elettrica nella tabella di rientro.
-        </label>
-      </div>
-
-      <!-- BLOCCO C -->
-      <div class="pv-subsection" style="margin-top:20px;">
-        <h3>Blocco C – Tabella di ammortamento anno per anno</h3>
-
-        <p style="font-size:0.9rem; margin-top:0;">
-          La tabella usa:
-          <strong>beneficio FV</strong> (risparmio autoconsumo casa + ricavo cessione) +
-          (eventuale) <strong>risparmio auto</strong> +
-          <strong>detrazioni</strong>.
-        </p>
-
-        <div class="calc-note">
-          Suggerimento: orizzonte <strong>15–20 anni</strong>.
-        </div>
-
-        <div class="calc-field" style="margin-top:10px; max-width:220px;">
-          <label>Orizzonte di calcolo (anni)</label>
-          <input type="number" id="amortYears" min="5" max="30" value="20">
-        </div>
-
-        <button class="calc-button" type="button" onclick="calcolaAmmortamento()">
-          Genera tabella di ammortamento
-        </button>
-
-        <button class="print-btn" type="button" onclick="window.print()">
-          🖨️ Stampa o salva in PDF
-        </button>
-
-        <!-- NEW: headline risultato -->
-        <div class="headline hidden" id="headlineResult"></div>
-
-        <div id="pvResultAmort" class="calc-result"></div>
-
-        <!-- NEW: what-if -->
-        <div class="whatif-box hidden" id="whatIfBox">
-          <h4>Cosa cambia davvero se…</h4>
-          <ul id="whatIfList"></ul>
-          <div class="tiny-help">Sono micro-simulazioni veloci (non previsione). Servono per capire “cosa pesa di più”.</div>
-        </div>
-      </div>
-
-      <div class="amazon-box">
-        <strong>Consiglio SmartShop:</strong>
-        Confronta almeno <strong>2–3 preventivi reali</strong>. Il calcolatore serve a capire gli ordini di grandezza.
+        <article class="calc-card">
+          <div class="calc-card-label">AUTO B</div>
+          <h3>Auto B (di solito il “nuovo acquisto”)</h3>
+          <p>
+            Qui spesso si mette l’auto che vorresti comprare (es. elettrica) per capire se ti conviene davvero
+            rispetto a quella attuale.
+          </p>
+        </article>
       </div>
     </section>
 
-    <!-- Richiami -->
-    <section style="margin-top:30px; padding:16px; border-radius:10px; background:#F7F7FB; border:1px solid #E5E7EB;">
-      <h2 style="margin-top:0;">Ti possono interessare anche:</h2>
+    <!-- CALCOLATORE -->
+    <section class="calc-section" id="calc-auto">
+      <h2>Calcolatore confronto costi carburante/energia</h2>
+      <p>
+        I campi “Consumo” si intendono <strong>ogni 100 km</strong>.
+        Puoi usare litri/100 km (termiche) oppure kWh/100 km (elettrica).
+      </p>
 
-      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-top:10px;">
-        <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
-          <a href="https://syncras.app/calcolatore-consumi-auto.html" style="text-decoration:none; color:var(--violet-dark); display:block;">
-            <h3 style="margin-top:0; font-size:1rem;">Quanto costa davvero usare un’auto?</h3>
-            <p style="font-size:0.9rem; margin:0;">Confronta i costi reali per km: termico vs elettrico.</p>
-          </a>
-        </article>
-
-        <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
-          <a href="https://syncras.app/smart-test/smart-test-auto-elettrica-per-te.html" style="text-decoration:none; color:var(--violet-dark); display:block;">
-            <h3 style="margin-top:0; font-size:1rem;">Ha senso l’auto elettrica per te?</h3>
-            <p style="font-size:0.9rem; margin:0;">Test rapido basato sul tuo uso reale.</p>
-          </a>
-        </article>
-
-        <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
-          <a href="https://syncras.app/smart-test/smart-test-ibrida-plugin-o-nessuna.html" style="text-decoration:none; color:var(--violet-dark); display:block;">
-            <h3 style="margin-top:0; font-size:1rem;">Ibrida, plug-in o nessuna?</h3>
-            <p style="font-size:0.9rem; margin:0;">Capisci cosa conviene davvero, senza marketing.</p>
-          </a>
-        </article>
+      <div class="calc-grid-inputs">
+        <div class="calc-field">
+          <label>Chilometri considerati (es. 20000 km/anno)</label>
+          <input id="kmTot" type="number" min="1000" max="100000" value="20000">
+        </div>
       </div>
 
-      <div style="text-align:center; margin-top:18px;">
-        <button id="shareBottom" class="share-btn">
-          <span class="icon">📎</span> Condividi questa pagina
-        </button>
+      <h3>Auto A</h3>
+      <div class="calc-grid-inputs">
+        <div class="calc-field">
+          <label>Alimentazione Auto A</label>
+          <select id="tipoA">
+            <option value="Benzina">Benzina</option>
+            <option value="Diesel">Diesel</option>
+            <option value="GPL" selected>GPL</option>
+            <option value="Metano">Metano</option>
+            <option value="Elettrica">Elettrica</option>
+          </select>
+        </div>
+
+        <div class="calc-field">
+          <label for="consA" id="labelConsA">Consumo Auto A (litri / 100 km)</label>
+          <input id="consA" type="number" step="0.1" min="1" max="40" value="8">
+        </div>
+
+        <div class="calc-field">
+          <label for="prezzoA" id="labelPrezzoA">Prezzo carburante Auto A (€/litro)</label>
+          <input id="prezzoA" type="number" step="0.01" min="0.1" max="5" value="0.90">
+        </div>
       </div>
+
+      <h3>Auto B</h3>
+      <div class="calc-grid-inputs">
+        <div class="calc-field">
+          <label>Alimentazione Auto B</label>
+          <select id="tipoB">
+            <option value="Benzina">Benzina</option>
+            <option value="Diesel">Diesel</option>
+            <option value="GPL">GPL</option>
+            <option value="Metano">Metano</option>
+            <option value="Elettrica" selected>Elettrica</option>
+          </select>
+        </div>
+
+        <div class="calc-field">
+          <label for="consB" id="labelConsB">Consumo Auto B (kWh / 100 km)</label>
+          <input id="consB" type="number" step="0.1" min="1" max="40" value="15">
+        </div>
+
+        <div class="calc-field">
+          <label for="prezzoB" id="labelPrezzoB">Prezzo energia Auto B (€/kWh)</label>
+          <input id="prezzoB" type="number" step="0.01" min="0.1" max="5" value="0.20">
+        </div>
+      </div>
+
+      <!-- NOTE LEGALI CHECK -->
+      <!-- ✅ MODIFICA: aggiunto id="legalBox" per scroll+highlight -->
+      <div class="legal-box-avviso" id="legalBox">
+        <label>
+          <input type="checkbox" id="legalAccept">
+          Prima di procedere, ricorda che i risultati sono solo stime indicative e non sostituiscono una valutazione professionale.
+          Per tutti i dettagli, consulta le <a href="note-legali.html" target="_blank" rel="noopener">Note Legali</a>.
+        </label>
+        <p class="legal-note-small">
+          I risultati di questo calcolatore sono indicativi e non costituiscono consulenza professionale.
+          Per decisioni economiche, fiscali o tecniche fai sempre riferimento a un professionista qualificato.
+        </p>
+      </div>
+
+      <button class="calc-btn" type="button" onclick="calcolaAuto()">Calcola confronto auto</button>
+
+      <div id="autoResult" class="calc-result"></div>
+
+      <!-- SHARE RISULTATO -->
+      <div style="text-align:center; margin:18px 0 6px;">
+        <button id="shareResultBtn" class="share-btn" type="button" style="width:100%;">📎 Condividi il risultato</button>
+
+        <div id="shareFallback" class="share-fallback">
+          <input id="shareText" type="text" readonly>
+          <button id="copyBtn" class="copy-btn" type="button">Copia testo</button>
+        </div>
+
+        <p class="small-note" style="margin-top:10px;">
+          Se il tuo browser non supporta la condivisione diretta, puoi copiare il testo e incollarlo su WhatsApp/Telegram.
+        </p>
+      </div>
+
+      <p class="small-note">
+        Il calcolatore considera solo il costo “carburante/energia”.
+        Non tiene conto di assicurazione, bollo, manutenzione, pedaggi, parcheggi, ecc.
+      </p>
+
+      <!-- RICHIAMO AD ALTRI CONTENUTI -->
+      <section style="margin-top:30px; padding:16px; border-radius:10px; background:#F7F7FB; border:1px solid #E5E7EB;">
+        <h2 style="margin-top:0;">Ti possono interessare anche:</h2>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-top:10px;">
+
+          <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
+            <a href="https://syncras.app/calcolatore-consumi-auto.html" style="text-decoration:none; color:var(--violet-dark); display:block;">
+              <h3 style="margin-top:0; font-size:1rem;">Quanto costa davvero usare un’auto?</h3>
+              <p style="font-size:0.9rem; margin:0;">
+                Confronta i costi reali di benzina, diesel, GPL, metano ed elettrico in base a chilometri e consumi reali.
+              </p>
+            </a>
+          </article>
+
+          <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
+            <a href="https://syncras.app/calcolatore-fotovoltaico-ammortamento.html" style="text-decoration:none; color:var(--violet-dark); display:block;">
+              <h3 style="margin-top:0; font-size:1rem;">In quanto tempo si ripaga il fotovoltaico?</h3>
+              <p style="font-size:0.9rem; margin:0;">
+                Scopri dopo quanti anni recuperi l’investimento in base a consumi, autoconsumo e produzione stimata.
+              </p>
+            </a>
+          </article>
+
+          <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
+            <a href="https://syncras.app/smart-test/smart-test-auto-elettrica-per-te.html" style="text-decoration:none; color:var(--violet-dark); display:block;">
+              <h3 style="margin-top:0; font-size:1rem;">Ha senso l’auto elettrica per te?</h3>
+              <p style="font-size:0.9rem; margin:0;">
+                Non per tutti è la scelta giusta. Questo test ti aiuta a capirlo in base al tuo uso reale.
+              </p>
+            </a>
+          </article>
+
+          <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
+            <a href="https://syncras.app/smart-test/smart-test-ibrida-plugin-o-nessuna.html" style="text-decoration:none; color:var(--violet-dark); display:block;">
+              <h3 style="margin-top:0; font-size:1rem;">Ibrida, plug-in o nessuna delle due?</h3>
+              <p style="font-size:0.9rem; margin:0;">
+                Tra marketing e realtà quotidiana, qui capisci quale tecnologia ha davvero senso per te.
+              </p>
+            </a>
+          </article>
+
+        </div>
+      </section>
+
+      <section style="max-width: 900px; margin: 40px auto; padding: 20px; font-family: sans-serif; line-height: 1.6; color: #333;">
+        <h2>Conviene l'auto elettrica nel 2025? Scoprilo con il calcolatore</h2>
+        <p>La domanda che molti si pongono è: <strong>quanto si risparmia davvero con un'auto elettrica</strong> rispetto a una a benzina o diesel? La risposta dipende da tre fattori chiave: il prezzo del carburante, l'efficienza del veicolo e, soprattutto, i chilometri percorsi ogni anno.</p>
+
+        <h3>Costi medi per 100 km (Stime 2025)</h3>
+        <p>Per usare al meglio il calcolatore, ecco alcuni riferimenti medi di consumo per diverse motorizzazioni:</p>
+        <ul>
+          <li><strong>Auto Benzina:</strong> 6-8 litri / 100km (Costo elevato, ideale per pochi km).</li>
+          <li><strong>Auto Diesel:</strong> 5-6 litri / 100km (Ancora competitivo per lunghi viaggi autostradali).</li>
+          <li><strong>Auto a GPL:</strong> 8-10 litri / 100km (Il costo del carburante è molto basso, circa la metà della benzina).</li>
+          <li><strong>Auto Elettrica:</strong> 15-20 kWh / 100km (Il risparmio è massimo se carichi a casa con tariffa domestica).</li>
+        </ul>
+
+        <h3>Come calcolare il punto di pareggio (Break-even point)</h3>
+        <p>Oltre al costo del carburante, ricorda di considerare che un'auto elettrica o ibrida ha spesso costi di manutenzione ridotti e agevolazioni sul bollo. Utilizza il nostro tool per simulare diversi scenari, variando il <strong>prezzo della benzina</strong> e il <strong>costo del kWh</strong> per trovare il tuo risparmio personalizzato.</p>
+
+        <p><small>Disclaimer: I dati forniti sono stime basate su valori medi di mercato e non costituiscono consulenza finanziaria all'acquisto.</small></p>
+      </section>
     </section>
   </main>
 
@@ -800,19 +740,19 @@ Risparmio auto (solo FV effettivo) = kWh FV effettivi × prezzo energia
         <h4>Link utili</h4>
         <ul>
           <li><a href="blog.html">Tutte le guide SmartShop</a></li>
-          <li><a href="calcolatori.html">Tutti i calcolatori</a></li>
-          <li><a href="fotovoltaico-4-kw-con-accumulo-10-kwh-quanto-costa-davvero-nel-2025.html">Caso reale fotovoltaico</a></li>
+          <li><a href="offerte.html">Offerte Amazon selezionate</a></li>
+          <li><a href="smart-tv-economica-o-tv-buona-con-box.html">Guida Smart TV</a></li>
+          <li><a href="fotovoltaico-4kw-accumulo-10kwh-quanto-costa-davvero-nel-2025.html">Guida fotovoltaico 4 kW</a></li>
         </ul>
       </div>
 
       <div class="footer-column">
-        <h4>Legale &amp; Privacy</h4>
+        <h4>Legale & Privacy</h4>
         <ul>
           <li><a href="privacy.html">Privacy Policy</a></li>
           <li><a href="cookie.html">Cookie Policy</a></li>
           <li><a href="disclaimer-amazon.html">Disclaimer Amazon</a></li>
           <li><a href="note-legali.html">Note Legali</a></li>
-          <li><a href="#" id="cookie-settings">Impostazioni cookie</a></li>
         </ul>
       </div>
     </div>
@@ -825,556 +765,257 @@ Risparmio auto (solo FV effettivo) = kWh FV effettivi × prezzo energia
         senza alcun costo aggiuntivo per l’utente.
       </p>
       <p>
-        Per ordini, resi, spedizioni o dati relativi agli acquisti, è necessario rivolgersi
-        direttamente al servizio clienti Amazon tramite il proprio account.
+        Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+        è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
       </p>
     </div>
   </footer>
 
-  <!-- Cookie Banner (consenso preventivo: GA solo dopo accettazione) -->
-  <div id="cookie-banner" role="dialog" aria-label="Banner cookie">
+  <script>
+    function toggleMenu() {
+      document.body.classList.toggle('nav-open');
+    }
+
+    // FORMATTAZIONE EURO
+    function euro(val) {
+      return val.toFixed(2).replace('.', ',');
+    }
+
+    function updateLabels() {
+      const tipoA = document.getElementById('tipoA').value;
+      const tipoB = document.getElementById('tipoB').value;
+
+      const labelConsA = document.getElementById('labelConsA');
+      const labelPrezzoA = document.getElementById('labelPrezzoA');
+      const labelConsB = document.getElementById('labelConsB');
+      const labelPrezzoB = document.getElementById('labelPrezzoB');
+
+      if (tipoA === 'Elettrica') {
+        labelConsA.textContent = 'Consumo Auto A (kWh / 100 km)';
+        labelPrezzoA.textContent = 'Prezzo energia Auto A (€/kWh)';
+      } else {
+        labelConsA.textContent = 'Consumo Auto A (litri / 100 km)';
+        labelPrezzoA.textContent = 'Prezzo carburante Auto A (€/litro)';
+      }
+
+      if (tipoB === 'Elettrica') {
+        labelConsB.textContent = 'Consumo Auto B (kWh / 100 km)';
+        labelPrezzoB.textContent = 'Prezzo energia Auto B (€/kWh)';
+      } else {
+        labelConsB.textContent = 'Consumo Auto B (litri / 100 km)';
+        labelPrezzoB.textContent = 'Prezzo carburante Auto B (€/litro)';
+      }
+    }
+
+    function buildShareText(payload) {
+      const lines = [
+        `🚗 Confronto costi auto (Syncras.App)`,
+        `Km considerati: ${payload.km.toLocaleString('it-IT')} km`,
+        ``,
+        `Auto A (${payload.tipoA})`,
+        `• Costo per 100 km: ${payload.costo100A} €`,
+        `• Costo totale: ${payload.costoTotA} €`,
+        ``,
+        `Auto B (${payload.tipoB})`,
+        `• Costo per 100 km: ${payload.costo100B} €`,
+        `• Costo totale: ${payload.costoTotB} €`,
+        ``,
+        `${payload.sintesi}`,
+        ``,
+        `Calcolatore: ${window.location.href}`
+      ];
+      return lines.join('\n');
+    }
+
+    function calcolaAuto() {
+      const legalCheckbox = document.getElementById('legalAccept');
+      if (legalCheckbox && !legalCheckbox.checked) {
+        alert('Per usare il calcolatore devi dichiarare di aver letto e accettato le Note Legali.');
+
+        // ✅ MODIFICA: scroll + highlight sul box della spunta
+        const box = document.getElementById('legalBox');
+        if (box) {
+          box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          box.classList.add('legal-highlight');
+          setTimeout(() => box.classList.remove('legal-highlight'), 1200);
+        } else if (legalCheckbox) {
+          legalCheckbox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        return;
+      }
+
+      const kmTot = parseFloat(document.getElementById('kmTot').value) || 0;
+
+      const tipoA = document.getElementById('tipoA').value;
+      const consA = parseFloat(document.getElementById('consA').value) || 0;
+      const prezzoA = parseFloat(document.getElementById('prezzoA').value) || 0;
+
+      const tipoB = document.getElementById('tipoB').value;
+      const consB = parseFloat(document.getElementById('consB').value) || 0;
+      const prezzoB = parseFloat(document.getElementById('prezzoB').value) || 0;
+
+      if (kmTot <= 0 || consA <= 0 || consB <= 0 || prezzoA <= 0 || prezzoB <= 0) {
+        alert('Controlla di aver inserito tutti i valori maggiori di zero.');
+        return;
+      }
+
+      const costo100A = consA * prezzoA;
+      const costoTotA = (costo100A / 100) * kmTot;
+
+      const costo100B = consB * prezzoB;
+      const costoTotB = (costo100B / 100) * kmTot;
+
+      const diffTot = costoTotA - costoTotB;
+
+      let sintesi = '';
+      if (Math.abs(diffTot) < 0.01) {
+        sintesi = 'Le due auto hanno un costo molto simile sui chilometri inseriti.';
+      } else if (diffTot > 0) {
+        sintesi = `Auto B (${tipoB}) è più economica: risparmio stimato ${euro(diffTot)} € sui km considerati.`;
+      } else {
+        sintesi = `Auto A (${tipoA}) è più economica: risparmio stimato ${euro(-diffTot)} € sui km considerati.`;
+      }
+
+      // BARRE
+      const maxCosto = Math.max(costoTotA, costoTotB);
+      const widthA = (costoTotA / maxCosto) * 100;
+      const widthB = (costoTotB / maxCosto) * 100;
+
+      const box = document.getElementById('autoResult');
+      box.innerHTML = `
+        <strong>📊 Risultato del confronto</strong>
+
+        <p style="margin-top:10px;"><u>Auto A (${tipoA})</u><br>
+        – Costo per 100 km: <strong>${euro(costo100A)} €</strong><br>
+        – Costo per ${kmTot.toLocaleString('it-IT')} km: <strong>${euro(costoTotA)} €</strong></p>
+        <div class="bar-container"><div class="bar-fill" style="width:${widthA}%"></div></div>
+
+        <p><u>Auto B (${tipoB})</u><br>
+        – Costo per 100 km: <strong>${euro(costo100B)} €</strong><br>
+        – Costo per ${kmTot.toLocaleString('it-IT')} km: <strong>${euro(costoTotB)} €</strong></p>
+        <div class="bar-container"><div class="bar-fill" style="width:${widthB}%"></div></div>
+
+        <div class="saving-box">
+          <strong>${sintesi}</strong><br>
+          <span style="font-size:0.9rem; color:#4b5563;">Risparmio mensile stimato: <strong>${euro(Math.abs(diffTot)/12)} €</strong></span>
+        </div>
+
+        <p class="small-note">
+          Nota: confronto solo sui costi di carburante/energia. Nella realtà incidono anche prezzo d’acquisto, manutenzione, tasse, assicurazione, pedaggi, ecc.
+        </p>
+      `;
+      box.style.display = 'block';
+      box.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      // prepara testo share risultato (fallback + share)
+      const payload = {
+        km: kmTot,
+        tipoA,
+        tipoB,
+        costo100A: euro(costo100A),
+        costoTotA: euro(costoTotA),
+        costo100B: euro(costo100B),
+        costoTotB: euro(costoTotB),
+        sintesi
+      };
+      const shareText = buildShareText(payload);
+      window.__syncrasLastShareText = shareText;
+
+      const fallbackWrap = document.getElementById('shareFallback');
+      const shareInput = document.getElementById('shareText');
+      if (shareInput) shareInput.value = shareText;
+      if (fallbackWrap) fallbackWrap.style.display = 'flex';
+    }
+
+    // SHARE pagina + risultato (con fallback copia)
+    function sharePage() {
+      const title = 'Confronto consumi e costi auto – Syncras.App';
+      const text = 'Ho trovato un calcolatore per confrontare i costi tra due auto (benzina, diesel, GPL, metano o elettrica).';
+      const url = window.location.href;
+
+      if (navigator.share) {
+        navigator.share({ title, text, url }).catch(() => {});
+      } else {
+        // fallback: copia URL
+        navigator.clipboard.writeText(url).then(() => alert('Link copiato! Incollalo su WhatsApp/Telegram.'));
+      }
+    }
+
+    function shareResult() {
+      const title = 'Risultato confronto costi auto – Syncras.App';
+      const text = window.__syncrasLastShareText || '';
+      const url = window.location.href;
+
+      if (!text) {
+        alert('Prima calcola un confronto, poi puoi condividere il risultato.');
+        return;
+      }
+
+      if (navigator.share) {
+        navigator.share({ title, text, url }).catch(() => {});
+      } else {
+        // fallback: mostra input già pronto (già attivo dopo calcolo)
+        const fallbackWrap = document.getElementById('shareFallback');
+        if (fallbackWrap) fallbackWrap.style.display = 'flex';
+        const shareInput = document.getElementById('shareText');
+        if (shareInput) shareInput.focus();
+        alert('Il tuo browser non supporta la condivisione diretta: copia il testo del risultato e incollalo su WhatsApp/Telegram.');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // footer year
+      const span = document.getElementById('year-span');
+      if (span) span.textContent = new Date().getFullYear();
+
+      // labels iniziali + listener
+      updateLabels();
+      document.getElementById('tipoA').addEventListener('change', updateLabels);
+      document.getElementById('tipoB').addEventListener('change', updateLabels);
+
+      // share buttons
+      const sharePageBtn = document.getElementById('sharePageBtn');
+      const shareResultBtn = document.getElementById('shareResultBtn');
+      if (sharePageBtn) sharePageBtn.addEventListener('click', sharePage);
+      if (shareResultBtn) shareResultBtn.addEventListener('click', shareResult);
+
+      // copy fallback
+      const copyBtn = document.getElementById('copyBtn');
+      if (copyBtn) {
+        copyBtn.addEventListener('click', () => {
+          const shareInput = document.getElementById('shareText');
+          if (!shareInput) return;
+          navigator.clipboard.writeText(shareInput.value).then(() => {
+            alert('Testo copiato! Ora incollalo su WhatsApp/Telegram.');
+          });
+        });
+      }
+    });
+  </script>
+
+  <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
+  <div id="cookie-banner">
     <p>
       Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite (Google Analytics).
       Alcuni link potrebbero essere di affiliazione.
       Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la <a href="privacy.html">Privacy Policy</a>.
     </p>
-    <div class="btn-row">
-      <button type="button" class="reject" onclick="rejectCookies()">Rifiuta</button>
-      <button type="button" class="accept" onclick="acceptCookies()">Accetta e continua</button>
+    <div style="display:flex; gap:10px; margin-top:8px;">
+      <button type="button" onclick="rejectCookies()">Rifiuta</button>
+      <button id="cookie-btn" type="button" onclick="acceptCookies()">Accetta e continua</button>
     </div>
   </div>
 
   <script>
-    // ===== UI =====
-    function toggleMenu(){ document.body.classList.toggle('nav-open'); }
-
-    function sharePage(){
-      const url = window.location.href;
-      const title = 'Calcolatore fotovoltaico con ammortamento | Syncras.App';
-      if (navigator.share) {
-        navigator.share({ title, url }).catch(() => {});
-      } else if (navigator.clipboard) {
-        navigator.clipboard.writeText(url).then(() => {
-          alert('Link copiato negli appunti. Puoi incollarlo dove vuoi.');
-        }).catch(() => {
-          alert('Non sono riuscito a copiare il link, ma puoi usare la barra degli indirizzi.');
-        });
-      } else {
-        alert('Condivisione non supportata: copia il link dalla barra degli indirizzi.');
-      }
-    }
-
-    function euro(val){
-      const n = Number(val) || 0;
-      // intero "da pagina": se vuoi con centesimi cambia toFixed(0) in toFixed(2)
-      return n.toFixed(0).replace('.', ',');
-    }
-
-    function euro2(val){
-      const n = Number(val) || 0;
-      return n.toFixed(2).replace('.', ',');
-    }
-
-    function checkLegalAccept(){
-      const cb = document.getElementById('legalAccept');
-      if (cb && !cb.checked) {
-        alert('Per usare questo calcolatore devi dichiarare di aver letto e accettato le Note Legali.');
-        return false;
-      }
-      return true;
-    }
-
-    // ===== Modalità rapida/precisa =====
-    const QUICK_PRESET = {
-      pvZona: "1300",
-      pvAutoconsumo: 35,
-      pvPrezzo: 0.30,
-      pvTipoImpianto: "ongrid",
-      pvPrezzoCessione: 0.10,
-      pvAnniDetrazione: 10,
-      pvQuotaDetrazione: 50
-    };
-
-    function setMode(isQuick){
-      const modePrecise = document.getElementById('modePrecise');
-      const modeQuick = document.getElementById('modeQuick');
-
-      if (isQuick){
-        modeQuick.classList.add('active');
-        modePrecise.classList.remove('active');
-
-        // applichiamo preset SENZA toccare i 3 input "chiave" già in pagina
-        document.getElementById('pvZona').value = QUICK_PRESET.pvZona;
-        document.getElementById('pvAutoconsumo').value = QUICK_PRESET.pvAutoconsumo;
-        document.getElementById('pvPrezzo').value = QUICK_PRESET.pvPrezzo;
-        document.getElementById('pvTipoImpianto').value = QUICK_PRESET.pvTipoImpianto;
-        document.getElementById('pvPrezzoCessione').value = QUICK_PRESET.pvPrezzoCessione;
-        document.getElementById('pvAnniDetrazione').value = QUICK_PRESET.pvAnniDetrazione;
-        document.getElementById('pvQuotaDetrazione').value = QUICK_PRESET.pvQuotaDetrazione;
-
-        // nascondiamo i campi avanzati (ma non li cancelliamo)
-        document.getElementById('pvZona').closest('.calc-field').classList.add('hidden');
-        document.getElementById('pvAutoconsumo').closest('.calc-field').classList.add('hidden');
-        document.getElementById('pvPrezzo').closest('.calc-field').classList.add('hidden');
-        document.getElementById('pvTipoImpianto').closest('.calc-field').classList.add('hidden');
-        document.getElementById('fieldCessione').classList.add('hidden');
-        document.getElementById('pvAnniDetrazione').closest('.calc-field').classList.add('hidden');
-        document.getElementById('pvQuotaDetrazione').closest('.calc-field').classList.add('hidden');
-
-        document.getElementById('modeHelp').textContent =
-          'Modalità Rapida: compila solo Potenza, Consumo casa, Costo impianto. Il resto usa valori medi. Puoi tornare in “Precisa” quando vuoi.';
-      } else {
-        modePrecise.classList.add('active');
-        modeQuick.classList.remove('active');
-
-        // mostra campi avanzati
-        document.getElementById('pvZona').closest('.calc-field').classList.remove('hidden');
-        document.getElementById('pvAutoconsumo').closest('.calc-field').classList.remove('hidden');
-        document.getElementById('pvPrezzo').closest('.calc-field').classList.remove('hidden');
-        document.getElementById('pvTipoImpianto').closest('.calc-field').classList.remove('hidden');
-        document.getElementById('fieldCessione').classList.remove('hidden');
-        document.getElementById('pvAnniDetrazione').closest('.calc-field').classList.remove('hidden');
-        document.getElementById('pvQuotaDetrazione').closest('.calc-field').classList.remove('hidden');
-
-        document.getElementById('modeHelp').textContent =
-          'Modalità Precisa: puoi personalizzare tutto (zona, autoconsumo, prezzo energia, sistema e cessione).';
-      }
-      syncCessioneUI();
-    }
-
-    // ===== EV helper =====
-    function computeEv(){
-      const km = parseFloat(document.getElementById('evKm').value) || 0;
-      const consumo100 = parseFloat(document.getElementById('evConsumo').value) || 0;
-      const quotaPvPerc = parseFloat(document.getElementById('evQuotaPv').value) || 0;
-      const prezzoEv = parseFloat(document.getElementById('evPrezzo').value) || 0;
-
-      if (km <= 0 || consumo100 <= 0 || prezzoEv <= 0) {
-        return { ok:false, kWhAnnuiAuto:0, autoPvKWhWanted:0, prezzoEv, warnings:['Inserisci km annui, consumo auto e prezzo energia per il calcolo auto.'] };
-      }
-
-      const kWhAnnuiAuto = km * (consumo100 / 100);
-      const autoPvKWhWanted = kWhAnnuiAuto * (quotaPvPerc / 100);
-
-      // warning "realismo" (richiesta tua)
-      const warnings = [];
-      if (consumo100 > 22) warnings.push('Consumo auto molto alto: controlla kWh/100km (valori tipici 13–20).');
-      if (km >= 60000) warnings.push('60.000 km/anno è un uso intenso: ok come stress-test, ma attenzione al realismo.');
-
-      return { ok:true, kWhAnnuiAuto, autoPvKWhWanted, prezzoEv, warnings };
-    }
-
-    // ===== FV base: coerente auto vs cessione =====
-    function computeFotovoltaicoBase(autoPvKWhWanted){
-      const kw = parseFloat(document.getElementById('pvKw').value) || 0;
-      const prodPerKw = parseFloat(document.getElementById('pvZona').value) || 0;
-      const consumoCasa = parseFloat(document.getElementById('pvConsumoCasa').value) || 0;
-      const autoconsumoPerc = parseFloat(document.getElementById('pvAutoconsumo').value) || 0;
-      const prezzo = parseFloat(document.getElementById('pvPrezzo').value) || 0;
-      const costoImpianto = parseFloat(document.getElementById('pvCosto').value) || 0;
-
-      const tipoImpianto = document.getElementById('pvTipoImpianto').value;
-      const prezzoCessione = parseFloat(document.getElementById('pvPrezzoCessione').value) || 0;
-
-      const anniDetr = parseFloat(document.getElementById('pvAnniDetrazione').value) || 0;
-      const quotaDetrPerc = parseFloat(document.getElementById('pvQuotaDetrazione').value) || 0;
-
-      if (kw <= 0 || prodPerKw <= 0) return { ok:false, error:'Inserisci almeno potenza impianto e zona.' };
-
-      const produzioneAnnua = kw * prodPerKw;
-
-      // Autoconsumo casa: potenziale % ma limitato dai consumi casa
-      const autoconsumoPotenziale = produzioneAnnua * (autoconsumoPerc / 100);
-      const autoconsumoCasaKWh = Math.min(autoconsumoPotenziale, consumoCasa);
-
-      const fvResiduoDopoCasa = Math.max(produzioneAnnua - autoconsumoCasaKWh, 0);
-
-      // Auto: può prendere FV solo da quello che resta dopo casa
-      const autoWanted = Math.max(0, Number(autoPvKWhWanted) || 0);
-      const autoPvEffettivoKWh = Math.min(autoWanted, fvResiduoDopoCasa);
-
-      // Cessione: ciò che resta dopo casa + auto (se ON-GRID)
-      let energiaCedutaKWh = 0;
-      let ricavoCessione = 0;
-      if (tipoImpianto === 'ongrid') {
-        energiaCedutaKWh = Math.max(produzioneAnnua - autoconsumoCasaKWh - autoPvEffettivoKWh, 0);
-        ricavoCessione = energiaCedutaKWh * prezzoCessione;
-      }
-
-      const risparmioAutoconsumoCasa = autoconsumoCasaKWh * prezzo;
-      const beneficioAnnualeFV = risparmioAutoconsumoCasa + ricavoCessione;
-
-      const detrazioneTotale = (costoImpianto > 0) ? (costoImpianto * (quotaDetrPerc / 100)) : 0;
-      const detrazioneAnnua = (anniDetr > 0) ? (detrazioneTotale / anniDetr) : 0;
-
-      return {
-        ok:true,
-        kw, prodPerKw, consumoCasa, autoconsumoPerc, prezzo, costoImpianto,
-        tipoImpianto, prezzoCessione,
-        anniDetr, quotaDetrPerc,
-        produzioneAnnua,
-        autoconsumoPotenziale,
-        autoconsumoCasaKWh,
-        fvResiduoDopoCasa,
-        autoPvEffettivoKWh,
-        autoPvKWhWanted: autoWanted,
-        energiaCedutaKWh,
-        risparmioAutoconsumoCasa,
-        ricavoCessione,
-        beneficioAnnualeFV,
-        detrazioneTotale,
-        detrazioneAnnua
-      };
-    }
-
-    // ===== Coerenza: semaforo =====
-    function setCoherence(status, items){
-      const badge = document.getElementById('coherenceBadge');
-      const list = document.getElementById('coherenceList');
-
-      badge.classList.remove('badge-ok','badge-warn','badge-bad');
-      if (status === 'ok') { badge.classList.add('badge-ok'); badge.textContent = '✅ OK'; }
-      if (status === 'warn') { badge.classList.add('badge-warn'); badge.textContent = '⚠️ Attenzione'; }
-      if (status === 'bad') { badge.classList.add('badge-bad'); badge.textContent = '⛔ Incoerente'; }
-
-      list.innerHTML = '';
-      (items || []).forEach(t => {
-        const li = document.createElement('li');
-        li.textContent = t;
-        list.appendChild(li);
-      });
-    }
-
-    function coherenceCheck(r, evInfo){
-      const issuesBad = [];
-      const issuesWarn = [];
-
-      if (!r || !r.ok) {
-        setCoherence('warn', ['Inserisci i dati e premi “Calcola impianto”.']);
-        return;
-      }
-
-      if ((r.consumoCasa || 0) <= 0) issuesWarn.push('Consumo casa = 0: l’autoconsumo reale andrà a 0 → risultato poco realistico.');
-      if ((r.autoconsumoPerc || 0) >= 80) issuesWarn.push('Autoconsumo stimato molto alto: senza batteria è raro. Con accumulo può avere senso, ma verifica.');
-      if ((r.prezzo || 0) < 0.10) issuesWarn.push('Prezzo energia molto basso: stai forse inserendo solo PUN e non “tutto incluso”.');
-      if ((r.prezzo || 0) > 0.60) issuesWarn.push('Prezzo energia molto alto: ok se includi periodi critici, ma verifica.');
-      if (r.tipoImpianto === 'ongrid' && (r.prezzoCessione || 0) <= 0) issuesWarn.push('ON-GRID ma prezzo cessione = 0: la cessione non darà ricavo.');
-
-      // auto check
-      if (evInfo && evInfo.ok){
-        if (evInfo.warnings && evInfo.warnings.length) issuesWarn.push(...evInfo.warnings);
-
-        // richiesta tua: “non puoi eccedere”
-        // qui segnaliamo quando l’auto chiede più FV residuo di quanto c’è.
-        if (r.autoPvKWhWanted > r.fvResiduoDopoCasa) {
-          issuesWarn.push(`Auto: richiedi ${r.autoPvKWhWanted.toFixed(0)} kWh FV/anno ma dopo i consumi casa restano ${r.fvResiduoDopoCasa.toFixed(0)} kWh → il calcolo limiterà automaticamente l’auto a ${r.autoPvEffettivoKWh.toFixed(0)} kWh.`);
-        }
-      }
-
-      // incoerenze dure
-      if (r.autoconsumoCasaKWh > r.produzioneAnnua + 1e-6) issuesBad.push('Autoconsumo reale > produzione: impossibile (controlla i dati).');
-      if (r.produzioneAnnua <= 0) issuesBad.push('Produzione annua nulla: controlla potenza e zona.');
-
-      if (issuesBad.length){
-        setCoherence('bad', issuesBad.concat(issuesWarn));
-      } else if (issuesWarn.length){
-        setCoherence('warn', issuesWarn);
-      } else {
-        setCoherence('ok', ['Dati coerenti. Ora puoi generare anche la tabella di ammortamento.']);
-      }
-    }
-
-    // ======== BLOCCO A ========
-    function calcolaFotovoltaicoImpianto(){
-      if (!checkLegalAccept()) return;
-
-      const r = computeFotovoltaicoBase(0);
-      if (!r.ok){ alert(r.error || 'Dati non validi.'); return; }
-
-      coherenceCheck(r, null);
-
-      const rientroSoloBeneficio = (r.costoImpianto > 0 && r.beneficioAnnualeFV > 0)
-        ? (r.costoImpianto / r.beneficioAnnualeFV) : null;
-
-      const rientroConDetrazioni = (r.costoImpianto > 0 && (r.beneficioAnnualeFV + r.detrazioneAnnua) > 0)
-        ? (r.costoImpianto / (r.beneficioAnnualeFV + r.detrazioneAnnua)) : null;
-
-      const div = document.getElementById('pvResultImpianto');
-      div.style.display = 'block';
-
-      div.innerHTML = `
-        <strong>Produzione annua:</strong> ${r.produzioneAnnua.toFixed(0)} kWh/anno<br>
-        • Autoconsumo POTENZIALE: ${r.autoconsumoPotenziale.toFixed(0)} kWh/anno (${r.autoconsumoPerc.toFixed(0)}%)<br>
-        • Autoconsumo REALE (limitato dai consumi casa): <strong>${r.autoconsumoCasaKWh.toFixed(0)} kWh/anno</strong><br>
-        • Risparmio autoconsumo casa: <strong>${euro(r.risparmioAutoconsumoCasa)} €</strong><br>
-        ${
-          r.tipoImpianto === 'ongrid'
-            ? `• Energia ceduta: <strong>${r.energiaCedutaKWh.toFixed(0)} kWh/anno</strong><br>
-               • Ricavo cessione (@${euro2(r.prezzoCessione)} €/kWh): <strong>${euro(r.ricavoCessione)} €</strong><br>`
-            : `• Impianto OFF-GRID: <strong>nessuna cessione</strong><br>`
-        }
-        • Beneficio annuo FV totale (casa + cessione): <strong>${euro(r.beneficioAnnualeFV)} €</strong><br>
-        ${r.detrazioneTotale > 0 ? `• Detrazione ipotetica: <strong>${euro(r.detrazioneTotale)} €</strong> (≈ ${euro(r.detrazioneAnnua)} €/anno)<br>` : ''}
-        • Rientro solo con beneficio annuo: <strong>${rientroSoloBeneficio ? rientroSoloBeneficio.toFixed(1) : '---'} anni</strong><br>
-        • Rientro con detrazioni: <strong>${rientroConDetrazioni ? rientroConDetrazioni.toFixed(1) : '---'} anni</strong><br>
-        <span style="font-size:0.8rem; color:#4b5563;">
-          Nota: Scambio sul Posto / Ritiro Dedicato sono stimati tramite il prezzo di cessione impostato.
-        </span>
-      `;
-    }
-
-    // ======== BLOCCO B ========
-    function calcolaFotovoltaicoAuto(){
-      if (!checkLegalAccept()) return;
-
-      const ev = computeEv();
-      if (!ev.ok) { alert('Inserisci almeno km annui, consumo auto e prezzo energia.'); return; }
-
-      // calcolo FV con auto "voluta" per ricavare quanta è effettiva
-      const r = computeFotovoltaicoBase(ev.autoPvKWhWanted);
-      if (!r.ok){ alert(r.error || 'Dati impianto non validi nel Blocco A.'); return; }
-
-      coherenceCheck(r, ev);
-
-      const div = document.getElementById('pvResultAuto');
-      div.style.display = 'block';
-
-      const risparmioAutoReale = r.autoPvEffettivoKWh * ev.prezzoEv;
-
-      // warning richiesto: “non puoi eccedere”
-      const extraWarn = (ev.autoPvKWhWanted > r.fvResiduoDopoCasa)
-        ? `<div style="margin-top:8px; padding:8px 10px; border-radius:8px; background:#fff7ed; border:1px solid #fed7aa;">
-             ⚠️ <strong>Attenzione:</strong> vorresti ${ev.autoPvKWhWanted.toFixed(0)} kWh FV/anno per l’auto, ma il FV residuo dopo casa è ${r.fvResiduoDopoCasa.toFixed(0)}.
-             Quindi l’auto potrà usare <strong>al massimo ${r.autoPvEffettivoKWh.toFixed(0)} kWh/anno</strong> (il resto viene dalla rete, non dal sole).
-           </div>`
-        : '';
-
-      div.innerHTML = `
-        <strong>Consumo annuo auto elettrica:</strong> ${ev.kWhAnnuiAuto.toFixed(0)} kWh/anno<br>
-        • Quota che vorresti caricare da FV: <strong>${ev.autoPvKWhWanted.toFixed(0)} kWh/anno</strong><br>
-        • FV effettivamente disponibile per auto (dopo casa): <strong>${r.autoPvEffettivoKWh.toFixed(0)} kWh/anno</strong><br>
-        • Risparmio auto reale (solo FV effettivo): <strong>${euro(risparmioAutoReale)} €</strong><br>
-        <span style="font-size:0.8rem; color:#4b5563;">
-          Nota: questo risparmio è reale solo per i kWh prodotti e usati davvero dal FV.
-        </span>
-        ${extraWarn}
-      `;
-    }
-
-    // ======== BLOCCO C - AMMORTAMENTO ========
-    function calcolaAmmortamento() {
-      if (!checkLegalAccept()) return;
-
-      const includeAuto = document.getElementById('includeAutoInAmort').checked;
-      const ev = includeAuto ? computeEv() : { ok:false, autoPvKWhWanted:0, prezzoEv:0, warnings:[] };
-
-      const r = computeFotovoltaicoBase(includeAuto && ev.ok ? ev.autoPvKWhWanted : 0);
-      if (!r.ok) { alert('Dati impianto non validi nel Blocco A.'); return; }
-
-      coherenceCheck(r, includeAuto ? ev : null);
-
-      const anniOrizzonte = parseInt(document.getElementById('amortYears').value) || 20;
-
-      // Risparmio auto REALE: kWh FV effettivi sull'auto × prezzo EV
-      const risparmioAnnualeAuto = (includeAuto && ev.ok) ? (r.autoPvEffettivoKWh * ev.prezzoEv) : 0;
-
-      // NEW: headline + tabella con capitale residuo
-      const head = document.getElementById('headlineResult');
-      const div = document.getElementById('pvResultAmort');
-      div.style.display = 'block';
-
-      let html = `
-        <strong>Riepilogo parametri usati:</strong><br>
-        • Costo impianto: <strong>${euro(r.costoImpianto)} €</strong><br>
-        • Produzione: <strong>${r.produzioneAnnua.toFixed(0)} kWh/anno</strong><br>
-        • Autoconsumo casa reale: <strong>${r.autoconsumoCasaKWh.toFixed(0)} kWh/anno</strong><br>
-        • FV usato per auto (effettivo): <strong>${r.autoPvEffettivoKWh.toFixed(0)} kWh/anno</strong><br>
-        ${
-          r.tipoImpianto === 'ongrid'
-          ? `• Energia ceduta (dopo casa+auto): <strong>${r.energiaCedutaKWh.toFixed(0)} kWh/anno</strong><br>
-             • Ricavo cessione: <strong>${euro(r.ricavoCessione)} €</strong> (@${euro2(r.prezzoCessione)} €/kWh)<br>`
-          : `• Impianto OFF-GRID: <strong>nessuna cessione</strong><br>`
-        }
-        • Beneficio FV (casa + cessione): <strong>${euro(r.beneficioAnnualeFV)} €</strong><br>
-        • Risparmio auto (da FV effettivo): <strong>${euro(risparmioAnnualeAuto)} €</strong><br>
-        ${r.detrazioneAnnua > 0
-          ? `• Detrazioni: <strong>${euro(r.detrazioneAnnua)} €/anno</strong> per ${r.anniDetr.toFixed(0)} anni (totale ≈ ${euro(r.detrazioneTotale)} €)<br>`
-          : `• Detrazioni: <strong>non considerate</strong><br>`
-        }
-        • Orizzonte: <strong>${anniOrizzonte} anni</strong><br>
-      `;
-
-      // Tabella
-      let cumulativo = -r.costoImpianto;
-      let breakEvenAnno = -1;
-
-      let table = `
-        <div class="amort-wrapper">
-          <table class="amort-table">
-            <thead>
-              <tr>
-                <th>Anno</th>
-                <th>Beneficio FV (casa+cess.)</th>
-                ${includeAuto ? '<th>Beneficio Auto (FV)</th>' : ''}
-                <th>Detrazione</th>
-                <th>Totale anno</th>
-                <th>Cumulativo</th>
-                <th>Capitale residuo</th>
-              </tr>
-            </thead>
-            <tbody>
-      `;
-
-      // degrado pannelli 0.5% annuo (come avevi)
-      for (let i = 1; i <= anniOrizzonte; i++) {
-        const degrado = Math.pow(0.995, i - 1);
-
-        const benefFv = r.beneficioAnnualeFV * degrado;
-        const benefAuto = includeAuto ? (risparmioAnnualeAuto * degrado) : 0;
-        const detr = (i <= r.anniDetr) ? r.detrazioneAnnua : 0;
-
-        const totale = benefFv + benefAuto + detr;
-        cumulativo += totale;
-
-        const capitaleResiduo = Math.max(0, -cumulativo);
-
-        let rowClass = "";
-        if (cumulativo >= 0 && breakEvenAnno === -1) {
-          breakEvenAnno = i;
-          rowClass = "row-break-even";
-        }
-
-        table += `
-          <tr class="${rowClass}">
-            <td>${i}</td>
-            <td>${euro(benefFv)}</td>
-            ${includeAuto ? `<td>${euro(benefAuto)}</td>` : ''}
-            <td>${euro(detr)}</td>
-            <td><strong>${euro(totale)}</strong></td>
-            <td style="color:${cumulativo>=0?'var(--ok)':'#b91c1c'}">${euro(cumulativo)}</td>
-            <td>${euro(capitaleResiduo)} €</td>
-          </tr>
-        `;
-      }
-
-      table += `</tbody></table></div>
-        <div class="amort-legend">
-          * La riga verde indica quando il cumulativo supera il costo impianto. <br>
-          * Degrado pannelli incluso: 0,5% annuo. Prezzi energia considerati costanti.
-        </div>
-      `;
-
-      // Headline risultato
-      head.classList.remove('hidden');
-      if (breakEvenAnno !== -1) {
-        head.innerHTML = `<strong>✅ Tempo di rientro stimato: circa ${breakEvenAnno} anni</strong><br>
-          <span style="font-size:.9rem;color:#4b5563;">Di cui: ~${euro(r.detrazioneAnnua)} €/anno detrazione (per ${r.anniDetr.toFixed(0)} anni) + beneficio FV/auto.</span>`;
-      } else {
-        head.innerHTML = `<strong>⚠️ Non si ripaga entro ${anniOrizzonte} anni</strong><br>
-          <span style="font-size:.9rem;color:#4b5563;">Prova a rivedere autoconsumo, prezzo energia o costo impianto.</span>`;
-      }
-
-      div.innerHTML = html + table;
-
-      // NEW: what-if (3 micro-simulazioni)
-      buildWhatIf(r, risparmioAnnualeAuto, anniOrizzonte);
-    }
-
-    function buildWhatIf(r, risparmioAnnualeAuto, anniOrizzonte){
-      const box = document.getElementById('whatIfBox');
-      const list = document.getElementById('whatIfList');
-      list.innerHTML = '';
-
-      if (!r || !r.ok || r.costoImpianto <= 0){
-        box.classList.add('hidden');
-        return;
-      }
-
-      function estimatePayback(benefFV, benefAuto, detrAnnua, detrYears){
-        // stima semplice: anno per anno finché cumulativo >= 0
-        let cumul = -r.costoImpianto;
-        for (let i=1; i<=anniOrizzonte; i++){
-          const degrado = Math.pow(0.995, i - 1);
-          const detr = (i <= detrYears) ? detrAnnua : 0;
-          cumul += (benefFV*degrado) + (benefAuto*degrado) + detr;
-          if (cumul >= 0) return i;
-        }
-        return null;
-      }
-
-      const base = estimatePayback(r.beneficioAnnualeFV, risparmioAnnualeAuto, r.detrazioneAnnua, r.anniDetr);
-
-      // scenario 1: autoconsumo +20 punti (max 90) → cambia beneficio FV (solo parte risparmio casa)
-      const autoPerc2 = Math.min(90, (r.autoconsumoPerc || 0) + 20);
-      // ricostruiamo al volo: manteniamo produzione e consumo casa, cambiamo autoconsumo potenziale
-      const autocPot2 = r.produzioneAnnua * (autoPerc2/100);
-      const autocReale2 = Math.min(autocPot2, r.consumoCasa);
-      const rispCasa2 = autocReale2 * r.prezzo;
-
-      // qui NON ricalcoliamo auto/cessione nei dettagli (what-if veloce): assumiamo auto e residui come nel calcolo attuale
-      // per evitare bug, aggiustiamo la cessione solo come “ciò che resta”
-      const energiaCeduta2 = (r.tipoImpianto==='ongrid')
-        ? Math.max(r.produzioneAnnua - autocReale2 - r.autoPvEffettivoKWh, 0) : 0;
-      const ricavo2 = energiaCeduta2 * r.prezzoCessione;
-      const benefFV2 = rispCasa2 + ricavo2;
-
-      const pb1 = estimatePayback(benefFV2, risparmioAnnualeAuto, r.detrazioneAnnua, r.anniDetr);
-
-      // scenario 2: prezzo energia +0,10
-      const prezzo2 = r.prezzo + 0.10;
-      const benefFV_price = (r.autoconsumoCasaKWh * prezzo2) + r.ricavoCessione;
-      const pb2 = estimatePayback(benefFV_price, risparmioAnnualeAuto, r.detrazioneAnnua, r.anniDetr);
-
-      // scenario 3: prezzo cessione -0,04 (min 0)
-      const cessionePrice2 = Math.max(0, r.prezzoCessione - 0.04);
-      const benefFV_ced = (r.autoconsumoCasaKWh * r.prezzo) + (r.energiaCedutaKWh * cessionePrice2);
-      const pb3 = estimatePayback(benefFV_ced, risparmioAnnualeAuto, r.detrazioneAnnua, r.anniDetr);
-
-      function li(text){
-        const el = document.createElement('li');
-        el.textContent = text;
-        list.appendChild(el);
-      }
-
-      if (base === null){
-        li('Base: non si ripaga entro l’orizzonte selezionato.');
-      } else {
-        li(`Base: rientro ~${base} anni.`);
-      }
-
-      li(`Se autoconsumo sale al ${autoPerc2.toFixed(0)}% → rientro ${pb1 ? ('~'+pb1+' anni') : 'non entro orizzonte'}.`);
-      li(`Se prezzo energia sale a ${euro2(prezzo2)} €/kWh → rientro ${pb2 ? ('~'+pb2+' anni') : 'non entro orizzonte'}.`);
-      li(`Se prezzo cessione scende a ${euro2(cessionePrice2)} €/kWh → rientro ${pb3 ? ('~'+pb3+' anni') : 'non entro orizzonte'}.`);
-
-      box.classList.remove('hidden');
-    }
-
-    // ===== ON/OFF grid UX =====
-    function syncCessioneUI(){
-      const tipo = document.getElementById('pvTipoImpianto');
-      const inpCessione = document.getElementById('pvPrezzoCessione');
-      const wrap = document.getElementById('fieldCessione');
-
-      const ongrid = (tipo.value === 'ongrid');
-      inpCessione.disabled = !ongrid;
-      inpCessione.style.opacity = ongrid ? '1' : '0.6';
-      wrap.style.opacity = ongrid ? '1' : '0.6';
-    }
-
-    // ======== GDPR COOKIE + GA (consenso preventivo) ========
-    (function(){
+    (function () {
+      // 👉 ID Google Analytics di Tiziana
       const GA_ID = 'G-CFTTCYDZ2P';
-      const CONSENT_KEY = 'syncras_cookie_consent';
+      const CONSENT_KEY = "syncras_cookie_consent";
 
-      // blocca GA preventivamente
-      window['ga-disable-' + GA_ID] = true;
-
-      function loadGoogleAnalytics(){
-        if (window.__syncrasGaLoaded) return;
-        window.__syncrasGaLoaded = true;
-
-        // riabilita GA SOLO dopo consenso
-        window['ga-disable-' + GA_ID] = false;
+      function loadGoogleAnalytics() {
+        if (window.__tizianaGaLoaded) return;
+        window.__tizianaGaLoaded = true;
 
         const gaScript = document.createElement('script');
         gaScript.async = true;
@@ -1384,85 +1025,45 @@ Risparmio auto (solo FV effettivo) = kWh FV effettivi × prezzo energia
         window.dataLayer = window.dataLayer || [];
         function gtag(){ dataLayer.push(arguments); }
         window.gtag = gtag;
-
         gtag('js', new Date());
         gtag('config', GA_ID, { anonymize_ip: true });
       }
 
-      function showBanner(){
-        const b = document.getElementById('cookie-banner');
-        if (b) b.style.display = 'block';
-      }
-      function hideBanner(){
-        const b = document.getElementById('cookie-banner');
-        if (b) b.style.display = 'none';
+      function showBanner() {
+        const banner = document.getElementById('cookie-banner');
+        if (banner) banner.style.display = 'block';
       }
 
-      window.acceptCookies = function(){
+      function hideBanner() {
+        const banner = document.getElementById('cookie-banner');
+        if (banner) banner.style.display = 'none';
+      }
+
+      window.acceptCookies = function () {
         localStorage.setItem(CONSENT_KEY, 'yes');
         hideBanner();
         loadGoogleAnalytics();
       };
 
-      window.rejectCookies = function(){
+      window.rejectCookies = function () {
         localStorage.setItem(CONSENT_KEY, 'no');
         hideBanner();
-        window['ga-disable-' + GA_ID] = true;
       };
 
-      window.revokeCookies = function(){
-        localStorage.removeItem(CONSENT_KEY);
-        window['ga-disable-' + GA_ID] = true;
-        showBanner();
-      };
-
-      document.addEventListener('DOMContentLoaded', function(){
+      document.addEventListener('DOMContentLoaded', function () {
         const consent = localStorage.getItem(CONSENT_KEY);
-        if (consent === 'yes') loadGoogleAnalytics();
-        else if (consent === 'no') window['ga-disable-' + GA_ID] = true;
-        else showBanner();
+
+        if (consent === 'yes') {
+          loadGoogleAnalytics();
+        } else if (consent === 'no') {
+          // niente GA, niente banner
+        } else {
+          showBanner();
+        }
       });
     })();
-
-    // ===== INIT =====
-    document.addEventListener('DOMContentLoaded', function(){
-      // year
-      const y = document.getElementById('year-span');
-      if (y) y.textContent = new Date().getFullYear();
-
-      // share buttons
-      const top = document.getElementById('shareTop');
-      const bottom = document.getElementById('shareBottom');
-      if (top) top.addEventListener('click', sharePage);
-      if (bottom) bottom.addEventListener('click', sharePage);
-
-      // cookie settings (revoca)
-      const cs = document.getElementById('cookie-settings');
-      if (cs) cs.addEventListener('click', function(e){
-        e.preventDefault();
-        if (typeof window.revokeCookies === 'function') window.revokeCookies();
-      });
-
-      // ON/OFF grid UI
-      const tipo = document.getElementById('pvTipoImpianto');
-      tipo.addEventListener('change', syncCessioneUI);
-      syncCessioneUI();
-
-      // mode toggles
-      const mP = document.getElementById('modePrecise');
-      const mQ = document.getElementById('modeQuick');
-      mP.addEventListener('click', () => setMode(false));
-      mQ.addEventListener('click', () => setMode(true));
-      mP.addEventListener('keydown', (e)=>{ if(e.key==='Enter') setMode(false); });
-      mQ.addEventListener('keydown', (e)=>{ if(e.key==='Enter') setMode(true); });
-
-      // default precise
-      setMode(false);
-
-      // initial coherence
-      setCoherence('warn', ['Inserisci i dati e premi “Calcola impianto”.']);
-    });
   </script>
+
 </body>
 </html>
 
