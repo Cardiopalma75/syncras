@@ -24,6 +24,38 @@
     "url": "https://syncras.app/calcolatore-consumi-auto.html"
   }
   </script>
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {
+      "@type":"Question",
+      "name":"Quanto costa percorrere 100 km in elettrico?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Dipende dai kWh/100 km e dal prezzo €/kWh. Esempio: 15 kWh/100 km a 0,20 €/kWh = 3,00 € ogni 100 km."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Come si calcola il costo carburante per 100 km?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Si moltiplica il consumo (litri/100 km o kWh/100 km) per il prezzo unitario (€/litro o €/kWh)."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Il calcolatore include assicurazione, bollo e manutenzione?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"No. Il tool confronta solo il costo di carburante/energia sui km indicati. Altri costi dipendono dal veicolo e dal profilo di utilizzo."
+      }
+    }
+  ]
+}
+</script>
 
   <style>
     :root {
@@ -288,6 +320,13 @@
       margin: 6px 0 0;
       font-size: 0.8rem;
       color: #6b7280;
+    }
+
+    /* ✅ MODIFICA: evidenziazione box legale (10/10 UX) */
+    .legal-highlight{
+      outline: 3px solid rgba(108,92,231,0.8);
+      box-shadow: 0 0 0 6px rgba(108,92,231,0.12);
+      transition: box-shadow .2s ease, outline .2s ease;
     }
 
     /* BARRE GRAFICHE COSTI */
@@ -585,7 +624,8 @@
       </div>
 
       <!-- NOTE LEGALI CHECK -->
-      <div class="legal-box-avviso">
+      <!-- ✅ MODIFICA: aggiunto id="legalBox" per scroll+highlight -->
+      <div class="legal-box-avviso" id="legalBox">
         <label>
           <input type="checkbox" id="legalAccept">
           Prima di procedere, ricorda che i risultati sono solo stime indicative e non sostituiscono una valutazione professionale.
@@ -791,6 +831,17 @@
       const legalCheckbox = document.getElementById('legalAccept');
       if (legalCheckbox && !legalCheckbox.checked) {
         alert('Per usare il calcolatore devi dichiarare di aver letto e accettato le Note Legali.');
+
+        // ✅ MODIFICA: scroll + highlight sul box della spunta
+        const box = document.getElementById('legalBox');
+        if (box) {
+          box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          box.classList.add('legal-highlight');
+          setTimeout(() => box.classList.remove('legal-highlight'), 1200);
+        } else if (legalCheckbox) {
+          legalCheckbox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
         return;
       }
 
