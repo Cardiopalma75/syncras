@@ -112,7 +112,6 @@
     }
     .legal a{color:var(--violet);font-weight:900;text-decoration:underline}
 
-    /* Box giallo come “originale” quando manca la spunta */
     .legal-warning{
       display:none;
       background:#FFF4D6;
@@ -184,6 +183,21 @@
 
     @media (max-width: 840px){ .grid2{grid-template-columns:1fr} }
 
+    /* ✅ Tabelle responsive: su mobile diventano “card” */
+    @media (max-width: 520px){
+      table{border-spacing:0 12px}
+      thead{display:none}
+      tr{display:block}
+      td{
+        display:block;
+        width:100%;
+        border-radius:12px !important;
+        margin-bottom:8px;
+      }
+      td.costCell{white-space:normal}
+      tr td:first-child, tr td:last-child{border-radius:12px !important}
+    }
+
     /* ===== FOOTER Syncras ===== */
     .syncras-footer{
       margin-top:32px;padding:2.5rem 1.5rem 1.5rem;background:#2b1840;color:#f3eaff;font-size:.9rem;
@@ -202,7 +216,7 @@
     .footer-bottom{max-width:980px;margin:0 auto;text-align:center;font-size:.8rem;opacity:.9}
     .footer-bottom p{margin:4px 0}
 
-    /* Cookie banner (dal tuo originale) */
+    /* Cookie banner */
     #cookie-banner{
       position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
       max-width:90%;width:420px;background:#ffffff;border:2px solid #6C5CE7;border-radius:10px;
@@ -246,737 +260,752 @@
     </div>
   </header>
 
-<main>
-  <span class="badge">Calcolatore per stanze</span>
-  <h1>Consumi di casa: chi ti svuota la bolletta? ⚡</h1>
-  <p class="sub">Diviso per stanze (Cucina / Salotto / Bagno / Clima). Costo per riga in tempo reale + risultato condivisibile.</p>
+  <main>
+    <span class="badge">Calcolatore per stanze</span>
+    <h1>Consumi di casa: chi ti svuota la bolletta? ⚡</h1>
+    <p class="sub">Diviso per stanze (Cucina / Salotto / Bagno / Clima). Costo per riga in tempo reale + risultato condivisibile.</p>
 
-  <div class="topbar">
-    <div style="display:flex; gap:10px; flex-wrap:wrap;">
-      <div class="field">
-        <label for="priceKwh">Prezzo energia (€/kWh)</label>
-        <input id="priceKwh" type="number" inputmode="decimal" step="0.01" min="0.05" max="2" value="0.30" />
-        <div class="hint">Metti il tuo valore reale (es. 0,28 / 0,35)</div>
+    <div class="topbar">
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <div class="field">
+          <label for="priceKwh">Prezzo energia (€/kWh)</label>
+          <input id="priceKwh" type="number" inputmode="decimal" step="0.01" min="0.05" max="2" value="0.30" />
+          <div class="hint">Metti il tuo valore reale (es. 0,28 / 0,35)</div>
+        </div>
+
+        <div class="field">
+          <label for="daysMonth">Giorni nel mese</label>
+          <input id="daysMonth" type="number" min="28" max="31" value="30" />
+          <div class="hint">Per i dispositivi “a ore/giorno”</div>
+        </div>
       </div>
 
-      <div class="field">
-        <label for="daysMonth">Giorni nel mese</label>
-        <input id="daysMonth" type="number" min="28" max="31" value="30" />
-        <div class="hint">Per i dispositivi “a ore/giorno”</div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="btn secondary" id="resetBtn" type="button">↺ Reset</button>
+        <button class="btn" id="calcBtn" type="button">📊 Calcola & Grafico</button>
       </div>
     </div>
 
-    <div style="display:flex; gap:10px; flex-wrap:wrap;">
-      <button class="btn secondary" id="resetBtn" type="button">↺ Reset</button>
-      <button class="btn" id="calcBtn" type="button">📊 Calcola & Grafico</button>
+    <div class="legal-warning" id="legalWarning">
+      💡 <strong>Prima di procedere:</strong> per usare il simulatore devi dichiarare di aver letto e accettato le
+      <a href="note-legali.html" target="_blank" rel="noopener">Note Legali</a>. Spunta la casella qui sotto.
     </div>
-  </div>
 
-  <!-- Box giallo che appare se manca spunta + scroll (NO alert) -->
-  <div class="legal-warning" id="legalWarning">
-    💡 <strong>Prima di procedere:</strong> per usare il simulatore devi dichiarare di aver letto e accettato le
-    <a href="note-legali.html" target="_blank" rel="noopener">Note Legali</a>. Spunta la casella qui sotto.
-  </div>
-
-  <div class="legal" id="legalBox">
-    <label style="display:flex; gap:10px; align-items:flex-start;">
-      <input type="checkbox" id="legalAccept" style="margin-top:4px;">
-      <span>
-        Risultati = <strong>stime indicative</strong>. Dettagli nelle
-        <a href="note-legali.html" target="_blank" rel="noopener">Note Legali</a>.
-        <span style="display:block; margin-top:6px; color:var(--muted); font-size:.82rem;">
-          Serve per capire cosa pesa davvero, non è consulenza professionale.
+    <div class="legal" id="legalBox">
+      <label style="display:flex; gap:10px; align-items:flex-start;">
+        <input type="checkbox" id="legalAccept" style="margin-top:4px;">
+        <span>
+          Risultati = <strong>stime indicative</strong>. Dettagli nelle
+          <a href="note-legali.html" target="_blank" rel="noopener">Note Legali</a>.
+          <span style="display:block; margin-top:6px; color:var(--muted); font-size:.82rem;">
+            Serve per capire cosa pesa davvero, non è consulenza professionale.
+          </span>
         </span>
-      </span>
-    </label>
-  </div>
-
-  <!-- ================== CUCINA ================== -->
-  <section class="section">
-    <div class="sectionHead">
-      <h2>🍳 Cucina (il cuore dei consumi)</h2>
-      <small>Grandi consumatori + uso reale</small>
+      </label>
     </div>
 
-    <table>
-      <thead>
-        <tr>
-          <th style="width:34%">Prodotto</th>
-          <th style="width:18%">W / kWh</th>
-          <th style="width:18%">Uso</th>
-          <th style="width:30%">Costo stimato</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr data-type="power" data-room="Cucina" data-name="Frigorifero">
-          <td>
-            <div class="nameCell"><div class="icon">🧊</div>
-              <div>Frigorifero / Congelatore<div class="mini">Ciclico: ore equivalenti compressore</div></div>
-            </div>
-          </td>
-          <td><input class="rowInput watt" type="number" min="10" max="300" value="70"></td>
-          <td>
-            <input class="rowInput hours" type="number" min="0" max="24" step="0.25" value="8">
-            <div class="mini">ore equivalenti/giorno (non 24h “motor sempre”)</div>
-          </td>
-          <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
-        </tr>
+    <!-- ================== CUCINA ================== -->
+    <section class="section">
+      <div class="sectionHead">
+        <h2>🍳 Cucina (il cuore dei consumi)</h2>
+        <small>Grandi consumatori + uso reale</small>
+      </div>
 
-        <tr data-type="power" data-room="Cucina" data-name="Forno elettrico">
-          <td>
-            <div class="nameCell"><div class="icon">🔥</div>
-              <div>Forno elettrico<div class="mini">Cotture settimanali</div></div>
-            </div>
-          </td>
-          <td><input class="rowInput watt" type="number" min="500" max="3500" value="2200"></td>
-          <td>
-            <input class="rowInput ovenHours" type="number" min="0" max="6" step="0.25" value="1">
-            <div class="mini">ore/cottura</div>
-            <input class="rowInput ovenPerW" type="number" min="0" max="21" step="1" value="3" style="margin-top:6px">
-            <div class="mini">cotture/settimana</div>
-          </td>
-          <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
-        </tr>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:34%">Prodotto</th>
+            <th style="width:18%">W / kWh</th>
+            <th style="width:18%">Uso</th>
+            <th style="width:30%">Costo stimato</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-type="power" data-room="Cucina" data-name="Frigorifero">
+            <td>
+              <div class="nameCell"><div class="icon">🧊</div>
+                <div>Frigorifero / Congelatore<div class="mini">Ciclico: ore equivalenti compressore</div></div>
+              </div>
+            </td>
+            <td><input class="rowInput watt" type="number" min="10" max="300" value="70"></td>
+            <td>
+              <input class="rowInput hours" type="number" min="0" max="24" step="0.25" value="8">
+              <div class="mini">ore equivalenti/giorno (non 24h “motor sempre”)</div>
+            </td>
+            <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
+          </tr>
 
-        <tr data-type="cycle" data-room="Cucina" data-name="Lavastoviglie">
-          <td>
-            <div class="nameCell"><div class="icon">🍽️</div>
-              <div>Lavastoviglie<div class="mini">kWh per ciclo</div></div>
-            </div>
-          </td>
-          <td>
-            <input class="rowInput kwhCycle" type="number" inputmode="decimal" min="0" max="5" step="0.1" value="1.0">
-            <div class="mini">kWh/ciclo</div>
-          </td>
-          <td>
-            <input class="rowInput cyclesW" type="number" min="0" max="21" step="1" value="5">
-            <div class="mini">cicli/settimana</div>
-          </td>
-          <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
-        </tr>
+          <tr data-type="power" data-room="Cucina" data-name="Forno elettrico">
+            <td>
+              <div class="nameCell"><div class="icon">🔥</div>
+                <div>Forno elettrico<div class="mini">Cotture settimanali</div></div>
+              </div>
+            </td>
+            <td><input class="rowInput watt" type="number" min="500" max="3500" value="2200"></td>
+            <td>
+              <input class="rowInput ovenHours" type="number" min="0" max="6" step="0.25" value="1">
+              <div class="mini">ore/cottura</div>
+              <input class="rowInput ovenPerW" type="number" min="0" max="21" step="1" value="3" style="margin-top:6px">
+              <div class="mini">cotture/settimana</div>
+            </td>
+            <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
+          </tr>
 
-        <tr data-type="power" data-room="Cucina" data-name="Induzione/Microonde" data-alt="1">
-          <td>
-            <div class="nameCell"><div class="icon">⚡</div>
-              <div>Cottura rapida<div class="mini">Induzione o Microonde</div></div>
-            </div>
-          </td>
-          <td>
-            <select class="rowSelect altSelect">
-              <option value="1800">Induzione (1 fuoco) ~ 1800 W</option>
-              <option value="1000">Microonde ~ 1000 W</option>
-              <option value="2000">Bollitore ~ 2000 W</option>
-            </select>
-          </td>
-          <td><input class="rowInput hours" type="number" min="0" max="6" step="0.05" value="0.5"></td>
-          <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
+          <tr data-type="cycle" data-room="Cucina" data-name="Lavastoviglie">
+            <td>
+              <div class="nameCell"><div class="icon">🍽️</div>
+                <div>Lavastoviglie<div class="mini">kWh per ciclo</div></div>
+              </div>
+            </td>
+            <td>
+              <input class="rowInput kwhCycle" type="number" inputmode="decimal" min="0" max="5" step="0.1" value="1.0">
+              <div class="mini">kWh/ciclo</div>
+            </td>
+            <td>
+              <input class="rowInput cyclesW" type="number" min="0" max="21" step="1" value="5">
+              <div class="mini">cicli/settimana</div>
+            </td>
+            <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
+          </tr>
 
-  <!-- ================== BAGNO/LAVANDERIA ================== -->
-  <section class="section">
-    <div class="sectionHead">
-      <h2>🚿 Lavanderia & Bagno (picchi di potenza)</h2>
-      <small>Quelli che “saltano il contatore” se li accendi insieme</small>
-    </div>
+          <tr data-type="power" data-room="Cucina" data-name="Induzione/Microonde" data-alt="1">
+            <td>
+              <div class="nameCell"><div class="icon">⚡</div>
+                <div>Cottura rapida<div class="mini" id="quickHint">Induzione o Microonde</div></div>
+              </div>
+            </td>
+            <td>
+              <select class="rowSelect altSelect" aria-label="Seleziona dispositivo di cottura rapida">
+                <option value="1800" data-hours="0.50">Induzione (1 fuoco) ~ 1800 W</option>
+                <option value="1000" data-hours="0.15">Microonde ~ 1000 W</option>
+                <option value="2000" data-hours="0.10">Bollitore ~ 2000 W</option>
+              </select>
+            </td>
+            <td>
+              <input class="rowInput hours quickHours" type="number" min="0" max="6" step="0.05" value="0.5">
+              <div class="mini" id="quickMini">Suggerimento: microonde spesso 0,10–0,20 h (6–12 min)</div>
+            </td>
+            <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
 
-    <table>
-      <thead>
-        <tr>
-          <th style="width:34%">Prodotto</th>
-          <th style="width:18%">W / kWh</th>
-          <th style="width:18%">Uso</th>
-          <th style="width:30%">Costo stimato</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr data-type="cycle" data-room="Bagno/Lavanderia" data-name="Lavatrice">
-          <td>
-            <div class="nameCell"><div class="icon">👕</div>
-              <div>Lavatrice<div class="mini">kWh per ciclo</div></div>
-            </div>
-          </td>
-          <td>
-            <input class="rowInput kwhCycle" type="number" inputmode="decimal" min="0" max="5" step="0.1" value="1.0">
-            <div class="mini">kWh/ciclo</div>
-          </td>
-          <td>
-            <input class="rowInput cyclesW" type="number" min="0" max="30" step="1" value="5">
-            <div class="mini">lavaggi/settimana</div>
-          </td>
-          <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
-        </tr>
+    <!-- ================== BAGNO/LAVANDERIA ================== -->
+    <section class="section">
+      <div class="sectionHead">
+        <h2>🚿 Lavanderia & Bagno (picchi di potenza)</h2>
+        <small>Quelli che “saltano il contatore” se li accendi insieme</small>
+      </div>
 
-        <tr data-type="cycle" data-room="Bagno/Lavanderia" data-name="Asciugatrice" data-dryer="1">
-          <td>
-            <div class="nameCell"><div class="icon">🌪️</div>
-              <div>Asciugatrice<div class="mini">Seleziona tipo</div></div>
-            </div>
-          </td>
-          <td>
-            <select class="rowSelect dryerPreset">
-              <option value="2.0">Pompa di calore ~ 2,0 kWh/ciclo</option>
-              <option value="3.5">Resistenza ~ 3,5 kWh/ciclo</option>
-            </select>
-          </td>
-          <td>
-            <input class="rowInput cyclesW" type="number" min="0" max="21" step="1" value="4">
-            <div class="mini">cicli/settimana</div>
-          </td>
-          <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
-        </tr>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:34%">Prodotto</th>
+            <th style="width:18%">W / kWh</th>
+            <th style="width:18%">Uso</th>
+            <th style="width:30%">Costo stimato</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-type="cycle" data-room="Bagno/Lavanderia" data-name="Lavatrice">
+            <td>
+              <div class="nameCell"><div class="icon">👕</div>
+                <div>Lavatrice<div class="mini">kWh per ciclo</div></div>
+              </div>
+            </td>
+            <td>
+              <input class="rowInput kwhCycle" type="number" inputmode="decimal" min="0" max="5" step="0.1" value="1.0">
+              <div class="mini">kWh/ciclo</div>
+            </td>
+            <td>
+              <input class="rowInput cyclesW" type="number" min="0" max="30" step="1" value="5">
+              <div class="mini">lavaggi/settimana</div>
+            </td>
+            <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
+          </tr>
 
-        <tr data-type="power" data-room="Bagno/Lavanderia" data-name="Scaldabagno elettrico">
-          <td>
-            <div class="nameCell"><div class="icon">🚿</div>
-              <div>Scaldabagno elettrico<div class="mini">se lo usi davvero</div></div>
-            </div>
-          </td>
-          <td><input class="rowInput watt" type="number" min="0" max="3000" value="0"></td>
-          <td><input class="rowInput hours" type="number" min="0" max="24" step="0.25" value="0"></td>
-          <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
-        </tr>
+          <tr data-type="cycle" data-room="Bagno/Lavanderia" data-name="Asciugatrice" data-dryer="1">
+            <td>
+              <div class="nameCell"><div class="icon">🌪️</div>
+                <div>Asciugatrice<div class="mini">Seleziona tipo</div></div>
+              </div>
+            </td>
+            <td>
+              <select class="rowSelect dryerPreset" aria-label="Seleziona tipo asciugatrice">
+                <option value="2.0">Pompa di calore ~ 2,0 kWh/ciclo</option>
+                <option value="3.5">Resistenza ~ 3,5 kWh/ciclo</option>
+              </select>
+            </td>
+            <td>
+              <input class="rowInput cyclesW" type="number" min="0" max="21" step="1" value="4">
+              <div class="mini">cicli/settimana</div>
+            </td>
+            <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
+          </tr>
 
-        <tr data-type="power" data-room="Bagno/Lavanderia" data-name="Phon">
-          <td>
-            <div class="nameCell"><div class="icon">💨</div>
-              <div>Phon<div class="mini">alta potenza, poco tempo</div></div>
-            </div>
-          </td>
-          <td><input class="rowInput watt" type="number" min="0" max="3000" value="2000"></td>
-          <td><input class="rowInput hours" type="number" min="0" max="3" step="0.05" value="0.17"></td>
-          <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
+          <tr data-type="power" data-room="Bagno/Lavanderia" data-name="Scaldabagno elettrico">
+            <td>
+              <div class="nameCell"><div class="icon">🚿</div>
+                <div>Scaldabagno elettrico<div class="mini">se lo usi davvero</div></div>
+              </div>
+            </td>
+            <td><input class="rowInput watt" type="number" min="0" max="3000" value="0"></td>
+            <td><input class="rowInput hours" type="number" min="0" max="24" step="0.25" value="0"></td>
+            <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
+          </tr>
 
-  <!-- ================== SOGGIORNO / HOME OFFICE ================== -->
-  <section class="section">
-    <div class="sectionHead">
-      <h2>🛋️ Soggiorno & Home Office (vampiri costanti)</h2>
-      <small>Quelli che rubano soldi perché restano accesi ore e ore</small>
-    </div>
+          <tr data-type="power" data-room="Bagno/Lavanderia" data-name="Phon">
+            <td>
+              <div class="nameCell"><div class="icon">💨</div>
+                <div>Phon<div class="mini">alta potenza, poco tempo</div></div>
+              </div>
+            </td>
+            <td><input class="rowInput watt" type="number" min="0" max="3000" value="2000"></td>
+            <td><input class="rowInput hours" type="number" min="0" max="3" step="0.05" value="0.17"></td>
+            <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
 
-    <table>
-      <thead>
-        <tr>
-          <th style="width:34%">Prodotto</th>
-          <th style="width:18%">W</th>
-          <th style="width:18%">Ore/giorno</th>
-          <th style="width:30%">Costo stimato</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr data-type="power" data-room="Soggiorno/Office" data-name="TV">
-          <td>
-            <div class="nameCell"><div class="icon">📺</div>
-              <div>Televisore<div class="mini">LED/OLED medio</div></div>
-            </div>
-          </td>
-          <td><input class="rowInput watt" type="number" min="0" max="600" value="120"></td>
-          <td><input class="rowInput hours" type="number" min="0" max="24" step="0.25" value="4"></td>
-          <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
-        </tr>
+    <!-- ================== SOGGIORNO / HOME OFFICE ================== -->
+    <section class="section">
+      <div class="sectionHead">
+        <h2>🛋️ Soggiorno & Home Office (vampiri costanti)</h2>
+        <small>Quelli che rubano soldi perché restano accesi ore e ore</small>
+      </div>
 
-        <tr data-type="power" data-room="Soggiorno/Office" data-name="Decoder / Box TV">
-          <td>
-            <div class="nameCell"><div class="icon">📦</div>
-              <div>Decoder / Box TV<div class="mini">spesso resta 24h</div></div>
-            </div>
-          </td>
-          <td><input class="rowInput watt" type="number" min="0" max="200" value="20"></td>
-          <td><input class="rowInput hours" type="number" min="0" max="24" step="0.25" value="24"></td>
-          <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
-        </tr>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:34%">Prodotto</th>
+            <th style="width:18%">W</th>
+            <th style="width:18%">Ore/giorno</th>
+            <th style="width:30%">Costo stimato</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-type="power" data-room="Soggiorno/Office" data-name="TV">
+            <td>
+              <div class="nameCell"><div class="icon">📺</div>
+                <div>Televisore<div class="mini">LED/OLED medio</div></div>
+              </div>
+            </td>
+            <td><input class="rowInput watt" type="number" min="0" max="600" value="120"></td>
+            <td><input class="rowInput hours" type="number" min="0" max="24" step="0.25" value="4"></td>
+            <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
+          </tr>
 
-        <tr data-type="power" data-room="Soggiorno/Office" data-name="Console PS5/Xbox">
-          <td>
-            <div class="nameCell"><div class="icon">🎮</div>
-              <div>Console (PS5 / Xbox)<div class="mini">se giochi 1–2 ore al giorno</div></div>
-            </div>
-          </td>
-          <td><input class="rowInput watt" type="number" min="0" max="800" value="180"></td>
-          <td><input class="rowInput hours" type="number" min="0" max="24" step="0.25" value="1"></td>
-          <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
-        </tr>
+          <tr data-type="power" data-room="Soggiorno/Office" data-name="Decoder / Box TV">
+            <td>
+              <div class="nameCell"><div class="icon">📦</div>
+                <div>Decoder / Box TV<div class="mini">spesso resta 24h</div></div>
+              </div>
+            </td>
+            <td><input class="rowInput watt" type="number" min="0" max="200" value="20"></td>
+            <td><input class="rowInput hours" type="number" min="0" max="24" step="0.25" value="24"></td>
+            <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
+          </tr>
 
-        <tr data-type="power" data-room="Soggiorno/Office" data-name="PC/Laptop" data-pc="1">
-          <td>
-            <div class="nameCell"><div class="icon">🖥️</div>
-              <div>Computer<div class="mini">PC fisso o Laptop</div></div>
-            </div>
-          </td>
-          <td>
-            <select class="rowSelect pcPreset">
-              <option value="400">PC fisso (medio) ~ 400 W</option>
-              <option value="60">Laptop ~ 60 W</option>
-            </select>
-          </td>
-          <td><input class="rowInput hours" type="number" min="0" max="24" step="0.25" value="3"></td>
-          <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
-        </tr>
+          <tr data-type="power" data-room="Soggiorno/Office" data-name="Console PS5/Xbox">
+            <td>
+              <div class="nameCell"><div class="icon">🎮</div>
+                <div>Console (PS5 / Xbox)<div class="mini">se giochi 1–2 ore al giorno</div></div>
+              </div>
+            </td>
+            <td><input class="rowInput watt" type="number" min="0" max="800" value="180"></td>
+            <td><input class="rowInput hours" type="number" min="0" max="24" step="0.25" value="1"></td>
+            <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
+          </tr>
 
-        <tr data-type="power" data-room="Soggiorno/Office" data-name="Modem/Router">
-          <td>
-            <div class="nameCell"><div class="icon">🌐</div>
-              <div>Modem + Router<div class="mini">Sempre acceso (24h)</div></div>
-            </div>
-          </td>
-          <td><input class="rowInput watt" type="number" min="0" max="80" value="15"></td>
-          <td><input class="rowInput hours" type="number" min="0" max="24" step="0.25" value="24"></td>
-          <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
-        </tr>
-      </tbody>
-    </table>
+          <tr data-type="power" data-room="Soggiorno/Office" data-name="PC/Laptop" data-pc="1">
+            <td>
+              <div class="nameCell"><div class="icon">🖥️</div>
+                <div>Computer<div class="mini">PC fisso o Laptop</div></div>
+              </div>
+            </td>
+            <td>
+              <select class="rowSelect pcPreset" aria-label="Seleziona tipo computer">
+                <option value="400">PC fisso (medio) ~ 400 W</option>
+                <option value="60">Laptop ~ 60 W</option>
+              </select>
+            </td>
+            <td><input class="rowInput hours" type="number" min="0" max="24" step="0.25" value="3"></td>
+            <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
+          </tr>
 
-    <div class="toggleBox">
-      <div class="toggleRow">
+          <tr data-type="power" data-room="Soggiorno/Office" data-name="Modem/Router">
+            <td>
+              <div class="nameCell"><div class="icon">🌐</div>
+                <div>Modem + Router<div class="mini">Sempre acceso (24h)</div></div>
+              </div>
+            </td>
+            <td><input class="rowInput watt" type="number" min="0" max="80" value="15"></td>
+            <td><input class="rowInput hours" type="number" min="0" max="24" step="0.25" value="24"></td>
+            <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="toggleBox">
+        <div class="toggleRow">
+          <div>
+            <strong>🧛 Aggiungi “standby & vampiri” extra</strong>
+            <div class="hint">Caricatori, lucine, ciabatte, ecc. (quelli che sorprendono).</div>
+          </div>
+          <button class="btn secondary" type="button" id="toggleAdvanced">Mostra extra</button>
+        </div>
+
+        <div class="advanced" id="advancedBlock">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:34%">Prodotto</th>
+                <th style="width:18%">W</th>
+                <th style="width:18%">Ore/giorno</th>
+                <th style="width:30%">Costo stimato</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-type="power" data-room="Extra Standby" data-name="Standby generico (somma)">
+                <td>
+                  <div class="nameCell"><div class="icon">🔌</div>
+                    <div>Standby generico<div class="mini">alimentatori, lucine, ecc.</div></div>
+                  </div>
+                </td>
+                <td><input class="rowInput watt" type="number" min="0" max="300" value="15"></td>
+                <td><input class="rowInput hours" type="number" min="0" max="24" step="0.25" value="24"></td>
+                <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
+              </tr>
+
+              <tr data-type="power" data-room="Extra Standby" data-name="Caricabatterie sempre attaccati">
+                <td>
+                  <div class="nameCell"><div class="icon">🔋</div>
+                    <div>Caricabatterie<div class="mini">sempre nella presa</div></div>
+                  </div>
+                </td>
+                <td><input class="rowInput watt" type="number" min="0" max="100" value="5"></td>
+                <td><input class="rowInput hours" type="number" min="0" max="24" step="0.25" value="24"></td>
+                <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================== CLIMA ================== -->
+    <section class="section">
+      <div class="sectionHead">
+        <h2>❄️🔥 Climatizzazione (stagionale)</h2>
+        <small>Qui pesa tantissimo il numero di ore</small>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th style="width:34%">Prodotto</th>
+            <th style="width:18%">W</th>
+            <th style="width:18%">Ore/giorno</th>
+            <th style="width:30%">Costo stimato</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-type="power" data-room="Clima" data-name="Condizionatore inverter">
+            <td>
+              <div class="nameCell"><div class="icon">❄️</div>
+                <div>Condizionatore (inverter)<div class="mini">media a regime</div></div>
+              </div>
+            </td>
+            <td><input class="rowInput watt" type="number" min="0" max="3000" value="800"></td>
+            <td><input class="rowInput hours" type="number" min="0" max="24" step="0.25" value="2"></td>
+            <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
+          </tr>
+
+          <tr data-type="power" data-room="Clima" data-name="Stufetta/Termoventilatore">
+            <td>
+              <div class="nameCell"><div class="icon">🔥</div>
+                <div>Stufetta / Termoventilatore<div class="mini">se la usi poco, metti poco</div></div>
+              </div>
+            </td>
+            <td><input class="rowInput watt" type="number" min="0" max="3000" value="0"></td>
+            <td><input class="rowInput hours" type="number" min="0" max="24" step="0.25" value="0"></td>
+            <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
+          </tr>
+
+          <tr data-type="power" data-room="Clima" data-name="Ventilatore">
+            <td>
+              <div class="nameCell"><div class="icon">🌀</div>
+                <div>Ventilatore<div class="mini">poca potenza, tante ore</div></div>
+              </div>
+            </td>
+            <td><input class="rowInput watt" type="number" min="0" max="200" value="50"></td>
+            <td><input class="rowInput hours" type="number" min="0" max="24" step="0.25" value="0"></td>
+            <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div style="display:flex; justify-content:flex-end; gap:10px; flex-wrap:wrap; margin-top:12px;">
+        <button class="btn" id="calcBtnBottom" type="button">📊 Calcola & Grafico (in fondo)</button>
+      </div>
+    </section>
+
+    <!-- ================== RISULTATI ================== -->
+    <section class="results" id="results">
+      <h2 style="margin:0 0 8px;color:var(--violet-dark)">📍 Risultato (condivisibile)</h2>
+
+      <div class="grid2">
         <div>
-          <strong>🧛 Aggiungi “standby & vampiri” extra</strong>
-          <div class="hint">Caricatori, lucine, ciabatte, ecc. (quelli che sorprendono).</div>
-        </div>
-        <button class="btn secondary" type="button" id="toggleAdvanced">Mostra extra</button>
-      </div>
+          <div class="bigNum">Totale stimato: <span id="totalMonth">—</span> / mese</div>
+          <div class="hint" style="margin-top:6px;">Percentuali per stanza (grafico) + top 3 “colpevoli”.</div>
 
-      <div class="advanced" id="advancedBlock">
-        <table>
-          <thead>
-            <tr>
-              <th style="width:34%">Prodotto</th>
-              <th style="width:18%">W</th>
-              <th style="width:18%">Ore/giorno</th>
-              <th style="width:30%">Costo stimato</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr data-type="power" data-room="Extra Standby" data-name="Standby generico (somma)">
-              <td>
-                <div class="nameCell"><div class="icon">🔌</div>
-                  <div>Standby generico<div class="mini">alimentatori, lucine, ecc.</div></div>
-                </div>
-              </td>
-              <td><input class="rowInput watt" type="number" min="0" max="300" value="15"></td>
-              <td><input class="rowInput hours" type="number" min="0" max="24" step="0.25" value="24"></td>
-              <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
-            </tr>
+          <div class="pills" id="pills"></div>
 
-            <tr data-type="power" data-room="Extra Standby" data-name="Caricabatterie sempre attaccati">
-              <td>
-                <div class="nameCell"><div class="icon">🔋</div>
-                  <div>Caricabatterie<div class="mini">sempre nella presa</div></div>
-                </div>
-              </td>
-              <td><input class="rowInput watt" type="number" min="0" max="100" value="5"></td>
-              <td><input class="rowInput hours" type="number" min="0" max="24" step="0.25" value="24"></td>
-              <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
+          <div class="shareBox">
+            <div style="font-weight:900; margin-bottom:8px;">📤 Condividi</div>
+            <textarea id="shareText" class="shareText" readonly></textarea>
 
-  <!-- ================== CLIMA ================== -->
-  <section class="section">
-    <div class="sectionHead">
-      <h2>❄️🔥 Climatizzazione (stagionale)</h2>
-      <small>Qui pesa tantissimo il numero di ore</small>
-    </div>
-
-    <table>
-      <thead>
-        <tr>
-          <th style="width:34%">Prodotto</th>
-          <th style="width:18%">W</th>
-          <th style="width:18%">Ore/giorno</th>
-          <th style="width:30%">Costo stimato</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr data-type="power" data-room="Clima" data-name="Condizionatore inverter">
-          <td>
-            <div class="nameCell"><div class="icon">❄️</div>
-              <div>Condizionatore (inverter)<div class="mini">media a regime</div></div>
+            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
+              <button class="btn" type="button" id="copyBtn">📎 Copia testo</button>
+              <button class="btn secondary" type="button" id="shareBtn">📲 Condividi risultato</button>
             </div>
-          </td>
-          <td><input class="rowInput watt" type="number" min="0" max="3000" value="800"></td>
-          <td><input class="rowInput hours" type="number" min="0" max="24" step="0.25" value="2"></td>
-          <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
-        </tr>
 
-        <tr data-type="power" data-room="Clima" data-name="Stufetta/Termoventilatore">
-          <td>
-            <div class="nameCell"><div class="icon">🔥</div>
-              <div>Stufetta / Termoventilatore<div class="mini">se la usi poco, metti poco</div></div>
+            <div class="hint" style="margin-top:8px;">
+              Se sei su Android/iPhone, “Condividi risultato” apre WhatsApp/Telegram ecc.
             </div>
-          </td>
-          <td><input class="rowInput watt" type="number" min="0" max="3000" value="0"></td>
-          <td><input class="rowInput hours" type="number" min="0" max="24" step="0.25" value="0"></td>
-          <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
-        </tr>
-
-        <tr data-type="power" data-room="Clima" data-name="Ventilatore">
-          <td>
-            <div class="nameCell"><div class="icon">🌀</div>
-              <div>Ventilatore<div class="mini">poca potenza, tante ore</div></div>
-            </div>
-          </td>
-          <td><input class="rowInput watt" type="number" min="0" max="200" value="50"></td>
-          <td><input class="rowInput hours" type="number" min="0" max="24" step="0.25" value="0"></td>
-          <td class="costCell"><span class="cost">—</span><span class="mutedCost">≈ al mese</span></td>
-        </tr>
-      </tbody>
-    </table>
-
-    <!-- Bottone “calcola” anche in fondo (consiglio Gemini) -->
-    <div style="display:flex; justify-content:flex-end; gap:10px; flex-wrap:wrap; margin-top:12px;">
-      <button class="btn" id="calcBtnBottom" type="button">📊 Calcola & Grafico (in fondo)</button>
-    </div>
-  </section>
-
-  <!-- ================== RISULTATI ================== -->
-  <section class="results" id="results">
-    <h2 style="margin:0 0 8px;color:var(--violet-dark)">📍 Risultato (condivisibile)</h2>
-
-    <div class="grid2">
-      <div>
-        <div class="bigNum">Totale stimato: <span id="totalMonth">—</span> / mese</div>
-        <div class="hint" style="margin-top:6px;">Percentuali per stanza (grafico) + top 3 “colpevoli”.</div>
-
-        <div class="pills" id="pills"></div>
-
-        <div class="shareBox">
-          <div style="font-weight:900; margin-bottom:8px;">📤 Condividi</div>
-          <textarea id="shareText" class="shareText" readonly></textarea>
-
-          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
-            <button class="btn" type="button" id="copyBtn">📎 Copia testo</button>
-            <button class="btn secondary" type="button" id="shareBtn">📲 Condividi risultato</button>
-          </div>
-
-          <div class="hint" style="margin-top:8px;">
-            Se sei su Android/iPhone, “Condividi risultato” apre WhatsApp/Telegram ecc.
           </div>
         </div>
-      </div>
 
-      <div style="display:flex; justify-content:center;">
-        <canvas id="pie" width="360" height="360"></canvas>
+        <div style="display:flex; justify-content:center;">
+          <canvas id="pie" width="360" height="360" role="img" aria-label="Grafico a torta: distribuzione costi per stanza">
+            Il tuo browser non supporta il grafico. In alternativa, leggi le percentuali per stanza nei badge sopra.
+          </canvas>
+        </div>
       </div>
+    </section>
+
+    <div class="legal-warning" style="display:block; margin-top:16px;">
+      ⚠️ <strong>Nota legale:</strong> i risultati di questo calcolatore sono <strong>puramente indicativi</strong> e
+      dipendono dai dati inseriti dall’utente e da ipotesi semplificate sui consumi e sulle tariffe.
+      Non costituiscono in alcun modo una <strong>consulenza professionale</strong>, un preventivo ufficiale
+      o un’offerta commerciale. Per valutazioni precise, rivolgiti a un <strong>tecnico abilitato</strong>.
     </div>
-  </section>
 
-  <!-- Nota legale finale ben evidente (come tuo originale) -->
-  <div class="legal-warning" style="display:block; margin-top:16px;">
-    ⚠️ <strong>Nota legale:</strong> i risultati di questo calcolatore sono <strong>puramente indicativi</strong> e
-    dipendono dai dati inseriti dall’utente e da ipotesi semplificate sui consumi e sulle tariffe.
-    Non costituiscono in alcun modo una <strong>consulenza professionale</strong>, un preventivo ufficiale
-    o un’offerta commerciale. Per valutazioni precise, rivolgiti a un <strong>tecnico abilitato</strong>.
-  </div>
-</main>
+    <section class="section guide-content" style="margin-top:20px;line-height:1.6;padding:20px;">
+      <h2>Come interpretare il risultato del calcolatore</h2>
 
-</main>
-
-<section class="section guide-content" style="max-width:980px;margin:20px auto;line-height:1.6;padding:20px;">
-  <h2>Come interpretare il risultato del calcolatore</h2>
-
-  <p>
-    Questo simulatore ti mostra <strong>dove finiscono davvero i soldi della tua bolletta</strong>.
-    Il totale stimato rappresenta il consumo legato all’uso reale degli elettrodomestici,
-    non include oneri fissi, trasporto e imposte.
-  </p>
-
-  <h3>Quali dispositivi incidono di più sulla bolletta?</h3>
-  <ul>
-    <li><strong>Frigorifero:</strong> consuma poco ogni ora, ma resta acceso 24h su 24.</li>
-    <li><strong>Forno e asciugatrice:</strong> pochi utilizzi, ma costi elevati per singolo ciclo.</li>
-    <li><strong>Standby:</strong> piccoli consumi costanti che, sommati, fanno la differenza.</li>
-  </ul>
-
-  <p>
-    Se il totale stimato è molto diverso dalla tua bolletta reale,
-    la differenza è spesso dovuta a <strong>costi fissi del contratto</strong>
-    o a elettrodomestici non considerati.
-  </p>
-</section>
-
-<script>
-  <!-- IL TUO JS RESTA IDENTICO -->
-</script>
-
-
-
-  
-<footer class="syncras-footer">
-  <div class="footer-inner">
-    <div class="footer-column">
-      <h4>Syncras.App</h4>
       <p>
-        Metodo SmartShop per fare acquisti con la testa (e con un po’ di ironia).<br>
-        Niente tecnicismi inutili, solo esperienze reali e numeri spiegati semplice.
+        Questo simulatore ti mostra <strong>dove finiscono davvero i soldi della tua bolletta</strong>.
+        Il totale stimato rappresenta il consumo legato all’uso reale degli elettrodomestici,
+        non include oneri fissi, trasporto e imposte.
+      </p>
+
+      <h3>Quali dispositivi incidono di più sulla bolletta?</h3>
+      <ul>
+        <li><strong>Frigorifero:</strong> consuma poco ogni ora, ma resta acceso 24h su 24.</li>
+        <li><strong>Forno e asciugatrice:</strong> pochi utilizzi, ma costi elevati per singolo ciclo.</li>
+        <li><strong>Standby:</strong> piccoli consumi costanti che, sommati, fanno la differenza.</li>
+      </ul>
+
+      <p>
+        Se il totale stimato è molto diverso dalla tua bolletta reale,
+        la differenza è spesso dovuta a <strong>costi fissi del contratto</strong>
+        o a elettrodomestici non considerati.
+      </p>
+    </section>
+  </main>
+
+  <footer class="syncras-footer">
+    <div class="footer-inner">
+      <div class="footer-column">
+        <h4>Syncras.App</h4>
+        <p>
+          Metodo SmartShop per fare acquisti con la testa (e con un po’ di ironia).<br>
+          Niente tecnicismi inutili, solo esperienze reali e numeri spiegati semplice.
+        </p>
+      </div>
+
+      <div class="footer-column">
+        <h4>Link utili</h4>
+        <ul>
+          <li><a href="blog.html">Tutte le guide SmartShop</a></li>
+          <li><a href="offerte.html">Offerte Amazon selezionate</a></li>
+          <li><a href="calcolatori.html">Tutti i calcolatori</a></li>
+          <li><a href="fotovoltaico-4-kw-con-accumulo-10-kwh-quanto-costa-davvero-nel-2025.html">Caso reale fotovoltaico</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h4>Legale & Privacy</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="cookie.html">Cookie Policy</a></li>
+          <li><a href="disclaimer-amazon.html">Disclaimer Amazon</a></li>
+          <li><a href="note-legali.html">Note Legali</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© <span id="year-span"></span> Syncras.App — Tutti i diritti riservati.</p>
+      <p>
+        Syncras.App partecipa al Programma Affiliazione Amazon EU.
+        Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+        senza alcun costo aggiuntivo per l’utente.
+      </p>
+      <p>
+        Per ordini, resi, spedizioni o dati relativi agli acquisti, è necessario rivolgersi
+        direttamente al servizio clienti Amazon tramite il proprio account.
       </p>
     </div>
+  </footer>
 
-    <div class="footer-column">
-      <h4>Link utili</h4>
-      <ul>
-        <li><a href="blog.html">Tutte le guide SmartShop</a></li>
-        <li><a href="offerte.html">Offerte Amazon selezionate</a></li>
-        <li><a href="calcolatori.html">Tutti i calcolatori</a></li>
-        <li><a href="fotovoltaico-4-kw-con-accumulo-10-kwh-quanto-costa-davvero-nel-2025.html">Caso reale fotovoltaico</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-column">
-      <h4>Legale & Privacy</h4>
-      <ul>
-        <li><a href="privacy.html">Privacy Policy</a></li>
-        <li><a href="cookie.html">Cookie Policy</a></li>
-        <li><a href="disclaimer-amazon.html">Disclaimer Amazon</a></li>
-        <li><a href="note-legali.html">Note Legali</a></li>
-      </ul>
+  <div id="cookie-banner">
+    <p>
+      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite (Google Analytics).
+      Alcuni link potrebbero essere di affiliazione.
+      Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
+      <a href="privacy.html">Privacy Policy</a>.
+    </p>
+    <div style="display:flex; gap:10px; margin-top:8px;">
+      <button type="button" onclick="rejectCookies()">Rifiuta</button>
+      <button id="cookie-btn" type="button" onclick="acceptCookies()">Accetta e continua</button>
     </div>
   </div>
 
-  <div class="footer-bottom">
-    <p>© <span id="year-span"></span> Syncras.App — Tutti i diritti riservati.</p>
-    <p>
-      Syncras.App partecipa al Programma Affiliazione Amazon EU.
-      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
-      senza alcun costo aggiuntivo per l’utente.
-    </p>
-    <p>
-      Per ordini, resi, spedizioni o dati relativi agli acquisti, è necessario rivolgersi
-      direttamente al servizio clienti Amazon tramite il proprio account.
-    </p>
-  </div>
-</footer>
+  <script>
+    function toggleMenu(){ document.body.classList.toggle('nav-open'); }
 
-<!-- Cookie Banner + GA bloccato finché non accetti (dal tuo originale) -->
-<div id="cookie-banner">
-  <p>
-    Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite (Google Analytics).
-    Alcuni link potrebbero essere di affiliazione.
-    Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la
-    <a href="privacy.html">Privacy Policy</a>.
-  </p>
-  <div style="display:flex; gap:10px; margin-top:8px;">
-    <button type="button" onclick="rejectCookies()">Rifiuta</button>
-    <button id="cookie-btn" type="button" onclick="acceptCookies()">Accetta e continua</button>
-  </div>
-</div>
+    // Helpers
+    function euro(n){
+      if (!isFinite(n)) return "—";
+      return n.toFixed(2).replace(".", ",") + " €";
+    }
+    function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
 
-<script>
-  function toggleMenu(){ document.body.classList.toggle('nav-open'); }
+    const priceEl = document.getElementById("priceKwh");
+    const daysEl  = document.getElementById("daysMonth");
+    const legalEl = document.getElementById("legalAccept");
+    const legalWarning = document.getElementById("legalWarning");
+    const legalBox = document.getElementById("legalBox");
 
-  // ===== Helpers =====
-  function euro(n){
-    if (!isFinite(n)) return "—";
-    return n.toFixed(2).replace(".", ",") + " €";
-  }
-  function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
+    const toggleBtn = document.getElementById("toggleAdvanced");
+    const advancedBlock = document.getElementById("advancedBlock");
 
-  const priceEl = document.getElementById("priceKwh");
-  const daysEl  = document.getElementById("daysMonth");
-  const legalEl = document.getElementById("legalAccept");
-  const legalWarning = document.getElementById("legalWarning");
-  const legalBox = document.getElementById("legalBox");
+    const calcBtn = document.getElementById("calcBtn");
+    const calcBtnBottom = document.getElementById("calcBtnBottom");
+    const resetBtn = document.getElementById("resetBtn");
 
-  const toggleBtn = document.getElementById("toggleAdvanced");
-  const advancedBlock = document.getElementById("advancedBlock");
+    const resultsBox = document.getElementById("results");
+    const totalMonthEl = document.getElementById("totalMonth");
+    const pillsEl = document.getElementById("pills");
 
-  const calcBtn = document.getElementById("calcBtn");
-  const calcBtnBottom = document.getElementById("calcBtnBottom");
-  const resetBtn = document.getElementById("resetBtn");
+    const shareTextEl = document.getElementById("shareText");
+    const copyBtn = document.getElementById("copyBtn");
+    const shareBtn = document.getElementById("shareBtn");
 
-  const resultsBox = document.getElementById("results");
-  const totalMonthEl = document.getElementById("totalMonth");
-  const pillsEl = document.getElementById("pills");
+    // Colori per stanze
+    const COLORS = {
+      "Cucina": "#ef4444",
+      "Bagno/Lavanderia": "#f59e0b",
+      "Soggiorno/Office": "#3b82f6",
+      "Clima": "#6C5CE7",
+      "Extra Standby": "#374151"
+    };
 
-  const shareTextEl = document.getElementById("shareText");
-  const copyBtn = document.getElementById("copyBtn");
-  const shareBtn = document.getElementById("shareBtn");
-
-  // Colori per stanze
-  const COLORS = {
-    "Cucina": "#ef4444",
-    "Bagno/Lavanderia": "#f59e0b",
-    "Soggiorno/Office": "#3b82f6",
-    "Clima": "#6C5CE7",
-    "Extra Standby": "#374151"
-  };
-
-  function isRowVisible(tr){
-    if (advancedBlock && advancedBlock.contains(tr) && advancedBlock.style.display !== "block") return false;
-    return true;
-  }
-  function getRows(){
-    return Array.from(document.querySelectorAll("tr[data-type]")).filter(isRowVisible);
-  }
-
-  // Calcoli:
-  // - power standard: W/1000 * ore/giorno * giorni * prezzo
-  // - oven: W/1000 * ore/cottura * cotture/settimana*4 * prezzo * 0.7
-  // - cycle: kWh/ciclo * cicli/settimana*4 * prezzo
-  function rowMonthlyCost(tr, price, days){
-    const type = tr.dataset.type;
-
-    if (tr.dataset.name === "Forno elettrico"){
-      let watt = parseFloat(tr.querySelector(".watt")?.value) || 0;
-      const h = parseFloat(tr.querySelector(".ovenHours")?.value) || 0;
-      const perW = parseFloat(tr.querySelector(".ovenPerW")?.value) || 0;
-      watt = clamp(watt, 0, 999999);
-      const kwhMonth = (watt/1000) * h * (perW*4) * 0.7;
-      return kwhMonth * price;
+    function isRowVisible(tr){
+      if (advancedBlock && advancedBlock.contains(tr) && advancedBlock.style.display !== "block") return false;
+      return true;
+    }
+    function getRows(){
+      return Array.from(document.querySelectorAll("tr[data-type]")).filter(isRowVisible);
     }
 
-    if (type === "power"){
-      let watt = 0;
-      const altSel = tr.querySelector(".altSelect");
-      const pcSel  = tr.querySelector(".pcPreset");
-      if (altSel) watt = parseFloat(altSel.value) || 0;
-      else if (pcSel) watt = parseFloat(pcSel.value) || 0;
-      else watt = parseFloat(tr.querySelector(".watt")?.value) || 0;
+    // Calcoli:
+    // - power standard: W/1000 * ore/giorno * giorni * prezzo
+    // - oven: W/1000 * ore/cottura * cotture/settimana*4 * prezzo * 0.7
+    // - cycle: kWh/ciclo * cicli/settimana*4 * prezzo
+    function rowMonthlyCost(tr, price, days){
+      const type = tr.dataset.type;
 
-      const hours = parseFloat(tr.querySelector(".hours")?.value) || 0;
-      watt = clamp(watt, 0, 999999);
-      const kwhMonth = (watt/1000) * hours * days;
-      return kwhMonth * price;
+      if (tr.dataset.name === "Forno elettrico"){
+        let watt = parseFloat(tr.querySelector(".watt")?.value) || 0;
+        const h = parseFloat(tr.querySelector(".ovenHours")?.value) || 0;
+        const perW = parseFloat(tr.querySelector(".ovenPerW")?.value) || 0;
+        watt = clamp(watt, 0, 999999);
+        const kwhMonth = (watt/1000) * h * (perW*4) * 0.7;
+        return kwhMonth * price;
+      }
+
+      if (type === "power"){
+        let watt = 0;
+        const altSel = tr.querySelector(".altSelect");
+        const pcSel  = tr.querySelector(".pcPreset");
+        if (altSel) watt = parseFloat(altSel.value) || 0;
+        else if (pcSel) watt = parseFloat(pcSel.value) || 0;
+        else watt = parseFloat(tr.querySelector(".watt")?.value) || 0;
+
+        const hours = parseFloat(tr.querySelector(".hours")?.value) || 0;
+        watt = clamp(watt, 0, 999999);
+        const kwhMonth = (watt/1000) * hours * days;
+        return kwhMonth * price;
+      }
+
+      if (type === "cycle"){
+        const dryerPreset = tr.querySelector(".dryerPreset");
+        const kwhCycle = dryerPreset ? (parseFloat(dryerPreset.value) || 0) : (parseFloat(tr.querySelector(".kwhCycle")?.value) || 0);
+        const cyclesW  = parseFloat(tr.querySelector(".cyclesW")?.value) || 0;
+        const kwhMonth = kwhCycle * cyclesW * 4;
+        return kwhMonth * price;
+      }
+
+      return 0;
     }
 
-    if (type === "cycle"){
-      const dryerPreset = tr.querySelector(".dryerPreset");
-      const kwhCycle = dryerPreset ? (parseFloat(dryerPreset.value) || 0) : (parseFloat(tr.querySelector(".kwhCycle")?.value) || 0);
-      const cyclesW  = parseFloat(tr.querySelector(".cyclesW")?.value) || 0;
-      const kwhMonth = kwhCycle * cyclesW * 4;
-      return kwhMonth * price;
+    function updateLiveCosts(){
+      const price = parseFloat(priceEl.value) || 0;
+      const days  = parseFloat(daysEl.value) || 30;
+
+      getRows().forEach(tr => {
+        const cost = rowMonthlyCost(tr, price, days);
+        const span = tr.querySelector(".cost");
+        if (span) span.textContent = euro(cost);
+      });
     }
 
-    return 0;
-  }
-
-  function updateLiveCosts(){
-    const price = parseFloat(priceEl.value) || 0;
-    const days  = parseFloat(daysEl.value) || 30;
-
-    getRows().forEach(tr => {
-      const cost = rowMonthlyCost(tr, price, days);
-      const span = tr.querySelector(".cost");
-      if (span) span.textContent = euro(cost);
-    });
-  }
-
-  // ✅ richiesta tua: se non spuntato → box giallo + scroll alla spunta
-  function ensureLegalOrScroll(){
-    if (legalEl && !legalEl.checked){
-      if (legalWarning) legalWarning.style.display = "block";
-      if (legalBox) legalBox.scrollIntoView({behavior:"smooth", block:"center"});
-      return false;
+    function ensureLegalOrScroll(){
+      if (legalEl && !legalEl.checked){
+        if (legalWarning) legalWarning.style.display = "block";
+        if (legalBox) legalBox.scrollIntoView({behavior:"smooth", block:"center"});
+        return false;
+      }
+      if (legalWarning) legalWarning.style.display = "none";
+      return true;
     }
-    if (legalWarning) legalWarning.style.display = "none";
-    return true;
-  }
 
-  // se l’utente spunta, nascondi warning
-  if (legalEl){
-    legalEl.addEventListener("change", () => {
-      if (legalEl.checked && legalWarning) legalWarning.style.display = "none";
-    });
-  }
+    if (legalEl){
+      legalEl.addEventListener("change", () => {
+        if (legalEl.checked && legalWarning) legalWarning.style.display = "none";
+      });
+    }
 
-  function drawPie(byRoom){
-    const canvas = document.getElementById("pie");
-    const ctx = canvas.getContext("2d");
-    const w = canvas.width, h = canvas.height;
-    const cx = w/2, cy = h/2;
-    const r = Math.min(w,h)*0.38;
+    // ✅ UX: suggerimento dinamico ore per “cottura rapida”
+    (function bindQuickCookHint(){
+      const row = document.querySelector('tr[data-alt="1"]');
+      if (!row) return;
+      const sel = row.querySelector(".altSelect");
+      const hours = row.querySelector(".quickHours");
+      const mini = document.getElementById("quickMini");
+      if (!sel || !hours) return;
 
-    ctx.clearRect(0,0,w,h);
-    ctx.fillStyle="#fff";
-    ctx.fillRect(0,0,w,h);
+      function apply(){
+        const opt = sel.options[sel.selectedIndex];
+        const suggested = parseFloat(opt.getAttribute("data-hours")) || null;
+        if (suggested != null){
+          // se l’utente non ha mai modificato a mano (o se è uguale al vecchio suggerito), aggiorna
+          if (!hours.dataset.userEdited) hours.value = suggested;
+          if (mini) mini.textContent = `Suggerimento: ${suggested.toFixed(2)} h/giorno (modificabile)`;
+        }
+        updateLiveCosts();
+      }
 
-    const total = Object.values(byRoom).reduce((a,b)=>a+b,0) || 1;
-    let start = -Math.PI/2;
+      hours.addEventListener("input", () => { hours.dataset.userEdited = "1"; });
+      sel.addEventListener("change", apply);
+      apply();
+    })();
 
-    Object.entries(byRoom).forEach(([room,val]) => {
-      const ang = (val/total)*Math.PI*2;
-      ctx.beginPath();
-      ctx.moveTo(cx,cy);
-      ctx.arc(cx,cy,r,start,start+ang);
-      ctx.closePath();
-      ctx.fillStyle = COLORS[room] || "#9ca3af";
-      ctx.fill();
-      start += ang;
-    });
+    function drawPie(byRoom){
+      const canvas = document.getElementById("pie");
+      const ctx = canvas.getContext("2d");
+      const w = canvas.width, h = canvas.height;
+      const cx = w/2, cy = h/2;
+      const r = Math.min(w,h)*0.38;
 
-    // donut
-    ctx.beginPath();
-    ctx.arc(cx,cy,r*0.58,0,Math.PI*2);
-    ctx.fillStyle="#fff";
-    ctx.fill();
+      ctx.clearRect(0,0,w,h);
+      ctx.fillStyle="#fff";
+      ctx.fillRect(0,0,w,h);
 
-    ctx.fillStyle="#111827";
-    ctx.font="900 18px Arial";
-    ctx.textAlign="center";
-    ctx.fillText("Totale/mese", cx, cy-6);
-    ctx.font="900 22px Arial";
-    ctx.fillText(totalMonthEl.textContent.replace(" / mese",""), cx, cy+22);
-  }
+      const total = Object.values(byRoom).reduce((a,b)=>a+b,0) || 1;
+      let start = -Math.PI/2;
 
-  function buildResults(){
-    const price = parseFloat(priceEl.value) || 0;
-    const days  = parseFloat(daysEl.value) || 30;
-
-    const rows = getRows();
-    let total = 0;
-
-    const byRoom = {};
-    const byDevice = [];
-
-    rows.forEach(tr => {
-      const room = tr.dataset.room || "Altro";
-      const name = tr.dataset.name || "Dispositivo";
-      const cost = rowMonthlyCost(tr, price, days);
-
-      total += cost;
-      byRoom[room] = (byRoom[room] || 0) + cost;
-      byDevice.push({ room, name, cost });
-    });
-
-    totalMonthEl.textContent = euro(total) + " / mese";
-
-    const sum = Object.values(byRoom).reduce((a,b)=>a+b,0) || 1;
-    pillsEl.innerHTML = "";
-
-    Object.entries(byRoom)
-      .sort((a,b)=>b[1]-a[1])
-      .forEach(([room,val]) => {
-        const pct = Math.round((val/sum)*100);
-        const pill = document.createElement("div");
-        pill.className="pill";
-        const dot = document.createElement("span");
-        dot.style.width="10px";
-        dot.style.height="10px";
-        dot.style.borderRadius="999px";
-        dot.style.display="inline-block";
-        dot.style.background = COLORS[room] || "#9ca3af";
-        pill.appendChild(dot);
-        pill.appendChild(document.createTextNode(`${room}: ${pct}%`));
-        pillsEl.appendChild(pill);
+      Object.entries(byRoom).forEach(([room,val]) => {
+        const ang = (val/total)*Math.PI*2;
+        ctx.beginPath();
+        ctx.moveTo(cx,cy);
+        ctx.arc(cx,cy,r,start,start+ang);
+        ctx.closePath();
+        ctx.fillStyle = COLORS[room] || "#9ca3af";
+        ctx.fill();
+        start += ang;
       });
 
-    byDevice.sort((a,b)=>b.cost-a.cost);
-    const top3 = byDevice.slice(0,3).filter(x=>x.cost>0.001);
+      // donut
+      ctx.beginPath();
+      ctx.arc(cx,cy,r*0.58,0,Math.PI*2);
+      ctx.fillStyle="#fff";
+      ctx.fill();
 
-    const topText = top3.length
-      ? top3.map((x,i)=>`${i+1}) ${x.name} (${x.room}) ≈ ${euro(x.cost)}/mese`).join("\n")
-      : "Top 3: (nessun consumo significativo inserito)";
+      ctx.fillStyle="#111827";
+      ctx.font="900 18px Arial";
+      ctx.textAlign="center";
+      ctx.fillText("Totale/mese", cx, cy-6);
+      ctx.font="900 22px Arial";
+      ctx.fillText(totalMonthEl.textContent.replace(" / mese",""), cx, cy+22);
+    }
 
-    const url = window.location.href; // usa l’URL reale della pagina pubblicata
-    shareTextEl.value =
+    function buildResults(){
+      const price = parseFloat(priceEl.value) || 0;
+      const days  = parseFloat(daysEl.value) || 30;
+
+      const rows = getRows();
+      let total = 0;
+
+      const byRoom = {};
+      const byDevice = [];
+
+      rows.forEach(tr => {
+        const room = tr.dataset.room || "Altro";
+        const name = tr.dataset.name || "Dispositivo";
+        const cost = rowMonthlyCost(tr, price, days);
+
+        total += cost;
+        byRoom[room] = (byRoom[room] || 0) + cost;
+        byDevice.push({ room, name, cost });
+      });
+
+      totalMonthEl.textContent = euro(total) + " / mese";
+
+      const sum = Object.values(byRoom).reduce((a,b)=>a+b,0) || 1;
+      pillsEl.innerHTML = "";
+
+      Object.entries(byRoom)
+        .sort((a,b)=>b[1]-a[1])
+        .forEach(([room,val]) => {
+          const pct = Math.round((val/sum)*100);
+          const pill = document.createElement("div");
+          pill.className="pill";
+          const dot = document.createElement("span");
+          dot.style.width="10px";
+          dot.style.height="10px";
+          dot.style.borderRadius="999px";
+          dot.style.display="inline-block";
+          dot.style.background = COLORS[room] || "#9ca3af";
+          pill.appendChild(dot);
+          pill.appendChild(document.createTextNode(`${room}: ${pct}%`));
+          pillsEl.appendChild(pill);
+        });
+
+      byDevice.sort((a,b)=>b.cost-a.cost);
+      const top3 = byDevice.slice(0,3).filter(x=>x.cost>0.001);
+
+      const topText = top3.length
+        ? top3.map((x,i)=>`${i+1}) ${x.name} (${x.room}) ≈ ${euro(x.cost)}/mese`).join("\n")
+        : "Top 3: (nessun consumo significativo inserito)";
+
+      const url = window.location.href;
+      shareTextEl.value =
 `😱 Ho scoperto chi mi svuota la bolletta (per stanze) ⚡
 Totale stimato: ${euro(total)}/mese
 
@@ -986,141 +1015,141 @@ ${topText}
 Fai il test anche tu:
 👉 ${url}`;
 
-    drawPie(byRoom);
-    resultsBox.style.display="block";
-    resultsBox.scrollIntoView({behavior:"smooth", block:"start"});
-  }
+      drawPie(byRoom);
+      resultsBox.style.display="block";
+      resultsBox.scrollIntoView({behavior:"smooth", block:"start"});
+    }
 
-  function bindLive(){
-    document.querySelectorAll("input, select").forEach(el => {
-      el.addEventListener("input", updateLiveCosts);
-      el.addEventListener("change", updateLiveCosts);
-    });
-  }
+    function bindLive(){
+      document.querySelectorAll("input, select").forEach(el => {
+        el.addEventListener("input", updateLiveCosts);
+        el.addEventListener("change", updateLiveCosts);
+      });
+    }
 
-  if (toggleBtn && advancedBlock){
-    toggleBtn.addEventListener("click", () => {
-      const open = advancedBlock.style.display === "block";
-      advancedBlock.style.display = open ? "none" : "block";
-      toggleBtn.textContent = open ? "Mostra extra" : "Nascondi extra";
+    if (toggleBtn && advancedBlock){
+      toggleBtn.addEventListener("click", () => {
+        const open = advancedBlock.style.display === "block";
+        advancedBlock.style.display = open ? "none" : "block";
+        toggleBtn.textContent = open ? "Mostra extra" : "Nascondi extra";
+        updateLiveCosts();
+      });
+    }
+
+    function runCalc(){
+      if (!ensureLegalOrScroll()) return;
       updateLiveCosts();
+      buildResults();
+    }
+
+    // ✅ entrambi i pulsanti funzionano
+    [calcBtn, calcBtnBottom].forEach(btn => {
+      if (btn) btn.addEventListener("click", runCalc);
     });
-  }
 
-  function runCalc(){
-    if (!ensureLegalOrScroll()) return;
-    updateLiveCosts();
-    buildResults();
-  }
+    resetBtn.addEventListener("click", () => location.reload());
 
-  calcBtn.addEventListener("click", runCalc);
-  if (calcBtnBottom) calcBtnBottom.addEventListener("click", runCalc);
-
-  resetBtn.addEventListener("click", () => location.reload());
-
-  copyBtn.addEventListener("click", async () => {
-    try{
-      await navigator.clipboard.writeText(shareTextEl.value);
-      alert("Testo copiato ✅");
-    }catch(e){
-      alert("Copia automatica non disponibile: seleziona il testo e copia manualmente.");
-    }
-  });
-
-  shareBtn.addEventListener("click", async () => {
-    const text = shareTextEl.value;
-    if (navigator.share){
-      try{ await navigator.share({ text }); }catch(e){}
-    }else{
+    copyBtn.addEventListener("click", async () => {
       try{
-        await navigator.clipboard.writeText(text);
-        alert("Condivisione non supportata: testo copiato ✅ (incolla su WhatsApp).");
+        await navigator.clipboard.writeText(shareTextEl.value);
+        alert("Testo copiato ✅");
       }catch(e){
-        alert("Condivisione non supportata: copia manualmente il testo.");
+        alert("Copia automatica non disponibile: seleziona il testo e copia manualmente.");
       }
+    });
+
+    shareBtn.addEventListener("click", async () => {
+      const text = shareTextEl.value;
+      if (navigator.share){
+        try{ await navigator.share({ text }); }catch(e){}
+      }else{
+        try{
+          await navigator.clipboard.writeText(text);
+          alert("Condivisione non supportata: testo copiato ✅ (incolla su WhatsApp).");
+        }catch(e){
+          alert("Condivisione non supportata: copia manualmente il testo.");
+        }
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const span = document.getElementById('year-span');
+      if (span) span.textContent = new Date().getFullYear();
+    });
+
+    // init
+    bindLive();
+    updateLiveCosts();
+  </script>
+
+  <!-- GDPR / GA -->
+  <script>
+  (function () {
+    const GA_ID = 'G-CFTTCYDZ2P';
+    const CONSENT_KEY = 'syncras_cookie_consent';
+
+    window['ga-disable-' + GA_ID] = true;
+
+    function loadGoogleAnalytics() {
+      if (window.__syncrasGaLoaded) return;
+      window.__syncrasGaLoaded = true;
+
+      window['ga-disable-' + GA_ID] = false;
+
+      const gaScript = document.createElement('script');
+      gaScript.async = true;
+      gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+      document.head.appendChild(gaScript);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', GA_ID, { anonymize_ip: true });
     }
-  });
 
-  // Footer year
-  document.addEventListener('DOMContentLoaded', function () {
-    const span = document.getElementById('year-span');
-    if (span) span.textContent = new Date().getFullYear();
-  });
+    function showBanner() {
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.style.display = 'block';
+    }
+    function hideBanner() {
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.style.display = 'none';
+    }
 
-  // init
-  bindLive();
-  updateLiveCosts();
-</script>
-
-<!-- GDPR / GA (stesso tuo blocco) -->
-<script>
-(function () {
-  const GA_ID = 'G-CFTTCYDZ2P';
-  const CONSENT_KEY = 'syncras_cookie_consent';
-
-  window['ga-disable-' + GA_ID] = true;
-
-  function loadGoogleAnalytics() {
-    if (window.__syncrasGaLoaded) return;
-    window.__syncrasGaLoaded = true;
-
-    window['ga-disable-' + GA_ID] = false;
-
-    const gaScript = document.createElement('script');
-    gaScript.async = true;
-    gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
-    document.head.appendChild(gaScript);
-
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){ dataLayer.push(arguments); }
-    window.gtag = gtag;
-    gtag('js', new Date());
-    gtag('config', GA_ID, { anonymize_ip: true });
-  }
-
-  function showBanner() {
-    const banner = document.getElementById('cookie-banner');
-    if (banner) banner.style.display = 'block';
-  }
-  function hideBanner() {
-    const banner = document.getElementById('cookie-banner');
-    if (banner) banner.style.display = 'none';
-  }
-
-  window.acceptCookies = function () {
-    localStorage.setItem(CONSENT_KEY, 'yes');
-    hideBanner();
-    loadGoogleAnalytics();
-  };
-
-  window.rejectCookies = function () {
-    localStorage.setItem(CONSENT_KEY, 'no');
-    hideBanner();
-    window['ga-disable-' + GA_ID] = true;
-  };
-
-  window.revokeCookies = function () {
-    localStorage.removeItem(CONSENT_KEY);
-    window['ga-disable-' + GA_ID] = true;
-    showBanner();
-  };
-
-  document.addEventListener('DOMContentLoaded', function () {
-    const consent = localStorage.getItem(CONSENT_KEY);
-
-    if (consent === 'yes') {
+    window.acceptCookies = function () {
+      localStorage.setItem(CONSENT_KEY, 'yes');
+      hideBanner();
       loadGoogleAnalytics();
-    } else if (consent === 'no') {
+    };
+
+    window.rejectCookies = function () {
+      localStorage.setItem(CONSENT_KEY, 'no');
+      hideBanner();
       window['ga-disable-' + GA_ID] = true;
-    } else {
+    };
+
+    window.revokeCookies = function () {
+      localStorage.removeItem(CONSENT_KEY);
+      window['ga-disable-' + GA_ID] = true;
       showBanner();
-    }
-  });
-})();
-</script>
+    };
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const consent = localStorage.getItem(CONSENT_KEY);
+
+      if (consent === 'yes') {
+        loadGoogleAnalytics();
+      } else if (consent === 'no') {
+        window['ga-disable-' + GA_ID] = true;
+      } else {
+        showBanner();
+      }
+    });
+  })();
+  </script>
 
 </body>
 </html>
-
 
 
