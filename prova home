@@ -926,24 +926,24 @@
     // ✅ un solo link finale per mantenere anteprima OG
     const lines = [
       `🚗 Confronto costi auto (Syncras.App)`,
-      `Km considerati: ${payload.km.toLocaleString('it-IT')} km`,
-      ``,
-      `${payload.nomeA} (${payload.tipoA})`,
-      `• Costo per 100 km: ${payload.costo100A} €`,
-      `• Costo totale: ${payload.costoTotA} €`,
-      ``,
-      `${payload.nomeB} (${payload.tipoB})`,
-      `• Costo per 100 km: ${payload.costo100B} €`,
-      `• Costo totale: ${payload.costoTotB} €`,
-      ``,
-      `${payload.sintesi}`,
-      payload.pareggioText ? `\n${payload.pareggioText}` : ``,
-      ``,
-      `Calcolatore: ${payload.url}`
-    ].filter(Boolean);
+    ``,
+    `Km considerati: ${payload.km.toLocaleString('it-IT')} km`,
+    ``,
+    `Auto A – ${nameA}`,
+    `• Costo per 100 km: ${payload.costo100A} €`,
+    `• Costo totale: ${payload.costoTotA} €`,
+    ``,
+    `Auto B – ${nameB}`,
+    `• Costo per 100 km: ${payload.costo100B} €`,
+    `• Costo totale: ${payload.costoTotB} €`,
+    ``,
+    `👉 ${payload.sintesi}`,
+    ``,
+    `Calcolatore: ${payload.url}`
+  ];
 
-    return lines.join('\n');
-  }
+  return lines.join('\n');
+}
 
   function calcolaAuto() {
     const legalCheckbox = document.getElementById('legalAccept');
