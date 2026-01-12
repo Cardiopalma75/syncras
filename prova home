@@ -922,25 +922,29 @@
     }
   }
 
-  function buildShareText(payload) {
-    // ✅ un solo link finale per mantenere anteprima OG
-    const lines = [
-      `🚗 Confronto costi auto (Syncras.App)`,
+ function buildShareText(payload) {
+  const nameA = (payload.nomeA && payload.nomeA.trim()) ? payload.nomeA.trim() : `Auto A (${payload.tipoA})`;
+  const nameB = (payload.nomeB && payload.nomeB.trim()) ? payload.nomeB.trim() : `Auto B (${payload.tipoB})`;
+
+  const lines = [
+    `🚗 Confronto costi auto (Syncras.App)`,
     ``,
     `Km considerati: ${payload.km.toLocaleString('it-IT')} km`,
     ``,
-    `Auto A – ${nameA}`,
+    `${nameA}`,
     `• Costo per 100 km: ${payload.costo100A} €`,
     `• Costo totale: ${payload.costoTotA} €`,
     ``,
-    `Auto B – ${nameB}`,
+    `${nameB}`,
     `• Costo per 100 km: ${payload.costo100B} €`,
     `• Costo totale: ${payload.costoTotB} €`,
     ``,
     `👉 ${payload.sintesi}`,
+    payload.pareggioText ? `` : ``,
+    payload.pareggioText ? `${payload.pareggioText}` : ``,
     ``,
     `Calcolatore: ${payload.url}`
-  ];
+  ].filter(Boolean);
 
   return lines.join('\n');
 }
@@ -1171,10 +1175,14 @@
     const text = window.__syncrasLastShareText || '';
     const url = window.location.href;
 
-    if (!text) {
-      alert('Prima calcola un confronto, poi puoi condividere il risultato.');
-      return;
-    }
+    const resultBox = document.getElementById('autoResult');
+const hasResultVisible = resultBox && resultBox.style.display === 'block';
+
+if (!text && !hasResultVisible) {
+  alert('Prima calcola un confronto, poi puoi condividere il risultato.');
+  return;
+}
+
 
     // ✅ Qui condividiamo testo + URL UNA SOLA VOLTA (l'anteprima OG arriva dall'URL)
     if (navigator.share) {
