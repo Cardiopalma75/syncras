@@ -675,7 +675,7 @@
       <!-- ✅ NUOVO: Nome auto B -->
       <div class="calc-field">
         <label for="nomeB">Nome Auto B (opzionale)</label>
-        <input id="nomeB" type="text" maxlength="60" placeholder="Es. Opel Astra Electric 54 kWh">
+        <input id="nomeB" type="text" maxlength="60" placeholder="Es. Fiat 131 Electric 54 kWh">
       </div>
 
       <div class="calc-field">
