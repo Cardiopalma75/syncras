@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="it">
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Confronto Costi Auto 2026: Benzina, Diesel vs Elettrica | Syncras.App</title>
+
+
 
 <meta name="description" content="Conviene l'auto elettrica? Calcola e confronta il costo per 100km e il risparmio annuo tra benzina, diesel, GPL, metano ed elettrico. Tool aggiornato 2025.">
 
@@ -26,23 +29,23 @@
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://syncras.app/calcolatore-consumi-auto.html">
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Calcolatore Confronto Costi Carburante Auto",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "All",
+  "description": "Strumento per confrontare i costi di percorrenza tra auto a combustione (benzina, diesel, GPL, metano) e auto elettriche.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "EUR"
+  },
+  "url": "https://syncras.app/calcolatore-consumi-auto.html"
+}
+</script>
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Calcolatore Confronto Costi Carburante Auto",
-    "applicationCategory": "FinanceApplication",
-    "operatingSystem": "All",
-    "description": "Strumento per confrontare i costi di percorrenza tra auto a combustione (benzina, diesel, GPL, metano) e auto elettriche.",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "EUR"
-    },
-    "url": "https://syncras.app/calcolatore-consumi-auto.html"
-  }
-  </script>
 <script type="application/ld+json">
 {
   "@context":"https://schema.org",
@@ -76,1015 +79,1248 @@
 }
 </script>
 
-  <style>
-    :root {
-      --violet-main: #6C5CE7;
-      --violet-dark: #4B3ACB;
-      --violet-soft: #A29BFE;
-      --text-main: #403E43;
-      --bg-page: #F7F7FB;
-    }
+<style>
+  :root {
+    --violet-main: #6C5CE7;
+    --violet-dark: #4B3ACB;
+    --violet-soft: #A29BFE;
+    --text-main: #403E43;
+    --bg-page: #F7F7FB;
+  }
 
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: var(--bg-page);
-      color: var(--text-main);
-      line-height: 1.6;
-    }
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-page);
+    color: var(--text-main);
+    line-height: 1.6;
+  }
 
-    /* HEADER */
-    .site-header {
-      background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
-      color: white;
-      padding: 12px 14px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-      position: relative;
-    }
+  /* HEADER */
+  .site-header {
+    background: linear-gradient(90deg, var(--violet-dark), var(--violet-main));
+    color: white;
+    padding: 12px 14px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+    position: relative;
+  }
 
-    .header-inner {
-      max-width: 1180px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-    }
+  .header-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
 
-    .logo {
-      font-size: 1.4rem;
-      font-weight: bold;
-      letter-spacing: 0.03em;
-    }
+  .logo {
+    font-size: 1.4rem;
+    font-weight: bold;
+    letter-spacing: 0.03em;
+  }
 
+  #main-nav {
+    display: flex;
+    gap: 18px;
+    font-size: 0.95rem;
+  }
+
+  #main-nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    padding-bottom: 2px;
+    border-bottom: 2px solid transparent;
+  }
+
+  #main-nav a:hover { text-decoration: underline; }
+
+  .menu-toggle {
+    display: none;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.4);
+    border-radius: 6px;
+    color: white;
+    padding: 6px 10px;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+  .menu-toggle span { margin-left: 4px; font-size: 1.1rem; }
+
+  @media (max-width: 768px) {
     #main-nav {
-      display: flex;
-      gap: 18px;
-      font-size: 0.95rem;
-    }
-
-    #main-nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: 600;
-      padding-bottom: 2px;
-      border-bottom: 2px solid transparent;
-    }
-
-    #main-nav a:hover { text-decoration: underline; }
-
-    .menu-toggle {
       display: none;
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.4);
-      border-radius: 6px;
-      color: white;
-      padding: 6px 10px;
-      font-size: 0.9rem;
-      cursor: pointer;
-    }
-    .menu-toggle span { margin-left: 4px; font-size: 1.1rem; }
-
-    @media (max-width: 768px) {
-      #main-nav {
-        display: none;
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 56px;
-        margin: 0 auto;
-        max-width: 1180px;
-        flex-direction: column;
-        background-color: var(--violet-dark);
-        padding: 10px 16px 12px 16px;
-        border-radius: 0 0 8px 8px;
-        box-shadow: 0 3px 6px rgba(0,0,0,0.25);
-        z-index: 50;
-      }
-      #main-nav a { padding: 6px 0; }
-      body.nav-open #main-nav { display: flex; }
-      .menu-toggle { display: inline-flex; align-items: center; }
-    }
-
-    /* MAIN */
-    main {
-      max-width: 1180px;
-      margin: 30px auto;
-      padding: 20px;
-      background-color: #ffffff;
-      border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.08);
-    }
-
-    h1, h2, h3 {
-      color: var(--violet-dark);
-      margin-top: 0;
-    }
-
-    .page-intro {
-      margin-bottom: 20px;
-      border-bottom: 1px solid #e5e7eb;
-      padding-bottom: 10px;
-    }
-
-    .badge-page {
-      display: inline-block;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      background: rgba(108, 92, 231, 0.08);
-      border: 1px solid rgba(108, 92, 231, 0.35);
-      border-radius: 999px;
-      padding: 2px 8px;
-      color: #3730a3;
-      margin-bottom: 8px;
-    }
-
-    .intro-text {
-      font-size: 0.95rem;
-      color: #4b5563;
-    }
-
-    /* GRIGLIA CARD INFO */
-    .calc-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 18px;
-      margin: 18px 0 26px;
-    }
-
-    .calc-card {
-      background: #f4f5ff;
-      border-radius: 16px;
-      padding: 16px 18px 14px;
-      border: 1px solid #d4d7ff;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-    }
-
-    .calc-card-label {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.09em;
-      color: #6b7280;
-      margin-bottom: 4px;
-    }
-
-    .calc-card h3 {
-      margin: 0 0 6px;
-      font-size: 1rem;
-      color: #1f2937;
-    }
-
-    .calc-card p {
-      margin: 0 0 10px;
-      font-size: 0.9rem;
-      color: #4b5563;
-    }
-
-    @media (max-width: 768px) {
-      .calc-grid { grid-template-columns: 1fr; }
-    }
-
-    /* SEZIONE CALCOLATORE */
-    .calc-section {
-      margin: 32px 0;
-      padding: 20px;
-      border-radius: 16px;
-      background: #f9fafb;
-      border: 1px solid #e5e7eb;
-    }
-
-    .calc-section h2 {
-      margin-top: 0;
-      margin-bottom: 6px;
-      font-size: 1.25rem;
-    }
-
-    .calc-section p { font-size: 0.95rem; color: #4b5563; }
-
-    .calc-grid-inputs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      margin-top: 14px;
-    }
-
-    .calc-field { flex: 1 1 220px; }
-
-    .calc-field label {
-      font-size: 0.9rem;
-      font-weight: 600;
-      display: inline-block;
-      margin-bottom: 4px;
-    }
-
-    .calc-field input, .calc-field select {
-      width: 100%;
-      padding: 8px;
-      border-radius: 6px;
-      border: 1px solid #d1d5db;
-      font-size: 0.95rem;
-      box-sizing: border-box;
-    }
-
-    .calc-btn {
-      margin-top: 18px;
-      background: var(--violet-main);
-      color: #fff;
-      padding: 10px 16px;
-      border-radius: 7px;
-      border: none;
-      cursor: pointer;
-      font-size: 0.98rem;
-      font-weight: 700;
-      width: 100%;
-    }
-    .calc-btn:hover { background: var(--violet-dark); }
-
-    .calc-result {
-      margin-top: 16px;
-      padding: 14px;
-      background: #ffffff;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.06);
-      display: none;
-      font-size: 0.95rem;
-      border: 2px solid rgba(108,92,231,0.25);
-    }
-
-    .small-note {
-      font-size: 0.8rem;
-      color: #6b7280;
-      margin-top: 8px;
-    }
-
-    /* BLOCCO NOTE LEGALI */
-    .legal-box-avviso {
-      margin-top: 18px;
-      margin-bottom: 10px;
-      padding: 12px 14px;
-      background: #ffffff;
-      border-radius: 8px;
-      border: 1px solid #e5e7eb;
-      font-size: 0.9rem;
-      color: #374151;
-    }
-    .legal-box-avviso a {
-      color: var(--violet-main);
-      text-decoration: underline;
-      font-weight: 700;
-    }
-    .legal-note-small {
-      margin: 6px 0 0;
-      font-size: 0.8rem;
-      color: #6b7280;
-    }
-
-    /* ✅ MODIFICA: evidenziazione box legale (10/10 UX) */
-    .legal-highlight{
-      outline: 3px solid rgba(108,92,231,0.8);
-      box-shadow: 0 0 0 6px rgba(108,92,231,0.12);
-      transition: box-shadow .2s ease, outline .2s ease;
-    }
-
-    /* BARRE GRAFICHE COSTI */
-    .bar-container {
-      height: 12px;
-      background: #eee;
-      border-radius: 999px;
-      overflow: hidden;
-      margin: 6px 0 14px;
-    }
-    .bar-fill {
-      height: 100%;
-      background: var(--violet-main);
-      width: 0%;
-      transition: width .6s ease;
-    }
-
-    /* BOX RISPARMIO */
-    .saving-box{
-      margin-top: 10px;
-      padding: 12px 12px;
-      border-radius: 10px;
-      border: 1px solid #e5e7eb;
-      background: #f7f7ff;
-    }
-    .saving-box strong{ color: var(--violet-dark); }
-
-    /* SHARE BUTTONS */
-    .share-btn {
-      background: var(--violet-main);
-      color: white;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 800;
-    }
-    .share-btn:hover { background: var(--violet-dark); }
-    .share-row {
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-      justify-content:flex-start;
-      margin: 8px 0 18px;
-    }
-    .share-fallback {
-      display:none;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-      margin-top: 8px;
-    }
-    .share-fallback input{
-      flex: 1 1 320px;
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid #d1d5db;
-      font-size: 0.95rem;
-    }
-    .copy-btn{
-      padding: 10px 12px;
-      border-radius: 8px;
-      border: 1px solid rgba(108,92,231,0.5);
-      background:#fff;
-      cursor:pointer;
-      font-weight:800;
-      color: var(--violet-dark);
-    }
-    .copy-btn:hover{ border-color: var(--violet-dark); }
-
-    /* FOOTER */
-    .syncras-footer {
-      margin-top: 40px;
-      padding: 2.5rem 1.5rem 1.5rem;
-      background: #2b1840;
-      color: #f3eaff;
-      font-family: Arial, sans-serif;
-      font-size: 0.9rem;
-    }
-
-    .syncras-footer a { color: #f3eaff; text-decoration: none; }
-    .syncras-footer a:hover { text-decoration: underline; }
-
-    .footer-inner {
-      max-width: 1180px;
-      margin: 0 auto 1.5rem auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 2rem;
-    }
-
-    .footer-column h4 { margin-top: 0; margin-bottom: 0.7rem; font-size: 1rem; }
-    .footer-column p { margin: 0; font-size: 0.85rem; }
-    .footer-column ul { list-style: none; padding: 0; margin: 0; }
-    .footer-column li { margin-bottom: 0.4rem; font-size: 0.85rem; }
-
-    .footer-bottom {
-      max-width: 1180px;
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 56px;
       margin: 0 auto;
-      text-align: center;
-      font-size: 0.8rem;
-      opacity: 0.95;
+      max-width: 1180px;
+      flex-direction: column;
+      background-color: var(--violet-dark);
+      padding: 10px 16px 12px 16px;
+      border-radius: 0 0 8px 8px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+      z-index: 50;
     }
-    .footer-bottom p { margin: 6px 0; }
+    #main-nav a { padding: 6px 0; }
+    body.nav-open #main-nav { display: flex; }
+    .menu-toggle { display: inline-flex; align-items: center; }
+  }
 
-    /* COOKIE BANNER (GDPR PERFETTO) */
-    #cookie-banner {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      max-width: 90%;
-      width: 420px;
-      background: #ffffff;
-      border: 2px solid #6C5CE7;
-      border-radius: 10px;
-      padding: 16px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-      z-index: 9999;
-      font-family: Arial, sans-serif;
-      display: none;
-    }
+  /* MAIN */
+  main {
+    max-width: 1180px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.08);
+  }
 
-    #cookie-banner p {
-      margin: 0 0 12px 0;
-      font-size: 0.95rem;
-      color: #333;
-      line-height: 1.4;
-    }
+  h1, h2, h3 {
+    color: var(--violet-dark);
+    margin-top: 0;
+  }
 
-    #cookie-banner a {
-      color: #6C5CE7;
-      font-weight: bold;
-      text-decoration: none;
-    }
+  .page-intro {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 10px;
+  }
 
-    /* Pulsante RIFIUTA – pari importanza al pulsante ACCETTA */
-    #cookie-banner button[onclick="rejectCookies()"] {
-      flex: 1;
-      background: white !important;
-      color: #111827 !important;
-      border: 2px solid #6C5CE7 !important;
-      padding: 10px 12px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 700;
-    }
+  .badge-page {
+    display: inline-block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    background: rgba(108, 92, 231, 0.08);
+    border: 1px solid rgba(108, 92, 231, 0.35);
+    border-radius: 999px;
+    padding: 2px 8px;
+    color: #3730a3;
+    margin-bottom: 8px;
+  }
 
-    /* Pulsante ACCETTA */
-    #cookie-btn {
-      flex: 1;
-      background: #6C5CE7;
-      color: white;
-      border: 2px solid #6C5CE7;
-      padding: 10px 16px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 800;
-    }
-    #cookie-btn:hover { background: #4B3ACB; }
-  </style>
+  .intro-text {
+    font-size: 0.95rem;
+    color: #4b5563;
+  }
+
+  /* GRIGLIA CARD INFO */
+  .calc-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    margin: 18px 0 26px;
+  }
+
+  .calc-card {
+    background: #f4f5ff;
+    border-radius: 16px;
+    padding: 16px 18px 14px;
+    border: 1px solid #d4d7ff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+  }
+
+  .calc-card-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: #6b7280;
+    margin-bottom: 4px;
+  }
+
+  .calc-card h3 {
+    margin: 0 0 6px;
+    font-size: 1rem;
+    color: #1f2937;
+  }
+
+  .calc-card p {
+    margin: 0 0 10px;
+    font-size: 0.9rem;
+    color: #4b5563;
+  }
+
+  @media (max-width: 768px) {
+    .calc-grid { grid-template-columns: 1fr; }
+  }
+
+  /* SEZIONE CALCOLATORE */
+  .calc-section {
+    margin: 32px 0;
+    padding: 20px;
+    border-radius: 16px;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+  }
+
+  .calc-section h2 {
+    margin-top: 0;
+    margin-bottom: 6px;
+    font-size: 1.25rem;
+  }
+
+  .calc-section p { font-size: 0.95rem; color: #4b5563; }
+
+  .calc-grid-inputs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 14px;
+  }
+
+  .calc-field { flex: 1 1 220px; }
+
+  .calc-field label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: inline-block;
+    margin-bottom: 4px;
+  }
+
+  .calc-field input, .calc-field select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+  }
+
+  .calc-btn {
+    margin-top: 18px;
+    background: var(--violet-main);
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 7px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.98rem;
+    font-weight: 700;
+    width: 100%;
+  }
+  .calc-btn:hover { background: var(--violet-dark); }
+
+  .calc-result {
+    margin-top: 16px;
+    padding: 14px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.06);
+    display: none;
+    font-size: 0.95rem;
+    border: 2px solid rgba(108,92,231,0.25);
+  }
+
+  .small-note {
+    font-size: 0.8rem;
+    color: #6b7280;
+    margin-top: 8px;
+  }
+
+  /* BLOCCO NOTE LEGALI */
+  .legal-box-avviso {
+    margin-top: 18px;
+    margin-bottom: 10px;
+    padding: 12px 14px;
+    background: #ffffff;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    font-size: 0.9rem;
+    color: #374151;
+  }
+  .legal-box-avviso a {
+    color: var(--violet-main);
+    text-decoration: underline;
+    font-weight: 700;
+  }
+  .legal-note-small {
+    margin: 6px 0 0;
+    font-size: 0.8rem;
+    color: #6b7280;
+  }
+
+  /* ✅ MODIFICA: evidenziazione box legale (10/10 UX) */
+  .legal-highlight{
+    outline: 3px solid rgba(108,92,231,0.8);
+    box-shadow: 0 0 0 6px rgba(108,92,231,0.12);
+    transition: box-shadow .2s ease, outline .2s ease;
+  }
+
+  /* BARRE GRAFICHE COSTI */
+  .bar-container {
+    height: 12px;
+    background: #eee;
+    border-radius: 999px;
+    overflow: hidden;
+    margin: 6px 0 14px;
+  }
+  .bar-fill {
+    height: 100%;
+    background: var(--violet-main);
+    width: 0%;
+    transition: width .6s ease;
+  }
+
+  /* BOX RISPARMIO */
+  .saving-box{
+    margin-top: 10px;
+    padding: 12px 12px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    background: #f7f7ff;
+  }
+  .saving-box strong{ color: var(--violet-dark); }
+  .saving-kpi{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:10px;
+  }
+  .kpi-pill{
+    display:inline-flex;
+    gap:8px;
+    align-items:center;
+    padding:8px 10px;
+    border-radius:999px;
+    border:1px solid rgba(108,92,231,0.25);
+    background:#fff;
+    font-weight:800;
+    color:#1f2937;
+    font-size:0.88rem;
+  }
+  .kpi-pill small{
+    font-weight:700;
+    color:#6b7280;
+  }
+
+  /* TOGGLE AVANZATO */
+  .advanced-box{
+    margin-top: 14px;
+    padding: 12px 12px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+  }
+  .advanced-toggle{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-weight:800;
+    color:#111827;
+    cursor:pointer;
+    user-select:none;
+  }
+  .advanced-toggle input{ transform: translateY(1px); }
+  .advanced-content{ margin-top:10px; display:none; }
+  .advanced-content.show{ display:block; }
+
+  /* SHARE BUTTONS */
+  .share-btn {
+    background: var(--violet-main);
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 800;
+  }
+  .share-btn:hover { background: var(--violet-dark); }
+  .share-row {
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:flex-start;
+    margin: 8px 0 18px;
+  }
+  .share-fallback {
+    display:none;
+    gap:10px;
+    flex-wrap:wrap;
+    align-items:center;
+    margin-top: 8px;
+  }
+  .share-fallback input{
+    flex: 1 1 320px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    font-size: 0.95rem;
+  }
+  .copy-btn{
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(108,92,231,0.5);
+    background:#fff;
+    cursor:pointer;
+    font-weight:800;
+    color: var(--violet-dark);
+  }
+  .copy-btn:hover{ border-color: var(--violet-dark); }
+
+  /* FOOTER */
+  .syncras-footer {
+    margin-top: 40px;
+    padding: 2.5rem 1.5rem 1.5rem;
+    background: #2b1840;
+    color: #f3eaff;
+    font-family: Arial, sans-serif;
+    font-size: 0.9rem;
+  }
+
+  .syncras-footer a { color: #f3eaff; text-decoration: none; }
+  .syncras-footer a:hover { text-decoration: underline; }
+
+  .footer-inner {
+    max-width: 1180px;
+    margin: 0 auto 1.5rem auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+  }
+
+  .footer-column h4 { margin-top: 0; margin-bottom: 0.7rem; font-size: 1rem; }
+  .footer-column p { margin: 0; font-size: 0.85rem; }
+  .footer-column ul { list-style: none; padding: 0; margin: 0; }
+  .footer-column li { margin-bottom: 0.4rem; font-size: 0.85rem; }
+
+  .footer-bottom {
+    max-width: 1180px;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 0.8rem;
+    opacity: 0.95;
+  }
+  .footer-bottom p { margin: 6px 0; }
+
+  /* COOKIE BANNER (GDPR PERFETTO) */
+  #cookie-banner {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 90%;
+    width: 420px;
+    background: #ffffff;
+    border: 2px solid #6C5CE7;
+    border-radius: 10px;
+    padding: 16px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    z-index: 9999;
+    font-family: Arial, sans-serif;
+    display: none;
+  }
+
+  #cookie-banner p {
+    margin: 0 0 12px 0;
+    font-size: 0.95rem;
+    color: #333;
+    line-height: 1.4;
+  }
+
+  #cookie-banner a {
+    color: #6C5CE7;
+    font-weight: bold;
+    text-decoration: none;
+  }
+
+  /* Pulsante RIFIUTA – pari importanza al pulsante ACCETTA */
+  #cookie-banner button[onclick="rejectCookies()"] {
+    flex: 1;
+    background: white !important;
+    color: #111827 !important;
+    border: 2px solid #6C5CE7 !important;
+    padding: 10px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 700;
+  }
+
+  /* Pulsante ACCETTA */
+  #cookie-btn {
+    flex: 1;
+    background: #6C5CE7;
+    color: white;
+    border: 2px solid #6C5CE7;
+    padding: 10px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 800;
+  }
+  #cookie-btn:hover { background: #4B3ACB; }
+</style>
 </head>
 
 <body>
-  <header class="site-header">
-    <div class="header-inner">
-      <div class="logo">Syncras.App</div>
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo">Syncras.App</div>
 
-      <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
-        Menu <span>☰</span>
-      </button>
+    <button class="menu-toggle" type="button" onclick="toggleMenu()" aria-label="Apri o chiudi il menu di navigazione">
+      Menu <span>☰</span>
+    </button>
 
-      <nav id="main-nav">
-        <a href="index.html">Home</a>
-        <a href="blog.html">Blog</a>
-        <a href="smart-test.html">Smart Test</a>
-        <a href="calcolatori.html">Calcolatori</a>
-        <a href="fast-cards.html">Fast Card</a>
-        <a href="offerte.html">Prodotti Consapevoli</a>
-        <a href="curiosita.html">Curiosità</a>
-        <a href="misteri.html">Misteri</a>
-        <a href="chi.html">Chi siamo</a>
-      </nav>
-    </div>
-  </header>
+    <nav id="main-nav">
+      <a href="index.html">Home</a>
+      <a href="blog.html">Blog</a>
+      <a href="smart-test.html">Smart Test</a>
+      <a href="calcolatori.html">Calcolatori</a>
+      <a href="fast-cards.html">Fast Card</a>
+      <a href="offerte.html">Prodotti Consapevoli</a>
+      <a href="curiosita.html">Curiosità</a>
+      <a href="misteri.html">Misteri</a>
+      <a href="chi.html">Chi siamo</a>
+    </nav>
+  </div>
+</header>
 
-  <main>
-    <div class="page-intro">
-      <span class="badge-page">Area strumenti</span>
-      <h1>🚗 Confronto costi auto: benzina, diesel, GPL, metano o elettrica?</h1>
+<main>
+  <div class="page-intro">
+    <span class="badge-page">Area strumenti</span>
+    <h1>🚗 Confronto costi auto: benzina, diesel, GPL, metano o elettrica?</h1>
 
-      <div style="background:#FEF6D8; padding:10px 14px; border-left:4px solid #EAB308; border-radius:6px; margin:15px 0; font-size:0.9rem;">
-        ⚠️ <strong>Avviso importante:</strong> le simulazioni sono <strong>stime orientative</strong> basate sui dati inseriti.
-        Non tengono conto di tutte le variabili economiche, tecniche, fiscali, regionali o assicurative.
-        Per valutazioni precise sui costi reali, rientri economici, tasse o scelte di mobilità, è sempre opportuno rivolgersi a un <strong>professionista competente</strong>.
-      </div>
-
-      <p class="intro-text">
-        Inserisci consumi, prezzi dei carburanti e chilometri annui.
-        Il calcolatore ti mostra il costo per 100 km e per tutta la distanza scelta, confrontando due auto (A e B).
-      </p>
+    <div style="background:#FEF6D8; padding:10px 14px; border-left:4px solid #EAB308; border-radius:6px; margin:15px 0; font-size:0.9rem;">
+      ⚠️ <strong>Avviso importante:</strong> le simulazioni sono <strong>stime orientative</strong> basate sui dati inseriti.
+      Non tengono conto di tutte le variabili economiche, tecniche, fiscali, regionali o assicurative.
+      Per valutazioni precise sui costi reali, rientri economici, tasse o scelte di mobilità, è sempre opportuno rivolgersi a un <strong>professionista competente</strong>.
     </div>
 
-    <!-- SHARE TOP (pagina) -->
-    <div class="share-row">
-      <button id="sharePageBtn" class="share-btn" type="button">📎 Condividi questa pagina</button>
-    </div>
-
-    <!-- CARD DI SPIEGAZIONE -->
-    <section aria-label="Informazioni sul confronto">
-      <h2>Come funziona il confronto dei costi auto</h2>
-      <div class="calc-grid">
-        <article class="calc-card">
-          <div class="calc-card-label">AUTO A</div>
-          <h3>Auto A (qualsiasi alimentazione)</h3>
-          <p>
-            Puoi impostare un’auto a benzina, diesel, GPL, metano o elettrica.
-            Inserisci i consumi in <strong>litri/100 km</strong> o <strong>kWh/100 km</strong> e il relativo prezzo.
-          </p>
-        </article>
-
-        <article class="calc-card">
-          <div class="calc-card-label">AUTO B</div>
-          <h3>Auto B (di solito il “nuovo acquisto”)</h3>
-          <p>
-            Qui spesso si mette l’auto che vorresti comprare (es. elettrica) per capire se ti conviene davvero
-            rispetto a quella attuale.
-          </p>
-        </article>
-      </div>
-    </section>
-
-    <!-- CALCOLATORE -->
-    <section class="calc-section" id="calc-auto">
-      <h2>Calcolatore confronto costi carburante/energia</h2>
-      <p>
-        I campi “Consumo” si intendono <strong>ogni 100 km</strong>.
-        Puoi usare litri/100 km (termiche) oppure kWh/100 km (elettrica).
-      </p>
-
-      <div class="calc-grid-inputs">
-        <div class="calc-field">
-          <label>Chilometri considerati (es. 20000 km/anno)</label>
-          <input id="kmTot" type="number" min="1000" max="100000" value="20000">
-        </div>
-      </div>
-
-      <h3>Auto A</h3>
-      <div class="calc-grid-inputs">
-        <div class="calc-field">
-          <label>Alimentazione Auto A</label>
-          <select id="tipoA">
-            <option value="Benzina">Benzina</option>
-            <option value="Diesel">Diesel</option>
-            <option value="GPL" selected>GPL</option>
-            <option value="Metano">Metano</option>
-            <option value="Elettrica">Elettrica</option>
-          </select>
-        </div>
-
-        <div class="calc-field">
-          <label for="consA" id="labelConsA">Consumo Auto A (litri / 100 km)</label>
-          <input id="consA" type="number" step="0.1" min="1" max="40" value="8">
-        </div>
-
-        <div class="calc-field">
-          <label for="prezzoA" id="labelPrezzoA">Prezzo carburante Auto A (€/litro)</label>
-          <input id="prezzoA" type="number" step="0.01" min="0.1" max="5" value="0.90">
-        </div>
-      </div>
-
-      <h3>Auto B</h3>
-      <div class="calc-grid-inputs">
-        <div class="calc-field">
-          <label>Alimentazione Auto B</label>
-          <select id="tipoB">
-            <option value="Benzina">Benzina</option>
-            <option value="Diesel">Diesel</option>
-            <option value="GPL">GPL</option>
-            <option value="Metano">Metano</option>
-            <option value="Elettrica" selected>Elettrica</option>
-          </select>
-        </div>
-
-        <div class="calc-field">
-          <label for="consB" id="labelConsB">Consumo Auto B (kWh / 100 km)</label>
-          <input id="consB" type="number" step="0.1" min="1" max="40" value="15">
-        </div>
-
-        <div class="calc-field">
-          <label for="prezzoB" id="labelPrezzoB">Prezzo energia Auto B (€/kWh)</label>
-          <input id="prezzoB" type="number" step="0.01" min="0.1" max="5" value="0.20">
-        </div>
-      </div>
-
-      <!-- NOTE LEGALI CHECK -->
-      <!-- ✅ MODIFICA: aggiunto id="legalBox" per scroll+highlight -->
-      <div class="legal-box-avviso" id="legalBox">
-        <label>
-          <input type="checkbox" id="legalAccept">
-          Prima di procedere, ricorda che i risultati sono solo stime indicative e non sostituiscono una valutazione professionale.
-          Per tutti i dettagli, consulta le <a href="note-legali.html" target="_blank" rel="noopener">Note Legali</a>.
-        </label>
-        <p class="legal-note-small">
-          I risultati di questo calcolatore sono indicativi e non costituiscono consulenza professionale.
-          Per decisioni economiche, fiscali o tecniche fai sempre riferimento a un professionista qualificato.
-        </p>
-      </div>
-
-      <button class="calc-btn" type="button" onclick="calcolaAuto()">Calcola confronto auto</button>
-
-      <div id="autoResult" class="calc-result"></div>
-
-      <!-- SHARE RISULTATO -->
-      <div style="text-align:center; margin:18px 0 6px;">
-        <button id="shareResultBtn" class="share-btn" type="button" style="width:100%;">📎 Condividi il risultato</button>
-
-        <div id="shareFallback" class="share-fallback">
-          <input id="shareText" type="text" readonly>
-          <button id="copyBtn" class="copy-btn" type="button">Copia testo</button>
-        </div>
-
-        <p class="small-note" style="margin-top:10px;">
-          Se il tuo browser non supporta la condivisione diretta, puoi copiare il testo e incollarlo su WhatsApp/Telegram.
-        </p>
-      </div>
-
-      <p class="small-note">
-        Il calcolatore considera solo il costo “carburante/energia”.
-        Non tiene conto di assicurazione, bollo, manutenzione, pedaggi, parcheggi, ecc.
-      </p>
-
-      <!-- RICHIAMO AD ALTRI CONTENUTI -->
-      <section style="margin-top:30px; padding:16px; border-radius:10px; background:#F7F7FB; border:1px solid #E5E7EB;">
-        <h2 style="margin-top:0;">Ti possono interessare anche:</h2>
-
-        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-top:10px;">
-
-          <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
-            <a href="https://syncras.app/calcolatore-consumi-auto.html" style="text-decoration:none; color:var(--violet-dark); display:block;">
-              <h3 style="margin-top:0; font-size:1rem;">Quanto costa davvero usare un’auto?</h3>
-              <p style="font-size:0.9rem; margin:0;">
-                Confronta i costi reali di benzina, diesel, GPL, metano ed elettrico in base a chilometri e consumi reali.
-              </p>
-            </a>
-          </article>
-
-          <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
-            <a href="https://syncras.app/calcolatore-fotovoltaico-ammortamento.html" style="text-decoration:none; color:var(--violet-dark); display:block;">
-              <h3 style="margin-top:0; font-size:1rem;">In quanto tempo si ripaga il fotovoltaico?</h3>
-              <p style="font-size:0.9rem; margin:0;">
-                Scopri dopo quanti anni recuperi l’investimento in base a consumi, autoconsumo e produzione stimata.
-              </p>
-            </a>
-          </article>
-
-          <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
-            <a href="https://syncras.app/smart-test/smart-test-auto-elettrica-per-te.html" style="text-decoration:none; color:var(--violet-dark); display:block;">
-              <h3 style="margin-top:0; font-size:1rem;">Ha senso l’auto elettrica per te?</h3>
-              <p style="font-size:0.9rem; margin:0;">
-                Non per tutti è la scelta giusta. Questo test ti aiuta a capirlo in base al tuo uso reale.
-              </p>
-            </a>
-          </article>
-
-          <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
-            <a href="https://syncras.app/smart-test/smart-test-ibrida-plugin-o-nessuna.html" style="text-decoration:none; color:var(--violet-dark); display:block;">
-              <h3 style="margin-top:0; font-size:1rem;">Ibrida, plug-in o nessuna delle due?</h3>
-              <p style="font-size:0.9rem; margin:0;">
-                Tra marketing e realtà quotidiana, qui capisci quale tecnologia ha davvero senso per te.
-              </p>
-            </a>
-          </article>
-
-        </div>
-      </section>
-
-      <section style="max-width: 900px; margin: 40px auto; padding: 20px; font-family: sans-serif; line-height: 1.6; color: #333;">
-        <h2>Conviene l'auto elettrica nel 2025? Scoprilo con il calcolatore</h2>
-        <p>La domanda che molti si pongono è: <strong>quanto si risparmia davvero con un'auto elettrica</strong> rispetto a una a benzina o diesel? La risposta dipende da tre fattori chiave: il prezzo del carburante, l'efficienza del veicolo e, soprattutto, i chilometri percorsi ogni anno.</p>
-
-        <h3>Costi medi per 100 km (Stime 2025)</h3>
-        <p>Per usare al meglio il calcolatore, ecco alcuni riferimenti medi di consumo per diverse motorizzazioni:</p>
-        <ul>
-          <li><strong>Auto Benzina:</strong> 6-8 litri / 100km (Costo elevato, ideale per pochi km).</li>
-          <li><strong>Auto Diesel:</strong> 5-6 litri / 100km (Ancora competitivo per lunghi viaggi autostradali).</li>
-          <li><strong>Auto a GPL:</strong> 8-10 litri / 100km (Il costo del carburante è molto basso, circa la metà della benzina).</li>
-          <li><strong>Auto Elettrica:</strong> 15-20 kWh / 100km (Il risparmio è massimo se carichi a casa con tariffa domestica).</li>
-        </ul>
-
-        <h3>Come calcolare il punto di pareggio (Break-even point)</h3>
-        <p>Oltre al costo del carburante, ricorda di considerare che un'auto elettrica o ibrida ha spesso costi di manutenzione ridotti e agevolazioni sul bollo. Utilizza il nostro tool per simulare diversi scenari, variando il <strong>prezzo della benzina</strong> e il <strong>costo del kWh</strong> per trovare il tuo risparmio personalizzato.</p>
-
-        <p><small>Disclaimer: I dati forniti sono stime basate su valori medi di mercato e non costituiscono consulenza finanziaria all'acquisto.</small></p>
-      </section>
-    </section>
-  </main>
-
-  <footer class="syncras-footer">
-    <div class="footer-inner">
-      <div class="footer-column">
-        <h4>Syncras.App</h4>
-        <p>
-          Metodo SmartShop per fare acquisti con la testa (e con un po’ di ironia).<br>
-          Niente tecnicismi inutili, solo esperienze reali e numeri spiegati semplice.
-        </p>
-      </div>
-
-      <div class="footer-column">
-        <h4>Link utili</h4>
-        <ul>
-          <li><a href="blog.html">Tutte le guide SmartShop</a></li>
-          <li><a href="offerte.html">Offerte Amazon selezionate</a></li>
-          <li><a href="smart-tv-economica-o-tv-buona-con-box.html">Guida Smart TV</a></li>
-          <li><a href="fotovoltaico-4kw-accumulo-10kwh-quanto-costa-davvero-nel-2025.html">Guida fotovoltaico 4 kW</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-column">
-        <h4>Legale & Privacy</h4>
-        <ul>
-          <li><a href="privacy.html">Privacy Policy</a></li>
-          <li><a href="cookie.html">Cookie Policy</a></li>
-          <li><a href="disclaimer-amazon.html">Disclaimer Amazon</a></li>
-          <li><a href="note-legali.html">Note Legali</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="footer-bottom">
-      <p>© <span id="year-span"></span> Syncras.App — Tutti i diritti riservati.</p>
-      <p>
-        Syncras.App partecipa al Programma Affiliazione Amazon EU.
-        Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
-        senza alcun costo aggiuntivo per l’utente.
-      </p>
-      <p>
-        Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
-        è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
-      </p>
-    </div>
-  </footer>
-
-  <script>
-    function toggleMenu() {
-      document.body.classList.toggle('nav-open');
-    }
-
-    // FORMATTAZIONE EURO
-    function euro(val) {
-      return val.toFixed(2).replace('.', ',');
-    }
-
-    function updateLabels() {
-      const tipoA = document.getElementById('tipoA').value;
-      const tipoB = document.getElementById('tipoB').value;
-
-      const labelConsA = document.getElementById('labelConsA');
-      const labelPrezzoA = document.getElementById('labelPrezzoA');
-      const labelConsB = document.getElementById('labelConsB');
-      const labelPrezzoB = document.getElementById('labelPrezzoB');
-
-      if (tipoA === 'Elettrica') {
-        labelConsA.textContent = 'Consumo Auto A (kWh / 100 km)';
-        labelPrezzoA.textContent = 'Prezzo energia Auto A (€/kWh)';
-      } else {
-        labelConsA.textContent = 'Consumo Auto A (litri / 100 km)';
-        labelPrezzoA.textContent = 'Prezzo carburante Auto A (€/litro)';
-      }
-
-      if (tipoB === 'Elettrica') {
-        labelConsB.textContent = 'Consumo Auto B (kWh / 100 km)';
-        labelPrezzoB.textContent = 'Prezzo energia Auto B (€/kWh)';
-      } else {
-        labelConsB.textContent = 'Consumo Auto B (litri / 100 km)';
-        labelPrezzoB.textContent = 'Prezzo carburante Auto B (€/litro)';
-      }
-    }
-
-    function buildShareText(payload) {
-      const lines = [
-        `🚗 Confronto costi auto (Syncras.App)`,
-        `Km considerati: ${payload.km.toLocaleString('it-IT')} km`,
-        ``,
-        `Auto A (${payload.tipoA})`,
-        `• Costo per 100 km: ${payload.costo100A} €`,
-        `• Costo totale: ${payload.costoTotA} €`,
-        ``,
-        `Auto B (${payload.tipoB})`,
-        `• Costo per 100 km: ${payload.costo100B} €`,
-        `• Costo totale: ${payload.costoTotB} €`,
-        ``,
-        `${payload.sintesi}`,
-        ``,
-        `Calcolatore: ${window.location.href}`
-      ];
-      return lines.join('\n');
-    }
-
-    function calcolaAuto() {
-      const legalCheckbox = document.getElementById('legalAccept');
-      if (legalCheckbox && !legalCheckbox.checked) {
-        alert('Per usare il calcolatore devi dichiarare di aver letto e accettato le Note Legali.');
-
-        // ✅ MODIFICA: scroll + highlight sul box della spunta
-        const box = document.getElementById('legalBox');
-        if (box) {
-          box.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          box.classList.add('legal-highlight');
-          setTimeout(() => box.classList.remove('legal-highlight'), 1200);
-        } else if (legalCheckbox) {
-          legalCheckbox.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-
-        return;
-      }
-
-      const kmTot = parseFloat(document.getElementById('kmTot').value) || 0;
-
-      const tipoA = document.getElementById('tipoA').value;
-      const consA = parseFloat(document.getElementById('consA').value) || 0;
-      const prezzoA = parseFloat(document.getElementById('prezzoA').value) || 0;
-
-      const tipoB = document.getElementById('tipoB').value;
-      const consB = parseFloat(document.getElementById('consB').value) || 0;
-      const prezzoB = parseFloat(document.getElementById('prezzoB').value) || 0;
-
-      if (kmTot <= 0 || consA <= 0 || consB <= 0 || prezzoA <= 0 || prezzoB <= 0) {
-        alert('Controlla di aver inserito tutti i valori maggiori di zero.');
-        return;
-      }
-
-      const costo100A = consA * prezzoA;
-      const costoTotA = (costo100A / 100) * kmTot;
-
-      const costo100B = consB * prezzoB;
-      const costoTotB = (costo100B / 100) * kmTot;
-
-      const diffTot = costoTotA - costoTotB;
-
-      let sintesi = '';
-      if (Math.abs(diffTot) < 0.01) {
-        sintesi = 'Le due auto hanno un costo molto simile sui chilometri inseriti.';
-      } else if (diffTot > 0) {
-        sintesi = `Auto B (${tipoB}) è più economica: risparmio stimato ${euro(diffTot)} € sui km considerati.`;
-      } else {
-        sintesi = `Auto A (${tipoA}) è più economica: risparmio stimato ${euro(-diffTot)} € sui km considerati.`;
-      }
-
-      // BARRE
-      const maxCosto = Math.max(costoTotA, costoTotB);
-      const widthA = (costoTotA / maxCosto) * 100;
-      const widthB = (costoTotB / maxCosto) * 100;
-
-      const box = document.getElementById('autoResult');
-      box.innerHTML = `
-        <strong>📊 Risultato del confronto</strong>
-
-        <p style="margin-top:10px;"><u>Auto A (${tipoA})</u><br>
-        – Costo per 100 km: <strong>${euro(costo100A)} €</strong><br>
-        – Costo per ${kmTot.toLocaleString('it-IT')} km: <strong>${euro(costoTotA)} €</strong></p>
-        <div class="bar-container"><div class="bar-fill" style="width:${widthA}%"></div></div>
-
-        <p><u>Auto B (${tipoB})</u><br>
-        – Costo per 100 km: <strong>${euro(costo100B)} €</strong><br>
-        – Costo per ${kmTot.toLocaleString('it-IT')} km: <strong>${euro(costoTotB)} €</strong></p>
-        <div class="bar-container"><div class="bar-fill" style="width:${widthB}%"></div></div>
-
-        <div class="saving-box">
-          <strong>${sintesi}</strong><br>
-          <span style="font-size:0.9rem; color:#4b5563;">Risparmio mensile stimato: <strong>${euro(Math.abs(diffTot)/12)} €</strong></span>
-        </div>
-
-        <p class="small-note">
-          Nota: confronto solo sui costi di carburante/energia. Nella realtà incidono anche prezzo d’acquisto, manutenzione, tasse, assicurazione, pedaggi, ecc.
-        </p>
-      `;
-      box.style.display = 'block';
-      box.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-      // prepara testo share risultato (fallback + share)
-      const payload = {
-        km: kmTot,
-        tipoA,
-        tipoB,
-        costo100A: euro(costo100A),
-        costoTotA: euro(costoTotA),
-        costo100B: euro(costo100B),
-        costoTotB: euro(costoTotB),
-        sintesi
-      };
-      const shareText = buildShareText(payload);
-      window.__syncrasLastShareText = shareText;
-
-      const fallbackWrap = document.getElementById('shareFallback');
-      const shareInput = document.getElementById('shareText');
-      if (shareInput) shareInput.value = shareText;
-      if (fallbackWrap) fallbackWrap.style.display = 'flex';
-    }
-
-    // SHARE pagina + risultato (con fallback copia)
-    function sharePage() {
-      const title = 'Confronto consumi e costi auto – Syncras.App';
-      const text = 'Ho trovato un calcolatore per confrontare i costi tra due auto (benzina, diesel, GPL, metano o elettrica).';
-      const url = window.location.href;
-
-      if (navigator.share) {
-        navigator.share({ title, text, url }).catch(() => {});
-      } else {
-        // fallback: copia URL
-        navigator.clipboard.writeText(url).then(() => alert('Link copiato! Incollalo su WhatsApp/Telegram.'));
-      }
-    }
-
-    function shareResult() {
-      const title = 'Risultato confronto costi auto – Syncras.App';
-      const text = window.__syncrasLastShareText || '';
-      const url = window.location.href;
-
-      if (!text) {
-        alert('Prima calcola un confronto, poi puoi condividere il risultato.');
-        return;
-      }
-
-      if (navigator.share) {
-        navigator.share({ title, text, url }).catch(() => {});
-      } else {
-        // fallback: mostra input già pronto (già attivo dopo calcolo)
-        const fallbackWrap = document.getElementById('shareFallback');
-        if (fallbackWrap) fallbackWrap.style.display = 'flex';
-        const shareInput = document.getElementById('shareText');
-        if (shareInput) shareInput.focus();
-        alert('Il tuo browser non supporta la condivisione diretta: copia il testo del risultato e incollalo su WhatsApp/Telegram.');
-      }
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-      // footer year
-      const span = document.getElementById('year-span');
-      if (span) span.textContent = new Date().getFullYear();
-
-      // labels iniziali + listener
-      updateLabels();
-      document.getElementById('tipoA').addEventListener('change', updateLabels);
-      document.getElementById('tipoB').addEventListener('change', updateLabels);
-
-      // share buttons
-      const sharePageBtn = document.getElementById('sharePageBtn');
-      const shareResultBtn = document.getElementById('shareResultBtn');
-      if (sharePageBtn) sharePageBtn.addEventListener('click', sharePage);
-      if (shareResultBtn) shareResultBtn.addEventListener('click', shareResult);
-
-      // copy fallback
-      const copyBtn = document.getElementById('copyBtn');
-      if (copyBtn) {
-        copyBtn.addEventListener('click', () => {
-          const shareInput = document.getElementById('shareText');
-          if (!shareInput) return;
-          navigator.clipboard.writeText(shareInput.value).then(() => {
-            alert('Testo copiato! Ora incollalo su WhatsApp/Telegram.');
-          });
-        });
-      }
-    });
-  </script>
-
-  <!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
-  <div id="cookie-banner">
-    <p>
-      Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite (Google Analytics).
-      Alcuni link potrebbero essere di affiliazione.
-      Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la <a href="privacy.html">Privacy Policy</a>.
+    <p class="intro-text">
+      Inserisci consumi, prezzi dei carburanti e chilometri annui.
+      Il calcolatore ti mostra il costo per 100 km e per tutta la distanza scelta, confrontando due auto (A e B).
     </p>
-    <div style="display:flex; gap:10px; margin-top:8px;">
-      <button type="button" onclick="rejectCookies()">Rifiuta</button>
-      <button id="cookie-btn" type="button" onclick="acceptCookies()">Accetta e continua</button>
+  </div>
+
+  <!-- SHARE TOP (pagina) -->
+  <div class="share-row">
+    <button id="sharePageBtn" class="share-btn" type="button">📎 Condividi questa pagina</button>
+  </div>
+
+  <!-- CARD DI SPIEGAZIONE -->
+  <section aria-label="Informazioni sul confronto">
+    <h2>Come funziona il confronto dei costi auto</h2>
+    <div class="calc-grid">
+      <article class="calc-card">
+        <div class="calc-card-label">AUTO A</div>
+        <h3>Auto A (qualsiasi alimentazione)</h3>
+        <p>
+          Puoi impostare un’auto a benzina, diesel, GPL, metano o elettrica.
+          Inserisci i consumi in <strong>litri/100 km</strong> o <strong>kWh/100 km</strong> e il relativo prezzo.
+        </p>
+      </article>
+
+      <article class="calc-card">
+        <div class="calc-card-label">AUTO B</div>
+        <h3>Auto B (di solito il “nuovo acquisto”)</h3>
+        <p>
+          Qui spesso si mette l’auto che vorresti comprare (es. elettrica) per capire se ti conviene davvero
+          rispetto a quella attuale.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <!-- CALCOLATORE -->
+  <section class="calc-section" id="calc-auto">
+    <h2>Calcolatore confronto costi carburante/energia</h2>
+    <p>
+      I campi “Consumo” si intendono <strong>ogni 100 km</strong>.
+      Puoi usare litri/100 km (termiche) oppure kWh/100 km (elettrica).
+    </p>
+
+    <div class="calc-grid-inputs">
+      <div class="calc-field">
+        <label>Chilometri considerati (es. 20000 km/anno)</label>
+        <input id="kmTot" type="number" min="1000" max="100000" value="20000">
+      </div>
+    </div>
+
+    <h3>Auto A</h3>
+    <div class="calc-grid-inputs">
+      <!-- ✅ NUOVO: Nome auto A -->
+      <div class="calc-field">
+        <label for="nomeA">Nome Auto A (opzionale)</label>
+        <input id="nomeA" type="text" maxlength="60" placeholder="Es. Opel Astra Diesel (Edition)">
+      </div>
+
+      <div class="calc-field">
+        <label>Alimentazione Auto A</label>
+        <select id="tipoA">
+          <option value="Benzina">Benzina</option>
+          <option value="Diesel">Diesel</option>
+          <option value="GPL" selected>GPL</option>
+          <option value="Metano">Metano</option>
+          <option value="Elettrica">Elettrica</option>
+        </select>
+      </div>
+
+      <div class="calc-field">
+        <label for="consA" id="labelConsA">Consumo Auto A (litri / 100 km)</label>
+        <input id="consA" type="number" step="0.1" min="1" max="40" value="8">
+      </div>
+
+      <div class="calc-field">
+        <label for="prezzoA" id="labelPrezzoA">Prezzo carburante Auto A (€/litro)</label>
+        <input id="prezzoA" type="number" step="0.01" min="0.1" max="5" value="0.90">
+      </div>
+    </div>
+
+    <h3>Auto B</h3>
+    <div class="calc-grid-inputs">
+      <!-- ✅ NUOVO: Nome auto B -->
+      <div class="calc-field">
+        <label for="nomeB">Nome Auto B (opzionale)</label>
+        <input id="nomeB" type="text" maxlength="60" placeholder="Es. Opel Astra Electric 54 kWh">
+      </div>
+
+      <div class="calc-field">
+        <label>Alimentazione Auto B</label>
+        <select id="tipoB">
+          <option value="Benzina">Benzina</option>
+          <option value="Diesel">Diesel</option>
+          <option value="GPL">GPL</option>
+          <option value="Metano">Metano</option>
+          <option value="Elettrica" selected>Elettrica</option>
+        </select>
+      </div>
+
+      <div class="calc-field">
+        <label for="consB" id="labelConsB">Consumo Auto B (kWh / 100 km)</label>
+        <input id="consB" type="number" step="0.1" min="1" max="40" value="15">
+      </div>
+
+      <div class="calc-field">
+        <label for="prezzoB" id="labelPrezzoB">Prezzo energia Auto B (€/kWh)</label>
+        <input id="prezzoB" type="number" step="0.01" min="0.1" max="5" value="0.20">
+      </div>
+    </div>
+
+    <!-- ✅ NUOVO: Avanzato (Prezzo acquisto + pareggio) -->
+    <div class="advanced-box" aria-label="Opzioni avanzate">
+      <label class="advanced-toggle" for="advancedToggle">
+        <input id="advancedToggle" type="checkbox">
+        Mostra calcolo pareggio (prezzo auto + anni)
+      </label>
+
+      <div id="advancedContent" class="advanced-content">
+        <div class="calc-grid-inputs" style="margin-top:10px;">
+          <div class="calc-field">
+            <label for="prezzoAcquistoA">Prezzo di acquisto Auto A (opzionale, €)</label>
+            <input id="prezzoAcquistoA" type="number" step="100" min="0" max="500000" placeholder="Es. 22000">
+          </div>
+          <div class="calc-field">
+            <label for="prezzoAcquistoB">Prezzo di acquisto Auto B (opzionale, €)</label>
+            <input id="prezzoAcquistoB" type="number" step="100" min="0" max="500000" placeholder="Es. 32000">
+          </div>
+        </div>
+
+        <p class="small-note" style="margin-top:8px;">
+          Il “pareggio” indica in quanti anni il risparmio sui costi energia/carburante può recuperare la differenza di prezzo tra Auto A e Auto B (stima orientativa).
+        </p>
+      </div>
+    </div>
+
+    <!-- NOTE LEGALI CHECK -->
+    <div class="legal-box-avviso" id="legalBox">
+      <label>
+        <input type="checkbox" id="legalAccept">
+        Prima di procedere, ricorda che i risultati sono solo stime indicative e non sostituiscono una valutazione professionale.
+        Per tutti i dettagli, consulta le <a href="note-legali.html" target="_blank" rel="noopener">Note Legali</a>.
+      </label>
+      <p class="legal-note-small">
+        I risultati di questo calcolatore sono indicativi e non costituiscono consulenza professionale.
+        Per decisioni economiche, fiscali o tecniche fai sempre riferimento a un professionista qualificato.
+      </p>
+    </div>
+
+    <button class="calc-btn" type="button" onclick="calcolaAuto()">Calcola confronto auto</button>
+
+    <div id="autoResult" class="calc-result"></div>
+
+    <!-- SHARE RISULTATO -->
+    <div style="text-align:center; margin:18px 0 6px;">
+      <button id="shareResultBtn" class="share-btn" type="button" style="width:100%;">📎 Condividi il risultato</button>
+
+      <div id="shareFallback" class="share-fallback">
+        <input id="shareText" type="text" readonly>
+        <button id="copyBtn" class="copy-btn" type="button">Copia testo</button>
+      </div>
+
+      <p class="small-note" style="margin-top:10px;">
+        Se il tuo browser non supporta la condivisione diretta, puoi copiare il testo e incollarlo su WhatsApp/Telegram.
+      </p>
+    </div>
+
+    <p class="small-note">
+      Il calcolatore considera solo il costo “carburante/energia”.
+      Non tiene conto di assicurazione, bollo, manutenzione, pedaggi, parcheggi, ecc.
+    </p>
+
+    <!-- RICHIAMO AD ALTRI CONTENUTI -->
+    <section style="margin-top:30px; padding:16px; border-radius:10px; background:#F7F7FB; border:1px solid #E5E7EB;">
+      <h2 style="margin-top:0;">Ti possono interessare anche:</h2>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px; margin-top:10px;">
+
+        <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
+          <a href="https://syncras.app/calcolatore-consumi-auto.html" style="text-decoration:none; color:var(--violet-dark); display:block;">
+            <h3 style="margin-top:0; font-size:1rem;">Quanto costa davvero usare un’auto?</h3>
+            <p style="font-size:0.9rem; margin:0;">
+              Confronta i costi reali di benzina, diesel, GPL, metano ed elettrico in base a chilometri e consumi reali.
+            </p>
+          </a>
+        </article>
+
+        <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
+          <a href="https://syncras.app/calcolatore-fotovoltaico-ammortamento.html" style="text-decoration:none; color:var(--violet-dark); display:block;">
+            <h3 style="margin-top:0; font-size:1rem;">In quanto tempo si ripaga il fotovoltaico?</h3>
+            <p style="font-size:0.9rem; margin:0;">
+              Scopri dopo quanti anni recuperi l’investimento in base a consumi, autoconsumo e produzione stimata.
+            </p>
+          </a>
+        </article>
+
+        <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
+          <a href="https://syncras.app/smart-test/smart-test-auto-elettrica-per-te.html" style="text-decoration:none; color:var(--violet-dark); display:block;">
+            <h3 style="margin-top:0; font-size:1rem;">Ha senso l’auto elettrica per te?</h3>
+            <p style="font-size:0.9rem; margin:0;">
+              Non per tutti è la scelta giusta. Questo test ti aiuta a capirlo in base al tuo uso reale.
+            </p>
+          </a>
+        </article>
+
+        <article style="background:#FFFFFF; border-radius:8px; padding:10px 12px; border:1px solid #E5E7EB;">
+          <a href="https://syncras.app/smart-test/smart-test-ibrida-plugin-o-nessuna.html" style="text-decoration:none; color:var(--violet-dark); display:block;">
+            <h3 style="margin-top:0; font-size:1rem;">Ibrida, plug-in o nessuna delle due?</h3>
+            <p style="font-size:0.9rem; margin:0;">
+              Tra marketing e realtà quotidiana, qui capisci quale tecnologia ha davvero senso per te.
+            </p>
+          </a>
+        </article>
+
+      </div>
+    </section>
+
+    <section style="max-width: 900px; margin: 40px auto; padding: 20px; font-family: sans-serif; line-height: 1.6; color: #333;">
+      <h2>Conviene l'auto elettrica nel 2025? Scoprilo con il calcolatore</h2>
+      <p>La domanda che molti si pongono è: <strong>quanto si risparmia davvero con un'auto elettrica</strong> rispetto a una a benzina o diesel? La risposta dipende da tre fattori chiave: il prezzo del carburante, l'efficienza del veicolo e, soprattutto, i chilometri percorsi ogni anno.</p>
+
+      <h3>Costi medi per 100 km (Stime 2025)</h3>
+      <p>Per usare al meglio il calcolatore, ecco alcuni riferimenti medi di consumo per diverse motorizzazioni:</p>
+      <ul>
+        <li><strong>Auto Benzina:</strong> 6-8 litri / 100km (Costo elevato, ideale per pochi km).</li>
+        <li><strong>Auto Diesel:</strong> 5-6 litri / 100km (Ancora competitivo per lunghi viaggi autostradali).</li>
+        <li><strong>Auto a GPL:</strong> 8-10 litri / 100km (Il costo del carburante è molto basso, circa la metà della benzina).</li>
+        <li><strong>Auto Elettrica:</strong> 15-20 kWh / 100km (Il risparmio è massimo se carichi a casa con tariffa domestica).</li>
+      </ul>
+
+      <h3>Come calcolare il punto di pareggio (Break-even point)</h3>
+      <p>Oltre al costo del carburante, ricorda di considerare che un'auto elettrica o ibrida ha spesso costi di manutenzione ridotti e agevolazioni sul bollo. Utilizza il nostro tool per simulare diversi scenari, variando il <strong>prezzo della benzina</strong> e il <strong>costo del kWh</strong> per trovare il tuo risparmio personalizzato.</p>
+
+      <p><small>Disclaimer: I dati forniti sono stime basate su valori medi di mercato e non costituiscono consulenza finanziaria all'acquisto.</small></p>
+    </section>
+  </section>
+</main>
+
+<footer class="syncras-footer">
+  <div class="footer-inner">
+    <div class="footer-column">
+      <h4>Syncras.App</h4>
+      <p>
+        Metodo SmartShop per fare acquisti con la testa (e con un po’ di ironia).<br>
+        Niente tecnicismi inutili, solo esperienze reali e numeri spiegati semplice.
+      </p>
+    </div>
+
+    <div class="footer-column">
+      <h4>Link utili</h4>
+      <ul>
+        <li><a href="blog.html">Tutte le guide SmartShop</a></li>
+        <li><a href="offerte.html">Offerte Amazon selezionate</a></li>
+        <li><a href="smart-tv-economica-o-tv-buona-con-box.html">Guida Smart TV</a></li>
+        <li><a href="fotovoltaico-4kw-accumulo-10kwh-quanto-costa-davvero-nel-2025.html">Guida fotovoltaico 4 kW</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-column">
+      <h4>Legale & Privacy</h4>
+      <ul>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="cookie.html">Cookie Policy</a></li>
+        <li><a href="disclaimer-amazon.html">Disclaimer Amazon</a></li>
+        <li><a href="note-legali.html">Note Legali</a></li>
+      </ul>
     </div>
   </div>
 
-  <script>
-    (function () {
-      // 👉 ID Google Analytics di Tiziana
-      const GA_ID = 'G-CFTTCYDZ2P';
-      const CONSENT_KEY = "syncras_cookie_consent";
+  <div class="footer-bottom">
+    <p>© <span id="year-span"></span> Syncras.App — Tutti i diritti riservati.</p>
+    <p>
+      Syncras.App partecipa al Programma Affiliazione Amazon EU.
+      Acquistando tramite i link presenti nelle pagine, il sito può ricevere una piccola commissione
+      senza alcun costo aggiuntivo per l’utente.
+    </p>
+    <p>
+      Per informazioni su ordini, resi, spedizioni o gestione dei dati relativi agli acquisti,
+      è necessario rivolgersi direttamente al servizio clienti Amazon tramite il proprio account.
+    </p>
+  </div>
+</footer>
 
-      function loadGoogleAnalytics() {
-        if (window.__tizianaGaLoaded) return;
-        window.__tizianaGaLoaded = true;
+<script>
+  function toggleMenu() {
+    document.body.classList.toggle('nav-open');
+  }
 
-        const gaScript = document.createElement('script');
-        gaScript.async = true;
-        gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
-        document.head.appendChild(gaScript);
+  // FORMATTAZIONE EURO
+  function euro(val) {
+    return val.toFixed(2).replace('.', ',');
+  }
 
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){ dataLayer.push(arguments); }
-        window.gtag = gtag;
-        gtag('js', new Date());
-        gtag('config', GA_ID, { anonymize_ip: true });
+  function euroInt(val) {
+    // per prezzi acquisto (senza decimali)
+    if (!isFinite(val)) return '';
+    return Math.round(val).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  }
+
+  function clampPercent(x){
+    if (!isFinite(x)) return 0;
+    return Math.max(0, Math.min(100, x));
+  }
+
+  function getDisplayName(raw, fallback) {
+    const t = (raw || '').trim();
+    return t.length ? t : fallback;
+  }
+
+  function updateLabels() {
+    const tipoA = document.getElementById('tipoA').value;
+    const tipoB = document.getElementById('tipoB').value;
+
+    const labelConsA = document.getElementById('labelConsA');
+    const labelPrezzoA = document.getElementById('labelPrezzoA');
+    const labelConsB = document.getElementById('labelConsB');
+    const labelPrezzoB = document.getElementById('labelPrezzoB');
+
+    if (tipoA === 'Elettrica') {
+      labelConsA.textContent = 'Consumo Auto A (kWh / 100 km)';
+      labelPrezzoA.textContent = 'Prezzo energia Auto A (€/kWh)';
+    } else {
+      labelConsA.textContent = 'Consumo Auto A (litri / 100 km)';
+      labelPrezzoA.textContent = 'Prezzo carburante Auto A (€/litro)';
+    }
+
+    if (tipoB === 'Elettrica') {
+      labelConsB.textContent = 'Consumo Auto B (kWh / 100 km)';
+      labelPrezzoB.textContent = 'Prezzo energia Auto B (€/kWh)';
+    } else {
+      labelConsB.textContent = 'Consumo Auto B (litri / 100 km)';
+      labelPrezzoB.textContent = 'Prezzo carburante Auto B (€/litro)';
+    }
+  }
+
+function buildShareText(payload) {
+  const nameA = (payload.nomeA && payload.nomeA.trim())
+    ? payload.nomeA.trim()
+    : `Auto A (${payload.tipoA})`;
+
+  const nameB = (payload.nomeB && payload.nomeB.trim())
+    ? payload.nomeB.trim()
+    : `Auto B (${payload.tipoB})`;
+
+  const lines = [
+    `🚗 Confronto costi auto (Syncras.App)`,
+    `Km considerati: ${payload.km.toLocaleString('it-IT')} km`,
+    ``,
+    `${nameA}`,
+    `• Costo per 100 km: ${payload.costo100A} €`,
+    `• Costo totale: ${payload.costoTotA} €`,
+    ``,
+    `${nameB}`,
+    `• Costo per 100 km: ${payload.costo100B} €`,
+    `• Costo totale: ${payload.costoTotB} €`,
+    ``,
+    `${payload.sintesi}`,
+    payload.pareggioText ? payload.pareggioText : ``,
+    ``,
+    `Calcolatore: ${payload.url}`
+  ].filter(Boolean);
+
+  return lines.join('\n');
+}
+
+
+  function calcolaAuto() {
+    const legalCheckbox = document.getElementById('legalAccept');
+    if (legalCheckbox && !legalCheckbox.checked) {
+      alert('Per usare il calcolatore devi dichiarare di aver letto e accettato le Note Legali.');
+
+      // scroll + highlight sul box della spunta
+      const box = document.getElementById('legalBox');
+      if (box) {
+        box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        box.classList.add('legal-highlight');
+        setTimeout(() => box.classList.remove('legal-highlight'), 1200);
+      } else if (legalCheckbox) {
+        legalCheckbox.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
+      return;
+    }
 
-      function showBanner() {
-        const banner = document.getElementById('cookie-banner');
-        if (banner) banner.style.display = 'block';
+    const kmTot = parseFloat(document.getElementById('kmTot').value) || 0;
+
+    const tipoA = document.getElementById('tipoA').value;
+    const consA = parseFloat(document.getElementById('consA').value) || 0;
+    const prezzoA = parseFloat(document.getElementById('prezzoA').value) || 0;
+
+    const tipoB = document.getElementById('tipoB').value;
+    const consB = parseFloat(document.getElementById('consB').value) || 0;
+    const prezzoB = parseFloat(document.getElementById('prezzoB').value) || 0;
+
+    const nomeA = getDisplayName(document.getElementById('nomeA').value, 'Auto A');
+    const nomeB = getDisplayName(document.getElementById('nomeB').value, 'Auto B');
+
+    const advEnabled = document.getElementById('advancedToggle').checked;
+    const prezzoAcqA = advEnabled ? (parseFloat(document.getElementById('prezzoAcquistoA').value) || 0) : 0;
+    const prezzoAcqB = advEnabled ? (parseFloat(document.getElementById('prezzoAcquistoB').value) || 0) : 0;
+
+    if (kmTot <= 0 || consA <= 0 || consB <= 0 || prezzoA <= 0 || prezzoB <= 0) {
+      alert('Controlla di aver inserito tutti i valori maggiori di zero.');
+      return;
+    }
+
+    // costo "carburante/energia"
+    const costo100A = consA * prezzoA;
+    const costoTotA = (costo100A / 100) * kmTot;
+
+    const costo100B = consB * prezzoB;
+    const costoTotB = (costo100B / 100) * kmTot;
+
+    const diffTot = costoTotA - costoTotB; // >0 => B più economica
+
+    // percentuale risparmio (più chiara per l'utente)
+    let percent = 0;
+    if (Math.abs(diffTot) > 0.01) {
+      if (diffTot > 0) { // B più economica
+        percent = (diffTot / costoTotA) * 100;
+      } else { // A più economica
+        percent = ((-diffTot) / costoTotB) * 100;
       }
+    }
+    percent = Math.max(0, percent);
 
-      function hideBanner() {
-        const banner = document.getElementById('cookie-banner');
-        if (banner) banner.style.display = 'none';
-      }
+    // sintesi principale
+    let sintesi = '';
+    let cheaperName = '';
+    let cheaperType = '';
+    let savingAbs = 0;
+    if (Math.abs(diffTot) < 0.01) {
+      sintesi = 'Le due auto hanno un costo molto simile sui chilometri inseriti.';
+    } else if (diffTot > 0) {
+      cheaperName = nomeB;
+      cheaperType = tipoB;
+      savingAbs = diffTot;
+      sintesi = `${nomeB} (${tipoB}) è più economica: risparmio stimato ${euro(diffTot)} € sui km considerati (≈ ${percent.toFixed(1).replace('.', ',')}%).`;
+    } else {
+      cheaperName = nomeA;
+      cheaperType = tipoA;
+      savingAbs = -diffTot;
+      sintesi = `${nomeA} (${tipoA}) è più economica: risparmio stimato ${euro(-diffTot)} € sui km considerati (≈ ${percent.toFixed(1).replace('.', ',')}%).`;
+    }
 
-      window.acceptCookies = function () {
-        localStorage.setItem(CONSENT_KEY, 'yes');
-        hideBanner();
-        loadGoogleAnalytics();
-      };
+    // BARRE
+    const maxCosto = Math.max(costoTotA, costoTotB);
+    const widthA = clampPercent((costoTotA / maxCosto) * 100);
+    const widthB = clampPercent((costoTotB / maxCosto) * 100);
 
-      window.rejectCookies = function () {
-        localStorage.setItem(CONSENT_KEY, 'no');
-        hideBanner();
-      };
+    // ✅ PAREGGIO (ammortamento) su base ANNUA usando km inseriti
+    // kmTot è considerato "km/anno" (come da label)
+    let pareggioHtml = '';
+    let pareggioTextShare = '';
+    if (advEnabled) {
+      // se l'utente non inserisce i prezzi, non mostriamo pareggio
+      const hasPrices = (prezzoAcqA > 0 || prezzoAcqB > 0);
+      if (hasPrices) {
+        const diffPrezzo = prezzoAcqB - prezzoAcqA; // se >0 B costa di più
+        const risparmioAnnuo = costoTotA - costoTotB; // se >0 B fa risparmiare
 
-      document.addEventListener('DOMContentLoaded', function () {
-        const consent = localStorage.getItem(CONSENT_KEY);
-
-        if (consent === 'yes') {
-          loadGoogleAnalytics();
-        } else if (consent === 'no') {
-          // niente GA, niente banner
+        // casi:
+        // - B costa di più e fa risparmiare => anni = diffPrezzo / risparmioAnnuo
+        // - B costa di più ma non fa risparmiare => nessun pareggio
+        // - B costa meno => pareggio immediato (già più economica)
+        // - prezzi parziali => calcolo comunque sulla differenza (se A è 0 o B è 0, è solo indicativo)
+        if (diffPrezzo <= 0) {
+          // B costa uguale o meno
+          if (diffPrezzo < 0) {
+            pareggioHtml = `<div class="saving-box" style="margin-top:12px;">
+              <strong>✅ Pareggio prezzo d’acquisto</strong><br>
+              <span style="font-size:0.9rem; color:#4b5563;">
+                ${nomeB} risulta già <strong>più economica all’acquisto</strong> di circa <strong>${euroInt(-diffPrezzo)} €</strong> (stima in base ai prezzi inseriti).
+              </span>
+            </div>`;
+            pareggioTextShare = `✅ Pareggio: ${nomeB} è già più economica all’acquisto di circa ${euroInt(-diffPrezzo)} €.`;
+          } else {
+            pareggioHtml = `<div class="saving-box" style="margin-top:12px;">
+              <strong>✅ Pareggio prezzo d’acquisto</strong><br>
+              <span style="font-size:0.9rem; color:#4b5563;">
+                I prezzi inseriti risultano <strong>uguali</strong>. In questo caso il confronto dipende solo dai costi energia/carburante.
+              </span>
+            </div>`;
+            pareggioTextShare = `✅ Pareggio: prezzi uguali (dipende solo dai costi di utilizzo).`;
+          }
         } else {
-          showBanner();
+          // B costa di più
+          if (risparmioAnnuo > 0.01) {
+            const anni = diffPrezzo / risparmioAnnuo;
+            const anniRounded = Math.ceil(anni * 10) / 10; // arrotonda per eccesso a 0,1
+            pareggioHtml = `<div class="saving-box" style="margin-top:12px;">
+              <strong>⏳ Pareggio prezzo d’acquisto</strong><br>
+              <span style="font-size:0.9rem; color:#4b5563;">
+                Differenza prezzo (B − A): <strong>${euroInt(diffPrezzo)} €</strong><br>
+                Risparmio annuo stimato: <strong>${euro(risparmioAnnuo)} €</strong><br>
+                👉 Per recuperare la differenza servono circa <strong>${anniRounded.toString().replace('.', ',')} anni</strong> (stima).
+              </span>
+            </div>`;
+            pareggioTextShare = `⏳ Pareggio: per recuperare ${euroInt(diffPrezzo)} € con un risparmio annuo di ${euro(risparmioAnnuo)} €, servono ~${anniRounded.toString().replace('.', ',')} anni.`;
+          } else {
+            pareggioHtml = `<div class="saving-box" style="margin-top:12px;">
+              <strong>⛔ Pareggio non raggiungibile</strong><br>
+              <span style="font-size:0.9rem; color:#4b5563;">
+                Con questi valori, ${nomeB} costa <strong>di più all’acquisto</strong> (≈ ${euroInt(diffPrezzo)} €)
+                ma <strong>non genera un risparmio annuo</strong> sufficiente sui km inseriti. Quindi il pareggio <strong>non si raggiunge</strong>.
+              </span>
+            </div>`;
+            pareggioTextShare = `⛔ Pareggio: non si raggiunge (B costa di più all’acquisto e non fa risparmiare sui km inseriti).`;
+          }
         }
+      }
+    }
+
+    // KPI per evidenziare risparmio
+    const kpiHtml = `
+      <div class="saving-kpi">
+        <span class="kpi-pill">📉 <small>Risparmio stimato</small> ${euro(Math.abs(diffTot))} €</span>
+        <span class="kpi-pill">📊 <small>Risparmio %</small> ${percent.toFixed(1).replace('.', ',')}%</span>
+        <span class="kpi-pill">🗓️ <small>Mensile</small> ${euro(Math.abs(diffTot)/12)} €</span>
+      </div>
+    `;
+
+    const box = document.getElementById('autoResult');
+    box.innerHTML = `
+      <strong>📊 Risultato del confronto</strong>
+
+      <p style="margin-top:10px;"><u>${nomeA} (${tipoA})</u><br>
+      – Costo per 100 km: <strong>${euro(costo100A)} €</strong><br>
+      – Costo per ${kmTot.toLocaleString('it-IT')} km: <strong>${euro(costoTotA)} €</strong></p>
+      <div class="bar-container"><div class="bar-fill" style="width:${widthA}%"></div></div>
+
+      <p><u>${nomeB} (${tipoB})</u><br>
+      – Costo per 100 km: <strong>${euro(costo100B)} €</strong><br>
+      – Costo per ${kmTot.toLocaleString('it-IT')} km: <strong>${euro(costoTotB)} €</strong></p>
+      <div class="bar-container"><div class="bar-fill" style="width:${widthB}%"></div></div>
+
+      <div class="saving-box">
+        <strong>${sintesi}</strong>
+        ${kpiHtml}
+      </div>
+
+      ${pareggioHtml}
+
+      <p class="small-note">
+        Nota: confronto solo sui costi di carburante/energia. Nella realtà incidono anche prezzo d’acquisto, manutenzione, tasse, assicurazione, pedaggi, ecc.
+      </p>
+    `;
+    box.style.display = 'block';
+    box.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    // prepara testo share risultato (fallback + share)
+    const payload = {
+      km: kmTot,
+      tipoA,
+      tipoB,
+      nomeA,
+      nomeB,
+      costo100A: euro(costo100A),
+      costoTotA: euro(costoTotA),
+      costo100B: euro(costo100B),
+      costoTotB: euro(costoTotB),
+      sintesi,
+      pareggioText: pareggioTextShare,
+      url: document.querySelector('link[rel="canonical"]')?.href || window.location.href
+
+    };
+    const shareText = buildShareText(payload);
+    window.__syncrasLastShareText = shareText;
+
+    const fallbackWrap = document.getElementById('shareFallback');
+    const shareInput = document.getElementById('shareText');
+    if (shareInput) shareInput.value = shareText;
+    if (fallbackWrap) fallbackWrap.style.display = 'flex';
+  }
+
+  // SHARE pagina + risultato (con fallback copia)
+  function sharePage() {
+    const title = 'Confronto consumi e costi auto – Syncras.App';
+    const text = 'Ho trovato un calcolatore per confrontare i costi tra due auto (benzina, diesel, GPL, metano o elettrico).';
+    const url = document.querySelector('link[rel="canonical"]')?.href || window.location.href;
+
+    if (navigator.share) {
+      navigator.share({ title, text, url }).catch(() => {});
+    } else {
+      // fallback: copia URL
+      navigator.clipboard.writeText(url).then(() => alert('Link copiato! Incollalo su WhatsApp/Telegram.'));
+    }
+  }
+
+ function shareResult() {
+  const title = 'Risultato confronto costi auto – Syncras.App';
+  const text = window.__syncrasLastShareText || '';
+  const url = document.querySelector('link[rel="canonical"]')?.href || window.location.href;
+
+  const resultBox = document.getElementById('autoResult');
+  const hasResultVisible = !!(resultBox && resultBox.offsetParent !== null);
+
+  if (!text && !hasResultVisible) {
+    alert('Prima calcola un confronto, poi puoi condividere il risultato.');
+    return;
+  }
+
+  // WhatsApp mostra anteprima OG solo se c'è un URL: lo mettiamo UNA SOLA VOLTA
+  const shareText = text ? `${text}\n\n${url}` : url;
+
+  if (navigator.share) {
+    navigator.share({ title, text: shareText }).catch(() => {});
+  } else {
+    const fallbackWrap = document.getElementById('shareFallback');
+    if (fallbackWrap) fallbackWrap.style.display = 'flex';
+    const shareInput = document.getElementById('shareText');
+    if (shareInput) {
+      shareInput.value = shareText;
+      shareInput.focus();
+    }
+    alert('Il tuo browser non supporta la condivisione diretta: copia il testo del risultato e incollalo su WhatsApp/Telegram.');
+  }
+}
+
+
+
+    
+
+  document.addEventListener('DOMContentLoaded', function() {
+    // footer year
+    const span = document.getElementById('year-span');
+    if (span) span.textContent = new Date().getFullYear();
+
+    // labels iniziali + listener
+    updateLabels();
+    document.getElementById('tipoA').addEventListener('change', updateLabels);
+    document.getElementById('tipoB').addEventListener('change', updateLabels);
+
+    // avanzato toggle
+    const advToggle = document.getElementById('advancedToggle');
+    const advContent = document.getElementById('advancedContent');
+    if (advToggle && advContent) {
+      advToggle.addEventListener('change', () => {
+        advContent.classList.toggle('show', advToggle.checked);
       });
-    })();
-  </script>
+    }
+
+    // share buttons
+    const sharePageBtn = document.getElementById('sharePageBtn');
+    const shareResultBtn = document.getElementById('shareResultBtn');
+    if (sharePageBtn) sharePageBtn.addEventListener('click', sharePage);
+    if (shareResultBtn) shareResultBtn.addEventListener('click', shareResult);
+
+    // copy fallback
+    const copyBtn = document.getElementById('copyBtn');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', () => {
+        const shareInput = document.getElementById('shareText');
+        if (!shareInput) return;
+        navigator.clipboard.writeText(shareInput.value).then(() => {
+          alert('Testo copiato! Ora incollalo su WhatsApp/Telegram.');
+        });
+      });
+    }
+  });
+</script>
+
+<!-- Cookie Banner + Blocco Google Analytics – Versione GDPR Perfetta -->
+<div id="cookie-banner">
+  <p>
+    Usiamo cookie tecnici e dati anonimi per migliorare il sito e misurare le visite (Google Analytics).
+    Alcuni link potrebbero essere di affiliazione.
+    Per dettagli leggi la <a href="cookie.html">Cookie Policy</a> e la <a href="privacy.html">Privacy Policy</a>.
+  </p>
+  <div style="display:flex; gap:10px; margin-top:8px;">
+    <button type="button" onclick="rejectCookies()">Rifiuta</button>
+    <button id="cookie-btn" type="button" onclick="acceptCookies()">Accetta e continua</button>
+  </div>
+</div>
+
+<script>
+  (function () {
+    // 👉 ID Google Analytics di Tiziana
+    const GA_ID = 'G-CFTTCYDZ2P';
+    const CONSENT_KEY = "syncras_cookie_consent";
+
+    function loadGoogleAnalytics() {
+      if (window.__tizianaGaLoaded) return;
+      window.__tizianaGaLoaded = true;
+
+      const gaScript = document.createElement('script');
+      gaScript.async = true;
+      gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+      document.head.appendChild(gaScript);
+
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', GA_ID, { anonymize_ip: true });
+    }
+
+    function showBanner() {
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.style.display = 'block';
+    }
+
+    function hideBanner() {
+      const banner = document.getElementById('cookie-banner');
+      if (banner) banner.style.display = 'none';
+    }
+
+    window.acceptCookies = function () {
+      localStorage.setItem(CONSENT_KEY, 'yes');
+      hideBanner();
+      loadGoogleAnalytics();
+    };
+
+    window.rejectCookies = function () {
+      localStorage.setItem(CONSENT_KEY, 'no');
+      hideBanner();
+    };
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const consent = localStorage.getItem(CONSENT_KEY);
+
+      if (consent === 'yes') {
+        loadGoogleAnalytics();
+      } else if (consent === 'no') {
+        // niente GA, niente banner
+      } else {
+        showBanner();
+      }
+    });
+  })();
+</script>
 
 </body>
 </html>
-
 
 
