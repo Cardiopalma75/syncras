@@ -6,6 +6,8 @@
 
 <title>Confronto Costi Auto 2026: Benzina, Diesel vs Elettrica | Syncras.App</title>
 
+
+
 <meta name="description" content="Conviene l'auto elettrica? Calcola e confronta il costo per 100km e il risparmio annuo tra benzina, diesel, GPL, metano ed elettrico. Tool aggiornato 2025.">
 
 <!-- Open Graph / Social Preview -->
@@ -1149,7 +1151,8 @@ function buildShareText(payload) {
       costoTotB: euro(costoTotB),
       sintesi,
       pareggioText: pareggioTextShare,
-      url: window.location.href
+      url: document.querySelector('link[rel="canonical"]')?.href || window.location.href
+
     };
     const shareText = buildShareText(payload);
     window.__syncrasLastShareText = shareText;
@@ -1164,7 +1167,7 @@ function buildShareText(payload) {
   function sharePage() {
     const title = 'Confronto consumi e costi auto – Syncras.App';
     const text = 'Ho trovato un calcolatore per confrontare i costi tra due auto (benzina, diesel, GPL, metano o elettrico).';
-    const url = window.location.href;
+    const url = document.querySelector('link[rel="canonical"]')?.href || window.location.href;
 
     if (navigator.share) {
       navigator.share({ title, text, url }).catch(() => {});
@@ -1174,31 +1177,39 @@ function buildShareText(payload) {
     }
   }
 
-  function shareResult() {
-    const title = 'Risultato confronto costi auto – Syncras.App';
-    const text = window.__syncrasLastShareText || '';
-    const url = window.location.href;
+ function shareResult() {
+  const title = 'Risultato confronto costi auto – Syncras.App';
+  const text = window.__syncrasLastShareText || '';
+  const url = document.querySelector('link[rel="canonical"]')?.href || window.location.href;
 
-    const resultBox = document.getElementById('autoResult');
-const hasResultVisible = resultBox && resultBox.style.display === 'block';
+  const resultBox = document.getElementById('autoResult');
+  const hasResultVisible = !!(resultBox && resultBox.offsetParent !== null);
 
-if (!text && !hasResultVisible) {
-  alert('Prima calcola un confronto, poi puoi condividere il risultato.');
-  return;
+  if (!text && !hasResultVisible) {
+    alert('Prima calcola un confronto, poi puoi condividere il risultato.');
+    return;
+  }
+
+  // WhatsApp mostra anteprima OG solo se c'è un URL: lo mettiamo UNA SOLA VOLTA
+  const shareText = text ? `${text}\n\n${url}` : url;
+
+  if (navigator.share) {
+    navigator.share({ title, text: shareText }).catch(() => {});
+  } else {
+    const fallbackWrap = document.getElementById('shareFallback');
+    if (fallbackWrap) fallbackWrap.style.display = 'flex';
+    const shareInput = document.getElementById('shareText');
+    if (shareInput) {
+      shareInput.value = shareText;
+      shareInput.focus();
+    }
+    alert('Il tuo browser non supporta la condivisione diretta: copia il testo del risultato e incollalo su WhatsApp/Telegram.');
+  }
 }
 
 
-    // ✅ Qui condividiamo testo + URL UNA SOLA VOLTA (l'anteprima OG arriva dall'URL)
-    if (navigator.share) {
-      navigator.share({ title, text, url }).catch(() => {});
-    } else {
-      const fallbackWrap = document.getElementById('shareFallback');
-      if (fallbackWrap) fallbackWrap.style.display = 'flex';
-      const shareInput = document.getElementById('shareText');
-      if (shareInput) shareInput.focus();
-      alert('Il tuo browser non supporta la condivisione diretta: copia il testo del risultato e incollalo su WhatsApp/Telegram.');
-    }
-  }
+
+    
 
   document.addEventListener('DOMContentLoaded', function() {
     // footer year
