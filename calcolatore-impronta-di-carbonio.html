@@ -1,12 +1,24 @@
+
 <!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Calcolatore Impronta di Carbonio 2026: Quanti Pianeti Servono? | Syncras.App</title>
-  <meta name="description" content="Calcola la tua impronta di carbonio in 60 secondi: tonnellate CO₂/anno, Pianeti Terra, equivalenze intuitive, confronto con media italiana e obiettivo clima. Risultato condivisibile.">
+  <title>Calcolatore Impronta di Carbonio 2026: CO₂/anno e Pianeti Terra | Syncras.App</title>
+
+  <meta name="description" content="Calcola la tua impronta di carbonio in 60 secondi: t CO₂/anno, Pianeti Terra, confronto con media italiana e obiettivo clima. Risultato condivisibile.">
   <meta name="robots" content="index,follow">
   <link rel="canonical" href="https://syncras.app/calcolatore-impronta-di-carbonio.html">
+
+  <!-- Open Graph / Social -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Syncras.App">
+  <meta property="og:title" content="Calcolatore Impronta di Carbonio 2026 (Syncras.App)">
+  <meta property="og:description" content="Stima rapida: t CO₂/anno, Pianeti Terra, equivalenze e confronto con media e obiettivo clima.">
+  <meta property="og:url" content="https://syncras.app/calcolatore-impronta-di-carbonio.html">
+  <!-- Se hai un’immagine OG del sito, mettila qui -->
+  <!-- <meta property="og:image" content="https://syncras.app/assets/og-carbonio.png"> -->
+  <meta name="twitter:card" content="summary_large_image">
 
   <!-- JSON-LD (WebApplication) -->
   <script type="application/ld+json">
@@ -16,9 +28,43 @@
     "name":"Calcolatore Impronta di Carbonio (Syncras.App)",
     "applicationCategory":"UtilitiesApplication",
     "operatingSystem":"All",
-    "description":"Calcolatore gratuito per stimare l'impronta di carbonio personale con output in Pianeti Terra, equivalenze intuitive e confronto con la media italiana e un obiettivo clima.",
+    "description":"Calcolatore gratuito per stimare l'impronta di carbonio personale con output in Pianeti Terra, equivalenze intuitive e confronto con media italiana e obiettivo clima.",
     "offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},
     "url":"https://syncras.app/calcolatore-impronta-di-carbonio.html"
+  }
+  </script>
+
+  <!-- JSON-LD (FAQPage) per SEO -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[
+      {
+        "@type":"Question",
+        "name":"Cos’è l’impronta di carbonio personale?",
+        "acceptedAnswer":{
+          "@type":"Answer",
+          "text":"È una stima delle emissioni annue di gas serra (in t CO₂/anno) legate al tuo stile di vita: mobilità, casa, alimentazione e consumi."
+        }
+      },
+      {
+        "@type":"Question",
+        "name":"Cosa significa “Pianeti Terra” nel risultato?",
+        "acceptedAnswer":{
+          "@type":"Answer",
+          "text":"È una traduzione intuitiva: indica quante Terre servirebbero se tutti vivessero come te, rispetto a un obiettivo di sostenibilità usato come riferimento."
+        }
+      },
+      {
+        "@type":"Question",
+        "name":"Quanto è accurato questo calcolo?",
+        "acceptedAnswer":{
+          "@type":"Answer",
+          "text":"È una stima indicativa basata su fattori medi. Serve per capire dove pesa di più e scegliere il primo passo più efficace."
+        }
+      }
+    ]
   }
   </script>
 
@@ -102,6 +148,7 @@
       box-shadow:none;
     }
     .btn:active{transform:translateY(1px)}
+    .btn.small{padding:9px 12px;font-size:.92rem}
 
     /* ===== Legal ===== */
     .legal{
@@ -137,13 +184,13 @@
     /* ===== Controls ===== */
     .control{
       padding:12px;border-radius:14px;background:#fafafa;border:1px solid #eee;
+      position:relative;
     }
     .control label{display:flex;align-items:center;justify-content:space-between;gap:10px;font-weight:900}
     .control .value{
       font-weight:900;background:#fff;border:1px solid rgba(108,92,231,.25);
       padding:4px 10px;border-radius:999px;white-space:nowrap;
     }
-    .control input[type="range"]{width:100%;margin-top:10px}
     .control .mini{margin-top:6px;color:var(--muted);font-size:.82rem;font-weight:700}
 
     .choices{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
@@ -158,6 +205,71 @@
       border-color:rgba(108,92,231,.55);
     }
     .chip small{font-weight:700;color:var(--muted)}
+
+    /* ===== Slider UX migliorata ===== */
+    .rangeWrap{margin-top:10px}
+    .rangeRow{
+      display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+      margin-top:10px;
+    }
+    .rangeRow .pm{
+      width:40px;height:40px;border-radius:12px;
+      border:2px solid rgba(108,92,231,.45);
+      background:#fff;color:var(--violet-dark);
+      font-weight:900;cursor:pointer;
+      display:grid;place-items:center;
+      box-shadow:0 4px 10px rgba(0,0,0,.06);
+    }
+    .rangeRow .pm:active{transform:translateY(1px)}
+    .rangeRow .num{
+      width:120px;max-width:38vw;
+      padding:10px;border-radius:12px;border:1px solid #d1d5db;background:#fff;
+      font-weight:900;
+    }
+    .rangeRow .unit{font-weight:900;color:#374151}
+
+    input[type="range"]{
+      -webkit-appearance:none;appearance:none;
+      width:100%;
+      height:14px;
+      border-radius:999px;
+      background:linear-gradient(90deg, rgba(108,92,231,.35), rgba(75,58,203,.25));
+      outline:none;
+      border:1px solid rgba(108,92,231,.28);
+    }
+    input[type="range"]::-webkit-slider-thumb{
+      -webkit-appearance:none;appearance:none;
+      width:28px;height:28px;border-radius:50%;
+      background:linear-gradient(90deg, var(--violet-dark), var(--violet));
+      border:4px solid #fff;
+      box-shadow:0 6px 16px rgba(0,0,0,.18);
+      cursor:pointer;
+    }
+    input[type="range"]::-moz-range-thumb{
+      width:28px;height:28px;border-radius:50%;
+      background:linear-gradient(90deg, var(--violet-dark), var(--violet));
+      border:4px solid #fff;
+      box-shadow:0 6px 16px rgba(0,0,0,.18);
+      cursor:pointer;
+    }
+    input[type="range"]::-moz-range-track{
+      height:14px;border-radius:999px;
+      background:linear-gradient(90deg, rgba(108,92,231,.35), rgba(75,58,203,.25));
+      border:1px solid rgba(108,92,231,.28);
+    }
+    .bubble{
+      position:absolute;
+      right:12px;
+      top:12px;
+      background:#fff;
+      border:1px solid rgba(108,92,231,.25);
+      border-radius:999px;
+      padding:6px 10px;
+      font-weight:900;
+      box-shadow:0 6px 14px rgba(0,0,0,.07);
+      display:none;
+    }
+    .bubble.show{display:inline-block}
 
     /* ===== Results ===== */
     .results{
@@ -201,6 +313,17 @@
     .shareText{
       width:100%;min-height:110px;resize:vertical;border-radius:12px;border:1px solid #d1d5db;padding:10px;font-size:.92rem;
     }
+
+    /* ===== SEO content ===== */
+    .toc{
+      margin-top:12px;
+      padding:12px;border-radius:14px;
+      background:#fff;border:1px solid var(--border);
+    }
+    .toc a{color:var(--violet-dark);font-weight:900;text-decoration:none}
+    .toc a:hover{text-decoration:underline}
+    .toc ul{margin:8px 0 0 18px}
+    .toc li{margin:6px 0}
 
     /* ===== FOOTER Syncras ===== */
     .syncras-footer{
@@ -266,8 +389,11 @@
 
   <main>
     <span class="badge">Carbon Footprint</span>
-    <h1>Impronta di Carbonio: quanti Pianeti servono per “sostenerti”? 🌍</h1>
-    <p class="sub">6–8 domande, 60 secondi. Output in <strong>Pianeti Terra</strong>, tonnellate CO₂/anno, equivalenze intuitive + confronto con media e obiettivo clima. Risultato condivisibile.</p>
+    <h1>Calcolatore Impronta di Carbonio 2026: CO₂/anno e Pianeti Terra 🌍</h1>
+    <p class="sub">
+      6–8 domande, 60 secondi. Output in <strong>Pianeti Terra</strong>, tonnellate CO₂/anno, equivalenze intuitive
+      + confronto con media e obiettivo clima. Risultato condivisibile.
+    </p>
 
     <div class="topbar">
       <div>
@@ -278,6 +404,17 @@
         <button class="btn secondary" id="resetBtn" type="button">↺ Reset</button>
         <button class="btn" id="calcBtn" type="button">🧮 Calcola impronta</button>
       </div>
+    </div>
+
+    <!-- Mini indice (SEO + UX) -->
+    <div class="toc">
+      <div style="font-weight:900;color:var(--violet-dark)">Vai a:</div>
+      <ul>
+        <li><a href="#input">Domande del calcolatore</a></li>
+        <li><a href="#risultato">Risultato: Pianeti Terra e t CO₂/anno</a></li>
+        <li><a href="#guida">Come interpretare il risultato</a></li>
+        <li><a href="#faq">FAQ impronta di carbonio</a></li>
+      </ul>
     </div>
 
     <div class="legal-warning" id="legalWarning">
@@ -299,50 +436,65 @@
     </div>
 
     <!-- ================== INPUTS ================== -->
-    <section class="section">
+    <section class="section" id="input">
       <div class="sectionHead">
         <h2>🚗 Mobilità (di solito è qui che “scoppia” tutto)</h2>
         <small>Km auto + alimentazione + voli</small>
       </div>
 
       <div class="grid2">
-        <div class="control">
+        <div class="control" id="ctrlKm">
           <label>
             Km in auto al mese
             <span class="value" id="kmValue">800 km</span>
           </label>
-          <input id="kmMonth" type="range" min="0" max="4000" step="50" value="800" aria-label="Km in auto al mese">
+
+          <div class="rangeWrap">
+            <input id="kmMonth" type="range" min="0" max="4000" step="50" value="800" aria-label="Km in auto al mese">
+            <div class="rangeRow">
+              <button class="pm" type="button" data-step="-50" data-target="kmMonth" aria-label="Diminuisci km">−</button>
+              <input class="num" id="kmNum" type="number" min="0" max="4000" step="50" value="800" inputmode="numeric" aria-label="Km in auto al mese (numero)">
+              <span class="unit">km</span>
+              <button class="pm" type="button" data-step="50" data-target="kmMonth" aria-label="Aumenta km">+</button>
+            </div>
+          </div>
+
           <div class="mini">Suggerimento: 0 se non hai auto o la usi pochissimo.</div>
         </div>
-<div class="control">
-  <label>Alimentazione auto <span class="value" id="carTypeLabel">Benzina</span></label>
-  <div class="choices" id="carType">
-    <div class="chip active" data-val="petrol">⛽ Benzina <small>(media)</small></div>
-    <div class="chip" data-val="diesel">🛢️ Diesel <small>(media)</small></div>
 
-    <!-- NUOVI -->
-    <div class="chip" data-val="gpl">🟢 GPL <small>(media)</small></div>
-    <div class="chip" data-val="metano">🔵 Metano <small>(CNG)</small></div>
+        <div class="control">
+          <label>Alimentazione auto <span class="value" id="carTypeLabel">Benzina</span></label>
+          <div class="choices" id="carType">
+            <div class="chip active" data-val="petrol">⛽ Benzina <small>(media)</small></div>
+            <div class="chip" data-val="diesel">🛢️ Diesel <small>(media)</small></div>
+            <div class="chip" data-val="gpl">🟢 GPL <small>(media)</small></div>
+            <div class="chip" data-val="metano">🔵 Metano <small>(CNG)</small></div>
+            <div class="chip" data-val="hybrid">🔋 Ibrida <small>(media)</small></div>
+            <div class="chip" data-val="ev">⚡ Elettrica <small>(mix rete)</small></div>
+          </div>
+          <div class="mini">Sono stime “medie”. Se vuoi, potremo aggiungere una modalità avanzata (consumo reale).</div>
+        </div>
+      </div>
 
-    <div class="chip" data-val="hybrid">🔋 Ibrida <small>(media)</small></div>
-    <div class="chip" data-val="ev">⚡ Elettrica <small>(mix rete)</small></div>
-  </div>
-  <div class="mini">
-    Sono stime “medie”. Se vuoi, potremo aggiungere una modalità avanzata (consumo reale).
-  </div>
-</div>
-
-
-      <div class="control" style="margin-top:12px;">
+      <div class="control" id="ctrlFlights" style="margin-top:12px;">
         <label>
           Voli aerei / anno
           <span class="value" id="flightsValue">0</span>
         </label>
-        <input id="flightsYear" type="range" min="0" max="12" step="1" value="0" aria-label="Voli aerei all'anno">
+
+        <div class="rangeWrap">
+          <input id="flightsYear" type="range" min="0" max="12" step="1" value="0" aria-label="Voli aerei all'anno">
+          <div class="rangeRow">
+            <button class="pm" type="button" data-step="-1" data-target="flightsYear" aria-label="Diminuisci voli">−</button>
+            <input class="num" id="flightsNum" type="number" min="0" max="12" step="1" value="0" inputmode="numeric" aria-label="Voli aerei all'anno (numero)">
+            <span class="unit">voli</span>
+            <button class="pm" type="button" data-step="1" data-target="flightsYear" aria-label="Aumenta voli">+</button>
+          </div>
+        </div>
+
         <div class="mini">1 volo = “andata e ritorno breve” considerato come unità semplificata.</div>
       </div>
     </section>
-
 
     <section class="section">
       <div class="sectionHead">
@@ -350,12 +502,22 @@
         <small>Carne rossa: pochi numeri, tanto impatto</small>
       </div>
 
-      <div class="control">
+      <div class="control" id="ctrlMeat">
         <label>
           Carne rossa a settimana
           <span class="value" id="meatValue">2 volte</span>
         </label>
-        <input id="meatWeek" type="range" min="0" max="14" step="1" value="2" aria-label="Carne rossa a settimana">
+
+        <div class="rangeWrap">
+          <input id="meatWeek" type="range" min="0" max="14" step="1" value="2" aria-label="Carne rossa a settimana">
+          <div class="rangeRow">
+            <button class="pm" type="button" data-step="-1" data-target="meatWeek" aria-label="Diminuisci carne">−</button>
+            <input class="num" id="meatNum" type="number" min="0" max="14" step="1" value="2" inputmode="numeric" aria-label="Carne rossa a settimana (numero)">
+            <span class="unit">volte</span>
+            <button class="pm" type="button" data-step="1" data-target="meatWeek" aria-label="Aumenta carne">+</button>
+          </div>
+        </div>
+
         <div class="mini">0 = quasi vegetariano. 14 = “due volte al giorno”.</div>
       </div>
     </section>
@@ -395,12 +557,22 @@
         <small>Non moralismo: è solo un pezzo del puzzle</small>
       </div>
 
-      <div class="control">
+      <div class="control" id="ctrlShop">
         <label>
           Shopping / oggetti nuovi al mese
           <span class="value" id="shopValue">150 €</span>
         </label>
-        <input id="shopMonth" type="range" min="0" max="800" step="10" value="150" aria-label="Shopping al mese">
+
+        <div class="rangeWrap">
+          <input id="shopMonth" type="range" min="0" max="800" step="10" value="150" aria-label="Shopping al mese">
+          <div class="rangeRow">
+            <button class="pm" type="button" data-step="-10" data-target="shopMonth" aria-label="Diminuisci shopping">−</button>
+            <input class="num" id="shopNum" type="number" min="0" max="800" step="10" value="150" inputmode="numeric" aria-label="Shopping al mese (numero)">
+            <span class="unit">€</span>
+            <button class="pm" type="button" data-step="10" data-target="shopMonth" aria-label="Aumenta shopping">+</button>
+          </div>
+        </div>
+
         <div class="mini">Include elettronica, abbigliamento, “robe che arrivano”. Stima grezza, ma utile.</div>
       </div>
     </section>
@@ -411,10 +583,10 @@
 
     <!-- ================== RISULTATI ================== -->
     <section class="results" id="results">
-      <h2 style="margin:0 0 8px;color:var(--violet-dark)">📍 Risultato (condivisibile)</h2>
+      <h2 id="risultato" style="margin:0 0 8px;color:var(--violet-dark)">📍 Risultato (condivisibile)</h2>
 
       <div class="hero">
-        <div class="heroCard">
+        <div class="heroCard" aria-live="polite">
           <div class="bigPlanet">
             <span id="planetsOut">—</span> <span class="small">Pianeti Terra</span>
           </div>
@@ -435,7 +607,9 @@
 
         <div class="heroCard">
           <div style="font-weight:900;margin-bottom:8px;">📊 Confronto rapido</div>
-          <canvas id="bar" width="520" height="280" role="img" aria-label="Grafico a barre: Tu vs Media italiana vs Obiettivo"></canvas>
+          <canvas id="bar" width="520" height="280" role="img" aria-label="Grafico a barre: Tu vs Media italiana vs Obiettivo">
+            Il tuo browser non supporta i grafici.
+          </canvas>
           <div class="hint" style="margin-top:8px;">
             “Media Italia” e “Obiettivo” sono riferimenti per orientarti. Non sono un giudizio.
           </div>
@@ -469,20 +643,56 @@
       <strong>consulenza professionale</strong> o una certificazione ufficiale.
     </div>
 
-    <section class="section" style="margin-top:20px;line-height:1.6;padding:20px;">
+    <!-- ===== SEO content / guida ===== -->
+    <section class="section" id="guida" style="margin-top:20px;line-height:1.6;padding:20px;">
       <h2>Come leggere il risultato (senza farsi prendere dal panico)</h2>
       <p>
-        Il valore in <strong>Pianeti Terra</strong> è una traduzione “emotiva” del tuo impatto:
+        Il valore in <strong>Pianeti Terra</strong> è una traduzione “intuitiva” del tuo impatto:
         più è alto, più il tuo stile di vita richiede risorse che il pianeta non riesce a rigenerare.
+        La parte importante però è <strong>il “Top 3”</strong>: ti dice dove intervenire con il miglior rapporto sforzo/risultato.
       </p>
       <ul>
         <li><strong>Mobilità</strong>: spesso è il colpevole n.1 (km + tipo auto).</li>
-        <li><strong>Riscaldamento</strong>: conta tantissimo se usi metano o soluzioni meno efficienti.</li>
-        <li><strong>Alimentazione</strong>: la carne rossa ha un peso molto superiore rispetto a scelte vegetali.</li>
+        <li><strong>Riscaldamento</strong>: pesa tantissimo (metano vs pompa di calore, abitudini e isolamento).</li>
+        <li><strong>Alimentazione</strong>: la carne rossa ha un peso molto più alto rispetto a scelte vegetali.</li>
       </ul>
       <p class="hint">
-        Vuoi la versione “pro” con più precisione (consumo reale auto, kWh casa, km voli separati)? Si può aggiungere dopo, senza rovinare la semplicità.
+        Vuoi la versione “pro” con più precisione (consumo reale auto, kWh casa, voli separati)? Si può aggiungere dopo, senza rovinare la semplicità.
       </p>
+
+      <div style="margin-top:14px;padding:12px;border:1px solid var(--border);border-radius:14px;background:#fff;">
+        <div style="font-weight:900;color:var(--violet-dark);margin-bottom:6px;">Risorse Syncras utili</div>
+        <ul style="margin:0 0 0 18px;">
+          <li><a href="calcolatori.html" style="color:var(--violet-dark);font-weight:900;text-decoration:none;">Tutti i calcolatori Syncras</a></li>
+          <li><a href="smart-test.html" style="color:var(--violet-dark);font-weight:900;text-decoration:none;">Smart Test: fai scelte migliori</a></li>
+          <li><a href="fotovoltaico-4-kw-con-accumulo-10-kwh-quanto-costa-davvero-nel-2025.html" style="color:var(--violet-dark);font-weight:900;text-decoration:none;">Caso reale fotovoltaico</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" id="faq" style="margin-top:14px;">
+      <div class="sectionHead">
+        <h2>FAQ: impronta di carbonio</h2>
+        <small>Domande rapide (e risposte utili)</small>
+      </div>
+      <details style="padding:10px 0;border-top:1px solid #eee;">
+        <summary style="font-weight:900;cursor:pointer;">Quanto è affidabile questo calcolatore?</summary>
+        <div class="hint" style="margin-top:8px;">
+          È una <strong>stima indicativa</strong> basata su fattori medi. Serve per capire il “peso relativo” delle tue abitudini e dove conviene intervenire per primo.
+        </div>
+      </details>
+      <details style="padding:10px 0;border-top:1px solid #eee;">
+        <summary style="font-weight:900;cursor:pointer;">Perché “Pianeti Terra”?</summary>
+        <div class="hint" style="margin-top:8px;">
+          Perché un numero emotivo (ma chiaro) spesso funziona meglio di una sigla: ti aiuta a capire subito se sei “vicino al target” o molto sopra.
+        </div>
+      </details>
+      <details style="padding:10px 0;border-top:1px solid #eee;">
+        <summary style="font-weight:900;cursor:pointer;">I miei dati vengono salvati?</summary>
+        <div class="hint" style="margin-top:8px;">
+          No: i valori restano nel tuo browser. Se accetti i cookie, viene caricato Google Analytics con IP anonimizzato per misurare le visite (non i tuoi input).
+        </div>
+      </details>
     </section>
 
   </main>
@@ -554,14 +764,19 @@
     const legalBox = document.getElementById("legalBox");
 
     const kmMonth = document.getElementById("kmMonth");
+    const kmNum = document.getElementById("kmNum");
     const kmValue = document.getElementById("kmValue");
+
     const flightsYear = document.getElementById("flightsYear");
+    const flightsNum = document.getElementById("flightsNum");
     const flightsValue = document.getElementById("flightsValue");
 
     const meatWeek = document.getElementById("meatWeek");
+    const meatNum = document.getElementById("meatNum");
     const meatValue = document.getElementById("meatValue");
 
     const shopMonth = document.getElementById("shopMonth");
+    const shopNum = document.getElementById("shopNum");
     const shopValue = document.getElementById("shopValue");
 
     const resultsBox = document.getElementById("results");
@@ -628,19 +843,94 @@
       });
     }
 
-    // ===== UI bindings
+    // ===== UI labels
     function updateLabels(){
       kmValue.textContent = `${kmMonth.value} km`;
       flightsValue.textContent = `${flightsYear.value}`;
+
       const m = parseInt(meatWeek.value,10);
       meatValue.textContent = (m === 0) ? "0 volte" : (m === 1 ? "1 volta" : `${m} volte`);
+
       shopValue.textContent = `${shopMonth.value} €`;
     }
 
+    // ===== Range sync (slider <-> number) + bottoni +/- + tastiera
+    function syncPair(rangeEl, numEl){
+      const min = parseFloat(rangeEl.min);
+      const max = parseFloat(rangeEl.max);
+      const step = parseFloat(rangeEl.step) || 1;
+
+      function apply(val){
+        let v = parseFloat(val);
+        if (!isFinite(v)) v = parseFloat(rangeEl.value) || 0;
+        v = clamp(v, min, max);
+
+        // snap to step
+        const snapped = Math.round((v - min) / step) * step + min;
+        const finalV = clamp(snapped, min, max);
+
+        rangeEl.value = String(finalV);
+        numEl.value = String(finalV);
+        updateLabels();
+      }
+
+      rangeEl.addEventListener("input", () => apply(rangeEl.value));
+      numEl.addEventListener("input", () => apply(numEl.value));
+      numEl.addEventListener("blur", () => apply(numEl.value));
+
+      // mouse wheel sul numero (comodissimo)
+      numEl.addEventListener("wheel", (e) => {
+        e.preventDefault();
+        const dir = e.deltaY > 0 ? -1 : 1;
+        apply((parseFloat(numEl.value)||0) + dir*step);
+      }, {passive:false});
+
+      apply(rangeEl.value);
+    }
+
+    syncPair(kmMonth, kmNum);
+    syncPair(flightsYear, flightsNum);
+    syncPair(meatWeek, meatNum);
+    syncPair(shopMonth, shopNum);
+
+    // bottoni +/- universali
+    document.querySelectorAll(".pm").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const step = parseFloat(btn.dataset.step);
+        const targetId = btn.dataset.target;
+        const rangeEl = document.getElementById(targetId);
+        if (!rangeEl) return;
+
+        // trova il numero associato (per convenzione: kmMonth->kmNum ecc.)
+        const numId = targetId.replace("Month","Num").replace("Year","Num").replace("Week","Num");
+        const numEl = document.getElementById(numId);
+
+        const v = (parseFloat(rangeEl.value)||0) + step;
+        const min = parseFloat(rangeEl.min), max = parseFloat(rangeEl.max);
+        const stepAbs = parseFloat(rangeEl.step) || 1;
+
+        let next = clamp(v, min, max);
+        next = Math.round((next - min)/stepAbs)*stepAbs + min;
+        next = clamp(next, min, max);
+
+        rangeEl.value = String(next);
+        if (numEl) numEl.value = String(next);
+        updateLabels();
+      });
+    });
+
+    // ===== Chips bind
     bindChips(carTypeWrap, (val) => {
       state.car = val;
       setChipsActive(carTypeWrap, val);
-      const map = {petrol:"Benzina", diesel:"Diesel", hybrid:"Ibrida", ev:"Elettrica"};
+      const map = {
+        petrol:"Benzina",
+        diesel:"Diesel",
+        gpl:"GPL",
+        metano:"Metano",
+        hybrid:"Ibrida",
+        ev:"Elettrica"
+      };
       carTypeLabel.textContent = map[val] || "—";
     });
 
@@ -657,32 +947,24 @@
       pvLabel.textContent = (val === "yes") ? "Sì" : "No";
     });
 
-    [kmMonth, flightsYear, meatWeek, shopMonth].forEach(el => {
-      el.addEventListener("input", updateLabels);
-    });
-
     // ===== Core model (semplice, indicativo)
-    // Nota: fattori "medi" per creare un calcolatore rapido e stabile.
+    // kg CO2 per km (stima media)
     const CAR_FACTORS = {
-  petrol: 0.192,   // Benzina
-  diesel: 0.171,   // Diesel
-  gpl: 0.150,      // GPL
-  metano: 0.135,   // Metano (CNG)
-  hybrid: 0.120,   // Ibrida
-  ev: 0.050        // Elettrica (mix rete IT)
-};
+      petrol: 0.192,
+      diesel: 0.171,
+      gpl: 0.150,
+      metano: 0.135,
+      hybrid: 0.120,
+      ev: 0.050
+    };
 
-      flight_t_per_unit: 0.25, // tCO2 per "volo breve A/R" semplificato
-      meat_t_per_week_unit: 0.10, // tCO2/anno per 1 "porzione/settimana" di carne rossa (semplificato)
-      heat_t_per_person_year: {
-        gas: 1.8,
-        hp: 0.8,
-        pellet: 1.0,
-        none: 0.2
-      },
-      electricity_t_per_person_year: 1.2, // elettricità/consumi di base per persona (stima)
-      pv_electricity_reduction: 0.35, // riduzione percentuale se PV
-      shopping_t_per_100eur_month: 0.18 // tCO2/anno per 100€/mese
+    const FACTORS = {
+      flight_t_per_unit: 0.25,
+      meat_t_per_week_unit: 0.10,
+      heat_t_per_person_year: { gas: 1.8, hp: 0.8, pellet: 1.0, none: 0.2 },
+      electricity_t_per_person_year: 1.2,
+      pv_electricity_reduction: 0.35,
+      shopping_t_per_100eur_month: 0.18
     };
 
     function compute(){
@@ -691,24 +973,17 @@
       const meat = parseFloat(meatWeek.value) || 0;
       const shop = parseFloat(shopMonth.value) || 0;
 
-      // Mobilità auto: km/mese *12 * kg/km -> t/anno
-      const carKgKm = FACTORS.car_kg_per_km[state.car] ?? 0.18;
+      const carKgKm = CAR_FACTORS[state.car] ?? 0.18;
       const t_car = (km * 12 * carKgKm) / 1000;
 
-      // Volo: unità * t
       const t_flights = flights * FACTORS.flight_t_per_unit;
-
-      // Alimentazione: porzioni settimanali -> t/anno
       const t_meat = meat * FACTORS.meat_t_per_week_unit;
 
-      // Casa: riscaldamento per persona (semplificato)
       const t_heat = FACTORS.heat_t_per_person_year[state.heat] ?? 1.2;
 
-      // Elettricità base, con riduzione PV
       let t_elec = FACTORS.electricity_t_per_person_year;
       if (state.pv === "yes") t_elec = t_elec * (1 - FACTORS.pv_electricity_reduction);
 
-      // Shopping: (€/mese / 100) * t
       const t_shop = (shop / 100) * FACTORS.shopping_t_per_100eur_month;
 
       const byCat = {
@@ -721,34 +996,33 @@
       };
 
       const total = Object.values(byCat).reduce((a,b)=>a+b,0);
-
       return { total, byCat };
     }
 
     // ===== Output mapping
     const REF = {
-      italy_avg: 7.0,   // t/anno (riferimento)
-      target: 2.0       // t/anno (riferimento)
+      italy_avg: 7.0,
+      target: 2.0
     };
 
-    // Pianeti: mappa semplice vs obiettivo (2 t = 1 pianeta)
     function planetsFromTotal(t){
       return Math.max(0.7, t / REF.target);
     }
 
     function treesEquivalent(t){
-      // equivalenza “intuitiva” (molto semplificata): 1 albero/anno ~ 0,02 t CO2
-      return Math.round(t / 0.02);
+      return Math.round(t / 0.02); // super semplificato
     }
     function pandaKmEquivalent(t){
-      // 1 km "Panda anni 90" ~ 0,14 kg -> 0,00014 t
-      return Math.round(t / 0.00014);
+      return Math.round(t / 0.00014); // semplificato
     }
 
     function impactColor(t){
-      if (t <= REF.target) return getComputedStyle(document.documentElement).getPropertyValue('--good').trim();
-      if (t <= REF.italy_avg) return getComputedStyle(document.documentElement).getPropertyValue('--warn').trim();
-      return getComputedStyle(document.documentElement).getPropertyValue('--bad').trim();
+      const good = getComputedStyle(document.documentElement).getPropertyValue('--good').trim();
+      const warn = getComputedStyle(document.documentElement).getPropertyValue('--warn').trim();
+      const bad  = getComputedStyle(document.documentElement).getPropertyValue('--bad').trim();
+      if (t <= REF.target) return good;
+      if (t <= REF.italy_avg) return warn;
+      return bad;
     }
 
     function drawBar(tUser){
@@ -757,7 +1031,6 @@
       const w = canvas.width, h = canvas.height;
       ctx.clearRect(0,0,w,h);
 
-      // background
       ctx.fillStyle = "#fff";
       ctx.fillRect(0,0,w,h);
 
@@ -772,7 +1045,6 @@
         {label:"OBIETTIVO", val:REF.target, color:"#10b981"}
       ];
 
-      // axis
       ctx.strokeStyle = "rgba(108,92,231,.35)";
       ctx.lineWidth = 1;
       ctx.beginPath();
@@ -781,7 +1053,6 @@
       ctx.lineTo(w - 20, baseY);
       ctx.stroke();
 
-      // grid
       ctx.fillStyle = "#6b7280";
       ctx.font = "700 12px Arial";
       const ticks = 4;
@@ -806,17 +1077,14 @@
         const bh = b.val * scale;
         const y = baseY - bh;
 
-        // bar
         ctx.fillStyle = b.color;
         ctx.fillRect(x, y, barW, bh);
 
-        // label
         ctx.fillStyle = "#111827";
         ctx.font = "900 12px Arial";
         ctx.textAlign = "center";
         ctx.fillText(b.label, x + barW/2, baseY + 18);
 
-        // value
         ctx.font = "900 13px Arial";
         ctx.fillText(`${fmt1(b.val)} t`, x + barW/2, y - 8);
         ctx.textAlign = "left";
@@ -831,13 +1099,11 @@
       planetsOut2.textContent = fmt1(planets);
       tco2Out.textContent = fmt1(total);
 
-      // meter fill (cap a 6 pianeti per grafica)
       const capped = clamp(planets, 0, 6);
       const pct = (capped / 6) * 100;
       meterFill.style.width = `${pct}%`;
       meterFill.style.background = impactColor(total);
 
-      // equivalenze
       equivs.innerHTML = "";
       const trees = treesEquivalent(total);
       const pandaKm = pandaKmEquivalent(total);
@@ -858,7 +1124,6 @@
         equivs.appendChild(d);
       });
 
-      // top categories
       const sortedCats = Object.entries(byCat).sort((a,b)=>b[1]-a[1]);
       const top3 = sortedCats.slice(0,3);
 
@@ -880,9 +1145,10 @@
         topCats.appendChild(row);
       });
 
-      // share text
-      const url = window.location.href;
-      const msg =
+      // LINK: per ora metto home (poi mettiamo il link definitivo quando pubblichi)
+      const url = "https://syncras.app/";
+
+      shareTextEl.value =
 `🌍 Impronta di carbonio (Syncras) — risultato rapido
 
 🪐 Pianeti Terra: ${fmt1(planets)}
@@ -897,12 +1163,9 @@ Equivalenze:
 
 Fai il test anche tu:
 👉 ${url}`;
-      shareTextEl.value = msg;
 
-      // chart
       drawBar(total);
 
-      // show
       resultsBox.style.display = "block";
       resultsBox.scrollIntoView({behavior:"smooth", block:"start"});
     }
@@ -943,9 +1206,6 @@ Fai il test anche tu:
       if (span) span.textContent = new Date().getFullYear();
       updateLabels();
     });
-
-    // init
-    updateLabels();
   </script>
 
   <!-- GDPR / GA (stesso stile/approccio Syncras) -->
@@ -1017,5 +1277,4 @@ Fai il test anche tu:
 
 </body>
 </html>
-
 
