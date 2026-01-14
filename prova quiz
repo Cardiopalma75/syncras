@@ -314,18 +314,24 @@
           <input id="kmMonth" type="range" min="0" max="4000" step="50" value="800" aria-label="Km in auto al mese">
           <div class="mini">Suggerimento: 0 se non hai auto o la usi pochissimo.</div>
         </div>
+<div class="control">
+  <label>Alimentazione auto <span class="value" id="carTypeLabel">Benzina</span></label>
+  <div class="choices" id="carType">
+    <div class="chip active" data-val="petrol">⛽ Benzina <small>(media)</small></div>
+    <div class="chip" data-val="diesel">🛢️ Diesel <small>(media)</small></div>
 
-        <div class="control">
-          <label>Alimentazione auto <span class="value" id="carTypeLabel">Benzina</span></label>
-          <div class="choices" id="carType">
-            <div class="chip active" data-val="petrol">⛽ Benzina <small>(media)</small></div>
-            <div class="chip" data-val="diesel">🛢️ Diesel <small>(media)</small></div>
-            <div class="chip" data-val="hybrid">🔋 Ibrida <small>(media)</small></div>
-            <div class="chip" data-val="ev">⚡ Elettrica <small>(mix rete)</small></div>
-          </div>
-          <div class="mini">Sono stime “medie”. Se vuoi, potremo aggiungere una modalità avanzata (consumo reale).</div>
-        </div>
-      </div>
+    <!-- NUOVI -->
+    <div class="chip" data-val="gpl">🟢 GPL <small>(media)</small></div>
+    <div class="chip" data-val="metano">🔵 Metano <small>(CNG)</small></div>
+
+    <div class="chip" data-val="hybrid">🔋 Ibrida <small>(media)</small></div>
+    <div class="chip" data-val="ev">⚡ Elettrica <small>(mix rete)</small></div>
+  </div>
+  <div class="mini">
+    Sono stime “medie”. Se vuoi, potremo aggiungere una modalità avanzata (consumo reale).
+  </div>
+</div>
+
 
       <div class="control" style="margin-top:12px;">
         <label>
@@ -336,6 +342,7 @@
         <div class="mini">1 volo = “andata e ritorno breve” considerato come unità semplificata.</div>
       </div>
     </section>
+
 
     <section class="section">
       <div class="sectionHead">
@@ -656,13 +663,15 @@
 
     // ===== Core model (semplice, indicativo)
     // Nota: fattori "medi" per creare un calcolatore rapido e stabile.
-    const FACTORS = {
-      car_kg_per_km: {
-        petrol: 0.192, // kg CO2 / km (media)
-        diesel: 0.171,
-        hybrid: 0.120,
-        ev: 0.060
-      },
+    const CAR_FACTORS = {
+  petrol: 0.192,   // Benzina
+  diesel: 0.171,   // Diesel
+  gpl: 0.150,      // GPL
+  metano: 0.135,   // Metano (CNG)
+  hybrid: 0.120,   // Ibrida
+  ev: 0.050        // Elettrica (mix rete IT)
+};
+
       flight_t_per_unit: 0.25, // tCO2 per "volo breve A/R" semplificato
       meat_t_per_week_unit: 0.10, // tCO2/anno per 1 "porzione/settimana" di carne rossa (semplificato)
       heat_t_per_person_year: {
