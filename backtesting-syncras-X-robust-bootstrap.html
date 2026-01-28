@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Syncras – Backtest SOLO X (Robust + Bootstrap)</title>
+<style>
+body{font-family:system-ui,Arial;margin:20px}
+input,select,button{padding:8px;border-radius:8px;border:1px solid #999}
+button{cursor:pointer}
+table{border-collapse:collapse;width:100%;margin-top:15px}
+th,td{border-bottom:1px solid #eee;padding:6px;text-align:right}
+th:first-child,td:first-child{text-align:left}
+.card{border:1px solid #ddd;border-radius:12px;padding:14px;margin-top:14px}
+small{color:#555}
+.ok{color:#0a7} .bad{color:#c22}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:10px}
+.kpi{border:1px solid #eee;border-radius:10px;padding:10px}
+.kpi b{font-size:18px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+</style>
+</head>
+<body>
+
+<h2>Syncras – Backtest “1€” SOLO X (Robust + Bootstrap)</h2>
+
+<div class="card">
+  <label>CSV risultati Syncras (RAW)</label><br>
+  <input id="csvResults" style="width:100%" placeholder="https://raw.githubusercontent.com/.../serie_a_results_syncras.csv"><br><br>
+
+  <label>CSV quote 1X2 Bet365 (RAW)</label><br>
+  <input id="csvQuotes" style="width:100%" placeholder="https://raw.githubusercontent.com/.../serie_a_quotes_b365_syncras_multi.csv"><br><br>
+
+  <div class="row">
+    <label>N</label><input id="N" type="number" value="10" style="width:70px">
+    <label>EV min (%)</label><input id="evMin" type="number" value="20" style="width:70px">
+    <label>Quota X min</label><input id="qMin" type="number" value="3.0" step="0.1" style="width:70px">
+    <label>Quota X max</label><input id="qMax" type="number" value="4.8" step="0.1" style="width:70px">
+    <label>Gol max</label><input id="gMax" type="number" value="2.6" step="0.1" style="width:70px">
+  </div>
+
+  <div class="row" style="margin-top:10px">
+    <label>Gol</label>
+    <select id="goalAgg">
+      <option value="mean">Media</option>
+      <option value="median">Mediana</option>
+    </select>
+
+    <label>Decay</label>
+    <select id="decay">
+      <option value="none">Nessuno</option>
+      <option value="linear">Lineare</option>
+      <option value="exp">Esponenziale</option>
+    </select>
+
+    <label>Home/Away</label>
+    <select id="homeAway">
+      <option value="on">ON</option>
+      <option value="off">OFF</option>
+    </select>
+
+    <label>Escludi EV 40–50</label>
+    <select id="ban4050">
+      <option value="on">ON</option>
+      <option value="off">OFF</option>
+    </select>
+  </div>
+
+  <hr style="margin:14px 0">
+
+  <div class="row">
+    <label><b>Bootstrap</b></label>
+    <label>Iterazioni</label><input id="B" type="number" value="2000" style="width:90px">
+    <label>Dimensione campione</label><input id="nSample" type="number" value="100" style="width:90px">
+  </div>
+
+  <div class="row" style="margin-top:10px">
+    <button onclick="run()">Avvia backtest + bootstrap</button>
+    <span id="status"></span>
+  </div>
+
+  <small>Studio ex-post. Nessuna previsione. Nessun invito a scommettere.</small>
+</div>
+
+<div id="output"></div>
+
+<script>
+function parseCSV(t){
+  const l=t.trim().split(/\r?\n/);
+  const h=l[0].split(",");
+  return l.slice(1).map(r=>{
+    const c=r.split(",");
+    let o={}; h.forEach((k,i)=>o[k]=c[i]?.replace(/"/g,""));
+    return o;
+  });
+}
+
+function resultForTeam(team,r){
+  if(r.result==="X") return "D";
+  if(r.result==="1") return r.home_team===team?"W":"L";
+  if(r.result==="2") return r.away_team===team?"W":"L";
+  return "";
+}
+
+function median(arr){
+  const a=arr.slice().sort((x,y)=>x-y);
+  const n=a.length;
+  if(!n) return NaN;
+  const mid=Math.floor(n/2);
+  return n%2? a[mid] : (a[mid-1]+a[mid])/2;
+}
+
+function weights(n, mode){
+  if(mode==="none") return Array.from({length:n}, ()=>1);
+  if(mode==="linear") return Array.from({length:n}, (_,i)=>i+1);
+  return Array.from({length:n}, (_,i)=>Math.pow(1.25, i)); // exp
+}
+
+function weightedRateDraw(team, matches, mode){
+  if(matches.length===0) return 0;
+  const w=weights(matches.length, mode);
+  let num=0, den=0;
+  for(let i=0;i<matches.length;i++){
+    const r=matches[i];
+    const isD = (resultForTeam(team,r)==="D") ? 1 : 0;
+    num += isD * w[i];
+    den += w[i];
+  }
+  return den? num/den : 0;
+}
+
+function calcPX(rows, r, N, decayMode, useHomeAway){
+  const prev = rows.filter(x=>x.date<r.date);
+
+  let homeHist, awayHist;
+  if(useHomeAway){
+    homeHist = prev.filter(x=>x.home_team===r.home_team);
+    awayHist = prev.filter(x=>x.away_team===r.away_team);
+  }else{
+    homeHist = prev.filter(x=>x.home_team===r.home_team || x.away_team===r.home_team);
+    awayHist = prev.filter(x=>x.home_team===r.away_team || x.away_team===r.away_team);
+  }
+
+  const hX = homeHist.filter(x=>x.result==="X").length / (homeHist.length||1);
+  const aX = awayHist.filter(x=>x.result==="X").length / (awayHist.length||1);
+  const histPX = (hX + aX) / 2;
+
+  const sortedPrev = prev.slice().sort((a,b)=>a.date<b.date?1:-1); // newest first
+  const homeRecent = sortedPrev.filter(x=>x.home_team===r.home_team||x.away_team===r.home_team).slice(0,N).reverse();
+  const awayRecent = sortedPrev.filter(x=>x.home_team===r.away_team||x.away_team===r.away_team).slice(0,N).reverse();
+
+  const recPX = (weightedRateDraw(r.home_team, homeRecent, decayMode) + weightedRateDraw(r.away_team, awayRecent, decayMode))/2;
+
+  return 0.6*recPX + 0.4*histPX;
+}
+
+function teamRecentGoals(rows, team, N, date){
+  const prev = rows.filter(x=>x.date<date && (x.home_team===team||x.away_team===team)).slice(-N);
+  return prev.map(x => Number(x.FTHG)+Number(x.FTAG)).filter(v=>Number.isFinite(v));
+}
+
+function percentile(sortedArr, p){
+  if(sortedArr.length===0) return NaN;
+  const idx = (sortedArr.length-1)*p;
+  const lo = Math.floor(idx), hi = Math.ceil(idx);
+  if(lo===hi) return sortedArr[lo];
+  return sortedArr[lo] + (sortedArr[hi]-sortedArr[lo])*(idx-lo);
+}
+
+function fmt(x){ return (Math.round(x*100)/100).toFixed(2); }
+
+async function run(){
+  const s=document.getElementById("status");
+  s.textContent="Carico e calcolo...";
+  try{
+    const resText = await (await fetch(document.getElementById("csvResults").value,{cache:"no-store"})).text();
+    const quoText = await (await fetch(document.getElementById("csvQuotes").value,{cache:"no-store"})).text();
+    const res = parseCSV(resText);
+    const quo = parseCSV(quoText);
+
+    const mapQ={};
+    quo.forEach(q=>mapQ[q.date+"|"+q.home_team+"|"+q.away_team]=q);
+
+    const N=+document.getElementById("N").value||10;
+    const evMin=+document.getElementById("evMin").value/100||0.2;
+    const qMin=+document.getElementById("qMin").value||3.0;
+    const qMax=+document.getElementById("qMax").value||4.8;
+    const gMax=+document.getElementById("gMax").value||2.6;
+
+    const goalAgg=document.getElementById("goalAgg").value;
+    const decayMode=document.getElementById("decay").value;
+    const useHomeAway=document.getElementById("homeAway").value==="on";
+    const ban4050=document.getElementById("ban4050").value==="on";
+
+    const B=+document.getElementById("B").value||2000;
+    const nSample=+document.getElementById("nSample").value||100;
+
+    // Build bet list (profit per bet with stake=1)
+    let betProfits=[];
+    let bets=0,wins=0,profit=0,equity=0,peak=0,maxDD=0;
+
+    res.forEach(r=>{
+      const q=mapQ[r.date+"|"+r.home_team+"|"+r.away_team];
+      if(!q) return;
+
+      const oddX=+q.b365_x;
+      if(!Number.isFinite(oddX) || oddX<qMin || oddX>qMax) return;
+
+      const pX = calcPX(res,r,N,decayMode,useHomeAway);
+      if(!Number.isFinite(pX) || pX<=0) return;
+
+      const EV = oddX*pX - 1;
+      const evPct=EV*100;
+      if(EV<evMin) return;
+      if(ban4050 && evPct>=40 && evPct<50) return;
+
+      const gH=teamRecentGoals(res,r.home_team,N,r.date);
+      const gA=teamRecentGoals(res,r.away_team,N,r.date);
+      if(gH.length<3 || gA.length<3) return;
+
+      const agg = (arr)=> goalAgg==="median" ? median(arr) : (arr.reduce((s,v)=>s+v,0)/arr.length);
+      const g = (agg(gH)+agg(gA))/2;
+      if(!Number.isFinite(g) || g>gMax) return;
+
+      bets++;
+      let bp=-1;
+      if(r.result==="X"){ wins++; bp=oddX-1; }
+      profit += bp;
+
+      equity += bp;
+      if(equity>peak) peak=equity;
+      maxDD = Math.max(maxDD, peak-equity);
+
+      betProfits.push(bp);
+    });
+
+    const roi = bets ? (profit/bets)*100 : 0;
+    const winrate = bets ? (wins/bets)*100 : 0;
+
+    // Bootstrap ROI distribution
+    if(betProfits.length===0){
+      document.getElementById("output").innerHTML =
+        `<div class="card"><b>Nessuna puntata selezionata.</b> Prova a ridurre EV min o allargare quota X.</div>`;
+      s.textContent="Completato";
+      return;
+    }
+
+    const rois=[];
+    let positive=0;
+    for(let i=0;i<B;i++){
+      let sum=0;
+      for(let j=0;j<nSample;j++){
+        const idx = Math.floor(Math.random()*betProfits.length);
+        sum += betProfits[idx];
+      }
+      const r = (sum/nSample)*100;
+      rois.push(r);
+      if(r>0) positive++;
+    }
+    rois.sort((a,b)=>a-b);
+    const mean = rois.reduce((s,x)=>s+x,0)/rois.length;
+    const med = percentile(rois,0.5);
+    const p05 = percentile(rois,0.05);
+    const p95 = percentile(rois,0.95);
+
+    document.getElementById("output").innerHTML = `
+    <div class="card">
+      <b>Backtest “1€” – SOLO X (Robust + Bootstrap)</b>
+      <div class="grid">
+        <div class="kpi">Puntate<br><b>${bets}</b></div>
+        <div class="kpi">Win% (X)<br><b>${winrate.toFixed(1)}%</b></div>
+        <div class="kpi">ROI (full set)<br><b class="${roi>=0?'ok':'bad'}">${roi.toFixed(2)}%</b></div>
+      </div>
+      Profitto (full set): <b class="${profit>=0?'ok':'bad'}">${fmt(profit)} €</b><br>
+      Max drawdown (full set): <b>${fmt(maxDD)} €</b><br>
+      <small>Parametri: N=${N}, EV≥${(evMin*100).toFixed(0)}%, q=[${qMin}-${qMax}], gMax=${gMax}, gol=${goalAgg}, decay=${decayMode}, H/A=${useHomeAway?'ON':'OFF'}, ban40-50=${ban4050?'ON':'OFF'}</small>
+      <hr>
+      <b>Bootstrap ROI</b> (B=${B}, nSample=${nSample}, con reinserimento)<br>
+      ROI medio: <b>${mean.toFixed(2)}%</b><br>
+      ROI mediano: <b>${med.toFixed(2)}%</b><br>
+      5° percentile: <b>${p05.toFixed(2)}%</b><br>
+      95° percentile: <b>${p95.toFixed(2)}%</b><br>
+      P(ROI &gt; 0): <b>${(positive/B*100).toFixed(1)}%</b>
+      <br><small>Interpretazione: se 5° percentile resta &gt; 0, il segnale è molto robusto. Se va sotto 0, l’edge esiste ma è fragile/variabile.</small>
+    </div>`;
+    s.textContent="Completato";
+  }catch(e){
+    s.textContent="Errore: "+e;
+  }
+}
+</script>
+
+</body>
+</html>
