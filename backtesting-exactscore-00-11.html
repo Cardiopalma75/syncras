@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Syncras – Backtest X vs 0-0 vs 1-1 (sim)</title>
+<style>
+body{font-family:system-ui,Arial;margin:20px}
+input,select,button{padding:8px;border-radius:8px;border:1px solid #999}
+button{cursor:pointer}
+.card{border:1px solid #ddd;border-radius:12px;padding:14px;margin-top:14px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:10px}
+.kpi{border:1px solid #eee;border-radius:10px;padding:10px}
+.kpi b{font-size:18px}
+.ok{color:#0a7} .bad{color:#c22}
+small{color:#555}
+</style>
+</head>
+<body>
+
+<h2>Backtest (studio): X vs 0–0 vs 1–1</h2>
+
+<div class="card">
+  <label>CSV risultati (RAW)</label><br>
+  <input id="csvResults" style="width:100%" placeholder="https://raw.githubusercontent.com/.../serie_a_results_hybrid_2024_25.csv"><br><br>
+
+  <label>CSV quote 1X2 Bet365 (RAW)</label><br>
+  <input id="csvQuotes" style="width:100%" placeholder="https://raw.githubusercontent.com/.../serie_a_quotes_b365_syncras_2024_25.csv"><br><br>
+
+  <div class="row">
+    <label>N</label><input id="N" type="number" value="10" style="width:70px">
+    <label>EV min X (%)</label><input id="evMin" type="number" value="30" style="width:80px">
+    <label>Quota X min</label><input id="qMin" type="number" value="3.2" step="0.1" style="width:80px">
+    <label>Quota X max</label><input id="qMax" type="number" value="4.8" step="0.1" style="width:80px">
+    <label>Gol max</label><input id="gMax" type="number" value="2.6" step="0.1" style="width:80px">
+  </div>
+
+  <div class="row" style="margin-top:10px">
+    <label>Split Home/Away</label>
+    <select id="homeAway">
+      <option value="off">OFF</option>
+      <option value="on">ON</option>
+    </select>
+
+    <label>Quota fissa 0–0</label><input id="odds00" type="number" value="9.0" step="0.1" style="width:90px">
+    <label>Quota fissa 1–1</label><input id="odds11" type="number" value="6.5" step="0.1" style="width:90px">
+
+    <button onclick="run()">Avvia</button>
+  </div>
+
+  <small>Studio ex-post. Nessuna previsione. Nessun invito a scommettere.</small>
+</div>
+
+<div id="out"></div>
+
+<script>
+function parseCSV(t){
+  const l=t.trim().split(/\r?\n/);
+  const h=l[0].split(",");
+  return l.slice(1).map(r=>{
+    const c=r.split(",");
+    let o={}; h.forEach((k,i)=>o[k]=c[i]?.replace(/"/g,""));
+    return o;
+  });
+}
+function getCol(row, ...names){
+  for(const n of names){
+    if(row[n]!==undefined && row[n]!=="") return row[n];
+  }
+  return "";
+}
+function normTeam(s){ return (s??"").toString().trim(); }
+function normDate(d){
+  d=(d??"").toString().trim();
+  if(/^\d{4}-\d{2}-\d{2}$/.test(d)) return d;
+  const m=d.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2}|\d{4})$/);
+  if(m){
+    let dd=m[1].padStart(2,"0"), mm=m[2].padStart(2,"0"), yy=m[3];
+    if(yy.length===2) yy=(parseInt(yy,10)>=70?"19":"20")+yy;
+    return `${yy}-${mm}-${dd}`;
+  }
+  return "";
+}
+function resultForTeam(team,r){
+  const res = getCol(r,"result","FTR");
+  if(res==="X" || res==="D") return "D";
+  if(res==="1" || res==="H") return (normTeam(getCol(r,"home_team","HomeTeam"))===team) ? "W" : "L";
+  if(res==="2" || res==="A") return (normTeam(getCol(r,"away_team","AwayTeam"))===team) ? "W" : "L";
+  return "";
+}
+function weights(n){
+  return Array.from({length:n},(_,i)=>i+1);
+}
+function weightedRateDraw(team, matches){
+  if(matches.length===0) return 0;
+  const w=weights(matches.length);
+  let num=0, den=0;
+  for(let i=0;i<matches.length;i++){
+    const isD = (resultForTeam(team,matches[i])==="D")?1:0;
+    num += isD*w[i]; den += w[i];
+  }
+  return den? num/den : 0;
+}
+function calcPX(rows, r, N, useHomeAway){
+  const rDate = normDate(getCol(r,"date","Date"));
+  const prev = rows.filter(x=> normDate(getCol(x,"date","Date")) < rDate);
+
+  const home = normTeam(getCol(r,"home_team","HomeTeam"));
+  const away = normTeam(getCol(r,"away_team","AwayTeam"));
+
+  let homeHist, awayHist;
+  if(useHomeAway){
+    homeHist = prev.filter(x=> normTeam(getCol(x,"home_team","HomeTeam"))===home);
+    awayHist = prev.filter(x=> normTeam(getCol(x,"away_team","AwayTeam"))===away);
+  }else{
+    homeHist = prev.filter(x=> normTeam(getCol(x,"home_team","HomeTeam"))===home || normTeam(getCol(x,"away_team","AwayTeam"))===home);
+    awayHist = prev.filter(x=> normTeam(getCol(x,"home_team","HomeTeam"))===away || normTeam(getCol(x,"away_team","AwayTeam"))===away);
+  }
+
+  const isDraw = (x)=> {
+    const res = getCol(x,"result","FTR");
+    return (res==="X"||res==="D");
+  };
+  const hX = homeHist.filter(isDraw).length/(homeHist.length||1);
+  const aX = awayHist.filter(isDraw).length/(awayHist.length||1);
+  const histPX = (hX+aX)/2;
+
+  const sortedPrev = prev.slice().sort((a,b)=> normDate(getCol(a,"date","Date"))<normDate(getCol(b,"date","Date"))?1:-1);
+  const homeRecent = sortedPrev.filter(x=>{
+    const ht=normTeam(getCol(x,"home_team","HomeTeam"));
+    const at=normTeam(getCol(x,"away_team","AwayTeam"));
+    return ht===home || at===home;
+  }).slice(0,N).reverse();
+
+  const awayRecent = sortedPrev.filter(x=>{
+    const ht=normTeam(getCol(x,"home_team","HomeTeam"));
+    const at=normTeam(getCol(x,"away_team","AwayTeam"));
+    return ht===away || at===away;
+  }).slice(0,N).reverse();
+
+  const recPX = (weightedRateDraw(home,homeRecent) + weightedRateDraw(away,awayRecent))/2;
+  return 0.6*recPX + 0.4*histPX;
+}
+function teamRecentGoals(rows, team, N, dateIso){
+  const prev = rows.filter(x=>{
+    const d=normDate(getCol(x,"date","Date"));
+    if(d>=dateIso) return false;
+    const ht=normTeam(getCol(x,"home_team","HomeTeam"));
+    const at=normTeam(getCol(x,"away_team","AwayTeam"));
+    return ht===team || at===team;
+  }).slice(-N);
+
+  return prev.map(x=>{
+    const hg=Number(getCol(x,"home_goals","FTHG"));
+    const ag=Number(getCol(x,"away_goals","FTAG"));
+    return hg+ag;
+  }).filter(v=>Number.isFinite(v));
+}
+function avg(arr){ return arr.reduce((s,v)=>s+v,0)/arr.length; }
+
+function simROI(profits){
+  const n=profits.length;
+  const sum=profits.reduce((s,v)=>s+v,0);
+  return {n, profit:sum, roi: n? (sum/n*100):0};
+}
+
+async function run(){
+  const resText = await (await fetch(document.getElementById("csvResults").value,{cache:"no-store"})).text();
+  const quoText = await (await fetch(document.getElementById("csvQuotes").value,{cache:"no-store"})).text();
+  const res = parseCSV(resText);
+  const quo = parseCSV(quoText);
+
+  // map quote by normalized key
+  const qMap = {};
+  for(const q of quo){
+    const d = normDate(getCol(q,"date","Date"));
+    const h = normTeam(getCol(q,"home_team","HomeTeam"));
+    const a = normTeam(getCol(q,"away_team","AwayTeam"));
+    qMap[`${d}|${h}|${a}`]=q;
+  }
+
+  const N=+document.getElementById("N").value||10;
+  const evMin=(+document.getElementById("evMin").value||0)/100;
+  const qMin=+document.getElementById("qMin").value||3.2;
+  const qMax=+document.getElementById("qMax").value||4.8;
+  const gMax=+document.getElementById("gMax").value||2.6;
+  const useHA=document.getElementById("homeAway").value==="on";
+
+  const odds00=+document.getElementById("odds00").value||9.0;
+  const odds11=+document.getElementById("odds11").value||6.5;
+
+  const profitsX=[], profits00=[], profits11=[];
+  let sel=0, hit00=0, hit11=0;
+
+  for(const r of res){
+    const d = normDate(getCol(r,"date","Date"));
+    const h = normTeam(getCol(r,"home_team","HomeTeam"));
+    const a = normTeam(getCol(r,"away_team","AwayTeam"));
+    if(!d||!h||!a) continue;
+
+    const q = qMap[`${d}|${h}|${a}`];
+    if(!q) continue;
+
+    const oddX = Number(getCol(q,"b365_x","B365D","B365X"));
+    if(!Number.isFinite(oddX) || oddX<qMin || oddX>qMax) continue;
+
+    const pX = calcPX(res, r, N, useHA);
+    if(!Number.isFinite(pX) || pX<=0) continue;
+
+    const EVx = oddX*pX - 1;
+    if(EVx < evMin) continue;
+
+    const gH = teamRecentGoals(res,h,N,d);
+    const gA = teamRecentGoals(res,a,N,d);
+    if(gH.length<3 || gA.length<3) continue;
+
+    const g = (avg(gH)+avg(gA))/2;
+    if(!Number.isFinite(g) || g>gMax) continue;
+
+    // selected match
+    sel++;
+
+    const hg = Number(getCol(r,"home_goals","FTHG"));
+    const ag = Number(getCol(r,"away_goals","FTAG"));
+
+    // X bet (real odds)
+    profitsX.push((hg===ag)? (oddX-1) : -1);
+
+    // 0-0 bet (sim odds)
+    const is00 = (hg===0 && ag===0);
+    const is11 = (hg===1 && ag===1);
+    if(is00) hit00++;
+    if(is11) hit11++;
+    profits00.push(is00 ? (odds00-1) : -1);
+    profits11.push(is11 ? (odds11-1) : -1);
+  }
+
+  const X = simROI(profitsX);
+  const Z0 = simROI(profits00);
+  const O1 = simROI(profits11);
+
+  const p00 = sel? (hit00/sel) : 0;
+  const p11 = sel? (hit11/sel) : 0;
+  const be00 = p00>0 ? (1/p00) : Infinity;
+  const be11 = p11>0 ? (1/p11) : Infinity;
+
+  const html = `
+  <div class="card">
+    <b>Selezione partite (stessi filtri del modello X)</b>
+    <div class="grid">
+      <div class="kpi">Partite selezionate<br><b>${sel}</b></div>
+      <div class="kpi">Hit 0–0<br><b>${(p00*100).toFixed(1)}%</b></div>
+      <div class="kpi">Hit 1–1<br><b>${(p11*100).toFixed(1)}%</b></div>
+    </div>
+    <small>Parametri: N=${N}, EVx≥${(evMin*100).toFixed(0)}%, quotaX=[${qMin}-${qMax}], gMax=${gMax}, H/A=${useHA?"ON":"OFF"}</small>
+  </div>
+
+  <div class="card">
+    <b>Backtest (stake 1€)</b><br><br>
+    <div><b>X</b> (quote reali 1X2): Puntate ${X.n} | Profitto <b class="${X.profit>=0?"ok":"bad"}">${X.profit.toFixed(2)}€</b> | ROI <b class="${X.roi>=0?"ok":"bad"}">${X.roi.toFixed(2)}%</b></div>
+    <hr>
+    <div><b>0–0</b> (quota fissa @${odds00}): Puntate ${Z0.n} | Profitto <b class="${Z0.profit>=0?"ok":"bad"}">${Z0.profit.toFixed(2)}€</b> | ROI <b class="${Z0.roi>=0?"ok":"bad"}">${Z0.roi.toFixed(2)}%</b></div>
+    <div>Quota break-even 0–0 (con questo filtro): <b>${isFinite(be00)? be00.toFixed(2):"∞"}</b></div>
+    <hr>
+    <div><b>1–1</b> (quota fissa @${odds11}): Puntate ${O1.n} | Profitto <b class="${O1.profit>=0?"ok":"bad"}">${O1.profit.toFixed(2)}€</b> | ROI <b class="${O1.roi>=0?"ok":"bad"}">${O1.roi.toFixed(2)}%</b></div>
+    <div>Quota break-even 1–1 (con questo filtro): <b>${isFinite(be11)? be11.toFixed(2):"∞"}</b></div>
+    <br><small>Studio ex-post, nessuna previsione.</small>
+  </div>
+  `;
+  document.getElementById("out").innerHTML = html;
+}
+</script>
+</body>
+</html>
