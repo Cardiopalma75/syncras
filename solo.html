@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Syncras – Segnala SOLO X (Offline Booster)</title>
+<style>
+  body{font-family:system-ui,Arial;margin:20px;background:#f7f7fb}
+  input,select,button{padding:8px;border-radius:10px;border:1px solid #cfcfe6}
+  button{cursor:pointer;background:#6C5CE7;color:#fff;border:0;font-weight:800}
+  button:hover{filter:brightness(.96)}
+  table{border-collapse:collapse;width:100%;margin-top:15px;background:#fff;border:1px solid #e7e7f5;border-radius:14px;overflow:hidden}
+  th,td{border-bottom:1px solid #eee;padding:8px;text-align:right;font-size:13px}
+  th{background:#fafafe;color:#333;font-size:12px}
+  th:first-child,td:first-child{text-align:left}
+  .card{background:#fff;border:1px solid #e7e7f5;border-radius:14px;padding:14px;margin-top:14px}
+  small{color:#555;line-height:1.35}
+  .ok{color:#0a7} .bad{color:#c22} .warn{color:#d97706}
+  .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:10px}
+  .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+  .pill{display:inline-flex;gap:6px;align-items:center;border:1px solid #e7e7f5;background:#fafafe;border-radius:999px;padding:6px 10px;font-size:12px;color:#555}
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+</style>
+</head>
+<body>
+
+<h2>Syncras – “SEGNALA” SOLO X (Offline Booster + Bootstrap)</h2>
+
+<div class="card">
+  <div class="row">
+    <div style="flex:1;min-width:240px">
+      <label><b>CSV UNIFICATO (storico + future)</b></label><br>
+      <input id="csvUnifiedFile" type="file" accept=".csv,text/csv" style="width:100%">
+      <small>
+        Colonne attese (nomi tipici): <span class="mono">date, home_team, away_team, result, FTHG, FTAG, b365_x</span>
+        (+ opzionali <span class="mono">b365_1, b365_2</span>).
+      </small>
+    </div>
+  </div>
+
+  <hr style="margin:14px 0">
+
+  <div class="row">
+    <label>N</label><input id="N" type="number" value="10" style="width:80px">
+    <label>EV min (%)</label><input id="evMin" type="number" value="30" style="width:90px">
+    <label>Quota X min</label><input id="qMin" type="number" value="3.0" step="0.1" style="width:90px">
+    <label>Quota X max</label><input id="qMax" type="number" value="4.8" step="0.1" style="width:90px">
+    <label>Gol max</label><input id="gMax" type="number" value="2.6" step="0.1" style="width:90px">
+    <label>Output</label><input id="topK" type="number" value="2" step="1" style="width:80px">
+  </div>
+
+  <div class="row" style="margin-top:10px">
+    <label>Gol</label>
+    <select id="goalAgg">
+      <option value="mean">Media</option>
+      <option value="median">Mediana</option>
+    </select>
+
+    <label>Decay</label>
+    <select id="decay">
+      <option value="none">Nessuno</option>
+      <option value="linear">Lineare</option>
+      <option value="exp">Esponenziale</option>
+    </select>
+
+    <label>Home/Away</label>
+    <select id="homeAway">
+      <option value="on">ON</option>
+      <option value="off">OFF</option>
+    </select>
+
+    <label>Escludi EV 40–50</label>
+    <select id="ban4050">
+      <option value="on">ON</option>
+      <option value="off">OFF</option>
+    </select>
+  </div>
+
+  <hr style="margin:14px 0">
+
+  <div class="row">
+    <label><b>Bootstrap (su P(X))</b></label>
+    <label>Iterazioni</label><input id="B" type="number" value="1200" style="width:100px">
+  </div>
+
+  <div class="row" style="margin-top:12px">
+    <button onclick="run()">Trova 1–2 partite da attenzionare</button>
+    <span id="status" style="margin-left:8px"></span>
+  </div>
+
+  <div style="margin-top:10px" class="row">
+    <span class="pill">✅ Solo HTML+JS</span>
+    <span class="pill">✅ Offline (FileReader)</span>
+    <span class="pill">✅ SOLO X</span>
+    <span class="pill">✅ Output “attenziona”</span>
+  </div>
+
+  <small style="display:block;margin-top:10px">
+    Studio informativo. Nessuna previsione certa. Nessun invito a scommettere.
+  </small>
+</div>
+
+<div id="output"></div>
+
+<script>
+/* -----------------------------
+   CSV parser (semplice ma robusto su virgole/quote base)
+----------------------------- */
+function parseCSV(text){
+  const rows=[];
+  let row=[], cur="", inQ=false;
+  for(let i=0;i<text.length;i++){
+    const ch=text[i], nx=text[i+1];
+    if(ch === '"'){
+      if(inQ && nx === '"'){ cur+='"'; i++; }
+      else inQ = !inQ;
+      continue;
+    }
+    if(!inQ && (ch===',' || ch===';')){
+      row.push(cur); cur=""; continue;
+    }
+    if(!inQ && ch==='\n'){
+      row.push(cur); rows.push(row);
+      row=[]; cur=""; continue;
+    }
+    if(!inQ && ch==='\r') continue;
+    cur+=ch;
+  }
+  row.push(cur); rows.push(row);
+  rows.length && rows[rows.length-1].every(c=>String(c).trim()==="") && rows.pop();
+  const h=rows[0].map(x=>String(x).trim());
+  return rows.slice(1).map(r=>{
+    const o={};
+    for(let i=0;i<h.length;i++) o[h[i]]=(r[i]??"").replace(/^\s+|\s+$/g,"").replace(/"/g,"");
+    return o;
+  });
+}
+
+function normKey(s){
+  return String(s||"").trim().toLowerCase();
+}
+function pick(o, keys){
+  const map={};
+  for(const k in o) map[normKey(k)] = o[k];
+  for(const k of keys){
+    const v = map[normKey(k)];
+    if(v!==undefined) return v;
+  }
+  return undefined;
+}
+
+function toNum(x){
+  const s=String(x??"").trim().replace(",",".");
+  const n=Number(s);
+  return Number.isFinite(n) ? n : NaN;
+}
+
+function median(arr){
+  const a=arr.slice().sort((x,y)=>x-y);
+  const n=a.length;
+  if(!n) return NaN;
+  const mid=Math.floor(n/2);
+  return n%2 ? a[mid] : (a[mid-1]+a[mid])/2;
+}
+
+function weights(n, mode){
+  if(mode==="none") return Array.from({length:n}, ()=>1);
+  if(mode==="linear") return Array.from({length:n}, (_,i)=>i+1);
+  return Array.from({length:n}, (_,i)=>Math.pow(1.25, i)); // exp
+}
+
+function resultForTeam(team,r){
+  if(r.result==="X") return "D";
+  if(r.result==="1") return r.home_team===team ? "W" : "L";
+  if(r.result==="2") return r.away_team===team ? "W" : "L";
+  return "";
+}
+
+function weightedRateDraw(team, matches, mode){
+  if(matches.length===0) return 0;
+  const w=weights(matches.length, mode);
+  let num=0, den=0;
+  for(let i=0;i<matches.length;i++){
+    const r=matches[i];
+    const isD = (resultForTeam(team,r)==="D") ? 1 : 0;
+    num += isD * w[i];
+    den += w[i];
+  }
+  return den ? num/den : 0;
+}
+
+/* -----------------------------
+   Core: P(X) come nel tuo booster
+----------------------------- */
+function calcPX(rows, r, N, decayMode, useHomeAway){
+  const prev = rows.filter(x=>x.date < r.date && (x.result==="1"||x.result==="X"||x.result==="2"));
+
+  let homeHist, awayHist;
+  if(useHomeAway){
+    homeHist = prev.filter(x=>x.home_team===r.home_team);
+    awayHist = prev.filter(x=>x.away_team===r.away_team);
+  }else{
+    homeHist = prev.filter(x=>x.home_team===r.home_team || x.away_team===r.home_team);
+    awayHist = prev.filter(x=>x.home_team===r.away_team || x.away_team===r.away_team);
+  }
+
+  const hX = homeHist.filter(x=>x.result==="X").length / (homeHist.length||1);
+  const aX = awayHist.filter(x=>x.result==="X").length / (awayHist.length||1);
+  const histPX = (hX + aX) / 2;
+
+  const sortedPrev = prev.slice().sort((a,b)=>a.date < b.date ? 1 : -1); // newest first
+  const homeRecent = sortedPrev
+    .filter(x=>x.home_team===r.home_team || x.away_team===r.home_team)
+    .slice(0,N).reverse(); // oldest->newest (coerente con weights crescenti)
+  const awayRecent = sortedPrev
+    .filter(x=>x.home_team===r.away_team || x.away_team===r.away_team)
+    .slice(0,N).reverse();
+
+  const recPX = (weightedRateDraw(r.home_team, homeRecent, decayMode) +
+                 weightedRateDraw(r.away_team, awayRecent, decayMode))/2;
+
+  // blend come nel tuo file
+  const p = 0.6*recPX + 0.4*histPX;
+
+  // clamp realistico “soft” (evita valori assurdi)
+  return Math.max(0.05, Math.min(0.60, p));
+}
+
+function teamRecentGoals(rows, team, N, date){
+  const prev = rows
+    .filter(x=>x.date<date && (x.result==="1"||x.result==="X"||x.result==="2") &&
+              (x.home_team===team||x.away_team===team))
+    .slice(-N);
+  return prev.map(x => toNum(x.FTHG)+toNum(x.FTAG)).filter(v=>Number.isFinite(v));
+}
+
+function percentile(sortedArr, p){
+  if(sortedArr.length===0) return NaN;
+  const idx = (sortedArr.length-1)*p;
+  const lo = Math.floor(idx), hi = Math.ceil(idx);
+  if(lo===hi) return sortedArr[lo];
+  return sortedArr[lo] + (sortedArr[hi]-sortedArr[lo])*(idx-lo);
+}
+
+/* -----------------------------
+   Bootstrap su P(X):
+   ricampiona (con reinserimento) le partite passate del team (solo per stimare CI)
+----------------------------- */
+function bootstrapPX(rows, r, N, decayMode, useHomeAway, B){
+  // estraggo “prev” una volta
+  const prevAll = rows.filter(x=>x.date < r.date && (x.result==="1"||x.result==="X"||x.result==="2"));
+  if(prevAll.length < 20) return {p05:NaN,p95:NaN,med:NaN};
+
+  // helper: campiona con reinserimento da una lista
+  const sample = (arr, k)=>{
+    const out=[];
+    for(let i=0;i<k;i++){
+      out.push(arr[Math.floor(Math.random()*arr.length)]);
+    }
+    return out;
+  };
+
+  // liste team-specific per dare “varianza” sensata
+  const hAll = prevAll.filter(x=>x.home_team===r.home_team || x.away_team===r.home_team);
+  const aAll = prevAll.filter(x=>x.home_team===r.away_team || x.away_team===r.away_team);
+
+  const vals=[];
+  const hK = Math.max(10, Math.min(hAll.length, 80));
+  const aK = Math.max(10, Math.min(aAll.length, 80));
+
+  for(let i=0;i<B;i++){
+    // creo un set “pseudo-prev” mischiando campioni dei due team + un po’ di globale
+    const mix = []
+      .concat(sample(hAll, hK))
+      .concat(sample(aAll, aK))
+      .concat(sample(prevAll, Math.min(prevAll.length, 120)));
+
+    // ordino per date crescente per non rompere i filtri date<r.date
+    mix.sort((x,y)=> x.date<y.date ? -1 : 1);
+
+    // ricalcolo pX su mix
+    const p = calcPX(mix, r, N, decayMode, useHomeAway);
+    vals.push(p);
+  }
+
+  vals.sort((x,y)=>x-y);
+  return {
+    p05: percentile(vals,0.05),
+    med: percentile(vals,0.50),
+    p95: percentile(vals,0.95)
+  };
+}
+
+/* -----------------------------
+   EV e format
+----------------------------- */
+function fmtPct(x){
+  return Number.isFinite(x) ? (x*100).toFixed(1)+"%" : "—";
+}
+function fmtNum(x){
+  return Number.isFinite(x) ? x.toFixed(2) : "—";
+}
+function ev(p, oddX){ return p*oddX - 1; }
+
+/* -----------------------------
+   MAIN
+----------------------------- */
+async function readFileText(file){
+  return new Promise((res,rej)=>{
+    const r=new FileReader();
+    r.onload=()=>res(String(r.result||""));
+    r.onerror=rej;
+    r.readAsText(file);
+  });
+}
+
+function normalizeUnifiedRow(o){
+  const date = String(pick(o,["date","Date","match_date","DATA","data"])||"").trim();
+  const home_team = String(pick(o,["home_team","HomeTeam","home","CASA"])||"").trim();
+  const away_team = String(pick(o,["away_team","AwayTeam","away","TRASFERTA"])||"").trim();
+
+  // result può essere vuoto per future
+  let result = String(pick(o,["result","Result","esito","FT","FTR"])||"").trim().toUpperCase();
+  if(result==="D") result="X";
+
+  // goals (possono essere vuoti sui futuri)
+  const FTHG = pick(o,["FTHG","fthg","home_goals","HG"]) ?? "";
+  const FTAG = pick(o,["FTAG","ftag","away_goals","AG"]) ?? "";
+
+  // odds (chiave: b365_x)
+  const b365_x = pick(o,["b365_x","B365D","oddx","odds_x","X"]) ?? "";
+  const b365_1 = pick(o,["b365_1","B365H","odd1","odds_1","1"]) ?? "";
+  const b365_2 = pick(o,["b365_2","B365A","odd2","odds_2","2"]) ?? "";
+
+  return {
+    date,
+    home_team,
+    away_team,
+    result,
+    FTHG: String(FTHG).trim(),
+    FTAG: String(FTAG).trim(),
+    b365_x: String(b365_x).trim(),
+    b365_1: String(b365_1).trim(),
+    b365_2: String(b365_2).trim(),
+  };
+}
+
+function isPlayed(r){
+  return (r.result==="1"||r.result==="X"||r.result==="2");
+}
+
+function isFutureCandidate(r){
+  // future / not played but with odds present
+  const oddX = toNum(r.b365_x);
+  return !isPlayed(r) && Number.isFinite(oddX) && r.home_team && r.away_team && r.date;
+}
+
+async function run(){
+  const s=document.getElementById("status");
+  const out=document.getElementById("output");
+  s.textContent="Carico CSV...";
+  out.innerHTML="";
+
+  try{
+    const file = document.getElementById("csvUnifiedFile").files?.[0];
+    if(!file){
+      s.textContent="⚠️ Seleziona il CSV unificato.";
+      return;
+    }
+
+    const text = await readFileText(file);
+    let rows = parseCSV(text).map(normalizeUnifiedRow);
+
+    // Nota: confronto date come stringa -> funziona bene se formato YYYY-MM-DD
+    // Se nel tuo CSV è diverso, lo sistemiamo (ma intanto è coerente con il tuo file).
+    rows = rows.filter(r=>r.date && r.home_team && r.away_team);
+
+    const N=+document.getElementById("N").value||10;
+    const evMin=+document.getElementById("evMin").value/100||0.30;
+    const qMin=+document.getElementById("qMin").value||3.0;
+    const qMax=+document.getElementById("qMax").value||4.8;
+    const gMax=+document.getElementById("gMax").value||2.6;
+    const topK=Math.max(1, +document.getElementById("topK").value||2);
+
+    const goalAgg=document.getElementById("goalAgg").value;
+    const decayMode=document.getElementById("decay").value;
+    const useHomeAway=document.getElementById("homeAway").value==="on";
+    const ban4050=document.getElementById("ban4050").value==="on";
+
+    const B=+document.getElementById("B").value||1200;
+
+    // future candidates
+    const future = rows.filter(isFutureCandidate);
+
+    if(future.length===0){
+      s.textContent="Nessuna partita futura (senza risultato) trovata nel CSV.";
+      out.innerHTML = `<div class="card"><b>Zero partite future nel CSV.</b><br>
+      Assicurati che nel CSV unificato siano presenti righe future con <span class="mono">b365_x</span> valorizzato e <span class="mono">result</span> vuoto.</div>`;
+      return;
+    }
+
+    s.textContent="Calcolo segnali SOLO X...";
+
+    const picks=[];
+    for(const r of future){
+      const oddX=toNum(r.b365_x);
+      if(!Number.isFinite(oddX) || oddX<qMin || oddX>qMax) continue;
+
+      const pX = calcPX(rows, r, N, decayMode, useHomeAway);
+      if(!Number.isFinite(pX) || pX<=0) continue;
+
+      const EV = ev(pX, oddX);
+      const evPct = EV*100;
+      if(EV < evMin) continue;
+      if(ban4050 && evPct>=40 && evPct<50) continue;
+
+      // gol filter (basato su storico)
+      const gH=teamRecentGoals(rows,r.home_team,N,r.date);
+      const gA=teamRecentGoals(rows,r.away_team,N,r.date);
+      if(gH.length<3 || gA.length<3) continue;
+
+      const agg = (arr)=> goalAgg==="median" ? median(arr) : (arr.reduce((s,v)=>s+v,0)/arr.length);
+      const g = (agg(gH)+agg(gA))/2;
+      if(!Number.isFinite(g) || g>gMax) continue;
+
+      // bootstrap CI su pX
+      const ci = bootstrapPX(rows, r, N, decayMode, useHomeAway, B);
+      const ciWidth = (Number.isFinite(ci.p95)&&Number.isFinite(ci.p05)) ? (ci.p95-ci.p05) : NaN;
+
+      const fair = 1/pX;
+
+      picks.push({
+        ...r,
+        oddX,
+        pX,
+        fair,
+        EV,
+        g,
+        ci,
+        ciWidth
+      });
+    }
+
+    picks.sort((a,b)=> b.EV - a.EV);
+
+    const top = picks.slice(0, topK);
+
+    if(top.length===0){
+      s.textContent="Nessun match supera i filtri.";
+      out.innerHTML = `<div class="card"><b>Nessuna partita da attenzionare.</b><br>
+      Prova: abbassa EV min, allarga quota X, aumenta gMax, oppure N.</div>`;
+      return;
+    }
+
+    const rowsHtml = top.map(m=>{
+      const evCls = m.EV>=0.40 ? "ok" : (m.EV>=0.30 ? "warn" : "");
+      const stab = Number.isFinite(m.ciWidth)
+        ? (m.ciWidth<=0.10 ? `<span class="ok">stabile</span>` : (m.ciWidth<=0.16 ? `<span class="warn">medio</span>` : `<span class="bad">volatile</span>`))
+        : "—";
+
+      return `
+        <tr>
+          <td><b>${m.home_team} — ${m.away_team}</b><br><small>${m.date}</small></td>
+          <td class="mono"><b>${fmtNum(m.oddX)}</b></td>
+          <td><b>${fmtPct(m.pX)}</b></td>
+          <td class="mono">${fmtNum(m.fair)}</td>
+          <td class="${evCls}"><b>${(m.EV*100>=0?"+":"")}${(m.EV*100).toFixed(1)}%</b></td>
+          <td class="mono">${fmtPct(m.ci.p05)} – ${fmtPct(m.ci.p95)}<br><small>${stab}</small></td>
+          <td><small>gol≈${m.g.toFixed(2)} • N=${N} • decay=${decayMode} • H/A=${useHomeAway?"ON":"OFF"}</small></td>
+        </tr>
+      `;
+    }).join("");
+
+    out.innerHTML = `
+      <div class="card">
+        <div class="row">
+          <span class="pill"><b>Future nel CSV:</b> ${future.length}</span>
+          <span class="pill"><b>Candidate after filtri:</b> ${picks.length}</span>
+          <span class="pill"><b>Output:</b> ${top.length}</span>
+        </div>
+        <hr style="margin:12px 0">
+        <table>
+          <thead>
+            <tr>
+              <th>Match</th>
+              <th>Quota X</th>
+              <th>P(X)</th>
+              <th>Quota equa</th>
+              <th>EV</th>
+              <th>Bootstrap CI (5–95%)</th>
+              <th>Note booster</th>
+            </tr>
+          </thead>
+          <tbody>${rowsHtml}</tbody>
+        </table>
+        <small style="display:block;margin-top:10px">
+          Filtri: EV≥${(evMin*100).toFixed(0)}%, X=[${qMin}-${qMax}], gol≤${gMax}, ban40–50=${ban4050?"ON":"OFF"}, bootstrap B=${B}.
+        </small>
+      </div>
+    `;
+
+    s.textContent="Completato ✅";
+  }catch(e){
+    s.textContent="Errore: "+e;
+  }
+}
+</script>
+
+</body>
+</html>
