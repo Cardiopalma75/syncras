@@ -173,20 +173,19 @@ function toNum(x){
 
 /* ---------- date: prova parse; se fallisce usa stringa ---------- */
 function parseDateTs(s){
-  const t = String(s??"").trim();
+  const t = String(s ?? "").trim();
   if(!t) return NaN;
-  // ISO ok
-  const d1 = new Date(t);
-  if(!isNaN(d1.getTime())) return d1.getTime();
-  // DD/MM/YYYY
-  const m = t.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/);
-  if(m){
-    const dd=+m[1], mm=(+m[2])-1, yy=(+m[3] < 100 ? (+m[3]+2000) : +m[3]);
-    const d2 = new Date(yy,mm,dd);
-    if(!isNaN(d2.getTime())) return d2.getTime();
+
+  // Se è YYYY-MM-DD → parse sicuro come UTC (evita bug browser)
+  if(/^\d{4}-\d{2}-\d{2}$/.test(t)){
+    return Date.parse(t + "T00:00:00Z");
   }
-  return NaN;
+
+  // fallback generico (se mai arrivasse altro formato)
+  const x = Date.parse(t);
+  return Number.isFinite(x) ? x : NaN;
 }
+
 
 /* ---------- stats helpers ---------- */
 function median(arr){
