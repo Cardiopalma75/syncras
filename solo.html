@@ -243,8 +243,8 @@ function normQuoteRow(o){
   const away_team = String(pick(o,["away_team","awayteam","away","AwayTeam","TRASFERTA"])||"").trim();
 
   const b365_x = pick(o,["b365_x","B365D","oddx","odds_x","X","draw"]) ?? "";
-  const b365_1 = pick(o,["b365_1","B365H","odd1","odds_1","1","home"]) ?? "";
-  const b365_2 = pick(o,["b365_2","B365A","odd2","odds_2","2","away"]) ?? "";
+  const b365_1 = pick(o,["b365_1","b365_h","B365H","odd1","odds_1","1","home"]) ?? "";
+const b365_2 = pick(o,["b365_2","b365_a","B365A","odd2","odds_2","2","away"]) ?? "";
 
   const dateTs = parseDateTs(dateStr);
   return {
