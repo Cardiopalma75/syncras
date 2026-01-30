@@ -291,7 +291,7 @@ function calcPX(results, match, N, decayMode, useHomeAway){
                  weightedRateDraw(match.away_team, awayRecent, decayMode))/2;
 
   const p = 0.6*recPX + 0.4*histPX;
-  return Math.max(0.05, Math.min(0.60, p));
+  return Math.max(0.10, Math.min(0.55, p));
 }
 
 /* ---------- goals filter ---------- */
