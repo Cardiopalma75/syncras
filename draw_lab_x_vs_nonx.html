@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>Syncras – Draw Lab (X vs NON-X)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body { font-family: system-ui, sans-serif; background:#f6f7fb; padding:16px; }
+h1 { font-size:20px; }
+.card { background:#fff; border-radius:12px; padding:16px; margin-bottom:16px; box-shadow:0 4px 12px rgba(0,0,0,.05); }
+table { width:100%; border-collapse:collapse; font-size:13px; }
+th, td { padding:6px 8px; border-bottom:1px solid #eee; text-align:right; }
+th:first-child, td:first-child { text-align:left; }
+.badge { display:inline-block; padding:4px 8px; border-radius:999px; background:#eee; margin-right:6px; font-size:12px; }
+.ok { background:#e6f7ec; color:#0a7a38; }
+.warn { background:#fff4e5; color:#8a5200; }
+.note { font-size:13px; color:#555; }
+</style>
+</head>
+<body>
+
+<h1>🔬 Draw Lab — Studio X vs NON-X</h1>
+
+<div class="card">
+  <span class="badge">Studio informativo</span>
+  <span class="badge warn">Nessun invito a scommettere</span>
+</div>
+
+<div id="summary" class="card"></div>
+<div id="quoteStats" class="card"></div>
+<div id="spreadTable" class="card"></div>
+<div id="xRatioTable" class="card"></div>
+<div id="homeAway" class="card"></div>
+<div id="goals" class="card"></div>
+
+<script>
+const QUOTES = 'prequotes_b365_unified_top_leagues.csv';
+const RESULTS = 'results_unified_top_leagues.csv';
+
+function parseCSV(txt){
+  const [h,...r]=txt.trim().split('\n');
+  const headers=h.split(',');
+  return r.map(l=>{
+    const o={}; l.split(',').forEach((v,i)=>o[headers[i]]=v);
+    return o;
+  });
+}
+
+Promise.all([
+  fetch(QUOTES).then(r=>r.text()),
+  fetch(RESULTS).then(r=>r.text())
+]).then(([qTxt,rTxt])=>{
+  const Q=parseCSV(qTxt);
+  const R=parseCSV(rTxt);
+
+  const rMap={};
+  R.forEach(r=>{
+    const k=`${r.Date}_${r.HomeTeam}_${r.AwayTeam}`;
+    rMap[k]=r;
+  });
+
+  const rows=[];
+  Q.forEach(q=>{
+    const k=`${q.Date}_${q.HomeTeam}_${q.AwayTeam}`;
+    if(!rMap[k]) return;
+
+    const r=rMap[k];
+    const odd1=+q.Odd1, oddX=+q.OddX, odd2=+q.Odd2;
+    if(!(odd1&&oddX&&odd2)) return;
+
+    const FTHG=+r.FTHG, FTAG=+r.FTAG;
+    const isX=FTHG===FTAG;
+
+    rows.push({
+      isX,
+      spread12: Math.abs(odd1-odd2),
+      avg12:(odd1+odd2)/2,
+      xRatioAvg: oddX/((odd1+odd2)/2),
+      favAway: odd2<odd1,
+      goals:FTHG+FTAG
+    });
+  });
+
+  const X=rows.filter(r=>r.isX);
+  const NX=rows.filter(r=>!r.isX);
+
+  const mean=(a)=>a.reduce((s,v)=>s+v,0)/a.length;
+
+  document.getElementById('summary').innerHTML=`
+    <b>Sintesi dataset</b><br><br>
+    <span class="badge ok">Match totali: ${rows.length}</span>
+    <span class="badge ok">X: ${X.length}</span>
+    <span class="badge">NON-X: ${NX.length}</span>
+  `;
+
+  document.getElementById('quoteStats').innerHTML=`
+    <b>Quote – confronto medio</b>
+    <table>
+      <tr><th>Metrica</th><th>X</th><th>NON-X</th></tr>
+      <tr><td>spread12</td><td>${mean(X.map(r=>r.spread12)).toFixed(2)}</td><td>${mean(NX.map(r=>r.spread12)).toFixed(2)}</td></tr>
+      <tr><td>avg12</td><td>${mean(X.map(r=>r.avg12)).toFixed(2)}</td><td>${mean(NX.map(r=>r.avg12)).toFixed(2)}</td></tr>
+      <tr><td>x_ratio_avg</td><td>${mean(X.map(r=>r.xRatioAvg)).toFixed(2)}</td><td>${mean(NX.map(r=>r.xRatioAvg)).toFixed(2)}</td></tr>
+    </table>
+  `;
+
+  function bucket(data, fn, size){
+    const m={};
+    data.forEach(r=>{
+      const b=Math.floor(fn(r)/size)*size;
+      m[b]=m[b]||{n:0,x:0};
+      m[b].n++; if(r.isX) m[b].x++;
+    });
+    return m;
+  }
+
+  const spreadB=bucket(rows,r=>r.spread12,0.5);
+  document.getElementById('spreadTable').innerHTML=`
+    <b>Rate X per fascia spread12</b>
+    <table>
+      <tr><th>Spread</th><th>N</th><th>Rate X</th></tr>
+      ${Object.keys(spreadB).sort((a,b)=>a-b).map(k=>{
+        const o=spreadB[k];
+        return `<tr><td>${k}–${(+k+0.5).toFixed(1)}</td><td>${o.n}</td><td>${(100*o.x/o.n).toFixed(1)}%</td></tr>`;
+      }).join('')}
+    </table>
+  `;
+
+  const ratioB=bucket(rows,r=>r.xRatioAvg,0.2);
+  document.getElementById('xRatioTable').innerHTML=`
+    <b>Rate X per fascia x_ratio_avg</b>
+    <table>
+      <tr><th>Ratio</th><th>N</th><th>Rate X</th></tr>
+      ${Object.keys(ratioB).sort((a,b)=>a-b).map(k=>{
+        const o=ratioB[k];
+        return `<tr><td>${k}–${(+k+0.2).toFixed(1)}</td><td>${o.n}</td><td>${(100*o.x/o.n).toFixed(1)}%</td></tr>`;
+      }).join('')}
+    </table>
+  `;
+
+  document.getElementById('homeAway').innerHTML=`
+    <b>Favorita casa vs trasferta</b><br><br>
+    <span class="badge">Casa: ${(100*X.filter(r=>!r.favAway).length/X.length).toFixed(1)}%</span>
+    <span class="badge">Trasferta: ${(100*X.filter(r=>r.favAway).length/X.length).toFixed(1)}%</span>
+  `;
+
+  document.getElementById('goals').innerHTML=`
+    <b>Distribuzione gol (solo X)</b><br><br>
+    ${[0,1,2,3,4,'5+'].map(g=>{
+      const n=X.filter(r=>g==='5+'?r.goals>=5:r.goals===g).length;
+      return `<div>${g} gol: ${(100*n/X.length).toFixed(1)}%</div>`;
+    }).join('')}
+  `;
+});
+</script>
+
+</body>
+</html>
