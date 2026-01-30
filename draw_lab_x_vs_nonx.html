@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
 body { font-family: system-ui, sans-serif; background:#f6f7fb; padding:16px; }
-h1 { font-size:20px; }
+h1 { font-size:20px; margin:0 0 10px 0; }
 .card { background:#fff; border-radius:12px; padding:16px; margin-bottom:16px; box-shadow:0 4px 12px rgba(0,0,0,.05); }
 table { width:100%; border-collapse:collapse; font-size:13px; }
 th, td { padding:6px 8px; border-bottom:1px solid #eee; text-align:right; }
@@ -15,6 +15,12 @@ th:first-child, td:first-child { text-align:left; }
 .ok { background:#e6f7ec; color:#0a7a38; }
 .warn { background:#fff4e5; color:#8a5200; }
 .note { font-size:13px; color:#555; }
+.row { display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+input[type="file"]{ padding:10px; border-radius:12px; border:1px solid #cfcfe6; background:#fff; }
+button{ cursor:pointer; border:0; border-radius:12px; padding:10px 14px; background:#6C5CE7; color:#fff; font-weight:800; }
+button:hover{ filter:brightness(.96); }
+.muted{ color:#6b7280; font-size:13px; }
+hr{ border:0; border-top:1px solid #eee; margin:12px 0; }
 </style>
 </head>
 <body>
@@ -22,8 +28,35 @@ th:first-child, td:first-child { text-align:left; }
 <h1>🔬 Draw Lab — Studio X vs NON-X</h1>
 
 <div class="card">
-  <span class="badge">Studio informativo</span>
-  <span class="badge warn">Nessun invito a scommettere</span>
+  <div class="row" style="justify-content:space-between;">
+    <div>
+      <span class="badge">Studio informativo</span>
+      <span class="badge warn">Nessun invito a scommettere</span>
+    </div>
+    <div class="muted" id="status">Carica i 2 CSV e clicca Analizza.</div>
+  </div>
+
+  <hr>
+
+  <div class="row">
+    <div style="flex:1; min-width:260px;">
+      <div class="muted" style="margin-bottom:6px;"><b>CSV QUOTE</b> (pre-match) — colonne tipiche: Date, HomeTeam, AwayTeam, Odd1, OddX, Odd2</div>
+      <input id="quotesFile" type="file" accept=".csv,text/csv">
+    </div>
+
+    <div style="flex:1; min-width:260px;">
+      <div class="muted" style="margin-bottom:6px;"><b>CSV RISULTATI</b> (giocato) — colonne tipiche: Date, HomeTeam, AwayTeam, FTHG, FTAG</div>
+      <input id="resultsFile" type="file" accept=".csv,text/csv">
+    </div>
+
+    <div>
+      <button onclick="run()">Analizza</button>
+    </div>
+  </div>
+
+  <div class="muted" style="margin-top:10px;">
+    Nota: offline puro. Nessun fetch, nessun server, nessuna API.
+  </div>
 </div>
 
 <div id="summary" class="card"></div>
@@ -34,123 +67,261 @@ th:first-child, td:first-child { text-align:left; }
 <div id="goals" class="card"></div>
 
 <script>
-const QUOTES = 'prequotes_b365_unified_top_leagues.csv';
-const RESULTS = 'results_unified_top_leagues.csv';
+// ==========================
+//  Draw Lab — X vs NON-X
+//  Versione OFFLINE: upload CSV + FileReader
+//  (stesse metriche del file che mi hai incollato)
+// ==========================
 
-function parseCSV(txt){
-  const [h,...r]=txt.trim().split('\n');
-  const headers=h.split(',');
-  return r.map(l=>{
-    const o={}; l.split(',').forEach((v,i)=>o[headers[i]]=v);
+function setStatus(msg){ document.getElementById("status").textContent = msg; }
+
+// CSV robusto (virgola o punto e virgola, quote)
+function parseCSV(text){
+  const rows=[];
+  let row=[], cur="", inQ=false;
+
+  for(let i=0;i<text.length;i++){
+    const ch=text[i], nx=text[i+1];
+
+    if(ch === '"'){
+      if(inQ && nx === '"'){ cur+='"'; i++; }
+      else inQ = !inQ;
+      continue;
+    }
+    if(!inQ && (ch===',' || ch===';')){ row.push(cur); cur=""; continue; }
+    if(!inQ && ch==='\n'){ row.push(cur); rows.push(row); row=[]; cur=""; continue; }
+    if(!inQ && ch==='\r') continue;
+
+    cur+=ch;
+  }
+  row.push(cur); rows.push(row);
+
+  // rimuovi eventuale riga vuota finale
+  if(rows.length && rows[rows.length-1].every(c => String(c).trim()==="")) rows.pop();
+  if(rows.length===0) return [];
+
+  const headers = rows[0].map(h => String(h).trim());
+  return rows.slice(1).map(r=>{
+    const o={};
+    for(let i=0;i<headers.length;i++){
+      o[headers[i]] = String(r[i] ?? "").trim().replace(/\uFEFF/g,"");
+    }
     return o;
   });
 }
 
-Promise.all([
-  fetch(QUOTES).then(r=>r.text()),
-  fetch(RESULTS).then(r=>r.text())
-]).then(([qTxt,rTxt])=>{
-  const Q=parseCSV(qTxt);
-  const R=parseCSV(rTxt);
-
-  const rMap={};
-  R.forEach(r=>{
-    const k=`${r.Date}_${r.HomeTeam}_${r.AwayTeam}`;
-    rMap[k]=r;
-  });
-
-  const rows=[];
-  Q.forEach(q=>{
-    const k=`${q.Date}_${q.HomeTeam}_${q.AwayTeam}`;
-    if(!rMap[k]) return;
-
-    const r=rMap[k];
-    const odd1=+q.Odd1, oddX=+q.OddX, odd2=+q.Odd2;
-    if(!(odd1&&oddX&&odd2)) return;
-
-    const FTHG=+r.FTHG, FTAG=+r.FTAG;
-    const isX=FTHG===FTAG;
-
-    rows.push({
-      isX,
-      spread12: Math.abs(odd1-odd2),
-      avg12:(odd1+odd2)/2,
-      xRatioAvg: oddX/((odd1+odd2)/2),
-      favAway: odd2<odd1,
-      goals:FTHG+FTAG
-    });
-  });
-
-  const X=rows.filter(r=>r.isX);
-  const NX=rows.filter(r=>!r.isX);
-
-  const mean=(a)=>a.reduce((s,v)=>s+v,0)/a.length;
-
-  document.getElementById('summary').innerHTML=`
-    <b>Sintesi dataset</b><br><br>
-    <span class="badge ok">Match totali: ${rows.length}</span>
-    <span class="badge ok">X: ${X.length}</span>
-    <span class="badge">NON-X: ${NX.length}</span>
-  `;
-
-  document.getElementById('quoteStats').innerHTML=`
-    <b>Quote – confronto medio</b>
-    <table>
-      <tr><th>Metrica</th><th>X</th><th>NON-X</th></tr>
-      <tr><td>spread12</td><td>${mean(X.map(r=>r.spread12)).toFixed(2)}</td><td>${mean(NX.map(r=>r.spread12)).toFixed(2)}</td></tr>
-      <tr><td>avg12</td><td>${mean(X.map(r=>r.avg12)).toFixed(2)}</td><td>${mean(NX.map(r=>r.avg12)).toFixed(2)}</td></tr>
-      <tr><td>x_ratio_avg</td><td>${mean(X.map(r=>r.xRatioAvg)).toFixed(2)}</td><td>${mean(NX.map(r=>r.xRatioAvg)).toFixed(2)}</td></tr>
-    </table>
-  `;
-
-  function bucket(data, fn, size){
-    const m={};
-    data.forEach(r=>{
-      const b=Math.floor(fn(r)/size)*size;
-      m[b]=m[b]||{n:0,x:0};
-      m[b].n++; if(r.isX) m[b].x++;
-    });
-    return m;
+function normKey(s){ return String(s||"").trim().toLowerCase(); }
+function pick(o, keys){
+  const m={};
+  for(const k in o) m[normKey(k)] = o[k];
+  for(const k of keys){
+    const v = m[normKey(k)];
+    if(v!==undefined && v!=="") return v;
   }
+  return "";
+}
+function toNum(x){
+  const s=String(x??"").trim().replace(",",".");
+  const n=Number(s);
+  return Number.isFinite(n) ? n : NaN;
+}
 
-  const spreadB=bucket(rows,r=>r.spread12,0.5);
-  document.getElementById('spreadTable').innerHTML=`
-    <b>Rate X per fascia spread12</b>
-    <table>
-      <tr><th>Spread</th><th>N</th><th>Rate X</th></tr>
-      ${Object.keys(spreadB).sort((a,b)=>a-b).map(k=>{
-        const o=spreadB[k];
-        return `<tr><td>${k}–${(+k+0.5).toFixed(1)}</td><td>${o.n}</td><td>${(100*o.x/o.n).toFixed(1)}%</td></tr>`;
+function readFileText(file){
+  return new Promise((res,rej)=>{
+    const r=new FileReader();
+    r.onload=()=>res(String(r.result||""));
+    r.onerror=rej;
+    r.readAsText(file);
+  });
+}
+
+function safeMean(arr){
+  if(!arr || arr.length===0) return NaN;
+  return arr.reduce((s,v)=>s+v,0)/arr.length;
+}
+
+function bucket(data, fn, size){
+  const m={};
+  data.forEach(r=>{
+    const v=fn(r);
+    if(!Number.isFinite(v)) return;
+    const b=Math.floor(v/size)*size;
+    m[b]=m[b]||{n:0,x:0};
+    m[b].n++;
+    if(r.isX) m[b].x++;
+  });
+  return m;
+}
+
+function renderEmpty(){
+  document.getElementById('summary').innerHTML = `<b>Carica i CSV e clicca Analizza.</b>`;
+  document.getElementById('quoteStats').innerHTML = ``;
+  document.getElementById('spreadTable').innerHTML = ``;
+  document.getElementById('xRatioTable').innerHTML = ``;
+  document.getElementById('homeAway').innerHTML = ``;
+  document.getElementById('goals').innerHTML = ``;
+}
+
+renderEmpty();
+
+async function run(){
+  try{
+    const qf = document.getElementById("quotesFile").files?.[0];
+    const rf = document.getElementById("resultsFile").files?.[0];
+    if(!qf || !rf){
+      setStatus("⚠️ Seleziona entrambi i CSV (QUOTE + RISULTATI).");
+      return;
+    }
+
+    setStatus("Leggo i CSV…");
+    const [qTxt, rTxt] = await Promise.all([readFileText(qf), readFileText(rf)]);
+
+    setStatus("Parsing…");
+    const Qraw = parseCSV(qTxt);
+    const Rraw = parseCSV(rTxt);
+
+    // Normalizzazione colonne: accetta sia formati "Odd1/OddX/Odd2" che "b365_1/b365_x/b365_2"
+    const Q = Qraw.map(q=>({
+      Date: pick(q, ["Date","date","match_date","data"]),
+      HomeTeam: pick(q, ["HomeTeam","home_team","Home","hometeam","casa"]),
+      AwayTeam: pick(q, ["AwayTeam","away_team","Away","awayteam","trasferta"]),
+      Odd1: pick(q, ["Odd1","odd1","b365_1","b365_h","B365H","1"]),
+      OddX: pick(q, ["OddX","oddx","b365_x","B365D","X","draw"]),
+      Odd2: pick(q, ["Odd2","odd2","b365_2","b365_a","B365A","2"])
+    })).filter(x=>x.Date && x.HomeTeam && x.AwayTeam);
+
+    const R = Rraw.map(r=>({
+      Date: pick(r, ["Date","date","match_date","data"]),
+      HomeTeam: pick(r, ["HomeTeam","home_team","Home","hometeam","casa"]),
+      AwayTeam: pick(r, ["AwayTeam","away_team","Away","awayteam","trasferta"]),
+      FTHG: pick(r, ["FTHG","fthg","hg","home_goals","HomeGoals"]),
+      FTAG: pick(r, ["FTAG","ftag","ag","away_goals","AwayGoals"])
+    })).filter(x=>x.Date && x.HomeTeam && x.AwayTeam);
+
+    if(Q.length===0 || R.length===0){
+      setStatus("❌ CSV vuoti o intestazioni non riconosciute.");
+      renderEmpty();
+      return;
+    }
+
+    // Map risultati per match
+    setStatus("Unisco quote + risultati…");
+    const rMap={};
+    R.forEach(r=>{
+      const k=`${r.Date}_${r.HomeTeam}_${r.AwayTeam}`;
+      rMap[k]=r;
+    });
+
+    const rows=[];
+    Q.forEach(q=>{
+      const k=`${q.Date}_${q.HomeTeam}_${q.AwayTeam}`;
+      const r=rMap[k];
+      if(!r) return;
+
+      const odd1=toNum(q.Odd1), oddX=toNum(q.OddX), odd2=toNum(q.Odd2);
+      if(!(Number.isFinite(odd1)&&Number.isFinite(oddX)&&Number.isFinite(odd2))) return;
+
+      const FTHG=toNum(r.FTHG), FTAG=toNum(r.FTAG);
+      if(!(Number.isFinite(FTHG)&&Number.isFinite(FTAG))) return;
+
+      const isX = (FTHG===FTAG);
+
+      rows.push({
+        isX,
+        spread12: Math.abs(odd1-odd2),
+        avg12:(odd1+odd2)/2,
+        xRatioAvg: oddX/((odd1+odd2)/2),
+        favAway: odd2<odd1,   // come nel tuo file: "favorita trasferta" se odd2 < odd1
+        goals:FTHG+FTAG
+      });
+    });
+
+    if(rows.length===0){
+      setStatus("❌ Nessun match allineato (Date/HomeTeam/AwayTeam non combaciano).");
+      renderEmpty();
+      return;
+    }
+
+    const X=rows.filter(r=>r.isX);
+    const NX=rows.filter(r=>!r.isX);
+
+    setStatus("Calcolo tabelle…");
+
+    document.getElementById('summary').innerHTML=`
+      <b>Sintesi dataset</b><br><br>
+      <span class="badge ok">Match totali: ${rows.length}</span>
+      <span class="badge ok">X: ${X.length}</span>
+      <span class="badge">NON-X: ${NX.length}</span>
+    `;
+
+    const mean = (arr)=>safeMean(arr);
+
+    document.getElementById('quoteStats').innerHTML=`
+      <b>Quote – confronto medio</b>
+      <table>
+        <tr><th>Metrica</th><th>X</th><th>NON-X</th></tr>
+        <tr><td>spread12</td><td>${mean(X.map(r=>r.spread12)).toFixed(2)}</td><td>${mean(NX.map(r=>r.spread12)).toFixed(2)}</td></tr>
+        <tr><td>avg12</td><td>${mean(X.map(r=>r.avg12)).toFixed(2)}</td><td>${mean(NX.map(r=>r.avg12)).toFixed(2)}</td></tr>
+        <tr><td>x_ratio_avg</td><td>${mean(X.map(r=>r.xRatioAvg)).toFixed(2)}</td><td>${mean(NX.map(r=>r.xRatioAvg)).toFixed(2)}</td></tr>
+      </table>
+      <div class="muted" style="margin-top:8px;">
+        Se una metrica è molto diversa tra X e NON-X, è un candidato forte da trasformare in filtro/bonus nel tool “SEGNALA”.
+      </div>
+    `;
+
+    const spreadB=bucket(rows,r=>r.spread12,0.5);
+    document.getElementById('spreadTable').innerHTML=`
+      <b>Rate X per fascia spread12</b>
+      <table>
+        <tr><th>Spread</th><th>N</th><th>Rate X</th></tr>
+        ${Object.keys(spreadB).sort((a,b)=>a-b).map(k=>{
+          const o=spreadB[k];
+          return `<tr><td>${k}–${(+k+0.5).toFixed(1)}</td><td>${o.n}</td><td>${(100*o.x/o.n).toFixed(1)}%</td></tr>`;
+        }).join('')}
+      </table>
+    `;
+
+    const ratioB=bucket(rows,r=>r.xRatioAvg,0.2);
+    document.getElementById('xRatioTable').innerHTML=`
+      <b>Rate X per fascia x_ratio_avg</b>
+      <table>
+        <tr><th>Ratio</th><th>N</th><th>Rate X</th></tr>
+        ${Object.keys(ratioB).sort((a,b)=>a-b).map(k=>{
+          const o=ratioB[k];
+          return `<tr><td>${k}–${(+k+0.2).toFixed(1)}</td><td>${o.n}</td><td>${(100*o.x/o.n).toFixed(1)}%</td></tr>`;
+        }).join('')}
+      </table>
+    `;
+
+    const xFavHome = X.length ? (100*X.filter(r=>!r.favAway).length/X.length) : 0;
+    const xFavAway = X.length ? (100*X.filter(r=>r.favAway).length/X.length) : 0;
+
+    document.getElementById('homeAway').innerHTML=`
+      <b>Favorita casa vs trasferta (solo X)</b><br><br>
+      <span class="badge">Casa: ${xFavHome.toFixed(1)}%</span>
+      <span class="badge">Trasferta: ${xFavAway.toFixed(1)}%</span>
+      <div class="muted" style="margin-top:8px;">
+        Se “Trasferta” è alta, l’idea “X da trasferta” (bonus quando la favorita è away) ha senso.
+      </div>
+    `;
+
+    document.getElementById('goals').innerHTML=`
+      <b>Distribuzione gol (solo X)</b><br><br>
+      ${[0,1,2,3,4,'5+'].map(g=>{
+        const n=X.filter(r=>g==='5+'?r.goals>=5:r.goals===g).length;
+        const pct = X.length ? (100*n/X.length) : 0;
+        return `<div>${g} gol: ${pct.toFixed(1)}%</div>`;
       }).join('')}
-    </table>
-  `;
+      <div class="muted" style="margin-top:8px;">
+        Questo serve a capire se i pareggi nel tuo campione sono soprattutto 0–0/1–1 oppure anche 2–2.
+      </div>
+    `;
 
-  const ratioB=bucket(rows,r=>r.xRatioAvg,0.2);
-  document.getElementById('xRatioTable').innerHTML=`
-    <b>Rate X per fascia x_ratio_avg</b>
-    <table>
-      <tr><th>Ratio</th><th>N</th><th>Rate X</th></tr>
-      ${Object.keys(ratioB).sort((a,b)=>a-b).map(k=>{
-        const o=ratioB[k];
-        return `<tr><td>${k}–${(+k+0.2).toFixed(1)}</td><td>${o.n}</td><td>${(100*o.x/o.n).toFixed(1)}%</td></tr>`;
-      }).join('')}
-    </table>
-  `;
-
-  document.getElementById('homeAway').innerHTML=`
-    <b>Favorita casa vs trasferta</b><br><br>
-    <span class="badge">Casa: ${(100*X.filter(r=>!r.favAway).length/X.length).toFixed(1)}%</span>
-    <span class="badge">Trasferta: ${(100*X.filter(r=>r.favAway).length/X.length).toFixed(1)}%</span>
-  `;
-
-  document.getElementById('goals').innerHTML=`
-    <b>Distribuzione gol (solo X)</b><br><br>
-    ${[0,1,2,3,4,'5+'].map(g=>{
-      const n=X.filter(r=>g==='5+'?r.goals>=5:r.goals===g).length;
-      return `<div>${g} gol: ${(100*n/X.length).toFixed(1)}%</div>`;
-    }).join('')}
-  `;
-});
+    setStatus("Completato ✅");
+  }catch(e){
+    setStatus("Errore: " + e);
+  }
+}
 </script>
 
 </body>
