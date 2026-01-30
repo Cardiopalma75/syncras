@@ -1,0 +1,680 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Syncras – Studio Pareggi (Quote + Risultati • Offline)</title>
+<style>
+  :root{--violet:#6C5CE7;--bg:#f7f7fb;--card:#fff;--border:#e7e7f5;--text:#111827;--muted:#6b7280}
+  body{font-family:system-ui,Arial;margin:18px;background:var(--bg);color:var(--text)}
+  h2{margin:0 0 8px 0}
+  .muted{color:var(--muted)}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;margin-top:14px}
+  input,select,button{padding:9px;border-radius:12px;border:1px solid #cfcfe6}
+  input[type="file"]{padding:10px}
+  button{cursor:pointer;background:var(--violet);color:#fff;border:0;font-weight:900;padding:12px 14px;border-radius:14px}
+  button:hover{filter:brightness(.96)}
+  .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+  .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+  @media(max-width:820px){.grid{grid-template-columns:1fr}}
+  .pill{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--border);background:#fafafe;border-radius:999px;padding:6px 10px;font-size:12px;color:#555}
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  hr{border:0;border-top:1px solid #eee;margin:14px 0}
+  table{border-collapse:collapse;width:100%;margin-top:10px;background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden}
+  th,td{border-bottom:1px solid #eee;padding:8px;text-align:right;font-size:13px;vertical-align:top}
+  th{background:#fafafe;color:#333;font-size:12px}
+  th:first-child,td:first-child{text-align:left}
+  .ok{color:#0a7} .bad{color:#c22} .warn{color:#d97706}
+  .barWrap{display:flex;align-items:center;gap:8px}
+  .bar{height:10px;border-radius:999px;background:var(--violet);opacity:.25}
+  .barLabel{min-width:70px}
+  .small{font-size:12px;color:#555}
+  .heat td{font-size:12px}
+  .right{float:right}
+</style>
+</head>
+<body>
+
+<h2>Syncras – Studio Pareggi (Quote + Risultati • Offline)</h2>
+<div class="muted">
+  Scopo: <b>analizzare</b> (non “segnalare”) se esiste relazione tra <b>quote</b>, <b>gol</b>, <b>casa/trasferta</b> e <b>pareggio</b>, usando SOLO i tuoi due CSV.
+</div>
+
+<div class="card">
+  <div class="grid">
+    <div>
+      <label><b>CSV RISULTATI</b></label><br>
+      <input id="csvResultsFile" type="file" accept=".csv,text/csv" style="width:100%">
+      <small class="muted">Attesi: <span class="mono">date, home_team, away_team, result/FTR, FTHG, FTAG</span></small>
+    </div>
+    <div>
+      <label><b>CSV QUOTE</b></label><br>
+      <input id="csvQuotesFile" type="file" accept=".csv,text/csv" style="width:100%">
+      <small class="muted">Attesi: <span class="mono">date, home_team, away_team, b365_1, b365_x, b365_2</span></small>
+    </div>
+    <div>
+      <label><b>Output</b></label><br>
+      <div class="row">
+        <span class="pill">✅ Solo studio</span>
+        <span class="pill">✅ 1200+ match</span>
+        <span class="pill">✅ Cross-analysis</span>
+      </div>
+      <div style="margin-top:10px" class="muted">
+        Unisce i due CSV per <b>data+home+away</b>. Se molte righe restano “non matchate”, il problema è quasi sempre il formato data o i nomi squadre.
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="row">
+    <label><b>Opzioni studio</b></label>
+    <span class="pill">Merge: <span class="mono">dateTs|home|away</span></span>
+
+    <label>Normalizza squadre</label>
+    <select id="teamNorm">
+      <option value="trimLower">trim+lower</option>
+      <option value="keepCase">solo trim</option>
+    </select>
+
+    <label>Quote min valide</label>
+    <input id="oddMin" type="number" value="1.01" step="0.01" style="width:100px">
+
+    <label>Quote max valide</label>
+    <input id="oddMax" type="number" value="50" step="0.1" style="width:90px">
+
+    <button onclick="analyze()">Analizza dataset</button>
+    <span id="status" class="muted"></span>
+  </div>
+
+  <small style="display:block;margin-top:10px">
+    Studio informativo. Nessun invito a scommettere.
+  </small>
+</div>
+
+<div id="out"></div>
+
+<script>
+/* =========================
+   Syncras – Studio Pareggi
+   - Carica 2 CSV offline
+   - Normalizza date/teams
+   - Merge results+quotes
+   - Separa: X vs non-X
+   - Statistiche su quote, spread, gol, favorita casa/trasferta
+   - Cross-analysis (heatmap): spread × gol
+========================= */
+
+/* ---------- CSV parser (virgola o punto e virgola, quote basic) ---------- */
+function parseCSV(text){
+  const rows=[];
+  let row=[], cur="", inQ=false;
+  for(let i=0;i<text.length;i++){
+    const ch=text[i], nx=text[i+1];
+    if(ch === '"'){
+      if(inQ && nx === '"'){ cur+='"'; i++; }
+      else inQ = !inQ;
+      continue;
+    }
+    if(!inQ && (ch===',' || ch===';')){ row.push(cur); cur=""; continue; }
+    if(!inQ && ch==='\n'){ row.push(cur); rows.push(row); row=[]; cur=""; continue; }
+    if(!inQ && ch==='\r') continue;
+    cur+=ch;
+  }
+  row.push(cur); rows.push(row);
+  if(rows.length && rows[rows.length-1].every(c=>String(c).trim()==="")) rows.pop();
+  const header = (rows[0]||[]).map(x=>String(x).trim());
+  return rows.slice(1).map(r=>{
+    const o={};
+    for(let i=0;i<header.length;i++){
+      o[header[i]] = String(r[i]??"").trim().replace(/"/g,"");
+    }
+    return o;
+  });
+}
+
+function normKey(s){ return String(s||"").trim().toLowerCase(); }
+function pick(o, keys){
+  const map={};
+  for(const k in o) map[normKey(k)] = o[k];
+  for(const k of keys){
+    const v = map[normKey(k)];
+    if(v!==undefined) return v;
+  }
+  return undefined;
+}
+
+function toNum(x){
+  const s=String(x??"").trim().replace(",",".");
+  const n=Number(s);
+  return Number.isFinite(n) ? n : NaN;
+}
+
+/* ---------- date parser robust: YYYY-MM-DD, DD/MM/YYYY, DD/MM/YY ---------- */
+function parseDateTs(s){
+  const t = String(s ?? "").trim();
+  if(!t) return NaN;
+
+  // YYYY-MM-DD
+  if(/^\d{4}-\d{2}-\d{2}$/.test(t)) return Date.parse(t+"T00:00:00Z");
+
+  // DD/MM/YYYY or D/M/YYYY
+  let m = t.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if(m){
+    const dd=+m[1], mm=+m[2], yyyy=+m[3];
+    const iso = `${yyyy.toString().padStart(4,'0')}-${mm.toString().padStart(2,'0')}-${dd.toString().padStart(2,'0')}`;
+    return Date.parse(iso+"T00:00:00Z");
+  }
+
+  // DD/MM/YY
+  m = t.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2})$/);
+  if(m){
+    const dd=+m[1], mm=+m[2], yy=+m[3];
+    // pivot: 70-99 => 19xx, 00-69 => 20xx (sufficient for football datasets recent)
+    const yyyy = (yy>=70) ? (1900+yy) : (2000+yy);
+    const iso = `${yyyy}-${mm.toString().padStart(2,'0')}-${dd.toString().padStart(2,'0')}`;
+    return Date.parse(iso+"T00:00:00Z");
+  }
+
+  // fallback generic
+  const x = Date.parse(t);
+  return Number.isFinite(x) ? x : NaN;
+}
+
+function teamNormFn(mode, s){
+  const t = String(s||"").trim();
+  if(mode==="trimLower") return t.toLowerCase();
+  return t; // keepCase
+}
+
+/* ---------- normalize rows ---------- */
+function normResultRow(o, teamMode){
+  const dateStr = String(pick(o,["date","match_date","data","giorno","Date","DATA"])||"").trim();
+  const home_team = teamNormFn(teamMode, pick(o,["home_team","hometeam","home","HomeTeam","CASA"])||"");
+  const away_team = teamNormFn(teamMode, pick(o,["away_team","awayteam","away","AwayTeam","TRASFERTA"])||"");
+
+  let result = String(pick(o,["result","Result","FTR","esito","ft"])||"").trim().toUpperCase();
+  if(result==="D") result="X";
+
+  const FTHG = String(pick(o,["FTHG","fthg","hg","home_goals","HomeGoals"]) ?? "").trim();
+  const FTAG = String(pick(o,["FTAG","ftag","ag","away_goals","AwayGoals"]) ?? "").trim();
+
+  const dateTs = parseDateTs(dateStr);
+  return {dateStr, dateTs, home_team, away_team, result, FTHG, FTAG};
+}
+
+function normQuoteRow(o, teamMode){
+  const dateStr = String(pick(o,["date","match_date","data","giorno","Date","DATA"])||"").trim();
+  const home_team = teamNormFn(teamMode, pick(o,["home_team","hometeam","home","HomeTeam","CASA"])||"");
+  const away_team = teamNormFn(teamMode, pick(o,["away_team","awayteam","away","AwayTeam","TRASFERTA"])||"");
+
+  const b365_x = String(pick(o,["b365_x","B365D","oddx","odds_x","X","draw"]) ?? "").trim();
+  const b365_1 = String(pick(o,["b365_1","b365_h","B365H","odd1","odds_1","1","home"]) ?? "").trim();
+  const b365_2 = String(pick(o,["b365_2","b365_a","B365A","odd2","odds_2","2","away"]) ?? "").trim();
+
+  const dateTs = parseDateTs(dateStr);
+  return {dateStr, dateTs, home_team, away_team, b365_1, b365_x, b365_2};
+}
+
+function isPlayed(r){
+  return (r.result==="1"||r.result==="X"||r.result==="2");
+}
+
+function keyOf(dateTs, home, away){
+  return `${dateTs}|${home}|${away}`;
+}
+
+/* ---------- stats helpers ---------- */
+function mean(arr){
+  if(!arr.length) return NaN;
+  let s=0; for(const x of arr) s+=x;
+  return s/arr.length;
+}
+function median(arr){
+  const a=arr.slice().sort((x,y)=>x-y);
+  const n=a.length; if(!n) return NaN;
+  const mid=Math.floor(n/2);
+  return n%2 ? a[mid] : (a[mid-1]+a[mid])/2;
+}
+function std(arr){
+  if(arr.length<2) return NaN;
+  const m=mean(arr);
+  let s=0; for(const x of arr) s+=(x-m)*(x-m);
+  return Math.sqrt(s/(arr.length-1));
+}
+function pct(n,d){ return d? (100*n/d):0; }
+function fmt2(x){ return Number.isFinite(x)? x.toFixed(2):"—"; }
+function fmt1(x){ return Number.isFinite(x)? x.toFixed(1):"—"; }
+function fmtPct(x){ return Number.isFinite(x)? (x*100).toFixed(1)+"%":"—"; }
+
+/* ---------- bins ---------- */
+function makeBins(edges, lastLabel){
+  // edges: [0,0.2,0.4,...] -> bins: [0-0.2), [0.2-0.4), ... , [last-∞)
+  const bins=[];
+  for(let i=0;i<edges.length-1;i++){
+    bins.push({lo:edges[i], hi:edges[i+1], label:`${edges[i]}–${edges[i+1]}`});
+  }
+  bins.push({lo:edges[edges.length-1], hi:Infinity, label:lastLabel});
+  return bins;
+}
+function binIndex(bins, v){
+  for(let i=0;i<bins.length;i++){
+    if(v>=bins[i].lo && v<bins[i].hi) return i;
+  }
+  return -1;
+}
+
+/* ---------- UI: FileReader ---------- */
+async function readFileText(file){
+  return new Promise((res,rej)=>{
+    const r=new FileReader();
+    r.onload=()=>res(String(r.result||""));
+    r.onerror=rej;
+    r.readAsText(file);
+  });
+}
+
+/* ---------- render helpers ---------- */
+function card(title, innerHtml){
+  return `<div class="card"><div class="row" style="justify-content:space-between;align-items:baseline">
+    <b>${title}</b>
+  </div>${innerHtml}</div>`;
+}
+
+function barRow(label, valuePct){
+  const w = Math.max(0, Math.min(100, valuePct));
+  return `<div class="barWrap">
+    <div class="barLabel small">${label}</div>
+    <div class="bar" style="width:${w}%;min-width:6px"></div>
+    <div class="small mono">${w.toFixed(1)}%</div>
+  </div>`;
+}
+
+function shadeForRate(rate){
+  // rate 0..1
+  const r = Math.max(0, Math.min(1, rate));
+  // violet-ish alpha
+  const alpha = 0.08 + 0.45*r;
+  return `background: rgba(108,92,231,${alpha.toFixed(3)});`;
+}
+
+/* ---------- MAIN ANALYSIS ---------- */
+async function analyze(){
+  const status = document.getElementById("status");
+  const out = document.getElementById("out");
+  out.innerHTML = "";
+  status.textContent = "Carico CSV…";
+
+  try{
+    const fRes = document.getElementById("csvResultsFile").files?.[0];
+    const fQuo = document.getElementById("csvQuotesFile").files?.[0];
+    if(!fRes || !fQuo){
+      status.textContent = "⚠️ Seleziona entrambi i CSV.";
+      return;
+    }
+
+    const teamMode = document.getElementById("teamNorm").value;
+    const oddMin = +document.getElementById("oddMin").value || 1.01;
+    const oddMax = +document.getElementById("oddMax").value || 50;
+
+    const resText = await readFileText(fRes);
+    const quoText = await readFileText(fQuo);
+
+    status.textContent = "Parsing & normalizzazione…";
+
+    const results = parseCSV(resText).map(o=>normResultRow(o, teamMode))
+      .filter(r=>r.dateStr && r.home_team && r.away_team && Number.isFinite(r.dateTs) && isPlayed(r));
+
+    const quotes = parseCSV(quoText).map(o=>normQuoteRow(o, teamMode))
+      .filter(q=>q.dateStr && q.home_team && q.away_team && Number.isFinite(q.dateTs));
+
+    // Map results by key
+    const resMap = new Map();
+    for(const r of results){
+      resMap.set(keyOf(r.dateTs, r.home_team, r.away_team), r);
+    }
+
+    // Merge
+    const merged=[];
+    let matched=0, notMatched=0, badOdds=0;
+    for(const q of quotes){
+      const k = keyOf(q.dateTs, q.home_team, q.away_team);
+      const r = resMap.get(k);
+      if(!r){ notMatched++; continue; }
+
+      const odd1 = toNum(q.b365_1);
+      const oddX = toNum(q.b365_x);
+      const odd2 = toNum(q.b365_2);
+
+      // accept rows even if some odds missing, but we count bad odds for market analyses
+      const oddsOk = [odd1,oddX,odd2].every(v => Number.isFinite(v) && v>=oddMin && v<=oddMax);
+      if(!oddsOk) badOdds++;
+
+      const hg = toNum(r.FTHG), ag = toNum(r.FTAG);
+      const goalsOk = Number.isFinite(hg) && Number.isFinite(ag) && hg>=0 && ag>=0;
+      const goals = goalsOk ? (hg+ag) : NaN;
+
+      merged.push({
+        dateTs: q.dateTs,
+        dateStr: q.dateStr,
+        home: q.home_team,
+        away: q.away_team,
+        result: r.result,
+        draw: r.result==="X",
+        odd1, oddX, odd2,
+        oddsOk,
+        goals
+      });
+      matched++;
+    }
+
+    // If quotes include already played set, matched should be close. If not, still fine for study if enough.
+    const totalMerged = merged.length;
+
+    // Filter rows usable for QUOTE-analyses (need all odds)
+    const mOdds = merged.filter(x=>x.oddsOk);
+
+    // Filter rows usable for GOAL-analyses
+    const mGoals = merged.filter(x=>Number.isFinite(x.goals));
+
+    // Filter rows usable for CROSS (need oddsOk + goals)
+    const mCross = merged.filter(x=>x.oddsOk && Number.isFinite(x.goals));
+
+    // Basic rates
+    const drawsAll = merged.filter(x=>x.draw).length;
+    const drawRateAll = totalMerged ? drawsAll/totalMerged : 0;
+
+    const drawsOdds = mOdds.filter(x=>x.draw).length;
+    const drawRateOdds = mOdds.length ? drawsOdds/mOdds.length : 0;
+
+    const drawsGoals = mGoals.filter(x=>x.draw).length;
+    const drawRateGoals = mGoals.length ? drawsGoals/mGoals.length : 0;
+
+    // Build metrics arrays (only where oddsOk)
+    function metrics(rows){
+      const spread12 = [];
+      const avg12 = [];
+      const x_ratio_min = [];
+      const x_ratio_avg = [];
+      const favAwayFlag = []; // 1 if away is favorite
+      for(const x of rows){
+        const s = Math.abs(x.odd1 - x.odd2);
+        const a = (x.odd1 + x.odd2)/2;
+        const mn = Math.min(x.odd1, x.odd2);
+        spread12.push(s);
+        avg12.push(a);
+        x_ratio_min.push(x.oddX / mn);
+        x_ratio_avg.push(x.oddX / a);
+        const favAway = (x.odd2 < x.odd1) ? 1 : 0;
+        favAwayFlag.push(favAway);
+      }
+      return {spread12, avg12, x_ratio_min, x_ratio_avg, favAwayFlag};
+    }
+
+    const mx = metrics(mOdds.filter(x=>x.draw));
+    const mnx = metrics(mOdds.filter(x=>!x.draw));
+
+    // Goals distribution (from mGoals)
+    function goalBins(rows){
+      const b = { "0":0, "1":0, "2":0, "3":0, "4":0, "5+":0, total:0 };
+      for(const x of rows){
+        if(!Number.isFinite(x.goals)) continue;
+        const g = Math.round(x.goals);
+        if(g<=0) b["0"]++;
+        else if(g===1) b["1"]++;
+        else if(g===2) b["2"]++;
+        else if(g===3) b["3"]++;
+        else if(g===4) b["4"]++;
+        else b["5+"]++;
+        b.total++;
+      }
+      return b;
+    }
+    const gX = goalBins(mGoals.filter(x=>x.draw));
+    const gN = goalBins(mGoals.filter(x=>!x.draw));
+
+    // Spread bin draw rates
+    const spreadBins = makeBins([0,0.2,0.4,0.6,0.8,1.0,1.5], "1.5+");
+    const oddXBins = makeBins([2.5,3.0,3.5,4.0,4.5,5.0], "5.0+");
+    const goalBinsList = [
+      {lo:0,hi:1,label:"0"},
+      {lo:1,hi:2,label:"1"},
+      {lo:2,hi:3,label:"2"},
+      {lo:3,hi:4,label:"3"},
+      {lo:4,hi:5,label:"4"},
+      {lo:5,hi:Infinity,label:"5+"}
+    ];
+
+    function spreadOf(x){ return Math.abs(x.odd1-x.odd2); }
+
+    function binStats(rows, bins, valueFn){
+      const stats = bins.map(b=>({label:b.label, n:0, dx:0}));
+      for(const x of rows){
+        const v = valueFn(x);
+        if(!Number.isFinite(v)) continue;
+        const idx = binIndex(bins, v);
+        if(idx<0) continue;
+        stats[idx].n++;
+        if(x.draw) stats[idx].dx++;
+      }
+      for(const s of stats){
+        s.rate = s.n ? (s.dx/s.n) : NaN;
+      }
+      return stats;
+    }
+
+    const spreadStats = binStats(mOdds, spreadBins, spreadOf);
+    const oddXStats = binStats(mOdds, oddXBins, x=>x.oddX);
+
+    // Cross heatmap: spreadBin × goalBin, show draw rate
+    const heat = [];
+    for(let i=0;i<spreadBins.length;i++){
+      heat[i]=[];
+      for(let j=0;j<goalBinsList.length;j++){
+        heat[i][j]={n:0, dx:0, rate:NaN};
+      }
+    }
+    for(const x of mCross){
+      const si = binIndex(spreadBins, spreadOf(x));
+      const gj = (x.goals<=0)?0 : (x.goals<2)?1 : (x.goals<3)?2 : (x.goals<4)?3 : (x.goals<5)?4 : 5;
+      if(si<0 || gj<0) continue;
+      heat[si][gj].n++;
+      if(x.draw) heat[si][gj].dx++;
+    }
+    for(let i=0;i<spreadBins.length;i++){
+      for(let j=0;j<goalBinsList.length;j++){
+        const c=heat[i][j];
+        c.rate = c.n ? (c.dx/c.n) : NaN;
+      }
+    }
+
+    // Away favorite analysis (only mOdds)
+    const awayFav = mOdds.filter(x=>x.odd2 < x.odd1);
+    const homeFav = mOdds.filter(x=>x.odd1 < x.odd2);
+    const awayFavDrawRate = awayFav.length ? awayFav.filter(x=>x.draw).length/awayFav.length : NaN;
+    const homeFavDrawRate = homeFav.length ? homeFav.filter(x=>x.draw).length/homeFav.length : NaN;
+
+    // Compose output
+    status.textContent = "Render output…";
+
+    const summaryHtml = `
+      <div class="row">
+        <span class="pill"><b>Risultati:</b> ${results.length}</span>
+        <span class="pill"><b>Quote:</b> ${quotes.length}</span>
+        <span class="pill"><b>Merge matchati:</b> ${matched}</span>
+        <span class="pill"><b>Non matchati:</b> ${notMatched}</span>
+        <span class="pill"><b>Odds ok:</b> ${mOdds.length}</span>
+        <span class="pill"><b>Gol ok:</b> ${mGoals.length}</span>
+      </div>
+      <div style="margin-top:10px" class="small">
+        Pareggi (su merge): <b>${drawsAll}/${totalMerged}</b> = <b>${(drawRateAll*100).toFixed(1)}%</b><br>
+        Pareggi (solo righe con quote complete): <b>${drawsOdds}/${mOdds.length}</b> = <b>${(drawRateOdds*100).toFixed(1)}%</b><br>
+        Pareggi (solo righe con gol validi): <b>${drawsGoals}/${mGoals.length}</b> = <b>${(drawRateGoals*100).toFixed(1)}%</b>
+        <span class="muted right">Rig. con quote fuori range/mancanti (tra i matchati): ${badOdds}</span>
+      </div>
+    `;
+
+    const metricTable = (title, a, b) => `
+      ${card(title, `
+        <table>
+          <thead>
+            <tr>
+              <th>Metrica</th>
+              <th>X (media)</th><th>X (mediana)</th><th>X (std)</th>
+              <th>NON-X (media)</th><th>NON-X (mediana)</th><th>NON-X (std)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>spread12 = |odd1-odd2|</td>
+              <td class="mono">${fmt2(mean(a.spread12))}</td><td class="mono">${fmt2(median(a.spread12))}</td><td class="mono">${fmt2(std(a.spread12))}</td>
+              <td class="mono">${fmt2(mean(b.spread12))}</td><td class="mono">${fmt2(median(b.spread12))}</td><td class="mono">${fmt2(std(b.spread12))}</td>
+            </tr>
+            <tr>
+              <td>avg12 = (odd1+odd2)/2</td>
+              <td class="mono">${fmt2(mean(a.avg12))}</td><td class="mono">${fmt2(median(a.avg12))}</td><td class="mono">${fmt2(std(a.avg12))}</td>
+              <td class="mono">${fmt2(mean(b.avg12))}</td><td class="mono">${fmt2(median(b.avg12))}</td><td class="mono">${fmt2(std(b.avg12))}</td>
+            </tr>
+            <tr>
+              <td>x_ratio_min = oddX / min(odd1,odd2)</td>
+              <td class="mono">${fmt2(mean(a.x_ratio_min))}</td><td class="mono">${fmt2(median(a.x_ratio_min))}</td><td class="mono">${fmt2(std(a.x_ratio_min))}</td>
+              <td class="mono">${fmt2(mean(b.x_ratio_min))}</td><td class="mono">${fmt2(median(b.x_ratio_min))}</td><td class="mono">${fmt2(std(b.x_ratio_min))}</td>
+            </tr>
+            <tr>
+              <td>x_ratio_avg = oddX / avg12</td>
+              <td class="mono">${fmt2(mean(a.x_ratio_avg))}</td><td class="mono">${fmt2(median(a.x_ratio_avg))}</td><td class="mono">${fmt2(std(a.x_ratio_avg))}</td>
+              <td class="mono">${fmt2(mean(b.x_ratio_avg))}</td><td class="mono">${fmt2(median(b.x_ratio_avg))}</td><td class="mono">${fmt2(std(b.x_ratio_avg))}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="small muted" style="margin-top:8px">
+          Lettura veloce: se le X hanno spread12 più basso e/o x_ratio_* diverso, il mercato “posiziona” la quota X in modo riconoscibile.
+        </div>
+      `)}
+    `;
+
+    const goalDistHtml = card("Distribuzione gol: X vs NON-X (solo partite con FTHG+FTAG validi)", `
+      <div class="grid" style="grid-template-columns:1fr 1fr">
+        <div>
+          <b>X</b> <span class="muted">(n=${gX.total})</span>
+          <div style="margin-top:8px">
+            ${barRow("0 gol", gX.total? (100*gX["0"]/gX.total):0)}
+            ${barRow("1 gol", gX.total? (100*gX["1"]/gX.total):0)}
+            ${barRow("2 gol", gX.total? (100*gX["2"]/gX.total):0)}
+            ${barRow("3 gol", gX.total? (100*gX["3"]/gX.total):0)}
+            ${barRow("4 gol", gX.total? (100*gX["4"]/gX.total):0)}
+            ${barRow("5+ gol", gX.total? (100*gX["5+"]/gX.total):0)}
+          </div>
+        </div>
+        <div>
+          <b>NON-X</b> <span class="muted">(n=${gN.total})</span>
+          <div style="margin-top:8px">
+            ${barRow("0 gol", gN.total? (100*gN["0"]/gN.total):0)}
+            ${barRow("1 gol", gN.total? (100*gN["1"]/gN.total):0)}
+            ${barRow("2 gol", gN.total? (100*gN["2"]/gN.total):0)}
+            ${barRow("3 gol", gN.total? (100*gN["3"]/gN.total):0)}
+            ${barRow("4 gol", gN.total? (100*gN["4"]/gN.total):0)}
+            ${barRow("5+ gol", gN.total? (100*gN["5+"]/gN.total):0)}
+          </div>
+        </div>
+      </div>
+      <div class="small muted" style="margin-top:10px">
+        Qui non stiamo facendo “under/over”: stiamo guardando <b>forma della distribuzione</b> e varianza. Le X spesso mostrano picchi (0–2 gol) e meno dispersione.
+      </div>
+    `);
+
+    const binTable = (title, stats, valueLabel) => {
+      const rows = stats.map(s=>{
+        const r = Number.isFinite(s.rate) ? (s.rate*100) : NaN;
+        return `<tr>
+          <td>${s.label}</td>
+          <td class="mono">${s.n}</td>
+          <td class="mono">${s.dx}</td>
+          <td class="mono">${Number.isFinite(r)? r.toFixed(1)+"%":"—"}</td>
+        </tr>`;
+      }).join("");
+      return card(title, `
+        <table>
+          <thead>
+            <tr>
+              <th>${valueLabel}</th>
+              <th>N</th>
+              <th>X</th>
+              <th>Rate X</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+        <div class="small muted" style="margin-top:8px">
+          Se alcune fasce hanno Rate X molto più alta della media, lì c’è un “segnale strutturale” (da studiare, non da giocare).
+        </div>
+      `);
+    };
+
+    const favHtml = card("Casa/Trasferta: favorita in casa vs favorita in trasferta (solo righe con quote complete)", `
+      <div class="row">
+        <span class="pill"><b>Favorita in casa:</b> ${homeFav.length} • Rate X: <b>${Number.isFinite(homeFavDrawRate)?(homeFavDrawRate*100).toFixed(1)+"%":"—"}</b></span>
+        <span class="pill"><b>Favorita in trasferta:</b> ${awayFav.length} • Rate X: <b>${Number.isFinite(awayFavDrawRate)?(awayFavDrawRate*100).toFixed(1)+"%":"—"}</b></span>
+      </div>
+      <div class="small muted" style="margin-top:10px">
+        Se “favorita fuori casa” ha Rate X più alta, il concetto di <b>X da trasferta</b> è supportato dal campione.
+      </div>
+    `);
+
+    // Heatmap table
+    let heatHead = `<tr><th>spread12 \\ gol</th>`;
+    for(const gb of goalBinsList) heatHead += `<th>${gb.label}</th>`;
+    heatHead += `</tr>`;
+
+    let heatBody = "";
+    for(let i=0;i<spreadBins.length;i++){
+      heatBody += `<tr><td><b>${spreadBins[i].label}</b></td>`;
+      for(let j=0;j<goalBinsList.length;j++){
+        const c = heat[i][j];
+        const r = Number.isFinite(c.rate) ? c.rate : NaN;
+        const style = Number.isFinite(r) ? shadeForRate(r) : "";
+        const label = c.n ? `${(r*100).toFixed(1)}%` : "—";
+        const tip = c.n ? `title="N=${c.n}, X=${c.dx}, Rate=${(r*100).toFixed(1)}%"` : `title="N=0"`;
+        heatBody += `<td class="mono" style="${style}" ${tip}>${label}<br><span class="muted small">n=${c.n}</span></td>`;
+      }
+      heatBody += `</tr>`;
+    }
+
+    const heatHtml = card("Cross-analysis: Rate X per (spread12 × gol totali) — heatmap", `
+      <div class="small muted">
+        Celle più “scure” = pareggi più frequenti in quel quadrante. Questa è la mappa pratica per capire dove vive davvero la X nel tuo dataset.
+      </div>
+      <table class="heat">
+        <thead>${heatHead}</thead>
+        <tbody>${heatBody}</tbody>
+      </table>
+    `);
+
+    const quickRead = card("Lettura rapida (auto)", `
+      <ul style="margin:10px 0 0 18px;color:#111827">
+        <li>Rate X complessivo (merge): <b>${(drawRateAll*100).toFixed(1)}%</b> su <b>${totalMerged}</b> match.</li>
+        <li>Se <b>spread12</b> nelle X è molto più basso della NON-X → mercato equilibrato = contesto X più probabile.</li>
+        <li>Se <b>favorita in trasferta</b> ha Rate X superiore → supporto al filtro “X da trasferta”.</li>
+        <li>Guarda la heatmap: se emergono “isole” (es. spread basso + 2 gol) → lì puoi costruire filtri mirati, senza inventare nulla.</li>
+      </ul>
+    `);
+
+    out.innerHTML =
+      card("Sintesi dataset", summaryHtml) +
+      metricTable("Quote: confronto X vs NON-X (solo match con quote complete)", mx, mnx) +
+      binTable("Rate X per fascia spread12 = |odd1-odd2| (quote complete)", spreadStats, "Spread12") +
+      binTable("Rate X per fascia quota X (quote complete)", oddXStats, "Quota X") +
+      favHtml +
+      goalDistHtml +
+      heatHtml +
+      quickRead;
+
+    status.textContent = "Completato ✅";
+  }catch(e){
+    status.textContent = "Errore: " + e;
+  }
+}
+</script>
+
+</body>
+</html>
