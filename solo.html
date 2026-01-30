@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="it">
 <head>
@@ -58,6 +57,7 @@
         <span class="pill">✅ SOLO X</span>
         <span class="pill">✅ GA difesa</span>
         <span class="pill">✅ spread12</span>
+        <span class="pill">✅ x_ratio_avg</span>
         <span class="pill">✅ bootstrap floor</span>
       </div>
       <div style="margin-top:10px" class="muted">
@@ -80,7 +80,7 @@
 
     <label>GA max (difesa)</label><input id="gaMax" type="number" value="1.20" step="0.05" style="width:110px">
 
-    <label>Spread max (|1-2|)</label><input id="spreadMax" type="number" value="6.5" step="0.1" style="width:110px">
+    <label>Spread max (|1-2|)</label><input id="spreadMax" type="number" value="3.5" step="0.1" style="width:110px">
 
     <label>Output</label><input id="topK" type="number" value="2" step="1" style="width:90px">
   </div>
@@ -124,12 +124,14 @@
 
 <script>
 /* =========================
-   Syncras – SOLO X (2 CSV) – versione alleggerita
-   CORE:
-   - pX base da storico+recenti (Home/Away forzato ON)
-   - filtro difesa: GA recenti per entrambe ≤ soglia
-   - spread12 = |odd1-odd2| (dato “forte” da DrawLab)
-   - favorita trasferta = micro bonus (odd2 < odd1)
+   Syncras – SOLO X (2 CSV) – versione alleggerita + regole DrawLab/Gemini
+   AGGIUNTE (Gemini/DrawLab):
+   - MURO spread12: sopra 3.5 crollo rate X (default spreadMax=3.5)
+   - ZONA ORO spread12: 0.5–1.5 -> bonus
+   - x_ratio_avg = oddX / avg(odd1,odd2) -> bonus in 1.2–1.6
+   - Pattern "home resistance": odd1 in [2.8..3.4] e odd2 in [2.1..2.5] (quando favAway) -> bonus
+   - Pivot X≈3.25: se spread non stretto, leggero malus (evita “esca”)
+   - GA: se spread ultra-stretto (<0.5), GA leggermente più permissivo
    - bootstrap floor: p05 > implied (1/oddX)
 ========================= */
 
@@ -197,8 +199,7 @@ function median(arr){
 function weights(n, mode){
   if(mode==="none") return Array.from({length:n}, ()=>1);
   if(mode==="linear") return Array.from({length:n}, (_,i)=>i+1);
-  // exp aggressivo
-  return Array.from({length:n}, (_,i)=>Math.pow(1.5, i));
+  return Array.from({length:n}, (_,i)=>Math.pow(1.5, i)); // exp aggressivo
 }
 function resultForTeam(team,r){
   if(r.result==="X") return "D";
@@ -247,7 +248,6 @@ function isPlayed(r){ return (r.result==="1"||r.result==="X"||r.result==="2"); }
 function calcPX(results, match, N, decayMode){
   const prev = results.filter(x => isPlayed(x) && Number.isFinite(x.dateTs) && x.dateTs < match.dateTs);
 
-  // Home/Away forzato ON
   const homeHist = prev.filter(x=>x.home_team===match.home_team);
   const awayHist = prev.filter(x=>x.away_team===match.away_team);
 
@@ -290,23 +290,40 @@ function teamRecentConceded(results, team, N, dateTs){
   return out;
 }
 
-/* ---------- spread12 factor (dato “forte” da DrawLab) ---------- */
-function spreadFactor(spread12, favAway){
-  // idea: spread basso = più equilibrio = X più probabile
+/* ---------- fattore strutturale quote (spread + ratio + pattern) ---------- */
+function structFactor({spread12, xRatioAvg, odd1, odd2, oddX, favAway}){
   let f = 1.0;
 
-  if(!Number.isFinite(spread12)) return 1.0;
+  // ZONA ORO spread12 0.5–1.5 (rate X alto)
+  if(Number.isFinite(spread12) && spread12 >= 0.5 && spread12 <= 1.5) f += 0.06;
+  else if(Number.isFinite(spread12) && spread12 < 0.5) f += 0.04; // ultra stretto
+  else if(Number.isFinite(spread12) && spread12 <= 3.5) f += 0.02; // ancora “ok”
+  // oltre 3.5: di solito scartiamo a monte (muro), qui non serve penalizzare
 
-  if(spread12 <= 1.0) f += 0.06;
-  else if(spread12 <= 2.5) f += 0.04;
-  else if(spread12 <= 3.5) f += 0.02;
-  else if(spread12 <= 5.0) f -= 0.03;
-  else f -= 0.08;
+  // x_ratio_avg: zona migliore 1.2–1.6
+  if(Number.isFinite(xRatioAvg) && xRatioAvg >= 1.2 && xRatioAvg <= 1.6){
+    f += (xRatioAvg >= 1.4 ? 0.06 : 0.04);
+  }
 
-  // micro bonus: favorita trasferta (non regola dura)
+  // Pattern "home resistance + favAway"
+  // odd1 2.80–3.40 e odd2 2.10–2.50 (con favAway)
+  if(favAway &&
+     Number.isFinite(odd1) && Number.isFinite(odd2) &&
+     odd1 >= 2.80 && odd1 <= 3.40 &&
+     odd2 >= 2.10 && odd2 <= 2.50){
+    f += 0.05;
+  }
+
+  // Pivot 3.25: se X in 3.15–3.35 e spread NON stretto (>0.5) -> malus (evita “esca”)
+  if(Number.isFinite(oddX) && oddX >= 3.15 && oddX <= 3.35 &&
+     Number.isFinite(spread12) && spread12 > 0.5){
+    f -= 0.04;
+  }
+
+  // micro bonus favorita trasferta (non regola dura)
   if(favAway) f += 0.02;
 
-  return Math.max(0.85, Math.min(1.10, f));
+  return Math.max(0.80, Math.min(1.20, f));
 }
 
 /* ---------- bootstrap ---------- */
@@ -392,7 +409,7 @@ async function run(){
     const qMax=+document.getElementById("qMax").value||4.8;
     const odds12Min=+document.getElementById("odds12Min").value||1.70;
     const gaMax=+document.getElementById("gaMax").value||1.2;
-    const spreadMax=+document.getElementById("spreadMax").value||6.5;
+    const spreadMax=+document.getElementById("spreadMax").value||3.5;
     const topK=Math.max(1,+document.getElementById("topK").value||2);
 
     const gaAgg=document.getElementById("gaAgg").value;
@@ -410,16 +427,21 @@ async function run(){
 
       if(!Number.isFinite(oddX) || oddX<qMin || oddX>qMax) continue;
 
-      // serve 1 e 2 per spread12 e contesto: se mancano, scarta (coerenza con studio)
+      // coerente con lo studio: serve 1 e 2
       if(!Number.isFinite(odd1) || !Number.isFinite(odd2)) continue;
 
       if(odd1 < odds12Min) continue;
       if(odd2 < odds12Min) continue;
 
       const spread12 = Math.abs(odd1-odd2);
+
+      // MURO spread (default 3.5)
       if(!Number.isFinite(spread12) || spread12 > spreadMax) continue;
 
       const favAway = (odd2 < odd1);
+
+      const avg12 = (odd1 + odd2) / 2;
+      const xRatioAvg = (Number.isFinite(avg12) && avg12>0) ? (oddX / avg12) : NaN;
 
       const match = { dateTs:q.dateTs, dateStr:q.dateStr, home_team:q.home_team, away_team:q.away_team };
 
@@ -427,7 +449,7 @@ async function run(){
       const pX = calcPX(results, match, N, decayMode);
       if(!Number.isFinite(pX) || pX<=0) continue;
 
-      // filtro difesa (GA) – entrambe sotto soglia
+      // GA difesa – entrambe sotto soglia
       const gaH=teamRecentConceded(results, match.home_team, N, match.dateTs);
       const gaA=teamRecentConceded(results, match.away_team, N, match.dateTs);
       if(gaH.length<3 || gaA.length<3) continue;
@@ -436,10 +458,15 @@ async function run(){
       const gaHn = agg(gaH);
       const gaAn = agg(gaA);
       if(!Number.isFinite(gaHn) || !Number.isFinite(gaAn)) continue;
-      if(gaHn > gaMax || gaAn > gaMax) continue;
 
-      // spread factor
-      const sf = spreadFactor(spread12, favAway);
+      // GA più permissivo se spread ultra-stretto (<0.5)
+      const gaMaxEff = (Number.isFinite(spread12) && spread12 < 0.5) ? (gaMax + 0.15) : gaMax;
+
+      if(gaHn > gaMaxEff || gaAn > gaMaxEff) continue;
+
+      // fattore strutturale (spread zona oro + x_ratio_avg + pattern + pivot)
+      const sf = structFactor({spread12, xRatioAvg, odd1, odd2, oddX, favAway});
+
       const pX_adj = Math.min(0.65, pX * sf);
 
       const EV = ev(pX_adj, oddX);
@@ -448,7 +475,7 @@ async function run(){
       const implied = 1/oddX;
       const fair = 1/pX_adj;
 
-      // bootstrap su pX base, poi applico stesso sf (approssimazione coerente)
+      // bootstrap su pX base, poi applico stesso sf
       const ci0 = bootstrapPX(results, match, N, decayMode, B);
       const ci = {
         p05: Number.isFinite(ci0.p05) ? Math.min(0.65, ci0.p05 * sf) : NaN,
@@ -464,9 +491,9 @@ async function run(){
 
       candidates.push({
         match, odd1, oddX, odd2,
-        spread12, favAway,
+        spread12, avg12, xRatioAvg, favAway,
         pX, sf, pX_adj,
-        gaHn, gaAn,
+        gaHn, gaAn, gaMaxEff,
         fair, EV, implied, ci, width
       });
     }
@@ -495,17 +522,32 @@ async function run(){
       return `
         <tr>
           <td><b>${x.match.home_team} — ${x.match.away_team}</b><br><small>${x.match.dateStr}</small></td>
-          <td class="mono">${fmtNum(x.odd1)} / <b>${fmtNum(x.oddX)}</b> / ${fmtNum(x.odd2)}
-            <br><small class="muted">spread12=${x.spread12.toFixed(2)} • ${x.favAway? "favAway=ON":"favAway=OFF"}</small>
+          <td class="mono">
+            ${fmtNum(x.odd1)} / <b>${fmtNum(x.oddX)}</b> / ${fmtNum(x.odd2)}
+            <br><small class="muted">
+              spread12=${x.spread12.toFixed(2)} • x_ratio_avg=${Number.isFinite(x.xRatioAvg)?x.xRatioAvg.toFixed(2):"—"} • ${x.favAway? "favAway=ON":"favAway=OFF"}
+            </small>
           </td>
-          <td><b>${fmtPct(x.pX_adj)}</b><br><small class="muted">base ${fmtPct(x.pX)} • sf×${x.sf.toFixed(2)}</small></td>
+          <td>
+            <b>${fmtPct(x.pX_adj)}</b>
+            <br><small class="muted">base ${fmtPct(x.pX)} • sf×${x.sf.toFixed(2)}</small>
+          </td>
           <td class="mono">${fmtNum(x.fair)}</td>
-          <td class="${evCls}"><b>${(x.EV*100>=0?"+":"")}${(x.EV*100).toFixed(1)}%</b><br><small class="muted">implied ${fmtPct(x.implied)}</small></td>
-          <td class="mono">${fmtPct(x.ci.p05)} – ${fmtPct(x.ci.p95)}
+          <td class="${evCls}">
+            <b>${(x.EV*100>=0?"+":"")}${(x.EV*100).toFixed(1)}%</b>
+            <br><small class="muted">implied ${fmtPct(x.implied)}</small>
+          </td>
+          <td class="mono">
+            ${fmtPct(x.ci.p05)} – ${fmtPct(x.ci.p95)}
             <br><small class="muted">p05 vs implied: ${fmtPct(x.ci.p05)} vs ${fmtPct(x.implied)}</small>
             <br><small>${stab}</small>
           </td>
-          <td><small>GA(H)≈${x.gaHn.toFixed(2)} • GA(A)≈${x.gaAn.toFixed(2)} • N=${N} • decay=${document.getElementById("decay").value} • H/A=ON</small></td>
+          <td>
+            <small>
+              GA(H)≈${x.gaHn.toFixed(2)} • GA(A)≈${x.gaAn.toFixed(2)} • GAmaxEff=${x.gaMaxEff.toFixed(2)}
+              • N=${N} • decay=${document.getElementById("decay").value} • H/A=ON
+            </small>
+          </td>
         </tr>`;
     }).join("");
 
@@ -535,7 +577,8 @@ async function run(){
 
         <small style="display:block;margin-top:10px">
           Filtri: EV≥${(evMin*100).toFixed(0)}%, X=[${qMin}-${qMax}], 1&2≥${odds12Min.toFixed(2)},
-          GA≤${gaMax.toFixed(2)} (entrambe), spread12≤${spreadMax.toFixed(1)},
+          GA≤${gaMax.toFixed(2)} (entrambe; +0.15 se spread&lt;0.5),
+          spread12≤${spreadMax.toFixed(1)} (muro consigliato 3.5),
           bootstrapFloor=${bootFloor?"ON":"OFF"}, bootstrap B=${B}. Home/Away forzato ON.
         </small>
       </div>`;
