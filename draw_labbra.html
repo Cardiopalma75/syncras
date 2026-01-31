@@ -618,60 +618,7 @@ async function analyze(){
       </div>
       <div class="small muted" style="margin-top:10px">
         Se “favorita fuori casa” ha Rate X più alta, il concetto di <b>X da trasferta</b> è supportato dal campione.
-      </div>
-    `);
-
-    // Heatmap table
-    let heatHead = `<tr><th>spread12 \\ gol</th>`;
-    for(const gb of goalBinsList) heatHead += `<th>${gb.label}</th>`;
-    heatHead += `</tr>`;
-
-    let heatBody = "";
-    for(let i=0;i<spreadBins.length;i++){
-      heatBody += `<tr><td><b>${spreadBins[i].label}</b></td>`;
-      for(let j=0;j<goalBinsList.length;j++){
-        const c = heat[i][j];
-        const r = Number.isFinite(c.rate) ? c.rate : NaN;
-        const style = Number.isFinite(r) ? shadeForRate(r) : "";
-        const label = c.n ? `${(r*100).toFixed(1)}%` : "—";
-        const tip = c.n ? `title="N=${c.n}, X=${c.dx}, Rate=${(r*100).toFixed(1)}%"` : `title="N=0"`;
-        heatBody += `<td class="mono" style="${style}" ${tip}>${label}<br><span class="muted small">n=${c.n}</span></td>`;
-      }
-      heatBody += `</tr>`;
-    }
-
-    const heatHtml = card("Cross-analysis: Rate X per (spread12 × gol totali) — heatmap", `
-      <div class="small muted">
-        Celle più “scure” = pareggi più frequenti in quel quadrante. Questa è la mappa pratica per capire dove vive davvero la X nel tuo dataset.
-      </div>
-      <table class="heat">
-        <thead>${heatHead}</thead>
-        <tbody>${heatBody}</tbody>
-      </table>
-    `);
-
-    const quickRead = card("Lettura rapida (auto)", `
-      <ul style="margin:10px 0 0 18px;color:#111827">
-        <li>Rate X complessivo (merge): <b>${(drawRateAll*100).toFixed(1)}%</b> su <b>${totalMerged}</b> match.</li>
-        <li>Se <b>spread12</b> nelle X è molto più basso della NON-X → mercato equilibrato = contesto X più probabile.</li>
-        <li>Se <b>favorita in trasferta</b> ha Rate X superiore → supporto al filtro “X da trasferta”.</li>
-        <li>Guarda la heatmap: se emergono “isole” (es. spread basso + 2 gol) → lì puoi costruire filtri mirati, senza inventare nulla.</li>
-      </ul>
-    `);
-
-    out.innerHTML =
-      card("Sintesi dataset", summaryHtml) +
-      metricTable("Quote: confronto X vs NON-X (solo match con quote complete)", mx, mnx) +
-      binTable("Rate X per fascia spread12 = |odd1-odd2| (quote complete)", spreadStats, "Spread12") +
-      binTable("Rate X per fascia quota X (quote complete)", oddXStats, "Quota X") +
-      favHtml +
-      goalDistHtml +
-      heatHtml +
-      quickRead;
-
-    status.textContent = "Completato ✅";
-  }catch(e){
-    status.textContent = "Errore: " + e;
+      </div>: " + e;
   }
 }
 </script>
