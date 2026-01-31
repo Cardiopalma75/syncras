@@ -1,0 +1,573 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Syncras – Backtest “Segnala X” (Quote + Risultati • Offline)</title>
+<style>
+  :root{--violet:#6C5CE7;--bg:#f7f7fb;--card:#fff;--border:#e7e7f5;--text:#111827;--muted:#6b7280}
+  body{font-family:system-ui,Arial;margin:18px;background:var(--bg);color:var(--text)}
+  h2{margin:0 0 10px 0}
+  .muted{color:var(--muted)}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;margin-top:14px}
+  input,select,button{padding:9px;border-radius:12px;border:1px solid #cfcfe6}
+  input[type="file"]{padding:10px}
+  button{cursor:pointer;background:var(--violet);color:#fff;border:0;font-weight:900;padding:12px 14px;border-radius:14px}
+  button:hover{filter:brightness(.96)}
+  .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+  .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+  @media(max-width:820px){.grid{grid-template-columns:1fr}}
+  .pill{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--border);background:#fafafe;border-radius:999px;padding:6px 10px;font-size:12px;color:#555}
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  hr{border:0;border-top:1px solid #eee;margin:14px 0}
+  table{border-collapse:collapse;width:100%;margin-top:10px;background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden}
+  th,td{border-bottom:1px solid #eee;padding:8px;text-align:right;font-size:13px;vertical-align:top}
+  th{background:#fafafe;color:#333;font-size:12px}
+  th:first-child,td:first-child{text-align:left}
+  .ok{color:#0a7} .bad{color:#c22} .warn{color:#d97706}
+  .small{font-size:12px;color:#555}
+</style>
+</head>
+<body>
+
+<h2>Syncras – Backtest “Segnala X” (Quote + Risultati • Offline)</h2>
+<div class="muted">
+  Scopo: dato un settaggio (filtri), misurare <b>quante X / 1 / 2</b> escono tra i match selezionati.
+  <br><b>Studio informativo</b>. Nessun invito a scommettere.
+</div>
+
+<div class="card">
+  <div class="grid">
+    <div>
+      <label><b>CSV RISULTATI</b></label><br>
+      <input id="csvResultsFile" type="file" accept=".csv,text/csv" style="width:100%">
+      <small class="muted">Attesi: <span class="mono">date, home_team, away_team, ftr/result, fthg, ftag</span></small>
+    </div>
+    <div>
+      <label><b>CSV QUOTE</b></label><br>
+      <input id="csvQuotesFile" type="file" accept=".csv,text/csv" style="width:100%">
+      <small class="muted">Attesi: <span class="mono">date, home_team, away_team, b365_1, b365_x, b365_2</span></small>
+    </div>
+    <div>
+      <label><b>Note</b></label><br>
+      <div class="muted">
+        Merge su <b>data + home + away</b> (normalizzati).<br>
+        Fix importante: risultati FTR <b>H/D/A</b> ora diventano <b>1/X/2</b>.
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div class="row">
+    <label><b>Normalizza squadre</b></label>
+    <select id="teamNorm">
+      <option value="trimLower" selected>trim+lower</option>
+      <option value="keepCase">solo trim</option>
+    </select>
+
+    <label>N recenti</label>
+    <input id="nRecent" type="number" value="10" min="3" step="1" style="width:90px">
+
+    <label>Decay</label>
+    <select id="decay">
+      <option value="none" selected>Nessuno</option>
+      <option value="exp">Esponenziale</option>
+    </select>
+
+    <label>Quota X min</label>
+    <input id="xMin" type="number" value="3.0" step="0.05" style="width:90px">
+
+    <label>Quota X max</label>
+    <input id="xMax" type="number" value="4.8" step="0.05" style="width:90px">
+
+    <label>1 e 2 ≥</label>
+    <input id="odds12Min" type="number" value="1.70" step="0.01" style="width:90px">
+
+    <label>Spread max |1-2|</label>
+    <input id="spreadMax" type="number" value="3.0" step="0.1" style="width:90px">
+
+    <label>EV min (%)</label>
+    <input id="evMin" type="number" value="30" step="1" style="width:90px">
+
+    <label>Bootstrap floor</label>
+    <select id="bootFloor">
+      <option value="on" selected>ON</option>
+      <option value="off">OFF</option>
+    </select>
+
+    <label>B</label>
+    <input id="bootB" type="number" value="600" step="50" style="width:90px">
+
+    <label>Filtro difesa GA</label>
+    <select id="gaOn">
+      <option value="on" selected>ON</option>
+      <option value="off">OFF</option>
+    </select>
+
+    <label>GA max</label>
+    <input id="gaMax" type="number" value="1.20" step="0.05" style="width:90px">
+
+    <label>GA agg</label>
+    <select id="gaAgg">
+      <option value="median" selected>Mediana</option>
+      <option value="mean">Media</option>
+    </select>
+
+    <label>Mostra lista selezionati</label>
+    <select id="showList">
+      <option value="on" selected>ON</option>
+      <option value="off">OFF</option>
+    </select>
+
+    <button onclick="runBacktest()">Esegui backtest</button>
+    <span id="status" class="muted"></span>
+  </div>
+</div>
+
+<div id="out"></div>
+
+<script>
+/* =========================
+   Backtest “Segnala X”
+   - carica 2 CSV offline
+   - merge per data+home+away
+   - stima P(X) usando storico precedente (N recenti) per ciascuna squadra
+   - calcola EV su quota X
+   - applica filtri
+   - output: conteggi X/1/2 su selezionati
+========================= */
+
+/* ---------- CSV parser base (virgola o ;, quote basic) ---------- */
+function parseCSV(text){
+  const rows=[];
+  let row=[], cur="", inQ=false;
+  for(let i=0;i<text.length;i++){
+    const ch=text[i], nx=text[i+1];
+    if(ch === '"'){
+      if(inQ && nx === '"'){ cur+='"'; i++; }
+      else inQ = !inQ;
+      continue;
+    }
+    if(!inQ && (ch===',' || ch===';')){ row.push(cur); cur=""; continue; }
+    if(!inQ && ch==='\n'){ row.push(cur); rows.push(row); row=[]; cur=""; continue; }
+    if(!inQ && ch==='\r') continue;
+    cur+=ch;
+  }
+  row.push(cur); rows.push(row);
+  if(rows.length && rows[rows.length-1].every(c=>String(c).trim()==="")) rows.pop();
+  const header = (rows[0]||[]).map(x=>String(x).trim());
+  return rows.slice(1).map(r=>{
+    const o={};
+    for(let i=0;i<header.length;i++){
+      o[header[i]] = String(r[i]??"").trim().replace(/"/g,"");
+    }
+    return o;
+  });
+}
+
+function normKey(s){ return String(s||"").trim().toLowerCase(); }
+function pick(o, keys){
+  const map={};
+  for(const k in o) map[normKey(k)] = o[k];
+  for(const k of keys){
+    const v = map[normKey(k)];
+    if(v!==undefined) return v;
+  }
+  return undefined;
+}
+function toNum(x){
+  const s=String(x??"").trim().replace(",",".");
+  const n=Number(s);
+  return Number.isFinite(n) ? n : NaN;
+}
+
+/* ---------- date parser robust: YYYY-MM-DD, DD/MM/YYYY, DD/MM/YY ---------- */
+function parseDateTs(s){
+  const t = String(s ?? "").trim();
+  if(!t) return NaN;
+  if(/^\d{4}-\d{2}-\d{2}$/.test(t)) return Date.parse(t+"T00:00:00Z");
+  let m = t.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if(m){
+    const dd=+m[1], mm=+m[2], yyyy=+m[3];
+    const iso = `${yyyy.toString().padStart(4,'0')}-${mm.toString().padStart(2,'0')}-${dd.toString().padStart(2,'0')}`;
+    return Date.parse(iso+"T00:00:00Z");
+  }
+  m = t.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2})$/);
+  if(m){
+    const dd=+m[1], mm=+m[2], yy=+m[3];
+    const yyyy = (yy>=70) ? (1900+yy) : (2000+yy);
+    const iso = `${yyyy}-${mm.toString().padStart(2,'0')}-${dd.toString().padStart(2,'0')}`;
+    return Date.parse(iso+"T00:00:00Z");
+  }
+  const x = Date.parse(t);
+  return Number.isFinite(x) ? x : NaN;
+}
+
+function teamNormFn(mode, s){
+  const t = String(s||"").trim();
+  if(mode==="trimLower") return t.toLowerCase();
+  return t;
+}
+
+function keyOf(dateTs, home, away){
+  return `${dateTs}|${home}|${away}`;
+}
+
+function isPlayed(res){
+  return (res==="1"||res==="X"||res==="2");
+}
+
+async function readFileText(file){
+  return new Promise((res,rej)=>{
+    const r=new FileReader();
+    r.onload=()=>res(String(r.result||""));
+    r.onerror=rej;
+    r.readAsText(file);
+  });
+}
+
+function fmtPct(p){ return (p*100).toFixed(1)+"%"; }
+function fmt1(x){ return Number.isFinite(x)? x.toFixed(1):"—"; }
+function fmt2(x){ return Number.isFinite(x)? x.toFixed(2):"—"; }
+
+function median(arr){
+  const a=arr.slice().sort((x,y)=>x-y);
+  const n=a.length; if(!n) return NaN;
+  const mid=Math.floor(n/2);
+  return n%2 ? a[mid] : (a[mid-1]+a[mid])/2;
+}
+function mean(arr){
+  if(!arr.length) return NaN;
+  let s=0; for(const x of arr) s+=x;
+  return s/arr.length;
+}
+
+function weightFor(i, n, mode){
+  // i = 0 oldest ... n-1 newest
+  if(mode==="exp"){
+    // più peso ai più recenti
+    const k = 0.30; // rigidità: più alto = più peso ai recenti
+    const age = (n-1-i);
+    return Math.exp(-k*age);
+  }
+  return 1;
+}
+
+function aggGA(values, mode, decay){
+  if(!values.length) return NaN;
+  if(decay==="exp"){
+    // weighted mean/median (approx: weighted mean for simplicity)
+    let num=0, den=0;
+    const n=values.length;
+    for(let i=0;i<n;i++){
+      const w=weightFor(i,n,"exp");
+      num += w*values[i];
+      den += w;
+    }
+    return den? (num/den):NaN;
+  }
+  return (mode==="median") ? median(values) : mean(values);
+}
+
+function estimatePX(teamHistHome, teamHistAway){
+  // stima semplicissima: media tra draw-rate home e draw-rate away
+  // teamHist: array di risultati precedenti "1/X/2"
+  function drawRate(hist){
+    if(!hist.length) return NaN;
+    let dx=0; for(const r of hist) if(r==="X") dx++;
+    return dx/hist.length;
+  }
+  const a=drawRate(teamHistHome);
+  const b=drawRate(teamHistAway);
+  if(Number.isFinite(a) && Number.isFinite(b)) return (a+b)/2;
+  if(Number.isFinite(a)) return a;
+  if(Number.isFinite(b)) return b;
+  return NaN;
+}
+
+function impliedFromOdd(odd){
+  return (odd>0) ? (1/odd) : NaN;
+}
+
+function card(title, inner){
+  return `<div class="card"><b>${title}</b><div style="margin-top:10px">${inner}</div></div>`;
+}
+
+/* ---------- MAIN ---------- */
+async function runBacktest(){
+  const status = document.getElementById("status");
+  const out = document.getElementById("out");
+  out.innerHTML = "";
+  status.textContent = "Carico CSV…";
+
+  try{
+    const fRes = document.getElementById("csvResultsFile").files?.[0];
+    const fQuo = document.getElementById("csvQuotesFile").files?.[0];
+    if(!fRes || !fQuo){
+      status.textContent = "⚠️ Seleziona entrambi i CSV.";
+      return;
+    }
+
+    const teamMode = document.getElementById("teamNorm").value;
+    const nRecent = Math.max(3, +document.getElementById("nRecent").value || 10);
+    const decay = document.getElementById("decay").value;
+
+    const xMin = +document.getElementById("xMin").value || 3.0;
+    const xMax = +document.getElementById("xMax").value || 4.8;
+    const odds12Min = +document.getElementById("odds12Min").value || 1.70;
+    const spreadMax = +document.getElementById("spreadMax").value || 3.0;
+    const evMin = (+document.getElementById("evMin").value || 30)/100;
+
+    const bootFloor = document.getElementById("bootFloor").value; // on/off (placeholder)
+    const bootB = +document.getElementById("bootB").value || 600;
+
+    const gaOn = document.getElementById("gaOn").value;
+    const gaMax = +document.getElementById("gaMax").value || 1.20;
+    const gaAgg = document.getElementById("gaAgg").value;
+    const showList = document.getElementById("showList").value;
+
+    const resText = await readFileText(fRes);
+    const quoText = await readFileText(fQuo);
+
+    status.textContent = "Parsing & merge…";
+
+    // results
+    const results = parseCSV(resText).map(o=>{
+      const dateStr = String(pick(o,["date","match_date","data","giorno","Date","DATA"])||"").trim();
+      const dateTs = parseDateTs(dateStr);
+
+      const home = teamNormFn(teamMode, pick(o,["home_team","hometeam","HomeTeam","home","casa"])||"");
+      const away = teamNormFn(teamMode, pick(o,["away_team","awayteam","AwayTeam","away","trasferta"])||"");
+
+      let result = String(pick(o,["ftr","FTR","result","Result","esito","ft"])||"").trim().toUpperCase();
+
+      // ✅ FIX: supporto FTR H/D/A
+      if(result==="D") result="X";
+      if(result==="H") result="1";
+      if(result==="A") result="2";
+
+      const fthg = toNum(pick(o,["fthg","FTHG","hg","home_goals"]) );
+      const ftag = toNum(pick(o,["ftag","FTAG","ag","away_goals"]) );
+
+      return {dateStr,dateTs,home,away,result,fthg,ftag};
+    }).filter(r=>r.home && r.away && Number.isFinite(r.dateTs) && isPlayed(r.result));
+
+    // quotes
+    const quotes = parseCSV(quoText).map(o=>{
+      const dateStr = String(pick(o,["date","match_date","data","giorno","Date","DATA"])||"").trim();
+      const dateTs = parseDateTs(dateStr);
+
+      const home = teamNormFn(teamMode, pick(o,["home_team","hometeam","HomeTeam","home","casa"])||"");
+      const away = teamNormFn(teamMode, pick(o,["away_team","awayteam","AwayTeam","away","trasferta"])||"");
+
+      const odd1 = toNum(pick(o,["b365_1","b365_h","B365H","odd1","1"]));
+      const oddX = toNum(pick(o,["b365_x","B365D","oddx","X","draw"]));
+      const odd2 = toNum(pick(o,["b365_2","b365_a","B365A","odd2","2"]));
+
+      return {dateStr,dateTs,home,away,odd1,oddX,odd2};
+    }).filter(q=>q.home && q.away && Number.isFinite(q.dateTs));
+
+    // map results
+    const resMap = new Map();
+    for(const r of results){
+      resMap.set(keyOf(r.dateTs,r.home,r.away), r);
+    }
+
+    // merge
+    const merged=[];
+    let matched=0, notMatched=0;
+    for(const q of quotes){
+      const k = keyOf(q.dateTs,q.home,q.away);
+      const r = resMap.get(k);
+      if(!r){ notMatched++; continue; }
+      merged.push({
+        dateTs:q.dateTs,
+        dateStr:q.dateStr,
+        home:q.home,
+        away:q.away,
+        odd1:q.odd1, oddX:q.oddX, odd2:q.odd2,
+        result:r.result,
+        fthg:r.fthg, ftag:r.ftag
+      });
+      matched++;
+    }
+
+    // sort by date for "previous matches"
+    merged.sort((a,b)=>a.dateTs-b.dateTs);
+
+    // Build per-team history as we walk forward
+    const teamHist = new Map(); // team -> array of results (W/D/L not needed; we just need "X" count)
+    const teamGA = new Map();   // team -> array of goals conceded per match
+
+    function pushHist(team, res, ga){
+      if(!teamHist.has(team)) teamHist.set(team, []);
+      if(!teamGA.has(team)) teamGA.set(team, []);
+      teamHist.get(team).push(res);
+      if(Number.isFinite(ga)) teamGA.get(team).push(ga);
+    }
+
+    // backtest rows
+    const rows=[];
+    for(const m of merged){
+      const h=m.home, a=m.away;
+
+      // take last N previous
+      const hHistAll = (teamHist.get(h) || []);
+      const aHistAll = (teamHist.get(a) || []);
+      const hHist = hHistAll.slice(-nRecent);
+      const aHist = aHistAll.slice(-nRecent);
+
+      // estimate P(X)
+      const pX = estimatePX(hHist, aHist);
+
+      // GA (difesa) on last N conceded
+      const hGAAll = (teamGA.get(h) || []);
+      const aGAAll = (teamGA.get(a) || []);
+      const hGA = hGAAll.slice(-nRecent);
+      const aGA = aGAAll.slice(-nRecent);
+
+      const gaH = aggGA(hGA, gaAgg, decay);
+      const gaA = aggGA(aGA, gaAgg, decay);
+
+      // implied draw
+      const impliedX = impliedFromOdd(m.oddX);
+
+      // EV on draw (p*odd - 1)
+      const ev = (Number.isFinite(pX) && Number.isFinite(m.oddX)) ? (pX*m.oddX - 1) : NaN;
+
+      // spread and constraints
+      const spread = (Number.isFinite(m.odd1) && Number.isFinite(m.odd2)) ? Math.abs(m.odd1-m.odd2) : NaN;
+
+      // filters
+      let ok = true;
+
+      if(!(Number.isFinite(m.oddX) && m.oddX>=xMin && m.oddX<=xMax)) ok=false;
+      if(!(Number.isFinite(m.odd1) && Number.isFinite(m.odd2) && m.odd1>=odds12Min && m.odd2>=odds12Min)) ok=false;
+      if(!(Number.isFinite(spread) && spread<=spreadMax)) ok=false;
+
+      if(!(Number.isFinite(ev) && ev>=evMin)) ok=false;
+
+      if(gaOn==="on"){
+        if(!(Number.isFinite(gaH) && Number.isFinite(gaA) && gaH<=gaMax && gaA<=gaMax)) ok=false;
+      }
+
+      // bootstrap floor placeholder: se ON richiede pX > impliedX
+      if(bootFloor==="on"){
+        if(!(Number.isFinite(pX) && Number.isFinite(impliedX) && pX>impliedX)) ok=false;
+      }
+
+      rows.push({
+        ...m,
+        pX, impliedX, ev, spread,
+        gaH, gaA,
+        ok
+      });
+
+      // update history AFTER computing features
+      // result for home/away doesn't matter for draw-rate; we store just "X" or "N"
+      const resLabel = (m.result==="X") ? "X" : "N";
+      // goals conceded
+      const gaHome = Number.isFinite(m.ftag) ? m.ftag : NaN;
+      const gaAway = Number.isFinite(m.fthg) ? m.fthg : NaN;
+
+      pushHist(h, resLabel, gaHome);
+      pushHist(a, resLabel, gaAway);
+    }
+
+    // baseline = all matched (rows)
+    const baseN = rows.length;
+    const baseX = rows.filter(r=>r.result==="X").length;
+    const base1 = rows.filter(r=>r.result==="1").length;
+    const base2 = rows.filter(r=>r.result==="2").length;
+
+    const selected = rows.filter(r=>r.ok);
+    const selN = selected.length;
+    const selX = selected.filter(r=>r.result==="X").length;
+    const sel1 = selected.filter(r=>r.result==="1").length;
+    const sel2 = selected.filter(r=>r.result==="2").length;
+
+    const baseRateX = baseN ? (baseX/baseN) : 0;
+    const selRateX = selN ? (selX/selN) : 0;
+    const lift = baseRateX ? (selRateX/baseRateX) : NaN;
+
+    // sort selected by EV desc
+    selected.sort((a,b)=>(b.ev-a.ev));
+
+    const pills = `
+      <div class="row">
+        <span class="pill"><b>Matchati:</b> ${matched}</span>
+        <span class="pill"><b>Non matchati:</b> ${notMatched}</span>
+        <span class="pill"><b>Selezionati:</b> ${selN}</span>
+        <span class="pill"><b>Baseline Rate X:</b> ${fmtPct(baseRateX)}</span>
+        <span class="pill"><b>Precisione X (selezionati):</b> ${selN? (selX+"/"+selN+" ("+fmtPct(selRateX)+")"):"—"}</span>
+        <span class="pill"><b>Lift:</b> ${Number.isFinite(lift)? lift.toFixed(2)+"×":"—"}</span>
+      </div>
+    `;
+
+    const table = `
+      <table>
+        <thead><tr><th>Gruppo</th><th>N</th><th>X</th><th>1</th><th>2</th><th>Rate X</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><b>Baseline (tutti i match matchati)</b></td>
+            <td class="mono">${baseN}</td>
+            <td class="mono">${baseX}</td>
+            <td class="mono">${base1}</td>
+            <td class="mono">${base2}</td>
+            <td class="mono">${fmtPct(baseRateX)}</td>
+          </tr>
+          <tr>
+            <td><b>Selezionati dal settaggio</b></td>
+            <td class="mono">${selN}</td>
+            <td class="mono">${selX}</td>
+            <td class="mono">${sel1}</td>
+            <td class="mono">${sel2}</td>
+            <td class="mono">${selN? fmtPct(selRateX):"—"}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="small muted" style="margin-top:8px">
+        Filtri: X[${xMin}-${xMax}], 1&2≥${odds12Min}, spread≤${spreadMax}, EV≥${(evMin*100).toFixed(0)}%,
+        GA=${gaOn.toUpperCase()} (≤${gaMax}, ${gaAgg}${decay!=="none"?", decay="+decay:""}),
+        bootFloor=${bootFloor.toUpperCase()} (B=${bootB}), N=${nRecent}.
+      </div>
+    `;
+
+    let listHtml = "";
+    if(showList==="on" && selN){
+      const maxShow = Math.min(400, selN);
+      let rowsHtml = "";
+      for(let i=0;i<maxShow;i++){
+        const r = selected[i];
+        rowsHtml += `
+          <tr>
+            <td><b>${r.home}</b> — <b>${r.away}</b><br><span class="muted">${r.dateStr||""}</span></td>
+            <td class="mono">${fmt2(r.odd1)} / <b>${fmt2(r.oddX)}</b> / ${fmt2(r.odd2)}<br><span class="muted">spread=${fmt2(r.spread)}</span></td>
+            <td class="mono">${fmtPct(r.pX)}<br><span class="muted">EV ${(r.ev*100).toFixed(1)}%</span></td>
+            <td class="mono">${fmt2(r.gaH)} / ${fmt2(r.gaA)}</td>
+            <td class="mono"><b>${r.result}</b></td>
+          </tr>
+        `;
+      }
+      listHtml = card(`Lista selezionati (max 400, ordinati per EV)`, `
+        <table>
+          <thead><tr><th>Match</th><th>Quote</th><th>P(X) / EV</th><th>GA(H/A)</th><th>Esito</th></tr></thead>
+          <tbody>${rowsHtml}</tbody>
+        </table>
+      `);
+    }
+
+    out.innerHTML =
+      card("Risultati backtest", pills + table) +
+      listHtml;
+
+    status.textContent = "Completato ✅";
+  }catch(e){
+    status.textContent = "Errore: " + e;
+  }
+}
+</script>
+
+</body>
+</html>
