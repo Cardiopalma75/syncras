@@ -238,7 +238,16 @@ function normResultRow(o){
   const home_team = normTeam(pick(o,["home_team","hometeam","home","HomeTeam","CASA"])||"");
   const away_team = normTeam(pick(o,["away_team","awayteam","away","AwayTeam","TRASFERTA"])||"");
   let result = String(pick(o,["result","Result","FTR","esito","ft"])||"").trim().toUpperCase();
-  if(result==="D") result="X";
+
+// mapping completo FTR (H/D/A) -> (1/X/2)
+if(result==="D") result="X";
+else if(result==="H") result="1";
+else if(result==="A") result="2";
+
+// fallback (alcuni csv usano parole)
+else if(result==="HOME") result="1";
+else if(result==="AWAY") result="2";
+else if(result==="DRAW") result="X";
   const FTHG = pick(o,["FTHG","fthg","hg","home_goals","HomeGoals"]) ?? "";
   const FTAG = pick(o,["FTAG","ftag","ag","away_goals","AwayGoals"]) ?? "";
   const dateTs = parseDateTs(dateStr);
