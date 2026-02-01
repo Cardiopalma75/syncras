@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Syncras – Under/Over 2.5 (Offline • 2 CSV • Backtest)</title>
+  <title>Syncras – Under/Over 2.5 (Spiegabile • 2 CSV • Backtest)</title>
   <style>
     :root{--violet:#6C5CE7;--bg:#f7f7fb;--card:#fff;--border:#e7e7f5;--text:#111827;--muted:#6b7280}
     body{font-family:system-ui,Arial;margin:18px;background:var(--bg);color:var(--text)}
@@ -12,12 +12,13 @@
     .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;margin-top:14px}
     .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
     .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-    @media(max-width:820px){.grid{grid-template-columns:1fr}}
+    @media(max-width:920px){.grid{grid-template-columns:1fr}}
     input,select,button{padding:9px;border-radius:12px;border:1px solid #cfcfe6}
     input[type="file"]{padding:10px}
     button{cursor:pointer;background:var(--violet);color:#fff;border:0;font-weight:900;padding:12px 14px;border-radius:14px}
     button:hover{filter:brightness(.96)}
     .btn2{background:#111827}
+    hr{border:none;border-top:1px solid #e9e9f7}
     .pill{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--border);background:#fafafe;border-radius:999px;padding:6px 10px;font-size:12px;color:#555}
     table{border-collapse:collapse;width:100%;margin-top:12px;background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden}
     th,td{border-bottom:1px solid #eee;padding:8px;text-align:right;font-size:13px;vertical-align:top}
@@ -26,15 +27,15 @@
     .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
     .ok{color:#0a7}
     .bad{color:#c22}
-    hr{border:none;border-top:1px solid #e9e9f7}
+    .warn{color:#d97706}
     small{color:#555;line-height:1.35}
   </style>
 </head>
-
 <body>
-  <h2>Syncras – Under/Over 2.5 (Offline • 2 CSV • Backtest)</h2>
+  <h2>Syncras – Under/Over 2.5 (Spiegabile • 2 CSV • Backtest)</h2>
   <div class="muted">
-    Carichi: (1) risultati storici giocati • (2) quote pre-match. Output: statistiche Under/Over 2.5 + partite da attenzionare + backtest (quante “prese” pre-match).
+    Obiettivo: <b>statistiche e percentuali</b> Under/Over 2.5 <b>spiegabili</b> (quota X, spread |1-2|, GA recente).
+    <br>Non servono quote Over/Under. Backtest = “quante partite avrei preso pre-match” + hit-rate (senza ROI).
   </div>
 
   <div class="card">
@@ -46,24 +47,25 @@
       </div>
 
       <div>
-        <label><b>CSV QUOTE (pre-match)</b></label><br>
+        <label><b>CSV QUOTE (pre-match 1/X/2)</b></label><br>
         <input id="csvQuotesFile" type="file" accept=".csv,text/csv" style="width:100%">
         <small class="muted">
-          Colonne consigliate: <span class="mono">date, home_team, away_team, b365_1, b365_x, b365_2</span><br>
-          + per U/O: <span class="mono">b365_u25</span> e/o <span class="mono">b365_o25</span>
+          Colonne attese: <span class="mono">date, home_team, away_team, b365_1, b365_x, b365_2</span>
         </small>
       </div>
 
       <div>
-        <label><b>Che cosa fa</b></label><br>
+        <label><b>Output</b></label><br>
         <div class="row">
-          <span class="pill">✅ Solo U/O 2.5</span>
-          <span class="pill">✅ GA (for+against)</span>
-          <span class="pill">✅ bonus X alta → Over (soft)</span>
-          <span class="pill">✅ Backtest “pre-match prese”</span>
+          <span class="pill">✅ %Over/%Under</span>
+          <span class="pill">✅ per quota X</span>
+          <span class="pill">✅ per spread |1-2|</span>
+          <span class="pill">✅ per GA</span>
+          <span class="pill">✅ selezione top 2</span>
+          <span class="pill">✅ backtest prese</span>
         </div>
         <small class="muted" style="display:block;margin-top:10px">
-          Nessun invito a scommettere. Output informativo.
+          Studio informativo. Nessun invito a scommettere.
         </small>
       </div>
     </div>
@@ -71,22 +73,16 @@
     <hr style="margin:14px 0">
 
     <div class="row">
-      <label>N recenti</label><input id="N" type="number" value="12" style="width:90px">
-      <label>Top N partite</label><input id="topK" type="number" value="10" style="width:110px">
-
-      <label>Mercato</label>
-      <select id="market">
-        <option value="over" selected>OVER 2.5</option>
-        <option value="under">UNDER 2.5</option>
-        <option value="best">AUTO (sceglie Over o Under)</option>
+      <label>N recenti (GA)</label><input id="N" type="number" value="12" style="width:90px">
+      <label>Modalità selezione</label>
+      <select id="mode">
+        <option value="over" selected>SEGNALA OVER</option>
+        <option value="under">SEGNALA UNDER</option>
+        <option value="auto">AUTO (sceglie Over o Under)</option>
       </select>
 
-      <label>EV min (%)</label><input id="evMin" type="number" value="5" style="width:100px">
-      <label>Usa quote U/O se presenti</label>
-      <select id="useUOOdds">
-        <option value="yes" selected>SI</option>
-        <option value="no">NO (solo probabilità)</option>
-      </select>
+      <label>Soglia Prob. min</label><input id="pMin" type="number" value="60" style="width:95px">
+      <label>Top</label><input id="topK" type="number" value="2" style="width:70px">
     </div>
 
     <div class="row" style="margin-top:10px">
@@ -95,50 +91,39 @@
         <option value="on" selected>ON</option>
         <option value="off">OFF</option>
       </select>
+      <label>X ≥</label><input id="xHigh" type="number" value="4.00" step="0.05" style="width:90px">
+      <label>Bonus (+p)</label><input id="xBoost" type="number" value="0.03" step="0.01" style="width:90px">
 
-      <label>Soglia X “alta”</label><input id="xHigh" type="number" value="4.50" step="0.05" style="width:110px">
-      <label>Forza bonus (0–0.08)</label><input id="xBoost" type="number" value="0.03" step="0.01" style="width:120px">
-
-      <span class="pill">Team norm: <span class="mono">trim+lower</span></span>
+      <span class="pill">range/spread = <span class="mono">|quota1 - quota2|</span></span>
     </div>
 
     <hr style="margin:14px 0">
 
     <div class="row">
-      <button id="runBtn" type="button">Trova partite da attenzionare</button>
-      <button id="btBtn" type="button" class="btn2">BACKTEST (pre-match prese)</button>
+      <button id="runBtn" type="button">1) Statistiche + Selezione (top 2)</button>
+      <button id="btBtn" type="button" class="btn2">2) BACKTEST (pre-match prese)</button>
       <span id="status" class="muted"></span>
     </div>
 
     <small style="display:block;margin-top:10px">
-      “Range quota” nelle tabelle = raggruppamento per intervalli (bin) di una variabile (es. quota X, spread |1-2|). Serve a vedere come cambia %Over/%Under al variare di quel valore.
+      Nota: il backtest funziona sulle partite che sono <b>presenti sia nel CSV quote sia nel CSV risultati</b> (matchate per data+home+away).
     </small>
   </div>
 
   <div id="output"></div>
 
 <script>
-/* =========================
-   Under/Over 2.5 – Offline 2 CSV
-   - Stima P(Over2.5) da “expected goals” semplice (GA for/against recente)
-   - Se ci sono quote b365_o25 / b365_u25 calcola EV e quota media
-   - Bonus soft: X alta -> spinge Over (NON filtro duro)
-   - Backtest: quante partite “prese” e quante corrette
-========================= */
-
 function normTeam(s){ return String(s||"").trim().toLowerCase(); }
 function normKey(s){ return String(s||"").trim().toLowerCase(); }
+function toNum(x){ const s=String(x??"").trim().replace(",","."); const n=Number(s); return Number.isFinite(n) ? n : NaN; }
+function fmtPct(x){ return Number.isFinite(x) ? (x*100).toFixed(1)+"%" : "—"; }
+function fmtNum(x){ return Number.isFinite(x) ? x.toFixed(2) : "—"; }
 
 function parseCSV(text){
-  const rows=[];
-  let row=[], cur="", inQ=false;
+  const rows=[]; let row=[], cur="", inQ=false;
   for(let i=0;i<text.length;i++){
     const ch=text[i], nx=text[i+1];
-    if(ch === '"'){
-      if(inQ && nx === '"'){ cur+='"'; i++; }
-      else inQ = !inQ;
-      continue;
-    }
+    if(ch === '"'){ if(inQ && nx === '"'){ cur+='"'; i++; } else inQ = !inQ; continue; }
     if(!inQ && (ch===',' || ch===';')){ row.push(cur); cur=""; continue; }
     if(!inQ && ch==='\n'){ row.push(cur); rows.push(row); row=[]; cur=""; continue; }
     if(!inQ && ch==='\r') continue;
@@ -146,456 +131,397 @@ function parseCSV(text){
   }
   row.push(cur); rows.push(row);
   if(rows.length && rows[rows.length-1].every(c=>String(c).trim()==="")) rows.pop();
-  const header = (rows[0]||[]).map(x=>String(x).trim());
+  const header=(rows[0]||[]).map(x=>String(x).trim());
   return rows.slice(1).map(r=>{
     const o={};
-    for(let i=0;i<header.length;i++){
-      o[header[i]] = String(r[i]??"").trim().replace(/"/g,"");
-    }
+    for(let i=0;i<header.length;i++) o[header[i]] = String(r[i]??"").trim().replace(/"/g,"");
     return o;
   });
 }
-
 function pick(o, keys){
-  const map={};
-  for(const k in o) map[normKey(k)] = o[k];
-  for(const k of keys){
-    const v = map[normKey(k)];
-    if(v!==undefined) return v;
-  }
+  const map={}; for(const k in o) map[normKey(k)] = o[k];
+  for(const k of keys){ const v = map[normKey(k)]; if(v!==undefined) return v; }
   return undefined;
 }
-
-function toNum(x){
-  const s=String(x??"").trim().replace(",",".");
-  const n=Number(s);
-  return Number.isFinite(n) ? n : NaN;
-}
-
-/* date robusta */
 function parseDateTs(s){
-  const t = String(s ?? "").trim();
-  if(!t) return NaN;
-  if(/^\d{4}-\d{2}-\d{2}$/.test(t)) return Date.parse(t + "T00:00:00Z");
-
-  let m = t.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  const t=String(s??"").trim(); if(!t) return NaN;
+  if(/^\d{4}-\d{2}-\d{2}$/.test(t)) return Date.parse(t+"T00:00:00Z");
+  let m=t.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
   if(m){
     const dd=+m[1], mm=+m[2], yyyy=+m[3];
-    const iso = `${yyyy.toString().padStart(4,'0')}-${String(mm).padStart(2,'0')}-${String(dd).padStart(2,'0')}`;
+    const iso=`${String(yyyy).padStart(4,'0')}-${String(mm).padStart(2,'0')}-${String(dd).padStart(2,'0')}`;
     return Date.parse(iso+"T00:00:00Z");
   }
-  m = t.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2})$/);
+  m=t.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2})$/);
   if(m){
     const dd=+m[1], mm=+m[2], yy=+m[3];
-    const yyyy = (yy>=70) ? (1900+yy) : (2000+yy);
-    const iso = `${yyyy}-${String(mm).padStart(2,'0')}-${String(dd).padStart(2,'0')}`;
+    const yyyy=(yy>=70)?(1900+yy):(2000+yy);
+    const iso=`${yyyy}-${String(mm).padStart(2,'0')}-${String(dd).padStart(2,'0')}`;
     return Date.parse(iso+"T00:00:00Z");
   }
-  const x = Date.parse(t);
-  return Number.isFinite(x) ? x : NaN;
+  const x=Date.parse(t); return Number.isFinite(x)?x:NaN;
 }
-
-/* normalizza righe */
 function normResultRow(o){
-  const dateStr = String(pick(o,["date","match_date","data","giorno","Date","DATA"])||"").trim();
-  const home_team = normTeam(pick(o,["home_team","hometeam","home","HomeTeam","CASA"])||"");
-  const away_team = normTeam(pick(o,["away_team","awayteam","away","AwayTeam","TRASFERTA"])||"");
-  const FTHG = pick(o,["FTHG","fthg","hg","home_goals","HomeGoals"]) ?? "";
-  const FTAG = pick(o,["FTAG","ftag","ag","away_goals","AwayGoals"]) ?? "";
-  const dateTs = parseDateTs(dateStr);
-  return {dateStr, dateTs, home_team, away_team, FTHG:String(FTHG).trim(), FTAG:String(FTAG).trim()};
+  const dateStr=String(pick(o,["date","match_date","data","giorno","Date","DATA"])||"").trim();
+  const home_team=normTeam(pick(o,["home_team","hometeam","home","HomeTeam","CASA"])||"");
+  const away_team=normTeam(pick(o,["away_team","awayteam","away","AwayTeam","TRASFERTA"])||"");
+  const FTHG=pick(o,["FTHG","fthg","hg","home_goals","HomeGoals"]) ?? "";
+  const FTAG=pick(o,["FTAG","ftag","ag","away_goals","AwayGoals"]) ?? "";
+  const dateTs=parseDateTs(dateStr);
+  return {dateStr,dateTs,home_team,away_team,FTHG:String(FTHG).trim(),FTAG:String(FTAG).trim()};
 }
-
 function normQuoteRow(o){
-  const dateStr = String(pick(o,["date","match_date","data","giorno","Date","DATA"])||"").trim();
-  const home_team = normTeam(pick(o,["home_team","hometeam","home","HomeTeam","CASA"])||"");
-  const away_team = normTeam(pick(o,["away_team","awayteam","away","AwayTeam","TRASFERTA"])||"");
-  const b365_1 = pick(o,["b365_1","b365_h","B365H","odd1","odds_1","1","home"]) ?? "";
-  const b365_x = pick(o,["b365_x","B365D","oddx","odds_x","X","draw"]) ?? "";
-  const b365_2 = pick(o,["b365_2","b365_a","B365A","odd2","odds_2","2","away"]) ?? "";
-  const b365_u25 = pick(o,["b365_u25","B365U25","odd_u25","u25","under25","under_2_5"]) ?? "";
-  const b365_o25 = pick(o,["b365_o25","B365O25","odd_o25","o25","over25","over_2_5"]) ?? "";
-  const dateTs = parseDateTs(dateStr);
-  return {dateStr, dateTs, home_team, away_team, b365_1:String(b365_1).trim(), b365_x:String(b365_x).trim(), b365_2:String(b365_2).trim(), b365_u25:String(b365_u25).trim(), b365_o25:String(b365_o25).trim()};
+  const dateStr=String(pick(o,["date","match_date","data","giorno","Date","DATA"])||"").trim();
+  const home_team=normTeam(pick(o,["home_team","hometeam","home","HomeTeam","CASA"])||"");
+  const away_team=normTeam(pick(o,["away_team","awayteam","away","AwayTeam","TRASFERTA"])||"");
+  const b365_1=pick(o,["b365_1","b365_h","B365H","odd1","odds_1","1","home"]) ?? "";
+  const b365_x=pick(o,["b365_x","B365D","oddx","odds_x","X","draw"]) ?? "";
+  const b365_2=pick(o,["b365_2","b365_a","B365A","odd2","odds_2","2","away"]) ?? "";
+  const dateTs=parseDateTs(dateStr);
+  return {dateStr,dateTs,home_team,away_team,b365_1:String(b365_1).trim(),b365_x:String(b365_x).trim(),b365_2:String(b365_2).trim()};
 }
+function keyOf(dateTs,home,away){ return `${dateTs}|${home}|${away}`; }
 
-function keyOf(dateTs, home, away){ return `${dateTs}|${home}|${away}`; }
-
-/* FileReader */
 async function readFileText(file){
-  return new Promise((res,rej)=>{
-    const r=new FileReader();
-    r.onload=()=>res(String(r.result||""));
-    r.onerror=rej;
-    r.readAsText(file);
-  });
+  return new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(String(r.result||"")); r.onerror=rej; r.readAsText(file); });
 }
 
-function fmtPct(x){ return Number.isFinite(x) ? (x*100).toFixed(1)+"%" : "—"; }
-function fmtNum(x){ return Number.isFinite(x) ? x.toFixed(2) : "—"; }
-
-/* ======== MODEL: expected goals semplice da GA recente ======== */
-
-/* ritorna array ultimi N match dove compare team */
-function lastNMatches(results, team, N, beforeTs){
-  const prev = results
-    .filter(r => Number.isFinite(r.dateTs) && r.dateTs < beforeTs && (r.home_team===team || r.away_team===team))
-    .sort((a,b)=>b.dateTs - a.dateTs)
-    .slice(0,N);
-  return prev;
-}
-
-/* media gol fatti/subiti ultimi N */
-function teamGFGA(results, team, N, beforeTs){
-  const ms = lastNMatches(results, team, N, beforeTs);
-  let gf=0, ga=0, n=0;
-  for(const m of ms){
-    const hg = toNum(m.FTHG), ag = toNum(m.FTAG);
-    if(!Number.isFinite(hg) || !Number.isFinite(ag)) continue;
-    if(m.home_team===team){ gf += hg; ga += ag; }
-    else { gf += ag; ga += hg; }
-    n++;
-  }
-  if(n<3) return {gf:NaN, ga:NaN, n};
-  return {gf: gf/n, ga: ga/n, n};
-}
-
-/* Poisson CDF fino a k con media mu */
+/* Poisson */
+const factMemo={0:1,1:1,2:2,3:6,4:24,5:120,6:720,7:5040,8:40320,9:362880,10:3628800};
+function factorial(n){ if(factMemo[n]) return factMemo[n]; let r=1; for(let i=2;i<=n;i++) r*=i; return r; }
 function poissonCDF(k, mu){
   if(!Number.isFinite(mu) || mu<=0) return NaN;
   let sum=0;
-  for(let i=0;i<=k;i++){
-    sum += Math.exp(-mu) * Math.pow(mu,i) / factorial(i);
-  }
+  for(let i=0;i<=k;i++) sum += Math.exp(-mu) * Math.pow(mu,i) / factorial(i);
   return sum;
 }
-const factMemo={0:1,1:1,2:2,3:6,4:24,5:120,6:720,7:5040,8:40320,9:362880,10:3628800};
-function factorial(n){
-  if(factMemo[n]) return factMemo[n];
-  let r=1;
-  for(let i=2;i<=n;i++) r*=i;
-  return r;
-}
+function pOver25(mu){ const pLe2=poissonCDF(2,mu); if(!Number.isFinite(pLe2)) return NaN; return 1-pLe2; }
 
-/* Stima media gol totale mu */
-function estimateMu(results, home, away, N, dateTs){
-  const h = teamGFGA(results, home, N, dateTs);
-  const a = teamGFGA(results, away, N, dateTs);
-  if(!Number.isFinite(h.gf) || !Number.isFinite(h.ga) || !Number.isFinite(a.gf) || !Number.isFinite(a.ga)){
-    return {mu:NaN, detail:{h,a}};
+function lastNMatches(results, team, N, beforeTs){
+  return results
+    .filter(r=>Number.isFinite(r.dateTs) && r.dateTs < beforeTs && (r.home_team===team || r.away_team===team))
+    .sort((a,b)=>b.dateTs - a.dateTs)
+    .slice(0,N);
+}
+function teamGFGA(results, team, N, beforeTs){
+  const ms=lastNMatches(results,team,N,beforeTs);
+  let gf=0, ga=0, n=0;
+  for(const m of ms){
+    const hg=toNum(m.FTHG), ag=toNum(m.FTAG);
+    if(!Number.isFinite(hg) || !Number.isFinite(ag)) continue;
+    if(m.home_team===team){ gf+=hg; ga+=ag; } else { gf+=ag; ga+=hg; }
+    n++;
   }
-  // mu totale = media di (attacco casa + difesa ospite) + (attacco ospite + difesa casa)
-  // è volutamente semplice e stabile
-  const muHome = (h.gf + a.ga)/2;
-  const muAway = (a.gf + h.ga)/2;
+  if(n<3) return {gf:NaN,ga:NaN,n};
+  return {gf:gf/n, ga:ga/n, n};
+}
+function estimateMu(results, home, away, N, dateTs){
+  const h=teamGFGA(results,home,N,dateTs);
+  const a=teamGFGA(results,away,N,dateTs);
+  if(!Number.isFinite(h.gf) || !Number.isFinite(h.ga) || !Number.isFinite(a.gf) || !Number.isFinite(a.ga)) return {mu:NaN};
+  const muHome=(h.gf + a.ga)/2;
+  const muAway=(a.gf + h.ga)/2;
   let mu = muHome + muAway;
-
-  // clamp per evitare numeri assurdi
-  mu = Math.max(1.6, Math.min(3.8, mu));
-  return {mu, detail:{h,a,muHome,muAway}};
+  mu = Math.max(1.4, Math.min(4.2, mu));
+  return {mu};
 }
-
-/* Probabilità Over2.5 */
-function pOver25(mu){
-  const pLe2 = poissonCDF(2, mu); // P(0)+P(1)+P(2)
-  if(!Number.isFinite(pLe2)) return NaN;
-  return 1 - pLe2;
-}
-
-/* Bonus soft: se X alta, spinge Over */
 function applyXBonus(pOver, oddX, xHigh, xBoost, use){
   if(!use) return pOver;
   if(!Number.isFinite(oddX)) return pOver;
   if(oddX < xHigh) return pOver;
   const b = Math.max(0, Math.min(0.08, xBoost));
-  return Math.max(0.05, Math.min(0.95, pOver + b));
+  return Math.max(0.02, Math.min(0.98, pOver + b));
 }
 
-/* EV: p*odd - 1 */
-function EV(p, odd){
-  if(!Number.isFinite(p) || !Number.isFinite(odd)) return NaN;
-  return p*odd - 1;
-}
-
-/* decide pick: over/under/best */
-function decidePick(pO, pU, oddO, oddU, market, useOdds){
-  if(market==="over") return {side:"OVER", p:pO, odd:oddO};
-  if(market==="under") return {side:"UNDER", p:pU, odd:oddU};
-  // best: se uso quote, scegli EV maggiore; altrimenti scegli p maggiore
-  if(useOdds && Number.isFinite(oddO) && Number.isFinite(oddU)){
-    const evO = EV(pO, oddO), evU = EV(pU, oddU);
-    if(Number.isFinite(evO) && Number.isFinite(evU)) return (evO>=evU) ? {side:"OVER", p:pO, odd:oddO, ev:evO} : {side:"UNDER", p:pU, odd:oddU, ev:evU};
-  }
-  return (pO>=pU) ? {side:"OVER", p:pO, odd:oddO} : {side:"UNDER", p:pU, odd:oddU};
-}
-
-/* ======== RUN: partite da attenzionare ======== */
-async function run(){
-  const status = document.getElementById("status");
-  const output = document.getElementById("output");
-  status.textContent = "Carico CSV…";
-  output.innerHTML = "";
-
-  try{
-    const fRes = document.getElementById("csvResultsFile").files?.[0];
-    const fQuo = document.getElementById("csvQuotesFile").files?.[0];
-    if(!fRes || !fQuo){
-      status.textContent = "⚠️ Seleziona entrambi i CSV (risultati + quote).";
-      return;
+/* Binning + tabelle */
+function binLabel(val, edges){
+  if(!Number.isFinite(val)) return "NA";
+  for(let i=0;i<edges.length;i++){
+    if(val<=edges[i]){
+      const lo=(i===0)?"-∞":edges[i-1].toFixed(2);
+      const hi=edges[i].toFixed(2);
+      return `${lo}–${hi}`;
     }
+  }
+  return `${edges[edges.length-1].toFixed(2)}+`;
+}
+function addAgg(map, key, isOver){
+  if(!map[key]) map[key]={n:0, over:0};
+  map[key].n++; if(isOver) map[key].over++;
+}
+function aggToRows(map){
+  return Object.keys(map).sort((a,b)=>map[b].n-map[a].n).map(k=>{
+    const n=map[k].n, over=map[k].over;
+    return {k,n,over,p:n?(over/n):0};
+  });
+}
+function makeTable(title, rows){
+  const body = rows.map(r=>`
+    <tr>
+      <td>${r.k}</td>
+      <td class="mono">${r.n}</td>
+      <td class="mono">${r.over}</td>
+      <td><b>${(r.p*100).toFixed(1)}%</b></td>
+      <td class="mono">${(100 - r.p*100).toFixed(1)}%</td>
+    </tr>
+  `).join("") || `<tr><td colspan="5" class="muted">Nessun dato</td></tr>`;
+  return `
+    <div class="card">
+      <b>${title}</b>
+      <table>
+        <thead>
+          <tr><th>Bin</th><th>N</th><th>Over</th><th>%Over</th><th>%Under</th></tr>
+        </thead>
+        <tbody>${body}</tbody>
+      </table>
+      <small class="muted">Over = gol totali ≥ 3. Under = gol totali ≤ 2.</small>
+    </div>
+  `;
+}
 
-    const N = +document.getElementById("N").value||12;
-    const topK = Math.max(1, +document.getElementById("topK").value||10);
-    const market = document.getElementById("market").value;
-    const evMin = (+document.getElementById("evMin").value||0)/100;
+/* 1) STATISTICHE + SELEZIONE */
+async function run(){
+  const status=document.getElementById("status");
+  const output=document.getElementById("output");
+  status.textContent="Carico CSV…"; output.innerHTML="";
+  try{
+    const fRes=document.getElementById("csvResultsFile").files?.[0];
+    const fQuo=document.getElementById("csvQuotesFile").files?.[0];
+    if(!fRes || !fQuo){ status.textContent="⚠️ Seleziona entrambi i CSV."; return; }
 
-    const useOdds = (document.getElementById("useUOOdds").value==="yes");
-    const useXBonus = (document.getElementById("useXBonus").value==="on");
-    const xHigh = +document.getElementById("xHigh").value||4.5;
-    const xBoost = +document.getElementById("xBoost").value||0.03;
+    const N=+document.getElementById("N").value||12;
+    const mode=document.getElementById("mode").value;
+    const pMin=(+document.getElementById("pMin").value||60)/100;
+    const topK=Math.max(1,+document.getElementById("topK").value||2);
 
-    const resText = await readFileText(fRes);
-    const quoText = await readFileText(fQuo);
+    const useXBonus=(document.getElementById("useXBonus").value==="on");
+    const xHigh=+document.getElementById("xHigh").value||4.0;
+    const xBoost=+document.getElementById("xBoost").value||0.03;
 
-    const results = parseCSV(resText).map(normResultRow)
-      .filter(r=>r.dateStr && r.home_team && r.away_team && Number.isFinite(r.dateTs));
+    const resText=await readFileText(fRes);
+    const quoText=await readFileText(fQuo);
 
-    const quotes = parseCSV(quoText).map(normQuoteRow)
-      .filter(q=>q.dateStr && q.home_team && q.away_team && Number.isFinite(q.dateTs));
+    const results=parseCSV(resText).map(normResultRow).filter(r=>r.dateStr && r.home_team && r.away_team && Number.isFinite(r.dateTs));
+    const quotes=parseCSV(quoText).map(normQuoteRow).filter(q=>q.dateStr && q.home_team && q.away_team && Number.isFinite(q.dateTs));
 
-    status.textContent = "Calcolo…";
+    const resMap=new Map();
+    for(const r of results) resMap.set(keyOf(r.dateTs,r.home_team,r.away_team), r);
 
-    const rows=[];
+    status.textContent="Calcolo tabelle spiegabili (solo match matchati)…";
+
+    const xEdges=[2.5,3.0,3.5,4.0,5.0,6.0,7.0,8.0];
+    const spEdges=[0.50,1.00,2.00,3.00,4.00,5.00,6.50];
+    const gaEdges=[1.8,2.2,2.6,3.0,3.4,3.8];
+
+    const aggX={}, aggSP={}, aggMU={}, aggXH={};
+    let matched=0, overCnt=0;
+
     for(const q of quotes){
-      const oddX = toNum(q.b365_x);
-      const oddO = toNum(q.b365_o25);
-      const oddU = toNum(q.b365_u25);
+      const r=resMap.get(keyOf(q.dateTs,q.home_team,q.away_team));
+      if(!r) continue;
 
-      const est = estimateMu(results, q.home_team, q.away_team, N, q.dateTs);
+      const hg=toNum(r.FTHG), ag=toNum(r.FTAG);
+      if(!Number.isFinite(hg) || !Number.isFinite(ag)) continue;
+      const isOver=(hg+ag)>=3;
+
+      const odd1=toNum(q.b365_1), odd2=toNum(q.b365_2), oddX=toNum(q.b365_x);
+      const spread=(Number.isFinite(odd1)&&Number.isFinite(odd2))?Math.abs(odd1-odd2):NaN;
+
+      const est=estimateMu(results,q.home_team,q.away_team,N,q.dateTs);
       if(!Number.isFinite(est.mu)) continue;
 
-      let pO = pOver25(est.mu);
+      matched++; if(isOver) overCnt++;
+
+      addAgg(aggX, binLabel(oddX,xEdges), isOver);
+      addAgg(aggSP, binLabel(spread,spEdges), isOver);
+      addAgg(aggMU, binLabel(est.mu,gaEdges), isOver);
+      if(Number.isFinite(oddX) && oddX>=xHigh) addAgg(aggXH, binLabel(oddX,xEdges), isOver);
+    }
+
+    const baseOver = matched ? (overCnt/matched) : NaN;
+
+    status.textContent="Selezione top…";
+    const candidates=[];
+    for(const q of quotes){
+      if(resMap.has(keyOf(q.dateTs,q.home_team,q.away_team))) continue; // future
+      const oddX=toNum(q.b365_x);
+      const odd1=toNum(q.b365_1);
+      const odd2=toNum(q.b365_2);
+      const spread=(Number.isFinite(odd1)&&Number.isFinite(odd2))?Math.abs(odd1-odd2):NaN;
+
+      const est=estimateMu(results,q.home_team,q.away_team,N,q.dateTs);
+      if(!Number.isFinite(est.mu)) continue;
+
+      let pO=pOver25(est.mu);
       if(!Number.isFinite(pO)) continue;
       pO = applyXBonus(pO, oddX, xHigh, xBoost, useXBonus);
+      const pU=1-pO;
 
-      const pU = 1 - pO;
+      let pick="OVER", pPick=pO;
+      if(mode==="under"){ pick="UNDER"; pPick=pU; }
+      else if(mode==="auto"){ if(pU>pO){ pick="UNDER"; pPick=pU; } }
 
-      const pick = decidePick(pO, pU, oddO, oddU, market, useOdds);
+      if(pPick < pMin) continue;
 
-      // se l’utente chiede EV min ma non ci sono quote, EV non si può usare
-      let ev = NaN;
-      if(useOdds && Number.isFinite(pick.odd)) ev = EV(pick.p, pick.odd);
+      const lift = Number.isFinite(baseOver) ? ((pick==="OVER") ? (pO-baseOver) : (pU-(1-baseOver))) : 0;
+      const score = pPick + 0.35*lift;
 
-      if(useOdds){
-        if(!Number.isFinite(ev)) continue;       // se uso quote ma non presenti, scarto
-        if(ev < evMin) continue;
-      }
-
-      // score per ordinamento: EV se disponibile, altrimenti probabilità
-      const score = (useOdds && Number.isFinite(ev)) ? ev : pick.p;
-
-      rows.push({
-        dateStr:q.dateStr, dateTs:q.dateTs,
-        home:q.home_team, away:q.away_team,
-        mu:est.mu, pO, pU,
-        oddO, oddU, oddX,
-        pick:pick.side, pickP:pick.p, pickOdd:pick.odd,
-        ev, score
-      });
+      candidates.push({dateStr:q.dateStr, home:q.home_team, away:q.away_team, odd1, oddX, odd2, spread, mu:est.mu, pO, pU, pick, pPick, lift, score});
     }
+    candidates.sort((a,b)=>b.score-a.score);
+    const top=candidates.slice(0, topK);
 
-    rows.sort((a,b)=>b.score - a.score);
-    const top = rows.slice(0, topK);
-
-    if(top.length===0){
-      status.textContent = "Nessuna partita trovata con i filtri attuali.";
-      output.innerHTML = `<div class="card"><b>Nessun risultato.</b><br><small>Prova: EV min più basso, oppure “Usa quote U/O” su NO, oppure aumenta N recenti.</small></div>`;
-      return;
-    }
-
-    const hasUOOdds = top.some(x=>Number.isFinite(x.pickOdd));
-    const avgOdd = hasUOOdds
-      ? top.filter(x=>Number.isFinite(x.pickOdd)).reduce((s,x)=>s+x.pickOdd,0) / top.filter(x=>Number.isFinite(x.pickOdd)).length
-      : NaN;
-
-    const htmlRows = top.map(x=>{
-      const evPct = Number.isFinite(x.ev) ? (x.ev*100) : NaN;
-      const evCls = Number.isFinite(evPct) ? (evPct>=10 ? "ok" : (evPct<0 ? "bad" : "")) : "";
-      return `
-        <tr>
-          <td><b>${x.home} — ${x.away}</b><br><small class="muted">${x.dateStr}</small></td>
-          <td class="mono">mu=${x.mu.toFixed(2)}<br><small class="muted">P(O) ${fmtPct(x.pO)} • P(U) ${fmtPct(x.pU)}</small></td>
-          <td class="mono"><b>${x.pick}</b><br><small class="muted">p=${fmtPct(x.pickP)}</small></td>
-          <td class="mono">${Number.isFinite(x.pickOdd)? x.pickOdd.toFixed(2):"—"}</td>
-          <td class="${evCls}"><b>${Number.isFinite(evPct)? (evPct>=0?"+":"")+evPct.toFixed(1)+"%":"—"}</b></td>
-          <td class="mono"><small class="muted">X=${Number.isFinite(x.oddX)?x.oddX.toFixed(2):"—"}</small></td>
-        </tr>
-      `;
-    }).join("");
+    const topRows = top.map(x=>`
+      <tr>
+        <td><b>${x.home} — ${x.away}</b><br><small class="muted">${x.dateStr}</small></td>
+        <td class="mono">${fmtNum(x.odd1)} / <b>${fmtNum(x.oddX)}</b> / ${fmtNum(x.odd2)}<br><small class="muted">spread=${fmtNum(x.spread)}</small></td>
+        <td class="mono">mu=${x.mu.toFixed(2)}</td>
+        <td><b>${x.pick}</b><br><small class="muted">P(Over) ${fmtPct(x.pO)} • P(Under) ${fmtPct(x.pU)}</small></td>
+        <td><b>${fmtPct(x.pPick)}</b><br><small class="muted">lift ${fmtPct(x.lift)}</small></td>
+      </tr>
+    `).join("") || `<tr><td colspan="5" class="muted">Nessuna partita supera la soglia probabilità</td></tr>`;
 
     output.innerHTML = `
       <div class="card">
-        <div class="row">
-          <span class="pill"><b>Risultati:</b> ${results.length}</span>
-          <span class="pill"><b>Quote:</b> ${quotes.length}</span>
-          <span class="pill"><b>Output:</b> ${top.length}</span>
-          <span class="pill"><b>Quota media (se presente):</b> ${fmtNum(avgOdd)}</span>
+        <b>Baseline (solo match matchati quote+risultati)</b>
+        <div class="row" style="margin-top:10px">
+          <span class="pill"><b>Match matchati:</b> ${matched}</span>
+          <span class="pill"><b>%Over (baseline):</b> ${Number.isFinite(baseOver)?(baseOver*100).toFixed(1)+"%":"—"}</span>
+          <span class="pill"><b>%Under (baseline):</b> ${Number.isFinite(baseOver)?(100-baseOver*100).toFixed(1)+"%":"—"}</span>
         </div>
+        <small class="muted" style="display:block;margin-top:8px">
+          Le tabelle sotto rispondono al tuo “perché esce?”: mostrano <b>come cambia %Over</b> quando cambia X/spread/GA.
+        </small>
+      </div>
 
+      ${makeTable("A) Over/Under per QUOTA X (b365_x)", aggToRows(aggX))}
+      ${makeTable("B) Over/Under per SPREAD |1-2|", aggToRows(aggSP))}
+      ${makeTable("C) Over/Under per GA (proxy mu totale da recenti)", aggToRows(aggMU))}
+      ${makeTable("D) Over/Under SOLO dove X ≥ soglia (per vedere l’effetto X alta)", aggToRows(aggXH))}
+
+      <div class="card">
+        <b>Selezione pre-match (top ${topK})</b>
         <table>
           <thead>
-            <tr>
-              <th>Match</th>
-              <th>Stima (mu / P)</th>
-              <th>Pick</th>
-              <th>Quota U/O</th>
-              <th>EV</th>
-              <th>Quota X</th>
-            </tr>
+            <tr><th>Match</th><th>Quote 1 / X / 2</th><th>GA (mu)</th><th>Probabilità stimate</th><th>Decisione</th></tr>
           </thead>
-          <tbody>${htmlRows}</tbody>
+          <tbody>${topRows}</tbody>
         </table>
-
-        <small style="display:block;margin-top:10px">
-          Settaggi: N=${N}, mercato=${market.toUpperCase()}, EV≥${(evMin*100).toFixed(0)}%,
-          usaQuoteUO=${useOdds?"SI":"NO"},
-          bonusX=${useXBonus?"ON":"OFF"} (X≥${xHigh.toFixed(2)} → +${Math.min(0.08,Math.max(0,xBoost)).toFixed(2)} su P(Over)).
+        <small class="muted" style="display:block;margin-top:8px">
+          Senza quote Over/Under non faccio ROI: qui segnalo <b>solo</b> dove statisticamente Over/Under è più probabile.
         </small>
       </div>
     `;
-    status.textContent = "Completato ✅";
+
+    status.textContent="Completato ✅";
   }catch(e){
-    status.textContent = "Errore: " + (e?.message || e);
+    status.textContent="Errore: " + (e?.message || e);
   }
 }
 
-/* ======== BACKTEST: quante “prese” e quante corrette ======== */
+/* 2) BACKTEST */
 async function backtest(){
-  const status = document.getElementById("status");
-  const output = document.getElementById("output");
-  status.textContent = "BACKTEST: carico CSV…";
-  output.innerHTML = "";
-
+  const status=document.getElementById("status");
+  const output=document.getElementById("output");
+  status.textContent="BACKTEST: carico CSV…"; output.innerHTML="";
   try{
-    const fRes = document.getElementById("csvResultsFile").files?.[0];
-    const fQuo = document.getElementById("csvQuotesFile").files?.[0];
-    if(!fRes || !fQuo){
-      status.textContent = "⚠️ Seleziona entrambi i CSV (risultati + quote).";
-      return;
-    }
+    const fRes=document.getElementById("csvResultsFile").files?.[0];
+    const fQuo=document.getElementById("csvQuotesFile").files?.[0];
+    if(!fRes || !fQuo){ status.textContent="⚠️ Seleziona entrambi i CSV."; return; }
 
-    const N = +document.getElementById("N").value||12;
-    const market = document.getElementById("market").value;
-    const evMin = (+document.getElementById("evMin").value||0)/100;
+    const N=+document.getElementById("N").value||12;
+    const mode=document.getElementById("mode").value;
+    const pMin=(+document.getElementById("pMin").value||60)/100;
 
-    const useOdds = (document.getElementById("useUOOdds").value==="yes");
-    const useXBonus = (document.getElementById("useXBonus").value==="on");
-    const xHigh = +document.getElementById("xHigh").value||4.5;
-    const xBoost = +document.getElementById("xBoost").value||0.03;
+    const useXBonus=(document.getElementById("useXBonus").value==="on");
+    const xHigh=+document.getElementById("xHigh").value||4.0;
+    const xBoost=+document.getElementById("xBoost").value||0.03;
 
-    const resText = await readFileText(fRes);
-    const quoText = await readFileText(fQuo);
+    const resText=await readFileText(fRes);
+    const quoText=await readFileText(fQuo);
 
-    const results = parseCSV(resText).map(normResultRow)
-      .filter(r=>r.dateStr && r.home_team && r.away_team && Number.isFinite(r.dateTs));
+    const results=parseCSV(resText).map(normResultRow).filter(r=>r.dateStr && r.home_team && r.away_team && Number.isFinite(r.dateTs));
+    const quotes=parseCSV(quoText).map(normQuoteRow).filter(q=>q.dateStr && q.home_team && q.away_team && Number.isFinite(q.dateTs));
 
-    const quotes = parseCSV(quoText).map(normQuoteRow)
-      .filter(q=>q.dateStr && q.home_team && q.away_team && Number.isFinite(q.dateTs));
+    const resMap=new Map();
+    for(const r of results) resMap.set(keyOf(r.dateTs,r.home_team,r.away_team), r);
 
-    // mappa risultati per merge
-    const resMap = new Map();
-    for(const r of results){
-      resMap.set(keyOf(r.dateTs, r.home_team, r.away_team), r);
-    }
+    const xEdges=[2.5,3.0,3.5,4.0,5.0,6.0,7.0,8.0];
+    const spEdges=[0.50,1.00,2.00,3.00,4.00,5.00,6.50];
+    const gaEdges=[1.8,2.2,2.6,3.0,3.4,3.8];
 
-    let merged=0, notMatched=0;
-
-    // conteggi selezione (“prese”)
+    let matched=0, notMatched=0;
     let taken=0, hit=0, miss=0;
     let takenOver=0, hitOver=0;
     let takenUnder=0, hitUnder=0;
 
-    // quote/ROI
-    let sumOdd=0, cntOdd=0;
-    let roi=0; // profitto cumulato (stake 1)
+    const takeByX={}, takeBySP={}, takeByMU={};
 
-    status.textContent = "BACKTEST: calcolo prese pre-match…";
+    status.textContent="BACKTEST: calcolo prese…";
 
     for(const q of quotes){
-      const k = keyOf(q.dateTs, q.home_team, q.away_team);
-      const r = resMap.get(k);
+      const r=resMap.get(keyOf(q.dateTs,q.home_team,q.away_team));
       if(!r){ notMatched++; continue; }
-      merged++;
 
       const hg=toNum(r.FTHG), ag=toNum(r.FTAG);
       if(!Number.isFinite(hg) || !Number.isFinite(ag)) continue;
-      const goals = hg+ag;
-      const isOver = goals >= 3;
-      const isUnder = goals <= 2;
 
-      const oddX = toNum(q.b365_x);
-      const oddO = toNum(q.b365_o25);
-      const oddU = toNum(q.b365_u25);
+      const isOver=(hg+ag)>=3;
+      const isUnder=!isOver;
 
-      const est = estimateMu(results, q.home_team, q.away_team, N, q.dateTs);
+      const oddX=toNum(q.b365_x);
+      const odd1=toNum(q.b365_1);
+      const odd2=toNum(q.b365_2);
+      const spread=(Number.isFinite(odd1)&&Number.isFinite(odd2))?Math.abs(odd1-odd2):NaN;
+
+      const est=estimateMu(results,q.home_team,q.away_team,N,q.dateTs);
       if(!Number.isFinite(est.mu)) continue;
 
-      let pO = pOver25(est.mu);
+      matched++;
+
+      let pO=pOver25(est.mu);
       if(!Number.isFinite(pO)) continue;
       pO = applyXBonus(pO, oddX, xHigh, xBoost, useXBonus);
+      const pU=1-pO;
 
-      const pU = 1 - pO;
+      let pick="OVER", pPick=pO;
+      if(mode==="under"){ pick="UNDER"; pPick=pU; }
+      else if(mode==="auto"){ if(pU>pO){ pick="UNDER"; pPick=pU; } }
 
-      const pick = decidePick(pO, pU, oddO, oddU, market, useOdds);
+      if(pPick < pMin) continue;
 
-      // filtri EV (se attivo uso quote)
-      let ev = NaN;
-      if(useOdds && Number.isFinite(pick.odd)) ev = EV(pick.p, pick.odd);
-      if(useOdds){
-        if(!Number.isFinite(ev)) continue;
-        if(ev < evMin) continue;
-      }
-
-      // QUI: questa partita è “presa” pre-match
       taken++;
 
-      const pickedOver = (pick.side==="OVER");
-      const pickedUnder = (pick.side==="UNDER");
+      addAgg(takeByX, binLabel(oddX,xEdges), isOver);
+      addAgg(takeBySP, binLabel(spread,spEdges), isOver);
+      addAgg(takeByMU, binLabel(est.mu,gaEdges), isOver);
 
-      if(pickedOver) takenOver++;
-      if(pickedUnder) takenUnder++;
+      const win = (pick==="OVER" && isOver) || (pick==="UNDER" && isUnder);
 
-      // quota media e ROI solo se la quota esiste
-      if(Number.isFinite(pick.odd)){
-        sumOdd += pick.odd; cntOdd++;
-      }
+      if(pick==="OVER") takenOver++;
+      if(pick==="UNDER") takenUnder++;
 
-      const win = (pickedOver && isOver) || (pickedUnder && isUnder);
       if(win){
-        hit++; 
-        if(pickedOver) hitOver++;
-        if(pickedUnder) hitUnder++;
-
-        if(Number.isFinite(pick.odd)) roi += (pick.odd - 1);
+        hit++;
+        if(pick==="OVER") hitOver++;
+        if(pick==="UNDER") hitUnder++;
       }else{
         miss++;
-        if(Number.isFinite(pick.odd)) roi -= 1;
       }
     }
 
     const hitRate = taken ? (hit/taken) : NaN;
-    const avgOdd = cntOdd ? (sumOdd/cntOdd) : NaN;
 
     output.innerHTML = `
       <div class="card">
-        <b>BACKTEST – “quante partite ho preso pre-match”</b>
+        <b>BACKTEST – “quante partite ho preso pre-match” (senza quote U/O)</b>
         <div class="row" style="margin-top:10px">
-          <span class="pill"><b>Match matchati:</b> ${merged}</span>
+          <span class="pill"><b>Match matchati:</b> ${matched}</span>
           <span class="pill"><b>Non matchati:</b> ${notMatched}</span>
-          <span class="pill"><b>PRESE (selezionate):</b> ${taken}</span>
+          <span class="pill"><b>PRESE:</b> ${taken}</span>
           <span class="pill"><b>Hit:</b> ${hit}</span>
           <span class="pill"><b>Miss:</b> ${miss}</span>
-          <span class="pill"><b>Hit-rate:</b> ${Number.isFinite(hitRate)? (hitRate*100).toFixed(1)+"%":"—"}</span>
+          <span class="pill"><b>Hit-rate:</b> ${Number.isFinite(hitRate)?(hitRate*100).toFixed(1)+"%":"—"}</span>
         </div>
 
         <hr style="margin:12px 0">
@@ -603,31 +529,28 @@ async function backtest(){
         <div class="row">
           <span class="pill"><b>PRESE Over:</b> ${takenOver} (hit ${hitOver})</span>
           <span class="pill"><b>PRESE Under:</b> ${takenUnder} (hit ${hitUnder})</span>
-          <span class="pill"><b>Quota media (se presente):</b> ${fmtNum(avgOdd)}</span>
-          <span class="pill"><b>ROI (stake 1):</b> ${Number.isFinite(roi)? roi.toFixed(2):"—"}</span>
+          <span class="pill"><b>Soglia p:</b> ${(pMin*100).toFixed(0)}%</span>
+          <span class="pill"><b>N recenti:</b> ${N}</span>
         </div>
 
-        <small style="display:block;margin-top:10px" class="muted">
-          “PRESE” = quante partite passano i filtri e quindi avresti considerato nel pre-match.<br>
-          Se nel CSV mancano b365_o25/b365_u25, la quota media e il ROI risultano “—”.
-        </small>
-
-        <small style="display:block;margin-top:10px">
-          Settaggi: N=${N}, mercato=${market.toUpperCase()}, EV≥${(evMin*100).toFixed(0)}%,
-          usaQuoteUO=${useOdds?"SI":"NO"},
-          bonusX=${useXBonus?"ON":"OFF"} (X≥${xHigh.toFixed(2)} → +${Math.min(0.08,Math.max(0,xBoost)).toFixed(2)} su P(Over)).
+        <small class="muted" style="display:block;margin-top:10px">
+          Sotto vedi <b>dove</b> (quota X/spread/GA) le prese hanno più Over: è la risposta “perché esce”.
         </small>
       </div>
+
+      ${makeTable("Prese – breakdown per QUOTA X (dentro alle prese)", aggToRows(takeByX))}
+      ${makeTable("Prese – breakdown per SPREAD |1-2| (dentro alle prese)", aggToRows(takeBySP))}
+      ${makeTable("Prese – breakdown per GA (mu) (dentro alle prese)", aggToRows(takeByMU))}
     `;
-    status.textContent = "BACKTEST completato ✅";
+
+    status.textContent="BACKTEST completato ✅";
   }catch(e){
-    status.textContent = "Errore BACKTEST: " + (e?.message || e);
+    status.textContent="Errore BACKTEST: " + (e?.message || e);
   }
 }
 
 document.getElementById("runBtn").addEventListener("click", run);
 document.getElementById("btBtn").addEventListener("click", backtest);
 </script>
-
 </body>
 </html>
