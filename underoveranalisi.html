@@ -1,0 +1,163 @@
+# 📄 FILE: ga_under_over_analysis.md
+
+## Obiettivo
+Calcolare **statisticamente** la probabilità di **Under / Over 2.5** di una partita  
+in base **ESCLUSIVAMENTE** a:
+- gol subiti delle squadre (GA)
+- dati reali storici
+- quote pre-match (solo come contesto, non previsione)
+
+❗ Non predittivo, **analitico**.
+
+---
+
+## 1️⃣ Dati richiesti (CSV)
+
+### A) `results_unified_top_leagues.csv`
+Campi minimi necessari:
+```
+Date
+HomeTeam
+AwayTeam
+FTHG
+FTAG
+```
+
+### B) `prequotes_b365_unified_top_leagues.csv`
+Campi minimi:
+```
+Date
+HomeTeam
+AwayTeam
+b365_1
+b365_x
+b365_2
+b365_u25 (opzionale)
+b365_o25 (opzionale)
+```
+
+---
+
+## 2️⃣ Definizioni (IMPORTANTISSIMO)
+
+### Gol Subiti (GA)
+- **GA_home** = media gol subiti dalla squadra di casa negli ultimi N match
+- **GA_away** = media gol subiti dalla squadra ospite negli ultimi N match
+
+```
+GA_match = (GA_home + GA_away) / 2
+```
+
+📌 **N = 15 match precedenti** (default, modificabile)
+
+---
+
+### Under / Over 2.5 reale
+```
+TotGoals = FTHG + FTAG
+
+if TotGoals <= 2 → Under 2.5
+if TotGoals >= 3 → Over 2.5
+```
+
+---
+
+## 3️⃣ Costruzione delle FASCE GA (range)
+
+Le partite vengono raggruppate per **GA_match**:
+
+```
+GA ≤ 0.80
+0.80 – 1.00
+1.00 – 1.20
+1.20 – 1.40
+1.40 – 1.60
+> 1.60
+```
+
+📌 Ogni fascia è **un cluster statistico**, non un giudizio.
+
+---
+
+## 4️⃣ Output PRINCIPALE (quello che ti serve davvero)
+
+Tabella finale:
+
+```
+GA_range | N | Under_% | Over_% | Under_count | Over_count
+```
+
+Esempio:
+```
+0.80–1.00 | 184 | 58.7% | 41.3% | 108 | 76
+```
+
+👉 Questo significa:
+> Quando il GA medio delle due squadre è tra 0.8 e 1.0, l’Under 2.5 esce ~59% delle volte.
+
+---
+
+## 5️⃣ Integrazione con le QUOTE (facoltativa ma utile)
+
+Una volta calcolata la tabella GA, puoi **incrociare** con:
+
+### A) Quota X
+```
+X 2.75–3.25
+X 3.25–3.75
+X 3.75–4.25
+X > 4.25
+```
+
+### B) Spread |1–2|
+```
+|quota1 – quota2|
+```
+
+Output incrociato:
+```
+GA_range | X_range | N | Under_% | Over_%
+```
+
+📌 Qui nasce il contesto utile (es. Under sottovalutato con X media).
+
+---
+
+## 6️⃣ Come selezionare le PARTITE DA ATTENZIONARE
+
+Per ogni match futuro:
+
+1. calcoli `GA_match`
+2. individui la **fascia GA**
+3. leggi la % Under/Over storica
+4. confronti con la quota bookmaker (se presente)
+
+Esempio:
+```
+GA_match = 0.92 → fascia 0.80–1.00 → Under storico 58%
+Quota Under = 2.10 (≈47%)
+```
+
+👉 Under statisticamente “più alto” del prezzo mercato.
+
+⚠️ Non è “gioca Under”, è:
+> match con profilo Under superiore alla media
+
+---
+
+## 7️⃣ Cosa NON fa questo file (volutamente)
+❌ non predice risultati  
+❌ non usa ML  
+❌ non garantisce esiti  
+❌ non usa grafici  
+
+✅ solo statistica reale + confronto mercato
+
+---
+
+## 8️⃣ Perché questo è utile anche per le X
+- GA medio-basso = partite chiuse
+- GA medio = X + Under convivono meglio
+- GA alto = X “stretta” muore in Over
+
+👉 prima capisci Under/Over, poi la X diventa più le
