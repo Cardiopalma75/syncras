@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Syncras – U/O 2.5 Score Unico (Spiegabile • 2 CSV • Backtest)</title>
+  <style>
+    :root{--violet:#6C5CE7;--bg:#f7f7fb;--card:#fff;--border:#e7e7f5;--text:#111827;--muted:#6b7280}
+    body{font-family:system-ui,Arial;margin:18px;background:var(--bg);color:var(--text)}
+    h2{margin:0 0 10px 0}
+    .muted{color:var(--muted)}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;margin-top:14px}
+    .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+    @media(max-width:980px){.grid{grid-template-columns:1fr}}
+    input,select,button{padding:9px;border-radius:12px;border:1px solid #cfcfe6}
+    input[type="file"]{padding:10px}
+    button{cursor:pointer;background:var(--violet);color:#fff;border:0;font-weight:900;padding:12px 14px;border-radius:14px}
+    button:hover{filter:brightness(.96)}
+    .btn2{background:#111827}
+    hr{border:none;border-top:1px solid #e9e9f7}
+    .pill{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--border);background:#fafafe;border-radius:999px;padding:6px 10px;font-size:12px;color:#555}
+    table{border-collapse:collapse;width:100%;margin-top:12px;background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden}
+    th,td{border-bottom:1px solid #eee;padding:8px;text-align:right;font-size:13px;vertical-align:top}
+    th{background:#fafafe;color:#333;font-size:12px}
+    th:first-child,td:first-child{text-align:left}
+    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+    .ok{color:#0a7}
+    .bad{color:#c22}
+    .warn{color:#d97706}
+    small{color:#555;line-height:1.35}
+    .tag{display:inline-flex;align-items:center;border-radius:999px;padding:4px 10px;font-size:12px;font-weight:800}
+    .tagOver{background:#ecfdf5;color:#067a50;border:1px solid #a7f3d0}
+    .tagUnder{background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe}
+    .tagMid{background:#fff7ed;color:#b45309;border:1px solid #fed7aa}
+  </style>
+</head>
+<body>
+  <h2>Syncras – Under/Over 2.5 (Score Unico • Spiegabile • 2 CSV)</h2>
+  <div class="muted">
+    Questo file crea uno <b>SCORE unico</b> (0–100) combinando <b>quota X</b>, <b>spread |1–2|</b> e <b>GA recente (mu)</b>.
+    <br>Output: match <b>OVER-friendly</b> e <b>UNDER-friendly</b>. Backtest: “quante prese pre-match” + hit-rate.
+  </div>
+
+  <div class="card">
+    <div class="grid">
+      <div>
+        <label><b>CSV RISULTATI (giocato)</b></label><br>
+        <input id="csvResultsFile" type="file" accept=".csv,text/csv" style="width:100%">
+        <small class="muted">Colonne tipiche: <span class="mono">date, HomeTeam/home_team, AwayTeam/away_team, FTHG, FTAG</span></small>
+      </div>
+
+      <div>
+        <label><b>CSV QUOTE (pre-match 1/X/2)</b></label><br>
+        <input id="csvQuotesFile" type="file" accept=".csv,text/csv" style="width:100%">
+        <small class="muted">
+          Colonne attese: <span class="mono">date, home_team, away_team, b365_1, b365_x, b365_2</span>
+        </small>
+      </div>
+
+      <div>
+        <label><b>2 tasti</b></label><br>
+        <div class="row">
+          <span class="pill">✅ Score unico (X + spread + GA)</span>
+          <span class="pill">✅ OVER/UNDER friendly</span>
+          <span class="pill">✅ Backtest prese</span>
+        </div>
+        <small class="muted" style="display:block;margin-top:10px">
+          Studio informativo. Nessun invito a scommettere.
+        </small>
+      </div>
+    </div>
+
+    <hr style="margin:14px 0">
+
+    <div class="row">
+      <label>N recenti (GA)</label><input id="N" type="number" value="12" style="width:90px">
+      <label>Top per categoria</label><input id="topK" type="number" value="2" style="width:90px">
+
+      <span class="pill">spread = <span class="mono">|quota1 - quota2|</span></span>
+    </div>
+
+    <div class="row" style="margin-top:10px">
+      <label>Soglia OVER-friendly</label><input id="thrOver" type="number" value="60" style="width:90px">
+      <label>Soglia UNDER-friendly</label><input id="thrUnder" type="number" value="40" style="width:90px">
+
+      <label>Peso GA</label><input id="wGA" type="number" value="0.40" step="0.05" style="width:90px">
+      <label>Peso spread</label><input id="wSP" type="number" value="0.35" step="0.05" style="width:90px">
+      <label>Peso X</label><input id="wX" type="number" value="0.25" step="0.05" style="width:90px">
+    </div>
+
+    <small class="muted" style="display:block;margin-top:8px">
+      Default = pesi coerenti coi tuoi test: GA conta tanto, spread conta molto, X conferma.
+    </small>
+
+    <hr style="margin:14px 0">
+
+    <div class="row">
+      <button id="attBtn" type="button">ATTENZIONA (Over/Under friendly)</button>
+      <button id="btBtn" type="button" class="btn2">BACKTEST (pre-match prese)</button>
+      <span id="status" class="muted"></span>
+    </div>
+  </div>
+
+  <div id="output"></div>
+
+<script>
+/* ========= UTIL ========= */
+function normTeam(s){ return String(s||"").trim().toLowerCase(); }
+function normKey(s){ return String(s||"").trim().toLowerCase(); }
+function toNum(x){ const s=String(x??"").trim().replace(",","."); const n=Number(s); return Number.isFinite(n)?n:NaN; }
+function clamp(x,a,b){ return Math.max(a, Math.min(b,x)); }
+function fmtNum(x){ return Number.isFinite(x)?x.toFixed(2):"—"; }
+function fmtPct(x){ return Number.isFinite(x)?(x*100).toFixed(1)+"%":"—"; }
+
+function parseCSV(text){
+  const rows=[]; let row=[], cur="", inQ=false;
+  for(let i=0;i<text.length;i++){
+    const ch=text[i], nx=text[i+1];
+    if(ch === '"'){ if(inQ && nx === '"'){ cur+='"'; i++; } else inQ=!inQ; continue; }
+    if(!inQ && (ch===',' || ch===';')){ row.push(cur); cur=""; continue; }
+    if(!inQ && ch==='\n'){ row.push(cur); rows.push(row); row=[]; cur=""; continue; }
+    if(!inQ && ch==='\r') continue;
+    cur+=ch;
+  }
+  row.push(cur); rows.push(row);
+  if(rows.length && rows[rows.length-1].every(c=>String(c).trim()==="")) rows.pop();
+  const header=(rows[0]||[]).map(x=>String(x).trim());
+  return rows.slice(1).map(r=>{
+    const o={};
+    for(let i=0;i<header.length;i++) o[header[i]] = String(r[i]??"").trim().replace(/"/g,"");
+    return o;
+  });
+}
+function pick(o, keys){
+  const map={}; for(const k in o) map[normKey(k)] = o[k];
+  for(const k of keys){ const v=map[normKey(k)]; if(v!==undefined) return v; }
+  return undefined;
+}
+function parseDateTs(s){
+  const t=String(s??"").trim(); if(!t) return NaN;
+  if(/^\d{4}-\d{2}-\d{2}$/.test(t)) return Date.parse(t+"T00:00:00Z");
+  let m=t.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if(m){
+    const dd=+m[1], mm=+m[2], yyyy=+m[3];
+    const iso=`${String(yyyy).padStart(4,'0')}-${String(mm).padStart(2,'0')}-${String(dd).padStart(2,'0')}`;
+    return Date.parse(iso+"T00:00:00Z");
+  }
+  m=t.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2})$/);
+  if(m){
+    const dd=+m[1], mm=+m[2], yy=+m[3];
+    const yyyy=(yy>=70)?(1900+yy):(2000+yy);
+    const iso=`${yyyy}-${String(mm).padStart(2,'0')}-${String(dd).padStart(2,'0')}`;
+    return Date.parse(iso+"T00:00:00Z");
+  }
+  const x=Date.parse(t); return Number.isFinite(x)?x:NaN;
+}
+function normResultRow(o){
+  const dateStr=String(pick(o,["date","match_date","data","giorno","Date","DATA"])||"").trim();
+  const home_team=normTeam(pick(o,["home_team","hometeam","home","HomeTeam","CASA"])||"");
+  const away_team=normTeam(pick(o,["away_team","awayteam","away","AwayTeam","TRASFERTA"])||"");
+  const FTHG=pick(o,["FTHG","fthg","hg","home_goals","HomeGoals"]) ?? "";
+  const FTAG=pick(o,["FTAG","ftag","ag","away_goals","AwayGoals"]) ?? "";
+  const dateTs=parseDateTs(dateStr);
+  return {dateStr,dateTs,home_team,away_team,FTHG:String(FTHG).trim(),FTAG:String(FTAG).trim()};
+}
+function normQuoteRow(o){
+  const dateStr=String(pick(o,["date","match_date","data","giorno","Date","DATA"])||"").trim();
+  const home_team=normTeam(pick(o,["home_team","hometeam","home","HomeTeam","CASA"])||"");
+  const away_team=normTeam(pick(o,["away_team","awayteam","away","AwayTeam","TRASFERTA"])||"");
+  const b365_1=pick(o,["b365_1","b365_h","B365H","odd1","odds_1","1","home"]) ?? "";
+  const b365_x=pick(o,["b365_x","B365D","oddx","odds_x","X","draw"]) ?? "";
+  const b365_2=pick(o,["b365_2","b365_a","B365A","odd2","odds_2","2","away"]) ?? "";
+  const dateTs=parseDateTs(dateStr);
+  return {dateStr,dateTs,home_team,away_team,b365_1:String(b365_1).trim(),b365_x:String(b365_x).trim(),b365_2:String(b365_2).trim()};
+}
+function keyOf(dateTs,home,away){ return `${dateTs}|${home}|${away}`; }
+async function readFileText(file){
+  return new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(String(r.result||"")); r.onerror=rej; r.readAsText(file); });
+}
+
+/* ========= GA (mu) ========= */
+function lastNMatches(results, team, N, beforeTs){
+  return results
+    .filter(r=>Number.isFinite(r.dateTs) && r.dateTs < beforeTs && (r.home_team===team || r.away_team===team))
+    .sort((a,b)=>b.dateTs - a.dateTs)
+    .slice(0,N);
+}
+function teamGFGA(results, team, N, beforeTs){
+  const ms=lastNMatches(results,team,N,beforeTs);
+  let gf=0, ga=0, n=0;
+  for(const m of ms){
+    const hg=toNum(m.FTHG), ag=toNum(m.FTAG);
+    if(!Number.isFinite(hg) || !Number.isFinite(ag)) continue;
+    if(m.home_team===team){ gf+=hg; ga+=ag; } else { gf+=ag; ga+=hg; }
+    n++;
+  }
+  if(n<3) return {gf:NaN,ga:NaN,n};
+  return {gf:gf/n, ga:ga/n, n};
+}
+function estimateMu(results, home, away, N, dateTs){
+  const h=teamGFGA(results,home,N,dateTs);
+  const a=teamGFGA(results,away,N,dateTs);
+  if(!Number.isFinite(h.gf) || !Number.isFinite(h.ga) || !Number.isFinite(a.gf) || !Number.isFinite(a.ga)) return NaN;
+  const muHome=(h.gf + a.ga)/2;
+  const muAway=(a.gf + h.ga)/2;
+  let mu = muHome + muAway;
+  return clamp(mu, 1.4, 4.2);
+}
+
+/* ========= SCORE UNICO =========
+   xScore: cresce quando X cresce (3.2 -> 0, 5.5 -> 1)
+   spScore: massimo a spread=2, scende verso 0 quando spread va verso 0 o verso 6.5
+   gaScore: cresce quando mu cresce (2.4 -> 0, 3.8 -> 1)
+*/
+function xScore(oddX){
+  if(!Number.isFinite(oddX)) return NaN;
+  return clamp((oddX - 3.20) / (5.50 - 3.20), 0, 1);
+}
+function spScore(spread){
+  if(!Number.isFinite(spread)) return NaN;
+  // triangolare: peak a 2.0, 0 a 0 e a 6.5
+  const peak=2.0, left=0.0, right=6.5;
+  if(spread<=peak) return clamp((spread-left)/(peak-left), 0, 1);
+  return clamp((right-spread)/(right-peak), 0, 1);
+}
+function gaScore(mu){
+  if(!Number.isFinite(mu)) return NaN;
+  return clamp((mu - 2.40) / (3.80 - 2.40), 0, 1);
+}
+function computeScore(oddX, spread, mu, wGA, wSP, wX){
+  const xs=xScore(oddX), ss=spScore(spread), gs=gaScore(mu);
+  if(!Number.isFinite(xs) || !Number.isFinite(ss) || !Number.isFinite(gs)) return {score:NaN, xs, ss, gs};
+  const sum = (wGA+wSP+wX) || 1;
+  const s = (wGA*gs + wSP*ss + wX*xs) / sum;
+  return {score: s*100, xs, ss, gs}; // 0..100
+}
+function tagFromScore(s, thrOver, thrUnder){
+  if(!Number.isFinite(s)) return {txt:"NA", cls:"tagMid"};
+  if(s>=thrOver) return {txt:"OVER-friendly", cls:"tagOver"};
+  if(s<=thrUnder) return {txt:"UNDER-friendly", cls:"tagUnder"};
+  return {txt:"NEUTRA", cls:"tagMid"};
+}
+function pickFromScore(s){
+  // decisione semplice: sopra 50 => Over, sotto 50 => Under (solo per backtest)
+  if(!Number.isFinite(s)) return "—";
+  return (s>=50) ? "OVER" : "UNDER";
+}
+
+/* ========= RENDER ========= */
+function renderPickTable(title, arr){
+  const rows = arr.map(x=>{
+    const t=tagFromScore(x.score, x.thrOver, x.thrUnder);
+    return `
+      <tr>
+        <td><b>${x.home} — ${x.away}</b><br><small class="muted">${x.dateStr}</small></td>
+        <td class="mono">${fmtNum(x.odd1)} / <b>${fmtNum(x.oddX)}</b> / ${fmtNum(x.odd2)}<br><small class="muted">spread=${fmtNum(x.spread)}</small></td>
+        <td class="mono">mu=${fmtNum(x.mu)}</td>
+        <td class="mono">
+          <b>${x.score.toFixed(1)}</b><br>
+          <small class="muted">GA=${(x.gs*100).toFixed(0)} • SP=${(x.ss*100).toFixed(0)} • X=${(x.xs*100).toFixed(0)}</small>
+        </td>
+        <td><span class="tag ${t.cls}">${t.txt}</span></td>
+      </tr>
+    `;
+  }).join("") || `<tr><td colspan="5" class="muted">Nessun match trovato</td></tr>`;
+
+  return `
+    <div class="card">
+      <b>${title}</b>
+      <table>
+        <thead>
+          <tr>
+            <th>Match</th>
+            <th>Quote 1 / X / 2</th>
+            <th>GA (mu)</th>
+            <th>Score unico</th>
+            <th>Etichetta</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+      <small class="muted">Score 0–100 = combinazione pesata di GA, spread e quota X.</small>
+    </div>
+  `;
+}
+
+/* ========= 1) ATTENZIONA ========= */
+async function attenziona(){
+  const status=document.getElementById("status");
+  const output=document.getElementById("output");
+  status.textContent="Carico CSV…";
+  output.innerHTML="";
+
+  try{
+    const fRes=document.getElementById("csvResultsFile").files?.[0];
+    const fQuo=document.getElementById("csvQuotesFile").files?.[0];
+    if(!fRes || !fQuo){ status.textContent="⚠️ Seleziona entrambi i CSV."; return; }
+
+    const N=+document.getElementById("N").value||12;
+    const topK=Math.max(1,+document.getElementById("topK").value||2);
+    const thrOver=+document.getElementById("thrOver").value||60;
+    const thrUnder=+document.getElementById("thrUnder").value||40;
+
+    let wGA=+document.getElementById("wGA").value||0.40;
+    let wSP=+document.getElementById("wSP").value||0.35;
+    let wX=+document.getElementById("wX").value||0.25;
+
+    const resText=await readFileText(fRes);
+    const quoText=await readFileText(fQuo);
+
+    const results=parseCSV(resText).map(normResultRow).filter(r=>r.dateStr && r.home_team && r.away_team && Number.isFinite(r.dateTs));
+    const quotes=parseCSV(quoText).map(normQuoteRow).filter(q=>q.dateStr && q.home_team && q.away_team && Number.isFinite(q.dateTs));
+
+    const resMap=new Map();
+    for(const r of results) resMap.set(keyOf(r.dateTs,r.home_team,r.away_team), r);
+
+    status.textContent="Calcolo score su match FUTURI…";
+
+    const future=[];
+    for(const q of quotes){
+      // FUTURI = non presenti nei risultati
+      if(resMap.has(keyOf(q.dateTs,q.home_team,q.away_team))) continue;
+
+      const odd1=toNum(q.b365_1), odd2=toNum(q.b365_2), oddX=toNum(q.b365_x);
+      const spread=(Number.isFinite(odd1)&&Number.isFinite(odd2))?Math.abs(odd1-odd2):NaN;
+
+      const mu=estimateMu(results, q.home_team, q.away_team, N, q.dateTs);
+      if(!Number.isFinite(mu)) continue;
+
+      const comp=computeScore(oddX, spread, mu, wGA, wSP, wX);
+      if(!Number.isFinite(comp.score)) continue;
+
+      future.push({
+        dateStr:q.dateStr, home:q.home_team, away:q.away_team,
+        odd1, oddX, odd2, spread, mu,
+        score: comp.score, xs:comp.xs, ss:comp.ss, gs:comp.gs,
+        thrOver, thrUnder
+      });
+    }
+
+    // due liste: top over-friendly e top under-friendly
+    const overList = future.slice().sort((a,b)=>b.score-a.score).slice(0, topK);
+    const underList = future.slice().sort((a,b)=>a.score-b.score).slice(0, topK);
+
+    output.innerHTML = `
+      <div class="card">
+        <b>Impostazioni</b>
+        <div class="row" style="margin-top:10px">
+          <span class="pill"><b>N recenti:</b> ${N}</span>
+          <span class="pill"><b>Pesi:</b> GA=${wGA.toFixed(2)} • spread=${wSP.toFixed(2)} • X=${wX.toFixed(2)}</span>
+          <span class="pill"><b>Soglie:</b> OVER≥${thrOver} • UNDER≤${thrUnder}</span>
+          <span class="pill"><b>Match futuri valutati:</b> ${future.length}</span>
+        </div>
+        <small class="muted" style="display:block;margin-top:8px">
+          “Attenziona” = ti mostra i match più estremi: quelli più OVER-friendly e quelli più UNDER-friendly.
+        </small>
+      </div>
+      ${renderPickTable("TOP OVER-friendly (score più alto)", overList)}
+      ${renderPickTable("TOP UNDER-friendly (score più basso)", underList)}
+    `;
+
+    status.textContent="Completato ✅";
+  }catch(e){
+    status.textContent="Errore: " + (e?.message || e);
+  }
+}
+
+/* ========= 2) BACKTEST =========
+   Applico score su match matchati (quote+risultati):
+   - pick = OVER se score>=50, UNDER se score<50
+   - “PRESA” = considero tutte le matchate (così vedi la verità)
+   - in più: separo over-friendly / under-friendly / neutre
+*/
+async function backtest(){
+  const status=document.getElementById("status");
+  const output=document.getElementById("output");
+  status.textContent="BACKTEST: carico CSV…";
+  output.innerHTML="";
+
+  try{
+    const fRes=document.getElementById("csvResultsFile").files?.[0];
+    const fQuo=document.getElementById("csvQuotesFile").files?.[0];
+    if(!fRes || !fQuo){ status.textContent="⚠️ Seleziona entrambi i CSV."; return; }
+
+    const N=+document.getElementById("N").value||12;
+    const thrOver=+document.getElementById("thrOver").value||60;
+    const thrUnder=+document.getElementById("thrUnder").value||40;
+
+    let wGA=+document.getElementById("wGA").value||0.40;
+    let wSP=+document.getElementById("wSP").value||0.35;
+    let wX=+document.getElementById("wX").value||0.25;
+
+    const resText=await readFileText(fRes);
+    const quoText=await readFileText(fQuo);
+
+    const results=parseCSV(resText).map(normResultRow).filter(r=>r.dateStr && r.home_team && r.away_team && Number.isFinite(r.dateTs));
+    const quotes=parseCSV(quoText).map(normQuoteRow).filter(q=>q.dateStr && q.home_team && q.away_team && Number.isFinite(q.dateTs));
+
+    const resMap=new Map();
+    for(const r of results) resMap.set(keyOf(r.dateTs,r.home_team,r.away_team), r);
+
+    let matched=0, notMatched=0;
+    let taken=0, hit=0, miss=0;
+    let hitOver=0, hitUnder=0, takeOver=0, takeUnder=0;
+
+    // breakdown per etichetta
+    const byTag = {
+      over:{n:0, hit:0},
+      under:{n:0, hit:0},
+      mid:{n:0, hit:0}
+    };
+
+    status.textContent="BACKTEST: calcolo…";
+
+    for(const q of quotes){
+      const r=resMap.get(keyOf(q.dateTs,q.home_team,q.away_team));
+      if(!r){ notMatched++; continue; }
+
+      const hg=toNum(r.FTHG), ag=toNum(r.FTAG);
+      if(!Number.isFinite(hg) || !Number.isFinite(ag)) continue;
+
+      const isOver = (hg+ag)>=3;
+      const isUnder = !isOver;
+
+      const odd1=toNum(q.b365_1), odd2=toNum(q.b365_2), oddX=toNum(q.b365_x);
+      const spread=(Number.isFinite(odd1)&&Number.isFinite(odd2))?Math.abs(odd1-odd2):NaN;
+
+      const mu=estimateMu(results, q.home_team, q.away_team, N, q.dateTs);
+      if(!Number.isFinite(mu)) continue;
+
+      const comp=computeScore(oddX, spread, mu, wGA, wSP, wX);
+      if(!Number.isFinite(comp.score)) continue;
+
+      matched++;
+      taken++;
+
+      const tag = tagFromScore(comp.score, thrOver, thrUnder);
+      const pick = pickFromScore(comp.score);
+
+      let win=false;
+      if(pick==="OVER"){ win = isOver; takeOver++; }
+      else if(pick==="UNDER"){ win = isUnder; takeUnder++; }
+
+      if(win){
+        hit++;
+        if(pick==="OVER") hitOver++;
+        if(pick==="UNDER") hitUnder++;
+      }else{
+        miss++;
+      }
+
+      if(tag.txt==="OVER-friendly"){ byTag.over.n++; if(win) byTag.over.hit++; }
+      else if(tag.txt==="UNDER-friendly"){ byTag.under.n++; if(win) byTag.under.hit++; }
+      else { byTag.mid.n++; if(win) byTag.mid.hit++; }
+    }
+
+    const hitRate = taken ? (hit/taken) : NaN;
+    const hrOver = takeOver ? (hitOver/takeOver) : NaN;
+    const hrUnder = takeUnder ? (hitUnder/takeUnder) : NaN;
+
+    const hrTag = (obj)=> obj.n ? (100*obj.hit/obj.n).toFixed(1)+"%" : "—";
+
+    output.innerHTML = `
+      <div class="card">
+        <b>BACKTEST – “quante prese pre-match” + perché funzionano</b>
+        <div class="row" style="margin-top:10px">
+          <span class="pill"><b>Match matchati:</b> ${matched}</span>
+          <span class="pill"><b>Non matchati:</b> ${notMatched}</span>
+          <span class="pill"><b>PRESE:</b> ${taken}</span>
+          <span class="pill"><b>Hit:</b> ${hit}</span>
+          <span class="pill"><b>Miss:</b> ${miss}</span>
+          <span class="pill"><b>Hit-rate:</b> ${Number.isFinite(hitRate)?(hitRate*100).toFixed(1)+"%":"—"}</span>
+        </div>
+
+        <hr style="margin:12px 0">
+
+        <div class="row">
+          <span class="pill"><b>Pick OVER:</b> ${takeOver} (hit ${hitOver}, HR ${Number.isFinite(hrOver)?(hrOver*100).toFixed(1)+"%":"—"})</span>
+          <span class="pill"><b>Pick UNDER:</b> ${takeUnder} (hit ${hitUnder}, HR ${Number.isFinite(hrUnder)?(hrUnder*100).toFixed(1)+"%":"—"})</span>
+        </div>
+
+        <hr style="margin:12px 0">
+
+        <div class="row">
+          <span class="pill"><b>OVER-friendly:</b> ${byTag.over.n} (HR ${hrTag(byTag.over)})</span>
+          <span class="pill"><b>NEUTRA:</b> ${byTag.mid.n} (HR ${hrTag(byTag.mid)})</span>
+          <span class="pill"><b>UNDER-friendly:</b> ${byTag.under.n} (HR ${hrTag(byTag.under)})</span>
+        </div>
+
+        <small class="muted" style="display:block;margin-top:10px">
+          Lettura corretta: se <b>OVER-friendly</b> ha HR più alta della NEUTRA, allora lo score sta catturando davvero il pattern (non “luna piena”).
+        </small>
+
+        <small style="display:block;margin-top:10px">
+          Set: N=${N}, pesi GA=${wGA.toFixed(2)}, spread=${wSP.toFixed(2)}, X=${wX.toFixed(2)} • soglie OVER≥${thrOver}, UNDER≤${thrUnder}.
+        </small>
+      </div>
+    `;
+
+    status.textContent="BACKTEST completato ✅";
+  }catch(e){
+    status.textContent="Errore BACKTEST: " + (e?.message || e);
+  }
+}
+
+document.getElementById("attBtn").addEventListener("click", attenziona);
+document.getElementById("btBtn").addEventListener("click", backtest);
+</script>
+</body>
+</html>
