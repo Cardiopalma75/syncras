@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Syncras – Test Under/Over 2.5 (Offline • 2 CSV)</title>
+  <style>
+    :root{--violet:#6C5CE7;--bg:#f7f7fb;--card:#fff;--border:#e7e7f5;--text:#111827;--muted:#6b7280}
+    body{font-family:system-ui,Arial;margin:18px;background:var(--bg);color:var(--text)}
+    h2{margin:0 0 10px 0}
+    .muted{color:var(--muted)}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;margin-top:14px}
+    input,select,button{padding:9px;border-radius:12px;border:1px solid #cfcfe6}
+    input[type="file"]{padding:10px}
+    button{cursor:pointer;background:var(--violet);color:#fff;border:0;font-weight:900;padding:12px 14px;border-radius:14px}
+    button:hover{filter:brightness(.96)}
+    .btn2{background:#111827}
+    small{color:#555;line-height:1.35}
+    .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+    @media(max-width:820px){.grid{grid-template-columns:1fr}}
+    .pill{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--border);background:#fafafe;border-radius:999px;padding:6px 10px;font-size:12px;color:#555}
+    table{border-collapse:collapse;width:100%;margin-top:12px;background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden}
+    th,td{border-bottom:1px solid #eee;padding:8px;text-align:right;font-size:13px;vertical-align:top}
+    th{background:#fafafe;color:#333;font-size:12px}
+    th:first-child,td:first-child{text-align:left}
+    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+    .ok{color:#0a7}
+    .bad{color:#c22}
+    .warn{color:#d97706}
+    hr{border:none;border-top:1px solid #e9e9f7}
+    .note{background:#fafafe;border:1px dashed #d9d9f3;border-radius:12px;padding:10px}
+  </style>
+</head>
+
+<body>
+  <h2>Syncras – Test Under/Over 2.5 (Offline • 2 CSV)</h2>
+  <div class="muted">
+    Carichi: (1) risultati giocati • (2) quote pre-match (1/X/2).<br>
+    Output: percentuali Under/Over 2.5 e “pattern” legati alle quote 1/X/2 (spread, favorita, range X, ecc.). Studio informativo.
+  </div>
+
+  <div class="card">
+    <div class="grid">
+      <div>
+        <label><b>CSV RISULTATI (giocato)</b></label><br>
+        <input id="csvResultsFile" type="file" accept=".csv,text/csv" style="width:100%">
+        <small class="muted">Atteso: <span class="mono">date, home_team, away_team, fthg, ftag, ftr</span></small>
+      </div>
+
+      <div>
+        <label><b>CSV QUOTE (pre-match)</b></label><br>
+        <input id="csvQuotesFile" type="file" accept=".csv,text/csv" style="width:100%">
+        <small class="muted">Atteso: <span class="mono">date, home_team, away_team, b365_h, b365_x, b365_a</span><br>
+          (Opzionali se un giorno li avrai: <span class="mono">b365_u25, b365_o25</span>)
+        </small>
+      </div>
+
+      <div class="note">
+        <b>Cosa fa questo test</b><br>
+        <small>
+          1) Matcha quote ↔ risultati (stessa data + squadre normalizzate)<br>
+          2) Calcola Under/Over 2.5 dal punteggio (fthg+ftag)<br>
+          3) Mostra distribuzioni e percentuali per fasce di quote 1/X/2<br>
+          4) BACKTEST: ti dice <i>quali filtri</i> tagliano Under (o Over)
+        </small>
+      </div>
+    </div>
+
+    <hr style="margin:14px 0">
+
+    <div class="row">
+      <label><b>Modalità selezione</b></label>
+      <select id="pickSide">
+        <option value="U" selected>UNDER 2.5</option>
+        <option value="O">OVER 2.5</option>
+      </select>
+
+      <label>Bin size quote</label>
+      <input id="bin" type="number" value="0.25" step="0.05" style="width:110px">
+
+      <label>Range quota X</label>
+      <input id="xMin" type="number" value="3.00" step="0.05" style="width:110px">
+      <input id="xMax" type="number" value="4.75" step="0.05" style="width:110px">
+
+      <label>1 & 2 ≥</label>
+      <input id="odds12Min" type="number" value="1.70" step="0.01" style="width:110px">
+
+      <label>Spread max |1-2|</label>
+      <input id="spreadMax" type="number" value="3.0" step="0.1" style="width:110px">
+
+      <label>Min match per bin</label>
+      <input id="minBinN" type="number" value="15" step="1" style="width:110px">
+    </div>
+
+    <div class="row" style="margin-top:10px">
+      <label>Team norm</label>
+      <select id="teamNorm">
+        <option value="trimLower" selected>trim + lower</option>
+        <option value="none">none</option>
+      </select>
+
+      <button id="runBtn" type="button">Calcola distribuzioni U/O 2.5</button>
+      <button id="btBtn" type="button" class="btn2">BACKTEST (spiega i tagli)</button>
+      <span id="status" class="muted"></span>
+    </div>
+
+    <small style="display:block;margin-top:10px">
+      Studio informativo. Nessun invito a scommettere.
+    </small>
+  </div>
+
+  <div id="output"></div>
+
+<script>
+/* =========================
+   Syncras – Under/Over 2.5 (2 CSV) – Distribuzioni + Backtest tagli
+========================= */
+
+/* --------- helpers base --------- */
+function normTeam(s, mode){
+  const t = String(s||"");
+  if(mode==="none") return t;
+  return t.trim().toLowerCase();
+}
+function normKey(s){ return String(s||"").trim().toLowerCase(); }
+
+function parseCSV(text){
+  const rows=[];
+  let row=[], cur="", inQ=false;
+  for(let i=0;i<text.length;i++){
+    const ch=text[i], nx=text[i+1];
+    if(ch === '"'){
+      if(inQ && nx === '"'){ cur+='"'; i++; }
+      else inQ = !inQ;
+      continue;
+    }
+    if(!inQ && (ch===',' || ch===';')){ row.push(cur); cur=""; continue; }
+    if(!inQ && ch==='\n'){ row.push(cur); rows.push(row); row=[]; cur=""; continue; }
+    if(!inQ && ch==='\r') continue;
+    cur+=ch;
+  }
+  row.push(cur); rows.push(row);
+  if(rows.length && rows[rows.length-1].every(c=>String(c).trim()==="")) rows.pop();
+  const header = (rows[0]||[]).map(x=>String(x).trim());
+  return rows.slice(1).map(r=>{
+    const o={};
+    for(let i=0;i<header.length;i++){
+      o[header[i]] = String(r[i]??"").trim().replace(/"/g,"");
+    }
+    return o;
+  });
+}
+function pick(o, keys){
+  const map={};
+  for(const k in o) map[normKey(k)] = o[k];
+  for(const k of keys){
+    const v = map[normKey(k)];
+    if(v!==undefined) return v;
+  }
+  return undefined;
+}
+function toNum(x){
+  const s=String(x??"").trim().replace(",",".");
+  const n=Number(s);
+  return Number.isFinite(n) ? n : NaN;
+}
+
+/* ---------- date parse (YYYY-MM-DD, DD/MM/YYYY, DD/MM/YY) ---------- */
+function parseDateTs(s){
+  const t = String(s ?? "").trim();
+  if(!t) return NaN;
+
+  if(/^\d{4}-\d{2}-\d{2}$/.test(t)) return Date.parse(t + "T00:00:00Z");
+
+  let m = t.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if(m){
+    const dd=+m[1], mm=+m[2], yyyy=+m[3];
+    const iso = `${yyyy.toString().padStart(4,'0')}-${String(mm).padStart(2,'0')}-${String(dd).padStart(2,'0')}`;
+    return Date.parse(iso+"T00:00:00Z");
+  }
+
+  m = t.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2})$/);
+  if(m){
+    const dd=+m[1], mm=+m[2], yy=+m[3];
+    const yyyy = (yy>=70) ? (1900+yy) : (2000+yy);
+    const iso = `${yyyy}-${String(mm).padStart(2,'0')}-${String(dd).padStart(2,'0')}`;
+    return Date.parse(iso+"T00:00:00Z");
+  }
+
+  const x = Date.parse(t);
+  return Number.isFinite(x) ? x : NaN;
+}
+
+/* ---------- key merge ---------- */
+function keyOf(dateTs, home, away){ return `${dateTs}|${home}|${away}`; }
+
+/* ---------- FileReader ---------- */
+async function readFileText(file){
+  return new Promise((res,rej)=>{
+    const r=new FileReader();
+    r.onload=()=>res(String(r.result||""));
+    r.onerror=rej;
+    r.readAsText(file);
+  });
+}
+
+/* ---------- normalize rows ---------- */
+function normResultRow(o, teamMode){
+  const dateStr = String(pick(o,["date","match_date","data","giorno","Date","DATA"])||"").trim();
+  const home_team = normTeam(pick(o,["home_team","hometeam","home","HomeTeam","CASA"])||"", teamMode);
+  const away_team = normTeam(pick(o,["away_team","awayteam","away","AwayTeam","TRASFERTA"])||"", teamMode);
+
+  let ftr = String(pick(o,["ftr","FTR","result","Result","esito"])||"").trim().toUpperCase();
+  // mapping (H/D/A) -> (1/X/2) e già (1/X/2)
+  if(ftr==="H") ftr="1";
+  else if(ftr==="D") ftr="X";
+  else if(ftr==="A") ftr="2";
+
+  const fthg = pick(o,["fthg","FTHG","hg","home_goals","HomeGoals"]) ?? "";
+  const ftag = pick(o,["ftag","FTAG","ag","away_goals","AwayGoals"]) ?? "";
+  const dateTs = parseDateTs(dateStr);
+
+  const hg = toNum(fthg);
+  const ag = toNum(ftag);
+  const goalsOk = Number.isFinite(hg) && Number.isFinite(ag);
+  const goals = goalsOk ? (hg+ag) : NaN;
+
+  // Under/Over 2.5
+  const uo = goalsOk ? (goals <= 2 ? "U" : "O") : "";
+
+  return {dateStr, dateTs, home_team, away_team, ftr, hg, ag, goals, goalsOk, uo};
+}
+function normQuoteRow(o, teamMode){
+  const dateStr = String(pick(o,["date","match_date","data","giorno","Date","DATA"])||"").trim();
+  const home_team = normTeam(pick(o,["home_team","hometeam","home","HomeTeam","CASA"])||"", teamMode);
+  const away_team = normTeam(pick(o,["away_team","awayteam","away","AwayTeam","TRASFERTA"])||"", teamMode);
+
+  const b365_1 = pick(o,["b365_h","b365_1","B365H","odd1","odds_1","1","home"]) ?? "";
+  const b365_x = pick(o,["b365_x","B365D","oddx","odds_x","X","draw"]) ?? "";
+  const b365_2 = pick(o,["b365_a","b365_2","B365A","odd2","odds_2","2","away"]) ?? "";
+
+  // opzionali se un giorno li avrai
+  const b365_u25 = pick(o,["b365_u25","b365_u_25","b365_under25","under25","u25","B365U"]) ?? "";
+  const b365_o25 = pick(o,["b365_o25","b365_o_25","b365_over25","over25","o25","B365O"]) ?? "";
+
+  const league = String(pick(o,["league","League","comp"])||"").trim();
+
+  const dateTs = parseDateTs(dateStr);
+  return {league, dateStr, dateTs, home_team, away_team, b365_1:String(b365_1).trim(), b365_x:String(b365_x).trim(), b365_2:String(b365_2).trim(),
+          b365_u25:String(b365_u25).trim(), b365_o25:String(b365_o25).trim()};
+}
+
+/* ---------- binning ---------- */
+function binLabel(x, bin){
+  if(!Number.isFinite(x)) return "—";
+  const b = Math.max(0.05, bin);
+  const lo = Math.floor(x / b) * b;
+  const hi = lo + b;
+  const f = (v)=> (Math.round(v*100)/100).toFixed(2);
+  return `${f(lo)}–${f(hi)}`;
+}
+function addMap(map, key, obj){
+  if(!map.has(key)) map.set(key, {n:0, U:0, O:0, r1:0, rX:0, r2:0});
+  const v = map.get(key);
+  v.n++;
+  if(obj.uo==="U") v.U++;
+  if(obj.uo==="O") v.O++;
+  if(obj.ftr==="1") v.r1++;
+  if(obj.ftr==="X") v.rX++;
+  if(obj.ftr==="2") v.r2++;
+}
+
+/* ---------- formatting ---------- */
+function fmtPct01(p){
+  if(!Number.isFinite(p)) return "—";
+  return (p*100).toFixed(1) + "%";
+}
+function fmtNum(x){ return Number.isFinite(x) ? x.toFixed(2) : "—"; }
+
+/* ---------- filters (first-fail) per backtest ---------- */
+function evalFilters(q, r, cfg){
+  // q: quote row, r: result row (matched)
+  const odd1 = toNum(q.b365_1), oddX = toNum(q.b365_x), odd2 = toNum(q.b365_2);
+  if(!Number.isFinite(oddX)) return {ok:false, reason:"oddX_missing"};
+  if(oddX < cfg.xMin || oddX > cfg.xMax) return {ok:false, reason:"oddX_range"};
+
+  if(!Number.isFinite(odd1) || !Number.isFinite(odd2)) return {ok:false, reason:"odd12_missing"};
+  if(odd1 < cfg.odds12Min) return {ok:false, reason:"odd1_lt_min"};
+  if(odd2 < cfg.odds12Min) return {ok:false, reason:"odd2_lt_min"};
+
+  const spread12 = Math.abs(odd1-odd2);
+  if(!Number.isFinite(spread12)) return {ok:false, reason:"spread_nan"};
+  if(spread12 > cfg.spreadMax) return {ok:false, reason:"spread_gt_max"};
+
+  // se un giorno avrai quote U/O, qui puoi aggiungere range odds U/O e/o EV
+  // per ora lasciamo solo filtri "di contesto 1X2"
+  return {ok:true, reason:"ok"};
+}
+
+/* ---------- MAIN: distributions ---------- */
+async function run(){
+  const status = document.getElementById("status");
+  const output = document.getElementById("output");
+  status.textContent = "Carico CSV…";
+  output.innerHTML = "";
+
+  try{
+    const fRes = document.getElementById("csvResultsFile").files?.[0];
+    const fQuo = document.getElementById("csvQuotesFile").files?.[0];
+    if(!fRes || !fQuo){
+      status.textContent = "⚠️ Seleziona entrambi i CSV (risultati + quote).";
+      return;
+    }
+
+    const teamMode = document.getElementById("teamNorm").value;
+    const bin = +document.getElementById("bin").value || 0.25;
+    const minBinN = Math.max(5, +document.getElementById("minBinN").value || 15);
+
+    const resText = await readFileText(fRes);
+    const quoText = await readFileText(fQuo);
+
+    const results = parseCSV(resText).map(o=>normResultRow(o, teamMode))
+      .filter(r=>r.dateStr && r.home_team && r.away_team && Number.isFinite(r.dateTs) && r.goalsOk && (r.uo==="U" || r.uo==="O"));
+
+    const quotes = parseCSV(quoText).map(o=>normQuoteRow(o, teamMode))
+      .filter(q=>q.dateStr && q.home_team && q.away_team && Number.isFinite(q.dateTs));
+
+    // map risultati
+    const resMap = new Map();
+    for(const r of results){
+      resMap.set(keyOf(r.dateTs, r.home_team, r.away_team), r);
+    }
+
+    // merge
+    let merged=0, notMatched=0;
+    const mergedRows=[];
+    for(const q of quotes){
+      const r = resMap.get(keyOf(q.dateTs, q.home_team, q.away_team));
+      if(!r){ notMatched++; continue; }
+      merged++;
+      mergedRows.push({q,r});
+    }
+
+    // overall stats
+    let U=0,O=0,r1=0,rX=0,r2=0;
+    for(const x of mergedRows){
+      if(x.r.uo==="U") U++;
+      if(x.r.uo==="O") O++;
+      if(x.r.ftr==="1") r1++;
+      if(x.r.ftr==="X") rX++;
+      if(x.r.ftr==="2") r2++;
+    }
+    const pU = merged ? U/merged : NaN;
+    const pO = merged ? O/merged : NaN;
+
+    // distributions by bins
+    const byOddX = new Map();
+    const byOdd1 = new Map();
+    const byOdd2 = new Map();
+    const byFav = new Map();     // favorita = min(odd1,odd2)
+    const bySpread = new Map();  // spread abs(odd1-odd2)
+
+    for(const x of mergedRows){
+      const odd1=toNum(x.q.b365_1), oddX=toNum(x.q.b365_x), odd2=toNum(x.q.b365_2);
+      const fav = Math.min(odd1, odd2);
+      const spread = Math.abs(odd1-odd2);
+
+      addMap(byOddX, binLabel(oddX, bin), x.r);
+      addMap(byOdd1, binLabel(odd1, bin), x.r);
+      addMap(byOdd2, binLabel(odd2, bin), x.r);
+      addMap(byFav,  binLabel(fav,  bin), x.r);
+      addMap(bySpread, binLabel(spread, bin), x.r);
+    }
+
+    function renderBinTable(title, map){
+      // sort by numeric lower bound
+      const arr = Array.from(map.entries())
+        .map(([k,v])=>{
+          const m = String(k).match(/^(\d+(\.\d+)?)/);
+          const lo = m ? Number(m[1]) : 1e9;
+          return {k, lo, v};
+        })
+        .sort((a,b)=>a.lo-b.lo);
+
+      const rows = arr
+        .filter(x=>x.v.n >= minBinN)
+        .map(x=>{
+          const pU = x.v.n ? x.v.U/x.v.n : NaN;
+          const pO = x.v.n ? x.v.O/x.v.n : NaN;
+          const p1 = x.v.n ? x.v.r1/x.v.n : NaN;
+          const pX = x.v.n ? x.v.rX/x.v.n : NaN;
+          const p2 = x.v.n ? x.v.r2/x.v.n : NaN;
+          return `
+            <tr>
+              <td class="mono">${x.k}</td>
+              <td class="mono">${x.v.n}</td>
+              <td><b>${fmtPct01(pU)}</b> <span class="muted">(U=${x.v.U})</span></td>
+              <td><b>${fmtPct01(pO)}</b> <span class="muted">(O=${x.v.O})</span></td>
+              <td>${fmtPct01(p1)}</td>
+              <td>${fmtPct01(pX)}</td>
+              <td>${fmtPct01(p2)}</td>
+            </tr>
+          `;
+        }).join("");
+
+      const empty = `<tr><td colspan="7" class="muted">Nessun bin con N ≥ ${minBinN}. Abbassa “Min match per bin”.</td></tr>`;
+
+      return `
+        <div class="card">
+          <b>${title}</b>
+          <table>
+            <thead>
+              <tr>
+                <th>Range quota</th>
+                <th>N</th>
+                <th>Under 2.5</th>
+                <th>Over 2.5</th>
+                <th>1</th>
+                <th>X</th>
+                <th>2</th>
+              </tr>
+            </thead>
+            <tbody>${rows || empty}</tbody>
+          </table>
+          <small class="muted">Nota: qui stai vedendo “quanto Under/Over esce davvero” quando la quota sta in quel range.</small>
+        </div>
+      `;
+    }
+
+    output.innerHTML = `
+      <div class="card">
+        <b>Riepilogo match matchati</b>
+        <div class="row" style="margin-top:10px">
+          <span class="pill"><b>Match matchati:</b> ${merged}</span>
+          <span class="pill"><b>Non matchati:</b> ${notMatched}</span>
+          <span class="pill"><b>Under 2.5:</b> ${U} (${fmtPct01(pU)})</span>
+          <span class="pill"><b>Over 2.5:</b> ${O} (${fmtPct01(pO)})</span>
+          <span class="pill"><b>1/X/2:</b> 1=${r1} • X=${rX} • 2=${r2}</span>
+          <span class="pill">Team norm: <span class="mono">${teamMode}</span></span>
+          <span class="pill">Bin: <span class="mono">${fmtNum(bin)}</span></span>
+        </div>
+        <small style="display:block;margin-top:10px">
+          Se vuoi “puntare” sulla qualità del test: cerca range con N decente e differenze nette (es. Under molto alto quando X sta in 3.25–4.00, ecc.).
+        </small>
+      </div>
+
+      ${renderBinTable("Distribuzione Under/Over per QUOTA X (b365_x)", byOddX)}
+      ${renderBinTable("Distribuzione Under/Over per QUOTA 1 (b365_h)", byOdd1)}
+      ${renderBinTable("Distribuzione Under/Over per QUOTA 2 (b365_a)", byOdd2)}
+      ${renderBinTable("Distribuzione Under/Over per ‘FAVORITA’ (min(1,2))", byFav)}
+      ${renderBinTable("Distribuzione Under/Over per SPREAD |1-2|", bySpread)}
+    `;
+
+    status.textContent = "Completato ✅";
+  }catch(e){
+    status.textContent = "Errore: " + (e?.message || e);
+  }
+}
+
+/* ---------- BACKTEST: spiega i tagli ---------- */
+function addCount(obj, k, inc=1){ obj[k]=(obj[k]||0)+inc; }
+
+async function backtest(){
+  const status = document.getElementById("status");
+  const output = document.getElementById("output");
+  status.textContent = "BACKTEST: carico CSV…";
+  output.innerHTML = "";
+
+  try{
+    const fRes = document.getElementById("csvResultsFile").files?.[0];
+    const fQuo = document.getElementById("csvQuotesFile").files?.[0];
+    if(!fRes || !fQuo){
+      status.textContent = "⚠️ Seleziona entrambi i CSV (risultati + quote).";
+      return;
+    }
+
+    const teamMode = document.getElementById("teamNorm").value;
+
+    const cfg = {
+      pickSide: document.getElementById("pickSide").value, // U o O
+      xMin: +document.getElementById("xMin").value || 3.0,
+      xMax: +document.getElementById("xMax").value || 4.75,
+      odds12Min: +document.getElementById("odds12Min").value || 1.70,
+      spreadMax: +document.getElementById("spreadMax").value || 3.0
+    };
+
+    const reasonLabel = {
+      oddX_missing:"oddX mancante",
+      oddX_range:"quota X fuori range",
+      odd12_missing:"odd1/odd2 mancanti",
+      odd1_lt_min:"odd1 < min",
+      odd2_lt_min:"odd2 < min",
+      spread_nan:"spread NaN",
+      spread_gt_max:"spread > max",
+      ok:"OK"
+    };
+
+    const resText = await readFileText(fRes);
+    const quoText = await readFileText(fQuo);
+
+    const results = parseCSV(resText).map(o=>normResultRow(o, teamMode))
+      .filter(r=>r.dateStr && r.home_team && r.away_team && Number.isFinite(r.dateTs) && r.goalsOk && (r.uo==="U"||r.uo==="O"));
+
+    const quotes = parseCSV(quoText).map(o=>normQuoteRow(o, teamMode))
+      .filter(q=>q.dateStr && q.home_team && q.away_team && Number.isFinite(q.dateTs));
+
+    const resMap = new Map();
+    for(const r of results){
+      resMap.set(keyOf(r.dateTs, r.home_team, r.away_team), r);
+    }
+
+    let merged=0, notMatched=0;
+
+    let totalTarget=0;     // quanti Under (o Over) reali
+    let selected=0;        // quanti selezionati
+    let hit=0;             // selezionati che sono davvero target (Under/Over)
+    let other=0;           // selezionati che NON sono target
+
+    const cutTarget = {};  // dove vengono tagliati gli Under/Over reali
+    const cutNonTarget = {};
+
+    status.textContent = "BACKTEST: merge & valutazione…";
+
+    for(const q of quotes){
+      const r = resMap.get(keyOf(q.dateTs, q.home_team, q.away_team));
+      if(!r){ notMatched++; continue; }
+      merged++;
+
+      const isTarget = (r.uo === cfg.pickSide);
+      if(isTarget) totalTarget++;
+
+      const evr = evalFilters(q, r, cfg);
+
+      if(evr.ok){
+        selected++;
+        if(isTarget) hit++;
+        else other++;
+      }else{
+        if(isTarget) addCount(cutTarget, evr.reason);
+        else addCount(cutNonTarget, evr.reason);
+      }
+    }
+
+    function breakdownTable(title, obj){
+      const keys = Object.keys(obj).sort((a,b)=>obj[b]-obj[a]);
+      const rows = keys.map(k=>`
+        <tr>
+          <td>${reasonLabel[k] || k}</td>
+          <td class="mono">${obj[k]}</td>
+        </tr>
+      `).join("") || `<tr><td colspan="2" class="muted">Nessun taglio registrato (o campione vuoto)</td></tr>`;
+      return `
+        <div class="card">
+          <b>${title}</b>
+          <table style="margin-top:10px">
+            <thead><tr><th>Filtro che taglia (first-fail)</th><th>N</th></tr></thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    const pct = (a,b)=> b ? (100*a/b) : 0;
+
+    output.innerHTML = `
+      <div class="card">
+        <b>BACKTEST – ${cfg.pickSide==="U" ? "UNDER 2.5" : "OVER 2.5"} con filtri “contesto 1X2”</b>
+        <div class="row" style="margin-top:10px">
+          <span class="pill"><b>Match matchati:</b> ${merged}</span>
+          <span class="pill"><b>Non matchati:</b> ${notMatched}</span>
+          <span class="pill"><b>Target reali:</b> ${totalTarget} (${pct(totalTarget,merged).toFixed(1)}%)</span>
+        </div>
+
+        <hr style="margin:12px 0">
+
+        <div class="row">
+          <span class="pill"><b>Selezionate:</b> ${selected}</span>
+          <span class="pill"><b>Tra selezionate:</b> target=${hit} • non-target=${other}</span>
+          <span class="pill"><b>Hit rate:</b> ${selected ? pct(hit,selected).toFixed(1) : "0.0"}%</span>
+          <span class="pill"><b>Copertura target:</b> ${totalTarget ? pct(hit,totalTarget).toFixed(1) : "0.0"}%</span>
+        </div>
+
+        <small style="display:block;margin-top:10px" class="muted">
+          Qui stai misurando: “quanti Under/Over reali prendo” e soprattutto <b>quale filtro li taglia</b>.
+          Questo è il passaggio giusto prima di parlare di EV.
+        </small>
+
+        <small style="display:block;margin-top:10px">
+          Filtri: X=[${cfg.xMin.toFixed(2)}–${cfg.xMax.toFixed(2)}], 1&2≥${cfg.odds12Min.toFixed(2)}, spread12≤${cfg.spreadMax.toFixed(1)}.
+          (Per EV su Under/Over servono anche quote U/O nel CSV.)
+        </small>
+      </div>
+
+      ${breakdownTable(`Dove vengono tagliati i ${cfg.pickSide==="U" ? "UNDER" : "OVER"} reali (QUESTO È IL PUNTO)`, cutTarget)}
+      ${breakdownTable("Dove vengono tagliati i NON-target (rumore)", cutNonTarget)}
+    `;
+
+    status.textContent = "BACKTEST completato ✅";
+  }catch(e){
+    status.textContent = "Errore BACKTEST: " + (e?.message || e);
+  }
+}
+
+document.getElementById("runBtn").addEventListener("click", run);
+document.getElementById("btBtn").addEventListener("click", backtest);
+</script>
+
+</body>
+</html>
