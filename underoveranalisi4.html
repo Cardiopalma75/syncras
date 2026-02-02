@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Syncras – U/O 2.5 Score Unico (Spiegabile • 2 CSV • Backtest)</title>
+  <title>Syncras – U/O 2.5 (GA + Bonus X + Spread) • % spiegabili • Backtest</title>
   <style>
     :root{--violet:#6C5CE7;--bg:#f7f7fb;--card:#fff;--border:#e7e7f5;--text:#111827;--muted:#6b7280}
     body{font-family:system-ui,Arial;margin:18px;background:var(--bg);color:var(--text)}
@@ -25,21 +25,21 @@
     th{background:#fafafe;color:#333;font-size:12px}
     th:first-child,td:first-child{text-align:left}
     .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
-    .ok{color:#0a7}
-    .bad{color:#c22}
-    .warn{color:#d97706}
-    small{color:#555;line-height:1.35}
-    .tag{display:inline-flex;align-items:center;border-radius:999px;padding:4px 10px;font-size:12px;font-weight:800}
+    .tag{display:inline-flex;align-items:center;border-radius:999px;padding:4px 10px;font-size:12px;font-weight:900}
     .tagOver{background:#ecfdf5;color:#067a50;border:1px solid #a7f3d0}
     .tagUnder{background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe}
     .tagMid{background:#fff7ed;color:#b45309;border:1px solid #fed7aa}
+    .scoreBox{display:inline-flex;flex-direction:column;gap:2px}
+    .big{font-weight:1000;font-size:14px}
+    .small{font-size:11px;color:#6b7280;line-height:1.25}
   </style>
 </head>
 <body>
-  <h2>Syncras – Under/Over 2.5 (Score Unico • Spiegabile • 2 CSV)</h2>
+  <h2>Syncras – Under/Over 2.5 (GA = base • X = bonus • Spread = contesto)</h2>
   <div class="muted">
-    Questo file crea uno <b>SCORE unico</b> (0–100) combinando <b>quota X</b>, <b>spread |1–2|</b> e <b>GA recente (mu)</b>.
-    <br>Output: match <b>OVER-friendly</b> e <b>UNDER-friendly</b>. Backtest: “quante prese pre-match” + hit-rate.
+    ✅ Output: match <b>OVER-friendly</b> / <b>UNDER-friendly</b> con <b>% probabilità (spiegabile)</b> sempre visibile.
+    <br>✅ Se il match è già giocato: vedi anche <b>risultato finale</b>. Se futuro: <b>?</b>.
+    <br><small>Studio informativo. Nessun invito a scommettere.</small>
   </div>
 
   <div class="card">
@@ -47,26 +47,24 @@
       <div>
         <label><b>CSV RISULTATI (giocato)</b></label><br>
         <input id="csvResultsFile" type="file" accept=".csv,text/csv" style="width:100%">
-        <small class="muted">Colonne tipiche: <span class="mono">date, HomeTeam/home_team, AwayTeam/away_team, FTHG, FTAG</span></small>
+        <small class="muted">Colonne tipiche: <span class="mono">date, home_team, away_team, FTHG, FTAG</span></small>
       </div>
 
       <div>
         <label><b>CSV QUOTE (pre-match 1/X/2)</b></label><br>
         <input id="csvQuotesFile" type="file" accept=".csv,text/csv" style="width:100%">
-        <small class="muted">
-          Colonne attese: <span class="mono">date, home_team, away_team, b365_1, b365_x, b365_2</span>
-        </small>
+        <small class="muted">Colonne attese: <span class="mono">date, home_team, away_team, b365_1, b365_x, b365_2</span></small>
       </div>
 
       <div>
         <label><b>2 tasti</b></label><br>
         <div class="row">
-          <span class="pill">✅ Score unico (X + spread + GA)</span>
-          <span class="pill">✅ OVER/UNDER friendly</span>
+          <span class="pill">✅ Attenziona</span>
+          <span class="pill">✅ % spiegabile (GA+X+Spread)</span>
           <span class="pill">✅ Backtest prese</span>
         </div>
         <small class="muted" style="display:block;margin-top:10px">
-          Studio informativo. Nessun invito a scommettere.
+          Nota: la % usa le “foto” (bin) derivate dai tuoi risultati storici.
         </small>
       </div>
     </div>
@@ -75,8 +73,7 @@
 
     <div class="row">
       <label>N recenti (GA)</label><input id="N" type="number" value="12" style="width:90px">
-      <label>Top per categoria</label><input id="topK" type="number" value="2" style="width:90px">
-
+      <label>Top per categoria</label><input id="topK" type="number" value="5" style="width:90px">
       <span class="pill">spread = <span class="mono">|quota1 - quota2|</span></span>
     </div>
 
@@ -90,7 +87,7 @@
     </div>
 
     <small class="muted" style="display:block;margin-top:8px">
-      Default = pesi coerenti coi tuoi test: GA conta tanto, spread conta molto, X conferma.
+      Default = coerente coi tuoi test: GA pesa di più, spread conta molto, X è bonus/conferma.
     </small>
 
     <hr style="margin:14px 0">
@@ -111,7 +108,7 @@ function normKey(s){ return String(s||"").trim().toLowerCase(); }
 function toNum(x){ const s=String(x??"").trim().replace(",","."); const n=Number(s); return Number.isFinite(n)?n:NaN; }
 function clamp(x,a,b){ return Math.max(a, Math.min(b,x)); }
 function fmtNum(x){ return Number.isFinite(x)?x.toFixed(2):"—"; }
-function fmtPct(x){ return Number.isFinite(x)?(x*100).toFixed(1)+"%":"—"; }
+function fmtPct01(x){ return Number.isFinite(x)?(x*100).toFixed(1)+"%":"—"; }
 
 function parseCSV(text){
   const rows=[]; let row=[], cur="", inQ=false;
@@ -208,18 +205,13 @@ function estimateMu(results, home, away, N, dateTs){
   return clamp(mu, 1.4, 4.2);
 }
 
-/* ========= SCORE UNICO =========
-   xScore: cresce quando X cresce (3.2 -> 0, 5.5 -> 1)
-   spScore: massimo a spread=2, scende verso 0 quando spread va verso 0 o verso 6.5
-   gaScore: cresce quando mu cresce (2.4 -> 0, 3.8 -> 1)
-*/
+/* ========= SCORE UNICO (0..100) ========= */
 function xScore(oddX){
   if(!Number.isFinite(oddX)) return NaN;
   return clamp((oddX - 3.20) / (5.50 - 3.20), 0, 1);
 }
 function spScore(spread){
   if(!Number.isFinite(spread)) return NaN;
-  // triangolare: peak a 2.0, 0 a 0 e a 6.5
   const peak=2.0, left=0.0, right=6.5;
   if(spread<=peak) return clamp((spread-left)/(peak-left), 0, 1);
   return clamp((right-spread)/(right-peak), 0, 1);
@@ -233,7 +225,7 @@ function computeScore(oddX, spread, mu, wGA, wSP, wX){
   if(!Number.isFinite(xs) || !Number.isFinite(ss) || !Number.isFinite(gs)) return {score:NaN, xs, ss, gs};
   const sum = (wGA+wSP+wX) || 1;
   const s = (wGA*gs + wSP*ss + wX*xs) / sum;
-  return {score: s*100, xs, ss, gs}; // 0..100
+  return {score: s*100, xs, ss, gs};
 }
 function tagFromScore(s, thrOver, thrUnder){
   if(!Number.isFinite(s)) return {txt:"NA", cls:"tagMid"};
@@ -241,29 +233,125 @@ function tagFromScore(s, thrOver, thrUnder){
   if(s<=thrUnder) return {txt:"UNDER-friendly", cls:"tagUnder"};
   return {txt:"NEUTRA", cls:"tagMid"};
 }
-function pickFromScore(s){
-  // decisione semplice: sopra 50 => Over, sotto 50 => Under (solo per backtest)
-  if(!Number.isFinite(s)) return "—";
-  return (s>=50) ? "OVER" : "UNDER";
+
+/* ========= % PROBABILITÀ (spiegabile) =========
+   - Base over-rate: 57% (dal tuo dataset)
+   - Poi aggiungo/sottraggo delte dai bin:
+     pOverPred = base + wGA*(pOver_GA - base) + wX*(pOver_X - base) + wSP*(pOver_SP - base)
+*/
+const BASE_OVER = 0.57;
+
+// Bins (derivati dai numeri che hai incollato)
+const BINS_GA = [
+  {min:2.60, max:3.00, pOver:0.619, label:"GA 2.60–3.00"},
+  {min:3.00, max:3.40, pOver:0.640, label:"GA 3.00–3.40"},
+  {min:3.40, max:3.80, pOver:0.630, label:"GA 3.40–3.80"},
+  {min:3.80, max:Infinity, pOver:0.797, label:"GA 3.80+"},
+];
+
+const BINS_X = [
+  {min:2.00, max:3.00, pOver:0.364, label:"X 2.00–3.00"},
+  {min:3.00, max:4.00, pOver:0.502, label:"X 3.00–4.00"},
+  {min:4.00, max:5.00, pOver:0.664, label:"X 4.00–5.00"},
+  {min:5.00, max:6.00, pOver:0.646, label:"X 5.00–6.00"},
+  {min:6.00, max:7.00, pOver:0.639, label:"X 6.00–7.00"},
+  {min:7.00, max:8.00, pOver:0.742, label:"X 7.00–8.00"},
+  {min:8.00, max:Infinity, pOver:0.684, label:"X 8.00+"},
+];
+
+const BINS_SPREAD = [
+  {min:-Infinity, max:0.50, pOver:0.589, label:"Spread <0.50"},
+  {min:0.50, max:1.00, pOver:0.659, label:"Spread 0.50–1.00"},
+  {min:1.00, max:2.00, pOver:0.738, label:"Spread 1.00–2.00"},
+  {min:2.00, max:3.00, pOver:0.709, label:"Spread 2.00–3.00"},
+  {min:3.00, max:4.00, pOver:0.607, label:"Spread 3.00–4.00"},
+  {min:4.00, max:5.00, pOver:0.654, label:"Spread 4.00–5.00"},
+  {min:5.00, max:6.50, pOver:0.622, label:"Spread 5.00–6.50"},
+  {min:6.50, max:Infinity, pOver:0.663, label:"Spread 6.50+"},
+];
+
+function binLookup(value, bins){
+  if(!Number.isFinite(value)) return {pOver:BASE_OVER, label:"(bin NA)"};
+  for(const b of bins){
+    if(value>=b.min && value<b.max) return {pOver:b.pOver, label:b.label};
+  }
+  return {pOver:BASE_OVER, label:"(bin default)"};
+}
+
+function predictOverProb(mu, oddX, spread, wGA, wSP, wX){
+  const ga = binLookup(mu, BINS_GA);
+  const xb = binLookup(oddX, BINS_X);
+  const sp = binLookup(spread, BINS_SPREAD);
+
+  const base = BASE_OVER;
+  const p = base
+    + wGA*(ga.pOver - base)
+    + wX*(xb.pOver - base)
+    + wSP*(sp.pOver - base);
+
+  const pClamped = clamp(p, 0.05, 0.95);
+
+  return {
+    pOver: pClamped,
+    parts: {
+      base,
+      ga, xb, sp,
+      deltaGA: ga.pOver - base,
+      deltaX: xb.pOver - base,
+      deltaSP: sp.pOver - base
+    }
+  };
 }
 
 /* ========= RENDER ========= */
 function renderPickTable(title, arr){
   const rows = arr.map(x=>{
     const t=tagFromScore(x.score, x.thrOver, x.thrUnder);
+
+    const pPick = (x.pick==="OVER") ? x.pOver : (1-x.pOver);
+    const pTxt = fmtPct01(pPick);
+
+    const resTxt = x.played ? `${x.FTHG}-${x.FTAG}` : "?";
+    const outcomeTxt = x.played ? (x.isHit ? "HIT" : "MISS") : "—";
+
     return `
       <tr>
-        <td><b>${x.home} — ${x.away}</b><br><small class="muted">${x.dateStr}</small></td>
-        <td class="mono">${fmtNum(x.odd1)} / <b>${fmtNum(x.oddX)}</b> / ${fmtNum(x.odd2)}<br><small class="muted">spread=${fmtNum(x.spread)}</small></td>
-        <td class="mono">mu=${fmtNum(x.mu)}</td>
-        <td class="mono">
-          <b>${x.score.toFixed(1)}</b><br>
-          <small class="muted">GA=${(x.gs*100).toFixed(0)} • SP=${(x.ss*100).toFixed(0)} • X=${(x.xs*100).toFixed(0)}</small>
+        <td>
+          <b>${x.home} — ${x.away}</b><br>
+          <small class="muted">${x.dateStr}</small>
         </td>
-        <td><span class="tag ${t.cls}">${t.txt}</span></td>
+
+        <td class="mono">
+          ${fmtNum(x.odd1)} / <b>${fmtNum(x.oddX)}</b> / ${fmtNum(x.odd2)}<br>
+          <small class="muted">spread=${fmtNum(x.spread)}</small>
+        </td>
+
+        <td class="mono">
+          mu=${fmtNum(x.mu)}<br>
+          <small class="muted">${x.gaLabel}</small>
+        </td>
+
+        <td class="mono">
+          <div class="scoreBox">
+            <span class="big">${x.score.toFixed(1)}</span>
+            <span class="small">GA=${(x.gs*100).toFixed(0)} • SP=${(x.ss*100).toFixed(0)} • X=${(x.xs*100).toFixed(0)}</span>
+          </div>
+        </td>
+
+        <td>
+          <span class="tag ${t.cls}">${t.txt}</span><br>
+          <small class="muted">Pick: <b>${x.pick}</b></small><br>
+          <small class="muted">P(successo): <b>${pTxt}</b></small><br>
+          <small class="muted">${x.xLabel} • ${x.spLabel}</small>
+        </td>
+
+        <td class="mono">
+          <b>${resTxt}</b><br>
+          <small class="muted">${outcomeTxt}</small>
+        </td>
       </tr>
     `;
-  }).join("") || `<tr><td colspan="5" class="muted">Nessun match trovato</td></tr>`;
+  }).join("") || `<tr><td colspan="6" class="muted">Nessun match trovato</td></tr>`;
 
   return `
     <div class="card">
@@ -275,12 +363,15 @@ function renderPickTable(title, arr){
             <th>Quote 1 / X / 2</th>
             <th>GA (mu)</th>
             <th>Score unico</th>
-            <th>Etichetta</th>
+            <th>Etichetta + %</th>
+            <th>Risultato</th>
           </tr>
         </thead>
         <tbody>${rows}</tbody>
       </table>
-      <small class="muted">Score 0–100 = combinazione pesata di GA, spread e quota X.</small>
+      <small class="muted">
+        P(successo) = probabilità empirica spiegabile: base 57% + aggiustamenti dai bin di GA, X, Spread (pesati con i tuoi pesi).
+      </small>
     </div>
   `;
 }
@@ -298,7 +389,7 @@ async function attenziona(){
     if(!fRes || !fQuo){ status.textContent="⚠️ Seleziona entrambi i CSV."; return; }
 
     const N=+document.getElementById("N").value||12;
-    const topK=Math.max(1,+document.getElementById("topK").value||2);
+    const topK=Math.max(1,+document.getElementById("topK").value||5);
     const thrOver=+document.getElementById("thrOver").value||60;
     const thrUnder=+document.getElementById("thrUnder").value||40;
 
@@ -315,13 +406,12 @@ async function attenziona(){
     const resMap=new Map();
     for(const r of results) resMap.set(keyOf(r.dateTs,r.home_team,r.away_team), r);
 
-    status.textContent="Calcolo score su match FUTURI…";
+    status.textContent="Calcolo score + %…";
 
-    const future=[];
+    const all=[];
+    let matched=0, future=0;
+
     for(const q of quotes){
-      // FUTURI = non presenti nei risultati
-      if(resMap.has(keyOf(q.dateTs,q.home_team,q.away_team))) continue;
-
       const odd1=toNum(q.b365_1), odd2=toNum(q.b365_2), oddX=toNum(q.b365_x);
       const spread=(Number.isFinite(odd1)&&Number.isFinite(odd2))?Math.abs(odd1-odd2):NaN;
 
@@ -331,17 +421,43 @@ async function attenziona(){
       const comp=computeScore(oddX, spread, mu, wGA, wSP, wX);
       if(!Number.isFinite(comp.score)) continue;
 
-      future.push({
+      const pr = predictOverProb(mu, oddX, spread, wGA, wSP, wX);
+
+      const r=resMap.get(keyOf(q.dateTs,q.home_team,q.away_team));
+      const played = !!r;
+      if(played) matched++; else future++;
+
+      let FTHG="?", FTAG="?", isOver=null, isHit=null;
+
+      // pick: uso score (>=50 OVER, <50 UNDER) solo per la "verifica" se giocato
+      const pick = (comp.score>=50) ? "OVER" : "UNDER";
+      if(played){
+        FTHG=r.FTHG; FTAG=r.FTAG;
+        const hg=toNum(r.FTHG), ag=toNum(r.FTAG);
+        if(Number.isFinite(hg)&&Number.isFinite(ag)){
+          isOver = (hg+ag)>=3;
+          if(pick==="OVER") isHit = isOver;
+          if(pick==="UNDER") isHit = !isOver;
+        }
+      }
+
+      all.push({
         dateStr:q.dateStr, home:q.home_team, away:q.away_team,
         odd1, oddX, odd2, spread, mu,
         score: comp.score, xs:comp.xs, ss:comp.ss, gs:comp.gs,
-        thrOver, thrUnder
+        thrOver, thrUnder,
+        pOver: pr.pOver,
+        gaLabel: pr.parts.ga.label,
+        xLabel: pr.parts.xb.label,
+        spLabel: pr.parts.sp.label,
+        pick,
+        played, FTHG, FTAG, isHit
       });
     }
 
-    // due liste: top over-friendly e top under-friendly
-    const overList = future.slice().sort((a,b)=>b.score-a.score).slice(0, topK);
-    const underList = future.slice().sort((a,b)=>a.score-b.score).slice(0, topK);
+    // Ordino per score: top over e top under
+    const overList = all.slice().sort((a,b)=>b.score-a.score).slice(0, topK);
+    const underList = all.slice().sort((a,b)=>a.score-b.score).slice(0, topK);
 
     output.innerHTML = `
       <div class="card">
@@ -350,12 +466,16 @@ async function attenziona(){
           <span class="pill"><b>N recenti:</b> ${N}</span>
           <span class="pill"><b>Pesi:</b> GA=${wGA.toFixed(2)} • spread=${wSP.toFixed(2)} • X=${wX.toFixed(2)}</span>
           <span class="pill"><b>Soglie:</b> OVER≥${thrOver} • UNDER≤${thrUnder}</span>
-          <span class="pill"><b>Match futuri valutati:</b> ${future.length}</span>
+          <span class="pill"><b>Quote valutate:</b> ${all.length}</span>
+          <span class="pill"><b>Giocati:</b> ${matched} • <b>Futuri:</b> ${future}</span>
         </div>
-        <small class="muted" style="display:block;margin-top:8px">
-          “Attenziona” = ti mostra i match più estremi: quelli più OVER-friendly e quelli più UNDER-friendly.
+
+        <small class="muted" style="display:block;margin-top:10px">
+          La colonna <b>P(successo)</b> è sempre presente:
+          se pick=OVER mostra P(Over); se pick=UNDER mostra P(Under)=1−P(Over).
         </small>
       </div>
+
       ${renderPickTable("TOP OVER-friendly (score più alto)", overList)}
       ${renderPickTable("TOP UNDER-friendly (score più basso)", underList)}
     `;
@@ -367,10 +487,9 @@ async function attenziona(){
 }
 
 /* ========= 2) BACKTEST =========
-   Applico score su match matchati (quote+risultati):
-   - pick = OVER se score>=50, UNDER se score<50
-   - “PRESA” = considero tutte le matchate (così vedi la verità)
-   - in più: separo over-friendly / under-friendly / neutre
+   - su match matchati (quote+risultati)
+   - pick=OVER se score>=50 else UNDER
+   - mostro anche perché: HR per OVER-friendly/NEUTRA/UNDER-friendly
 */
 async function backtest(){
   const status=document.getElementById("status");
@@ -402,14 +521,11 @@ async function backtest(){
 
     let matched=0, notMatched=0;
     let taken=0, hit=0, miss=0;
-    let hitOver=0, hitUnder=0, takeOver=0, takeUnder=0;
 
-    // breakdown per etichetta
-    const byTag = {
-      over:{n:0, hit:0},
-      under:{n:0, hit:0},
-      mid:{n:0, hit:0}
-    };
+    let takeOver=0, hitOver=0, sumOddOver=0, nOddOver=0;
+    let takeUnder=0, hitUnder=0, sumOddUnder=0, nOddUnder=0;
+
+    const byTag = { over:{n:0, hit:0}, mid:{n:0, hit:0}, under:{n:0, hit:0} };
 
     status.textContent="BACKTEST: calcolo…";
 
@@ -419,9 +535,7 @@ async function backtest(){
 
       const hg=toNum(r.FTHG), ag=toNum(r.FTAG);
       if(!Number.isFinite(hg) || !Number.isFinite(ag)) continue;
-
       const isOver = (hg+ag)>=3;
-      const isUnder = !isOver;
 
       const odd1=toNum(q.b365_1), odd2=toNum(q.b365_2), oddX=toNum(q.b365_x);
       const spread=(Number.isFinite(odd1)&&Number.isFinite(odd2))?Math.abs(odd1-odd2):NaN;
@@ -436,26 +550,30 @@ async function backtest(){
       taken++;
 
       const tag = tagFromScore(comp.score, thrOver, thrUnder);
-      const pick = pickFromScore(comp.score);
+      const pick = (comp.score>=50) ? "OVER" : "UNDER";
 
       let win=false;
-      if(pick==="OVER"){ win = isOver; takeOver++; }
-      else if(pick==="UNDER"){ win = isUnder; takeUnder++; }
-
-      if(win){
-        hit++;
-        if(pick==="OVER") hitOver++;
-        if(pick==="UNDER") hitUnder++;
+      if(pick==="OVER"){
+        takeOver++;
+        if(Number.isFinite(oddX)){ /* niente */ }
+        // quota media (se esistono quote O/U nel csv non ci sono qui), quindi uso b365_x come proxy? NO.
+        // meglio: qui non abbiamo quota Over 2.5, quindi lasciamo solo conteggi.
+        win = isOver;
+        if(win) hitOver++;
       }else{
-        miss++;
+        takeUnder++;
+        win = !isOver;
+        if(win) hitUnder++;
       }
+
+      if(win){ hit++; } else { miss++; }
 
       if(tag.txt==="OVER-friendly"){ byTag.over.n++; if(win) byTag.over.hit++; }
       else if(tag.txt==="UNDER-friendly"){ byTag.under.n++; if(win) byTag.under.hit++; }
       else { byTag.mid.n++; if(win) byTag.mid.hit++; }
     }
 
-    const hitRate = taken ? (hit/taken) : NaN;
+    const hr = taken ? (hit/taken) : NaN;
     const hrOver = takeOver ? (hitOver/takeOver) : NaN;
     const hrUnder = takeUnder ? (hitUnder/takeUnder) : NaN;
 
@@ -464,13 +582,14 @@ async function backtest(){
     output.innerHTML = `
       <div class="card">
         <b>BACKTEST – “quante prese pre-match” + perché funzionano</b>
+
         <div class="row" style="margin-top:10px">
           <span class="pill"><b>Match matchati:</b> ${matched}</span>
           <span class="pill"><b>Non matchati:</b> ${notMatched}</span>
           <span class="pill"><b>PRESE:</b> ${taken}</span>
           <span class="pill"><b>Hit:</b> ${hit}</span>
           <span class="pill"><b>Miss:</b> ${miss}</span>
-          <span class="pill"><b>Hit-rate:</b> ${Number.isFinite(hitRate)?(hitRate*100).toFixed(1)+"%":"—"}</span>
+          <span class="pill"><b>Hit-rate:</b> ${Number.isFinite(hr)?(hr*100).toFixed(1)+"%":"—"}</span>
         </div>
 
         <hr style="margin:12px 0">
@@ -489,11 +608,12 @@ async function backtest(){
         </div>
 
         <small class="muted" style="display:block;margin-top:10px">
-          Lettura corretta: se <b>OVER-friendly</b> ha HR più alta della NEUTRA, allora lo score sta catturando davvero il pattern (non “luna piena”).
+          Lettura corretta (quella che volevi tu): se <b>OVER-friendly</b> ha HR più alta della NEUTRA, lo score sta catturando un pattern reale.
+          E la % che mostriamo nei match è la versione “spiegabile” di quel pattern (GA + bonus X + spread).
         </small>
 
         <small style="display:block;margin-top:10px">
-          Set: N=${N}, pesi GA=${wGA.toFixed(2)}, spread=${wSP.toFixed(2)}, X=${wX.toFixed(2)} • soglie OVER≥${thrOver}, UNDER≤${thrUnder}.
+          Set: N=${N}, pesi GA=${wGA.toFixed(2)}, spread=${wSP.toFixed(2)}, X=${wX.toFixed(2)} • soglie OVER≥${thrOver}, UNDER≤${thrUnder}. Base Over=${(BASE_OVER*100).toFixed(1)}%.
         </small>
       </div>
     `;
