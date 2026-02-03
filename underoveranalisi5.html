@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Syncras – U/O 2.5 (GA + Bonus X + Spread) • Per Lega • Backtest</title>
+  <title>Syncras – U/O 2.5 • Per Lega • TOP Over/Under (probabilità) + Backtest</title>
   <style>
     :root{--violet:#6C5CE7;--bg:#f7f7fb;--card:#fff;--border:#e7e7f5;--text:#111827;--muted:#6b7280}
     body{font-family:system-ui,Arial;margin:18px;background:var(--bg);color:var(--text)}
@@ -39,10 +39,10 @@
   </style>
 </head>
 <body>
-  <h2>Syncras – Under/Over 2.5 (GA = base • X = bonus • Spread = contesto) — <u>Per Lega</u></h2>
+  <h2>Syncras – Under/Over 2.5 (densità) — <u>TOP per Lega</u></h2>
   <div class="muted">
-    ✅ Output: per <b>ognuna delle 7 leghe</b> mostra <b>TOP OVER-friendly</b> e <b>TOP UNDER-friendly</b> (stile “tipo screenshot”).<br>
-    ✅ Migliorie: <b>penalità campione piccolo</b> + <b>bonus partita aperta (entrambe segnano)</b> + <b>P(Over) & P(Under) sempre visibili</b>.<br>
+    ✅ Per ognuna delle 7 leghe: <b>TOP OVER</b> (P(Over) più alta) + <b>TOP UNDER</b> (P(Under) più alta).<br>
+    ✅ Se il match è presente nel CSV risultati: mostra <b>risultato</b> e <b>HIT/MISS</b>. Se futuro: <b>?</b>.<br>
     <small>Studio informativo. Nessun invito a scommettere.</small>
   </div>
 
@@ -61,14 +61,14 @@
       </div>
 
       <div>
-        <label><b>2 tasti</b></label><br>
+        <label><b>Output</b></label><br>
         <div class="row">
-          <span class="pill">✅ TOP per lega</span>
-          <span class="pill">✅ % spiegabile (GA+X+Spread)</span>
-          <span class="pill">✅ Backtest prese</span>
+          <span class="pill">✅ TOP per lega (probabilità)</span>
+          <span class="pill">✅ Affidabilità (campione)</span>
+          <span class="pill">✅ Bonus “open-game”</span>
         </div>
         <small class="muted" style="display:block;margin-top:10px">
-          Nota: la % usa bin globali (step 2 = bin per lega, se vuoi).
+          Nota: la P(Over) è “spiegabile” (bin GA/X/Spread pesati). Step futuro: bin <i>per lega</i>.
         </small>
       </div>
     </div>
@@ -79,13 +79,13 @@
       <label>N recenti (GA)</label><input id="N" type="number" value="12" style="width:90px">
       <label>Top per lega</label><input id="topK" type="number" value="5" style="width:90px">
       <span class="pill">spread = <span class="mono">|quota1 - quota2|</span></span>
-      <span class="pill">bonus open-game max <b>+6</b> punti</span>
-      <span class="pill">reliability penalty min <b>0.70×</b></span>
+      <span class="pill">bonus open-game max <b>+6</b> (solo score)</span>
     </div>
 
     <div class="row" style="margin-top:10px">
-      <label>Soglia OVER-friendly</label><input id="thrOver" type="number" value="60" style="width:90px">
-      <label>Soglia UNDER-friendly</label><input id="thrUnder" type="number" value="40" style="width:90px">
+      <!-- Ora queste soglie sono usate come SOGLIE DI PROBABILITÀ (percento) -->
+      <label>Soglia OVER-friendly (POver%)</label><input id="thrOver" type="number" value="60" style="width:90px">
+      <label>Soglia UNDER-friendly (PUnder%)</label><input id="thrUnder" type="number" value="60" style="width:90px">
 
       <label>Peso GA</label><input id="wGA" type="number" value="0.40" step="0.05" style="width:90px">
       <label>Peso spread</label><input id="wSP" type="number" value="0.35" step="0.05" style="width:90px">
@@ -93,14 +93,14 @@
     </div>
 
     <small class="muted" style="display:block;margin-top:8px">
-      Default coerente coi tuoi test: GA pesa di più, spread conta molto, X è bonus/conferma.
+      Importante: <b>TOP OVER/UNDER</b> sono scelti dalla <b>probabilità</b>. Lo <b>score</b> resta un indicatore di contesto (con penalità + bonus).
     </small>
 
     <hr style="margin:14px 0">
 
     <div class="row">
       <button id="attBtn" type="button">ATTENZIONA (TOP Over/Under per Lega)</button>
-      <button id="btBtn" type="button" class="btn2">BACKTEST (prese)</button>
+      <button id="btBtn" type="button" class="btn2">BACKTEST (HIT/MISS prese)</button>
       <span id="status" class="muted"></span>
     </div>
   </div>
@@ -187,7 +187,7 @@ async function readFileText(file){
   return new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(String(r.result||"")); r.onerror=rej; r.readAsText(file); });
 }
 
-/* ========= Reliability + Open Game Bonus ========= */
+/* ========= Reliability + Open Game Bonus (solo score) ========= */
 function reliabilityFactor(hN, aN){
   const minN = Math.min(hN||0, aN||0);
   if(minN >= 8) return 1.00;
@@ -241,7 +241,7 @@ function estimateMu(results, home, away, N, dateTs, div){
   return {mu, hN:h.n, aN:a.n, hGF:h.gf, hGA:h.ga, aGF:a.gf, aGA:a.ga};
 }
 
-/* ========= SCORE UNICO (0..100) ========= */
+/* ========= SCORE (supporto) ========= */
 function xScore(oddX){
   if(!Number.isFinite(oddX)) return NaN;
   return clamp((oddX - 3.20) / (5.50 - 3.20), 0, 1);
@@ -263,15 +263,11 @@ function computeScore(oddX, spread, mu, wGA, wSP, wX){
   const s = (wGA*gs + wSP*ss + wX*xs) / sum;
   return {score: s*100, xs, ss, gs};
 }
-function tagFromScore(s, thrOver, thrUnder){
-  if(!Number.isFinite(s)) return {txt:"NA", cls:"tagMid"};
-  if(s>=thrOver) return {txt:"OVER-friendly", cls:"tagOver"};
-  if(s<=thrUnder) return {txt:"UNDER-friendly", cls:"tagUnder"};
-  return {txt:"NEUTRA", cls:"tagMid"};
-}
 
 /* ========= % PROBABILITÀ (spiegabile) ========= */
 const BASE_OVER = 0.57;
+
+// (Questi bin sono ancora globali; step futuro: per lega)
 const BINS_GA = [
   {min:2.60, max:3.00, pOver:0.619, label:"GA 2.60–3.00"},
   {min:3.00, max:3.40, pOver:0.640, label:"GA 3.00–3.40"},
@@ -297,6 +293,7 @@ const BINS_SPREAD = [
   {min:5.00, max:6.50, pOver:0.622, label:"Spread 5.00–6.50"},
   {min:6.50, max:Infinity, pOver:0.663, label:"Spread 6.50+"},
 ];
+
 function binLookup(value, bins){
   if(!Number.isFinite(value)) return {pOver:BASE_OVER, label:"(bin NA)"};
   for(const b of bins){
@@ -321,11 +318,22 @@ function predictOverProb(mu, oddX, spread, wGA, wSP, wX){
   };
 }
 
+/* ========= TAG e PICK da PROBABILITÀ (fix) ========= */
+function tagFromProb(pOver, thrOverPct=60, thrUnderPct=60){
+  const pO = Number.isFinite(pOver) ? pOver : NaN;
+  const pU = Number.isFinite(pOver) ? (1 - pOver) : NaN;
+
+  if(Number.isFinite(pO) && pO >= thrOverPct/100) return {txt:"OVER-friendly", cls:"tagOver"};
+  if(Number.isFinite(pU) && pU >= thrUnderPct/100) return {txt:"UNDER-friendly", cls:"tagUnder"};
+  return {txt:"NEUTRA", cls:"tagMid"};
+}
+
 /* ========= RENDER ========= */
-function renderPickTable(title, arr, thrOver, thrUnder){
+function renderPickTable(title, arr, thrOverPct, thrUnderPct){
   const rows = arr.map(x=>{
-    const t=tagFromScore(x.score, thrOver, thrUnder);
+    const t = tagFromProb(x.pOver, thrOverPct, thrUnderPct);
     const pPick = (x.pick==="OVER") ? x.pOver : (1-x.pOver);
+
     const resTxt = x.played ? `${x.FTHG}-${x.FTAG}` : "?";
     const outcomeTxt = x.played ? (x.isHit ? "HIT" : "MISS") : "—";
     const rb = relBadge(x.hN, x.aN);
@@ -381,15 +389,39 @@ function renderPickTable(title, arr, thrOver, thrUnder){
             <th>Match</th>
             <th>Quote 1 / X / 2</th>
             <th>GA (mu)</th>
-            <th>Score unico</th>
-            <th>Etichetta + %</th>
+            <th>Score (supporto)</th>
+            <th>Etichetta + Probabilità</th>
             <th>Risultato</th>
           </tr>
         </thead>
         <tbody>${rows}</tbody>
       </table>
       <small class="muted">
-        Migliorie attive: penalità affidabilità (campione piccolo) + bonus open-game (entrambe segnano).
+        Etichetta e TOP sono basati su P(Over)/P(Under). Lo score è un indicatore di contesto (con penalità affidabilità + bonus open-game).
+      </small>
+    </div>
+  `;
+}
+
+function renderLeagueSummary(div, arr){
+  // mini summary: quante giocate, quante future, e hit-rate sulle matchate
+  let played=0, future=0, taken=0, hit=0;
+  for(const x of arr){
+    if(x.played){ played++; taken++; if(x.isHit) hit++; }
+    else future++;
+  }
+  const hr = taken ? (hit/taken) : NaN;
+  return `
+    <div class="card">
+      <b>LEGA: ${div}</b>
+      <div class="row" style="margin-top:8px">
+        <span class="pill"><b>Match valutati:</b> ${arr.length}</span>
+        <span class="pill"><b>Giocati:</b> ${played}</span>
+        <span class="pill"><b>Futuri:</b> ${future}</span>
+        <span class="pill"><b>Hit-rate (solo giocati):</b> ${Number.isFinite(hr)?(hr*100).toFixed(1)+"%":"—"}</span>
+      </div>
+      <small class="muted" style="display:block;margin-top:8px">
+        Questo HR è informativo (dipende dalla pick che sceglie max(POver, PUnder)).
       </small>
     </div>
   `;
@@ -409,8 +441,9 @@ async function attenziona(){
 
     const N=+document.getElementById("N").value||12;
     const topK=Math.max(1,+document.getElementById("topK").value||5);
-    const thrOver=+document.getElementById("thrOver").value||60;
-    const thrUnder=+document.getElementById("thrUnder").value||40;
+
+    const thrOverPct=+document.getElementById("thrOver").value||60;
+    const thrUnderPct=+document.getElementById("thrUnder").value||60;
 
     let wGA=+document.getElementById("wGA").value||0.40;
     let wSP=+document.getElementById("wSP").value||0.35;
@@ -430,7 +463,7 @@ async function attenziona(){
       resMap.set(keyOf(r.div,r.dateTs,r.home_team,r.away_team), r);
     }
 
-    status.textContent="Calcolo score + % (per lega)…";
+    status.textContent="Calcolo…";
 
     const all=[];
     let matched=0, future=0;
@@ -446,24 +479,26 @@ async function attenziona(){
       const comp=computeScore(oddX, spread, mu, wGA, wSP, wX);
       if(!Number.isFinite(comp.score)) continue;
 
-      // Reliability penalty
+      // score (solo supporto): penalità + bonus
       const rel = reliabilityFactor(est.hN, est.aN);
-      const scoreAdj = comp.score * rel;
-
-      // Open-game bonus
       const bonusOpen = openGameBonus(est.hGF, est.aGF, est.hGA, est.aGA);
+      const scoreFinal = clamp(comp.score * rel + bonusOpen, 0, 100);
 
-      const scoreFinal = clamp(scoreAdj + bonusOpen, 0, 100);
-
+      // probabilità spiegabile
       const pr = predictOverProb(mu, oddX, spread, wGA, wSP, wX);
+      const pOver = pr.pOver;
+      const pUnder = 1 - pOver;
 
+      // PICK da probabilità (fix)
+      const pick = (pOver >= pUnder) ? "OVER" : "UNDER";
+
+      // risultato (se disponibile)
       const r=resMap.get(keyOf(q.div,q.dateTs,q.home_team,q.away_team));
       const played = !!r;
       if(played) matched++; else future++;
 
       let FTHG="?", FTAG="?", isHit=null;
 
-      const pick = (scoreFinal>=50) ? "OVER" : "UNDER";
       if(played){
         FTHG=r.FTHG; FTAG=r.FTAG;
         const hg=toNum(r.FTHG), ag=toNum(r.FTAG);
@@ -478,20 +513,22 @@ async function attenziona(){
         dateStr:q.dateStr, home:q.home_team, away:q.away_team,
         odd1, oddX, odd2, spread,
         mu,
-        // extra for display & scoring transparency
         hN: est.hN, aN: est.aN,
         bonusOpen,
         score: scoreFinal,
         xs:comp.xs, ss:comp.ss, gs:comp.gs,
-        pOver: pr.pOver,
+
+        pOver,
         gaLabel: pr.parts.ga.label,
         xLabel: pr.parts.xb.label,
         spLabel: pr.parts.sp.label,
+
         pick,
         played, FTHG, FTAG, isHit
       });
     }
 
+    // raggruppo per lega
     const byLeague = new Map();
     for(const m of all){
       const div = (m.div || "NA").toUpperCase();
@@ -508,12 +545,12 @@ async function attenziona(){
           <span class="pill"><b>N recenti:</b> ${N}</span>
           <span class="pill"><b>Top per lega:</b> ${topK}</span>
           <span class="pill"><b>Pesi:</b> GA=${wGA.toFixed(2)} • spread=${wSP.toFixed(2)} • X=${wX.toFixed(2)}</span>
-          <span class="pill"><b>Soglie:</b> OVER≥${thrOver} • UNDER≤${thrUnder}</span>
+          <span class="pill"><b>Soglie:</b> OVER-friendly se POver≥${thrOverPct}% • UNDER-friendly se PUnder≥${thrUnderPct}%</span>
           <span class="pill"><b>Quote valutate:</b> ${all.length}</span>
           <span class="pill"><b>Giocati:</b> ${matched} • <b>Futuri:</b> ${future}</span>
         </div>
         <small class="muted" style="display:block;margin-top:10px">
-          Output <b>per lega</b>: TOP OVER-friendly e TOP UNDER-friendly (con affidabilità & open-game).
+          “TOP OVER” = P(Over) più alta. “TOP UNDER” = P(Under) più alta. Risultato: se presente → HIT/MISS.
         </small>
       </div>
     `;
@@ -522,19 +559,13 @@ async function attenziona(){
       const arr = byLeague.get(div);
       if(!arr || !arr.length) continue;
 
-      const overList = arr.slice().sort((a,b)=>b.score-a.score).slice(0, topK);
-      const underList = arr.slice().sort((a,b)=>a.score-b.score).slice(0, topK);
+      // TOP per probabilità (fix)
+      const overList  = arr.slice().sort((a,b)=> (b.pOver - a.pOver)).slice(0, topK);
+      const underList = arr.slice().sort((a,b)=> ((1-b.pOver) - (1-a.pOver))).slice(0, topK);
 
-      html += `
-        <div class="card">
-          <b>LEGA: ${div}</b>
-          <small class="muted" style="display:block;margin-top:6px">
-            TOP ${topK} OVER-friendly (score più alto) + TOP ${topK} UNDER-friendly (score più basso)
-          </small>
-        </div>
-        ${renderPickTable(`TOP OVER-friendly — ${div}`, overList, thrOver, thrUnder)}
-        ${renderPickTable(`TOP UNDER-friendly — ${div}`, underList, thrOver, thrUnder)}
-      `;
+      html += renderLeagueSummary(div, arr);
+      html += renderPickTable(`TOP OVER — ${div} (POver più alta)`, overList, thrOverPct, thrUnderPct);
+      html += renderPickTable(`TOP UNDER — ${div} (PUnder più alta)`, underList, thrOverPct, thrUnderPct);
     }
 
     output.innerHTML = html;
@@ -544,7 +575,7 @@ async function attenziona(){
   }
 }
 
-/* ========= 2) BACKTEST (globale come prima) ========= */
+/* ========= 2) BACKTEST (conteggio HIT/MISS) ========= */
 async function backtest(){
   const status=document.getElementById("status");
   const output=document.getElementById("output");
@@ -557,8 +588,8 @@ async function backtest(){
     if(!fRes || !fQuo){ status.textContent="⚠️ Seleziona entrambi i CSV."; return; }
 
     const N=+document.getElementById("N").value||12;
-    const thrOver=+document.getElementById("thrOver").value||60;
-    const thrUnder=+document.getElementById("thrUnder").value||40;
+    const thrOverPct=+document.getElementById("thrOver").value||60;
+    const thrUnderPct=+document.getElementById("thrUnder").value||60;
 
     let wGA=+document.getElementById("wGA").value||0.40;
     let wSP=+document.getElementById("wSP").value||0.35;
@@ -604,15 +635,21 @@ async function backtest(){
       if(!Number.isFinite(comp.score)) continue;
 
       const rel = reliabilityFactor(est.hN, est.aN);
-      const scoreAdj = comp.score * rel;
       const bonusOpen = openGameBonus(est.hGF, est.aGF, est.hGA, est.aGA);
-      const scoreFinal = clamp(scoreAdj + bonusOpen, 0, 100);
+      const scoreFinal = clamp(comp.score * rel + bonusOpen, 0, 100);
+
+      const pr = predictOverProb(mu, oddX, spread, wGA, wSP, wX);
+      const pOver = pr.pOver;
+      const pUnder = 1 - pOver;
+
+      // pick da probabilità
+      const pick = (pOver >= pUnder) ? "OVER" : "UNDER";
+
+      // tag da probabilità
+      const tag = tagFromProb(pOver, thrOverPct, thrUnderPct);
 
       matched++;
       taken++;
-
-      const tag = tagFromScore(scoreFinal, thrOver, thrUnder);
-      const pick = (scoreFinal>=50) ? "OVER" : "UNDER";
 
       const win = (pick==="OVER") ? isOver : !isOver;
       if(win){ hit++; } else { miss++; }
@@ -627,13 +664,13 @@ async function backtest(){
 
     output.innerHTML = `
       <div class="card">
-        <b>BACKTEST – globale (con reliability + open-game)</b>
+        <b>BACKTEST – prese (HIT/MISS) — pick da probabilità</b>
         <div class="row" style="margin-top:10px">
           <span class="pill"><b>Match matchati:</b> ${matched}</span>
           <span class="pill"><b>Non matchati:</b> ${notMatched}</span>
           <span class="pill"><b>PRESE:</b> ${taken}</span>
-          <span class="pill"><b>Hit:</b> ${hit}</span>
-          <span class="pill"><b>Miss:</b> ${miss}</span>
+          <span class="pill"><b>HIT:</b> ${hit}</span>
+          <span class="pill"><b>MISS:</b> ${miss}</span>
           <span class="pill"><b>Hit-rate:</b> ${Number.isFinite(hr)?(hr*100).toFixed(1)+"%":"—"}</span>
         </div>
 
@@ -646,7 +683,7 @@ async function backtest(){
         </div>
 
         <small class="muted" style="display:block;margin-top:10px">
-          Questo backtest è ancora globale. Se vuoi, step successivo: stesso report <b>per lega</b>.
+          Qui “friendly” è coerente con le percentuali perché dipende da P(Over)/P(Under), non dallo score.
         </small>
       </div>
     `;
@@ -662,3 +699,4 @@ document.getElementById("btBtn").addEventListener("click", backtest);
 </script>
 </body>
 </html>
+
