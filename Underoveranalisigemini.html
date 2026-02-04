@@ -1,40 +1,70 @@
 
-    <!doctype html>
+<!doctype html>
 <html lang="it">
 <head>
   <meta charset="utf-8">
-  <title>Syncras Pro - Analisi Recency (Last 10)</title>
+  <title>Syncras Pro - Advanced Analytics Dashboard</title>
   <style>
-    :root{--violet:#6C5CE7;--bg:#f3f4f6;--card:#fff;--border:#d1d5db;--text:#1f2937;--success:#10b981;--danger:#ef4444;--bet:#facc15}
-    body{font-family:sans-serif;margin:20px;background:var(--bg);color:var(--text)}
-    .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:20px;box-shadow:0 2px 4px rgba(0,0,0,0.05)}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
-    button{cursor:pointer;background:var(--violet);color:#fff;border:0;font-weight:700;padding:12px 20px;border-radius:8px}
-    table{width:100%;border-collapse:collapse;font-size:12px;margin-top:10px}
+    :root{--violet:#6C5CE7;--bg:#f0f2f5;--card:#fff;--border:#d1d5db;--text:#1f2937;--success:#10b981;--danger:#ef4444;--bet:#facc15}
+    body{font-family:system-ui,sans-serif;margin:20px;background:var(--bg);color:var(--text);font-size:14px}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:20px;box-shadow:0 1px 3px rgba(0,0,0,0.1)}
+    .grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px}
+    button{cursor:pointer;background:var(--violet);color:#fff;border:0;font-weight:700;padding:12px 20px;border-radius:8px;width:100%}
+    input, select{width:100%;padding:8px;margin-top:5px;border:1px solid var(--border);border-radius:6px}
+    table{width:100%;border-collapse:collapse;margin-top:10px;background:#fff}
     th,td{padding:10px;text-align:left;border-bottom:1px solid #eee}
-    th{background:#f9fafb;text-transform:uppercase;color:#6b7280;font-size:10px}
-    .stat-box{background:#fff;padding:15px;border-radius:8px;border:1px solid var(--border);text-align:center;flex:1}
-    .bet-now{background:black; color:var(--bet); padding:4px 8px; border-radius:4px; font-weight:bold}
-    .mu-box{font-size:10px; color:#666; line-height:1.2}
-    .tag-trend{font-size:9px; background:#eee; padding:2px 4px; border-radius:3px; margin-left:5px}
+    th{background:#f9fafb;font-size:11px;color:#6b7280;text-transform:uppercase}
+    .stat-val{font-size:22px;font-weight:800;display:block;margin-top:5px}
+    .bet-now{background:black; color:var(--bet); padding:3px 6px; border-radius:4px; font-weight:bold; font-size:11px}
+    .badge{padding:2px 6px;border-radius:4px;font-size:11px;font-weight:bold;background:#e5e7eb}
   </style>
 </head>
 <body>
 
-<h2>Syncras Pro – Analisi Dinamica (Ultimi 10 Match)</h2>
+<h2>Syncras Pro v4.0 <span style="font-size:12px; font-weight:normal; color:gray;">(Last 10 Analytics)</span></h2>
 
 <div class="card">
-  <div class="grid">
-    <div><label><b>1. Storico Risultati</b></label><br><input id="fRes" type="file" style="width:100%"></div>
-    <div><label><b>2. Quote Prossimi Match</b></label><br><input id="fQuo" type="file" style="width:100%"></div>
-    <div style="display:flex;align-items:flex-end"><button onclick="elabora()">ANALIZZA FORMA ATTUALE</button></div>
+  <h3>⚙️ Impostazioni Algoritmo</h3>
+  <div class="grid-3">
+    <div>
+      <label>Soglia Confidenza (%)</label>
+      <input type="number" id="threshold" value="63" min="50" max="90">
+      <small>Più è alta, meno scommesse fai (ma più sicure)</small>
+    </div>
+    <div>
+      <label>Quota Media (ROI)</label>
+      <input type="number" id="avgQuota" value="1.70" step="0.05">
+      <small>Usata per calcolare le vincite totali</small>
+    </div>
+    <div style="display:flex;align-items:flex-end">
+      <button onclick="elabora()">AGGIORNA ANALISI</button>
+    </div>
   </div>
 </div>
 
-<div id="dashboard" style="display:flex;gap:10px;margin-bottom:20px"></div>
-<div id="output"></div>
+<div class="grid-3" id="mainStats">
+  <div class="card"><span style="color:gray">Match Analizzati</span><span id="totMatch" class="stat-val">0</span></div>
+  <div class="card"><span style="color:gray">Scommesse Fatte</span><span id="totBets" class="stat-val">0</span></div>
+  <div class="card"><span style="color:gray">Vincita Totale</span><span id="totProfit" class="stat-val" style="color:var(--success)">0.00 u.</span></div>
+</div>
+
+<div class="card" id="leagueSection" style="display:none">
+  <h3>📊 Media Over per Lega (Baseline)</h3>
+  <div id="leagueTable"></div>
+</div>
+
+<div class="card">
+  <h3>📋 Segnali e Backtest</h3>
+  <div style="margin-bottom:10px">
+    <input id="fRes" type="file" style="width:45%; display:inline-block">
+    <input id="fQuo" type="file" style="width:45%; display:inline-block">
+  </div>
+  <div id="output"></div>
+</div>
 
 <script>
+let teamLeagueMap = {};
+
 function parseCSV(text) {
     const lines = text.split(/\r?\n/).filter(l => l.trim() !== "");
     const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
@@ -46,95 +76,96 @@ function parseCSV(text) {
     });
 }
 
-// Funzione che estrae la media gol degli ultimi 10 match di una squadra
+function getLeagueInfo(results) {
+    const stats = {};
+    results.forEach(r => {
+        const lg = r.league || "Unknown";
+        if (!stats[lg]) stats[lg] = { t: 0, o: 0 };
+        const total = parseFloat(r.fthg) + parseFloat(r.ftag);
+        if (!isNaN(total)) {
+            stats[lg].t++;
+            if (total > 2.5) stats[lg].o++;
+            teamLeagueMap[r.home_team] = lg;
+        }
+    });
+    return stats;
+}
+
 function getRecentStats(team, allResults, currentDate) {
     const history = allResults
         .filter(r => (r.home_team === team || r.away_team === team) && new Date(r.date) < new Date(currentDate))
-        .sort((a, b) => new Date(b.date) - new Date(a.date)) // Ordina dal più recente
-        .slice(0, 10); // Prendi solo gli ultimi 10
-
-    if (history.length < 5) return null; // Dato insufficiente
-
+        .sort((a, b) => new Date(b.date) - new Date(a.date))
+        .slice(0, 10);
+    if (history.length < 5) return null;
     let gf = 0, ga = 0;
     history.forEach(r => {
-        if (r.home_team === team) {
-            gf += parseFloat(r.fthg); ga += parseFloat(r.ftag);
-        } else {
-            gf += parseFloat(r.ftag); ga += parseFloat(r.fthg);
-        }
+        const isHome = r.home_team === team;
+        gf += isHome ? parseFloat(r.fthg) : parseFloat(r.ftag);
+        ga += isHome ? parseFloat(r.ftag) : parseFloat(r.fthg);
     });
-
-    return { avgF: gf / history.length, avgS: ga / history.length, count: history.length };
+    return { avgF: gf / history.length, avgS: ga / history.length };
 }
 
 async function elabora() {
     const resFile = document.getElementById('fRes').files[0];
     const quoFile = document.getElementById('fQuo').files[0];
-    if(!resFile || !quoFile) return alert("Carica entrambi i file!");
+    if(!resFile || !quoFile) return alert("Carica i file CSV");
 
     const resData = parseCSV(await resFile.text());
     const quoData = parseCSV(await quoFile.text());
+    const leagueBaselines = getLeagueInfo(resData);
+    const userThreshold = document.getElementById('threshold').value / 100;
+    const userQuota = parseFloat(document.getElementById('avgQuota').value);
 
-    let html = `<table><thead><tr><th>Match</th><th>Potenziale Gol (Last 10)</th><th>P(Over)</th><th>Esito / Suggerimento</th></tr></thead><tbody>`;
-    
-    let totalBets = 0, hits = 0, profit = 0;
-    const QUOTA_MEDIA = 1.70;
+    // Mostra Medie Leghe
+    let lHtml = "<table><tr><th>Lega</th><th>Match Totali</th><th>Media Over %</th></tr>";
+    Object.keys(leagueBaselines).forEach(l => {
+        const p = (leagueBaselines[l].o / leagueBaselines[l].t * 100).toFixed(1);
+        lHtml += `<tr><td><span class="badge">${l}</span></td><td>${leagueBaselines[l].t}</td><td><b>${p}%</b></td></tr>`;
+    });
+    document.getElementById('leagueTable').innerHTML = lHtml + "</table>";
+    document.getElementById('leagueSection').style.display = "block";
+
+    let counts = { tot: 0, bets: 0, hits: 0, profit: 0 };
+    let html = `<table><thead><tr><th>Match</th><th>Lega</th><th>P(Over)</th><th>Esito / Segnale</th></tr></thead><tbody>`;
 
     quoData.forEach(q => {
+        counts.tot++;
         const hStats = getRecentStats(q.home_team, resData, q.date);
         const aStats = getRecentStats(q.away_team, resData, q.date);
-
         if(!hStats || !aStats) return;
 
-        // Calcolo della media attesa (Poisson-like)
-        // (Attacco Casa + Difesa Ospite) + (Attacco Ospite + Difesa Casa)
-        const expHome = (hStats.avgF + aStats.avgS) / 2;
-        const expAway = (aStats.avgF + hStats.avgS) / 2;
-        const muMatch = expHome + expAway;
-
-        // Probabilità basata su muMatch (2.5 è il centro, ogni 0.1 gol aggiunge ~4%)
-        let prob = 0.50 + (muMatch - 2.5) * 0.18;
-        
-        // Correzione Quota Pareggio
-        const qX = parseFloat(q.b365_x);
-        if(qX > 3.70) prob += 0.05;
-        if(qX < 3.10) prob -= 0.05;
-
-        prob = Math.max(0.05, Math.min(0.95, prob));
+        const mu = (hStats.avgF + aStats.avgS + aStats.avgF + hStats.avgS) / 2;
+        let prob = 0.50 + (mu - 2.5) * 0.18;
+        if(parseFloat(q.b365_x) > 3.70) prob += 0.05;
 
         const matchReale = resData.find(r => r.home_team === q.home_team && r.date === q.date);
         let esito = "";
 
-        if(matchReale) {
-            const isOver = (parseFloat(matchReale.fthg) + parseFloat(matchReale.ftag)) > 2.5;
-            if(prob > 0.63) {
-                totalBets++;
-                if(isOver) { hits++; profit += (QUOTA_MEDIA - 1); esito = "<b class='hit'>HIT (O)</b>"; }
-                else { profit -= 1; esito = "<b class='miss'>MISS (O)</b>"; }
+        if(prob >= userThreshold) {
+            counts.bets++;
+            if(matchReale) {
+                const win = (parseFloat(matchReale.fthg) + parseFloat(matchReale.ftag)) > 2.5;
+                if(win) { counts.hits++; counts.profit += (userQuota - 1); esito = "<b style='color:var(--success)'>VINTO</b>"; }
+                else { counts.profit -= 1; esito = "<b style='color:var(--danger)'>PERSO</b>"; }
+            } else {
+                esito = "<span class='bet-now'>🚀 BET OVER</span>";
             }
-        } else if(prob > 0.63) {
-            esito = "<span class='bet-now'>🚀 BET OVER</span>";
         }
 
-        if(esito !== "" || prob > 0.55) { // Mostra solo i match interessanti
+        if(esito !== "") {
             html += `<tr>
-                <td><b>${q.home_team} - ${q.away_team}</b><br><small>${q.date}</small></td>
-                <td class="mu-box">
-                    Exp Gol: ${muMatch.toFixed(2)}<br>
-                    <span class="tag-trend">Casa F:${hStats.avgF.toFixed(1)} S:${hStats.avgS.toFixed(1)}</span>
-                    <span class="tag-trend">Osp F:${aStats.avgF.toFixed(1)} S:${aStats.avgS.toFixed(1)}</span>
-                </td>
-                <td><b>${(prob*100).toFixed(1)}%</b></td>
+                <td>${q.home_team}-${q.away_team}<br><small>${q.date}</small></td>
+                <td><span class="badge">${teamLeagueMap[q.home_team] || 'N/A'}</span></td>
+                <td><b>${(prob*100).toFixed(0)}%</b></td>
                 <td>${esito}</td>
             </tr>`;
         }
     });
 
-    document.getElementById('dashboard').innerHTML = `
-        <div class="stat-box">Win Rate (Last 10 Mode): <b>${totalBets > 0 ? ((hits/totalBets)*100).toFixed(1) : 0}%</b></div>
-        <div class="stat-box">Profitto Netto: <b style="color:${profit>=0?'green':'red'}">${profit.toFixed(2)} u.</b></div>
-        <div class="stat-box">Sample: <b>${totalBets} match suggeriti</b></div>
-    `;
+    document.getElementById('totMatch').innerText = counts.tot;
+    document.getElementById('totBets').innerText = counts.bets;
+    document.getElementById('totProfit').innerText = counts.profit.toFixed(2) + " u.";
     document.getElementById('output').innerHTML = html + "</tbody></table>";
 }
 </script>
