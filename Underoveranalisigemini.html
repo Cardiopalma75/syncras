@@ -1,12 +1,4 @@
-
-<!doctype html>
-<html lang="it">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Syncras Pro - Betting Bot</title>
-  <style>
-    :root{--violet:#6C5CE7;--bg:#f3f4f6;--card:#fff;--border:#d1d5db;--text:#1f2937;--success:#10b981;--danger:#ef4444;--bet:#facc15}
+root{--violet:#6C5CE7;--bg:#f3f4f6;--card:#fff;--border:#d1d5db;--text:#1f2937;--success:#10b981;--danger:#ef4444;--bet:#facc15}
     body{font-family:sans-serif;margin:20px;background:var(--bg);color:var(--text)}
     .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:20px;box-shadow:0 2px 4px rgba(0,0,0,0.05)}
     .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
@@ -98,47 +90,3 @@ async function elabora() {
         let pOver = base;
         if(qX > 3.60) pOver += 0.05;
         if(qX > 4.50) pOver += 0.10;
-
-        const matchReale = resData.find(r => r.home_team === home && r.date === q.date);
-        let esitoHtml = "";
-        
-        if(matchReale) {
-            const gol = parseFloat(matchReale.fthg) + parseFloat(matchReale.ftag);
-            const isOver = gol > 2.5;
-            if(pOver > 0.60) {
-                totalBets++;
-                if(isOver) { hits++; profit += (QUOTA_MEDIA - 1); esitoHtml = "<span class='hit'>HIT (O)</span>"; }
-                else { profit -= 1; esitoHtml = "<span class='miss'>MISS (O)</span>"; }
-            }
-        } else {
-            // PARTITE FUTURE
-            if(pOver > 0.60) {
-                esitoHtml = "<span class='bet-now'>🚀 BET OVER</span>";
-            } else {
-                esitoHtml = "<span style='color:#999'>NO BET</span>";
-            }
-        }
-
-        html += `<tr>
-            <td>${q.date}</td>
-            <td>${home} - ${q.away_team}</td>
-            <td><span class="tag">${lg}</span></td>
-            <td>${(base*100).toFixed(0)}%</td>
-            <td><b>${(pOver*100).toFixed(1)}%</b></td>
-            <td>${esitoHtml}</td>
-        </tr>`;
-    });
-
-    html += "</tbody></table>";
-    
-    document.getElementById('dashboard').innerHTML = `
-        <div class="stat-bar">
-            <div class="stat-box">Win Rate (Storico): <b>${((hits/totalBets)*100).toFixed(1)}%</b></div>
-            <div class="stat-box">Profitto (Quota 1.70): <b style="color:${profit>=0?'green':'red'}">${profit.toFixed(2)} u.</b></div>
-        </div>
-    `;
-    document.getElementById('output').innerHTML = html;
-}
-</script>
-</body>
-</html>
