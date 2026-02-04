@@ -181,7 +181,7 @@ function normResultRow(o){
   return {div, dateStr,dateTs,home_team,away_team,FTHG:String(FTHG).trim(),FTAG:String(FTAG).trim()};
 }
 function normQuoteRow(o){
-  // qui la lega può mancare: la inferiremo dopo
+  // lega può mancare: la inferiremo dopo
   const div = normDiv(o); // può diventare "NA"
   const dateStr=String(pick(o,["date","match_date","data","giorno","Date","DATA"])||"").trim();
   const home_team=normTeam(pick(o,["home_team","hometeam","home","HomeTeam","CASA"])||"");
@@ -189,13 +189,23 @@ function normQuoteRow(o){
   const b365_1=pick(o,["b365_1","b365_h","B365H","odd1","odds_1","1","home"]) ?? "";
   const b365_x=pick(o,["b365_x","B365D","oddx","odds_x","X","draw"]) ?? "";
   const b365_2=pick(o,["b365_2","b365_a","B365A","odd2","odds_2","2","away"]) ?? "";
+
+  // ✅ OPTIONAL: quote Over/Under 2.5 se presenti nel CSV
+  const o25 = pick(o,[
+    "B365O2.5","B365O25","B365>2.5","B365 Over 2.5","B365_O25","b365_o25","odds_over25","over25","O25","O2.5"
+  ]) ?? "";
+  const u25 = pick(o,[
+    "B365U2.5","B365U25","B365<2.5","B365 Under 2.5","B365_U25","b365_u25","odds_under25","under25","U25","U2.5"
+  ]) ?? "";
+
   const dateTs=parseDateTs(dateStr);
-  return {div, dateStr,dateTs,home_team,away_team,b365_1:String(b365_1).trim(),b365_x:String(b365_x).trim(),b365_2:String(b365_2).trim()};
+  return {
+    div, dateStr,dateTs,home_team,away_team,
+    b365_1:String(b365_1).trim(), b365_x:String(b365_x).trim(), b365_2:String(b365_2).trim(),
+    o25:String(o25).trim(), u25:String(u25).trim()
+  };
 }
-function keyOf(div,dateTs,home,away){ return `${div}|${dateTs}|${home}|${away}`; }
-async function readFileText(file){
-  return new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(String(r.result||"")); r.onerror=rej; r.readAsText(file); });
-}
+
 
 /* ========= TEAM -> LEAGUE inference ========= */
 function buildTeamLeagueMap(results){
@@ -901,21 +911,240 @@ async function attenziona(){
 async function backtest(){
   const status=document.getElementById("status");
   const output=document.getElementById("output");
-  status.textContent="Backtest: calcolo…";
+  status.textContent="Backtest: carico e calcolo…";
   output.innerHTML="";
 
   try{
-    // (per ora rimandiamo al tuo uso: se vuoi, lo riporto completo come nella versione precedente)
-    output.innerHTML = `<div class="card"><b>Backtest</b><br><small class="muted">Se vuoi lo reintegro completo (HIT/MISS per tag e per lega) come prima, ma prima verifichiamo che “Attenziona” lavori con i tuoi file ✅</small></div>`;
-    status.textContent="Backtest (placeholder) ✅";
+    const thrOverPct=+document.getElementById("thrOver").value||60;
+    const thrUnderPct=+document.getElementById("thrUnder").value||60;
+    let wGA=+document.getElementById("wGA").value||0.40;
+    let wSP=+document.getElementById("wSP").value||0.35;
+    let wX=+document.getElementById("wX").value||0.25;
+
+    const {results, quotes, resMap, leagueStats, baseByLeague, globalBase, N, inferred, stillNA} = await loadDataOrFail();
+
+    if(!document.getElementById("leagueConfig").innerHTML.trim()){
+      renderLeagueConfig(leagueStats);
+    }
+
+    let matched=0, notMatched=0, skipped=0, filteredOut=0;
+
+    // aggregati globali
+    let taken=0, hit=0, miss=0;
+
+    // yield (se ho odds O25/U25)
+    let yTaken=0, yProfit=0;
+
+    // per tag (friendly) e per lega
+    const byTag = { over:{n:0, hit:0, yN:0, yP:0}, mid:{n:0, hit:0, yN:0, yP:0}, under:{n:0, hit:0, yN:0, yP:0} };
+    const byLeague = new Map(); // div -> stats
+
+    function ensureLeague(div){
+      const d = String(div||"NA").toUpperCase();
+      if(!byLeague.has(d)){
+        byLeague.set(d, {
+          n:0, hit:0,
+          overN:0, overHit:0,
+          underN:0, underHit:0,
+          yN:0, yP:0,
+          // diagnostica "bias favorita": performance per spread alto
+          spHighN:0, spHighHit:0, // spread >= soglia
+          spHighThr: 2.0,
+        });
+      }
+      return byLeague.get(d);
+    }
+
+    // helper yield su unit stake
+    function profitUnit(odd, win){
+      if(!Number.isFinite(odd)) return 0;
+      return win ? (odd - 1) : -1;
+    }
+
+    for(const q of quotes){
+      const div = String(q.div||"NA").toUpperCase();
+      if(div==="NA"){ skipped++; continue; }
+
+      // match risultato
+      const r = resMap.get(keyOf(div,q.dateTs,q.home_team,q.away_team));
+      if(!r){ notMatched++; continue; }
+
+      const hg=toNum(r.FTHG), ag=toNum(r.FTAG);
+      if(!Number.isFinite(hg) || !Number.isFinite(ag)){ skipped++; continue; }
+      const isOver = (hg+ag)>=3;
+
+      const odd1=toNum(q.b365_1), odd2=toNum(q.b365_2), oddX=toNum(q.b365_x);
+      const spread=(Number.isFinite(odd1)&&Number.isFinite(odd2))?Math.abs(odd1-odd2):NaN;
+
+      const est = estimateMu(results, q.home_team, q.away_team, N, q.dateTs, div);
+      if(!Number.isFinite(est.mu) || !Number.isFinite(oddX) || !Number.isFinite(spread)){ skipped++; continue; }
+
+      // filtri per lega (se attivi)
+      if(!passesLeagueFilters(div, leagueStats, est.mu, oddX, spread)){ filteredOut++; continue; }
+
+      const comp=computeScore(oddX, spread, est.mu, wGA, wSP, wX);
+      if(!Number.isFinite(comp.score)){ skipped++; continue; }
+
+      const rel = reliabilityFactor(est.hN, est.aN);
+      const bonusOpen = openGameBonus(est.hGF, est.aGF, est.hGA, est.aGA);
+      const scoreFinal = clamp(comp.score * rel + bonusOpen, 0, 100);
+
+      const pr = predictOverProb(div, est.mu, oddX, spread, wGA, wSP, wX, baseByLeague, globalBase);
+      const pOver = pr.pOver;
+      const pUnder = 1 - pOver;
+
+      // pick da probabilità
+      const pick = (pOver >= pUnder) ? "OVER" : "UNDER";
+      const win = (pick==="OVER") ? isOver : !isOver;
+
+      // tag da probabilità
+      const tag = tagFromProb(pOver, thrOverPct, thrUnderPct);
+
+      matched++;
+      taken++;
+      if(win) hit++; else miss++;
+
+      // per tag
+      const tagKey = (tag.txt==="OVER-friendly") ? "over" : (tag.txt==="UNDER-friendly" ? "under" : "mid");
+      byTag[tagKey].n++;
+      if(win) byTag[tagKey].hit++;
+
+      // per lega
+      const L = ensureLeague(div);
+      L.n++;
+      if(win) L.hit++;
+      if(pick==="OVER"){ L.overN++; if(win) L.overHit++; }
+      else { L.underN++; if(win) L.underHit++; }
+
+      // diagnostica bias favorita: spread alto (default 2.0)
+      if(Number.isFinite(spread) && spread >= L.spHighThr){
+        L.spHighN++;
+        if(win) L.spHighHit++;
+      }
+
+      // yield (solo se ho le quote O/U 2.5)
+      const o25 = toNum(q.o25);
+      const u25 = toNum(q.u25);
+      let oddPick = NaN;
+      if(pick==="OVER") oddPick = o25;
+      else oddPick = u25;
+
+      if(Number.isFinite(oddPick)){
+        const p = profitUnit(oddPick, win);
+        yTaken++; yProfit += p;
+        byTag[tagKey].yN++; byTag[tagKey].yP += p;
+        L.yN++; L.yP += p;
+      }
+    }
+
+    const hr = taken ? (hit/taken) : NaN;
+    const roi = yTaken ? (yProfit/yTaken) : NaN;
+
+    const pct = (x)=> Number.isFinite(x)?(x*100).toFixed(1)+"%":"—";
+    const pctN = (hit,n)=> n ? ((100*hit/n).toFixed(1)+"%") : "—";
+    const roiTxt = (p,n)=> n ? ((100*p/n).toFixed(2)+"%") : "—";
+
+    // tabella per lega
+    const leagues = Array.from(byLeague.keys()).sort();
+    const leagueRows = leagues.map(div=>{
+      const L = byLeague.get(div);
+      return `
+        <tr>
+          <td><b>${div}</b></td>
+          <td>${L.n}</td>
+          <td><b>${pctN(L.hit,L.n)}</b></td>
+          <td>${L.overN} / ${pctN(L.overHit,L.overN)}</td>
+          <td>${L.underN} / ${pctN(L.underHit,L.underN)}</td>
+          <td>${L.spHighN} / ${pctN(L.spHighHit,L.spHighN)}</td>
+          <td>${roiTxt(L.yP,L.yN)} <small class="muted">(n=${L.yN})</small></td>
+        </tr>
+      `;
+    }).join("");
+
+    // tabella per tag
+    const tagRow = (name,obj)=>`
+      <tr>
+        <td><b>${name}</b></td>
+        <td>${obj.n}</td>
+        <td><b>${pctN(obj.hit,obj.n)}</b></td>
+        <td>${roiTxt(obj.yP,obj.yN)} <small class="muted">(n=${obj.yN})</small></td>
+      </tr>
+    `;
+
+    output.innerHTML = `
+      <div class="card">
+        <b>BACKTEST – prese (HIT/MISS) — pick da probabilità</b>
+
+        <div class="row" style="margin-top:10px">
+          <span class="pill"><b>Match matchati:</b> ${matched}</span>
+          <span class="pill"><b>Non matchati:</b> ${notMatched}</span>
+          <span class="pill"><b>Skippati:</b> ${skipped}</span>
+          <span class="pill"><b>Filtrati via:</b> ${filteredOut}</span>
+          <span class="pill"><b>PRESE:</b> ${taken}</span>
+          <span class="pill"><b>HIT:</b> ${hit}</span>
+          <span class="pill"><b>MISS:</b> ${miss}</span>
+          <span class="pill"><b>Hit-rate:</b> ${pct(hr)}</span>
+        </div>
+
+        <hr style="margin:12px 0">
+
+        <div class="row">
+          <span class="pill"><b>Yield/ROI:</b> ${Number.isFinite(roi)?(roi*100).toFixed(2)+"%":"—"} <small class="muted">(copertura n=${yTaken})</small></span>
+          <span class="pill"><b>Lega inferita:</b> ${inferred}</span>
+          <span class="pill"><b>Quote NA:</b> ${stillNA}</span>
+        </div>
+
+        <small class="muted" style="display:block;margin-top:10px">
+          ROI viene calcolato <b>solo</b> se nel CSV quote esistono le quote Over2.5/Under2.5 (o25/u25). Con sole 1/X/2 il ROI resta “—”.
+        </small>
+      </div>
+
+      <div class="card">
+        <b>Backtest per “friendly”</b>
+        <table>
+          <thead>
+            <tr><th>Classe</th><th>N</th><th>HR</th><th>ROI</th></tr>
+          </thead>
+          <tbody>
+            ${tagRow("OVER-friendly", byTag.over)}
+            ${tagRow("NEUTRA", byTag.mid)}
+            ${tagRow("UNDER-friendly", byTag.under)}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <b>Backtest per LEGA + diagnostica “Bias Favorita”</b>
+        <table>
+          <thead>
+            <tr>
+              <th>Lega</th>
+              <th>N</th>
+              <th>HR</th>
+              <th>Pick OVER (n/HR)</th>
+              <th>Pick UNDER (n/HR)</th>
+              <th>Spread≥2.0 (n/HR)</th>
+              <th>ROI (se disponibile)</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${leagueRows || `<tr><td colspan="7" class="muted">Nessuna lega disponibile</td></tr>`}
+          </tbody>
+        </table>
+
+        <small class="muted" style="display:block;margin-top:10px">
+          Colonna “Spread≥2.0”: se qui l’HR dei TOP OVER cala in una lega (es. leghe Under-friendly), è il classico “bias della favorita” (vittoria controllata 1-0 / 2-0).
+          In quel caso: abbassa <b>wSP</b> per quella lega o imposta un filtro Spread “Mean/Custom” per evitare estremi.
+        </small>
+      </div>
+    `;
+
+    status.textContent="Backtest completato ✅";
   }catch(e){
-    status.textContent="Errore: " + (e?.message || e);
+    status.textContent="Errore Backtest: " + (e?.message || e);
   }
 }
 
-document.getElementById("prepBtn").addEventListener("click", prepStats);
-document.getElementById("attBtn").addEventListener("click", attenziona);
-document.getElementById("btBtn").addEventListener("click", backtest);
 </script>
 </body>
 </html>
