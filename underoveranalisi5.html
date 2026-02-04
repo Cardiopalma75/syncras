@@ -206,7 +206,10 @@ function normQuoteRow(o){
   };
 }
 
-
+// ✅ QUI: subito dopo normQuoteRow, prima delle altre funzioni che la usano
+function keyOf(div, dateTs, home, away){
+  return `${div}|${dateTs}|${home}|${away}`;
+}
 /* ========= TEAM -> LEAGUE inference ========= */
 function buildTeamLeagueMap(results){
   // team -> {league -> count}
@@ -980,9 +983,18 @@ async function backtest(){
       if(!Number.isFinite(est.mu) || !Number.isFinite(oddX) || !Number.isFinite(spread)){ skipped++; continue; }
 
       // filtri per lega (se attivi)
-      if(!passesLeagueFilters(div, leagueStats, est.mu, oddX, spread)){ filteredOut++; continue; }
+      const filtersReady =
+  document.getElementById("leagueConfig").innerHTML.trim().length > 0;
 
-     const comp = computeScore(oddX, spread, est.mu, wGA, wSP, wX);
+if(filtersReady && !passesLeagueFilters(div, leagueStats, est.mu, oddX, spread)){
+  filteredOut++;
+  continue;
+}
+
+
+     const comp = computeScore(...);
+const scoreRaw = Number.isFinite(comp.score) ? comp.score : 50;
+
 
 // in pre-match NON scartiamo: se lo score non è calcolabile lo mettiamo neutro
 const scoreRaw = Number.isFinite(comp.score) ? comp.score : 50;
@@ -990,12 +1002,12 @@ const scoreRaw = Number.isFinite(comp.score) ? comp.score : 50;
 
       const rel = reliabilityFactor(est.hN, est.aN);
       const bonusOpen = openGameBonus(est.hGF, est.aGF, est.hGA, est.aGA);
-      const scoreFinal = clamp(comp.score * rel + bonusOpen, 0, 100);
+      
 
       const pr = predictOverProb(div, est.mu, oddX, spread, wGA, wSP, wX, baseByLeague, globalBase);
       const pOver = pr.pOver;
       const pUnder = 1 - pOver;
-const scoreFinal = clamp(scoreRaw * rel + bonusOpen, 0, 100);
+
       // pick da probabilità
       const pick = (pOver >= pUnder) ? "OVER" : "UNDER";
       const win = (pick==="OVER") ? isOver : !isOver;
