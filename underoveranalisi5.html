@@ -982,8 +982,11 @@ async function backtest(){
       // filtri per lega (se attivi)
       if(!passesLeagueFilters(div, leagueStats, est.mu, oddX, spread)){ filteredOut++; continue; }
 
-      const comp=computeScore(oddX, spread, est.mu, wGA, wSP, wX);
-      if(!Number.isFinite(comp.score)){ skipped++; continue; }
+     const comp = computeScore(oddX, spread, est.mu, wGA, wSP, wX);
+
+// in pre-match NON scartiamo: se lo score non è calcolabile lo mettiamo neutro
+const scoreRaw = Number.isFinite(comp.score) ? comp.score : 50;
+
 
       const rel = reliabilityFactor(est.hN, est.aN);
       const bonusOpen = openGameBonus(est.hGF, est.aGF, est.hGA, est.aGA);
@@ -992,7 +995,7 @@ async function backtest(){
       const pr = predictOverProb(div, est.mu, oddX, spread, wGA, wSP, wX, baseByLeague, globalBase);
       const pOver = pr.pOver;
       const pUnder = 1 - pOver;
-
+const scoreFinal = clamp(scoreRaw * rel + bonusOpen, 0, 100);
       // pick da probabilità
       const pick = (pOver >= pUnder) ? "OVER" : "UNDER";
       const win = (pick==="OVER") ? isOver : !isOver;
