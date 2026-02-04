@@ -1,11 +1,12 @@
+
 <!doctype html>
 <html lang="it">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Syncras Pro - Custom per i tuoi CSV</title>
+  <title>Syncras Pro - Betting Bot</title>
   <style>
-    :root{--violet:#6C5CE7;--bg:#f3f4f6;--card:#fff;--border:#d1d5db;--text:#1f2937;--success:#10b981;--danger:#ef4444}
+    :root{--violet:#6C5CE7;--bg:#f3f4f6;--card:#fff;--border:#d1d5db;--text:#1f2937;--success:#10b981;--danger:#ef4444;--bet:#facc15}
     body{font-family:sans-serif;margin:20px;background:var(--bg);color:var(--text)}
     .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:20px;box-shadow:0 2px 4px rgba(0,0,0,0.05)}
     .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
@@ -17,25 +18,26 @@
     .stat-box{background:#fff;padding:10px 15px;border-radius:8px;border:1px solid var(--border);flex:1;text-align:center}
     .hit{color:var(--success);font-weight:bold}
     .miss{color:var(--danger);font-weight:bold}
+    .bet-now{background:black; color:var(--bet); padding:4px 8px; border-radius:4px; font-weight:bold; display:inline-block}
     .tag{padding:3px 6px;border-radius:4px;font-size:10px;background:#e5e7eb;font-weight:bold}
   </style>
 </head>
 <body>
 
-<h2>Syncras Pro – Analisi Dati Caricati</h2>
+<h2>Syncras Pro – Dashboard Operativa</h2>
 
 <div class="card">
   <div class="grid">
     <div>
-      <label><b>1. File Risultati</b></label><br>
+      <label><b>1. File Risultati (Storico)</b></label><br>
       <input id="fRes" type="file" accept=".csv">
     </div>
     <div>
-      <label><b>2. File Quote</b></label><br>
+      <label><b>2. File Quote (Prossimi Match)</b></label><br>
       <input id="fQuo" type="file" accept=".csv">
     </div>
     <div style="display:flex;align-items:flex-end">
-      <button onclick="elabora()">AVVIA ANALISI</button>
+      <button onclick="elabora()">GENERA SEGNALI</button>
     </div>
   </div>
 </div>
@@ -44,7 +46,6 @@
 <div id="output"></div>
 
 <script>
-// Mappa Team -> Lega per riempire i buchi del file quote
 let teamLeagueMap = {};
 
 function parseCSV(text) {
@@ -67,7 +68,6 @@ function getBaseline(results) {
         if (!isNaN(total)) {
             stats[lg].t++;
             if (total > 2.5) stats[lg].o++;
-            // Popola mappa team
             teamLeagueMap[r.home_team] = lg;
             teamLeagueMap[r.away_team] = lg;
         }
@@ -84,49 +84,46 @@ async function elabora() {
     const quoData = parseCSV(await quoFile.text());
     const baselines = getBaseline(resData);
 
-    let html = `<table><thead><tr><th>Data</th><th>Match</th><th>Lega</th><th>Baseline</th><th>Quota X</th><th>P(Over)</th><th>Esito</th></tr></thead><tbody>`;
+    let html = `<table><thead><tr><th>Data</th><th>Match</th><th>Lega</th><th>Base</th><th>P(Over)</th><th>Stato / Esito</th></tr></thead><tbody>`;
     
     let totalBets = 0, hits = 0, profit = 0;
+    const QUOTA_MEDIA = 1.70; // Modificata come richiesto
 
     quoData.forEach(q => {
         const home = q.home_team;
-        const away = q.away_team;
-        const lg = teamLeagueMap[home] || teamLeagueMap[away] || "N/A";
+        const lg = teamLeagueMap[home] || "N/A";
         const base = baselines[lg] ? (baselines[lg].o / baselines[lg].t) : 0.50;
         
-        // Calcolo probabilità semplificato basato su Baseline + Quota Pareggio (b365_x)
         const qX = parseFloat(q.b365_x);
         let pOver = base;
-        if(qX > 3.60) pOver += 0.05; // Se il pareggio è meno probabile, aumentano i gol
+        if(qX > 3.60) pOver += 0.05;
         if(qX > 4.50) pOver += 0.10;
 
-        // Cerca esito nel file risultati
         const matchReale = resData.find(r => r.home_team === home && r.date === q.date);
-        let esitoHtml = "---";
+        let esitoHtml = "";
         
         if(matchReale) {
             const gol = parseFloat(matchReale.fthg) + parseFloat(matchReale.ftag);
             const isOver = gol > 2.5;
-            const consigliatoOver = pOver > 0.60;
-            const consigliatoUnder = pOver < 0.45;
-
-            if(consigliatoOver) {
+            if(pOver > 0.60) {
                 totalBets++;
-                if(isOver) { hits++; profit += 0.90; esitoHtml = "<span class='hit'>HIT (O)</span>"; }
+                if(isOver) { hits++; profit += (QUOTA_MEDIA - 1); esitoHtml = "<span class='hit'>HIT (O)</span>"; }
                 else { profit -= 1; esitoHtml = "<span class='miss'>MISS (O)</span>"; }
-            } else if (consigliatoUnder) {
-                totalBets++;
-                if(!isOver) { hits++; profit += 0.90; esitoHtml = "<span class='hit'>HIT (U)</span>"; }
-                else { profit -= 1; esitoHtml = "<span class='miss'>MISS (U)</span>"; }
+            }
+        } else {
+            // PARTITE FUTURE
+            if(pOver > 0.60) {
+                esitoHtml = "<span class='bet-now'>🚀 BET OVER</span>";
+            } else {
+                esitoHtml = "<span style='color:#999'>NO BET</span>";
             }
         }
 
         html += `<tr>
             <td>${q.date}</td>
-            <td>${home} - ${away}</td>
+            <td>${home} - ${q.away_team}</td>
             <td><span class="tag">${lg}</span></td>
             <td>${(base*100).toFixed(0)}%</td>
-            <td>${q.b365_x}</td>
             <td><b>${(pOver*100).toFixed(1)}%</b></td>
             <td>${esitoHtml}</td>
         </tr>`;
@@ -136,9 +133,8 @@ async function elabora() {
     
     document.getElementById('dashboard').innerHTML = `
         <div class="stat-bar">
-            <div class="stat-box">Bet Totali: <b>${totalBets}</b></div>
-            <div class="stat-box">Win Rate: <b>${((hits/totalBets)*100).toFixed(1)}%</b></div>
-            <div class="stat-box">Profitto: <b style="color:${profit>=0?'green':'red'}">${profit.toFixed(2)} u.</b></div>
+            <div class="stat-box">Win Rate (Storico): <b>${((hits/totalBets)*100).toFixed(1)}%</b></div>
+            <div class="stat-box">Profitto (Quota 1.70): <b style="color:${profit>=0?'green':'red'}">${profit.toFixed(2)} u.</b></div>
         </div>
     `;
     document.getElementById('output').innerHTML = html;
