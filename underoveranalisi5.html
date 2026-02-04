@@ -1,1 +1,1055 @@
-a
+
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Syncras – U/O 2.5 • BaseLine per LEGA • Filtri (GA/X/Spread) • TOP + Backtest</title>
+  <style>
+    :root{--violet:#6C5CE7;--bg:#f7f7fb;--card:#fff;--border:#e7e7f5;--text:#111827;--muted:#6b7280}
+    body{font-family:system-ui,Arial;margin:18px;background:var(--bg);color:var(--text)}
+    h2{margin:0 0 10px 0}
+    .muted{color:var(--muted)}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;margin-top:14px}
+    .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+    @media(max-width:980px){.grid{grid-template-columns:1fr}}
+    input,select,button{padding:9px;border-radius:12px;border:1px solid #cfcfe6}
+    input[type="file"]{padding:10px}
+    button{cursor:pointer;background:var(--violet);color:#fff;border:0;font-weight:900;padding:12px 14px;border-radius:14px}
+    button:hover{filter:brightness(.96)}
+    .btn2{background:#111827}
+    .btn3{background:#0f766e}
+    hr{border:none;border-top:1px solid #e9e9f7}
+    .pill{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--border);background:#fafafe;border-radius:999px;padding:6px 10px;font-size:12px;color:#555}
+    table{border-collapse:collapse;width:100%;margin-top:12px;background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden}
+    th,td{border-bottom:1px solid #eee;padding:8px;text-align:right;font-size:13px;vertical-align:top}
+    th{background:#fafafe;color:#333;font-size:12px}
+    th:first-child,td:first-child{text-align:left}
+    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+    .tag{display:inline-flex;align-items:center;border-radius:999px;padding:4px 10px;font-size:12px;font-weight:900}
+    .tagOver{background:#ecfdf5;color:#067a50;border:1px solid #a7f3d0}
+    .tagUnder{background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe}
+    .tagMid{background:#fff7ed;color:#b45309;border:1px solid #fed7aa}
+    .scoreBox{display:inline-flex;flex-direction:column;gap:2px}
+    .big{font-weight:1000;font-size:14px}
+    .small{font-size:11px;color:#6b7280;line-height:1.25}
+    .badge{display:inline-flex;align-items:center;border-radius:999px;padding:2px 8px;font-size:11px;font-weight:900;border:1px solid var(--border);background:#fafafe;color:#374151}
+    .bHigh{background:#ecfdf5;color:#067a50;border:1px solid #a7f3d0}
+    .bMid{background:#fff7ed;color:#b45309;border:1px solid #fed7aa}
+    .bLow{background:#fee2e2;color:#991b1b;border:1px solid #fecaca}
+    details{border:1px solid var(--border);border-radius:14px;background:#fff;margin-top:14px}
+    summary{cursor:pointer;padding:12px 14px;font-weight:900}
+    .cfgWrap{padding:0 14px 14px 14px}
+    .cfgTable input{width:90px}
+    .cfgTable select{width:165px}
+    .cfgHint{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.35}
+  </style>
+</head>
+<body>
+  <h2>Syncras – Under/Over 2.5 (densità) — <u>BASELINE per LEGA + Filtri configurabili</u></h2>
+  <div class="muted">
+    ✅ Il file ricalcola ogni volta: <b>baseline Over% per lega</b>, <b>X medio</b>, <b>spread medio</b>, <b>mu medio</b>.<br>
+    ✅ Tu puoi impostare: “in Serie A voglio X=3.50±0.20” e lui filtrerà solo quei match (idem mu e spread).<br>
+    ✅ Se il match è presente nel CSV risultati: mostra <b>risultato</b> e <b>HIT/MISS</b>. Se futuro: <b>?</b>.<br>
+    <small>Studio informativo. Nessun invito a scommettere.</small>
+  </div>
+
+  <div class="card">
+    <div class="grid">
+      <div>
+        <label><b>CSV RISULTATI (giocato)</b></label><br>
+        <input id="csvResultsFile" type="file" accept=".csv,text/csv" style="width:100%">
+        <small class="muted">Tipico football-data: <span class="mono">Div, Date, HomeTeam, AwayTeam, FTHG, FTAG</span></small>
+      </div>
+
+      <div>
+        <label><b>CSV QUOTE (pre-match 1/X/2)</b></label><br>
+        <input id="csvQuotesFile" type="file" accept=".csv,text/csv" style="width:100%">
+        <small class="muted">Attese: <span class="mono">Div, Date, HomeTeam, AwayTeam, B365H, B365D, B365A</span></small>
+      </div>
+
+      <div>
+        <label><b>Comandi</b></label><br>
+        <div class="row">
+          <button id="prepBtn" type="button" class="btn3">CALCOLA STATS LEGHE</button>
+          <button id="attBtn" type="button">ATTENZIONA (TOP per LEGA)</button>
+          <button id="btBtn" type="button" class="btn2">BACKTEST (HIT/MISS)</button>
+        </div>
+        <small class="muted" style="display:block;margin-top:10px">
+          Suggerito: 1) calcola stats, 2) setta filtri, 3) attenziona/backtest.
+        </small>
+      </div>
+    </div>
+
+    <hr style="margin:14px 0">
+
+    <div class="row">
+      <label>N recenti (GA)</label><input id="N" type="number" value="12" style="width:90px">
+      <label>Top per lega</label><input id="topK" type="number" value="5" style="width:90px">
+      <span class="pill">spread = <span class="mono">|quota1 - quota2|</span></span>
+      <span class="pill">bonus open-game max <b>+6</b> (solo score)</span>
+    </div>
+
+    <div class="row" style="margin-top:10px">
+      <label>Soglia OVER-friendly (POver%)</label><input id="thrOver" type="number" value="60" style="width:90px">
+      <label>Soglia UNDER-friendly (PUnder%)</label><input id="thrUnder" type="number" value="60" style="width:90px">
+
+      <label>Peso GA</label><input id="wGA" type="number" value="0.40" step="0.05" style="width:90px">
+      <label>Peso spread</label><input id="wSP" type="number" value="0.35" step="0.05" style="width:90px">
+      <label>Peso X</label><input id="wX" type="number" value="0.25" step="0.05" style="width:90px">
+    </div>
+
+    <small class="muted" style="display:block;margin-top:8px">
+      Importante: <b>P(Over)</b> parte dalla <b>baseline della lega</b> e poi viene aggiustata da bin (mu/X/spread) pesati.
+      I filtri (mu/X/spread) sono opzionali e servono per “cercare solo quel cluster”.
+    </small>
+  </div>
+
+  <details id="cfgDetails">
+    <summary>⚙️ Filtri per Lega (mu / X / spread) + statistiche calcolate</summary>
+    <div class="cfgWrap">
+      <div class="cfgHint">
+        • Ogni riga è una lega. Vedi: <b>baseline Over%</b>, <b>X medio</b>, <b>spread medio</b>, <b>mu medio</b>.<br>
+        • Per filtrare: scegli modalità “<b>Custom</b>” e imposta <b>valore ± tolleranza</b> (es. X=3.50 ± 0.20).<br>
+        • Modalità “<b>Mean</b>” = usa il valore medio della lega (utile con tolleranza stretta per prendere “intorno alla media”).<br>
+        • I filtri vengono applicati sia ad “Attenziona” sia a “Backtest”.
+      </div>
+      <div id="leagueConfig"></div>
+    </div>
+  </details>
+
+  <div id="output"></div>
+
+<script>
+/* ========= UTIL ========= */
+function normTeam(s){ return String(s||"").trim().toLowerCase(); }
+function normKey(s){ return String(s||"").trim().toLowerCase(); }
+function toNum(x){ const s=String(x??"").trim().replace(",","."); const n=Number(s); return Number.isFinite(n)?n:NaN; }
+function clamp(x,a,b){ return Math.max(a, Math.min(b,x)); }
+function fmtNum(x){ return Number.isFinite(x)?x.toFixed(2):"—"; }
+function fmtPct01(x){ return Number.isFinite(x)?(x*100).toFixed(1)+"%":"—"; }
+function safeDiv(s){ return (String(s||"NA").trim().toUpperCase() || "NA"); }
+
+function parseCSV(text){
+  const rows=[]; let row=[], cur="", inQ=false;
+  for(let i=0;i<text.length;i++){
+    const ch=text[i], nx=text[i+1];
+    if(ch === '"'){ if(inQ && nx === '"'){ cur+='"'; i++; } else inQ=!inQ; continue; }
+    if(!inQ && (ch===',' || ch===';')){ row.push(cur); cur=""; continue; }
+    if(!inQ && ch==='\n'){ row.push(cur); rows.push(row); row=[]; cur=""; continue; }
+    if(!inQ && ch==='\r') continue;
+    cur+=ch;
+  }
+  row.push(cur); rows.push(row);
+  if(rows.length && rows[rows.length-1].every(c=>String(c).trim()==="")) rows.pop();
+  const header=(rows[0]||[]).map(x=>String(x).trim());
+  return rows.slice(1).map(r=>{
+    const o={};
+    for(let i=0;i<header.length;i++) o[header[i]] = String(r[i]??"").trim().replace(/"/g,"");
+    return o;
+  });
+}
+function pick(o, keys){
+  const map={}; for(const k in o) map[normKey(k)] = o[k];
+  for(const k of keys){ const v=map[normKey(k)]; if(v!==undefined) return v; }
+  return undefined;
+}
+function parseDateTs(s){
+  const t=String(s??"").trim(); if(!t) return NaN;
+  if(/^\d{4}-\d{2}-\d{2}$/.test(t)) return Date.parse(t+"T00:00:00Z");
+  let m=t.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if(m){
+    const dd=+m[1], mm=+m[2], yyyy=+m[3];
+    const iso=`${String(yyyy).padStart(4,'0')}-${String(mm).padStart(2,'0')}-${String(dd).padStart(2,'0')}`;
+    return Date.parse(iso+"T00:00:00Z");
+  }
+  m=t.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2})$/);
+  if(m){
+    const dd=+m[1], mm=+m[2], yy=+m[3];
+    const yyyy=(yy>=70)?(1900+yy):(2000+yy);
+    const iso=`${yyyy}-${String(mm).padStart(2,'0')}-${String(dd).padStart(2,'0')}`;
+    return Date.parse(iso+"T00:00:00Z");
+  }
+  const x=Date.parse(t); return Number.isFinite(x)?x:NaN;
+}
+function normDiv(o){
+  return safeDiv(pick(o,["Div","div","league","League","campionato"]));
+}
+function normResultRow(o){
+  const div = normDiv(o);
+  const dateStr=String(pick(o,["date","match_date","data","giorno","Date","DATA"])||"").trim();
+  const home_team=normTeam(pick(o,["home_team","hometeam","home","HomeTeam","CASA"])||"");
+  const away_team=normTeam(pick(o,["away_team","awayteam","away","AwayTeam","TRASFERTA"])||"");
+  const FTHG=pick(o,["FTHG","fthg","hg","home_goals","HomeGoals"]) ?? "";
+  const FTAG=pick(o,["FTAG","ftag","ag","away_goals","AwayGoals"]) ?? "";
+  const dateTs=parseDateTs(dateStr);
+  return {div, dateStr,dateTs,home_team,away_team,FTHG:String(FTHG).trim(),FTAG:String(FTAG).trim()};
+}
+function normQuoteRow(o){
+  const div = normDiv(o);
+  const dateStr=String(pick(o,["date","match_date","data","giorno","Date","DATA"])||"").trim();
+  const home_team=normTeam(pick(o,["home_team","hometeam","home","HomeTeam","CASA"])||"");
+  const away_team=normTeam(pick(o,["away_team","awayteam","away","AwayTeam","TRASFERTA"])||"");
+  const b365_1=pick(o,["b365_1","b365_h","B365H","odd1","odds_1","1","home"]) ?? "";
+  const b365_x=pick(o,["b365_x","B365D","oddx","odds_x","X","draw"]) ?? "";
+  const b365_2=pick(o,["b365_2","b365_a","B365A","odd2","odds_2","2","away"]) ?? "";
+  const dateTs=parseDateTs(dateStr);
+  return {div, dateStr,dateTs,home_team,away_team,b365_1:String(b365_1).trim(),b365_x:String(b365_x).trim(),b365_2:String(b365_2).trim()};
+}
+function keyOf(div,dateTs,home,away){ return `${div}|${dateTs}|${home}|${away}`; }
+async function readFileText(file){
+  return new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(String(r.result||"")); r.onerror=rej; r.readAsText(file); });
+}
+
+/* ========= Reliability + Open Game Bonus (solo score) ========= */
+function reliabilityFactor(hN, aN){
+  const minN = Math.min(hN||0, aN||0);
+  if(minN >= 8) return 1.00;
+  if(minN >= 5) return 0.90;
+  if(minN >= 3) return 0.80;
+  return 0.70;
+}
+function relBadge(hN, aN){
+  const minN = Math.min(hN||0, aN||0);
+  if(minN >= 8) return {txt:"HIGH", cls:"bHigh"};
+  if(minN >= 5) return {txt:"MID", cls:"bMid"};
+  return {txt:"LOW", cls:"bLow"};
+}
+function openGameBonus(hGF, aGF, hGA, aGA){
+  if(!Number.isFinite(hGF) || !Number.isFinite(aGF) || !Number.isFinite(hGA) || !Number.isFinite(aGA)) return 0;
+  const bothScore = (hGF>=1.0 && aGF>=1.0);
+  const bothConcede = (hGA>=1.0 && aGA>=1.0);
+  if(bothScore && bothConcede) return 6;
+  if(bothScore) return 3;
+  return 0;
+}
+
+/* ========= GA (mu) ========= */
+function lastNMatches(results, team, N, beforeTs, div){
+  return results
+    .filter(r=>r.div===div && Number.isFinite(r.dateTs) && r.dateTs < beforeTs && (r.home_team===team || r.away_team===team))
+    .sort((a,b)=>b.dateTs - a.dateTs)
+    .slice(0,N);
+}
+function teamGFGA(results, team, N, beforeTs, div){
+  const ms=lastNMatches(results,team,N,beforeTs,div);
+  let gf=0, ga=0, n=0;
+  for(const m of ms){
+    const hg=toNum(m.FTHG), ag=toNum(m.FTAG);
+    if(!Number.isFinite(hg) || !Number.isFinite(ag)) continue;
+    if(m.home_team===team){ gf+=hg; ga+=ag; } else { gf+=ag; ga+=hg; }
+    n++;
+  }
+  if(n<3) return {gf:NaN,ga:NaN,n};
+  return {gf:gf/n, ga:ga/n, n};
+}
+function estimateMu(results, home, away, N, dateTs, div){
+  const h=teamGFGA(results,home,N,dateTs,div);
+  const a=teamGFGA(results,away,N,dateTs,div);
+  if(!Number.isFinite(h.gf) || !Number.isFinite(h.ga) || !Number.isFinite(a.gf) || !Number.isFinite(a.ga)){
+    return {mu:NaN, hN:h.n, aN:a.n, hGF:h.gf, hGA:h.ga, aGF:a.gf, aGA:a.ga};
+  }
+  const muHome=(h.gf + a.ga)/2;
+  const muAway=(a.gf + h.ga)/2;
+  let mu = clamp(muHome + muAway, 1.4, 4.2);
+  return {mu, hN:h.n, aN:a.n, hGF:h.gf, hGA:h.ga, aGF:a.gf, aGA:a.ga};
+}
+
+/* ========= SCORE (supporto) ========= */
+function xScore(oddX){
+  if(!Number.isFinite(oddX)) return NaN;
+  return clamp((oddX - 3.20) / (5.50 - 3.20), 0, 1);
+}
+function spScore(spread){
+  if(!Number.isFinite(spread)) return NaN;
+  const peak=2.0, left=0.0, right=6.5;
+  if(spread<=peak) return clamp((spread-left)/(peak-left), 0, 1);
+  return clamp((right-spread)/(right-peak), 0, 1);
+}
+function gaScore(mu){
+  if(!Number.isFinite(mu)) return NaN;
+  return clamp((mu - 2.40) / (3.80 - 2.40), 0, 1);
+}
+function computeScore(oddX, spread, mu, wGA, wSP, wX){
+  const xs=xScore(oddX), ss=spScore(spread), gs=gaScore(mu);
+  if(!Number.isFinite(xs) || !Number.isFinite(ss) || !Number.isFinite(gs)) return {score:NaN, xs, ss, gs};
+  const sum = (wGA+wSP+wX) || 1;
+  const s = (wGA*gs + wSP*ss + wX*xs) / sum;
+  return {score: s*100, xs, ss, gs};
+}
+
+/* ========= BIN GLOBALI (pOver per intervallo) =========
+   Nota: i bins sono globali ma la PROBABILITÀ parte dalla BASELINE della LEGA.
+*/
+const BINS_GA = [
+  {min:2.60, max:3.00, pOver:0.619, label:"GA 2.60–3.00"},
+  {min:3.00, max:3.40, pOver:0.640, label:"GA 3.00–3.40"},
+  {min:3.40, max:3.80, pOver:0.630, label:"GA 3.40–3.80"},
+  {min:3.80, max:Infinity, pOver:0.797, label:"GA 3.80+"},
+];
+const BINS_X = [
+  {min:2.00, max:3.00, pOver:0.364, label:"X 2.00–3.00"},
+  {min:3.00, max:4.00, pOver:0.502, label:"X 3.00–4.00"},
+  {min:4.00, max:5.00, pOver:0.664, label:"X 4.00–5.00"},
+  {min:5.00, max:6.00, pOver:0.646, label:"X 5.00–6.00"},
+  {min:6.00, max:7.00, pOver:0.639, label:"X 6.00–7.00"},
+  {min:7.00, max:8.00, pOver:0.742, label:"X 7.00–8.00"},
+  {min:8.00, max:Infinity, pOver:0.684, label:"X 8.00+"},
+];
+const BINS_SPREAD = [
+  {min:-Infinity, max:0.50, pOver:0.589, label:"Spread <0.50"},
+  {min:0.50, max:1.00, pOver:0.659, label:"Spread 0.50–1.00"},
+  {min:1.00, max:2.00, pOver:0.738, label:"Spread 1.00–2.00"},
+  {min:2.00, max:3.00, pOver:0.709, label:"Spread 2.00–3.00"},
+  {min:3.00, max:4.00, pOver:0.607, label:"Spread 3.00–4.00"},
+  {min:4.00, max:5.00, pOver:0.654, label:"Spread 4.00–5.00"},
+  {min:5.00, max:6.50, pOver:0.622, label:"Spread 5.00–6.50"},
+  {min:6.50, max:Infinity, pOver:0.663, label:"Spread 6.50+"},
+];
+
+function binLookup(value, bins, base){
+  if(!Number.isFinite(value)) return {pOver:base, label:"(bin NA)"};
+  for(const b of bins){
+    if(value>=b.min && value<b.max) return {pOver:b.pOver, label:b.label};
+  }
+  return {pOver:base, label:"(bin default)"};
+}
+
+/* ========= BASELINE per LEGA (calcolata dal CSV risultati) ========= */
+function computeLeagueBaselines(results){
+  const map = new Map(); // div -> {n, over}
+  let gN=0, gOver=0;
+  for(const r of results){
+    const hg=toNum(r.FTHG), ag=toNum(r.FTAG);
+    if(!Number.isFinite(hg) || !Number.isFinite(ag)) continue;
+    const div = safeDiv(r.div);
+    const tot = hg+ag;
+    const isOver = tot>=3;
+    if(!map.has(div)) map.set(div, {n:0, over:0});
+    const obj = map.get(div);
+    obj.n++; if(isOver) obj.over++;
+    gN++; if(isOver) gOver++;
+  }
+  const globalBase = gN ? (gOver/gN) : 0.55;
+  const baseByLeague = new Map();
+  for(const [div,obj] of map){
+    baseByLeague.set(div, obj.n ? (obj.over/obj.n) : globalBase);
+  }
+  return {baseByLeague, globalBase};
+}
+
+/* ========= STATS per LEGA: X medio, spread medio, mu medio (su quote dove mu calcolabile) ========= */
+function avg(arr){
+  const xs = arr.filter(Number.isFinite);
+  if(!xs.length) return NaN;
+  return xs.reduce((a,b)=>a+b,0)/xs.length;
+}
+function computeLeagueStats(results, quotes, N){
+  // baselines
+  const {baseByLeague, globalBase} = computeLeagueBaselines(results);
+
+  // mean X/spread from quotes
+  const xBy = new Map();
+  const spBy = new Map();
+  for(const q of quotes){
+    const div=safeDiv(q.div);
+    const oddX=toNum(q.b365_x);
+    const odd1=toNum(q.b365_1), odd2=toNum(q.b365_2);
+    const spread=(Number.isFinite(odd1)&&Number.isFinite(odd2))?Math.abs(odd1-odd2):NaN;
+
+    if(!xBy.has(div)) xBy.set(div, []);
+    if(!spBy.has(div)) spBy.set(div, []);
+    if(Number.isFinite(oddX)) xBy.get(div).push(oddX);
+    if(Number.isFinite(spread)) spBy.get(div).push(spread);
+  }
+
+  // mean mu from quotes where mu computable (per lega)
+  const muBy = new Map();
+  for(const q of quotes){
+    const div=safeDiv(q.div);
+    const est = estimateMu(results, q.home_team, q.away_team, N, q.dateTs, div);
+    if(Number.isFinite(est.mu)){
+      if(!muBy.has(div)) muBy.set(div, []);
+      muBy.get(div).push(est.mu);
+    }
+  }
+
+  // union of leagues
+  const leagues = new Set([
+    ...Array.from(baseByLeague.keys()),
+    ...Array.from(xBy.keys()),
+    ...Array.from(spBy.keys()),
+    ...Array.from(muBy.keys()),
+  ]);
+
+  const out = new Map();
+  for(const div of leagues){
+    out.set(div, {
+      div,
+      baseOver: baseByLeague.get(div) ?? globalBase,
+      nBase: null, // non indispensabile in UI, ma volendo si può aggiungere
+      meanX: avg(xBy.get(div)||[]),
+      meanSpread: avg(spBy.get(div)||[]),
+      meanMu: avg(muBy.get(div)||[]),
+    });
+  }
+  return {leagueStats: out, baseByLeague, globalBase};
+}
+
+/* ========= PROBABILITÀ: parte dalla baseline LEGA ========= */
+function predictOverProb(div, mu, oddX, spread, wGA, wSP, wX, baseByLeague, globalBase){
+  const base = baseByLeague.get(div) ?? globalBase;
+
+  const ga = binLookup(mu, BINS_GA, base);
+  const xb = binLookup(oddX, BINS_X, base);
+  const sp = binLookup(spread, BINS_SPREAD, base);
+
+  const p = base
+    + wGA*(ga.pOver - base)
+    + wX*(xb.pOver - base)
+    + wSP*(sp.pOver - base);
+
+  return {
+    base,
+    pOver: clamp(p, 0.05, 0.95),
+    parts: { ga, xb, sp }
+  };
+}
+
+/* ========= TAG e PICK da PROBABILITÀ ========= */
+function tagFromProb(pOver, thrOverPct=60, thrUnderPct=60){
+  const pO = Number.isFinite(pOver) ? pOver : NaN;
+  const pU = Number.isFinite(pOver) ? (1 - pOver) : NaN;
+
+  if(Number.isFinite(pO) && pO >= thrOverPct/100) return {txt:"OVER-friendly", cls:"tagOver"};
+  if(Number.isFinite(pU) && pU >= thrUnderPct/100) return {txt:"UNDER-friendly", cls:"tagUnder"};
+  return {txt:"NEUTRA", cls:"tagMid"};
+}
+
+/* ========= CONFIG per LEGA (filtri mu/X/spread) ========= */
+const CFG_KEY = "syncras_uo_league_cfg_v2";
+
+function defaultLeagueCfg(){
+  return {
+    muMode:"off",   muVal:"",   muTol:0.25,
+    xMode:"off",    xVal:"",    xTol:0.25,
+    spMode:"off",   spVal:"",   spTol:0.30
+  };
+}
+function loadCfgStore(){
+  try{
+    const raw = localStorage.getItem(CFG_KEY);
+    const obj = raw ? JSON.parse(raw) : {};
+    return (obj && typeof obj==="object") ? obj : {};
+  }catch(_){ return {}; }
+}
+function saveCfgStore(obj){
+  try{ localStorage.setItem(CFG_KEY, JSON.stringify(obj||{})); }catch(_){}
+}
+function getLeagueCfg(div){
+  const store = loadCfgStore();
+  const k = safeDiv(div);
+  const cfg = store[k] || defaultLeagueCfg();
+  return {...defaultLeagueCfg(), ...(cfg||{})};
+}
+function setLeagueCfg(div, patch){
+  const store = loadCfgStore();
+  const k = safeDiv(div);
+  const prev = store[k] || defaultLeagueCfg();
+  store[k] = {...prev, ...(patch||{})};
+  saveCfgStore(store);
+}
+
+/* applica filtro: ritorna true se match passa */
+function passesFilterMode(mode, targetVal, tol, leagueMean, actualVal){
+  if(mode==="off") return true;
+  const t = (mode==="mean") ? leagueMean : targetVal;
+  if(!Number.isFinite(t) || !Number.isFinite(actualVal) || !Number.isFinite(tol)) return false;
+  return Math.abs(actualVal - t) <= Math.abs(tol);
+}
+function passesLeagueFilters(div, leagueStats, mu, oddX, spread){
+  const stats = leagueStats.get(div);
+  if(!stats) return true;
+
+  const cfg = getLeagueCfg(div);
+
+  const muVal = toNum(cfg.muVal);
+  const xVal  = toNum(cfg.xVal);
+  const spVal = toNum(cfg.spVal);
+
+  const muTol = toNum(cfg.muTol);
+  const xTol  = toNum(cfg.xTol);
+  const spTol = toNum(cfg.spTol);
+
+  if(!passesFilterMode(cfg.muMode, muVal, muTol, stats.meanMu, mu)) return false;
+  if(!passesFilterMode(cfg.xMode,  xVal,  xTol,  stats.meanX,  oddX)) return false;
+  if(!passesFilterMode(cfg.spMode, spVal, spTol, stats.meanSpread, spread)) return false;
+
+  return true;
+}
+
+function renderLeagueConfig(leagueStats){
+  const host = document.getElementById("leagueConfig");
+  const leagues = Array.from(leagueStats.keys())
+    .map(safeDiv)
+    .filter(x=>x!=="NA")
+    .sort();
+
+  const rows = leagues.map(div=>{
+    const st = leagueStats.get(div);
+    const cfg = getLeagueCfg(div);
+
+    const baseTxt = Number.isFinite(st.baseOver) ? (st.baseOver*100).toFixed(1)+"%" : "—";
+    const meanX = fmtNum(st.meanX);
+    const meanSp = fmtNum(st.meanSpread);
+    const meanMu = fmtNum(st.meanMu);
+
+    const id = (suffix)=> `cfg_${div}_${suffix}`;
+
+    return `
+      <tr>
+        <td><b>${div}</b><br><small class="muted">baseOver ${baseTxt}</small></td>
+        <td class="mono">${meanMu}</td>
+        <td>
+          <select id="${id("muMode")}">
+            <option value="off">Off</option>
+            <option value="mean">Mean</option>
+            <option value="custom">Custom</option>
+          </select>
+          <input id="${id("muVal")}" type="number" step="0.05" placeholder="val" value="${cfg.muVal}">
+          <input id="${id("muTol")}" type="number" step="0.05" value="${cfg.muTol}">
+        </td>
+
+        <td class="mono">${meanX}</td>
+        <td>
+          <select id="${id("xMode")}">
+            <option value="off">Off</option>
+            <option value="mean">Mean</option>
+            <option value="custom">Custom</option>
+          </select>
+          <input id="${id("xVal")}" type="number" step="0.05" placeholder="val" value="${cfg.xVal}">
+          <input id="${id("xTol")}" type="number" step="0.05" value="${cfg.xTol}">
+        </td>
+
+        <td class="mono">${meanSp}</td>
+        <td>
+          <select id="${id("spMode")}">
+            <option value="off">Off</option>
+            <option value="mean">Mean</option>
+            <option value="custom">Custom</option>
+          </select>
+          <input id="${id("spVal")}" type="number" step="0.05" placeholder="val" value="${cfg.spVal}">
+          <input id="${id("spTol")}" type="number" step="0.05" value="${cfg.spTol}">
+        </td>
+      </tr>
+    `;
+  }).join("");
+
+  host.innerHTML = `
+    <table class="cfgTable">
+      <thead>
+        <tr>
+          <th>Lega</th>
+          <th>μ medio</th>
+          <th>Filtro μ (mode / val / ±tol)</th>
+          <th>X medio</th>
+          <th>Filtro X (mode / val / ±tol)</th>
+          <th>Spread medio</th>
+          <th>Filtro Spread (mode / val / ±tol)</th>
+        </tr>
+      </thead>
+      <tbody>${rows || `<tr><td colspan="7" class="muted">Nessuna lega trovata</td></tr>`}</tbody>
+    </table>
+  `;
+
+  // set select values + listeners
+  for(const div of leagues){
+    const cfg = getLeagueCfg(div);
+    const id = (suffix)=> `cfg_${div}_${suffix}`;
+
+    const muMode = document.getElementById(id("muMode"));
+    const xMode  = document.getElementById(id("xMode"));
+    const spMode = document.getElementById(id("spMode"));
+    if(muMode) muMode.value = cfg.muMode;
+    if(xMode)  xMode.value  = cfg.xMode;
+    if(spMode) spMode.value = cfg.spMode;
+
+    const syncOne = ()=>{
+      setLeagueCfg(div, {
+        muMode: (document.getElementById(id("muMode"))?.value || "off"),
+        muVal:  (document.getElementById(id("muVal"))?.value ?? ""),
+        muTol:  toNum(document.getElementById(id("muTol"))?.value) || 0.25,
+
+        xMode:  (document.getElementById(id("xMode"))?.value || "off"),
+        xVal:   (document.getElementById(id("xVal"))?.value ?? ""),
+        xTol:   toNum(document.getElementById(id("xTol"))?.value) || 0.25,
+
+        spMode: (document.getElementById(id("spMode"))?.value || "off"),
+        spVal:  (document.getElementById(id("spVal"))?.value ?? ""),
+        spTol:  toNum(document.getElementById(id("spTol"))?.value) || 0.30,
+      });
+    };
+
+    ["muMode","muVal","muTol","xMode","xVal","xTol","spMode","spVal","spTol"].forEach(s=>{
+      const el = document.getElementById(id(s));
+      if(!el) return;
+      el.addEventListener("change", syncOne);
+      el.addEventListener("input", syncOne);
+    });
+  }
+}
+
+/* ========= RENDER ========= */
+function renderPickTable(title, arr, thrOverPct, thrUnderPct){
+  const rows = arr.map(x=>{
+    const t = tagFromProb(x.pOver, thrOverPct, thrUnderPct);
+    const pPick = (x.pick==="OVER") ? x.pOver : (1-x.pOver);
+
+    const resTxt = x.played ? `${x.FTHG}-${x.FTAG}` : "?";
+    const outcomeTxt = x.played ? (x.isHit ? "HIT" : "MISS") : "—";
+    const rb = relBadge(x.hN, x.aN);
+
+    return `
+      <tr>
+        <td>
+          <b>${x.home} — ${x.away}</b><br>
+          <small class="muted">${x.dateStr} • <b>${x.div}</b></small>
+        </td>
+
+        <td class="mono">
+          ${fmtNum(x.odd1)} / <b>${fmtNum(x.oddX)}</b> / ${fmtNum(x.odd2)}<br>
+          <small class="muted">spread=${fmtNum(x.spread)}</small>
+        </td>
+
+        <td class="mono">
+          base=${fmtPct01(x.base)}<br>
+          mu=${fmtNum(x.mu)} <span class="badge ${rb.cls}">${rb.txt}</span><br>
+          <small class="muted">${x.gaLabel}</small><br>
+          <small class="muted">n(H/A)=${x.hN}/${x.aN} • bonusOpen=+${x.bonusOpen}</small>
+        </td>
+
+        <td class="mono">
+          <div class="scoreBox">
+            <span class="big">${x.score.toFixed(1)}</span>
+            <span class="small">GA=${(x.gs*100).toFixed(0)} • SP=${(x.ss*100).toFixed(0)} • X=${(x.xs*100).toFixed(0)}</span>
+          </div>
+        </td>
+
+        <td>
+          <span class="tag ${t.cls}">${t.txt}</span><br>
+          <small class="muted">Pick: <b>${x.pick}</b></small><br>
+          <small class="muted">P(Over): <b>${fmtPct01(x.pOver)}</b></small><br>
+          <small class="muted">P(Under): <b>${fmtPct01(1-x.pOver)}</b></small><br>
+          <small class="muted">P(successo pick): <b>${fmtPct01(pPick)}</b></small><br>
+          <small class="muted">${x.xLabel} • ${x.spLabel}</small>
+        </td>
+
+        <td class="mono">
+          <b>${resTxt}</b><br>
+          <small class="muted">${outcomeTxt}</small>
+        </td>
+      </tr>
+    `;
+  }).join("") || `<tr><td colspan="6" class="muted">Nessun match trovato</td></tr>`;
+
+  return `
+    <div class="card">
+      <b>${title}</b>
+      <table>
+        <thead>
+          <tr>
+            <th>Match</th>
+            <th>Quote 1 / X / 2</th>
+            <th>Base+GA</th>
+            <th>Score (supporto)</th>
+            <th>Etichetta + Probabilità</th>
+            <th>Risultato</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+      <small class="muted">
+        P(Over) = baseline lega + aggiustamenti da bin (mu/X/spread) pesati. Filtri (se attivi) selezionano solo il cluster che vuoi.
+      </small>
+    </div>
+  `;
+}
+
+function renderLeagueSummary(div, arr, leagueStats){
+  let played=0, future=0, taken=0, hit=0;
+  for(const x of arr){
+    if(x.played){ played++; taken++; if(x.isHit) hit++; }
+    else future++;
+  }
+  const hr = taken ? (hit/taken) : NaN;
+  const st = leagueStats.get(div);
+  const baseTxt = st && Number.isFinite(st.baseOver) ? (st.baseOver*100).toFixed(1)+"%" : "—";
+
+  const cfg = getLeagueCfg(div);
+  const cfgTxt = (mode, val, tol, mean, label)=>{
+    if(mode==="off") return `${label}: off`;
+    const t = (mode==="mean") ? `mean(${fmtNum(mean)})` : `${fmtNum(toNum(val))}`;
+    return `${label}: ${mode==="mean"?"mean":"custom"} ${t} ±${fmtNum(toNum(tol))}`;
+  };
+
+  return `
+    <div class="card">
+      <b>LEGA: ${div}</b>
+      <div class="row" style="margin-top:8px">
+        <span class="pill"><b>Baseline Over:</b> ${baseTxt}</span>
+        <span class="pill"><b>Match (post-filtri):</b> ${arr.length}</span>
+        <span class="pill"><b>Giocati:</b> ${played}</span>
+        <span class="pill"><b>Futuri:</b> ${future}</span>
+        <span class="pill"><b>Hit-rate (solo giocati):</b> ${Number.isFinite(hr)?(hr*100).toFixed(1)+"%":"—"}</span>
+      </div>
+      <small class="muted" style="display:block;margin-top:8px">
+        Filtri attivi → ${cfgTxt(cfg.muMode,cfg.muVal,cfg.muTol,st?.meanMu,"mu")} • ${cfgTxt(cfg.xMode,cfg.xVal,cfg.xTol,st?.meanX,"X")} • ${cfgTxt(cfg.spMode,cfg.spVal,cfg.spTol,st?.meanSpread,"spread")}
+      </small>
+    </div>
+  `;
+}
+
+/* ========= DATA LOAD + PREP ========= */
+async function loadDataOrFail(){
+  const fRes=document.getElementById("csvResultsFile").files?.[0];
+  const fQuo=document.getElementById("csvQuotesFile").files?.[0];
+  if(!fRes || !fQuo) throw new Error("Seleziona entrambi i CSV.");
+
+  const N=+document.getElementById("N").value||12;
+
+  const resText=await readFileText(fRes);
+  const quoText=await readFileText(fQuo);
+
+  const results=parseCSV(resText).map(normResultRow)
+    .filter(r=>r.dateStr && r.home_team && r.away_team && Number.isFinite(r.dateTs));
+
+  const quotes=parseCSV(quoText).map(normQuoteRow)
+    .filter(q=>q.dateStr && q.home_team && q.away_team && Number.isFinite(q.dateTs));
+
+  const resMap=new Map();
+  for(const r of results){
+    resMap.set(keyOf(r.div,r.dateTs,r.home_team,r.away_team), r);
+  }
+
+  const {leagueStats, baseByLeague, globalBase} = computeLeagueStats(results, quotes, N);
+
+  return {results, quotes, resMap, leagueStats, baseByLeague, globalBase, N};
+}
+
+async function prepStats(){
+  const status=document.getElementById("status");
+  const output=document.getElementById("output");
+  status.textContent="Calcolo stats leghe…";
+  output.innerHTML="";
+  try{
+    const data = await loadDataOrFail();
+    renderLeagueConfig(data.leagueStats);
+    document.getElementById("cfgDetails").open = true;
+
+    // mini report
+    const leagues = Array.from(data.leagueStats.keys()).map(safeDiv).filter(x=>x!=="NA").sort();
+    let html = `<div class="card"><b>Stats calcolate ✅</b><div class="row" style="margin-top:10px">`;
+    html += `<span class="pill"><b>Leghe trovate:</b> ${leagues.length}</span>`;
+    html += `<span class="pill"><b>Baseline globale (fallback):</b> ${(data.globalBase*100).toFixed(1)}%</span>`;
+    html += `</div><small class="muted" style="display:block;margin-top:10px">Ora puoi settare i filtri per lega e poi fare “Attenziona / Backtest”.</small></div>`;
+    output.innerHTML = html;
+
+    status.textContent="Stats pronte ✅";
+  }catch(e){
+    status.textContent="Errore: " + (e?.message || e);
+  }
+}
+
+/* ========= 1) ATTENZIONA (PER LEGA) ========= */
+async function attenziona(){
+  const status=document.getElementById("status");
+  const output=document.getElementById("output");
+  status.textContent="Carico CSV…";
+  output.innerHTML="";
+
+  try{
+    const topK=Math.max(1,+document.getElementById("topK").value||5);
+    const thrOverPct=+document.getElementById("thrOver").value||60;
+    const thrUnderPct=+document.getElementById("thrUnder").value||60;
+
+    let wGA=+document.getElementById("wGA").value||0.40;
+    let wSP=+document.getElementById("wSP").value||0.35;
+    let wX=+document.getElementById("wX").value||0.25;
+
+    const {results, quotes, resMap, leagueStats, baseByLeague, globalBase, N} = await loadDataOrFail();
+
+    // render config se non c'è ancora
+    if(!document.getElementById("leagueConfig").innerHTML.trim()){
+      renderLeagueConfig(leagueStats);
+    }
+
+    status.textContent="Calcolo…";
+
+    const all=[];
+    let matched=0, future=0, filteredOut=0;
+
+    for(const q of quotes){
+      const div = safeDiv(q.div);
+
+      const odd1=toNum(q.b365_1), odd2=toNum(q.b365_2), oddX=toNum(q.b365_x);
+      const spread=(Number.isFinite(odd1)&&Number.isFinite(odd2))?Math.abs(odd1-odd2):NaN;
+
+      const est = estimateMu(results, q.home_team, q.away_team, N, q.dateTs, div);
+      const mu = est.mu;
+      if(!Number.isFinite(mu) || !Number.isFinite(oddX) || !Number.isFinite(spread)) continue;
+
+      // filtri per lega (cluster selection)
+      if(!passesLeagueFilters(div, leagueStats, mu, oddX, spread)){
+        filteredOut++;
+        continue;
+      }
+
+      const comp=computeScore(oddX, spread, mu, wGA, wSP, wX);
+      if(!Number.isFinite(comp.score)) continue;
+
+      // score (supporto): penalità + bonus
+      const rel = reliabilityFactor(est.hN, est.aN);
+      const bonusOpen = openGameBonus(est.hGF, est.aGF, est.hGA, est.aGA);
+      const scoreFinal = clamp(comp.score * rel + bonusOpen, 0, 100);
+
+      // probabilità: BASELINE per LEGA
+      const pr = predictOverProb(div, mu, oddX, spread, wGA, wSP, wX, baseByLeague, globalBase);
+      const pOver = pr.pOver;
+      const pUnder = 1 - pOver;
+
+      // pick da probabilità
+      const pick = (pOver >= pUnder) ? "OVER" : "UNDER";
+
+      // risultato (se disponibile)
+      const r=resMap.get(keyOf(div,q.dateTs,q.home_team,q.away_team));
+      const played = !!r;
+      if(played) matched++; else future++;
+
+      let FTHG="?", FTAG="?", isHit=null;
+      if(played){
+        FTHG=r.FTHG; FTAG=r.FTAG;
+        const hg=toNum(r.FTHG), ag=toNum(r.FTAG);
+        if(Number.isFinite(hg)&&Number.isFinite(ag)){
+          const isOver = (hg+ag)>=3;
+          isHit = (pick==="OVER") ? isOver : !isOver;
+        }
+      }
+
+      all.push({
+        div,
+        dateStr:q.dateStr, home:q.home_team, away:q.away_team,
+        odd1, oddX, odd2, spread,
+        base: pr.base,
+        mu,
+        hN: est.hN, aN: est.aN,
+        bonusOpen,
+        score: scoreFinal,
+        xs:comp.xs, ss:comp.ss, gs:comp.gs,
+
+        pOver,
+        gaLabel: pr.parts.ga.label,
+        xLabel: pr.parts.xb.label,
+        spLabel: pr.parts.sp.label,
+
+        pick,
+        played, FTHG, FTAG, isHit
+      });
+    }
+
+    // group per lega
+    const byLeague = new Map();
+    for(const m of all){
+      if(!byLeague.has(m.div)) byLeague.set(m.div, []);
+      byLeague.get(m.div).push(m);
+    }
+
+    const leagueOrder = ["I1","D1","E0","SP1","F1","N1","P1"];
+    const otherLeagues = Array.from(byLeague.keys()).filter(x=>!leagueOrder.includes(x)).sort();
+    const finalOrder = [...leagueOrder, ...otherLeagues];
+
+    let html = `
+      <div class="card">
+        <b>Impostazioni</b>
+        <div class="row" style="margin-top:10px">
+          <span class="pill"><b>N recenti:</b> ${N}</span>
+          <span class="pill"><b>Top per lega:</b> ${topK}</span>
+          <span class="pill"><b>Pesi:</b> GA=${wGA.toFixed(2)} • spread=${wSP.toFixed(2)} • X=${wX.toFixed(2)}</span>
+          <span class="pill"><b>Soglie:</b> OVER-friendly se POver≥${thrOverPct}% • UNDER-friendly se PUnder≥${thrUnderPct}%</span>
+          <span class="pill"><b>Match (post-filtri):</b> ${all.length}</span>
+          <span class="pill"><b>Filtrati via:</b> ${filteredOut}</span>
+          <span class="pill"><b>Giocati:</b> ${matched} • <b>Futuri:</b> ${future}</span>
+        </div>
+        <small class="muted" style="display:block;margin-top:10px">
+          “TOP OVER” = P(Over) più alta. “TOP UNDER” = P(Under) più alta. Base = baseline della lega.
+        </small>
+      </div>
+    `;
+
+    for(const div of finalOrder){
+      const arr = byLeague.get(div);
+      if(!arr || !arr.length) continue;
+
+      const overList  = arr.slice().sort((a,b)=> (b.pOver - a.pOver)).slice(0, topK);
+      const underList = arr.slice().sort((a,b)=> ((1-b.pOver) - (1-a.pOver))).slice(0, topK);
+
+      html += renderLeagueSummary(div, arr, leagueStats);
+      html += renderPickTable(`TOP OVER — ${div} (POver più alta)`, overList, thrOverPct, thrUnderPct);
+      html += renderPickTable(`TOP UNDER — ${div} (PUnder più alta)`, underList, thrOverPct, thrUnderPct);
+    }
+
+    output.innerHTML = html;
+    status.textContent="Completato ✅";
+  }catch(e){
+    status.textContent="Errore: " + (e?.message || e);
+  }
+}
+
+/* ========= 2) BACKTEST (conteggio HIT/MISS) ========= */
+async function backtest(){
+  const status=document.getElementById("status");
+  const output=document.getElementById("output");
+  status.textContent="BACKTEST: carico CSV…";
+  output.innerHTML="";
+
+  try{
+    const thrOverPct=+document.getElementById("thrOver").value||60;
+    const thrUnderPct=+document.getElementById("thrUnder").value||60;
+
+    let wGA=+document.getElementById("wGA").value||0.40;
+    let wSP=+document.getElementById("wSP").value||0.35;
+    let wX=+document.getElementById("wX").value||0.25;
+
+    const {results, quotes, resMap, leagueStats, baseByLeague, globalBase, N} = await loadDataOrFail();
+
+    if(!document.getElementById("leagueConfig").innerHTML.trim()){
+      renderLeagueConfig(leagueStats);
+    }
+
+    let matched=0, notMatched=0;
+    let taken=0, hit=0, miss=0, filteredOut=0;
+
+    const byTag = { over:{n:0, hit:0}, mid:{n:0, hit:0}, under:{n:0, hit:0} };
+    const byLeague = new Map(); // div -> {n, hit}
+
+    status.textContent="BACKTEST: calcolo…";
+
+    for(const q of quotes){
+      const div = safeDiv(q.div);
+
+      const r=resMap.get(keyOf(div,q.dateTs,q.home_team,q.away_team));
+      if(!r){ notMatched++; continue; }
+
+      const hg=toNum(r.FTHG), ag=toNum(r.FTAG);
+      if(!Number.isFinite(hg) || !Number.isFinite(ag)) continue;
+      const isOver = (hg+ag)>=3;
+
+      const odd1=toNum(q.b365_1), odd2=toNum(q.b365_2), oddX=toNum(q.b365_x);
+      const spread=(Number.isFinite(odd1)&&Number.isFinite(odd2))?Math.abs(odd1-odd2):NaN;
+
+      const est = estimateMu(results, q.home_team, q.away_team, N, q.dateTs, div);
+      const mu = est.mu;
+      if(!Number.isFinite(mu) || !Number.isFinite(oddX) || !Number.isFinite(spread)) continue;
+
+      // filtri per lega
+      if(!passesLeagueFilters(div, leagueStats, mu, oddX, spread)){
+        filteredOut++;
+        continue;
+      }
+
+      const comp=computeScore(oddX, spread, mu, wGA, wSP, wX);
+      if(!Number.isFinite(comp.score)) continue;
+
+      const pr = predictOverProb(div, mu, oddX, spread, wGA, wSP, wX, baseByLeague, globalBase);
+      const pOver = pr.pOver;
+      const pUnder = 1 - pOver;
+
+      // pick da probabilità
+      const pick = (pOver >= pUnder) ? "OVER" : "UNDER";
+      const tag = tagFromProb(pOver, thrOverPct, thrUnderPct);
+
+      matched++;
+      taken++;
+
+      const win = (pick==="OVER") ? isOver : !isOver;
+      if(win){ hit++; } else { miss++; }
+
+      if(tag.txt==="OVER-friendly"){ byTag.over.n++; if(win) byTag.over.hit++; }
+      else if(tag.txt==="UNDER-friendly"){ byTag.under.n++; if(win) byTag.under.hit++; }
+      else { byTag.mid.n++; if(win) byTag.mid.hit++; }
+
+      if(!byLeague.has(div)) byLeague.set(div, {n:0, hit:0});
+      byLeague.get(div).n++;
+      if(win) byLeague.get(div).hit++;
+    }
+
+    const hr = taken ? (hit/taken) : NaN;
+    const hrTag = (obj)=> obj.n ? (100*obj.hit/obj.n).toFixed(1)+"%" : "—";
+
+    // per lega, tabellina
+    const leagues = Array.from(byLeague.keys()).sort();
+    const leagueRows = leagues.map(div=>{
+      const o = byLeague.get(div);
+      const st = leagueStats.get(div);
+      const baseTxt = st && Number.isFinite(st.baseOver) ? (st.baseOver*100).toFixed(1)+"%" : "—";
+      const lhr = o.n ? (100*o.hit/o.n).toFixed(1)+"%" : "—";
+      return `<tr><td><b>${div}</b></td><td>${baseTxt}</td><td>${o.n}</td><td>${o.hit}</td><td>${lhr}</td></tr>`;
+    }).join("") || `<tr><td colspan="5" class="muted">Nessuna lega (post-filtri)</td></tr>`;
+
+    output.innerHTML = `
+      <div class="card">
+        <b>BACKTEST – prese (HIT/MISS) — baseline per lega + filtri cluster</b>
+
+        <div class="row" style="margin-top:10px">
+          <span class="pill"><b>Match matchati:</b> ${matched}</span>
+          <span class="pill"><b>Non matchati:</b> ${notMatched}</span>
+          <span class="pill"><b>Filtrati via:</b> ${filteredOut}</span>
+          <span class="pill"><b>PRESE:</b> ${taken}</span>
+          <span class="pill"><b>HIT:</b> ${hit}</span>
+          <span class="pill"><b>MISS:</b> ${miss}</span>
+          <span class="pill"><b>Hit-rate:</b> ${Number.isFinite(hr)?(hr*100).toFixed(1)+"%":"—"}</span>
+        </div>
+
+        <hr style="margin:12px 0">
+
+        <div class="row">
+          <span class="pill"><b>OVER-friendly:</b> ${byTag.over.n} (HR ${hrTag(byTag.over)})</span>
+          <span class="pill"><b>NEUTRA:</b> ${byTag.mid.n} (HR ${hrTag(byTag.mid)})</span>
+          <span class="pill"><b>UNDER-friendly:</b> ${byTag.under.n} (HR ${hrTag(byTag.under)})</span>
+        </div>
+
+        <hr style="margin:12px 0">
+
+        <b>Dettaglio per lega (post-filtri)</b>
+        <table>
+          <thead>
+            <tr>
+              <th>Lega</th>
+              <th>Baseline Over%</th>
+              <th>Prese</th>
+              <th>Hit</th>
+              <th>HR</th>
+            </tr>
+          </thead>
+          <tbody>${leagueRows}</tbody>
+        </table>
+
+        <small class="muted" style="display:block;margin-top:10px">
+          Se una lega “crolla”, spesso è perché il cluster scelto non è davvero denso in quella lega. Qui lo vedi subito.
+        </small>
+      </div>
+    `;
+
+    status.textContent="BACKTEST completato ✅";
+  }catch(e){
+    status.textContent="Errore BACKTEST: " + (e?.message || e);
+  }
+}
+
+/* ========= WIRE ========= */
+document.getElementById("prepBtn").addEventListener("click", prepStats);
+document.getElementById("attBtn").addEventListener("click", attenziona);
+document.getElementById("btBtn").addEventListener("click", backtest);
+</script>
+</body>
+</html>
