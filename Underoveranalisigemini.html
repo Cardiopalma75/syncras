@@ -3,81 +3,49 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Syncras Pro – U/O 2.5 Multi-League Analyzer</title>
+  <title>Syncras Pro - Custom per i tuoi CSV</title>
   <style>
-    :root{--violet:#6C5CE7;--bg:#f0f2f5;--card:#fff;--border:#d1d5db;--text:#1f2937;--muted:#6b7280;--success:#10b981;--danger:#ef4444}
-    body{font-family:system-ui,sans-serif;margin:20px;background:var(--bg);color:var(--text);line-height:1.5}
-    .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:20px;box-shadow:0 1px 3px rgba(0,0,0,0.1)}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
-    h2,h3{margin-top:0;color:#111827}
-    input,select,button{padding:10px;border-radius:8px;border:1px solid var(--border);font-size:14px}
-    button{cursor:pointer;background:var(--violet);color:#fff;border:0;font-weight:700;transition:opacity 0.2s}
-    button:hover{opacity:0.9}
-    .btn-secondary{background:#374151}
-    table{width:100%;border-collapse:collapse;margin-top:10px;font-size:13px}
-    th,td{padding:12px;text-align:left;border-bottom:1px solid #edf2f7}
-    th{background:#f9fafb;font-weight:600;color:var(--muted);text-transform:uppercase;font-size:11px}
-    .tag{padding:4px 8px;border-radius:6px;font-weight:700;font-size:11px}
-    .tag-over{background:#dcfce7;color:#166534}
-    .tag-under{background:#dbeafe;color:#1e40af}
+    :root{--violet:#6C5CE7;--bg:#f3f4f6;--card:#fff;--border:#d1d5db;--text:#1f2937;--success:#10b981;--danger:#ef4444}
+    body{font-family:sans-serif;margin:20px;background:var(--bg);color:var(--text)}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:20px;box-shadow:0 2px 4px rgba(0,0,0,0.05)}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+    button{cursor:pointer;background:var(--violet);color:#fff;border:0;font-weight:700;padding:12px 20px;border-radius:8px}
+    table{width:100%;border-collapse:collapse;font-size:12px;margin-top:10px}
+    th,td{padding:10px;text-align:left;border-bottom:1px solid #eee}
+    th{background:#f9fafb;text-transform:uppercase;color:#6b7280;font-size:10px}
+    .stat-bar{display:flex;gap:10px;margin-bottom:20px}
+    .stat-box{background:#fff;padding:10px 15px;border-radius:8px;border:1px solid var(--border);flex:1;text-align:center}
     .hit{color:var(--success);font-weight:bold}
     .miss{color:var(--danger);font-weight:bold}
-    .stats-bar{display:flex;gap:15px;margin-bottom:15px;flex-wrap:wrap}
-    .stat-pill{background:#fff;padding:8px 12px;border-radius:20px;border:1px solid var(--border);font-size:12px}
-    .profit-pos{color:var(--success)}
-    .profit-neg{color:var(--danger)}
-    .mono{font-family:monospace;font-size:12px}
+    .tag{padding:3px 6px;border-radius:4px;font-size:10px;background:#e5e7eb;font-weight:bold}
   </style>
 </head>
 <body>
 
-<h2>Syncras Pro v3.0 <span style="font-size: 0.5em; vertical-align: middle; opacity: 0.7;">Baseline & Yield Engine</span></h2>
+<h2>Syncras Pro – Analisi Dati Caricati</h2>
 
 <div class="card">
   <div class="grid">
     <div>
-      <label><b>CSV Risultati Storici</b></label><br>
-      <input id="csvResultsFile" type="file" accept=".csv" style="width:100%">
+      <label><b>1. File Risultati</b></label><br>
+      <input id="fRes" type="file" accept=".csv">
     </div>
     <div>
-      <label><b>CSV Quote / Match Futuri</b></label><br>
-      <input id="csvQuotesFile" type="file" accept=".csv" style="width:100%">
+      <label><b>2. File Quote</b></label><br>
+      <input id="fQuo" type="file" accept=".csv">
     </div>
-    <div style="display:flex; align-items:flex-end; gap:10px">
-      <button id="mainBtn">ELABORA ANALISI</button>
-      <button id="btBtn" class="btn-secondary">BACKTEST ROI</button>
+    <div style="display:flex;align-items:flex-end">
+      <button onclick="elabora()">AVVIA ANALISI</button>
     </div>
   </div>
-  <div id="status" style="margin-top:10px" class="muted">Caricare i file per iniziare...</div>
 </div>
 
 <div id="dashboard"></div>
 <div id="output"></div>
 
 <script>
-/** * LOGICA CORE MIGLIORATA
- * 1. Calcolo Baseline per Lega
- * 2. Correzione Probabilità mediante Cluster GA/X/Spread
- * 3. Calcolo Yield (Profitto netto basato su stake flat 1 unità)
- */
-
-const CONFIG = {
-    N: 12,
-    overThreshold: 0.62, // 62% per consigliare Over
-    underThreshold: 0.38, // 38% per consigliare Under
-    weights: { ga: 0.45, sp: 0.30, x: 0.25 }
-};
-
-// --- Helper di Parsing e Statistica ---
-const toNum = v => { let n = parseFloat(String(v).replace(',','.')); return isFinite(n) ? n : null; };
-
-async function readFile(file) {
-    return new Promise((res) => {
-        const reader = new FileReader();
-        reader.onload = () => res(reader.result);
-        reader.readAsText(file);
-    });
-}
+// Mappa Team -> Lega per riempire i buchi del file quote
+let teamLeagueMap = {};
 
 function parseCSV(text) {
     const lines = text.split(/\r?\n/).filter(l => l.trim() !== "");
@@ -90,155 +58,91 @@ function parseCSV(text) {
     });
 }
 
-// --- Motore di Analisi ---
-
-function getLeagueStats(results) {
+function getBaseline(results) {
     const stats = {};
     results.forEach(r => {
-        const div = r.div || r.league || "NA";
-        if (!stats[div]) stats[div] = { total: 0, over: 0 };
-        const hg = toNum(r.fthg), ag = toNum(r.ftag);
-        if (hg !== null && ag !== null) {
-            stats[div].total++;
-            if (hg + ag > 2.5) stats[div].over++;
+        const lg = r.league || "Unknown";
+        if (!stats[lg]) stats[lg] = { t: 0, o: 0 };
+        const total = parseFloat(r.fthg) + parseFloat(r.ftag);
+        if (!isNaN(total)) {
+            stats[lg].t++;
+            if (total > 2.5) stats[lg].o++;
+            // Popola mappa team
+            teamLeagueMap[r.home_team] = lg;
+            teamLeagueMap[r.away_team] = lg;
         }
     });
     return stats;
 }
 
-function calculateTeamMetrics(team, league, results, dateLimit) {
-    const history = results.filter(r => 
-        (r.div === league) && 
-        (r.home_team === team || r.away_team === team) &&
-        (new Date(r.date) < new Date(dateLimit))
-    ).sort((a,b) => new Date(b.date) - new Date(a.date)).slice(0, CONFIG.N);
+async function elabora() {
+    const resFile = document.getElementById('fRes').files[0];
+    const quoFile = document.getElementById('fQuo').files[0];
+    if(!resFile || !quoFile) return alert("Carica entrambi i file!");
 
-    if (history.length < 4) return null;
+    const resData = parseCSV(await resFile.text());
+    const quoData = parseCSV(await quoFile.text());
+    const baselines = getBaseline(resData);
 
-    let gf = 0, ga = 0;
-    history.forEach(m => {
-        const isHome = m.home_team === team;
-        gf += isHome ? toNum(m.fthg) : toNum(m.ftag);
-        ga += isHome ? toNum(m.ftag) : toNum(m.fthg);
-    });
+    let html = `<table><thead><tr><th>Data</th><th>Match</th><th>Lega</th><th>Baseline</th><th>Quota X</th><th>P(Over)</th><th>Esito</th></tr></thead><tbody>`;
+    
+    let totalBets = 0, hits = 0, profit = 0;
 
-    return { gf: gf / history.length, ga: ga / history.length, n: history.length };
-}
+    quoData.forEach(q => {
+        const home = q.home_team;
+        const away = q.away_team;
+        const lg = teamLeagueMap[home] || teamLeagueMap[away] || "N/A";
+        const base = baselines[lg] ? (baselines[lg].o / baselines[lg].t) : 0.50;
+        
+        // Calcolo probabilità semplificato basato su Baseline + Quota Pareggio (b365_x)
+        const qX = parseFloat(q.b365_x);
+        let pOver = base;
+        if(qX > 3.60) pOver += 0.05; // Se il pareggio è meno probabile, aumentano i gol
+        if(qX > 4.50) pOver += 0.10;
 
-// --- Rendering UI ---
+        // Cerca esito nel file risultati
+        const matchReale = resData.find(r => r.home_team === home && r.date === q.date);
+        let esitoHtml = "---";
+        
+        if(matchReale) {
+            const gol = parseFloat(matchReale.fthg) + parseFloat(matchReale.ftag);
+            const isOver = gol > 2.5;
+            const consigliatoOver = pOver > 0.60;
+            const consigliatoUnder = pOver < 0.45;
 
-function renderTable(data, title) {
-    let html = `<h3>${title}</h3><div class="card" style="overflow-x:auto"><table><thead><tr>
-        <th>Match</th><th>Lega</th><th>Baseline</th><th>μ (GA)</th><th>P(Over)</th><th>Esito</th><th>ROI Est.</th>
-    </tr></thead><tbody>`;
-
-    data.forEach(item => {
-        const isHit = item.hit === true;
-        const resClass = item.hit === null ? "" : (isHit ? "hit" : "miss");
-        const profit = item.hit === null ? "-" : (isHit ? `+${(item.qUsed - 1).toFixed(2)}` : "-1.00");
-        const profitClass = isHit ? "profit-pos" : "profit-neg";
+            if(consigliatoOver) {
+                totalBets++;
+                if(isOver) { hits++; profit += 0.90; esitoHtml = "<span class='hit'>HIT (O)</span>"; }
+                else { profit -= 1; esitoHtml = "<span class='miss'>MISS (O)</span>"; }
+            } else if (consigliatoUnder) {
+                totalBets++;
+                if(!isOver) { hits++; profit += 0.90; esitoHtml = "<span class='hit'>HIT (U)</span>"; }
+                else { profit -= 1; esitoHtml = "<span class='miss'>MISS (U)</span>"; }
+            }
+        }
 
         html += `<tr>
-            <td><b>${item.home} - ${item.away}</b><br><small class="muted">${item.date}</small></td>
-            <td><span class="tag">${item.league}</span></td>
-            <td>${(item.base * 100).toFixed(1)}%</td>
-            <td class="mono">${item.mu.toFixed(2)}</td>
-            <td><b style="color:${item.prob > 0.6 ? '#10b981' : '#3b82f6'}">${(item.prob * 100).toFixed(1)}%</b></td>
-            <td class="${resClass}">${item.result || '?' }</td>
-            <td class="${profitClass} mono"><b>${profit}</b></td>
+            <td>${q.date}</td>
+            <td>${home} - ${away}</td>
+            <td><span class="tag">${lg}</span></td>
+            <td>${(base*100).toFixed(0)}%</td>
+            <td>${q.b365_x}</td>
+            <td><b>${(pOver*100).toFixed(1)}%</b></td>
+            <td>${esitoHtml}</td>
         </tr>`;
     });
 
-    html += `</tbody></table></div>`;
-    return html;
-}
-
-// --- Main Execution ---
-
-async function runProcess(mode = 'analysis') {
-    const resFile = document.getElementById('csvResultsFile').files[0];
-    const quoFile = document.getElementById('csvQuotesFile').files[0];
-    if (!resFile || !quoFile) { alert("Carica entrambi i file!"); return; }
-
-    document.getElementById('status').innerText = "Elaborazione in corso...";
+    html += "</tbody></table>";
     
-    const results = parseCSV(await readFile(resFile));
-    const quotes = parseCSV(await readFile(quoFile));
-    const leagueStats = getLeagueStats(results);
-
-    const analysis = [];
-    let totalProfit = 0;
-    let hits = 0;
-    let totalBets = 0;
-
-    quotes.forEach(q => {
-        const league = q.div || q.league || "NA";
-        const base = leagueStats[league] ? (leagueStats[league].over / leagueStats[league].total) : 0.53;
-        
-        const hMet = calculateTeamMetrics(q.home_team, league, results, q.date);
-        const aMet = calculateTeamMetrics(q.away_team, league, results, q.date);
-
-        if (hMet && aMet) {
-            const mu = hMet.gf + aMet.ga + aMet.gf + hMet.ga; // Semplificato
-            const oddX = toNum(q.b365d || q.b365_x);
-            const spread = Math.abs(toNum(q.b365h) - toNum(q.b365a));
-            
-            // Formula di aggiustamento Probabilità
-            let prob = base;
-            if (mu > 2.8) prob += 0.08;
-            if (oddX > 3.8) prob += 0.05;
-            if (spread > 1.5) prob += 0.04;
-            prob = Math.min(prob, 0.85);
-
-            // Backtest check
-            const actual = results.find(r => r.home_team === q.home_team && r.date === q.date);
-            let hit = null;
-            let resStr = "";
-            let qUsed = prob > 0.5 ? toNum(q.b365_over || 1.90) : toNum(q.b365_under || 1.90); 
-            // Nota: se non hai quote U/O nel CSV, usiamo un default di 1.90 per il calcolo ROI
-
-            if (actual) {
-                const totalGoals = toNum(actual.fthg) + toNum(actual.ftag);
-                resStr = `${actual.fthg}-${actual.ftag}`;
-                if (prob >= CONFIG.overThreshold) {
-                    hit = totalGoals > 2.5;
-                    totalBets++;
-                    if (hit) { hits++; totalProfit += (qUsed - 1); } else { totalProfit -= 1; }
-                } else if (prob <= CONFIG.underThreshold) {
-                    hit = totalGoals < 2.5;
-                    totalBets++;
-                    if (hit) { hits++; totalProfit += (qUsed - 1); } else { totalProfit -= 1; }
-                }
-            }
-
-            if (mode === 'backtest' && hit === null) return; // Salta match futuri in backtest
-
-            analysis.push({
-                home: q.home_team, away: q.away_team, date: q.date,
-                league, base, mu, prob, hit, result: resStr, qUsed
-            });
-        }
-    });
-
-    // Dashboard Stats
-    const yieldPct = totalBets > 0 ? (totalProfit / totalBets * 100).toFixed(2) : 0;
     document.getElementById('dashboard').innerHTML = `
-        <div class="stats-bar">
-            <div class="stat-pill">Match Analizzati: <b>${analysis.length}</b></div>
-            <div class="stat-pill">Suggerimenti (Bet): <b>${totalBets}</b></div>
-            <div class="stat-pill">Hit Rate: <b>${totalBets > 0 ? (hits/totalBets*100).toFixed(1) : 0}%</b></div>
-            <div class="stat-pill">Profitto Totale: <b class="${totalProfit >= 0 ? 'profit-pos' : 'profit-neg'}">${totalProfit.toFixed(2)} u.</b></div>
-            <div class="stat-pill">ROI: <b class="${totalProfit >= 0 ? 'profit-pos' : 'profit-neg'}">${yieldPct}%</b></div>
+        <div class="stat-bar">
+            <div class="stat-box">Bet Totali: <b>${totalBets}</b></div>
+            <div class="stat-box">Win Rate: <b>${((hits/totalBets)*100).toFixed(1)}%</b></div>
+            <div class="stat-box">Profitto: <b style="color:${profit>=0?'green':'red'}">${profit.toFixed(2)} u.</b></div>
         </div>
     `;
-
-    document.getElementById('output').innerHTML = renderTable(analysis, mode === 'backtest' ? "Risultati Backtest" : "Analisi Prossimi Match");
-    document.getElementById('status').innerText = "Completato!";
+    document.getElementById('output').innerHTML = html;
 }
-
-document.getElementById('mainBtn').addEventListener('click', () => runProcess('analysis'));
-document.getElementById('btBtn').addEventListener('click', () => runProcess('backtest'));
-
 </script>
 </body>
 </html>
