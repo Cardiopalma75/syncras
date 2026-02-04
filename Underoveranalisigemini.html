@@ -1,4 +1,11 @@
-root{--violet:#6C5CE7;--bg:#f3f4f6;--card:#fff;--border:#d1d5db;--text:#1f2937;--success:#10b981;--danger:#ef4444;--bet:#facc15}
+
+    <!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <title>Syncras Pro - Analisi Recency (Last 10)</title>
+  <style>
+    :root{--violet:#6C5CE7;--bg:#f3f4f6;--card:#fff;--border:#d1d5db;--text:#1f2937;--success:#10b981;--danger:#ef4444;--bet:#facc15}
     body{font-family:sans-serif;margin:20px;background:var(--bg);color:var(--text)}
     .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:20px;box-shadow:0 2px 4px rgba(0,0,0,0.05)}
     .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
@@ -6,40 +13,28 @@ root{--violet:#6C5CE7;--bg:#f3f4f6;--card:#fff;--border:#d1d5db;--text:#1f2937;-
     table{width:100%;border-collapse:collapse;font-size:12px;margin-top:10px}
     th,td{padding:10px;text-align:left;border-bottom:1px solid #eee}
     th{background:#f9fafb;text-transform:uppercase;color:#6b7280;font-size:10px}
-    .stat-bar{display:flex;gap:10px;margin-bottom:20px}
-    .stat-box{background:#fff;padding:10px 15px;border-radius:8px;border:1px solid var(--border);flex:1;text-align:center}
-    .hit{color:var(--success);font-weight:bold}
-    .miss{color:var(--danger);font-weight:bold}
-    .bet-now{background:black; color:var(--bet); padding:4px 8px; border-radius:4px; font-weight:bold; display:inline-block}
-    .tag{padding:3px 6px;border-radius:4px;font-size:10px;background:#e5e7eb;font-weight:bold}
+    .stat-box{background:#fff;padding:15px;border-radius:8px;border:1px solid var(--border);text-align:center;flex:1}
+    .bet-now{background:black; color:var(--bet); padding:4px 8px; border-radius:4px; font-weight:bold}
+    .mu-box{font-size:10px; color:#666; line-height:1.2}
+    .tag-trend{font-size:9px; background:#eee; padding:2px 4px; border-radius:3px; margin-left:5px}
   </style>
 </head>
 <body>
 
-<h2>Syncras Pro – Dashboard Operativa</h2>
+<h2>Syncras Pro – Analisi Dinamica (Ultimi 10 Match)</h2>
 
 <div class="card">
   <div class="grid">
-    <div>
-      <label><b>1. File Risultati (Storico)</b></label><br>
-      <input id="fRes" type="file" accept=".csv">
-    </div>
-    <div>
-      <label><b>2. File Quote (Prossimi Match)</b></label><br>
-      <input id="fQuo" type="file" accept=".csv">
-    </div>
-    <div style="display:flex;align-items:flex-end">
-      <button onclick="elabora()">GENERA SEGNALI</button>
-    </div>
+    <div><label><b>1. Storico Risultati</b></label><br><input id="fRes" type="file" style="width:100%"></div>
+    <div><label><b>2. Quote Prossimi Match</b></label><br><input id="fQuo" type="file" style="width:100%"></div>
+    <div style="display:flex;align-items:flex-end"><button onclick="elabora()">ANALIZZA FORMA ATTUALE</button></div>
   </div>
 </div>
 
-<div id="dashboard"></div>
+<div id="dashboard" style="display:flex;gap:10px;margin-bottom:20px"></div>
 <div id="output"></div>
 
 <script>
-let teamLeagueMap = {};
-
 function parseCSV(text) {
     const lines = text.split(/\r?\n/).filter(l => l.trim() !== "");
     const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
@@ -51,20 +46,25 @@ function parseCSV(text) {
     });
 }
 
-function getBaseline(results) {
-    const stats = {};
-    results.forEach(r => {
-        const lg = r.league || "Unknown";
-        if (!stats[lg]) stats[lg] = { t: 0, o: 0 };
-        const total = parseFloat(r.fthg) + parseFloat(r.ftag);
-        if (!isNaN(total)) {
-            stats[lg].t++;
-            if (total > 2.5) stats[lg].o++;
-            teamLeagueMap[r.home_team] = lg;
-            teamLeagueMap[r.away_team] = lg;
+// Funzione che estrae la media gol degli ultimi 10 match di una squadra
+function getRecentStats(team, allResults, currentDate) {
+    const history = allResults
+        .filter(r => (r.home_team === team || r.away_team === team) && new Date(r.date) < new Date(currentDate))
+        .sort((a, b) => new Date(b.date) - new Date(a.date)) // Ordina dal più recente
+        .slice(0, 10); // Prendi solo gli ultimi 10
+
+    if (history.length < 5) return null; // Dato insufficiente
+
+    let gf = 0, ga = 0;
+    history.forEach(r => {
+        if (r.home_team === team) {
+            gf += parseFloat(r.fthg); ga += parseFloat(r.ftag);
+        } else {
+            gf += parseFloat(r.ftag); ga += parseFloat(r.fthg);
         }
     });
-    return stats;
+
+    return { avgF: gf / history.length, avgS: ga / history.length, count: history.length };
 }
 
 async function elabora() {
@@ -74,19 +74,69 @@ async function elabora() {
 
     const resData = parseCSV(await resFile.text());
     const quoData = parseCSV(await quoFile.text());
-    const baselines = getBaseline(resData);
 
-    let html = `<table><thead><tr><th>Data</th><th>Match</th><th>Lega</th><th>Base</th><th>P(Over)</th><th>Stato / Esito</th></tr></thead><tbody>`;
+    let html = `<table><thead><tr><th>Match</th><th>Potenziale Gol (Last 10)</th><th>P(Over)</th><th>Esito / Suggerimento</th></tr></thead><tbody>`;
     
     let totalBets = 0, hits = 0, profit = 0;
-    const QUOTA_MEDIA = 1.70; // Modificata come richiesto
+    const QUOTA_MEDIA = 1.70;
 
     quoData.forEach(q => {
-        const home = q.home_team;
-        const lg = teamLeagueMap[home] || "N/A";
-        const base = baselines[lg] ? (baselines[lg].o / baselines[lg].t) : 0.50;
+        const hStats = getRecentStats(q.home_team, resData, q.date);
+        const aStats = getRecentStats(q.away_team, resData, q.date);
+
+        if(!hStats || !aStats) return;
+
+        // Calcolo della media attesa (Poisson-like)
+        // (Attacco Casa + Difesa Ospite) + (Attacco Ospite + Difesa Casa)
+        const expHome = (hStats.avgF + aStats.avgS) / 2;
+        const expAway = (aStats.avgF + hStats.avgS) / 2;
+        const muMatch = expHome + expAway;
+
+        // Probabilità basata su muMatch (2.5 è il centro, ogni 0.1 gol aggiunge ~4%)
+        let prob = 0.50 + (muMatch - 2.5) * 0.18;
         
+        // Correzione Quota Pareggio
         const qX = parseFloat(q.b365_x);
-        let pOver = base;
-        if(qX > 3.60) pOver += 0.05;
-        if(qX > 4.50) pOver += 0.10;
+        if(qX > 3.70) prob += 0.05;
+        if(qX < 3.10) prob -= 0.05;
+
+        prob = Math.max(0.05, Math.min(0.95, prob));
+
+        const matchReale = resData.find(r => r.home_team === q.home_team && r.date === q.date);
+        let esito = "";
+
+        if(matchReale) {
+            const isOver = (parseFloat(matchReale.fthg) + parseFloat(matchReale.ftag)) > 2.5;
+            if(prob > 0.63) {
+                totalBets++;
+                if(isOver) { hits++; profit += (QUOTA_MEDIA - 1); esito = "<b class='hit'>HIT (O)</b>"; }
+                else { profit -= 1; esito = "<b class='miss'>MISS (O)</b>"; }
+            }
+        } else if(prob > 0.63) {
+            esito = "<span class='bet-now'>🚀 BET OVER</span>";
+        }
+
+        if(esito !== "" || prob > 0.55) { // Mostra solo i match interessanti
+            html += `<tr>
+                <td><b>${q.home_team} - ${q.away_team}</b><br><small>${q.date}</small></td>
+                <td class="mu-box">
+                    Exp Gol: ${muMatch.toFixed(2)}<br>
+                    <span class="tag-trend">Casa F:${hStats.avgF.toFixed(1)} S:${hStats.avgS.toFixed(1)}</span>
+                    <span class="tag-trend">Osp F:${aStats.avgF.toFixed(1)} S:${aStats.avgS.toFixed(1)}</span>
+                </td>
+                <td><b>${(prob*100).toFixed(1)}%</b></td>
+                <td>${esito}</td>
+            </tr>`;
+        }
+    });
+
+    document.getElementById('dashboard').innerHTML = `
+        <div class="stat-box">Win Rate (Last 10 Mode): <b>${totalBets > 0 ? ((hits/totalBets)*100).toFixed(1) : 0}%</b></div>
+        <div class="stat-box">Profitto Netto: <b style="color:${profit>=0?'green':'red'}">${profit.toFixed(2)} u.</b></div>
+        <div class="stat-box">Sample: <b>${totalBets} match suggeriti</b></div>
+    `;
+    document.getElementById('output').innerHTML = html + "</tbody></table>";
+}
+</script>
+</body>
+</html>
