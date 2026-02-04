@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Syncras – U/O 2.5 • BaseLine per LEGA • Filtri (GA/X/Spread) • TOP + Backtest</title>
+  <title>Syncras – U/O 2.5 • Baseline per Lega • TOP + Backtest</title>
   <style>
     :root{--violet:#6C5CE7;--bg:#f7f7fb;--card:#fff;--border:#e7e7f5;--text:#111827;--muted:#6b7280}
     body{font-family:system-ui,Arial;margin:18px;background:var(--bg);color:var(--text)}
@@ -46,11 +46,11 @@
   </style>
 </head>
 <body>
-  <h2>Syncras – Under/Over 2.5 (densità) — <u>BASELINE per LEGA + Filtri configurabili</u></h2>
+  <h2>Syncras – Under/Over 2.5 (densità) — <u>Baseline per Lega + Filtri + TOP + Backtest</u></h2>
   <div class="muted">
-    ✅ Ricalcolo automatico: <b>baseline Over% per lega</b>, <b>X medio</b>, <b>spread medio</b>, <b>mu medio</b>.<br>
-    ✅ Le pre-quote senza lega vengono <b>assegnate automaticamente</b> (inferenza da team→lega usando i risultati).<br>
-    ✅ Se il match è presente nel CSV risultati: mostra <b>risultato</b> e <b>HIT/MISS</b>. Se futuro: <b>?</b>.<br>
+    ✅ Baseline Over% <b>per lega</b> (da risultati).<br>
+    ✅ TOP per ciascuna delle 7 leghe: <b>TOP OVER</b> e <b>TOP UNDER</b> (da POver/PUnder).<br>
+    ✅ Se risultato presente: mostra <b>HIT/MISS</b>. Se no: <b>?</b>.<br>
     <small>Studio informativo. Nessun invito a scommettere.</small>
   </div>
 
@@ -59,13 +59,13 @@
       <div>
         <label><b>CSV RISULTATI (giocato)</b></label><br>
         <input id="csvResultsFile" type="file" accept=".csv,text/csv" style="width:100%">
-        <small class="muted">Tipico: <span class="mono">league/Div, date/Date, home_team/HomeTeam, away_team/AwayTeam, fthg/FTHG, ftag/FTAG</span></small>
+        <small class="muted">es.: <span class="mono">date,league,home_team,away_team,FTHG,FTAG</span></small>
       </div>
 
       <div>
         <label><b>CSV QUOTE (pre-match 1/X/2)</b></label><br>
         <input id="csvQuotesFile" type="file" accept=".csv,text/csv" style="width:100%">
-        <small class="muted">Accetta anche senza lega: <span class="mono">date, home_team, away_team, b365_1, b365_x, b365_2</span></small>
+        <small class="muted">es.: <span class="mono">date,league,home_team,away_team,b365_1,b365_x,b365_2,spread12</span></small>
       </div>
 
       <div>
@@ -84,8 +84,7 @@
     <div class="row">
       <label>N recenti (GA)</label><input id="N" type="number" value="12" style="width:90px">
       <label>Top per lega</label><input id="topK" type="number" value="5" style="width:90px">
-      <span class="pill">spread = <span class="mono">|quota1 - quota2|</span></span>
-      <span class="pill">bonus open-game max <b>+6</b> (solo score)</span>
+      <span class="pill">spread = <span class="mono">|quota1 - quota2|</span> (o colonna spread12)</span>
     </div>
 
     <div class="row" style="margin-top:10px">
@@ -98,16 +97,16 @@
     </div>
 
     <small class="muted" style="display:block;margin-top:8px">
-      P(Over) parte dalla <b>baseline della lega</b>. I filtri per lega (mu/X/spread) sono opzionali e servono per cercare un cluster preciso.
+      P(Over) = baseline lega + aggiustamenti da bin (μ / X / spread) con pesi.
     </small>
   </div>
 
   <details id="cfgDetails">
-    <summary>⚙️ Filtri per Lega (mu / X / spread) + statistiche calcolate</summary>
+    <summary>⚙️ Filtri per Lega (μ / X / spread) + statistiche calcolate</summary>
     <div class="cfgWrap">
       <div class="cfgHint">
-        • Ogni riga è una lega. Vedi: <b>baseline Over%</b>, <b>X medio</b>, <b>spread medio</b>, <b>mu medio</b>.<br>
-        • Filtri: “Custom” → imposti <b>valore ± tolleranza</b>. “Mean” → usa la media della lega ± tolleranza.
+        • “Mean” usa la media lega ± tolleranza. “Custom” imposti tu valore ± tolleranza. “Off” non filtra.<br>
+        • Se μ non è calcolabile per un match, uso fallback su μ medio lega (così non rimani a 0 match).
       </div>
       <div id="leagueConfig"></div>
     </div>
@@ -152,106 +151,57 @@ function pick(o, keys){
 function parseDateTs(s){
   const t=String(s??"").trim(); if(!t) return NaN;
   if(/^\d{4}-\d{2}-\d{2}$/.test(t)) return Date.parse(t+"T00:00:00Z");
+  // DD/MM/YYYY
   let m=t.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
   if(m){
     const dd=+m[1], mm=+m[2], yyyy=+m[3];
     const iso=`${String(yyyy).padStart(4,'0')}-${String(mm).padStart(2,'0')}-${String(dd).padStart(2,'0')}`;
     return Date.parse(iso+"T00:00:00Z");
   }
-  m=t.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2})$/);
-  if(m){
-    const dd=+m[1], mm=+m[2], yy=+m[3];
-    const yyyy=(yy>=70)?(1900+yy):(2000+yy);
-    const iso=`${yyyy}-${String(mm).padStart(2,'0')}-${String(dd).padStart(2,'0')}`;
-    return Date.parse(iso+"T00:00:00Z");
-  }
   const x=Date.parse(t); return Number.isFinite(x)?x:NaN;
 }
 function normDiv(o){
-  return safeDiv(pick(o,["Div","div","league","League","campionato"]));
+  return safeDiv(pick(o,["league","div","Div","League","campionato"]));
 }
 function normResultRow(o){
   const div = normDiv(o);
-  const dateStr=String(pick(o,["date","match_date","data","giorno","Date","DATA"])||"").trim();
-  const home_team=normTeam(pick(o,["home_team","hometeam","home","HomeTeam","CASA"])||"");
-  const away_team=normTeam(pick(o,["away_team","awayteam","away","AwayTeam","TRASFERTA"])||"");
-  const FTHG=pick(o,["FTHG","fthg","fthg","hg","home_goals","HomeGoals"]) ?? "";
-  const FTAG=pick(o,["FTAG","ftag","ftag","ag","away_goals","AwayGoals"]) ?? "";
+  const dateStr=String(pick(o,["date","Date","data","DATA"])||"").trim();
+  const home_team=normTeam(pick(o,["home_team","HomeTeam","hometeam","home"])||"");
+  const away_team=normTeam(pick(o,["away_team","AwayTeam","awayteam","away"])||"");
+  const FTHG=pick(o,["FTHG","fthg","hg","home_goals"]) ?? "";
+  const FTAG=pick(o,["FTAG","ftag","ag","away_goals"]) ?? "";
   const dateTs=parseDateTs(dateStr);
   return {div, dateStr,dateTs,home_team,away_team,FTHG:String(FTHG).trim(),FTAG:String(FTAG).trim()};
 }
 function normQuoteRow(o){
-  // lega può mancare: la inferiremo dopo
-  const div = normDiv(o); // può diventare "NA"
-  const dateStr=String(pick(o,["date","match_date","data","giorno","Date","DATA"])||"").trim();
-  const home_team=normTeam(pick(o,["home_team","hometeam","home","HomeTeam","CASA"])||"");
-  const away_team=normTeam(pick(o,["away_team","awayteam","away","AwayTeam","TRASFERTA"])||"");
-  const b365_1=pick(o,["b365_1","b365_h","B365H","odd1","odds_1","1","home"]) ?? "";
-  const b365_x=pick(o,["b365_x","B365D","oddx","odds_x","X","draw"]) ?? "";
-  const b365_2=pick(o,["b365_2","b365_a","B365A","odd2","odds_2","2","away"]) ?? "";
-
-  // ✅ OPTIONAL: quote Over/Under 2.5 se presenti nel CSV
-  const o25 = pick(o,[
-    "B365O2.5","B365O25","B365>2.5","B365 Over 2.5","B365_O25","b365_o25","odds_over25","over25","O25","O2.5"
-  ]) ?? "";
-  const u25 = pick(o,[
-    "B365U2.5","B365U25","B365<2.5","B365 Under 2.5","B365_U25","b365_u25","odds_under25","under25","U25","U2.5"
-  ]) ?? "";
-
+  const div = normDiv(o); // nel tuo CSV c'è "league"
+  const dateStr=String(pick(o,["date","Date","data","DATA"])||"").trim();
+  const home_team=normTeam(pick(o,["home_team","HomeTeam","hometeam","home"])||"");
+  const away_team=normTeam(pick(o,["away_team","AwayTeam","awayteam","away"])||"");
+  const b365_1=pick(o,["b365_1","B365H","b365_h","odd1"]) ?? "";
+  const b365_x=pick(o,["b365_x","B365D","b365_d","oddx","X"]) ?? "";
+  const b365_2=pick(o,["b365_2","B365A","b365_a","odd2"]) ?? "";
+  const spread12=pick(o,["spread12","spread","Spread12"]) ?? "";
   const dateTs=parseDateTs(dateStr);
   return {
     div, dateStr,dateTs,home_team,away_team,
     b365_1:String(b365_1).trim(), b365_x:String(b365_x).trim(), b365_2:String(b365_2).trim(),
-    o25:String(o25).trim(), u25:String(u25).trim()
+    spread12:String(spread12).trim()
   };
 }
-
-// ✅ QUI: subito dopo normQuoteRow, prima delle altre funzioni che la usano
 function keyOf(div, dateTs, home, away){
-  return `${div}|${dateTs}|${home}|${away}`;
+  return `${safeDiv(div)}|${dateTs}|${normTeam(home)}|${normTeam(away)}`;
 }
-/* ========= TEAM -> LEAGUE inference ========= */
-function buildTeamLeagueMap(results){
-  // team -> {league -> count}
-  const m = new Map();
-  const add = (team, div)=>{
-    if(!team || team==="") return;
-    const t = normTeam(team);
-    const d = safeDiv(div);
-    if(d==="NA") return;
-    if(!m.has(t)) m.set(t, new Map());
-    const mm = m.get(t);
-    mm.set(d, (mm.get(d)||0) + 1);
-  };
-  for(const r of results){
-    add(r.home_team, r.div);
-    add(r.away_team, r.div);
-  }
-  // team -> bestLeague
-  const best = new Map();
-  for(const [team, mm] of m){
-    let bestDiv="NA", bestC=0;
-    for(const [d,c] of mm){
-      if(c>bestC){ bestC=c; bestDiv=d; }
-    }
-    best.set(team, bestDiv);
-  }
-  return best;
-}
-function inferLeagueForMatch(team2league, home, away){
-  const h = team2league.get(normTeam(home)) || "NA";
-  const a = team2league.get(normTeam(away)) || "NA";
-  if(h!=="NA" && a!=="NA"){
-    if(h===a) return h;
-    // conflitto: preferisco "NA" (così non inquini)
-    return "NA";
-  }
-  if(h!=="NA") return h;
-  if(a!=="NA") return a;
-  return "NA";
+async function readFileText(file){
+  return new Promise((res,rej)=>{
+    const r=new FileReader();
+    r.onload=()=>res(String(r.result||""));
+    r.onerror=rej;
+    r.readAsText(file);
+  });
 }
 
-/* ========= Reliability + Open Game Bonus (solo score) ========= */
+/* ========= Reliability ========= */
 function reliabilityFactor(hN, aN){
   const minN = Math.min(hN||0, aN||0);
   if(minN >= 8) return 1.00;
@@ -259,22 +209,15 @@ function reliabilityFactor(hN, aN){
   if(minN >= 3) return 0.80;
   return 0.70;
 }
-function relBadge(hN, aN){
+function relBadge(hN, aN, usedFallbackMu){
+  if(usedFallbackMu) return {txt:"FALLBACK", cls:"bMid"};
   const minN = Math.min(hN||0, aN||0);
   if(minN >= 8) return {txt:"HIGH", cls:"bHigh"};
   if(minN >= 5) return {txt:"MID", cls:"bMid"};
   return {txt:"LOW", cls:"bLow"};
 }
-function openGameBonus(hGF, aGF, hGA, aGA){
-  if(!Number.isFinite(hGF) || !Number.isFinite(aGF) || !Number.isFinite(hGA) || !Number.isFinite(aGA)) return 0;
-  const bothScore = (hGF>=1.0 && aGF>=1.0);
-  const bothConcede = (hGA>=1.0 && aGA>=1.0);
-  if(bothScore && bothConcede) return 6;
-  if(bothScore) return 3;
-  return 0;
-}
 
-/* ========= GA (mu) ========= */
+/* ========= MU estimate ========= */
 function lastNMatches(results, team, N, beforeTs, div){
   return results
     .filter(r=>r.div===div && Number.isFinite(r.dateTs) && r.dateTs < beforeTs && (r.home_team===team || r.away_team===team))
@@ -297,15 +240,15 @@ function estimateMu(results, home, away, N, dateTs, div){
   const h=teamGFGA(results,home,N,dateTs,div);
   const a=teamGFGA(results,away,N,dateTs,div);
   if(!Number.isFinite(h.gf) || !Number.isFinite(h.ga) || !Number.isFinite(a.gf) || !Number.isFinite(a.ga)){
-    return {mu:NaN, hN:h.n, aN:a.n, hGF:h.gf, hGA:h.ga, aGF:a.gf, aGA:a.ga};
+    return {mu:NaN, hN:h.n, aN:a.n};
   }
   const muHome=(h.gf + a.ga)/2;
   const muAway=(a.gf + h.ga)/2;
   let mu = clamp(muHome + muAway, 1.4, 4.2);
-  return {mu, hN:h.n, aN:a.n, hGF:h.gf, hGA:h.ga, aGF:a.gf, aGA:a.ga};
+  return {mu, hN:h.n, aN:a.n};
 }
 
-/* ========= SCORE (supporto) ========= */
+/* ========= SCORE helper ========= */
 function xScore(oddX){
   if(!Number.isFinite(oddX)) return NaN;
   return clamp((oddX - 3.20) / (5.50 - 3.20), 0, 1);
@@ -362,7 +305,7 @@ function binLookup(value, bins, base){
   return {pOver:base, label:"(bin default)"};
 }
 
-/* ========= BASELINE per LEGA ========= */
+/* ========= BASELINE per LEGA + STATS ========= */
 function computeLeagueBaselines(results){
   const map = new Map();
   let gN=0, gOver=0;
@@ -383,8 +326,6 @@ function computeLeagueBaselines(results){
   }
   return {baseByLeague, globalBase};
 }
-
-/* ========= STATS per LEGA ========= */
 function avg(arr){
   const xs = arr.filter(Number.isFinite);
   if(!xs.length) return NaN;
@@ -395,22 +336,23 @@ function computeLeagueStats(results, quotes, N){
 
   const xBy = new Map();
   const spBy = new Map();
+  const muBy = new Map();
+
   for(const q of quotes){
     const div=safeDiv(q.div);
     if(div==="NA") continue;
+
     const oddX=toNum(q.b365_x);
     const odd1=toNum(q.b365_1), odd2=toNum(q.b365_2);
-    const spread=(Number.isFinite(odd1)&&Number.isFinite(odd2))?Math.abs(odd1-odd2):NaN;
+    const spreadFromCol = toNum(q.spread12);
+    const spread=(Number.isFinite(spreadFromCol)) ? spreadFromCol :
+                 ((Number.isFinite(odd1)&&Number.isFinite(odd2))?Math.abs(odd1-odd2):NaN);
+
     if(!xBy.has(div)) xBy.set(div, []);
     if(!spBy.has(div)) spBy.set(div, []);
     if(Number.isFinite(oddX)) xBy.get(div).push(oddX);
     if(Number.isFinite(spread)) spBy.get(div).push(spread);
-  }
 
-  const muBy = new Map();
-  for(const q of quotes){
-    const div=safeDiv(q.div);
-    if(div==="NA") continue;
     const est = estimateMu(results, q.home_team, q.away_team, N, q.dateTs, div);
     if(Number.isFinite(est.mu)){
       if(!muBy.has(div)) muBy.set(div, []);
@@ -444,7 +386,6 @@ function predictOverProb(div, mu, oddX, spread, wGA, wSP, wX, baseByLeague, glob
   const ga = binLookup(mu, BINS_GA, base);
   const xb = binLookup(oddX, BINS_X, base);
   const sp = binLookup(spread, BINS_SPREAD, base);
-
   const p = base + wGA*(ga.pOver-base) + wX*(xb.pOver-base) + wSP*(sp.pOver-base);
   return { base, pOver: clamp(p, 0.05, 0.95), parts:{ga,xb,sp} };
 }
@@ -457,12 +398,12 @@ function tagFromProb(pOver, thrOverPct=60, thrUnderPct=60){
 }
 
 /* ========= CONFIG per LEGA ========= */
-const CFG_KEY = "syncras_uo_league_cfg_v2";
+const CFG_KEY = "syncras_uo_league_cfg_v3";
 function defaultLeagueCfg(){
   return {
-    muMode:"off",   muVal:"",   muTol:0.25,
-    xMode:"off",    xVal:"",    xTol:0.25,
-    spMode:"off",   spVal:"",   spTol:0.30
+    muMode:"off", muVal:"", muTol:0.25,
+    xMode:"off",  xVal:"",  xTol:0.25,
+    spMode:"off", spVal:"", spTol:0.30
   };
 }
 function loadCfgStore(){
@@ -521,7 +462,6 @@ function renderLeagueConfig(leagueStats){
     const st = leagueStats.get(div);
     const cfg = getLeagueCfg(div);
     const baseTxt = Number.isFinite(st.baseOver) ? (st.baseOver*100).toFixed(1)+"%" : "—";
-
     const id = (suffix)=> `cfg_${div}_${suffix}`;
     return `
       <tr>
@@ -555,13 +495,7 @@ function renderLeagueConfig(leagueStats){
     <table class="cfgTable">
       <thead>
         <tr>
-          <th>Lega</th>
-          <th>μ medio</th>
-          <th>Filtro μ</th>
-          <th>X medio</th>
-          <th>Filtro X</th>
-          <th>Spread medio</th>
-          <th>Filtro Spread</th>
+          <th>Lega</th><th>μ medio</th><th>Filtro μ</th><th>X medio</th><th>Filtro X</th><th>Spread medio</th><th>Filtro Spread</th>
         </tr>
       </thead>
       <tbody>${rows || `<tr><td colspan="7" class="muted">Nessuna lega trovata</td></tr>`}</tbody>
@@ -601,14 +535,14 @@ function renderLeagueConfig(leagueStats){
   }
 }
 
-/* ========= RENDER output ========= */
+/* ========= RENDER ========= */
 function renderPickTable(title, arr, thrOverPct, thrUnderPct){
   const rows = arr.map(x=>{
     const t = tagFromProb(x.pOver, thrOverPct, thrUnderPct);
     const pPick = (x.pick==="OVER") ? x.pOver : (1-x.pOver);
     const resTxt = x.played ? `${x.FTHG}-${x.FTAG}` : "?";
     const outcomeTxt = x.played ? (x.isHit ? "HIT" : "MISS") : "—";
-    const rb = relBadge(x.hN, x.aN);
+    const rb = relBadge(x.hN, x.aN, x.usedFallbackMu);
 
     return `
       <tr>
@@ -658,12 +592,7 @@ function renderPickTable(title, arr, thrOverPct, thrUnderPct){
       <table>
         <thead>
           <tr>
-            <th>Match</th>
-            <th>Quote 1 / X / 2</th>
-            <th>Base+GA</th>
-            <th>Score</th>
-            <th>Probabilità</th>
-            <th>Risultato</th>
+            <th>Match</th><th>Quote 1 / X / 2</th><th>Base+GA</th><th>Score</th><th>Probabilità</th><th>Risultato</th>
           </tr>
         </thead>
         <tbody>${rows}</tbody>
@@ -690,13 +619,13 @@ function renderLeagueSummary(div, arr, leagueStats){
         <span class="pill"><b>Match (post-filtri):</b> ${arr.length}</span>
         <span class="pill"><b>Giocati:</b> ${played}</span>
         <span class="pill"><b>Futuri:</b> ${future}</span>
-        <span class="pill"><b>Hit-rate:</b> ${Number.isFinite(hr)?(hr*100).toFixed(1)+"%":"—"}</span>
+        <span class="pill"><b>Hit-rate (solo giocati):</b> ${Number.isFinite(hr)?(hr*100).toFixed(1)+"%":"—"}</span>
       </div>
     </div>
   `;
 }
 
-/* ========= LOAD + PREP ========= */
+/* ========= LOAD DATA ========= */
 async function loadDataOrFail(){
   const fRes=document.getElementById("csvResultsFile").files?.[0];
   const fQuo=document.getElementById("csvQuotesFile").files?.[0];
@@ -710,18 +639,8 @@ async function loadDataOrFail(){
   const results=parseCSV(resText).map(normResultRow)
     .filter(r=>r.dateStr && r.home_team && r.away_team && Number.isFinite(r.dateTs));
 
-  let quotes=parseCSV(quoText).map(normQuoteRow)
+  const quotes=parseCSV(quoText).map(normQuoteRow)
     .filter(q=>q.dateStr && q.home_team && q.away_team && Number.isFinite(q.dateTs));
-
-  // inferenza lega per quote
-  const team2league = buildTeamLeagueMap(results);
-  let inferred=0, stillNA=0;
-  quotes = quotes.map(q=>{
-    if(q.div && q.div!=="NA") return q;
-    const inf = inferLeagueForMatch(team2league, q.home_team, q.away_team);
-    if(inf!=="NA") inferred++; else stillNA++;
-    return {...q, div: inf};
-  });
 
   const resMap=new Map();
   for(const r of results){
@@ -729,10 +648,10 @@ async function loadDataOrFail(){
   }
 
   const {leagueStats, baseByLeague, globalBase} = computeLeagueStats(results, quotes, N);
-
-  return {results, quotes, resMap, leagueStats, baseByLeague, globalBase, N, inferred, stillNA};
+  return {results, quotes, resMap, leagueStats, baseByLeague, globalBase, N};
 }
 
+/* ========= PREP ========= */
 async function prepStats(){
   const status=document.getElementById("status");
   const output=document.getElementById("output");
@@ -748,18 +667,14 @@ async function prepStats(){
       <div class="card">
         <b>Stats calcolate ✅</b>
         <div class="row" style="margin-top:10px">
-          <span class="pill"><b>Leghe:</b> ${leagues.length}</span>
-          <span class="pill"><b>Baseline globale fallback:</b> ${(data.globalBase*100).toFixed(1)}%</span>
-          <span class="pill"><b>Quote con lega inferita:</b> ${data.inferred}</span>
-          <span class="pill"><b>Quote ancora NA:</b> ${data.stillNA}</span>
+          <span class="pill"><b>Leghe trovate:</b> ${leagues.length}</span>
+          <span class="pill"><b>Baseline globale:</b> ${(data.globalBase*100).toFixed(1)}%</span>
         </div>
-        <small class="muted" style="display:block;margin-top:10px">
-          Se “Quote ancora NA” è alto, i nomi team delle quote non matchano i nomi team dei risultati (serve uniformare).
-        </small>
       </div>
     `;
     status.textContent="Stats pronte ✅";
   }catch(e){
+    console.error(e);
     status.textContent="Errore: " + (e?.message || e);
   }
 }
@@ -779,38 +694,51 @@ async function attenziona(){
     let wSP=+document.getElementById("wSP").value||0.35;
     let wX=+document.getElementById("wX").value||0.25;
 
-    const {results, quotes, resMap, leagueStats, baseByLeague, globalBase, N, inferred, stillNA} = await loadDataOrFail();
-
+    const {results, quotes, resMap, leagueStats, baseByLeague, globalBase, N} = await loadDataOrFail();
     if(!document.getElementById("leagueConfig").innerHTML.trim()){
       renderLeagueConfig(leagueStats);
     }
 
     const all=[];
-    let matched=0, future=0, filteredOut=0, skipped=0;
+    let matched=0, future=0, filteredOut=0, skipped=0, usedFallback=0;
 
     for(const q of quotes){
       const div = safeDiv(q.div);
       if(div==="NA"){ skipped++; continue; }
 
       const odd1=toNum(q.b365_1), odd2=toNum(q.b365_2), oddX=toNum(q.b365_x);
-      const spread=(Number.isFinite(odd1)&&Number.isFinite(odd2))?Math.abs(odd1-odd2):NaN;
+      const spreadFromCol = toNum(q.spread12);
+      const spread=(Number.isFinite(spreadFromCol)) ? spreadFromCol :
+                   ((Number.isFinite(odd1)&&Number.isFinite(odd2))?Math.abs(odd1-odd2):NaN);
 
+      if(!Number.isFinite(oddX) || !Number.isFinite(spread)) { skipped++; continue; }
+
+      // mu (o fallback su meanMu lega)
       const est = estimateMu(results, q.home_team, q.away_team, N, q.dateTs, div);
-      if(!Number.isFinite(est.mu) || !Number.isFinite(oddX) || !Number.isFinite(spread)) { skipped++; continue; }
+      let mu = est.mu;
+      let usedFallbackMu = false;
+      if(!Number.isFinite(mu)){
+        const st = leagueStats.get(div);
+        if(st && Number.isFinite(st.meanMu)){
+          mu = st.meanMu;
+          usedFallbackMu = true;
+          usedFallback++;
+        } else {
+          skipped++;
+          continue;
+        }
+      }
 
-      if(!passesLeagueFilters(div, leagueStats, est.mu, oddX, spread)){ filteredOut++; continue; }
+      if(!passesLeagueFilters(div, leagueStats, mu, oddX, spread)){ filteredOut++; continue; }
 
-      const comp=computeScore(oddX, spread, est.mu, wGA, wSP, wX);
-      if(!Number.isFinite(comp.score)) { skipped++; continue; }
-
+      const comp=computeScore(oddX, spread, mu, wGA, wSP, wX);
+      const scoreRaw = Number.isFinite(comp.score) ? comp.score : 50;
       const rel = reliabilityFactor(est.hN, est.aN);
-      const bonusOpen = openGameBonus(est.hGF, est.aGF, est.hGA, est.aGA);
-      const scoreFinal = clamp(comp.score * rel + bonusOpen, 0, 100);
+      const scoreFinal = clamp(scoreRaw * rel, 0, 100);
 
-      const pr = predictOverProb(div, est.mu, oddX, spread, wGA, wSP, wX, baseByLeague, globalBase);
+      const pr = predictOverProb(div, mu, oddX, spread, wGA, wSP, wX, baseByLeague, globalBase);
       const pOver = pr.pOver;
       const pUnder = 1 - pOver;
-
       const pick = (pOver >= pUnder) ? "OVER" : "UNDER";
 
       const r=resMap.get(keyOf(div,q.dateTs,q.home_team,q.away_team));
@@ -832,10 +760,13 @@ async function attenziona(){
         dateStr:q.dateStr, home:q.home_team, away:q.away_team,
         odd1, oddX, odd2, spread,
         base: pr.base,
-        mu: est.mu,
+        mu,
         hN: est.hN, aN: est.aN,
+        usedFallbackMu,
         score: scoreFinal,
-        xs:comp.xs, ss:comp.ss, gs:comp.gs,
+        xs: (Number.isFinite(comp.xs)?comp.xs:0.5),
+        ss: (Number.isFinite(comp.ss)?comp.ss:0.5),
+        gs: (Number.isFinite(comp.gs)?comp.gs:0.5),
         pOver,
         gaLabel: pr.parts.ga.label,
         xLabel: pr.parts.xb.label,
@@ -845,56 +776,45 @@ async function attenziona(){
       });
     }
 
-    if(!all.length){
-      output.innerHTML = `
-        <div class="card">
-          <b>Nessun match valutabile</b>
-          <div class="row" style="margin-top:10px">
-            <span class="pill"><b>Quote totali:</b> ${quotes.length}</span>
-            <span class="pill"><b>Lega inferita:</b> ${inferred}</span>
-            <span class="pill"><b>Quote NA:</b> ${stillNA}</span>
-            <span class="pill"><b>Skippate:</b> ${skipped}</span>
-            <span class="pill"><b>Filtrate via:</b> ${filteredOut}</span>
-          </div>
-          <small class="muted" style="display:block;margin-top:10px">
-            Se “Quote NA” è alto → nomi squadre diversi tra CSV quote e risultati (serve uniformare).  
-            Se “Skippate” è alto → mu non calcolabile (pochi match storici o date fuori range).
-          </small>
-        </div>
-      `;
-      status.textContent="Finito (0 match) ⚠️";
-      return;
-    }
-
+    // ordine fisso 7 leghe + eventuali altre
+    const wanted = ["I1","D1","E0","SP1","F1","N1","P1"];
     const byLeague = new Map();
     for(const m of all){
       if(!byLeague.has(m.div)) byLeague.set(m.div, []);
       byLeague.get(m.div).push(m);
     }
-
-    const order = ["I1","D1","E0","SP1","F1","N1","P1"];
-    const others = Array.from(byLeague.keys()).filter(x=>!order.includes(x)).sort();
-    const finalOrder = [...order, ...others];
+    const others = Array.from(byLeague.keys()).filter(x=>!wanted.includes(x)).sort();
+    const finalOrder = [...wanted, ...others];
 
     let html = `
       <div class="card">
         <b>Riepilogo</b>
         <div class="row" style="margin-top:10px">
           <span class="pill"><b>N recenti:</b> ${N}</span>
-          <span class="pill"><b>Match post-filtri:</b> ${all.length}</span>
+          <span class="pill"><b>Match valutati:</b> ${all.length}</span>
           <span class="pill"><b>Filtrati via:</b> ${filteredOut}</span>
           <span class="pill"><b>Skippati:</b> ${skipped}</span>
+          <span class="pill"><b>μ fallback usati:</b> ${usedFallback}</span>
           <span class="pill"><b>Giocati:</b> ${matched}</span>
           <span class="pill"><b>Futuri:</b> ${future}</span>
-          <span class="pill"><b>Lega inferita:</b> ${inferred}</span>
-          <span class="pill"><b>Quote NA:</b> ${stillNA}</span>
         </div>
       </div>
     `;
 
     for(const div of finalOrder){
-      const arr = byLeague.get(div);
-      if(!arr || !arr.length) continue;
+      const arr = byLeague.get(div) || [];
+      // vuoi comunque vedere tutte e 7 leghe anche se vuote:
+      if(wanted.includes(div) && !arr.length){
+        html += `
+          <div class="card">
+            <b>LEGA: ${div}</b><br>
+            <small class="muted">Nessun match disponibile (post-filtri) in questa lega.</small>
+          </div>
+        `;
+        continue;
+      }
+      if(!arr.length) continue;
+
       const overList  = arr.slice().sort((a,b)=> (b.pOver - a.pOver)).slice(0, topK);
       const underList = arr.slice().sort((a,b)=> ((1-b.pOver) - (1-a.pOver))).slice(0, topK);
 
@@ -906,6 +826,7 @@ async function attenziona(){
     output.innerHTML = html;
     status.textContent="Completato ✅";
   }catch(e){
+    console.error(e);
     status.textContent="Errore: " + (e?.message || e);
   }
 }
@@ -924,51 +845,28 @@ async function backtest(){
     let wSP=+document.getElementById("wSP").value||0.35;
     let wX=+document.getElementById("wX").value||0.25;
 
-    const {results, quotes, resMap, leagueStats, baseByLeague, globalBase, N, inferred, stillNA} = await loadDataOrFail();
-
+    const {results, quotes, resMap, leagueStats, baseByLeague, globalBase, N} = await loadDataOrFail();
     if(!document.getElementById("leagueConfig").innerHTML.trim()){
       renderLeagueConfig(leagueStats);
     }
 
     let matched=0, notMatched=0, skipped=0, filteredOut=0;
-
-    // aggregati globali
     let taken=0, hit=0, miss=0;
 
-    // yield (se ho odds O25/U25)
-    let yTaken=0, yProfit=0;
-
-    // per tag (friendly) e per lega
-    const byTag = { over:{n:0, hit:0, yN:0, yP:0}, mid:{n:0, hit:0, yN:0, yP:0}, under:{n:0, hit:0, yN:0, yP:0} };
-    const byLeague = new Map(); // div -> stats
-
+    const byTag = { over:{n:0, hit:0}, mid:{n:0, hit:0}, under:{n:0, hit:0} };
+    const byLeague = new Map(); // div -> {n,hit,overN,overHit,underN,underHit,spHighN,spHighHit}
     function ensureLeague(div){
-      const d = String(div||"NA").toUpperCase();
+      const d = safeDiv(div);
       if(!byLeague.has(d)){
-        byLeague.set(d, {
-          n:0, hit:0,
-          overN:0, overHit:0,
-          underN:0, underHit:0,
-          yN:0, yP:0,
-          // diagnostica "bias favorita": performance per spread alto
-          spHighN:0, spHighHit:0, // spread >= soglia
-          spHighThr: 2.0,
-        });
+        byLeague.set(d, {n:0, hit:0, overN:0, overHit:0, underN:0, underHit:0, spHighN:0, spHighHit:0});
       }
       return byLeague.get(d);
     }
 
-    // helper yield su unit stake
-    function profitUnit(odd, win){
-      if(!Number.isFinite(odd)) return 0;
-      return win ? (odd - 1) : -1;
-    }
-
     for(const q of quotes){
-      const div = String(q.div||"NA").toUpperCase();
+      const div = safeDiv(q.div);
       if(div==="NA"){ skipped++; continue; }
 
-      // match risultato
       const r = resMap.get(keyOf(div,q.dateTs,q.home_team,q.away_team));
       if(!r){ notMatched++; continue; }
 
@@ -977,89 +875,48 @@ async function backtest(){
       const isOver = (hg+ag)>=3;
 
       const odd1=toNum(q.b365_1), odd2=toNum(q.b365_2), oddX=toNum(q.b365_x);
-      const spread=(Number.isFinite(odd1)&&Number.isFinite(odd2))?Math.abs(odd1-odd2):NaN;
+      const spreadFromCol = toNum(q.spread12);
+      const spread=(Number.isFinite(spreadFromCol)) ? spreadFromCol :
+                   ((Number.isFinite(odd1)&&Number.isFinite(odd2))?Math.abs(odd1-odd2):NaN);
+
+      if(!Number.isFinite(oddX) || !Number.isFinite(spread)){ skipped++; continue; }
 
       const est = estimateMu(results, q.home_team, q.away_team, N, q.dateTs, div);
-      if(!Number.isFinite(est.mu) || !Number.isFinite(oddX) || !Number.isFinite(spread)){ skipped++; continue; }
+      let mu = est.mu;
+      if(!Number.isFinite(mu)){
+        const st = leagueStats.get(div);
+        if(st && Number.isFinite(st.meanMu)) mu = st.meanMu;
+        else { skipped++; continue; }
+      }
 
-      // filtri per lega (se attivi)
-      const filtersReady =
-  document.getElementById("leagueConfig").innerHTML.trim().length > 0;
+      if(!passesLeagueFilters(div, leagueStats, mu, oddX, spread)){ filteredOut++; continue; }
 
-if(filtersReady && !passesLeagueFilters(div, leagueStats, est.mu, oddX, spread)){
-  filteredOut++;
-  continue;
-}
-
-
-     const comp = computeScore(...);
-const scoreRaw = Number.isFinite(comp.score) ? comp.score : 50;
-
-
-// in pre-match NON scartiamo: se lo score non è calcolabile lo mettiamo neutro
-const scoreRaw = Number.isFinite(comp.score) ? comp.score : 50;
-
-
-      const rel = reliabilityFactor(est.hN, est.aN);
-      const bonusOpen = openGameBonus(est.hGF, est.aGF, est.hGA, est.aGA);
-      
-
-      const pr = predictOverProb(div, est.mu, oddX, spread, wGA, wSP, wX, baseByLeague, globalBase);
+      const pr = predictOverProb(div, mu, oddX, spread, wGA, wSP, wX, baseByLeague, globalBase);
       const pOver = pr.pOver;
       const pUnder = 1 - pOver;
-
-      // pick da probabilità
       const pick = (pOver >= pUnder) ? "OVER" : "UNDER";
       const win = (pick==="OVER") ? isOver : !isOver;
 
-      // tag da probabilità
       const tag = tagFromProb(pOver, thrOverPct, thrUnderPct);
+      const tagKey = (tag.txt==="OVER-friendly") ? "over" : (tag.txt==="UNDER-friendly" ? "under" : "mid");
 
       matched++;
       taken++;
       if(win) hit++; else miss++;
 
-      // per tag
-      const tagKey = (tag.txt==="OVER-friendly") ? "over" : (tag.txt==="UNDER-friendly" ? "under" : "mid");
       byTag[tagKey].n++;
       if(win) byTag[tagKey].hit++;
 
-      // per lega
       const L = ensureLeague(div);
-      L.n++;
-      if(win) L.hit++;
+      L.n++; if(win) L.hit++;
       if(pick==="OVER"){ L.overN++; if(win) L.overHit++; }
       else { L.underN++; if(win) L.underHit++; }
-
-      // diagnostica bias favorita: spread alto (default 2.0)
-      if(Number.isFinite(spread) && spread >= L.spHighThr){
-        L.spHighN++;
-        if(win) L.spHighHit++;
-      }
-
-      // yield (solo se ho le quote O/U 2.5)
-      const o25 = toNum(q.o25);
-      const u25 = toNum(q.u25);
-      let oddPick = NaN;
-      if(pick==="OVER") oddPick = o25;
-      else oddPick = u25;
-
-      if(Number.isFinite(oddPick)){
-        const p = profitUnit(oddPick, win);
-        yTaken++; yProfit += p;
-        byTag[tagKey].yN++; byTag[tagKey].yP += p;
-        L.yN++; L.yP += p;
-      }
+      if(spread >= 2.0){ L.spHighN++; if(win) L.spHighHit++; }
     }
 
-    const hr = taken ? (hit/taken) : NaN;
-    const roi = yTaken ? (yProfit/yTaken) : NaN;
-
     const pct = (x)=> Number.isFinite(x)?(x*100).toFixed(1)+"%":"—";
-    const pctN = (hit,n)=> n ? ((100*hit/n).toFixed(1)+"%") : "—";
-    const roiTxt = (p,n)=> n ? ((100*p/n).toFixed(2)+"%") : "—";
+    const pctN = (h,n)=> n ? ((100*h/n).toFixed(1)+"%") : "—";
 
-    // tabella per lega
     const leagues = Array.from(byLeague.keys()).sort();
     const leagueRows = leagues.map(div=>{
       const L = byLeague.get(div);
@@ -1071,25 +928,13 @@ const scoreRaw = Number.isFinite(comp.score) ? comp.score : 50;
           <td>${L.overN} / ${pctN(L.overHit,L.overN)}</td>
           <td>${L.underN} / ${pctN(L.underHit,L.underN)}</td>
           <td>${L.spHighN} / ${pctN(L.spHighHit,L.spHighN)}</td>
-          <td>${roiTxt(L.yP,L.yN)} <small class="muted">(n=${L.yN})</small></td>
         </tr>
       `;
     }).join("");
 
-    // tabella per tag
-    const tagRow = (name,obj)=>`
-      <tr>
-        <td><b>${name}</b></td>
-        <td>${obj.n}</td>
-        <td><b>${pctN(obj.hit,obj.n)}</b></td>
-        <td>${roiTxt(obj.yP,obj.yN)} <small class="muted">(n=${obj.yN})</small></td>
-      </tr>
-    `;
-
     output.innerHTML = `
       <div class="card">
         <b>BACKTEST – prese (HIT/MISS) — pick da probabilità</b>
-
         <div class="row" style="margin-top:10px">
           <span class="pill"><b>Match matchati:</b> ${matched}</span>
           <span class="pill"><b>Non matchati:</b> ${notMatched}</span>
@@ -1098,32 +943,18 @@ const scoreRaw = Number.isFinite(comp.score) ? comp.score : 50;
           <span class="pill"><b>PRESE:</b> ${taken}</span>
           <span class="pill"><b>HIT:</b> ${hit}</span>
           <span class="pill"><b>MISS:</b> ${miss}</span>
-          <span class="pill"><b>Hit-rate:</b> ${pct(hr)}</span>
+          <span class="pill"><b>Hit-rate:</b> ${pct(taken?hit/taken:NaN)}</span>
         </div>
-
-        <hr style="margin:12px 0">
-
-        <div class="row">
-          <span class="pill"><b>Yield/ROI:</b> ${Number.isFinite(roi)?(roi*100).toFixed(2)+"%":"—"} <small class="muted">(copertura n=${yTaken})</small></span>
-          <span class="pill"><b>Lega inferita:</b> ${inferred}</span>
-          <span class="pill"><b>Quote NA:</b> ${stillNA}</span>
-        </div>
-
-        <small class="muted" style="display:block;margin-top:10px">
-          ROI viene calcolato <b>solo</b> se nel CSV quote esistono le quote Over2.5/Under2.5 (o25/u25). Con sole 1/X/2 il ROI resta “—”.
-        </small>
       </div>
 
       <div class="card">
         <b>Backtest per “friendly”</b>
         <table>
-          <thead>
-            <tr><th>Classe</th><th>N</th><th>HR</th><th>ROI</th></tr>
-          </thead>
+          <thead><tr><th>Classe</th><th>N</th><th>HR</th></tr></thead>
           <tbody>
-            ${tagRow("OVER-friendly", byTag.over)}
-            ${tagRow("NEUTRA", byTag.mid)}
-            ${tagRow("UNDER-friendly", byTag.under)}
+            <tr><td><b>OVER-friendly</b></td><td>${byTag.over.n}</td><td><b>${pctN(byTag.over.hit,byTag.over.n)}</b></td></tr>
+            <tr><td><b>NEUTRA</b></td><td>${byTag.mid.n}</td><td><b>${pctN(byTag.mid.hit,byTag.mid.n)}</b></td></tr>
+            <tr><td><b>UNDER-friendly</b></td><td>${byTag.under.n}</td><td><b>${pctN(byTag.under.hit,byTag.under.n)}</b></td></tr>
           </tbody>
         </table>
       </div>
@@ -1133,33 +964,33 @@ const scoreRaw = Number.isFinite(comp.score) ? comp.score : 50;
         <table>
           <thead>
             <tr>
-              <th>Lega</th>
-              <th>N</th>
-              <th>HR</th>
-              <th>Pick OVER (n/HR)</th>
-              <th>Pick UNDER (n/HR)</th>
+              <th>Lega</th><th>N</th><th>HR</th>
+              <th>Pick OVER (n/HR)</th><th>Pick UNDER (n/HR)</th>
               <th>Spread≥2.0 (n/HR)</th>
-              <th>ROI (se disponibile)</th>
             </tr>
           </thead>
           <tbody>
-            ${leagueRows || `<tr><td colspan="7" class="muted">Nessuna lega disponibile</td></tr>`}
+            ${leagueRows || `<tr><td colspan="6" class="muted">Nessuna lega disponibile</td></tr>`}
           </tbody>
         </table>
-
         <small class="muted" style="display:block;margin-top:10px">
-          Colonna “Spread≥2.0”: se qui l’HR dei TOP OVER cala in una lega (es. leghe Under-friendly), è il classico “bias della favorita” (vittoria controllata 1-0 / 2-0).
-          In quel caso: abbassa <b>wSP</b> per quella lega o imposta un filtro Spread “Mean/Custom” per evitare estremi.
+          Se in una lega la colonna “Spread≥2.0” crolla, è il classico “bias della favorita” (1-0/2-0 controllato): abbassa <b>wSP</b> o filtra Spread.
         </small>
       </div>
     `;
 
     status.textContent="Backtest completato ✅";
   }catch(e){
+    console.error(e);
     status.textContent="Errore Backtest: " + (e?.message || e);
   }
 }
 
+/* ========= EVENT LISTENERS (FONDAMENTALI) ========= */
+document.getElementById("prepBtn").addEventListener("click", prepStats);
+document.getElementById("attBtn").addEventListener("click", attenziona);
+document.getElementById("btBtn").addEventListener("click", backtest);
 </script>
 </body>
 </html>
+
