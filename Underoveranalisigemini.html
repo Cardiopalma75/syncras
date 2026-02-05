@@ -2,19 +2,18 @@
 <html lang="it">
 <head>
   <meta charset="utf-8">
-  <title>Syncras Pro - DEFINITIVE FIX</title>
+  <title>Syncras Pro - Betting Data Edition</title>
   <style>
     :root{--violet:#6C5CE7;--bg:#f7f7fb;--card:#fff;--border:#e7e7f5;--text:#111827;--success:#10b981;--danger:#ef4444}
-    body{font-family:system-ui,sans-serif;margin:18px;background:var(--bg);color:var(--text);font-size:12px}
+    body{font-family:system-ui,sans-serif;margin:15px;background:var(--bg);color:var(--text);font-size:12px}
     .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:15px;margin-bottom:15px}
-    .math-dash{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:15px}
+    .math-dash{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:15px 0}
     .math-card{background:#f8fafc;padding:12px;border-radius:10px;border:1px solid var(--border);text-align:center}
     .math-val{font-size:20px;font-weight:900;display:block;color:var(--violet)}
-    table{width:100%;border-collapse:collapse;margin-top:10px}
+    table{width:100%;border-collapse:collapse;background:#fff}
     th,td{padding:10px;text-align:left;border-bottom:1px solid #eee}
     th{background:#f9fafb;font-size:10px;text-transform:uppercase}
     button{background:var(--violet);color:white;border:0;padding:12px;border-radius:8px;font-weight:bold;cursor:pointer;width:100%}
-    .cfg-input{width:60px;padding:6px;border:1px solid #ddd;border-radius:4px}
     .pos{color:var(--success);font-weight:bold}
     .neg{color:var(--danger);font-weight:bold}
   </style>
@@ -22,128 +21,108 @@
 <body>
 
   <div class="card">
-    <h2 style="margin:0 0 10px 0">Syncras Optimizer - Fix Finale</h2>
-    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:15px; align-items:end">
-        <div><label>CSV Risultati</label><br><input id="fRes" type="file"></div>
-        <div><label>CSV Quote</label><br><input id="fQuo" type="file"></div>
-        <button onclick="caricaDati()">1. CARICA TUTTE LE LEGHE</button>
+    <h3 style="margin:0">Carica i file Football-Data</h3>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; align-items:end; margin-top:10px">
+        <div><label>Risultati (CSV)</label><input id="fRes" type="file"></div>
+        <div><label>Fixtures (Quote O/U)</label><input id="fQuo" type="file"></div>
+        <button onclick="caricaDati()">1. ANALIZZA</button>
     </div>
   </div>
 
-  <div id="configArea" class="card" style="display:none">
-    <h3>⚙️ Imposta Soglie e Stake</h3>
-    <div id="leagueGrid"></div>
-    <br>
-    <button onclick="eseguiBacktest()" style="background:#111827">2. CALCOLA BACKTEST ORA</button>
+  <div id="setup" class="card" style="display:none">
+    <h3>2. Impostazioni per Lega</h3>
+    <div id="grid"></div>
+    <button onclick="calcola()" style="margin-top:15px; background:#111827">3. CALCOLA PROFITTO REALE</button>
   </div>
 
-  <div id="resultsArea" class="card" style="display:none; border:2px solid var(--violet)">
+  <div id="results" class="card" style="display:none; border:2px solid var(--violet)">
     <div class="math-dash">
-        <div class="math-card"><span>Bet</span><span id="resT" class="math-val">-</span></div>
-        <div class="math-card"><span>Win Rate</span><span id="resWR" class="math-val">-</span></div>
-        <div class="math-card"><span>Profitto</span><span id="resP" class="math-val">-</span></div>
-        <div class="math-card"><span>Edge</span><span id="resE" class="math-val">-</span></div>
+        <div class="math-card"><span>Bet</span><span id="vT">-</span></div>
+        <div class="math-card"><span>Win Rate</span><span id="vWR">-</span></div>
+        <div class="math-card"><span>Profitto (u)</span><span id="vP">-</span></div>
+        <div class="math-card"><span>Edge Reale</span><span id="vE">-</span></div>
     </div>
-    <div id="leagueStatsTable"></div>
+    <div id="tab"></div>
   </div>
 
 <script>
-let g_res = [], g_quo = [];
+let R = [], Q = [];
+const cl = s => String(s||"").toLowerCase().replace(/[^a-z0-9]/g, "").trim();
 
-// Normalizzazione per evitare errori di match
-const nrm = s => String(s||"").toLowerCase().replace(/[^a-z0-9]/g, "").trim();
-
-async function parseCSV(file) {
-    const text = await file.text();
-    const rows = text.split(/\r?\n/).filter(l => l.trim() !== "");
-    const headers = rows[0].split(",").map(h => h.trim().toLowerCase());
-    return rows.slice(1).map(row => {
-        const cells = row.split(",");
-        let obj = {};
-        headers.forEach((h, i) => obj[h] = cells[i]?.trim());
-        return obj;
+async function parse(f) {
+    const t = await f.text();
+    const rows = t.split(/\r?\n/).filter(l => l.trim() !== "");
+    const h = rows[0].split(",").map(x => x.trim());
+    return rows.slice(1).map(r => {
+        let o = {}, c = r.split(",");
+        h.forEach((name, i) => o[name] = c[i]?.trim());
+        return o;
     });
 }
 
 async function caricaDati() {
-    g_res = await parseCSV(document.getElementById('fRes').files[0]);
-    g_quo = await parseCSV(document.getElementById('fQuo').files[0]);
+    R = await parse(document.getElementById('fRes').files[0]);
+    Q = await parse(document.getElementById('fQuo').files[0]);
+    let lSet = new Set();
+    Q.forEach(q => { if(q.Div) lSet.add(q.Div.toUpperCase()) });
+    R.forEach(r => { if(r.league) lSet.add(r.league.toUpperCase()) });
     
-    // Trova leghe uniche da entrambi i file
-    let leagues = new Set();
-    g_quo.forEach(q => { if(q.league) leagues.add(q.league.toUpperCase()) });
-    g_res.forEach(r => { if(r.league) leagues.add(r.league.toUpperCase()) });
-    
-    let sortedLeagues = Array.from(leagues).sort();
-    let html = "<table><tr><th>Lega</th><th>Soglia %</th><th>Stake (u)</th></tr>";
-    sortedLeagues.forEach(l => {
-        html += `<tr>
-            <td><b>${l}</b></td>
-            <td><input type="number" class="cfg-input" id="thr_${l}" value="50"> %</td>
-            <td><input type="number" class="cfg-input" id="stk_${l}" value="1.0" step="0.1"></td>
-        </tr>`;
+    let html = "<table><tr><th>Lega</th><th>Soglia Over %</th><th>Stake</th></tr>";
+    Array.from(lSet).sort().forEach(l => {
+        html += `<tr><td><b>${l}</b></td>
+        <td><input type="number" id="t_${l}" value="50" style="width:50px">%</td>
+        <td><input type="number" id="s_${l}" value="1.0" step="0.1" style="width:50px"></td></tr>`;
     });
-    document.getElementById('leagueGrid').innerHTML = html + "</table>";
-    document.getElementById('configArea').style.display = "block";
+    document.getElementById('grid').innerHTML = html + "</table>";
+    document.getElementById('setup').style.display = "block";
 }
 
-function eseguiBacktest() {
-    // Mappa con gestione Case-Insensitive per i gol (FTHG vs fthg)
-    const resMap = new Map();
-    g_res.forEach(r => {
-        const key = `${nrm(r.home_team)}|${r.date}`;
-        resMap.set(key, r);
-    });
+function calcola() {
+    const map = new Map();
+    R.forEach(r => map.set(`${cl(r.home_team)}|${r.date}`, r));
 
-    let stats = { t:0, w:0, p:0, exp:0 };
-    let summary = {};
+    let tot = { t:0, w:0, p:0, exp:0 };
+    let leghe = {};
 
-    g_quo.forEach(q => {
-        const match = resMap.get(`${nrm(q.home_team)}|${q.date}`);
-        const lKey = (q.league || match?.league || "UNK").toUpperCase();
-        
-        if (match) {
-            const soglia = (parseFloat(document.getElementById(`thr_${lKey}`).value) || 0) / 100;
-            const stake = parseFloat(document.getElementById(`stk_${lKey}`).value) || 0;
-            
-            // Logica densità (tuo parametro 67% WR di successo)
-            let probSuccesso = 0.62; 
+    Q.forEach(q => {
+        // Football-Data usa HomeTeam/AwayTeam e Date (DD/MM/YYYY)
+        // Dobbiamo normalizzare le date per il match
+        const m = map.get(`${cl(q.HomeTeam)}|${q.Date}`); 
+        const L = (q.Div || "UNK").toUpperCase();
 
-            if (probSuccesso >= soglia) {
-                // FIX: Cerca sia maiuscolo che minuscolo per i gol
-                let hg = parseInt(match.fthg || match.FTHG);
-                let ag = parseInt(match.ftag || match.FTAG);
+        if(m) {
+            const thr = (parseFloat(document.getElementById(`t_${L}`).value)||50)/100;
+            const stk = parseFloat(document.getElementById(`s_${L}`).value)||1;
+            let prob = 0.62; // Qui puoi inserire la tua densità
 
-                if (!isNaN(hg) && !isNaN(ag)) {
-                    let win = (hg + ag) >= 3;
-                    let quota = parseFloat(q.b365_2) || 1.80; // Usa b365_2 come da tuo file
-                    let pft = win ? (stake * (quota - 1)) : -stake;
+            if(prob >= thr) {
+                let gH = parseInt(m.FTHG || m.fthg || 0);
+                let gA = parseInt(m.FTAG || m.ftag || 0);
+                let win = (gH + gA) >= 3;
+                
+                // USA LA QUOTA REALE DAL NUOVO FILE
+                let quota = parseFloat(q['B365>2.5']) || 1.80; 
+                let pft = win ? (stk * (quota - 1)) : -stk;
 
-                    if (!summary[lKey]) summary[lKey] = { t:0, w:0, p:0 };
-                    summary[lKey].t++;
-                    if(win) summary[lKey].w++;
-                    summary[lKey].p += pft;
-
-                    stats.t++; stats.exp += probSuccesso;
-                    if(win) stats.w++;
-                    stats.p += pft;
-                }
+                if(!leghe[L]) leghe[L] = { t:0, w:0, p:0 };
+                leghe[L].t++; if(win) leghe[L].w++; leghe[L].p += pft;
+                tot.t++; tot.exp += prob; if(win) tot.w++; tot.p += pft;
             }
         }
     });
 
-    document.getElementById('resultsArea').style.display = "block";
-    document.getElementById('resT').innerText = stats.t;
-    document.getElementById('resWR').innerText = stats.t > 0 ? ((stats.w/stats.t)*100).toFixed(1) + "%" : "0%";
-    document.getElementById('resP').innerText = stats.p.toFixed(2) + " u.";
-    document.getElementById('resE').innerText = (stats.w - stats.exp).toFixed(2);
+    document.getElementById('results').style.display = "block";
+    document.getElementById('vT').innerText = tot.t;
+    document.getElementById('vWR').innerText = ((tot.w/tot.t)*100).toFixed(1) + "%";
+    document.getElementById('vP').innerText = tot.p.toFixed(2);
+    document.getElementById('vE').innerText = (tot.w - tot.exp).toFixed(2);
 
-    let h = "<table><tr><th>Lega</th><th>Bet</th><th>Win %</th><th>Profitto</th></tr>";
-    for(let l in summary) {
-        let d = summary[l];
-        h += `<tr><td><b>${l}</b></td><td>${d.t}</td><td>${((d.w/d.t)*100).toFixed(1)}%</td><td class="${d.p>=0?'pos':'neg'}">${d.p.toFixed(2)}</td></tr>`;
+    let h = "<table><tr><th>Lega</th><th>Bet</th><th>Win %</th><th>Profitto Reale (u)</th></tr>";
+    for(let l in leghe) {
+        let d = leghe[l];
+        h += `<tr><td>${l}</td><td>${d.t}</td><td>${((d.w/d.t)*100).toFixed(1)}%</td><td class="${d.p>=0?'pos':'neg'}">${d.p.toFixed(2)}</td></tr>`;
     }
-    document.getElementById('leagueStatsTable').innerHTML = h + "</table>";
+    document.getElementById('tab').innerHTML = h + "</table>";
 }
 </script>
 </body>
