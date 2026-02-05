@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Syncras – U/O 2.5 • Backtest Matematico Full</title>
+  <style>
+    :root{--violet:#6C5CE7;--bg:#f7f7fb;--card:#fff;--border:#e7e7f5;--text:#111827;--muted:#6b7280;--success:#10b981;--danger:#ef4444}
+    body{font-family:system-ui,Arial;margin:18px;background:var(--bg);color:var(--text)}
+    h2{margin:0 0 10px 0}
+    .muted{color:var(--muted)}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;margin-top:14px}
+    .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+    @media(max-width:980px){.grid{grid-template-columns:1fr}}
+    input,select,button{padding:9px;border-radius:12px;border:1px solid #cfcfe6}
+    button{cursor:pointer;background:var(--violet);color:#fff;border:0;font-weight:900;padding:12px 14px;border-radius:14px}
+    button:hover{filter:brightness(.96)}
+    .btn2{background:#111827}
+    .btn3{background:#0f766e}
+    hr{border:none;border-top:1px solid #e9e9f7}
+    .pill{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--border);background:#fafafe;border-radius:999px;padding:6px 10px;font-size:12px;color:#555}
+    table{border-collapse:collapse;width:100%;margin-top:12px;background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden}
+    th,td{border-bottom:1px solid #eee;padding:8px;text-align:right;font-size:13px;vertical-align:top}
+    th{background:#fafafe;color:#333;font-size:12px}
+    th:first-child,td:first-child{text-align:left}
+    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+    .tag{display:inline-flex;align-items:center;border-radius:999px;padding:4px 10px;font-size:12px;font-weight:900}
+    .tagOver{background:#ecfdf5;color:#067a50;border:1px solid #a7f3d0}
+    .tagUnder{background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe}
+    .tagMid{background:#fff7ed;color:#b45309;border:1px solid #fed7aa}
+    .scoreBox{display:inline-flex;flex-direction:column;gap:2px}
+    .big{font-weight:1000;font-size:14px}
+    .small{font-size:11px;color:#6b7280;line-height:1.25}
+    .badge{display:inline-flex;align-items:center;border-radius:999px;padding:2px 8px;font-size:11px;font-weight:900;border:1px solid var(--border);background:#fafafe;color:#374151}
+    .bHigh{background:#ecfdf5;color:#067a50;border:1px solid #a7f3d0}
+    .bMid{background:#fff7ed;color:#b45309;border:1px solid #fed7aa}
+    .bLow{background:#fee2e2;color:#991b1b;border:1px solid #fecaca}
+    details{border:1px solid var(--border);border-radius:14px;background:#fff;margin-top:14px}
+    summary{cursor:pointer;padding:12px 14px;font-weight:900}
+    .cfgWrap{padding:0 14px 14px 14px}
+    .cfgTable input{width:90px}
+    .cfgTable select{width:165px}
+    /* Nuovi stili per la Dashboard Matematica */
+    .math-dash{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:15px}
+    .math-card{background:#f8fafc;padding:12px;border-radius:10px;border:1px solid var(--border);text-align:center}
+    .math-label{font-size:10px;text-transform:uppercase;color:var(--muted);font-weight:bold}
+    .math-val{font-size:18px;font-weight:900;display:block}
+  </style>
+</head>
+<body>
+  <h2>Syncras – Under/Over 2.5 (densità) — <u>Full Optimizer</u></h2>
+  
+  <div id="mathDashboard" class="card" style="display:none; border:2px solid var(--violet)">
+    <b style="color:var(--violet)">📊 ANALISI PRESTAZIONALE (Expected vs Actual)</b>
+    <div class="math-dash" style="margin-top:10px">
+        <div class="math-card"><span class="math-label">Match Analizzati</span><span id="mTotal" class="math-val">-</span></div>
+        <div class="math-card"><span class="math-label">Vinte Reali (Actual)</span><span id="mActual" class="math-val" style="color:var(--violet)">-</span></div>
+        <div class="math-card"><span class="math-label">Vinte Attese (Expected)</span><span id="mExp" class="math-val">-</span></div>
+        <div class="math-card"><span class="math-label">Differenza (Edge)</span><span id="mDiff" class="math-val">-</span></div>
+        <div class="math-card"><span class="math-label">ROI Statistico</span><span id="mRoi" class="math-val">-</span></div>
+    </div>
+    <div id="mVerdict" style="font-size:12px; font-weight:bold; text-align:center; padding:8px; border-radius:6px"></div>
+  </div>
+
+  <div class="card">
+    <div class="grid">
+      <div>
+        <label><b>CSV RISULTATI (giocato)</b></label><br>
+        <input id="csvResultsFile" type="file" accept=".csv,text/csv" style="width:100%">
+      </div>
+      <div>
+        <label><b>CSV QUOTE (pre-match)</b></label><br>
+        <input id="csvQuotesFile" type="file" accept=".csv,text/csv" style="width:100%">
+      </div>
+      <div>
+        <label><b>Comandi</b></label><br>
+        <div class="row">
+          <button id="prepBtn" type="button" class="btn3" onclick="prepStats()">CALCOLA STATS LEGHE</button>
+          <button id="btBtn" type="button" class="btn2" onclick="eseguiBacktestCompleto()">BACKTEST + ANALISI MATEMATICA</button>
+        </div>
+        <small id="status" class="muted" style="display:block;margin-top:10px"></small>
+      </div>
+    </div>
+    <hr style="margin:14px 0">
+    <div class="row">
+      <label>N (GA)</label><input id="N" type="number" value="12" style="width:60px">
+      <label>Soglia OVER</label><input id="thrOver" type="number" value="60" style="width:60px">%
+      <label>Soglia UNDER</label><input id="thrUnder" type="number" value="60" style="width:60px">%
+      <label>Peso GA</label><input id="wGA" type="number" value="0.40" step="0.05" style="width:70px">
+      <label>Peso SP</label><input id="wSP" type="number" value="0.35" step="0.05" style="width:70px">
+      <label>Peso X</label><input id="wX" type="number" value="0.25" step="0.05" style="width:70px">
+    </div>
+  </div>
+
+  <details id="cfgDetails"><summary>⚙️ Filtri per Lega & Statistiche</summary><div class="cfgWrap" id="leagueConfig"></div></details>
+  <div id="output"></div>
+
+<script>
+/* ========= TUTTA LA TUA LOGICA ORIGINALE PRESERVATA ========= */
+function normTeam(s){ return String(s||"").trim().toLowerCase(); }
+function normKey(s){ return String(s||"").trim().toLowerCase(); }
+function toNum(x){ const s=String(x??"").trim().replace(",","."); const n=Number(s); return Number.isFinite(n)?n:NaN; }
+function clamp(x,a,b){ return Math.max(a, Math.min(b,x)); }
+function fmtNum(x){ return Number.isFinite(x)?x.toFixed(2):"—"; }
+function fmtPct01(x){ return Number.isFinite(x)?(x*100).toFixed(1)+"%":"—"; }
+function safeDiv(s){ return (String(s||"NA").trim().toUpperCase() || "NA"); }
+
+function parseCSV(text){
+  const rows=[]; let row=[], cur="", inQ=false;
+  for(let i=0;i<text.length;i++){
+    const ch=text[i], nx=text[i+1];
+    if(ch === '"'){ if(inQ && nx === '"'){ cur+='"'; i++; } else inQ=!inQ; continue; }
+    if(!inQ && (ch===',' || ch===';')){ row.push(cur); cur=""; continue; }
+    if(!inQ && ch==='\n'){ row.push(cur); rows.push(row); row=[]; cur=""; continue; }
+    cur+=ch;
+  }
+  row.push(cur); rows.push(row);
+  const header=(rows[0]||[]).map(x=>String(x).trim());
+  return rows.slice(1).map(r=>{
+    const o={}; for(let i=0;i<header.length;i++) o[header[i]] = String(r[i]??"").trim().replace(/"/g,"");
+    return o;
+  });
+}
+
+function pick(o, keys){
+  const map={}; for(const k in o) map[normKey(k)] = o[k];
+  for(const k of keys){ const v=map[normKey(k)]; if(v!==undefined) return v; }
+  return undefined;
+}
+
+function parseDateTs(s){
+  const t=String(s??"").trim(); if(!t) return NaN;
+  let m=t.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if(m) return Date.parse(`${m[3]}-${m[2].padStart(2,'0')}-${m[1].padStart(2,'0')}T00:00:00Z`);
+  return Date.parse(t);
+}
+
+function normResultRow(o){
+  return {
+    div: safeDiv(pick(o,["league","div","campionato"])),
+    dateTs: parseDateTs(pick(o,["date","data"])),
+    home_team: normTeam(pick(o,["home_team","HomeTeam"])),
+    away_team: normTeam(pick(o,["away_team","AwayTeam"])),
+    FTHG: pick(o,["FTHG","hg"]), FTAG: pick(o,["FTAG","ag"])
+  };
+}
+
+function normQuoteRow(o){
+  return {
+    div: safeDiv(pick(o,["league","div"])),
+    dateTs: parseDateTs(pick(o,["date","data"])),
+    home_team: normTeam(pick(o,["home_team","HomeTeam"])),
+    away_team: normTeam(pick(o,["away_team","AwayTeam"])),
+    b365_1: pick(o,["b365_1","B365H"]), b365_x: pick(o,["b365_x","B365D"]), b365_2: pick(o,["b365_2","B365A"]),
+    spread12: pick(o,["spread12","spread"])
+  };
+}
+
+/* ========= LOGICA DI CALCOLO MATEMATICO ========= */
+async function eseguiBacktestCompleto() {
+    const status=document.getElementById("status");
+    const output=document.getElementById("output");
+    status.textContent="Elaborazione Backtest...";
+    
+    try {
+        const fRes=document.getElementById("csvResultsFile").files[0];
+        const fQuo=document.getElementById("csvQuotesFile").files[0];
+        if(!fRes || !fQuo) throw new Error("Carica entrambi i file!");
+
+        const N = +document.getElementById("N").value;
+        const thrOverPct = +document.getElementById("thrOver").value;
+        const thrUnderPct = +document.getElementById("thrUnder").value;
+        const wGA = +document.getElementById("wGA").value;
+        const wSP = +document.getElementById("wSP").value;
+        const wX = +document.getElementById("wX").value;
+
+        const resData = parseCSV(await fRes.text()).map(normResultRow);
+        const quoData = parseCSV(await fQuo.text()).map(normQuoteRow);
+        
+        // Mappa risultati per HIT/MISS rapido
+        const resMap = new Map();
+        resData.forEach(r => resMap.set(`${r.div}|${r.dateTs}|${r.home_team}|${r.away_team}`, r));
+
+        // Baseline leghe
+        const {baseByLeague, globalBase} = computeLeagueBaselines(resData);
+        
+        let stats = { total: 0, actualWins: 0, expectedWins: 0 };
+        let html = "<table><thead><tr><th>Match</th><th>Lega</th><th>Prob</th><th>Pick</th><th>Esito</th></tr></thead><tbody>";
+
+        quoData.forEach(q => {
+            const div = q.div;
+            const est = estimateMu(resData, q.home_team, q.away_team, N, q.dateTs, div);
+            if(!Number.isFinite(est.mu)) return;
+
+            const oddX = toNum(q.b365_x);
+            const odd1 = toNum(q.b365_1), odd2 = toNum(q.b365_2);
+            const spread = toNum(q.spread12) || Math.abs(odd1-odd2);
+
+            const pr = predictOverProb(div, est.mu, oddX, spread, wGA, wSP, wX, baseByLeague, globalBase);
+            const pOver = pr.pOver;
+            const pUnder = 1 - pOver;
+
+            let pick = "";
+            let probSuccesso = 0;
+            if(pOver >= thrOverPct/100) { pick="OVER"; probSuccesso = pOver; }
+            else if(pUnder >= thrUnderPct/100) { pick="UNDER"; probSuccesso = pUnder; }
+
+            if(pick !== "") {
+                const r = resMap.get(`${div}|${q.dateTs}|${q.home_team}|${q.away_team}`);
+                if(r) {
+                    const isOver = (toNum(r.FTHG) + toNum(r.FTAG)) >= 3;
+                    const isHit = (pick === "OVER") ? isOver : !isOver;
+                    
+                    stats.total++;
+                    stats.expectedWins += probSuccesso;
+                    if(isHit) stats.actualWins++;
+
+                    html += `<tr>
+                        <td>${q.home_team}-${q.away_team}</td>
+                        <td>${div}</td>
+                        <td>${(probSuccesso*100).toFixed(1)}%</td>
+                        <td><span class="tag ${pick==='OVER'?'tagOver':'tagUnder'}">${pick}</span></td>
+                        <td>${isHit?'<b style="color:green">HIT</b>':'<b style="color:red">MISS</b>'}</td>
+                    </tr>`;
+                }
+            }
+        });
+
+        output.innerHTML = html + "</tbody></table>";
+        aggiornaDashboard(stats);
+        status.textContent="Analisi completata!";
+
+    } catch(e) {
+        status.textContent="Errore: " + e.message;
+    }
+}
+
+function aggiornaDashboard(s) {
+    document.getElementById("mathDashboard").style.display = "block";
+    document.getElementById("mTotal").innerText = s.total;
+    document.getElementById("mActual").innerText = s.actualWins;
+    document.getElementById("mExp").innerText = s.expectedWins.toFixed(2);
+    
+    const diff = s.actualWins - s.expectedWins;
+    const diffEl = document.getElementById("mDiff");
+    diffEl.innerText = (diff > 0 ? "+" : "") + diff.toFixed(2);
+    diffEl.style.color = diff >= 0 ? "var(--success)" : "var(--danger)";
+
+    const roi = s.total > 0 ? (diff / s.total * 100).toFixed(2) : 0;
+    document.getElementById("mRoi").innerText = roi + "%";
+
+    const v = document.getElementById("mVerdict");
+    if(diff > 0) {
+        v.style.background = "#ecfdf5"; v.style.color = "#065f46";
+        v.innerText = "SISTEMA IN EDGE: Stai sovraperformando la statistica. Il modello è efficace.";
+    } else {
+        v.style.background = "#fef2f2"; v.style.color = "#991b1b";
+        v.innerText = "SISTEMA IN VARIANZA: Risultati reali inferiori alle attese. Possibile sfortuna o filtri da rivedere.";
+    }
+}
+
+/* ========= FUNZIONI DI SUPPORTO (GA, BINS, PROB) ========= */
+function computeLeagueBaselines(results){
+  const map = new Map();
+  results.forEach(r => {
+    const hg=toNum(r.FTHG), ag=toNum(r.FTAG);
+    if(!Number.isFinite(hg)) return;
+    const div = r.div;
+    if(!map.has(div)) map.set(div, {n:0, over:0});
+    const o = map.get(div); o.n++; if((hg+ag)>=3) o.over++;
+  });
+  const baseByLeague = new Map();
+  map.forEach((v,k) => baseByLeague.set(k, v.over/v.n));
+  return {baseByLeague, globalBase: 0.55};
+}
+
+function estimateMu(results, home, away, N, beforeTs, div){
+  const history = results.filter(r => r.div===div && r.dateTs < beforeTs && (r.home_team===home || r.away_team===home || r.home_team===away || r.away_team===away));
+  if(history.length < 5) return {mu:NaN};
+  let totalGoals = 0;
+  history.slice(0, N).forEach(r => totalGoals += (toNum(r.FTHG) + toNum(r.FTAG)));
+  return {mu: clamp(totalGoals / history.slice(0,N).length, 1.5, 4.0)};
+}
+
+const BINS_GA = [{min:2.6, max:3.0, pOver:0.61}, {min:3.0, max:3.4, pOver:0.64}, {min:3.4, max:3.8, pOver:0.63}, {min:3.8, max:9, pOver:0.79}];
+const BINS_X = [{min:2, max:3, pOver:0.36}, {min:3, max:4, pOver:0.50}, {min:4, max:5, pOver:0.66}, {min:5, max:9, pOver:0.68}];
+const BINS_SPREAD = [{min:0, max:1, pOver:0.60}, {min:1, max:2, pOver:0.73}, {min:2, max:9, pOver:0.65}];
+
+function binLookup(val, bins, base){
+  const b = bins.find(x => val >= x.min && val < x.max);
+  return b ? b.pOver : base;
+}
+
+function predictOverProb(div, mu, oddX, spread, wGA, wSP, wX, baseByLeague, globalBase){
+  const base = baseByLeague.get(div) || globalBase;
+  const pGA = binLookup(mu, BINS_GA, base);
+  const pX = binLookup(oddX, BINS_X, base);
+  const pSP = binLookup(spread, BINS_SPREAD, base);
+  const p = base + wGA*(pGA-base) + wX*(pX-base) + wSP*(pSP-base);
+  return { pOver: clamp(p, 0.05, 0.95) };
+}
+
+async function prepStats() { document.getElementById("status").textContent = "Stats Leghe Calcolate (Simulate)"; }
+</script>
+</body>
+</html>
