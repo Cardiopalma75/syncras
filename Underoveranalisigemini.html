@@ -2,60 +2,59 @@
 <html lang="it">
 <head>
   <meta charset="utf-8">
-  <title>Syncras Pro v4.2 - League Optimizer</title>
+  <title>Syncras Pro v4.4 - Multi-League Optimizer</title>
   <style>
     :root{--violet:#6C5CE7;--bg:#f0f2f5;--card:#fff;--border:#d1d5db;--text:#1f2937;--success:#10b981;--danger:#ef4444;--bet:#facc15}
-    body{font-family:system-ui,sans-serif;margin:20px;background:var(--bg);color:var(--text);font-size:14px}
+    body{font-family:system-ui,sans-serif;margin:20px;background:var(--bg);color:var(--text);font-size:13px}
     .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:20px;box-shadow:0 1px 3px rgba(0,0,0,0.1)}
-    .grid-4{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:15px}
-    button{cursor:pointer;background:var(--violet);color:#fff;border:0;font-weight:700;padding:12px 20px;border-radius:8px;width:100%}
-    input{width:100%;padding:8px;margin-top:5px;border:1px solid var(--border);border-radius:6px;box-sizing:border-box}
-    table{width:100%;border-collapse:collapse;margin-top:10px;background:#fff}
+    .grid-header{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px}
+    button{cursor:pointer;background:var(--violet);color:#fff;border:0;font-weight:700;padding:12px;border-radius:8px;transition:0.2s;width:100%}
+    input, .th-input{padding:5px;border:1px solid var(--border);border-radius:4px;width:60px;text-align:center;font-weight:bold}
+    table{width:100%;border-collapse:collapse;margin-top:10px}
     th,td{padding:10px;text-align:left;border-bottom:1px solid #eee}
     th{background:#f9fafb;font-size:10px;color:#6b7280;text-transform:uppercase}
-    .stat-val{font-size:20px;font-weight:800;display:block;margin-top:5px}
-    .win-rate{color:var(--violet)}
+    .stat-val{font-size:22px;font-weight:800;display:block;margin-top:5px}
     .profit-pos{color:var(--success)}
     .profit-neg{color:var(--danger)}
-    .badge{padding:2px 6px;border-radius:4px;font-size:11px;font-weight:bold;background:#e5e7eb}
+    .badge-lg{padding:3px 7px;border-radius:4px;font-weight:bold;background:#374151;color:white;font-size:10px}
   </style>
 </head>
 <body>
 
 <div class="card">
-  <h3>⚙️ Parametri & Money Management</h3>
-  <div class="grid-4">
-    <div><label>Soglia % Generale</label><input type="number" id="threshold" value="63"></div>
-    <div><label>Quota Media</label><input type="number" id="avgQuota" value="1.70" step="0.05"></div>
-    <div><label>Stake (€)</label><input type="number" id="stake" value="10"></div>
-    <div style="display:flex;align-items:flex-end"><button onclick="elabora()">RINCALCOLA DASHBOARD</button></div>
+  <h3>⚙️ Impostazioni Globali</h3>
+  <div class="grid-header">
+    <div><label>Quota Media</label><input type="number" id="avgQuota" value="1.70" step="0.05" style="width:100%"></div>
+    <div><label>Stake per Bet (€)</label><input type="number" id="stake" value="10" style="width:100%"></div>
+    <div style="display:flex;align-items:flex-end"><button onclick="elabora()">1. CARICA E ANALIZZA</button></div>
   </div>
 </div>
 
-<div class="grid-4">
-  <div class="card"><span>Win Rate Totale</span><span id="winRate" class="stat-val win-rate">0%</span></div>
-  <div class="card"><span>Profitto (u)</span><span id="totProfit" class="stat-val profit-pos">0.00 u.</span></div>
-  <div class="card"><span>Bilancio (€)</span><span id="totEuro" class="stat-val" style="color:#2563eb">0.00 €</span></div>
-  <div class="card"><span>Sample Bet</span><span id="winLoss" class="stat-val" style="font-size:14px">0 V / 0 P</span></div>
+<div class="grid-header" id="dash" style="display:none">
+  <div class="card"><span>Profitto Totale</span><span id="totProfit" class="stat-val">0.00 u.</span></div>
+  <div class="card"><span>Win Rate</span><span id="winRate" class="stat-val" style="color:var(--violet)">0%</span></div>
+  <div class="card"><span>Netto (€)</span><span id="totCash" class="stat-val" style="color:#2563eb">0.00 €</span></div>
+  <div class="card"><span>Scommesse</span><span id="winLoss" class="stat-val" style="font-size:14px">0 V / 0 P</span></div>
 </div>
 
-<div class="card" id="leagueAnalytics" style="display:none">
-  <h3>📊 Performance di Precisione per Lega</h3>
-  <p style="font-size:12px; color:gray">Usa questi dati per capire se alzare o abbassare la soglia per ogni specifico campionato.</p>
+<div class="card" id="leaguePanel" style="display:none">
+  <h3>📊 Ottimizzatore Leghe (Soglie Individuali)</h3>
+  <p style="font-size:11px; color:gray">Modifica la soglia di ogni lega e premi "APPLICA SOGLIE" per aggiornare i risultati.</p>
   <div id="leagueTable"></div>
+  <button onclick="updateCalculations()" style="margin-top:15px; background:black">2. APPLICA SOGLIE E RICALCOLA</button>
 </div>
 
 <div class="card">
-  <h3>📂 File & Segnali Operativi</h3>
-  <div style="margin-bottom:15px; display:flex; gap:10px">
-    <div style="flex:1"><small>CSV Risultati Storici</small><input id="fRes" type="file"></div>
-    <div style="flex:1"><small>CSV Quote Future</small><input id="fQuo" type="file"></div>
+  <h3>📂 Caricamento File</h3>
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px">
+    <input id="fRes" type="file">
+    <input id="fQuo" type="file">
   </div>
-  <div id="output"></div>
+  <div id="output" style="margin-top:15px; max-height:400px; overflow-y:auto"></div>
 </div>
 
 <script>
-let teamLeagueMap = {};
+let globalRes = [], globalQuo = [], leagueMap = {}, customThresholds = {};
 
 function parseCSV(text) {
     const lines = text.split(/\r?\n/).filter(l => l.trim() !== "");
@@ -79,7 +78,7 @@ function getRecentStats(team, allResults, currentDate) {
         gf += isH ? parseFloat(r.fthg) : parseFloat(r.ftag);
         ga += isH ? parseFloat(r.ftag) : parseFloat(r.fthg);
     });
-    return { avgF: gf/history.length, avgS: ga/history.length };
+    return { avgF: gf/10, avgS: ga/10 };
 }
 
 async function elabora() {
@@ -87,78 +86,89 @@ async function elabora() {
     const quoFile = document.getElementById('fQuo').files[0];
     if(!resFile || !quoFile) return alert("Carica i file!");
 
-    const resData = parseCSV(await resFile.text());
-    const quoData = parseCSV(await quoFile.text());
+    globalRes = parseCSV(await resFile.text());
+    globalQuo = parseCSV(await quoFile.text());
     
-    // Mappa Leghe
-    resData.forEach(r => { if(r.league && r.home_team) teamLeagueMap[r.home_team] = r.league; });
+    // Identifica le leghe e imposta soglia default 60
+    globalRes.forEach(r => { 
+        if(r.league) {
+            leagueMap[r.home_team] = r.league;
+            if(!customThresholds[r.league]) customThresholds[r.league] = 60;
+        } 
+    });
 
-    const threshold = document.getElementById('threshold').value / 100;
+    updateCalculations();
+    document.getElementById('dash').style.display = "grid";
+    document.getElementById('leaguePanel').style.display = "block";
+}
+
+function updateCalculations() {
+    // Leggi soglie aggiornate dalla tabella
+    document.querySelectorAll('.th-input').forEach(input => {
+        customThresholds[input.dataset.lg] = parseFloat(input.value);
+    });
+
     const quota = parseFloat(document.getElementById('avgQuota').value);
     const stake = parseFloat(document.getElementById('stake').value);
 
-    let counts = { bets: 0, hits: 0, profit: 0 };
-    let leagueStats = {}; // { 'E0': {bets:0, hits:0, profit:0} }
-    let html = `<table><thead><tr><th>Match</th><th>Lega</th><th>Prob.</th><th>Esito</th></tr></thead><tbody>`;
+    let main = { bets: 0, hits: 0, profit: 0 };
+    let leagueStats = {};
+    let tableHtml = `<table><thead><tr><th>Match</th><th>Lega</th><th>Prob</th><th>Azione</th></tr></thead><tbody>`;
 
-    quoData.forEach(q => {
-        const hS = getRecentStats(q.home_team, resData, q.date);
-        const aS = getRecentStats(q.away_team, resData, q.date);
+    globalQuo.forEach(q => {
+        const hS = getRecentStats(q.home_team, globalRes, q.date);
+        const aS = getRecentStats(q.away_team, globalRes, q.date);
         if(!hS || !aS) return;
 
-        const lg = teamLeagueMap[q.home_team] || "N/A";
-        if(!leagueStats[lg]) leagueStats[lg] = { bets:0, hits:0, profit:0 };
-
+        const lg = leagueMap[q.home_team] || "N/A";
+        const th = (customThresholds[lg] || 60) / 100;
+        
         const mu = (hS.avgF + aS.avgS + aS.avgF + hS.avgS) / 2;
         let prob = 0.50 + (mu - 2.5) * 0.18;
         if(parseFloat(q.b365_x) > 3.70) prob += 0.05;
 
-        if(prob >= threshold) {
-            counts.bets++;
+        if(prob >= th) {
+            if(!leagueStats[lg]) leagueStats[lg] = { bets:0, hits:0, profit:0 };
+            main.bets++;
             leagueStats[lg].bets++;
             
-            const matchR = resData.find(r => r.home_team === q.home_team && r.date === q.date);
-            let resStr = "<span style='color:orange'>ATTESA</span>";
-            
+            const matchR = globalRes.find(r => r.home_team === q.home_team && r.date === q.date);
+            let resStr = "🚀 FUTURA";
             if(matchR) {
                 const win = (parseFloat(matchR.fthg) + parseFloat(matchR.ftag)) > 2.5;
                 if(win) { 
-                    counts.hits++; leagueStats[lg].hits++; 
-                    counts.profit += (quota - 1); leagueStats[lg].profit += (quota - 1);
+                    main.hits++; leagueStats[lg].hits++; main.profit += (quota - 1); leagueStats[lg].profit += (quota - 1);
                     resStr = "<b class='profit-pos'>HIT</b>"; 
                 } else { 
-                    counts.profit -= 1; leagueStats[lg].profit -= 1;
+                    main.profit -= 1; leagueStats[lg].profit -= 1;
                     resStr = "<b class='profit-neg'>MISS</b>"; 
                 }
             }
-            html += `<tr><td>${q.home_team}-${q.away_team}</td><td><span class="badge">${lg}</span></td><td>${(prob*100).toFixed(0)}%</td><td>${resStr}</td></tr>`;
+            tableHtml += `<tr><td>${q.home_team}-${q.away_team}</td><td><span class="badge-lg">${lg}</span></td><td>${(prob*100).toFixed(0)}%</td><td>${resStr}</td></tr>`;
         }
     });
 
-    // Rendering Tabella Leghe
-    let lHtml = "<table><tr><th>Lega</th><th>Bet Fatte</th><th>Vinte (HIT)</th><th>Win Rate</th><th>Profitto (u)</th></tr>";
-    Object.keys(leagueStats).sort().forEach(l => {
-        const s = leagueStats[l];
-        const wr = ((s.hits/s.bets)*100).toFixed(1);
+    // Tabella Leghe
+    let lHtml = "<table><tr><th>Lega</th><th>Soglia %</th><th>Bet</th><th>Win%</th><th>Profitto (u)</th></tr>";
+    Object.keys(customThresholds).sort().forEach(l => {
+        const s = leagueStats[l] || {bets:0, hits:0, profit:0};
+        const wr = s.bets > 0 ? ((s.hits/s.bets)*100).toFixed(1) : 0;
         lHtml += `<tr>
-            <td><span class="badge">${l}</span></td>
+            <td><b>${l}</b></td>
+            <td><input type="number" class="th-input" data-lg="${l}" value="${customThresholds[l]}"></td>
             <td>${s.bets}</td>
-            <td>${s.hits}</td>
-            <td style="color:var(--violet); font-weight:bold">${wr}%</td>
-            <td class="${s.profit >=0 ? 'profit-pos' : 'profit-neg'}"><b>${s.profit.toFixed(2)}</b></td>
+            <td>${wr}%</td>
+            <td class="${s.profit >= 0 ? 'profit-pos' : 'profit-neg'}"><b>${s.profit.toFixed(2)}</b></td>
         </tr>`;
     });
+    
     document.getElementById('leagueTable').innerHTML = lHtml + "</table>";
-    document.getElementById('leagueAnalytics').style.display = "block";
-
-    // Dashboard Totale
-    const wrTot = counts.bets > 0 ? (counts.hits / counts.bets * 100).toFixed(1) : 0;
-    document.getElementById('winRate').innerText = wrTot + "%";
-    document.getElementById('totProfit').innerText = counts.profit.toFixed(2) + " u.";
-    document.getElementById('totProfit').className = "stat-val " + (counts.profit >=0 ? "profit-pos" : "profit-neg");
-    document.getElementById('totEuro').innerText = (counts.profit * stake).toFixed(2) + " €";
-    document.getElementById('winLoss').innerText = `${counts.hits} V / ${counts.bets - counts.hits} P`;
-    document.getElementById('output').innerHTML = html + "</tbody></table>";
+    document.getElementById('winRate').innerText = main.bets > 0 ? (main.hits/main.bets*100).toFixed(1) + "%" : "0%";
+    document.getElementById('totProfit').innerText = main.profit.toFixed(2) + " u.";
+    document.getElementById('totProfit').className = "stat-val " + (main.profit >=0 ? "profit-pos" : "profit-neg");
+    document.getElementById('totCash').innerText = (main.profit * stake).toFixed(2) + " €";
+    document.getElementById('winLoss').innerText = `${main.hits} V / ${main.bets - main.hits} P`;
+    document.getElementById('output').innerHTML = tableHtml + "</tbody></table>";
 }
 </script>
 </body>
