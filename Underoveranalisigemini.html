@@ -2,60 +2,73 @@
 <html lang="it">
 <head>
   <meta charset="utf-8">
-  <title>Syncras Pro - Edge League Analyzer</title>
+  <title>Syncras Pro - Ultra Linker</title>
   <style>
     :root{--violet:#6C5CE7;--bg:#f7f7fb;--card:#fff;--border:#e7e7f5;--text:#111827;--success:#10b981;--danger:#ef4444}
     body{font-family:system-ui,sans-serif;margin:18px;background:var(--bg);color:var(--text);font-size:13px}
-    .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:15px;box-shadow:0 2px 4px rgba(0,0,0,0.02)}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:15px;box-shadow:0 4px 6px -1px rgba(0,0,0,0.1)}
     .math-dash{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:15px 0}
     .math-card{background:#f8fafc;padding:15px;border-radius:10px;border:1px solid var(--border);text-align:center}
     .math-val{font-size:22px;font-weight:900;display:block;color:var(--violet)}
-    .math-label{font-size:10px;text-transform:uppercase;color:#6b7280;font-weight:bold}
     table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;border:1px solid var(--border)}
     th,td{padding:12px;text-align:left;border-bottom:1px solid #eee}
-    th{background:#f9fafb;font-size:11px;text-transform:uppercase}
+    th{background:#f9fafb;font-size:11px;text-transform:uppercase;color:#6b7280}
     button{background:var(--violet);color:white;border:0;padding:14px;border-radius:10px;font-weight:bold;cursor:pointer;width:100%}
-    .tag-win{color:var(--success);font-weight:bold}
-    input[type="file"]{font-size:11px;margin-top:5px}
+    .pos{color:var(--success);font-weight:bold}
+    .neg{color:var(--danger);font-weight:bold}
+    .debug-info{font-size:11px;color:#6b7280;margin-top:10px}
   </style>
 </head>
 <body>
 
   <div class="card" id="dashCard" style="display:none; border:2px solid var(--violet)">
-    <h3 style="margin:0">📊 Performance Reale (Win Rate 67%)</h3>
+    <h3 style="margin:0">📊 Analisi Integrata (Tutte le Leghe)</h3>
     <div class="math-dash">
-        <div class="math-card"><span class="math-label">Match</span><span id="mTotal" class="math-val">-</span></div>
-        <div class="math-card"><span class="math-label">Win Rate</span><span id="mWR" class="math-val" style="color:var(--success)">-</span></div>
-        <div class="math-card"><span class="math-label">Edge Netto</span><span id="mEdge" class="math-val">-</span></div>
-        <div class="math-card"><span class="math-label">Leghe</span><span id="mLeagues" class="math-val">-</span></div>
+        <div class="math-card"><span>Match Trovati</span><span id="mTotal" class="math-val">-</span></div>
+        <div class="math-card"><span>Win Rate</span><span id="mWR" class="math-val" style="color:var(--success)">-</span></div>
+        <div class="math-card"><span>Profitto (u)</span><span id="mProfit" class="math-val">-</span></div>
+        <div class="math-card"><span>Leghe Attive</span><span id="mLeagues" class="math-val">-</span></div>
     </div>
   </div>
 
   <div class="card">
     <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:15px; align-items:end">
-        <div><label><b>File Risultati</b></label><br><input id="fRes" type="file"></div>
-        <div><label><b>File Quote</b></label><br><input id="fQuo" type="file"></div>
-        <button onclick="calcolaTutto()">AVVIA BACKTEST</button>
+        <div><label><b>CSV Risultati</b></label><br><input id="fRes" type="file"></div>
+        <div><label><b>CSV Quote</b></label><br><input id="fQuo" type="file"></div>
+        <button onclick="calcolaSenzaErrori()">SINCRONIZZA E CALCOLA</button>
     </div>
+    <div id="debug" class="debug-info"></div>
   </div>
 
   <div id="leagueSection" class="card" style="display:none">
-    <h3 style="margin-top:0">🏆 Dettaglio per Lega</h3>
+    <h3>🏆 Risultati per Campionato</h3>
     <div id="leagueTable"></div>
   </div>
 
 <script>
-// Funzione per pulire i nomi (es: "Man Utd" diventa "manutd")
-const clean = s => String(s||"").toLowerCase().replace(/[^a-z0-9]/g, "").trim();
+// Pulisce i nomi (es: "Man Utd" -> "manutd")
+const cleanStr = s => String(s||"").toLowerCase().replace(/[^a-z0-9]/g, "").trim();
 
-async function calcolaTutto() {
+// Converte ogni formato data in "AAAA-MM-GG"
+const formatDate = d => {
+    if(!d) return "";
+    let s = String(d).trim();
+    if(s.includes('/')) {
+        let parts = s.split('/');
+        if(parts[0].length === 4) return s.replace(/\//g, '-'); // AAAA/MM/GG
+        return `${parts[2]}-${parts[1].padStart(2,'0')}-${parts[0].padStart(2,'0')}`; // GG/MM/AAAA
+    }
+    return s;
+};
+
+async function calcolaSenzaErrori() {
     const fRes = document.getElementById('fRes').files[0];
     const fQuo = document.getElementById('fQuo').files[0];
-    if(!fRes || !fQuo) return alert("Carica entrambi i file!");
+    if(!fRes || !fQuo) return alert("Seleziona entrambi i file!");
 
     const parse = async (f) => {
         const text = await f.text();
-        const lines = text.split("\n").filter(l => l.trim() !== "");
+        const lines = text.split(/\r?\n/).filter(l => l.trim() !== "");
         const head = lines[0].split(",").map(h => h.trim().toLowerCase());
         return lines.slice(1).map(line => {
             const row = line.split(",");
@@ -67,44 +80,62 @@ async function calcolaTutto() {
     const resData = await parse(fRes);
     const quoData = await parse(fQuo);
     
+    // Creiamo una mappa dei risultati usando (SquadraCasa + DataNormalizzata)
     const resMap = new Map();
-    resData.forEach(r => resMap.set(`${clean(r.home_team)}|${r.date}`, r));
+    resData.forEach(r => {
+        const d = formatDate(r.date);
+        const k = `${cleanStr(r.home_team)}|${d}`;
+        resMap.set(k, r);
+    });
 
-    let stats = { total:0, wins:0, exp:0 };
+    let stats = { total:0, wins:0, profit:0 };
     let leghe = {};
 
     quoData.forEach(q => {
-        const match = resMap.get(`${clean(q.home_team)}|${q.date}`);
+        const d = formatDate(q.date);
+        const k = `${cleanStr(q.home_team)}|${d}`;
+        const match = resMap.get(k);
+
         if(match) {
-            let prob = 0.62; // Basato sui tuoi parametri di successo
             let hg = parseInt(match.fthg), ag = parseInt(match.ftag);
             if(!isNaN(hg)) {
-                let isHit = (hg + ag) >= 3;
-                let div = q.league || match.league || "ALTRO";
+                let div = (q.league || match.league || "Altro").toUpperCase();
+                let isOver = (hg + ag) >= 3;
+                let quota = parseFloat(q.b365_2) || 1.80; // Esempio se giochi Over
+
+                if(!leghe[div]) leghe[div] = { t:0, w:0, p:0 };
                 
-                if(!leghe[div]) leghe[div] = { t:0, w:0, e:0 };
                 stats.total++; leghe[div].t++;
-                stats.exp += prob; leghe[div].e += prob;
-                if(isHit) { stats.wins++; leghe[div].w++; }
+                if(isOver) {
+                    stats.wins++; leghe[div].w++;
+                    stats.profit += (quota - 1);
+                    leghe[div].p += (quota - 1);
+                } else {
+                    stats.profit -= 1;
+                    leghe[div].p -= 1;
+                }
             }
         }
     });
 
-    // Mostra Risultati
+    // Dashboard
     document.getElementById('dashCard').style.display = "block";
     document.getElementById('mTotal').innerText = stats.total;
-    document.getElementById('mWR').innerText = ((stats.wins/stats.total)*100).toFixed(1) + "%";
-    document.getElementById('mEdge').innerText = "+" + (stats.wins - stats.exp).toFixed(2);
+    document.getElementById('mWR').innerText = stats.total > 0 ? ((stats.wins/stats.total)*100).toFixed(1) + "%" : "0%";
+    document.getElementById('mProfit').innerText = stats.profit.toFixed(2);
+    document.getElementById('mProfit').className = 'math-val ' + (stats.profit >= 0 ? 'pos' : 'neg');
     document.getElementById('mLeagues').innerText = Object.keys(leghe).length;
 
+    // Tabella
     document.getElementById('leagueSection').style.display = "block";
-    let html = "<table><thead><tr><th>Lega</th><th>Match</th><th>Win%</th><th>Edge</th></tr></thead><tbody>";
-    for(let l in leghe) {
+    let html = "<table><thead><tr><th>Lega</th><th>Match</th><th>Win %</th><th>Profitto (u)</th></tr></thead><tbody>";
+    Object.keys(leghe).sort().forEach(l => {
         let d = leghe[l];
-        let e = (d.w - d.e).toFixed(2);
-        html += `<tr><td><b>${l}</b></td><td>${d.t}</td><td>${((d.w/d.t)*100).toFixed(1)}%</td><td style="color:${e>0?'green':'red'}"><b>${e>0?'+'+e:e}</b></td></tr>`;
-    }
+        html += `<tr><td><b>${l}</b></td><td>${d.t}</td><td>${((d.w/d.t)*100).toFixed(1)}%</td><td class="${d.p>=0?'pos':'neg'}">${d.p.toFixed(2)}</td></tr>`;
+    });
     document.getElementById('leagueTable').innerHTML = html + "</tbody></table>";
+    
+    document.getElementById('debug').innerText = `Sync completato. Match processati: ${stats.total}. Se il numero è basso, controlla che i nomi squadre coincidano nei due file.`;
 }
 </script>
 </body>
