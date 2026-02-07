@@ -387,20 +387,38 @@ function computeQuotaNostraFromMatches(matches, params){
   return rows;
 }
 function runBacktest(matches, params){
-  const {oddsMin, oddsMax, oppMin} = params;
+  const {oddsMin, oddsMax, oppMin, edgeTh, useEdge} = params;
+
   const obs = buildLong(matches).filter(o => o.odds>=oddsMin && o.odds<=oddsMax);
   const bets=[];
   let n=0;
+
   for(const o of obs){
-    const q=QUOTA_MAP.get(o.player);
+    const q = QUOTA_MAP.get(o.player);
     if(!q) continue;
+
+    // filtro equilibrio avversario
     if(Number.isFinite(oppMin) && Number.isFinite(o.oppOdds) && o.oppOdds < oppMin) continue;
+
+    // filtro edge (sottovalutata)
+    const edge = (o.odds - q.quota_nostra) / q.quota_nostra;
+    if(useEdge && Number.isFinite(edgeTh) && edge < edgeTh) continue;
+
     n++;
-    const profit=o.outcome*o.odds-1;
-    bets.push({n, player:o.player, odds:o.odds, outcome:o.outcome, profit, note:"OK"});
+    const profit = o.outcome*o.odds - 1;
+
+    bets.push({
+      n,
+      player:o.player,
+      odds:o.odds,
+      outcome:o.outcome,
+      profit,
+      note: (useEdge ? `EDGE ${ (edge*100).toFixed(1) }%` : "OK")
+    });
   }
   return bets;
 }
+
 function computeKPIs(bets){
   if(!bets.length) return {n:0, win:NaN, profit:0, dd:0, curve:[]};
   let cum=0, peak=0, dd=0, wins=0;
@@ -526,7 +544,9 @@ document.getElementById("btnRun").addEventListener("click", ()=>{
   }
 
   // Backtest
-  LAST_BETS = runBacktest(MATCHES, {oddsMin,oddsMax,oppMin});
+  const edgeTh = toNum(document.getElementById("pEdgeTh").value);
+LAST_BETS = runBacktest(MATCHES, {oddsMin,oddsMax,oppMin, edgeTh, useEdge:true});
+
   const k=computeKPIs(LAST_BETS);
   setText("kBets", String(k.n));
   setText("kWin", fmtPct(k.win));
