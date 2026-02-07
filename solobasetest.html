@@ -430,6 +430,22 @@ async function run(){
       const oddX=toNum(q.b365_x);
       const odd1=toNum(q.b365_1);
       const odd2=toNum(q.b365_2);
+      
+
+
+      // EXTRA (solo lettura/visualizzazione)
+      const oddO25 = toNum(q.b365_o25);
+      const oddU25 = toNum(q.b365_u25);
+      const oddEven = toNum(q.b365_even);
+      const oddOdd  = toNum(q.b365_odd);
+
+      if(!Number.isFinite(oddX) || oddX<qMin || oddX>qMax) continue;
+
+      if(!Number.isFinite(odd1) || !Number.isFinite(odd2)) continue;
+      if(odd1 < odds12Min) continue;
+      if(odd2 < odds12Min) continue;
+
+      const spread12 = Math.abs(odd1-odd2);
       // ---- REGOLE DI ESCLUSIONE CLUSTER TOSSICI (X) ----
 
 // 1) cluster pubblico X 3.15–3.45 + spread medio
@@ -450,21 +466,6 @@ if (
 
 // 5) bootstrap instabile
 if (Number.isFinite(width) && width > 0.18) continue;
-
-
-      // EXTRA (solo lettura/visualizzazione)
-      const oddO25 = toNum(q.b365_o25);
-      const oddU25 = toNum(q.b365_u25);
-      const oddEven = toNum(q.b365_even);
-      const oddOdd  = toNum(q.b365_odd);
-
-      if(!Number.isFinite(oddX) || oddX<qMin || oddX>qMax) continue;
-
-      if(!Number.isFinite(odd1) || !Number.isFinite(odd2)) continue;
-      if(odd1 < odds12Min) continue;
-      if(odd2 < odds12Min) continue;
-
-      const spread12 = Math.abs(odd1-odd2);
       if(!Number.isFinite(spread12) || spread12 > spreadMax) continue;
 
       const favAway = (odd2 < odd1);
