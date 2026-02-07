@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Syncras – SOLO X + Quote O/U 2.5 + Pari/Dispari (Offline • 2 CSV)</title>
+<title>Syncras – SOLO X (RECOVERY) + O/U 2.5 + Pari/Dispari</title>
 <style>
   :root{--violet:#6C5CE7;--bg:#f7f7fb;--card:#fff;--border:#e7e7f5;--text:#111827;--muted:#6b7280}
   body{font-family:system-ui,Arial;margin:18px;background:var(--bg);color:var(--text)}
@@ -25,74 +25,49 @@
   .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
   .ok{color:#0a7} .bad{color:#c22} .warn{color:#d97706}
   .muted{color:var(--muted)}
-  .tag{display:inline-flex;align-items:center;border-radius:999px;padding:2px 8px;font-size:11px;font-weight:900;border:1px solid var(--border);background:#fafafe;color:#374151}
-  .tGood{background:#ecfdf5;color:#067a50;border:1px solid #a7f3d0}
-  .tMid{background:#fff7ed;color:#b45309;border:1px solid #fed7aa}
-  .tBad{background:#fee2e2;color:#991b1b;border:1px solid #fecaca}
 </style>
 </head>
 <body>
 
-<h2>Syncras – SOLO X + O/U 2.5 + Pari/Dispari (Offline • 2 CSV)</h2>
+<h2>Syncras – SOLO X (RECOVERY) + O/U 2.5 + Pari/Dispari</h2>
 <div class="muted">
-  Carichi: (1) risultati storici • (2) quote future (1/X/2 + opzionali O/U 2.5 + Pari/Dispari).<br>
-  Output: Top partite da <b>attenzionare SOLO X</b> con filtri anti-cluster (spread/pivot/GA sbilanciato/instabilità).<br>
+  Versione “RECOVERY”: meno muri → deve far uscire risultati. Poi stringiamo i cluster.<br>
   <small>Studio informativo. Nessun invito a scommettere.</small>
 </div>
 
 <div class="card">
   <div class="grid">
     <div>
-      <label><b>CSV RISULTATI (storico, giocato)</b></label><br>
+      <label><b>CSV RISULTATI (storico)</b></label><br>
       <input id="csvResultsFile" type="file" accept=".csv,text/csv" style="width:100%">
-      <small class="muted">Attesi: <span class="mono">date, home_team, away_team, result (1/X/2), FTHG, FTAG</span> (+ opzionale <span class="mono">league/Div</span>)</small>
+      <small class="muted">Attesi: <span class="mono">date, home_team, away_team, result (1/X/2), FTHG, FTAG</span></small>
     </div>
     <div>
-      <label><b>CSV QUOTE (future / pre-match)</b></label><br>
+      <label><b>CSV QUOTE (future)</b></label><br>
       <input id="csvQuotesFile" type="file" accept=".csv,text/csv" style="width:100%">
-      <small class="muted">Attesi: <span class="mono">date, home_team, away_team, b365_1, b365_x, b365_2</span> + opzionali <span class="mono">O25/U25</span> e <span class="mono">Even/Odd</span></small>
+      <small class="muted">Attesi: <span class="mono">date, home_team, away_team, b365_1, b365_x, b365_2</span> + opzionali O/U 2.5 + Pari/Dispari</small>
     </div>
     <div>
-      <label><b>Setup</b></label><br>
-      <div class="row">
-        <span class="pill">✅ SOLO X</span>
-        <span class="pill">✅ GA difesa</span>
-        <span class="pill">✅ spread12</span>
-        <span class="pill">✅ anti-cluster</span>
-        <span class="pill">✅ bootstrap stabilità</span>
-      </div>
-      <div style="margin-top:10px" class="muted">
-        Se non trova nulla: abbassa EV min o disattiva Bootstrap floor.
-      </div>
+      <label><b>Comandi</b></label><br>
+      <button id="runBtn" type="button">Trova partite (RECOVERY)</button>
+      <div id="status" class="muted" style="margin-top:10px"></div>
     </div>
   </div>
 
   <hr style="margin:14px 0;border:none;border-top:1px solid #e9e9f7">
 
   <div class="row">
-    <label>N (recenti)</label><input id="N" type="number" value="10" style="width:90px">
-
-    <label>EV min (%)</label><input id="evMin" type="number" value="15" style="width:100px">
-
-    <label>Quota X min</label><input id="qMin" type="number" value="3.0" step="0.1" style="width:100px">
-    <label>Quota X max</label><input id="qMax" type="number" value="4.8" step="0.1" style="width:100px">
-
-    <label>1 e 2 ≥</label><input id="odds12Min" type="number" value="1.70" step="0.01" style="width:100px">
-
-    <label>GA max (difesa)</label><input id="gaMax" type="number" value="1.20" step="0.05" style="width:110px">
-
-    <label>Spread max (|1-2|)</label><input id="spreadMax" type="number" value="2.2" step="0.1" style="width:110px">
-
-    <label>Output</label><input id="topK" type="number" value="5" step="1" style="width:90px">
+    <label>N (recenti)</label><input id="N" type="number" value="12" style="width:90px">
+    <label>EV min (%)</label><input id="evMin" type="number" value="5" style="width:90px">
+    <label>X min</label><input id="qMin" type="number" value="2.8" step="0.1" style="width:90px">
+    <label>X max</label><input id="qMax" type="number" value="5.5" step="0.1" style="width:90px">
+    <label>1 e 2 ≥</label><input id="odds12Min" type="number" value="1.55" step="0.01" style="width:90px">
+    <label>Spread max</label><input id="spreadMax" type="number" value="3.5" step="0.1" style="width:90px">
+    <label>GA max</label><input id="gaMax" type="number" value="1.35" step="0.05" style="width:90px">
+    <label>Output</label><input id="topK" type="number" value="15" step="1" style="width:90px">
   </div>
 
   <div class="row" style="margin-top:10px">
-    <label>GA agg</label>
-    <select id="gaAgg">
-      <option value="mean">Media</option>
-      <option value="median">Mediana</option>
-    </select>
-
     <label>Decay</label>
     <select id="decay">
       <option value="exp" selected>Esponenziale</option>
@@ -100,32 +75,20 @@
       <option value="none">Nessuno</option>
     </select>
 
-    <label>Bootstrap floor (p05 > implied)</label>
-    <select id="bootFloor">
-      <option value="on" selected>ON</option>
-      <option value="off">OFF</option>
+    <label>GA agg</label>
+    <select id="gaAgg">
+      <option value="mean">Media</option>
+      <option value="median">Mediana</option>
     </select>
 
-    <label>Max width CI (stabilità)</label>
-    <input id="maxWidth" type="number" value="0.18" step="0.01" style="width:110px">
-  </div>
-
-  <hr style="margin:14px 0;border:none;border-top:1px solid #e9e9f7">
-
-  <div class="row">
-    <label><b>Bootstrap su P(X)</b></label>
-    <label>Iterazioni</label><input id="B" type="number" value="1200" style="width:120px">
-    <button id="runBtn" type="button">Trova partite da attenzionare</button>
-    <span id="status" class="muted"></span>
+    <span class="pill">Bootstrap: calcolato ma <b>non</b> blocca</span>
   </div>
 </div>
 
 <div id="output"></div>
 
 <script>
-/* =========================
-   UTIL + CSV
-========================= */
+/* ===== CSV robusto ===== */
 function parseCSV(text){
   const rows=[]; let row=[], cur="", inQ=false;
   for(let i=0;i<text.length;i++){
@@ -190,84 +153,48 @@ async function readFileText(file){
 function clamp(x,a,b){ return Math.max(a, Math.min(b,x)); }
 function fmtNum(x){ return Number.isFinite(x) ? x.toFixed(2) : "—"; }
 function fmtPct01(x){ return Number.isFinite(x) ? (x*100).toFixed(1)+"%" : "—"; }
-
-/* =========================
-   NORMALIZZAZIONE ROWS
-========================= */
 function normTeam(s){ return String(s||"").trim().toLowerCase(); }
-function normLeague(o){
-  const v = pick(o, ["league","League","Div","div","campionato"]);
-  return String(v||"NA").trim().toUpperCase() || "NA";
-}
+
+/* ===== normalize ===== */
 function normResultRow(o){
   const dateStr = String(pick(o,["date","match_date","data","giorno","Date","DATA"])||"").trim();
   const home_team = normTeam(pick(o,["home_team","hometeam","home","HomeTeam","CASA"])||"");
   const away_team = normTeam(pick(o,["away_team","awayteam","away","AwayTeam","TRASFERTA"])||"");
   let result = String(pick(o,["result","Result","FTR","esito","ft"])||"").trim().toUpperCase();
-  if(result==="D") result="X";
-  if(result==="H") result="1";
-  if(result==="A") result="2";
+  if(result==="D") result="X"; if(result==="H") result="1"; if(result==="A") result="2";
   const FTHG = pick(o,["FTHG","fthg","hg","home_goals","HomeGoals"]) ?? "";
   const FTAG = pick(o,["FTAG","ftag","ag","away_goals","AwayGoals"]) ?? "";
   const dateTs = parseDateTs(dateStr);
-  const league = normLeague(o);
-  return {dateStr, dateTs, league, home_team, away_team, result, FTHG:String(FTHG).trim(), FTAG:String(FTAG).trim()};
+  return {dateStr, dateTs, home_team, away_team, result, FTHG:String(FTHG).trim(), FTAG:String(FTAG).trim()};
 }
 function normQuoteRow(o){
   const dateStr = String(pick(o,["date","match_date","data","giorno","Date","DATA"])||"").trim();
   const home_team = normTeam(pick(o,["home_team","hometeam","home","HomeTeam","CASA"])||"");
   const away_team = normTeam(pick(o,["away_team","awayteam","away","AwayTeam","TRASFERTA"])||"");
   const dateTs = parseDateTs(dateStr);
-  const league = normLeague(o);
 
-  // 1X2
   const b365_x = pick(o,["b365_x","B365D","oddx","odds_x","X","draw"]) ?? "";
   const b365_1 = pick(o,["b365_1","b365_h","B365H","odd1","odds_1","1","home"]) ?? "";
   const b365_2 = pick(o,["b365_2","b365_a","B365A","odd2","odds_2","2","away"]) ?? "";
 
-  // O/U 2.5 (tante varianti)
-  const o25 = pick(o,[
-    "b365_o25","B365O25","B365O2.5","B365>2.5","O25","O2.5","over25","odds_over25","Over2.5"
-  ]) ?? "";
-  const u25 = pick(o,[
-    "b365_u25","B365U25","B365U2.5","B365<2.5","U25","U2.5","under25","odds_under25","Under2.5"
-  ]) ?? "";
+  const o25 = pick(o,["b365_o25","B365O25","B365O2.5","B365>2.5","O25","over25","Over2.5"]) ?? "";
+  const u25 = pick(o,["b365_u25","B365U25","B365U2.5","B365<2.5","U25","under25","Under2.5"]) ?? "";
 
-  // Pari/Dispari (anche qui varianti)
-  const even = pick(o,[
-    "b365_even","B365Even","even","pari","Even","PARI","odds_even"
-  ]) ?? "";
-  const odd = pick(o,[
-    "b365_odd","B365Odd","odd","dispari","Odd","DISPARI","odds_odd"
-  ]) ?? "";
+  const even = pick(o,["b365_even","B365Even","even","pari","Even","PARI","odds_even"]) ?? "";
+  const odd = pick(o,["b365_odd","B365Odd","odd","dispari","Odd","DISPARI","odds_odd"]) ?? "";
 
-  return {
-    dateStr, dateTs, league, home_team, away_team,
-    b365_x:String(b365_x).trim(),
-    b365_1:String(b365_1).trim(),
-    b365_2:String(b365_2).trim(),
-    o25:String(o25).trim(),
-    u25:String(u25).trim(),
-    even:String(even).trim(),
-    odd:String(odd).trim()
+  return {dateStr, dateTs, home_team, away_team,
+    b365_x:String(b365_x).trim(), b365_1:String(b365_1).trim(), b365_2:String(b365_2).trim(),
+    o25:String(o25).trim(), u25:String(u25).trim(), even:String(even).trim(), odd:String(odd).trim()
   };
 }
 function isPlayed(r){ return (r.result==="1"||r.result==="X"||r.result==="2"); }
 
-/* =========================
-   STATISTICHE X
-========================= */
-function median(arr){
-  const a=arr.slice().sort((x,y)=>x-y);
-  const n=a.length;
-  if(!n) return NaN;
-  const mid=Math.floor(n/2);
-  return n%2 ? a[mid] : (a[mid-1]+a[mid])/2;
-}
+/* ===== Draw rate ===== */
 function weights(n, mode){
   if(mode==="none") return Array.from({length:n}, ()=>1);
   if(mode==="linear") return Array.from({length:n}, (_,i)=>i+1);
-  return Array.from({length:n}, (_,i)=>Math.pow(1.5, i)); // exp
+  return Array.from({length:n}, (_,i)=>Math.pow(1.5, i));
 }
 function resultForTeam(team,r){
   if(r.result==="X") return "D";
@@ -290,31 +217,29 @@ function weightedRateDraw(team, matches, mode){
 function calcPX(results, match, N, decayMode){
   const prev = results.filter(x => isPlayed(x) && Number.isFinite(x.dateTs) && x.dateTs < match.dateTs);
 
-  // storico casa/trasferta
   const homeHist = prev.filter(x=>x.home_team===match.home_team);
   const awayHist = prev.filter(x=>x.away_team===match.away_team);
   const hX = homeHist.filter(x=>x.result==="X").length / (homeHist.length||1);
   const aX = awayHist.filter(x=>x.result==="X").length / (awayHist.length||1);
   const histPX = (hX + aX) / 2;
 
-  // recenti (qualunque sede) con decay
   const sortedPrev = prev.slice().sort((a,b)=>b.dateTs - a.dateTs);
-  const homeRecent = sortedPrev
-    .filter(x=>x.home_team===match.home_team || x.away_team===match.home_team)
-    .slice(0,N).reverse();
-  const awayRecent = sortedPrev
-    .filter(x=>x.home_team===match.away_team || x.away_team===match.away_team)
-    .slice(0,N).reverse();
+  const homeRecent = sortedPrev.filter(x=>x.home_team===match.home_team || x.away_team===match.home_team).slice(0,N).reverse();
+  const awayRecent = sortedPrev.filter(x=>x.home_team===match.away_team || x.away_team===match.away_team).slice(0,N).reverse();
+
   const recPX = (weightedRateDraw(match.home_team, homeRecent, decayMode) +
                  weightedRateDraw(match.away_team, awayRecent, decayMode))/2;
 
-  const p = 0.6*recPX + 0.4*histPX;
-  return clamp(p, 0.10, 0.55);
+  return clamp(0.6*recPX + 0.4*histPX, 0.10, 0.60);
 }
 
-/* =========================
-   GA (difesa)
-========================= */
+/* ===== GA conceded ===== */
+function median(arr){
+  const a=arr.slice().sort((x,y)=>x-y);
+  const n=a.length; if(!n) return NaN;
+  const mid=Math.floor(n/2);
+  return n%2 ? a[mid] : (a[mid-1]+a[mid])/2;
+}
 function teamRecentConceded(results, team, N, dateTs){
   const prev = results
     .filter(x => isPlayed(x) && Number.isFinite(x.dateTs) && x.dateTs < dateTs &&
@@ -333,9 +258,7 @@ function teamRecentConceded(results, team, N, dateTs){
   return out;
 }
 
-/* =========================
-   Bootstrap
-========================= */
+/* ===== bootstrap (solo info) ===== */
 function percentile(sortedArr, p){
   if(sortedArr.length===0) return NaN;
   const idx=(sortedArr.length-1)*p;
@@ -357,14 +280,14 @@ function bootstrapPX(results, match, N, decayMode, B){
   const aAll = prevAll.filter(x=>x.home_team===match.away_team || x.away_team===match.away_team);
 
   const vals=[];
-  const hK=Math.max(10, Math.min(hAll.length, 80));
-  const aK=Math.max(10, Math.min(aAll.length, 80));
+  const hK=Math.max(10, Math.min(hAll.length, 60));
+  const aK=Math.max(10, Math.min(aAll.length, 60));
 
   for(let i=0;i<B;i++){
     const mix = []
       .concat(sample(hAll, hK))
       .concat(sample(aAll, aK))
-      .concat(sample(prevAll, Math.min(prevAll.length, 120)));
+      .concat(sample(prevAll, Math.min(prevAll.length, 100)));
     mix.sort((x,y)=>x.dateTs - y.dateTs);
     vals.push(calcPX(mix, match, N, decayMode));
   }
@@ -372,231 +295,147 @@ function bootstrapPX(results, match, N, decayMode, B){
   return { p05: percentile(vals,0.05), med: percentile(vals,0.50), p95: percentile(vals,0.95) };
 }
 
-/* =========================
-   EV
-========================= */
 function ev(pX, oddX){ return pX*oddX - 1; }
 
-/* =========================
-   TAG stabilità
-========================= */
-function stabilityTag(width, maxWidth){
-  if(!Number.isFinite(width)) return {txt:"NO-CI", cls:"tMid"};
-  if(width <= maxWidth*0.75) return {txt:"STABILE", cls:"tGood"};
-  if(width <= maxWidth) return {txt:"MEDIA", cls:"tMid"};
-  return {txt:"VOLATILE", cls:"tBad"};
-}
-
-/* =========================
-   MAIN
-========================= */
+/* ===== MAIN ===== */
 async function run(){
   const status = document.getElementById("status");
   const output = document.getElementById("output");
-  status.textContent = "Carico CSV…";
-  output.innerHTML = "";
+  status.textContent="Carico CSV…";
+  output.innerHTML="";
 
-  try{
-    const fRes = document.getElementById("csvResultsFile").files?.[0];
-    const fQuo = document.getElementById("csvQuotesFile").files?.[0];
-    if(!fRes || !fQuo){
-      status.textContent = "⚠️ Seleziona entrambi i CSV (risultati + quote).";
-      return;
-    }
+  const fRes = document.getElementById("csvResultsFile").files?.[0];
+  const fQuo = document.getElementById("csvQuotesFile").files?.[0];
+  if(!fRes || !fQuo){ status.textContent="⚠️ Seleziona entrambi i CSV."; return; }
 
-    const resText = await readFileText(fRes);
-    const quoText = await readFileText(fQuo);
+  const resText = await readFileText(fRes);
+  const quoText = await readFileText(fQuo);
 
-    const results = parseCSV(resText).map(normResultRow)
-      .filter(r=>r.dateStr && r.home_team && r.away_team && Number.isFinite(r.dateTs));
+  const results = parseCSV(resText).map(normResultRow)
+    .filter(r=>r.dateStr && r.home_team && r.away_team && Number.isFinite(r.dateTs));
 
-    const quotes = parseCSV(quoText).map(normQuoteRow)
-      .filter(q=>q.dateStr && q.home_team && q.away_team && Number.isFinite(q.dateTs));
+  const quotes = parseCSV(quoText).map(normQuoteRow)
+    .filter(q=>q.dateStr && q.home_team && q.away_team && Number.isFinite(q.dateTs));
 
-    const N = +document.getElementById("N").value||10;
-    const evMin = (+document.getElementById("evMin").value||15)/100;
-    const qMin = +document.getElementById("qMin").value||3.0;
-    const qMax = +document.getElementById("qMax").value||4.8;
-    const odds12Min = +document.getElementById("odds12Min").value||1.70;
-    const gaMax = +document.getElementById("gaMax").value||1.2;
-    const spreadMax = +document.getElementById("spreadMax").value||2.2;
-    const topK = Math.max(1, +document.getElementById("topK").value||5);
-    const gaAgg = document.getElementById("gaAgg").value;
-    const decayMode = document.getElementById("decay").value;
-    const bootFloor = document.getElementById("bootFloor").value==="on";
-    const B = +document.getElementById("B").value||1200;
-    const maxWidth = +document.getElementById("maxWidth").value||0.18;
+  const N=+document.getElementById("N").value||12;
+  const evMin=(+document.getElementById("evMin").value||5)/100;
+  const qMin=+document.getElementById("qMin").value||2.8;
+  const qMax=+document.getElementById("qMax").value||5.5;
+  const odds12Min=+document.getElementById("odds12Min").value||1.55;
+  const spreadMax=+document.getElementById("spreadMax").value||3.5;
+  const gaMax=+document.getElementById("gaMax").value||1.35;
+  const topK=Math.max(1,+document.getElementById("topK").value||15);
+  const decayMode=document.getElementById("decay").value;
+  const gaAgg=document.getElementById("gaAgg").value;
+  const B=600; // info-only
 
+  status.textContent="Calcolo…";
+
+  let checked=0, kept=0, skipOdds=0, skipSpread=0, skipPX=0, skipEV=0;
+
+  const list=[];
+  for(const q of quotes){
+    checked++;
+
+    const oddX=toNum(q.b365_x);
+    const odd1=toNum(q.b365_1);
+    const odd2=toNum(q.b365_2);
+
+    if(!Number.isFinite(oddX) || oddX<qMin || oddX>qMax){ skipOdds++; continue; }
+    if(!Number.isFinite(odd1) || !Number.isFinite(odd2) || odd1<odds12Min || odd2<odds12Min){ skipOdds++; continue; }
+
+    const spread12=Math.abs(odd1-odd2);
+    if(!Number.isFinite(spread12) || spread12>spreadMax){ skipSpread++; continue; }
+
+    const match={dateTs:q.dateTs, dateStr:q.dateStr, home_team:q.home_team, away_team:q.away_team};
+
+    const pX=calcPX(results, match, N, decayMode);
+    if(!Number.isFinite(pX) || pX<=0){ skipPX++; continue; }
+
+    const EV=ev(pX, oddX);
+    if(EV<evMin){ skipEV++; continue; }
+
+    // GA (NON blocca se non disponibile)
+    const gaH=teamRecentConceded(results, match.home_team, N, match.dateTs);
+    const gaA=teamRecentConceded(results, match.away_team, N, match.dateTs);
     const agg = (arr)=> gaAgg==="median" ? median(arr) : (arr.reduce((s,v)=>s+v,0)/arr.length);
+    const gaHn = gaH.length>=3 ? agg(gaH) : NaN;
+    const gaAn = gaA.length>=3 ? agg(gaA) : NaN;
 
-    status.textContent="Calcolo segnali SOLO X…";
+    // se GA disponibile e supera gaMax, scarta (muro leggero)
+    if(Number.isFinite(gaHn) && gaHn>gaMax) continue;
+    if(Number.isFinite(gaAn) && gaAn>gaMax) continue;
 
-    const candidates = [];
+    // bootstrap info
+    const ci=bootstrapPX(results, match, N, decayMode, B);
+    const width=(Number.isFinite(ci.p95)&&Number.isFinite(ci.p05)) ? (ci.p95-ci.p05) : NaN;
 
-    for(const q of quotes){
-      // ===== BLOCCO 1: quote + spread (prima di qualsiasi filtro su spread) =====
-      const oddX = toNum(q.b365_x);
-      const odd1 = toNum(q.b365_1);
-      const odd2 = toNum(q.b365_2);
+    kept++;
+    list.push({
+      match, odd1, oddX, odd2, spread12,
+      pX, EV, implied:1/oddX,
+      ci, width,
+      gaHn, gaAn,
+      o25:toNum(q.o25), u25:toNum(q.u25),
+      even:toNum(q.even), odd:toNum(q.odd)
+    });
+  }
 
-      if(!Number.isFinite(oddX) || oddX < qMin || oddX > qMax) continue;
-      if(!Number.isFinite(odd1) || !Number.isFinite(odd2)) continue;
-      if(odd1 < odds12Min || odd2 < odds12Min) continue;
+  list.sort((a,b)=>b.EV-a.EV);
+  const top=list.slice(0, topK);
 
-      const spread12 = Math.abs(odd1 - odd2);
-      if(!Number.isFinite(spread12) || spread12 > spreadMax) continue;
-
-      // ANTI-CLUSTER #1: pivot X “trappola” se spread medio (non stretto)
-      // (evitiamo la zona dove spesso il mercato “incastra” il draw)
-      if(oddX >= 3.15 && oddX <= 3.45 && spread12 >= 0.6 && spread12 <= 1.2) continue;
-
-      // info extra odds
-      const o25 = toNum(q.o25);
-      const u25 = toNum(q.u25);
-      const even = toNum(q.even);
-      const odd = toNum(q.odd);
-
-      const match = { dateTs:q.dateTs, dateStr:q.dateStr, home_team:q.home_team, away_team:q.away_team, league:q.league };
-
-      // P(X) base
-      const pX = calcPX(results, match, N, decayMode);
-      if(!Number.isFinite(pX) || pX<=0) continue;
-
-      // ===== BLOCCO 2: GA (difesa) -> calcola gaHn/gaAn PRIMA di usarli =====
-      const gaH = teamRecentConceded(results, match.home_team, N, match.dateTs);
-      const gaA = teamRecentConceded(results, match.away_team, N, match.dateTs);
-      if(gaH.length < 3 || gaA.length < 3) continue;
-
-      const gaHn = agg(gaH);
-      const gaAn = agg(gaA);
-      if(!Number.isFinite(gaHn) || !Number.isFinite(gaAn)) continue;
-
-      // filtro GA “classico” (cluster che rompe X: una squadra troppo “clean”, l’altra troppo “leaky”)
-      if((gaHn <= 0.9 && gaAn >= 1.4) || (gaAn <= 0.9 && gaHn >= 1.4)) continue;
-
-      // filtro GA max (difesa)
-      if(gaHn > gaMax || gaAn > gaMax) continue;
-
-      // ===== BLOCCO 3: bootstrap / stabilità =====
-      const ci0 = bootstrapPX(results, match, N, decayMode, B);
-      const ci = { p05: ci0.p05, med: ci0.med, p95: ci0.p95 };
-      const width = (Number.isFinite(ci.p95) && Number.isFinite(ci.p05)) ? (ci.p95 - ci.p05) : NaN;
-
-      // ANTI-CLUSTER #2: instabilità -> scarta (questa ti taglia i cluster “cattivi”)
-      if(Number.isFinite(width) && width > maxWidth) continue;
-
-      const implied = 1/oddX;
-
-      // bootstrap floor: p05 > implied
-      if(bootFloor){
-        if(!Number.isFinite(ci.p05)) continue;
-        if(ci.p05 <= implied) continue;
-      }
-
-      // EV
-      const EV = ev(pX, oddX);
-      if(EV < evMin) continue;
-
-      candidates.push({
-        match, odd1, oddX, odd2, spread12,
-        pX, EV, implied, ci, width,
-        gaHn, gaAn,
-        o25, u25, even, odd
-      });
-    }
-
-    candidates.sort((a,b)=>b.EV - a.EV);
-    const top = candidates.slice(0, topK);
-
-    if(top.length===0){
-      status.textContent="Nessuna partita supera i filtri.";
-      output.innerHTML = `
-        <div class="card">
-          <b>Nessuna partita da attenzionare.</b><br>
-          <small>Prova: EV min più basso, Bootstrap floor OFF, oppure alza GA max o maxWidth.</small>
-        </div>`;
-      return;
-    }
-
-    const rowsHtml = top.map(x=>{
-      const evCls = x.EV>=0.30 ? "ok" : (x.EV>=0.20 ? "warn" : "");
-      const tag = stabilityTag(x.width, maxWidth);
-
-      return `
-        <tr>
-          <td>
-            <b>${x.match.home_team} — ${x.match.away_team}</b><br>
-            <small class="muted">${x.match.dateStr} • ${x.match.league}</small>
-          </td>
-
-          <td class="mono">
-            ${fmtNum(x.odd1)} / <b>${fmtNum(x.oddX)}</b> / ${fmtNum(x.odd2)}<br>
-            <small class="muted">spread12=${fmtNum(x.spread12)}</small>
-          </td>
-
-          <td>
-            <b>${fmtPct01(x.pX)}</b><br>
-            <small class="muted">implied ${fmtPct01(x.implied)}</small>
-          </td>
-
-          <td class="${evCls}">
-            <b>${(x.EV*100>=0?"+":"")}${(x.EV*100).toFixed(1)}%</b><br>
-            <small class="muted">EV = pX*oddX - 1</small>
-          </td>
-
-          <td class="mono">
-            ${fmtPct01(x.ci.p05)} – ${fmtPct01(x.ci.p95)}<br>
-            <small class="muted">width=${fmtNum(x.width)}</small><br>
-            <span class="tag ${tag.cls}">${tag.txt}</span>
-          </td>
-
-          <td>
-            <small>
-              GA(H)≈${fmtNum(x.gaHn)} • GA(A)≈${fmtNum(x.gaAn)}<br>
-              O2.5=${fmtNum(x.o25)} • U2.5=${fmtNum(x.u25)}<br>
-              Pari=${fmtNum(x.even)} • Dispari=${fmtNum(x.odd)}
-            </small>
-          </td>
-        </tr>
-      `;
-    }).join("");
-
+  if(!top.length){
+    status.textContent="0 risultati (anche in RECOVERY).";
     output.innerHTML = `
       <div class="card">
-        <div class="row">
-          <span class="pill"><b>Risultati:</b> ${results.length}</span>
-          <span class="pill"><b>Quote future:</b> ${quotes.length}</span>
-          <span class="pill"><b>Candidate:</b> ${candidates.length}</span>
-          <span class="pill"><b>Output:</b> ${top.length}</span>
+        <b>Diagnostica</b><br>
+        <div class="row" style="margin-top:10px">
+          <span class="pill"><b>Quote lette:</b> ${quotes.length}</span>
+          <span class="pill"><b>Analizzate:</b> ${checked}</span>
+          <span class="pill"><b>Skip odds:</b> ${skipOdds}</span>
+          <span class="pill"><b>Skip spread:</b> ${skipSpread}</span>
+          <span class="pill"><b>Skip pX:</b> ${skipPX}</span>
+          <span class="pill"><b>Skip EV:</b> ${skipEV}</span>
         </div>
-
-        <table>
-          <thead>
-            <tr>
-              <th>Match</th>
-              <th>Quote (1 / X / 2)</th>
-              <th>P(X)</th>
-              <th>EV</th>
-              <th>Bootstrap CI + stabilità</th>
-              <th>Extra quote (info)</th>
-            </tr>
-          </thead>
-          <tbody>${rowsHtml}</tbody>
-        </table>
-
-        <small style="display:block;margin-top:10px">
-          Filtri attivi: EV≥${(evMin*100).toFixed(0)}%, X=[${qMin}-${qMax}], 1&2≥${odds12Min.toFixed(2)},
-          GA≤${gaMax.toFixed(2)}, spread12≤${spreadMax.toFixed(1)},
-          pivot-skip (X 3.15–3.45 & spread 0.6–1.2),
-          width≤${maxWidth.toFixed(2)}, bootstrapFloor=${bootFloor?"ON":"OFF"} (B=${B}).
+        <small class="muted" style="display:block;margin-top:10px">
+          Se “Skip odds” è alto → il CSV quote non ha b365_1/b365_x/b365_2 come li stiamo leggendo (nomi colonne diversi).<br>
+          Se “Skip spread” è alto → spreadMax troppo basso.<br>
+          Se “Skip pX” è alto → date delle quote non parse / non ci sono risultati precedenti (dateTs sbagliata).<br>
+          Se “Skip EV” è alto → EV min troppo alto.
         </small>
-      </div>
-    `;
-
-    status.textContent="Completato ✅";
-  }catch(e){
-    status.textContent="Errore: " + (e?.message || e);
+      </div>`;
+    return;
   }
+
+  const rows=top.map(x=>`
+    <tr>
+      <td><b>${x.match.home_team} — ${x.match.away_team}</b><br><small class="muted">${x.match.dateStr}</small></td>
+      <td class="mono">${fmtNum(x.odd1)} / <b>${fmtNum(x.oddX)}</b> / ${fmtNum(x.odd2)}<br><small class="muted">spread=${fmtNum(x.spread12)}</small></td>
+      <td><b>${fmtPct01(x.pX)}</b><br><small class="muted">implied ${fmtPct01(x.implied)}</small></td>
+      <td class="${x.EV>=0.25?'ok':(x.EV>=0.15?'warn':'')}"><b>${(x.EV*100>=0?"+":"")}${(x.EV*100).toFixed(1)}%</b></td>
+      <td class="mono">${fmtPct01(x.ci.p05)}–${fmtPct01(x.ci.p95)}<br><small class="muted">w=${fmtNum(x.width)}</small></td>
+      <td><small>GA(H)=${fmtNum(x.gaHn)} • GA(A)=${fmtNum(x.gaAn)}<br>O2.5=${fmtNum(x.o25)} U2.5=${fmtNum(x.u25)}<br>Pari=${fmtNum(x.even)} Dispari=${fmtNum(x.odd)}</small></td>
+    </tr>
+  `).join("");
+
+  output.innerHTML=`
+    <div class="card">
+      <div class="row">
+        <span class="pill"><b>Risultati:</b> ${results.length}</span>
+        <span class="pill"><b>Quote:</b> ${quotes.length}</span>
+        <span class="pill"><b>Tenute:</b> ${kept}</span>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Match</th><th>1/X/2</th><th>P(X)</th><th>EV</th><th>CI (info)</th><th>Extra (info)</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+  `;
+  status.textContent="Completato ✅";
 }
 
 document.getElementById("runBtn").addEventListener("click", run);
