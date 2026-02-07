@@ -707,9 +707,57 @@ document.getElementById("btnRun").addEventListener("click", async ()=>{
   }
 
   // Load matches
-  const texts = await readFilesAsText(matchFiles);
-  const matches = [];
-  for(const t of texts){
+  // Load matches OR quota_nostra (auto-detect)
+const texts = await readFilesAsText(matchFiles);
+
+const matches = [];
+let detectedQuota = [];
+
+for(const t of texts){
+  const rows = parseCSV(t.text);
+  if(rows.length === 0) continue;
+
+  // detect headers
+  const h = Object.keys(rows[0] || {}).map(x => x.toLowerCase());
+
+  const isMatch =
+    h.includes("winner") && h.includes("loser") &&
+    (h.includes("avgw") || h.includes("avgw ") ) &&
+    (h.includes("avgl") || h.includes("avgl ") );
+
+  const isQuota =
+    h.includes("player") && h.includes("win_rate") && h.includes("quota_nostra");
+
+  if(isQuota && !isMatch){
+    // treat as quota_nostra file
+    detectedQuota = detectedQuota.concat(
+      rows.map(r => ({
+        player: (r.player ?? r.Player ?? "").trim(),
+        matches: toNum(r.matches ?? r.Matches),
+        wins: toNum(r.wins ?? r.Wins),
+        win_rate: toNum(r.win_rate ?? r.WinRate ?? r.winrate),
+        quota_nostra: toNum(r.quota_nostra ?? r.QuotaNostra ?? r.quota)
+      })).filter(x => x.player && Number.isFinite(x.matches) && Number.isFinite(x.win_rate) && Number.isFinite(x.quota_nostra))
+    );
+    continue;
+  }
+
+  // otherwise parse as match rows
+  for(const r of rows){
+    const m = normalizeMatchRow(r);
+    if(m) matches.push(m);
+  }
+}
+
+// Save
+if(matches.length > 0) MATCHES = matches;
+if(detectedQuota.length > 0){
+  detectedQuota.sort((a,b)=> a.quota_nostra - b.quota_nostra);
+  QUOTA = detectedQuota;
+  QUOTA_MAP = new Map(QUOTA.map(r=>[r.player, r]));
+  refreshQuotaPreview();
+}
+
     const rows = parseCSV(t.text);
     for(const r of rows){
       const m = normalizeMatchRow(r);
