@@ -1,134 +1,133 @@
 <!doctype html>
 <html lang="it">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Syncras – “SEGNALA” SOLO X (Offline • 2 CSV)</title>
-  <style>
-    :root{--violet:#6C5CE7;--bg:#f7f7fb;--card:#fff;--border:#e7e7f5;--text:#111827;--muted:#6b7280}
-    body{font-family:system-ui,Arial;margin:18px;background:var(--bg);color:var(--text)}
-    h2{margin:0 0 10px 0}
-    .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;margin-top:14px}
-    input,select,button{padding:9px;border-radius:12px;border:1px solid #cfcfe6}
-    input[type="file"]{padding:10px}
-    button{cursor:pointer;background:var(--violet);color:#fff;border:0;font-weight:900;padding:12px 14px;border-radius:14px}
-    button:hover{filter:brightness(.96)}
-    small{color:#555;line-height:1.35}
-    .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-    @media(max-width:820px){.grid{grid-template-columns:1fr}}
-    .pill{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--border);background:#fafafe;border-radius:999px;padding:6px 10px;font-size:12px;color:#555}
-    table{border-collapse:collapse;width:100%;margin-top:12px;background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden}
-    th,td{border-bottom:1px solid #eee;padding:8px;text-align:right;font-size:13px;vertical-align:top}
-    th{background:#fafafe;color:#333;font-size:12px}
-    th:first-child,td:first-child{text-align:left}
-    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
-    .ok{color:#0a7}
-    .bad{color:#c22}
-    .warn{color:#d97706}
-    .muted{color:var(--muted)}
-    hr{border:none;border-top:1px solid #e9e9f7}
-    .btn2{background:#111827}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Syncras – “SEGNALA” SOLO X (Offline • 2 CSV)</title>
+<style>
+  :root{--violet:#6C5CE7;--bg:#f7f7fb;--card:#fff;--border:#e7e7f5;--text:#111827;--muted:#6b7280}
+  body{font-family:system-ui,Arial;margin:18px;background:var(--bg);color:var(--text)}
+  h2{margin:0 0 10px 0}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;margin-top:14px}
+  input,select,button{padding:9px;border-radius:12px;border:1px solid #cfcfe6}
+  input[type="file"]{padding:10px}
+  button{cursor:pointer;background:var(--violet);color:#fff;border:0;font-weight:900;padding:12px 14px;border-radius:14px}
+  button:hover{filter:brightness(.96)}
+  small{color:#555;line-height:1.35}
+  .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+  .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+  @media(max-width:820px){.grid{grid-template-columns:1fr}}
+  .pill{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--border);background:#fafafe;border-radius:999px;padding:6px 10px;font-size:12px;color:#555}
+  table{border-collapse:collapse;width:100%;margin-top:12px;background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden}
+  th,td{border-bottom:1px solid #eee;padding:8px;text-align:right;font-size:13px;vertical-align:top}
+  th{background:#fafafe;color:#333;font-size:12px}
+  th:first-child,td:first-child{text-align:left}
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  .ok{color:#0a7} .bad{color:#c22} .warn{color:#d97706}
+  .muted{color:var(--muted)}
+</style>
 </head>
-
 <body>
-  <h2>Syncras – “SEGNALA” SOLO X (Offline • 2 CSV)</h2>
-  <div class="muted">
-    Carichi: (1) risultati storici • (2) quote future. Output: 1–2 partite da attenzionare (SOLO X). Studio informativo.
+
+<h2>Syncras – “SEGNALA” SOLO X (Offline • 2 CSV)</h2>
+<div class="muted">
+  Carichi: (1) risultati storici • (2) quote future.
+  Output: 1–2 partite da attenzionare (SOLO X). Studio informativo.
+</div>
+
+<div class="card">
+  <div class="grid">
+    <div>
+      <label><b>CSV RISULTATI (storico, giocato)</b></label><br>
+      <input id="csvResultsFile" type="file" accept=".csv,text/csv" style="width:100%">
+      <small class="muted">
+        Colonne tipiche: <span class="mono">date, home_team, away_team, result, FTHG, FTAG</span>
+      </small>
+    </div>
+    <div>
+      <label><b>CSV QUOTE (future / pre-match)</b></label><br>
+      <input id="csvQuotesFile" type="file" accept=".csv,text/csv" style="width:100%">
+      <small class="muted">
+        Colonne tipiche: <span class="mono">date, home_team, away_team, b365_x</span> (+ opzionali
+        <span class="mono">b365_1, b365_2, b365_o25, b365_u25, b365_even, b365_odd</span>)
+      </small>
+    </div>
+    <div>
+      <label><b>Setup “leggero”</b></label><br>
+      <div class="row">
+        <span class="pill">✅ SOLO X</span>
+        <span class="pill">✅ GA difesa</span>
+        <span class="pill">✅ spread12</span>
+        <span class="pill">✅ x_ratio_avg</span>
+        <span class="pill">✅ bootstrap floor</span>
+      </div>
+      <div style="margin-top:10px" class="muted">
+        Se non trova nulla: abbassa EV min o disattiva Bootstrap floor.
+      </div>
+    </div>
   </div>
 
-  <div class="card">
-    <div class="grid">
-      <div>
-        <label><b>CSV RISULTATI (storico, giocato)</b></label><br>
-        <input id="csvResultsFile" type="file" accept=".csv,text/csv" style="width:100%">
-        <small class="muted">Colonne tipiche: <span class="mono">date, home_team, away_team, result, FTHG, FTAG</span></small>
-      </div>
+  <hr style="margin:14px 0">
 
-      <div>
-        <label><b>CSV QUOTE (future / pre-match)</b></label><br>
-        <input id="csvQuotesFile" type="file" accept=".csv,text/csv" style="width:100%">
-        <small class="muted">Colonne tipiche: <span class="mono">date, home_team, away_team, b365_x</span> (+ opzionali <span class="mono">b365_1, b365_2</span>)</small>
-      </div>
+  <div class="row">
+    <label>N (recenti)</label><input id="N" type="number" value="10" style="width:90px">
 
-      <div>
-        <label><b>Setup “leggero”</b></label><br>
-        <div class="row">
-          <span class="pill">✅ SOLO X</span>
-          <span class="pill">✅ GA difesa</span>
-          <span class="pill">✅ spread12</span>
-          <span class="pill">✅ bootstrap floor</span>
-        </div>
-        <div style="margin-top:10px" class="muted">
-          Se non trova nulla: abbassa EV min o disattiva Bootstrap floor.
-        </div>
-      </div>
-    </div>
+    <label>EV min (%)</label><input id="evMin" type="number" value="15" style="width:100px">
 
-    <hr style="margin:14px 0">
+    <label>Quota X min</label><input id="qMin" type="number" value="3.0" step="0.1" style="width:100px">
+    <label>Quota X max</label><input id="qMax" type="number" value="4.8" step="0.1" style="width:100px">
 
-    <div class="row">
-      <label>N (recenti)</label><input id="N" type="number" value="10" style="width:90px">
-      <label>EV min (%)</label><input id="evMin" type="number" value="15" style="width:100px">
-      <label>Quota X min</label><input id="qMin" type="number" value="3.0" step="0.1" style="width:100px">
-      <label>Quota X max</label><input id="qMax" type="number" value="4.8" step="0.1" style="width:100px">
-      <label>1 e 2 ≥</label><input id="odds12Min" type="number" value="1.70" step="0.01" style="width:100px">
-      <label>GA max (difesa)</label><input id="gaMax" type="number" value="1.20" step="0.05" style="width:110px">
-      <label>Spread max (|1-2|)</label><input id="spreadMax" type="number" value="6.5" step="0.1" style="width:110px">
-      <label>Output</label><input id="topK" type="number" value="2" step="1" style="width:90px">
-    </div>
+    <label>1 e 2 ≥</label><input id="odds12Min" type="number" value="1.70" step="0.01" style="width:100px">
 
-    <div class="row" style="margin-top:10px">
-      <label>GA agg</label>
-      <select id="gaAgg">
-        <option value="mean">Media</option>
-        <option value="median">Mediana</option>
-      </select>
+    <label>GA max (difesa)</label><input id="gaMax" type="number" value="1.20" step="0.05" style="width:110px">
 
-      <label>Decay</label>
-      <select id="decay">
-        <option value="exp" selected>Esponenziale</option>
-        <option value="linear">Lineare</option>
-        <option value="none">Nessuno</option>
-      </select>
+    <label>Spread max (|1-2|)</label><input id="spreadMax" type="number" value="3.5" step="0.1" style="width:110px">
 
-      <label>Bootstrap floor (p05 > implied)</label>
-      <select id="bootFloor">
-        <option value="on" selected>ON</option>
-        <option value="off">OFF</option>
-      </select>
-
-      <span class="pill">Team norm: <span class="mono">trim+lower</span></span>
-    </div>
-
-    <hr style="margin:14px 0">
-
-    <div class="row">
-      <label><b>Bootstrap (su P(X))</b></label>
-      <label>Iterazioni</label><input id="B" type="number" value="1200" style="width:120px">
-      <button id="runBtn" type="button">Trova 1–2 partite da attenzionare</button>
-      <button id="btBtn" type="button" class="btn2">BACKTEST (spiega i tagli)</button>
-      <span id="status" class="muted"></span>
-    </div>
-
-    <small style="display:block;margin-top:10px">
-      Studio informativo. Nessun invito a scommettere.
-    </small>
+    <label>Output</label><input id="topK" type="number" value="2" step="1" style="width:90px">
   </div>
 
-  <div id="output"></div>
+  <div class="row" style="margin-top:10px">
+    <label>GA agg</label>
+    <select id="gaAgg">
+      <option value="mean">Media</option>
+      <option value="median">Mediana</option>
+    </select>
+
+    <label>Decay</label>
+    <select id="decay">
+      <option value="exp" selected>Esponenziale</option>
+      <option value="linear">Lineare</option>
+      <option value="none">Nessuno</option>
+    </select>
+
+    <label>Bootstrap floor (p05 > implied)</label>
+    <select id="bootFloor">
+      <option value="on" selected>ON</option>
+      <option value="off">OFF</option>
+    </select>
+  </div>
+
+  <hr style="margin:14px 0">
+
+  <div class="row">
+    <label><b>Bootstrap (su P(X))</b></label>
+    <label>Iterazioni</label><input id="B" type="number" value="1200" style="width:120px">
+    <button onclick="run()">Trova 1–2 partite da attenzionare</button>
+    <span id="status" class="muted"></span>
+  </div>
+
+  <small style="display:block;margin-top:10px">
+    Studio informativo. Nessun invito a scommettere.
+  </small>
+</div>
+
+<div id="output"></div>
 
 <script>
 /* =========================
-   Syncras – SOLO X (2 CSV) – con BACKTEST
-   Aggiunta: Backtest che spiega quale filtro taglia:
-   - tutte le X
-   - e in particolare 0-0 / 1-1
+   Syncras – SOLO X (2 CSV) – versione alleggerita + regole DrawLab/Gemini
+   + lettura quote EXTRA: b365_o25, b365_u25, b365_even, b365_odd
 ========================= */
-
-/* --------- team normalization (fixed) --------- */
-function normTeam(s){ return String(s||"").trim().toLowerCase(); }
 
 /* ---------- CSV parser robusto ---------- */
 function parseCSV(text){
@@ -148,7 +147,7 @@ function parseCSV(text){
   }
   row.push(cur); rows.push(row);
   if(rows.length && rows[rows.length-1].every(c=>String(c).trim()==="")) rows.pop();
-  const header = (rows[0]||[]).map(x=>String(x).trim());
+  const header = rows[0].map(x=>String(x).trim());
   return rows.slice(1).map(r=>{
     const o={};
     for(let i=0;i<header.length;i++){
@@ -174,28 +173,11 @@ function toNum(x){
   return Number.isFinite(n) ? n : NaN;
 }
 
-/* ---------- date (robusto: YYYY-MM-DD, DD/MM/YYYY, DD/MM/YY) ---------- */
+/* ---------- date ---------- */
 function parseDateTs(s){
   const t = String(s ?? "").trim();
   if(!t) return NaN;
-
   if(/^\d{4}-\d{2}-\d{2}$/.test(t)) return Date.parse(t + "T00:00:00Z");
-
-  let m = t.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
-  if(m){
-    const dd=+m[1], mm=+m[2], yyyy=+m[3];
-    const iso = `${yyyy.toString().padStart(4,'0')}-${String(mm).padStart(2,'0')}-${String(dd).padStart(2,'0')}`;
-    return Date.parse(iso+"T00:00:00Z");
-  }
-
-  m = t.match(/^(\d{1,2})\/(\d{1,2})\/(\d{2})$/);
-  if(m){
-    const dd=+m[1], mm=+m[2], yy=+m[3];
-    const yyyy = (yy>=70) ? (1900+yy) : (2000+yy);
-    const iso = `${yyyy}-${String(mm).padStart(2,'0')}-${String(dd).padStart(2,'0')}`;
-    return Date.parse(iso+"T00:00:00Z");
-  }
-
   const x = Date.parse(t);
   return Number.isFinite(x) ? x : NaN;
 }
@@ -211,12 +193,12 @@ function median(arr){
 function weights(n, mode){
   if(mode==="none") return Array.from({length:n}, ()=>1);
   if(mode==="linear") return Array.from({length:n}, (_,i)=>i+1);
-  return Array.from({length:n}, (_,i)=>Math.pow(1.5, i)); // exp aggressivo
+  return Array.from({length:n}, (_,i)=>Math.pow(1.5, i));
 }
 function resultForTeam(team,r){
   if(r.result==="X") return "D";
-  if(r.result==="1") return r.home_team===team ? "W" : "L";
-  if(r.result==="2") return r.away_team===team ? "W" : "L";
+  if(r.result==="1") return r.home_team===team?"W":"L";
+  if(r.result==="2") return r.away_team===team?"W":"L";
   return "";
 }
 function weightedRateDraw(team, matches, mode){
@@ -235,38 +217,45 @@ function weightedRateDraw(team, matches, mode){
 /* ---------- normalize rows ---------- */
 function normResultRow(o){
   const dateStr = String(pick(o,["date","match_date","data","giorno","Date","DATA"])||"").trim();
-  const home_team = normTeam(pick(o,["home_team","hometeam","home","HomeTeam","CASA"])||"");
-  const away_team = normTeam(pick(o,["away_team","awayteam","away","AwayTeam","TRASFERTA"])||"");
+  const home_team = String(pick(o,["home_team","hometeam","home","HomeTeam","CASA"])||"").trim();
+  const away_team = String(pick(o,["away_team","awayteam","away","AwayTeam","TRASFERTA"])||"").trim();
   let result = String(pick(o,["result","Result","FTR","esito","ft"])||"").trim().toUpperCase();
-
-// mapping completo FTR (H/D/A) -> (1/X/2)
-if(result==="D") result="X";
-else if(result==="H") result="1";
-else if(result==="A") result="2";
-
-// fallback (alcuni csv usano parole)
-else if(result==="HOME") result="1";
-else if(result==="AWAY") result="2";
-else if(result==="DRAW") result="X";
+  if(result==="D") result="X";
   const FTHG = pick(o,["FTHG","fthg","hg","home_goals","HomeGoals"]) ?? "";
   const FTAG = pick(o,["FTAG","ftag","ag","away_goals","AwayGoals"]) ?? "";
   const dateTs = parseDateTs(dateStr);
   return {dateStr, dateTs, home_team, away_team, result, FTHG:String(FTHG).trim(), FTAG:String(FTAG).trim()};
 }
+
 function normQuoteRow(o){
   const dateStr = String(pick(o,["date","match_date","data","giorno","Date","DATA"])||"").trim();
-  const home_team = normTeam(pick(o,["home_team","hometeam","home","HomeTeam","CASA"])||"");
-  const away_team = normTeam(pick(o,["away_team","awayteam","away","AwayTeam","TRASFERTA"])||"");
+  const home_team = String(pick(o,["home_team","hometeam","home","HomeTeam","CASA"])||"").trim();
+  const away_team = String(pick(o,["away_team","awayteam","away","AwayTeam","TRASFERTA"])||"").trim();
+
   const b365_x = pick(o,["b365_x","B365D","oddx","odds_x","X","draw"]) ?? "";
   const b365_1 = pick(o,["b365_1","b365_h","B365H","odd1","odds_1","1","home"]) ?? "";
   const b365_2 = pick(o,["b365_2","b365_a","B365A","odd2","odds_2","2","away"]) ?? "";
-  const dateTs = parseDateTs(dateStr);
-  return {dateStr, dateTs, home_team, away_team, b365_x:String(b365_x).trim(), b365_1:String(b365_1).trim(), b365_2:String(b365_2).trim()};
-}
-function isPlayed(r){ return (r.result==="1"||r.result==="X"||r.result==="2"); }
 
-/* ---------- key merge ---------- */
-function keyOf(dateTs, home, away){ return `${dateTs}|${home}|${away}`; }
+  // ✅ EXTRA
+  const b365_o25  = pick(o,["b365_o25","b365_over25","B365>2.5","B365O25","o25","over25","over_2_5"]) ?? "";
+  const b365_u25  = pick(o,["b365_u25","b365_under25","B365<2.5","B365U25","u25","under25","under_2_5"]) ?? "";
+  const b365_even = pick(o,["b365_even","b365_pari","even","pari"]) ?? "";
+  const b365_odd  = pick(o,["b365_odd","b365_dispari","odd","dispari"]) ?? "";
+
+  const dateTs = parseDateTs(dateStr);
+  return {
+    dateStr, dateTs, home_team, away_team,
+    b365_x:String(b365_x).trim(),
+    b365_1:String(b365_1).trim(),
+    b365_2:String(b365_2).trim(),
+    b365_o25:String(b365_o25).trim(),
+    b365_u25:String(b365_u25).trim(),
+    b365_even:String(b365_even).trim(),
+    b365_odd:String(b365_odd).trim()
+  };
+}
+
+function isPlayed(r){ return (r.result==="1"||r.result==="X"||r.result==="2"); }
 
 /* ---------- pX base (Home/Away forzato ON) ---------- */
 function calcPX(results, match, N, decayMode){
@@ -284,13 +273,12 @@ function calcPX(results, match, N, decayMode){
   const homeRecent = sortedPrev
     .filter(x=>x.home_team===match.home_team || x.away_team===match.home_team)
     .slice(0,N).reverse();
-
   const awayRecent = sortedPrev
     .filter(x=>x.home_team===match.away_team || x.away_team===match.away_team)
     .slice(0,N).reverse();
 
   const recPX = (weightedRateDraw(match.home_team, homeRecent, decayMode) +
-                 weightedRateDraw(match.away_team, awayRecent, decayMode)) / 2;
+                 weightedRateDraw(match.away_team, awayRecent, decayMode))/2;
 
   const p = 0.6*recPX + 0.4*histPX;
   return Math.max(0.10, Math.min(0.55, p));
@@ -315,18 +303,33 @@ function teamRecentConceded(results, team, N, dateTs){
   return out;
 }
 
-/* ---------- spread12 factor ---------- */
-function spreadFactor(spread12, favAway){
+/* ---------- fattore strutturale quote (spread + ratio + pattern) ---------- */
+function structFactor({spread12, xRatioAvg, odd1, odd2, oddX, favAway}){
   let f = 1.0;
-  if(!Number.isFinite(spread12)) return 1.0;
-  if(spread12 <= 1.0) f += 0.06;
-  else if(spread12 <= 2.5) f += 0.04;
-  else if(spread12 <= 3.5) f += 0.02;
-  else if(spread12 <= 5.0) f -= 0.03;
-  else f -= 0.08;
+
+  if(Number.isFinite(spread12) && spread12 >= 0.5 && spread12 <= 1.5) f += 0.06;
+  else if(Number.isFinite(spread12) && spread12 < 0.5) f += 0.04;
+  else if(Number.isFinite(spread12) && spread12 <= 3.5) f += 0.02;
+
+  if(Number.isFinite(xRatioAvg) && xRatioAvg >= 1.2 && xRatioAvg <= 1.6){
+    f += (xRatioAvg >= 1.4 ? 0.06 : 0.04);
+  }
+
+  if(favAway &&
+     Number.isFinite(odd1) && Number.isFinite(odd2) &&
+     odd1 >= 2.80 && odd1 <= 3.40 &&
+     odd2 >= 2.10 && odd2 <= 2.50){
+    f += 0.05;
+  }
+
+  if(Number.isFinite(oddX) && oddX >= 3.15 && oddX <= 3.35 &&
+     Number.isFinite(spread12) && spread12 > 0.5){
+    f -= 0.04;
+  }
 
   if(favAway) f += 0.02;
-  return Math.max(0.85, Math.min(1.10, f));
+
+  return Math.max(0.80, Math.min(1.20, f));
 }
 
 /* ---------- bootstrap ---------- */
@@ -382,62 +385,10 @@ async function readFileText(file){
   });
 }
 
-/* ---------- Selection evaluation (returns failReason) ---------- */
-function evaluateSelection(q, results, cfg){
-  const oddX=toNum(q.b365_x);
-  const odd1=toNum(q.b365_1);
-  const odd2=toNum(q.b365_2);
-
-  if(!Number.isFinite(oddX)) return {ok:false, reason:"oddX_missing"};
-  if(oddX < cfg.qMin || oddX > cfg.qMax) return {ok:false, reason:"oddX_range"};
-
-  if(!Number.isFinite(odd1) || !Number.isFinite(odd2)) return {ok:false, reason:"odd12_missing"};
-  if(odd1 < cfg.odds12Min) return {ok:false, reason:"odd1_lt_min"};
-  if(odd2 < cfg.odds12Min) return {ok:false, reason:"odd2_lt_min"};
-
-  const spread12 = Math.abs(odd1-odd2);
-  if(!Number.isFinite(spread12)) return {ok:false, reason:"spread_nan"};
-  if(spread12 > cfg.spreadMax) return {ok:false, reason:"spread_gt_max"};
-
-  const favAway = (odd2 < odd1);
-  const match = { dateTs:q.dateTs, dateStr:q.dateStr, home_team:q.home_team, away_team:q.away_team };
-
-  const pX = calcPX(results, match, cfg.N, cfg.decayMode);
-  if(!Number.isFinite(pX) || pX<=0) return {ok:false, reason:"pX_bad"};
-
-  const gaH=teamRecentConceded(results, match.home_team, cfg.N, match.dateTs);
-  const gaA=teamRecentConceded(results, match.away_team, cfg.N, match.dateTs);
-  if(gaH.length<3 || gaA.length<3) return {ok:false, reason:"ga_samples_low"};
-
-  const agg = (arr)=> cfg.gaAgg==="median" ? median(arr) : (arr.reduce((s,v)=>s+v,0)/arr.length);
-  const gaHn = agg(gaH);
-  const gaAn = agg(gaA);
-  if(!Number.isFinite(gaHn) || !Number.isFinite(gaAn)) return {ok:false, reason:"ga_nan"};
-  if(gaHn > cfg.gaMax || gaAn > cfg.gaMax) return {ok:false, reason:"ga_gt_max"};
-
-  const sf = spreadFactor(spread12, favAway);
-  const pX_adj = Math.min(0.65, pX * sf);
-
-  const EV = ev(pX_adj, oddX);
-  if(EV < cfg.evMin) return {ok:false, reason:"ev_lt_min"};
-
-  const implied = 1/oddX;
-
-  if(cfg.bootFloor){
-    const ci0 = bootstrapPX(results, match, cfg.N, cfg.decayMode, cfg.B);
-    const p05 = Number.isFinite(ci0.p05) ? Math.min(0.65, ci0.p05 * sf) : NaN;
-    if(!Number.isFinite(p05)) return {ok:false, reason:"boot_p05_nan"};
-    if(p05 <= implied) return {ok:false, reason:"boot_floor_fail"};
-  }
-
-  return {ok:true, reason:"ok", extra:{spread12, favAway, pX, sf, pX_adj, EV}};
-}
-
-/* ---------- MAIN (segnala) ---------- */
+/* ---------- MAIN ---------- */
 async function run(){
   const status = document.getElementById("status");
   const output = document.getElementById("output");
-
   status.textContent = "Carico CSV…";
   output.innerHTML = "";
 
@@ -458,70 +409,154 @@ async function run(){
     const quotes = parseCSV(quoText).map(normQuoteRow)
       .filter(q=>q.dateStr && q.home_team && q.away_team && Number.isFinite(q.dateTs));
 
-    const cfg = {
-      N:+document.getElementById("N").value||10,
-      evMin:(+document.getElementById("evMin").value||15)/100,
-      qMin:+document.getElementById("qMin").value||3.0,
-      qMax:+document.getElementById("qMax").value||4.8,
-      odds12Min:+document.getElementById("odds12Min").value||1.70,
-      gaMax:+document.getElementById("gaMax").value||1.2,
-      spreadMax:+document.getElementById("spreadMax").value||6.5,
-      topK:Math.max(1,+document.getElementById("topK").value||2),
-      gaAgg:document.getElementById("gaAgg").value,
-      decayMode:document.getElementById("decay").value,
-      bootFloor:document.getElementById("bootFloor").value==="on",
-      B:+document.getElementById("B").value||1200
-    };
+    const N=+document.getElementById("N").value||10;
+    const evMin=(+document.getElementById("evMin").value||15)/100;
+    const qMin=+document.getElementById("qMin").value||3.0;
+    const qMax=+document.getElementById("qMax").value||4.8;
+    const odds12Min=+document.getElementById("odds12Min").value||1.70;
+    const gaMax=+document.getElementById("gaMax").value||1.2;
+    const spreadMax=+document.getElementById("spreadMax").value||3.5;
+    const topK=Math.max(1,+document.getElementById("topK").value||2);
+
+    const gaAgg=document.getElementById("gaAgg").value;
+    const decayMode=document.getElementById("decay").value;
+    const bootFloor=document.getElementById("bootFloor").value==="on";
+    const B=+document.getElementById("B").value||1200;
 
     status.textContent="Calcolo segnali SOLO X…";
 
     const candidates=[];
     for(const q of quotes){
-      const evr = evaluateSelection(q, results, cfg);
-      if(!evr.ok) continue;
+      const oddX=toNum(q.b365_x);
+      const odd1=toNum(q.b365_1);
+      const odd2=toNum(q.b365_2);
 
-      const oddX=toNum(q.b365_x), odd1=toNum(q.b365_1), odd2=toNum(q.b365_2);
+      // EXTRA (solo lettura/visualizzazione)
+      const oddO25 = toNum(q.b365_o25);
+      const oddU25 = toNum(q.b365_u25);
+      const oddEven = toNum(q.b365_even);
+      const oddOdd  = toNum(q.b365_odd);
+
+      if(!Number.isFinite(oddX) || oddX<qMin || oddX>qMax) continue;
+
+      if(!Number.isFinite(odd1) || !Number.isFinite(odd2)) continue;
+      if(odd1 < odds12Min) continue;
+      if(odd2 < odds12Min) continue;
+
       const spread12 = Math.abs(odd1-odd2);
+      if(!Number.isFinite(spread12) || spread12 > spreadMax) continue;
+
       const favAway = (odd2 < odd1);
+      const avg12 = (odd1 + odd2) / 2;
+      const xRatioAvg = (Number.isFinite(avg12) && avg12>0) ? (oddX / avg12) : NaN;
+
       const match = { dateTs:q.dateTs, dateStr:q.dateStr, home_team:q.home_team, away_team:q.away_team };
 
-      const fair = 1/evr.extra.pX_adj;
+      const pX = calcPX(results, match, N, decayMode);
+      if(!Number.isFinite(pX) || pX<=0) continue;
+
+      const gaH=teamRecentConceded(results, match.home_team, N, match.dateTs);
+      const gaA=teamRecentConceded(results, match.away_team, N, match.dateTs);
+      if(gaH.length<3 || gaA.length<3) continue;
+
+      const agg = (arr)=> gaAgg==="median" ? median(arr) : (arr.reduce((s,v)=>s+v,0)/arr.length);
+      const gaHn = agg(gaH);
+      const gaAn = agg(gaA);
+      if(!Number.isFinite(gaHn) || !Number.isFinite(gaAn)) continue;
+
+      const gaMaxEff = (Number.isFinite(spread12) && spread12 < 0.5) ? (gaMax + 0.15) : gaMax;
+      if(gaHn > gaMaxEff || gaAn > gaMaxEff) continue;
+
+      const sf = structFactor({spread12, xRatioAvg, odd1, odd2, oddX, favAway});
+      const pX_adj = Math.min(0.65, pX * sf);
+
+      const EV = ev(pX_adj, oddX);
+      if(EV < evMin) continue;
+
       const implied = 1/oddX;
+      const fair = 1/pX_adj;
+
+      const ci0 = bootstrapPX(results, match, N, decayMode, B);
+      const ci = {
+        p05: Number.isFinite(ci0.p05) ? Math.min(0.65, ci0.p05 * sf) : NaN,
+        med: Number.isFinite(ci0.med) ? Math.min(0.65, ci0.med * sf) : NaN,
+        p95: Number.isFinite(ci0.p95) ? Math.min(0.65, ci0.p95 * sf) : NaN
+      };
+      const width = (Number.isFinite(ci.p95) && Number.isFinite(ci.p05)) ? (ci.p95-ci.p05) : NaN;
+
+      if(bootFloor){
+        if(!Number.isFinite(ci.p05)) continue;
+        if(ci.p05 <= implied) continue;
+      }
 
       candidates.push({
         match, odd1, oddX, odd2,
-        spread12, favAway,
-        pX: evr.extra.pX, sf: evr.extra.sf, pX_adj: evr.extra.pX_adj,
-        fair, EV: evr.extra.EV, implied
+        oddO25, oddU25, oddEven, oddOdd,
+        spread12, avg12, xRatioAvg, favAway,
+        pX, sf, pX_adj,
+        gaHn, gaAn, gaMaxEff,
+        fair, EV, implied, ci, width
       });
     }
 
     candidates.sort((a,b)=>b.EV - a.EV);
-    const top=candidates.slice(0, cfg.topK);
+    const top=candidates.slice(0, topK);
 
     if(top.length===0){
       status.textContent="Nessuna partita supera i filtri.";
       output.innerHTML = `
         <div class="card">
           <b>Nessuna partita da attenzionare.</b><br>
-          <small>Prova: EV min più basso, Bootstrap floor OFF, oppure alza GA max / Spread max.</small>
+          <small>
+            Prova: EV min più basso, Bootstrap floor OFF, oppure alza GA max / Spread max.
+          </small>
         </div>`;
       return;
     }
 
     const rowsHtml = top.map(x=>{
-      const evPct = x.EV*100;
-      const evCls = evPct>=30 ? "ok" : (evPct>=20 ? "warn" : "");
+      const evCls = x.EV>=0.30 ? "ok" : (x.EV>=0.20 ? "warn" : "");
+      const stab = Number.isFinite(x.width)
+        ? (x.width<=0.10 ? `<span class="ok">stabile</span>` : (x.width<=0.16 ? `<span class="warn">medio</span>` : `<span class="bad">volatile</span>`))
+        : "—";
+
+      const extra = [
+        `O2.5=${fmtNum(x.oddO25)}`,
+        `U2.5=${fmtNum(x.oddU25)}`,
+        `PARI=${fmtNum(x.oddEven)}`,
+        `DISPARI=${fmtNum(x.oddOdd)}`
+      ].join(" • ");
+
       return `
         <tr>
           <td><b>${x.match.home_team} — ${x.match.away_team}</b><br><small>${x.match.dateStr}</small></td>
-          <td class="mono">${fmtNum(x.odd1)} / <b>${fmtNum(x.oddX)}</b> / ${fmtNum(x.odd2)}
-            <br><small class="muted">spread12=${x.spread12.toFixed(2)} • ${x.favAway? "favAway=ON":"favAway=OFF"}</small>
+          <td class="mono">
+            ${fmtNum(x.odd1)} / <b>${fmtNum(x.oddX)}</b> / ${fmtNum(x.odd2)}
+            <br><small class="muted">
+              spread12=${x.spread12.toFixed(2)} • x_ratio_avg=${Number.isFinite(x.xRatioAvg)?x.xRatioAvg.toFixed(2):"—"} • ${x.favAway? "favAway=ON":"favAway=OFF"}
+            </small>
+            <br><small class="muted">EXTRA: ${extra}</small>
           </td>
-          <td><b>${fmtPct(x.pX_adj)}</b><br><small class="muted">base ${fmtPct(x.pX)} • sf×${x.sf.toFixed(2)}</small></td>
+          <td>
+            <b>${fmtPct(x.pX_adj)}</b>
+            <br><small class="muted">base ${fmtPct(x.pX)} • sf×${x.sf.toFixed(2)}</small>
+          </td>
           <td class="mono">${fmtNum(x.fair)}</td>
-          <td class="${evCls}"><b>${evPct>=0?"+":""}${evPct.toFixed(1)}%</b><br><small class="muted">implied ${fmtPct(x.implied)}</small></td>
-          <td><small>N=${cfg.N} • decay=${cfg.decayMode} • H/A=ON</small></td>
+          <td class="${evCls}">
+            <b>${(x.EV*100>=0?"+":"")}${(x.EV*100).toFixed(1)}%</b>
+            <br><small class="muted">implied ${fmtPct(x.implied)}</small>
+          </td>
+          <td class="mono">
+            ${fmtPct(x.ci.p05)} – ${fmtPct(x.ci.p95)}
+            <br><small class="muted">p05 vs implied: ${fmtPct(x.ci.p05)} vs ${fmtPct(x.implied)}</small>
+            <br><small>${stab}</small>
+          </td>
+          <td>
+            <small>
+              GA(H)≈${x.gaHn.toFixed(2)} • GA(A)≈${x.gaAn.toFixed(2)} • GAmaxEff=${x.gaMaxEff.toFixed(2)}
+              • N=${N} • decay=${document.getElementById("decay").value} • H/A=ON
+            </small>
+          </td>
         </tr>`;
     }).join("");
 
@@ -529,7 +564,7 @@ async function run(){
       <div class="card">
         <div class="row">
           <span class="pill"><b>Risultati:</b> ${results.length}</span>
-          <span class="pill"><b>Quote:</b> ${quotes.length}</span>
+          <span class="pill"><b>Quote future:</b> ${quotes.length}</span>
           <span class="pill"><b>Candidate:</b> ${candidates.length}</span>
           <span class="pill"><b>Output:</b> ${top.length}</span>
         </div>
@@ -538,10 +573,11 @@ async function run(){
           <thead>
             <tr>
               <th>Match</th>
-              <th>Quote (1 / X / 2)</th>
+              <th>Quote (1 / X / 2) + EXTRA</th>
               <th>P(X)</th>
               <th>Quota equa</th>
               <th>EV</th>
+              <th>Bootstrap CI (5–95%)</th>
               <th>Note</th>
             </tr>
           </thead>
@@ -549,198 +585,23 @@ async function run(){
         </table>
 
         <small style="display:block;margin-top:10px">
-          Filtri: EV≥${(cfg.evMin*100).toFixed(0)}%, X=[${cfg.qMin}-${cfg.qMax}], 1&2≥${cfg.odds12Min.toFixed(2)},
-          GA≤${cfg.gaMax.toFixed(2)} (entrambe), spread12≤${cfg.spreadMax.toFixed(1)},
-          bootstrapFloor=${cfg.bootFloor?"ON":"OFF"}, bootstrap B=${cfg.B}. Team norm: trim+lower.
+          Filtri: EV≥${(evMin*100).toFixed(0)}%, X=[${qMin}-${qMax}], 1&2≥${odds12Min.toFixed(2)},
+          GA≤${gaMax.toFixed(2)} (entrambe; +0.15 se spread&lt;0.5),
+          spread12≤${spreadMax.toFixed(1)},
+          bootstrapFloor=${bootFloor?"ON":"OFF"}, bootstrap B=${B}. Home/Away forzato ON.
+        </small>
+        <small class="muted" style="display:block;margin-top:6px">
+          Nota: le quote EXTRA (O2.5/U2.5/Pari/Dispari) vengono solo lette e mostrate, non influenzano i filtri “SOLO X”.
         </small>
       </div>`;
+
     status.textContent="Completato ✅";
   }catch(e){
-    status.textContent="Errore: " + (e?.message || e);
+    status.textContent="Errore: "+e;
   }
 }
-
-/* ---------- BACKTEST: spiega i tagli ---------- */
-function addCount(map, key, inc=1){ map[key]=(map[key]||0)+inc; }
-
-async function backtest(){
-  const status = document.getElementById("status");
-  const output = document.getElementById("output");
-  status.textContent = "BACKTEST: carico CSV…";
-  output.innerHTML = "";
-
-  try{
-    const fRes = document.getElementById("csvResultsFile").files?.[0];
-    const fQuo = document.getElementById("csvQuotesFile").files?.[0];
-    if(!fRes || !fQuo){
-      status.textContent = "⚠️ Seleziona entrambi i CSV (risultati + quote).";
-      return;
-    }
-
-    const resText = await readFileText(fRes);
-    const quoText = await readFileText(fQuo);
-
-    const results = parseCSV(resText).map(normResultRow)
-      .filter(r=>r.dateStr && r.home_team && r.away_team && Number.isFinite(r.dateTs) && isPlayed(r));
-
-    const quotes = parseCSV(quoText).map(normQuoteRow)
-      .filter(q=>q.dateStr && q.home_team && q.away_team && Number.isFinite(q.dateTs));
-
-    const cfg = {
-      N:+document.getElementById("N").value||10,
-      evMin:(+document.getElementById("evMin").value||15)/100,
-      qMin:+document.getElementById("qMin").value||3.0,
-      qMax:+document.getElementById("qMax").value||4.8,
-      odds12Min:+document.getElementById("odds12Min").value||1.70,
-      gaMax:+document.getElementById("gaMax").value||1.2,
-      spreadMax:+document.getElementById("spreadMax").value||6.5,
-      gaAgg:document.getElementById("gaAgg").value,
-      decayMode:document.getElementById("decay").value,
-      bootFloor:document.getElementById("bootFloor").value==="on",
-      B:+document.getElementById("B").value||1200
-    };
-
-    // map risultati per merge
-    const resMap = new Map();
-    for(const r of results){
-      resMap.set(keyOf(r.dateTs, r.home_team, r.away_team), r);
-    }
-
-    // contatori
-    let merged=0, notMatched=0;
-
-    let totalSel=0, selX=0, sel1=0, sel2=0;
-    let selTight=0; // 0-0 or 1-1
-
-    let totalX=0, totalTight=0;
-
-    const cutAllX = {};        // dove vengono tagliate le X (tutte)
-    const cutTightX = {};      // dove vengono tagliate 0-0/1-1
-    const cutNonX = {};        // dove vengono tagliate le non-X (per capire rumore)
-
-    // elenco filtri (ordine reale = "first fail")
-    const reasonLabel = {
-      oddX_missing:"oddX mancante",
-      oddX_range:"quota X fuori range",
-      odd12_missing:"odd1/odd2 mancanti",
-      odd1_lt_min:"odd1 < min",
-      odd2_lt_min:"odd2 < min",
-      spread_nan:"spread NaN",
-      spread_gt_max:"spread > max",
-      pX_bad:"pX non valido",
-      ga_samples_low:"GA: campioni recenti insufficienti",
-      ga_nan:"GA non valido",
-      ga_gt_max:"GA > max",
-      ev_lt_min:"EV < min",
-      boot_p05_nan:"bootstrap p05 NaN",
-      boot_floor_fail:"bootstrap floor fallito",
-      ok:"OK"
-    };
-
-    status.textContent = "BACKTEST: merge & valutazione…";
-
-    for(const q of quotes){
-      const k = keyOf(q.dateTs, q.home_team, q.away_team);
-      const r = resMap.get(k);
-      if(!r){ notMatched++; continue; }
-
-      merged++;
-
-      // outcome reale
-      const hg=toNum(r.FTHG), ag=toNum(r.FTAG);
-      const goalsOk = Number.isFinite(hg) && Number.isFinite(ag);
-      const goals = goalsOk ? (hg+ag) : NaN;
-
-      const isDraw = r.result==="X";
-      const isTight = isDraw && goalsOk && (goals===0 || goals===2); // 0-0 (0) oppure 1-1 (2)
-
-      if(isDraw) totalX++;
-      if(isTight) totalTight++;
-
-      // valuta selezione con filtri
-      const evr = evaluateSelection(q, results, cfg);
-
-      if(evr.ok){
-        totalSel++;
-        if(r.result==="X") selX++;
-        else if(r.result==="1") sel1++;
-        else if(r.result==="2") sel2++;
-        if(isTight) selTight++;
-      }else{
-        // tagli: conteggio per tipologia
-        if(isDraw) addCount(cutAllX, evr.reason);
-        else addCount(cutNonX, evr.reason);
-
-        if(isTight) addCount(cutTightX, evr.reason);
-      }
-    }
-
-    // helper: render table breakdown
-    function breakdownTable(title, obj){
-      const keys = Object.keys(obj).sort((a,b)=>obj[b]-obj[a]);
-      const rows = keys.map(k=>`
-        <tr>
-          <td>${reasonLabel[k] || k}</td>
-          <td class="mono">${obj[k]}</td>
-        </tr>
-      `).join("") || `<tr><td colspan="2" class="muted">Nessun taglio registrato (o campione vuoto)</td></tr>`;
-
-      return `
-        <div class="card">
-          <b>${title}</b>
-          <table style="margin-top:10px">
-            <thead><tr><th>Filtro che taglia (first-fail)</th><th>N</th></tr></thead>
-            <tbody>${rows}</tbody>
-          </table>
-        </div>
-      `;
-    }
-
-    const pct = (a,b)=> b? (100*a/b):0;
-
-    output.innerHTML = `
-      <div class="card">
-        <b>BACKTEST – risultati con i tuoi settaggi</b>
-        <div class="row" style="margin-top:10px">
-          <span class="pill"><b>Match matchati:</b> ${merged}</span>
-          <span class="pill"><b>Non matchati:</b> ${notMatched}</span>
-          <span class="pill"><b>X reali:</b> ${totalX} (${pct(totalX,merged).toFixed(1)}%)</span>
-          <span class="pill"><b>X strette (0-0/1-1):</b> ${totalTight} (${pct(totalTight,totalX).toFixed(1)}% delle X)</span>
-        </div>
-
-        <hr style="margin:12px 0">
-
-        <div class="row">
-          <span class="pill"><b>Selezionate:</b> ${totalSel}</span>
-          <span class="pill"><b>Esito tra selezionate:</b> X=${selX} • 1=${sel1} • 2=${sel2}</span>
-          <span class="pill"><b>X strette prese:</b> ${selTight} su ${totalTight} (${pct(selTight,totalTight).toFixed(1)}%)</span>
-        </div>
-
-        <small style="display:block;margin-top:10px" class="muted">
-          Questo è il dato che ti serve: “quante X reali prendo” e “quante 0-0/1-1 prendo”, e soprattutto <b>chi le sta tagliando</b>.
-        </small>
-
-        <small style="display:block;margin-top:10px">
-          Settaggi: EV≥${(cfg.evMin*100).toFixed(0)}%, X=[${cfg.qMin}-${cfg.qMax}], 1&2≥${cfg.odds12Min.toFixed(2)},
-          GA≤${cfg.gaMax.toFixed(2)}, spread12≤${cfg.spreadMax.toFixed(1)},
-          bootFloor=${cfg.bootFloor?"ON":"OFF"} (B=${cfg.B}), N=${cfg.N}, decay=${cfg.decayMode}, GA agg=${cfg.gaAgg}.
-        </small>
-      </div>
-
-      ${breakdownTable("Dove vengono tagliate le X (tutte le X reali scartate)", cutAllX)}
-      ${breakdownTable("Dove vengono tagliate le X strette (0-0 / 1-1) – QUESTO È IL PUNTO", cutTightX)}
-      ${breakdownTable("Dove vengono tagliate le NON-X (per capire il “rumore”)", cutNonX)}
-    `;
-
-    status.textContent = "BACKTEST completato ✅";
-  }catch(e){
-    status.textContent = "Errore BACKTEST: " + (e?.message || e);
-  }
-}
-
-document.getElementById("runBtn").addEventListener("click", run);
-document.getElementById("btBtn").addEventListener("click", backtest);
 </script>
 
 </body>
 </html>
+
