@@ -1,0 +1,780 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Syncras • Tennis EV & Backtest (Offline)</title>
+  <style>
+    :root{
+      --bg:#0c0a12;
+      --card:#141021;
+      --card2:#1a1330;
+      --txt:#f2f1f7;
+      --muted:#b7b3c8;
+      --violet:#8b5cf6;
+      --violet2:#a78bfa;
+      --line:#2a2242;
+      --ok:#22c55e;
+      --warn:#f59e0b;
+      --bad:#ef4444;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;
+      background:radial-gradient(1200px 800px at 20% 0%, rgba(139,92,246,.25), transparent 60%),
+                 radial-gradient(900px 600px at 90% 20%, rgba(167,139,250,.18), transparent 55%),
+                 var(--bg);
+      color:var(--txt);
+    }
+    header{
+      padding:18px 18px 10px;
+      border-bottom:1px solid var(--line);
+      position:sticky; top:0; backdrop-filter: blur(10px);
+      background:rgba(12,10,18,.72);
+      z-index:10;
+    }
+    .row{display:flex; gap:12px; flex-wrap:wrap; align-items:center}
+    .brand{
+      display:flex; gap:10px; align-items:center;
+    }
+    .logo{
+      width:34px; height:34px; border-radius:12px;
+      background:linear-gradient(135deg,var(--violet),var(--violet2));
+      box-shadow:0 8px 30px rgba(139,92,246,.35);
+    }
+    h1{margin:0; font-size:16px; font-weight:700}
+    .sub{margin:0; color:var(--muted); font-size:12px}
+    main{padding:16px; max-width:1200px; margin:0 auto;}
+    .grid{display:grid; grid-template-columns: 1fr; gap:12px;}
+    @media(min-width:980px){
+      .grid{grid-template-columns: 1.2fr .8fr;}
+    }
+    .card{
+      background:linear-gradient(180deg, rgba(20,16,33,.92), rgba(20,16,33,.78));
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:14px;
+      box-shadow:0 10px 30px rgba(0,0,0,.25);
+    }
+    .card h2{margin:0 0 8px; font-size:14px}
+    .card p{margin:6px 0; color:var(--muted); font-size:13px; line-height:1.35}
+    .pill{
+      display:inline-flex; align-items:center; gap:6px;
+      padding:6px 10px; border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(167,139,250,.08);
+      font-size:12px; color:var(--txt);
+    }
+    .btn{
+      appearance:none; border:1px solid var(--line);
+      background:rgba(139,92,246,.14);
+      color:var(--txt);
+      padding:10px 12px;
+      border-radius:12px;
+      cursor:pointer;
+      font-weight:600;
+    }
+    .btn:hover{border-color:rgba(167,139,250,.55)}
+    .btn.primary{
+      background:linear-gradient(135deg, rgba(139,92,246,.95), rgba(167,139,250,.85));
+      border:0;
+    }
+    .btn.ghost{
+      background:transparent;
+    }
+    input[type="file"], input[type="text"], input[type="number"]{
+      width:100%;
+      padding:10px 10px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      color:var(--txt);
+      outline:none;
+    }
+    label{display:block; font-size:12px; color:var(--muted); margin:10px 0 6px}
+    .two{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+    .three{display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px}
+    .kpis{display:grid; grid-template-columns: repeat(2, 1fr); gap:10px}
+    @media(min-width:720px){
+      .kpis{grid-template-columns: repeat(4, 1fr);}
+    }
+    .kpi{
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:10px;
+    }
+    .kpi .t{font-size:11px; color:var(--muted)}
+    .kpi .v{font-size:18px; font-weight:800; margin-top:4px}
+    .kpi .s{font-size:11px; color:var(--muted); margin-top:2px}
+    .ok{color:var(--ok)} .warn{color:var(--warn)} .bad{color:var(--bad)}
+    table{
+      width:100%;
+      border-collapse:collapse;
+      font-size:12px;
+      overflow:hidden;
+      border-radius:14px;
+      border:1px solid var(--line);
+    }
+    th, td{padding:8px 8px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top}
+    th{background:rgba(167,139,250,.08); color:var(--txt); font-weight:700}
+    tr:hover td{background:rgba(255,255,255,.02)}
+    .muted{color:var(--muted)}
+    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
+    canvas{width:100%; height:220px; background:rgba(255,255,255,.02); border:1px solid var(--line); border-radius:14px}
+    .small{font-size:11px; color:var(--muted)}
+    .hr{height:1px; background:var(--line); margin:12px 0}
+    .badge{
+      padding:4px 8px; border-radius:999px; font-size:12px; font-weight:800;
+      border:1px solid var(--line); background:rgba(255,255,255,.03);
+    }
+    .badge.ok{border-color:rgba(34,197,94,.35); background:rgba(34,197,94,.12)}
+    .badge.neu{border-color:rgba(245,158,11,.30); background:rgba(245,158,11,.10)}
+    .badge.bad{border-color:rgba(239,68,68,.35); background:rgba(239,68,68,.12)}
+  </style>
+</head>
+<body>
+<header>
+  <div class="row" style="justify-content:space-between">
+    <div class="brand">
+      <div class="logo"></div>
+      <div>
+        <h1>Syncras • Tennis EV & Backtest (Offline)</h1>
+        <p class="sub">Sistema “win-rate” + quota nostra • solo analisi informativa • stake fisso</p>
+      </div>
+    </div>
+    <div class="row">
+      <span class="pill">Range quota: <b>1.25–1.55</b></span>
+      <span class="pill">Ammessi: <b>≥60 match</b> & <b>win≥73%</b></span>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="grid">
+    <!-- LEFT -->
+    <section class="card">
+      <h2>1) Carica lo storico e genera “quota_nostra” + backtest</h2>
+      <p>
+        Carica un CSV con colonne: <span class="mono">Winner, Loser, AvgW, AvgL</span> (opzionale: <span class="mono">Date, Year</span>).
+        Puoi caricare più file (2023, 2024, 2025, 2026): verranno uniti.
+      </p>
+
+      <div class="two">
+        <div>
+          <label>Upload match CSV (uno o più file)</label>
+          <input id="fileMatches" type="file" accept=".csv,text/csv" multiple />
+          <p class="small">Suggerimento: esporta da Excel in CSV (separatore virgola o punto e virgola).</p>
+        </div>
+        <div>
+          <label>Oppure carica quota_nostra.csv (facoltativo)</label>
+          <input id="fileQuotaNostra" type="file" accept=".csv,text/csv" />
+          <p class="small">Se non lo carichi, lo calcolo io dai match caricati.</p>
+        </div>
+      </div>
+
+      <div class="hr"></div>
+
+      <div class="two">
+        <div class="kpi">
+          <div class="t">Giocate (backtest)</div>
+          <div class="v" id="kBets">—</div>
+          <div class="s">numero selezioni</div>
+        </div>
+        <div class="kpi">
+          <div class="t">Win rate</div>
+          <div class="v" id="kWin">—</div>
+          <div class="s">vittorie / giocate</div>
+        </div>
+        <div class="kpi">
+          <div class="t">Profitto totale</div>
+          <div class="v" id="kProfit">—</div>
+          <div class="s">stake=1</div>
+        </div>
+        <div class="kpi">
+          <div class="t">Max drawdown</div>
+          <div class="v" id="kDD">—</div>
+          <div class="s">peggior calo</div>
+        </div>
+      </div>
+
+      <div class="two" style="margin-top:10px">
+        <button class="btn primary" id="btnRun">Esegui calcolo + backtest</button>
+        <button class="btn" id="btnDownloadQuota">Scarica quota_nostra.csv</button>
+      </div>
+
+      <div style="margin-top:10px">
+        <label>Curva bankroll (backtest)</label>
+        <canvas id="bankrollChart" width="1000" height="280"></canvas>
+        <p class="small">Curva cumulata dei profitti (stake=1). Serve per vedere volatilità e drawdown.</p>
+      </div>
+
+      <div class="hr"></div>
+
+      <h2>Dettaglio backtest (prime 200 righe)</h2>
+      <div style="overflow:auto; max-height:320px">
+        <table id="tblBets">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Player</th>
+              <th>Odds</th>
+              <th>Outcome</th>
+              <th>Profit</th>
+              <th>Motivo (filtri)</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <div class="hr"></div>
+      <p class="small">
+        <b>Disclaimer:</b> questo strumento è per analisi statistica e didattica. Nessuna garanzia di risultati.
+        Gioco responsabile: imposta limiti, evita rincorse, e se senti perdita di controllo chiedi supporto.
+      </p>
+    </section>
+
+    <!-- RIGHT -->
+    <aside class="card">
+      <h2>2) Valutazione quota “X vs Y” (pre-match)</h2>
+      <p>Inserisci giocatore e quota bookmaker. Se il giocatore è nel nostro <b>quota_nostra</b>, calcolo scarto e giudizio.</p>
+
+      <label>Giocatore X (nome come nel dataset, es: “Sinner J.”)</label>
+      <input id="inPlayer" type="text" placeholder="Es: Sinner J." />
+
+      <div class="two">
+        <div>
+          <label>Quota bookmaker su X</label>
+          <input id="inOddsX" type="number" step="0.01" placeholder="Es: 1.42" />
+        </div>
+        <div>
+          <label>Quota avversario (opzionale)</label>
+          <input id="inOddsOpp" type="number" step="0.01" placeholder="Es: 3.10" />
+        </div>
+      </div>
+
+      <div class="two" style="margin-top:10px">
+        <button class="btn primary" id="btnEval">Valuta quota</button>
+        <button class="btn ghost" id="btnClear">Reset</button>
+      </div>
+
+      <div class="hr"></div>
+
+      <div class="kpis">
+        <div class="kpi">
+          <div class="t">Quota nostra</div>
+          <div class="v" id="kFair">—</div>
+          <div class="s">1 / win_rate storico</div>
+        </div>
+        <div class="kpi">
+          <div class="t">Win rate storico</div>
+          <div class="v" id="kWR">—</div>
+          <div class="s">nel range 1.25–1.55</div>
+        </div>
+        <div class="kpi">
+          <div class="t">Scarto</div>
+          <div class="v" id="kEdge">—</div>
+          <div class="s">(book - fair) / fair</div>
+        </div>
+        <div class="kpi">
+          <div class="t">Giudizio</div>
+          <div class="v" id="kJudge">—</div>
+          <div class="s">🟢 / ⚪ / 🔴</div>
+        </div>
+      </div>
+
+      <div class="hr"></div>
+
+      <h2>Parametri sistema (modificabili)</h2>
+      <div class="two">
+        <div>
+          <label>Quota min</label>
+          <input id="pOddsMin" type="number" step="0.01" value="1.25"/>
+        </div>
+        <div>
+          <label>Quota max</label>
+          <input id="pOddsMax" type="number" step="0.01" value="1.55"/>
+        </div>
+      </div>
+      <div class="two">
+        <div>
+          <label>Win rate minimo (ammesso)</label>
+          <input id="pWRMin" type="number" step="0.01" value="0.73"/>
+        </div>
+        <div>
+          <label>Match minimi (ammesso)</label>
+          <input id="pNMin" type="number" step="1" value="60"/>
+        </div>
+      </div>
+      <div class="two">
+        <div>
+          <label>Opp odds min (filtro equilibrio)</label>
+          <input id="pOppMin" type="number" step="0.01" value="2.80"/>
+          <p class="small">Se l’avversario è sotto questa quota → scarto perché match “non così sbilanciato”.</p>
+        </div>
+        <div>
+          <label>Soglia giudizio (±)</label>
+          <input id="pEdgeTh" type="number" step="0.01" value="0.07"/>
+          <p class="small">7% = default (🟢 se scarto ≥ +7%).</p>
+        </div>
+      </div>
+
+      <div class="hr"></div>
+      <h2>Quota_nostra (preview)</h2>
+      <p class="small">Prime righe dei giocatori ammessi.</p>
+      <div style="overflow:auto; max-height:300px">
+        <table id="tblQuota">
+          <thead>
+            <tr>
+              <th>Player</th>
+              <th>Match</th>
+              <th>Win%</th>
+              <th>Quota nostra</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<script>
+/** ===========
+ *  UTILITIES
+ *  =========== */
+function detectDelimiter(text){
+  // naive: choose ; if more occurrences than ,
+  const comma = (text.match(/,/g)||[]).length;
+  const semi  = (text.match(/;/g)||[]).length;
+  return semi > comma ? ';' : ',';
+}
+function parseCSV(text){
+  const delim = detectDelimiter(text);
+  const lines = text.trim().split(/\r?\n/);
+  if(lines.length < 2) return [];
+  const headers = lines[0].split(delim).map(h => h.trim());
+  const rows = [];
+  for(let i=1;i<lines.length;i++){
+    const line = lines[i];
+    if(!line.trim()) continue;
+    // basic split (no quoted commas handling)
+    const cols = line.split(delim);
+    const obj = {};
+    headers.forEach((h,idx)=> obj[h] = (cols[idx] ?? "").trim());
+    rows.push(obj);
+  }
+  return rows;
+}
+function toNum(x){
+  if(x===null||x===undefined) return NaN;
+  const s = String(x).replace(',', '.').trim();
+  const v = Number(s);
+  return Number.isFinite(v) ? v : NaN;
+}
+function fmtPct(x){
+  if(!Number.isFinite(x)) return "—";
+  return (x*100).toFixed(2) + "%";
+}
+function fmt2(x){
+  if(!Number.isFinite(x)) return "—";
+  return x.toFixed(2);
+}
+function fmt4(x){
+  if(!Number.isFinite(x)) return "—";
+  return x.toFixed(4);
+}
+function setText(id, v){ document.getElementById(id).textContent = v; }
+
+function downloadText(filename, text){
+  const blob = new Blob([text], {type:"text/csv;charset=utf-8"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+/** =========================
+ *  STATE
+ *  ========================= */
+let MATCHES = [];        // raw matches rows
+let QUOTA = [];          // quota_nostra rows: {player, matches, wins, win_rate, quota_nostra}
+let QUOTA_MAP = new Map(); // player -> quota row
+let LAST_BETS = [];      // backtest bets
+
+/** =========================
+ *  LOADERS
+ *  ========================= */
+async function readFilesAsText(fileList){
+  const files = Array.from(fileList || []);
+  const texts = [];
+  for(const f of files){
+    const t = await f.text();
+    texts.push({name:f.name, text:t});
+  }
+  return texts;
+}
+
+function normalizeMatchRow(r){
+  // expected: Winner, Loser, AvgW, AvgL, optional Date, Year
+  const Winner = (r.Winner ?? r.winner ?? "").trim();
+  const Loser  = (r.Loser  ?? r.loser  ?? "").trim();
+  const AvgW   = toNum(r.AvgW ?? r.avgw ?? r.AVGW);
+  const AvgL   = toNum(r.AvgL ?? r.avgl ?? r.AVGL);
+  const Date   = (r.Date ?? r.date ?? "").trim();
+  const Year   = toNum(r.Year ?? r.year);
+  if(!Winner || !Loser || !Number.isFinite(AvgW) || !Number.isFinite(AvgL)) return null;
+  return {Winner, Loser, AvgW, AvgL, Date, Year: Number.isFinite(Year) ? Year : null};
+}
+
+function buildLongObservations(matches){
+  // returns array: {player, odds, outcome, opponentOdds, reasonMeta}
+  const obs = [];
+  for(const m of matches){
+    obs.push({
+      player: m.Winner,
+      odds: m.AvgW,
+      outcome: 1,
+      opponentOdds: m.AvgL
+    });
+    obs.push({
+      player: m.Loser,
+      odds: m.AvgL,
+      outcome: 0,
+      opponentOdds: m.AvgW
+    });
+  }
+  return obs;
+}
+
+/** =========================
+ *  QUOTA NOSTRA
+ *  ========================= */
+function computeQuotaNostraFromMatches(matches, params){
+  const {oddsMin, oddsMax, wrMin, nMin} = params;
+  const obs = buildLongObservations(matches)
+    .filter(o => o.odds >= oddsMin && o.odds <= oddsMax);
+
+  const agg = new Map(); // player -> {matches,wins}
+  for(const o of obs){
+    const key = o.player;
+    const cur = agg.get(key) || {matches:0, wins:0};
+    cur.matches += 1;
+    cur.wins += o.outcome;
+    agg.set(key, cur);
+  }
+
+  const rows = [];
+  for(const [player, a] of agg.entries()){
+    const win_rate = a.wins / a.matches;
+    if(a.matches >= nMin && win_rate >= wrMin){
+      rows.push({
+        player,
+        matches: a.matches,
+        wins: a.wins,
+        win_rate,
+        quota_nostra: 1 / win_rate
+      });
+    }
+  }
+  rows.sort((a,b)=> a.quota_nostra - b.quota_nostra);
+  return rows;
+}
+
+function parseQuotaNostraCSV(text){
+  const rows = parseCSV(text);
+  const out = [];
+  for(const r of rows){
+    const player = (r.player ?? r.Player ?? "").trim();
+    const matches = toNum(r.matches ?? r.Matches);
+    const wins = toNum(r.wins ?? r.Wins);
+    const win_rate = toNum(r.win_rate ?? r.WinRate ?? r.winrate);
+    const quota_nostra = toNum(r.quota_nostra ?? r.QuotaNostra ?? r.quota);
+    if(!player || !Number.isFinite(matches) || !Number.isFinite(win_rate) || !Number.isFinite(quota_nostra)) continue;
+    out.push({player, matches, wins: Number.isFinite(wins)?wins:null, win_rate, quota_nostra});
+  }
+  out.sort((a,b)=> a.quota_nostra - b.quota_nostra);
+  return out;
+}
+
+function refreshQuotaPreview(){
+  const tbody = document.querySelector("#tblQuota tbody");
+  tbody.innerHTML = "";
+  QUOTA.slice(0,120).forEach(r=>{
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${r.player}</td>
+      <td>${r.matches}</td>
+      <td>${fmtPct(r.win_rate)}</td>
+      <td>${fmt2(r.quota_nostra)}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+/** =========================
+ *  BACKTEST
+ *  ========================= */
+function runBacktest(matches, params){
+  const {oddsMin, oddsMax, oppMin} = params;
+
+  // Build observations only in odds range
+  const obs = buildLongObservations(matches)
+    .filter(o => o.odds >= oddsMin && o.odds <= oddsMax);
+
+  // Apply admission list from QUOTA_MAP (computed or uploaded)
+  const bets = [];
+  let idx = 0;
+  for(const o of obs){
+    const q = QUOTA_MAP.get(o.player);
+    if(!q){
+      continue;
+    }
+    // Opponent filter (if known)
+    if(Number.isFinite(oppMin) && o.opponentOdds && o.opponentOdds < oppMin){
+      continue;
+    }
+    idx++;
+    const profit = o.outcome * o.odds - 1; // stake 1
+    bets.push({
+      n: idx,
+      player: o.player,
+      odds: o.odds,
+      outcome: o.outcome,
+      profit,
+      reason: `OK: admitted + oddsRange${Number.isFinite(oppMin) ? " + opp≥"+oppMin : ""}`
+    });
+  }
+  return bets;
+}
+
+function computeKPIs(bets){
+  const n = bets.length;
+  if(n === 0){
+    return {n:0, win:NaN, profit:0, roi:NaN, dd:0, curve:[]};
+  }
+  let cum = 0;
+  let peak = 0;
+  let maxDD = 0;
+  const curve = [];
+  let wins = 0;
+  for(const b of bets){
+    cum += b.profit;
+    if(cum > peak) peak = cum;
+    const dd = peak - cum;
+    if(dd > maxDD) maxDD = dd;
+    curve.push(cum);
+    if(b.outcome === 1) wins++;
+  }
+  const winRate = wins / n;
+  const totalProfit = cum;
+  const roi = totalProfit / n;
+  return {n, win:winRate, profit:totalProfit, roi, dd:maxDD, curve};
+}
+
+function renderBetsTable(bets){
+  const tbody = document.querySelector("#tblBets tbody");
+  tbody.innerHTML = "";
+  bets.slice(0,200).forEach(b=>{
+    const tr = document.createElement("tr");
+    const out = b.outcome === 1 ? "<span class='ok'>WIN</span>" : "<span class='bad'>LOSS</span>";
+    const profClass = b.profit >= 0 ? "ok" : "bad";
+    tr.innerHTML = `
+      <td class="muted">${b.n}</td>
+      <td>${b.player}</td>
+      <td>${fmt2(b.odds)}</td>
+      <td>${out}</td>
+      <td class="${profClass}">${fmt2(b.profit)}</td>
+      <td class="muted">${b.reason}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function drawCurve(canvasId, curve){
+  const c = document.getElementById(canvasId);
+  const ctx = c.getContext("2d");
+  ctx.clearRect(0,0,c.width,c.height);
+
+  // background grid
+  ctx.globalAlpha = 1;
+  ctx.lineWidth = 1;
+  ctx.strokeStyle = "rgba(167,139,250,0.18)";
+  const w = c.width, h = c.height;
+  for(let i=1;i<=4;i++){
+    const y = i*h/5;
+    ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(w,y); ctx.stroke();
+  }
+
+  if(!curve || curve.length<2){
+    ctx.fillStyle = "rgba(183,179,200,0.8)";
+    ctx.fillText("Nessun dato per la curva bankroll.", 16, 26);
+    return;
+  }
+
+  const min = Math.min(...curve);
+  const max = Math.max(...curve);
+  const pad = 18;
+  const X = (i)=> pad + i*(w-2*pad)/(curve.length-1);
+  const Y = (v)=>{
+    const span = (max-min) || 1;
+    return h-pad - (v-min)*(h-2*pad)/span;
+  }
+
+  // line
+  ctx.lineWidth = 2;
+  ctx.strokeStyle = "rgba(139,92,246,0.95)";
+  ctx.beginPath();
+  ctx.moveTo(X(0), Y(curve[0]));
+  for(let i=1;i<curve.length;i++){
+    ctx.lineTo(X(i), Y(curve[i]));
+  }
+  ctx.stroke();
+
+  // labels
+  ctx.fillStyle = "rgba(242,241,247,0.92)";
+  ctx.font = "12px system-ui";
+  ctx.fillText(`min ${min.toFixed(2)} • max ${max.toFixed(2)} • n ${curve.length}`, 16, 20);
+}
+
+/** =========================
+ *  EVAL MATCHUP
+ *  ========================= */
+function evalPlayer(){
+  const player = document.getElementById("inPlayer").value.trim();
+  const oddsX  = toNum(document.getElementById("inOddsX").value);
+  const oddsOpp = toNum(document.getElementById("inOddsOpp").value);
+
+  const edgeTh = toNum(document.getElementById("pEdgeTh").value);
+  const oppMin = toNum(document.getElementById("pOppMin").value);
+
+  if(!player){
+    alert("Inserisci il nome del giocatore (come nel dataset).");
+    return;
+  }
+  const q = QUOTA_MAP.get(player);
+  if(!q){
+    setText("kFair","—");
+    setText("kWR","—");
+    setText("kEdge","—");
+    setText("kJudge","Giocatore non presente");
+    return;
+  }
+
+  setText("kFair", fmt2(q.quota_nostra));
+  setText("kWR", fmtPct(q.win_rate));
+
+  if(!Number.isFinite(oddsX)){
+    setText("kEdge","—");
+    setText("kJudge","Inserisci quota");
+    return;
+  }
+
+  // optional filter check
+  if(Number.isFinite(oddsOpp) && Number.isFinite(oppMin) && oddsOpp < oppMin){
+    setText("kEdge","—");
+    setText("kJudge","Scartata: avversario troppo forte (opp<min)");
+    return;
+  }
+
+  const edge = (oddsX - q.quota_nostra) / q.quota_nostra;
+  setText("kEdge", fmtPct(edge));
+
+  let badge = "⚪ Neutra";
+  if(edge >= edgeTh) badge = "🟢 Sottovalutata";
+  else if(edge <= -edgeTh) badge = "🔴 Sopravvalutata";
+  setText("kJudge", badge);
+}
+
+/** =========================
+ *  MAIN ACTION
+ *  ========================= */
+document.getElementById("btnRun").addEventListener("click", async ()=>{
+  const oddsMin = toNum(document.getElementById("pOddsMin").value);
+  const oddsMax = toNum(document.getElementById("pOddsMax").value);
+  const wrMin   = toNum(document.getElementById("pWRMin").value);
+  const nMin    = toNum(document.getElementById("pNMin").value);
+  const oppMin  = toNum(document.getElementById("pOppMin").value);
+
+  const matchFiles = document.getElementById("fileMatches").files;
+  if(!matchFiles || matchFiles.length === 0){
+    alert("Carica almeno un CSV match (Winner, Loser, AvgW, AvgL).");
+    return;
+  }
+
+  // Load matches
+  const texts = await readFilesAsText(matchFiles);
+  const matches = [];
+  for(const t of texts){
+    const rows = parseCSV(t.text);
+    for(const r of rows){
+      const m = normalizeMatchRow(r);
+      if(m) matches.push(m);
+    }
+  }
+  if(matches.length === 0){
+    alert("Nessuna riga valida trovata. Controlla colonne: Winner, Loser, AvgW, AvgL.");
+    return;
+  }
+  MATCHES = matches;
+
+  // Load or compute quota_nostra
+  const quotaFile = document.getElementById("fileQuotaNostra").files?.[0];
+  const params = {oddsMin, oddsMax, wrMin, nMin};
+
+  if(quotaFile){
+    const qt = await quotaFile.text();
+    QUOTA = parseQuotaNostraCSV(qt);
+  } else {
+    QUOTA = computeQuotaNostraFromMatches(MATCHES, params);
+  }
+
+  QUOTA_MAP = new Map(QUOTA.map(r=>[r.player, r]));
+  refreshQuotaPreview();
+
+  // Backtest (note: only filters available from data)
+  const btParams = {oddsMin, oddsMax, oppMin};
+  LAST_BETS = runBacktest(MATCHES, btParams);
+  const k = computeKPIs(LAST_BETS);
+
+  setText("kBets", String(k.n));
+  setText("kWin", fmtPct(k.win));
+  setText("kProfit", (k.profit>=0?"+":"") + fmt2(k.profit));
+  setText("kDD", "−" + fmt2(k.dd));
+
+  renderBetsTable(LAST_BETS);
+  drawCurve("bankrollChart", k.curve);
+});
+
+document.getElementById("btnDownloadQuota").addEventListener("click", ()=>{
+  if(!QUOTA || QUOTA.length===0){
+    alert("Prima esegui il calcolo (o carica quota_nostra.csv).");
+    return;
+  }
+  const lines = ["player,matches,wins,win_rate,quota_nostra"];
+  QUOTA.forEach(r=>{
+    lines.push([
+      `"${String(r.player).replaceAll('"','""')}"`,
+      r.matches,
+      (r.wins ?? ""),
+      (r.win_rate ?? ""),
+      (r.quota_nostra ?? "")
+    ].join(","));
+  });
+  downloadText("quota_nostra.csv", lines.join("\n"));
+});
+
+document.getElementById("btnEval").addEventListener("click", evalPlayer);
+document.getElementById("btnClear").addEventListener("click", ()=>{
+  document.getElementById("inPlayer").value="";
+  document.getElementById("inOddsX").value="";
+  document.getElementById("inOddsOpp").value="";
+  setText("kFair","—"); setText("kWR","—"); setText("kEdge","—"); setText("kJudge","—");
+});
+</script>
+</body>
+</html>
