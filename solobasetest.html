@@ -430,6 +430,27 @@ async function run(){
       const oddX=toNum(q.b365_x);
       const odd1=toNum(q.b365_1);
       const odd2=toNum(q.b365_2);
+      // ---- REGOLE DI ESCLUSIONE CLUSTER TOSSICI (X) ----
+
+// 1) cluster pubblico X 3.15–3.45 + spread medio
+if (oddX >= 3.15 && oddX <= 3.45 && spread12 >= 0.6 && spread12 <= 1.2) continue;
+
+// 2) spread troppo alto (favorita che controlla)
+if (spread12 > 2.2) continue;
+
+// 3) mercato spinge Over → X penalizzato
+const o25 = toNum(q.b365_o25);
+if (Number.isFinite(o25) && o25 < 1.75) continue;
+
+// 4) GA sbilanciato (finto equilibrio)
+if (
+  (gaHn <= 0.9 && gaAn >= 1.4) ||
+  (gaAn <= 0.9 && gaHn >= 1.4)
+) continue;
+
+// 5) bootstrap instabile
+if (Number.isFinite(width) && width > 0.18) continue;
+
 
       // EXTRA (solo lettura/visualizzazione)
       const oddO25 = toNum(q.b365_o25);
