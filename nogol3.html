@@ -1,0 +1,802 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Syncras — Modello GG/NG senza quote (Squadre + Backtest)</title>
+  <style>
+    :root{
+      --bg:#0b0b12; --card:#121225; --muted:#a7a7c2; --txt:#f2f2ff;
+      --accent:#8b5cf6; --ok:#22c55e; --warn:#f59e0b; --bad:#ef4444;
+      --border: rgba(255,255,255,.10);
+    }
+    body{margin:0;background:linear-gradient(180deg,#07070f 0%,#0b0b12 100%);color:var(--txt);
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif}
+    .wrap{max-width:1250px;margin:0 auto;padding:18px}
+    h1{font-size:20px;margin:6px 0 12px}
+    h2{font-size:16px;margin:18px 0 10px}
+    .card{background:rgba(18,18,37,.92);border:1px solid var(--border);border-radius:14px;padding:14px;
+      box-shadow:0 12px 30px rgba(0,0,0,.35)}
+    .row{display:flex;gap:12px;flex-wrap:wrap}
+    .col{flex:1;min-width:320px}
+    label{display:block;font-size:12px;color:var(--muted);margin:8px 0 6px}
+    input[type="file"], select, input[type="number"], input[type="text"]{
+      width:100%;padding:10px;border-radius:12px;border:1px solid var(--border);
+      background:#0f0f20;color:var(--txt);outline:none
+    }
+    button{
+      padding:10px 12px;border-radius:12px;border:1px solid var(--border);
+      background:linear-gradient(180deg,rgba(139,92,246,.95),rgba(139,92,246,.75));
+      color:white;cursor:pointer;font-weight:800
+    }
+    button:disabled{opacity:.55;cursor:not-allowed}
+    .muted{color:var(--muted);font-size:13px;line-height:1.35}
+    .pill{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;border:1px solid var(--border);font-size:12px}
+    .pill.ok{background:rgba(34,197,94,.14);border-color:rgba(34,197,94,.35)}
+    .pill.bad{background:rgba(239,68,68,.14);border-color:rgba(239,68,68,.35)}
+    .pill.warn{background:rgba(245,158,11,.14);border-color:rgba(245,158,11,.35)}
+    .pill.neutral{background:rgba(255,255,255,.06)}
+    .hr{height:1px;background:var(--border);margin:14px 0}
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:9px 8px;border-bottom:1px solid var(--border);text-align:left;font-size:13px;white-space:nowrap}
+    th{color:#d9d9ff;font-weight:900;position:sticky;top:0;background:#121225;z-index:1}
+    tr:hover td{background:rgba(255,255,255,.03)}
+    .small{font-size:12px;color:var(--muted)}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+    @media (max-width:900px){.grid3{grid-template-columns:1fr}}
+    @media (max-width:720px){.grid2{grid-template-columns:1fr}}
+    .kpi{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+    .kpi .box{flex:1;min-width:170px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:12px;padding:10px}
+    .kpi .v{font-size:18px;font-weight:950}
+    .kpi .t{font-size:12px;color:var(--muted)}
+    pre{white-space:pre-wrap;background:rgba(255,255,255,.04);border:1px solid var(--border);padding:10px;border-radius:12px;color:#eaeaff}
+    a{color:#c4b5fd}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Syncras — Modello GG/NG senza quote (Squadre + Backtest walk-forward)</h1>
+
+  <div class="card">
+    <div class="muted">
+      Questo tool fa <b>solo analisi statistica</b>. Non usa quote e non è un invito a scommettere.
+      Usa lo storico per stimare P(GG)/P(NG) in modo <b>match-specifico</b> (ultime N partite per squadra, casa/trasferta).
+    </div>
+  </div>
+
+  <div class="row" style="margin-top:12px">
+    <div class="col card">
+      <h2>1) Storico risultati</h2>
+      <label>Carica CSV risultati (es. Latest_Results.csv)</label>
+      <input id="resultsFile" type="file" accept=".csv,text/csv" />
+
+      <div class="hr"></div>
+
+      <div class="grid2">
+        <div>
+          <label>Separatore</label>
+          <select id="r_sep">
+            <option value="auto">Auto</option>
+            <option value=",">,</option>
+            <option value=";">;</option>
+            <option value="\t">TAB</option>
+          </select>
+        </div>
+        <div>
+          <label>Preset (football-data)</label>
+          <select id="r_preset">
+            <option value="auto">Auto</option>
+            <option value="football_data">football-data (Div, Date, HomeTeam, AwayTeam, FTHG, FTAG)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid3" style="margin-top:8px">
+        <div><label>League</label><select id="r_league"></select></div>
+        <div><label>Date</label><select id="r_date"></select></div>
+        <div><label>HomeTeam</label><select id="r_home"></select></div>
+        <div><label>AwayTeam</label><select id="r_away"></select></div>
+        <div><label>FTHG</label><select id="r_hg"></select></div>
+        <div><label>FTAG</label><select id="r_ag"></select></div>
+      </div>
+
+      <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap">
+        <button id="btnPrepare" disabled>Prepara storico</button>
+      </div>
+
+      <div class="small" id="resultsStatus"></div>
+    </div>
+
+    <div class="col card">
+      <h2>2) Fixtures future</h2>
+      <label>Carica CSV fixtures (es. fixtures.csv)</label>
+      <input id="fixFile" type="file" accept=".csv,text/csv" />
+
+      <div class="hr"></div>
+
+      <div class="grid2">
+        <div>
+          <label>Separatore</label>
+          <select id="f_sep">
+            <option value="auto">Auto</option>
+            <option value=",">,</option>
+            <option value=";">;</option>
+            <option value="\t">TAB</option>
+          </select>
+        </div>
+        <div>
+          <label>Preset (football-data)</label>
+          <select id="f_preset">
+            <option value="auto">Auto</option>
+            <option value="football_data">football-data (Div, Date, HomeTeam, AwayTeam)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid3" style="margin-top:8px">
+        <div><label>League</label><select id="f_league"></select></div>
+        <div><label>Date</label><select id="f_date"></select></div>
+        <div><label>HomeTeam</label><select id="f_home"></select></div>
+        <div><label>AwayTeam</label><select id="f_away"></select></div>
+      </div>
+
+      <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap">
+        <button id="btnRun" disabled>Calcola previsioni fixtures</button>
+        <button id="btnExport" disabled>Esporta output (CSV)</button>
+      </div>
+
+      <div class="small" id="fixStatus"></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:12px">
+    <h2>3) Parametri modello</h2>
+    <div class="grid3">
+      <div>
+        <label>Ultime N partite per squadra (forma)</label>
+        <input id="N" type="number" min="3" step="1" value="10" />
+        <div class="small">Suggerito: 8–15. (10 è un buon default)</div>
+      </div>
+      <div>
+        <label>Lookback lega (baseline)</label>
+        <input id="L" type="number" min="50" step="10" value="380" />
+        <div class="small">Usato per baseline di lega (GG%).</div>
+      </div>
+      <div>
+        <label>Filtro lega (vuoto = tutte)</label>
+        <input id="leagueFilter" type="text" placeholder="E0 / I1 / D1 / SP1 ..." />
+      </div>
+
+      <div>
+        <label>Soglia GG forte (P(GG) ≥)</label>
+        <input id="thrGG" type="number" step="0.01" value="0.58" />
+      </div>
+      <div>
+        <label>Soglia NG forte (P(GG) ≤)</label>
+        <input id="thrNG" type="number" step="0.01" value="0.42" />
+      </div>
+      <div>
+        <label>Range data fixtures (opzionale)</label>
+        <input id="from" type="text" placeholder="YYYY-MM-DD (da)" />
+        <input id="to" type="text" placeholder="YYYY-MM-DD (a)" style="margin-top:8px" />
+      </div>
+    </div>
+
+    <div class="muted" style="margin-top:10px">
+      Modello: stima P(Home segna) e P(Away segna) dalla forma recente (GF/GS casa/trasferta) + baseline lega.
+      Poi P(GG) = P(Home segna) × P(Away segna). P(NG)=1-P(GG).
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:12px">
+    <h2>Backtest rapido (walk-forward) sullo storico</h2>
+    <div class="muted">Verifica se usare le squadre migliora davvero rispetto alla baseline lega. (Senza quote)</div>
+    <div id="btKpis" class="kpi" style="display:none"></div>
+    <div class="small" id="btNote"></div>
+    <pre id="btTableText">(esegui “Prepara storico” per generare il backtest)</pre>
+  </div>
+
+  <div class="card" style="margin-top:12px">
+    <h2>Output fixtures (P(GG)/P(NG) + segnale)</h2>
+    <div style="overflow:auto;max-height:560px;margin-top:10px">
+      <table id="outTable">
+        <thead>
+          <tr>
+            <th>Data</th><th>Lega</th><th>Match</th>
+            <th>P(GG)</th><th>P(NG)</th><th>Segnale</th>
+            <th>GFh</th><th>GSh</th><th>GFa</th><th>GSa</th>
+            <th>Baseline GG lega</th><th>N usati</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="small">GFh/GSh = media gol fatti/subiti recenti della squadra di casa (in casa). GFa/GSa = squadra ospite (in trasferta).</div>
+  </div>
+</div>
+
+<script>
+/* ===== CSV parser ===== */
+function detectSeparator(text){
+  const sample = text.slice(0, 4000);
+  const candidates = [",",";","\t"];
+  let best = ",", bestScore = -1;
+  for (const sep of candidates){
+    const lines = sample.split(/\r?\n/).slice(0, 30).filter(Boolean);
+    let score = 0;
+    for (const line of lines){
+      score += (line.match(new RegExp(sep.replace("\t","\\t"), "g")) || []).length;
+    }
+    if (score > bestScore){ bestScore = score; best = sep; }
+  }
+  return best;
+}
+
+function parseCSV(text, sep){
+  if (sep === "auto") sep = detectSeparator(text);
+  const rows = [];
+  let i=0, field="", row=[], inQuotes=false;
+  function pushField(){ row.push(field); field=""; }
+  function pushRow(){
+    const allEmpty = row.every(v => String(v).trim()==="");
+    if (!allEmpty) rows.push(row);
+    row=[];
+  }
+  while (i < text.length){
+    const c = text[i];
+    if (c === '"'){
+      if (inQuotes && text[i+1] === '"'){ field+='"'; i+=2; continue; }
+      inQuotes = !inQuotes; i++; continue;
+    }
+    if (!inQuotes && c === sep){ pushField(); i++; continue; }
+    if (!inQuotes && (c === "\n" || c === "\r")){
+      if (c === "\r" && text[i+1] === "\n") i++;
+      pushField(); pushRow(); i++; continue;
+    }
+    field += c; i++;
+  }
+  pushField(); pushRow();
+  const headers = (rows.shift() || []).map(h => String(h).trim());
+  const outRows = rows.map(r => {
+    const obj = {};
+    for (let k=0;k<headers.length;k++) obj[headers[k]] = (r[k] ?? "").toString().trim();
+    return obj;
+  });
+  return { headers, rows: outRows, sep };
+}
+
+/* ===== helpers ===== */
+const $ = (id) => document.getElementById(id);
+
+function toNumber(x){
+  const s = String(x ?? "").trim().replace(",", ".");
+  const n = Number(s);
+  return Number.isFinite(n) ? n : NaN;
+}
+
+function parseDateAny(s){
+  if (!s) return null;
+  const t = String(s).trim();
+  // YYYY-MM-DD or YYYY/MM/DD
+  let m = t.match(/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})/);
+  if (m){
+    const y=+m[1], mo=+m[2]-1, d=+m[3];
+    const dt = new Date(Date.UTC(y,mo,d));
+    return isNaN(dt.getTime()) ? null : dt;
+  }
+  // DD/MM/YYYY
+  m = t.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/);
+  if (m){
+    const d=+m[1], mo=+m[2]-1, y=+m[3];
+    const dt = new Date(Date.UTC(y,mo,d));
+    return isNaN(dt.getTime()) ? null : dt;
+  }
+  const dt = new Date(t);
+  return isNaN(dt.getTime()) ? null : dt;
+}
+
+function isoDate(dt){ return dt.toISOString().slice(0,10); }
+
+function fillSelect(sel, headers){
+  sel.innerHTML = "";
+  for (const h of headers){
+    const o = document.createElement("option");
+    o.value = h;
+    o.textContent = h;
+    sel.appendChild(o);
+  }
+}
+
+function pct(x){ return (x*100).toFixed(1) + "%"; }
+function fmt(x,d=2){ return Number.isFinite(x) ? x.toFixed(d) : ""; }
+
+/* normalizzazione squadre/lega (per join e robustezza) */
+function norm(s){
+  return String(s ?? "")
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, " ")
+    .replace(/[’'".\-]/g, "")
+    .replace(/[()]/g, "")
+    .replace(/&/g, "and");
+}
+
+/* ===== state ===== */
+let Rraw = null, Fraw = null;
+let R = { clean:[], byLeague:new Map(), byTeamLeague:new Map(), ready:false };
+let F = { clean:[], ready:false };
+let outRows = [];
+
+/* ===== ingest results ===== */
+$("resultsFile").addEventListener("change", async (e) => {
+  const f = e.target.files?.[0];
+  if (!f) return;
+  const text = await f.text();
+  const sep = $("r_sep").value;
+  Rraw = parseCSV(text, sep);
+
+  fillSelect($("r_league"), Rraw.headers);
+  fillSelect($("r_date"), Rraw.headers);
+  fillSelect($("r_home"), Rraw.headers);
+  fillSelect($("r_away"), Rraw.headers);
+  fillSelect($("r_hg"), Rraw.headers);
+  fillSelect($("r_ag"), Rraw.headers);
+
+  if ($("r_preset").value === "football_data"){
+    if (Rraw.headers.includes("Div")) $("r_league").value = "Div";
+    if (Rraw.headers.includes("Date")) $("r_date").value = "Date";
+    if (Rraw.headers.includes("HomeTeam")) $("r_home").value = "HomeTeam";
+    if (Rraw.headers.includes("AwayTeam")) $("r_away").value = "AwayTeam";
+    if (Rraw.headers.includes("FTHG")) $("r_hg").value = "FTHG";
+    if (Rraw.headers.includes("FTAG")) $("r_ag").value = "FTAG";
+  }
+
+  $("resultsStatus").textContent = `Caricato storico: ${Rraw.rows.length} righe.`;
+  $("btnPrepare").disabled = (Rraw.rows.length === 0);
+});
+
+$("r_preset").addEventListener("change", () => {
+  if (!Rraw) return;
+  if ($("r_preset").value === "football_data"){
+    if (Rraw.headers.includes("Div")) $("r_league").value = "Div";
+    if (Rraw.headers.includes("Date")) $("r_date").value = "Date";
+    if (Rraw.headers.includes("HomeTeam")) $("r_home").value = "HomeTeam";
+    if (Rraw.headers.includes("AwayTeam")) $("r_away").value = "AwayTeam";
+    if (Rraw.headers.includes("FTHG")) $("r_hg").value = "FTHG";
+    if (Rraw.headers.includes("FTAG")) $("r_ag").value = "FTAG";
+  }
+});
+
+/* ===== ingest fixtures ===== */
+$("fixFile").addEventListener("change", async (e) => {
+  const f = e.target.files?.[0];
+  if (!f) return;
+  const text = await f.text();
+  const sep = $("f_sep").value;
+  Fraw = parseCSV(text, sep);
+
+  fillSelect($("f_league"), Fraw.headers);
+  fillSelect($("f_date"), Fraw.headers);
+  fillSelect($("f_home"), Fraw.headers);
+  fillSelect($("f_away"), Fraw.headers);
+
+  if ($("f_preset").value === "football_data"){
+    if (Fraw.headers.includes("Div")) $("f_league").value = "Div";
+    if (Fraw.headers.includes("Date")) $("f_date").value = "Date";
+    if (Fraw.headers.includes("HomeTeam")) $("f_home").value = "HomeTeam";
+    if (Fraw.headers.includes("AwayTeam")) $("f_away").value = "AwayTeam";
+  }
+
+  $("fixStatus").textContent = `Caricato fixtures: ${Fraw.rows.length} righe.`;
+  $("btnRun").disabled = !(Fraw.rows.length && R.ready);
+});
+
+$("f_preset").addEventListener("change", () => {
+  if (!Fraw) return;
+  if ($("f_preset").value === "football_data"){
+    if (Fraw.headers.includes("Div")) $("f_league").value = "Div";
+    if (Fraw.headers.includes("Date")) $("f_date").value = "Date";
+    if (Fraw.headers.includes("HomeTeam")) $("f_home").value = "HomeTeam";
+    if (Fraw.headers.includes("AwayTeam")) $("f_away").value = "AwayTeam";
+  }
+});
+
+/* ===== build per-team histories ===== */
+function keyTL(league, team){ return `${norm(league)}|${norm(team)}`; }
+
+/*
+We store, for each (league, team), two ordered arrays of matches:
+- homeMatches: list of {dt, gf, ga}
+- awayMatches: list of {dt, gf, ga}
+Also league-level ordered list to compute baseline GG%.
+*/
+function buildHistories(cleanRows){
+  const byTeamLeague = new Map();
+  const byLeague = new Map();
+
+  for (const m of cleanRows){
+    const lg = m.league;
+    if (!byLeague.has(lg)) byLeague.set(lg, []);
+    byLeague.get(lg).push(m);
+
+    const kH = keyTL(lg, m.home);
+    const kA = keyTL(lg, m.away);
+
+    if (!byTeamLeague.has(kH)) byTeamLeague.set(kH, { home:[], away:[] });
+    if (!byTeamLeague.has(kA)) byTeamLeague.set(kA, { home:[], away:[] });
+
+    byTeamLeague.get(kH).home.push({ dt:m.dt, gf:m.hg, ga:m.ag });
+    byTeamLeague.get(kA).away.push({ dt:m.dt, gf:m.ag, ga:m.hg });
+  }
+
+  // sort all
+  for (const [k, v] of byTeamLeague.entries()){
+    v.home.sort((a,b)=>a.dt-b.dt);
+    v.away.sort((a,b)=>a.dt-b.dt);
+  }
+  for (const [lg, arr] of byLeague.entries()){
+    arr.sort((a,b)=>a.dt-b.dt);
+  }
+
+  return { byTeamLeague, byLeague };
+}
+
+/* binary search: first index >= dt */
+function lowerBound(arr, dt){
+  let lo=0, hi=arr.length;
+  while (lo < hi){
+    const mid = (lo+hi)>>1;
+    if (arr[mid].dt < dt) lo = mid+1;
+    else hi = mid;
+  }
+  return lo;
+}
+
+function avgGFGA(arr, dt, N){
+  if (!arr || !arr.length) return null;
+  const end = lowerBound(arr, dt); // strictly before dt
+  const start = Math.max(0, end - N);
+  const slice = arr.slice(start, end);
+  if (slice.length < Math.min(N, 3)) return null; // need at least 3 matches
+  let gf=0, ga=0;
+  for (const x of slice){ gf += x.gf; ga += x.ga; }
+  return { n: slice.length, gf: gf/slice.length, ga: ga/slice.length };
+}
+
+function leagueBaselineGG(leagueArr, dt, L){
+  if (!leagueArr || !leagueArr.length) return null;
+  const end = lowerBound(leagueArr, dt);
+  const start = Math.max(0, end - L);
+  const slice = leagueArr.slice(start, end);
+  if (slice.length < Math.min(L, 50)) return null;
+  let gg=0;
+  for (const m of slice){
+    if (m.hg > 0 && m.ag > 0) gg++;
+  }
+  return { n: slice.length, pGG: gg/slice.length };
+}
+
+/* clamp probability */
+function clamp01(x){ return Math.max(0.01, Math.min(0.99, x)); }
+
+/* convert average goals to prob(team scores at least 1) using Poisson approx: 1 - e^-lambda */
+function probScore(lambda){
+  lambda = Math.max(0, lambda);
+  return clamp01(1 - Math.exp(-lambda));
+}
+
+/* estimate P(GG) for a given match (league, home, away, dt) */
+function estimatePgg(match, N, L){
+  const lg = match.league;
+
+  const tlH = R.byTeamLeague.get(keyTL(lg, match.home));
+  const tlA = R.byTeamLeague.get(keyTL(lg, match.away));
+  const lgArr = R.byLeague.get(lg);
+
+  const base = leagueBaselineGG(lgArr, match.dt, L);
+  // fallback baseline if insufficient: use overall league average up to dt (smaller window)
+  if (!base) return null;
+
+  const homeHome = tlH ? avgGFGA(tlH.home, match.dt, N) : null; // A in casa
+  const awayAway = tlA ? avgGFGA(tlA.away, match.dt, N) : null; // B in trasferta
+  const homeAll = tlH ? avgGFGA([...(tlH.home||[]), ...(tlH.away||[])].sort((a,b)=>a.dt-b.dt), match.dt, N) : null;
+  const awayAll = tlA ? avgGFGA([...(tlA.home||[]), ...(tlA.away||[])].sort((a,b)=>a.dt-b.dt), match.dt, N) : null;
+
+  // prefer split; fallback to all-matches if split missing
+  const gfH = homeHome?.gf ?? homeAll?.gf;
+  const gaH = homeHome?.ga ?? homeAll?.ga;
+  const gfA = awayAway?.gf ?? awayAll?.gf;
+  const gaA = awayAway?.ga ?? awayAll?.ga;
+
+  if (!Number.isFinite(gfH) || !Number.isFinite(gaH) || !Number.isFinite(gfA) || !Number.isFinite(gaA)) return null;
+
+  // expected goals (simple blending)
+  // lambda home: attack of home (gfH) + defense weakness of away (gaA)
+  // lambda away: attack of away (gfA) + defense weakness of home (gaH)
+  let lamH = 0.55*gfH + 0.45*gaA;
+  let lamA = 0.55*gfA + 0.45*gaH;
+
+  // incorporate league baseline GG: push probabilities toward league environment
+  // Convert baseline GG into an "environment factor" between 0.85 and 1.15
+  const env = 0.85 + 0.30*base.pGG; // pGG 0..1 -> 0.85..1.15
+  lamH *= env;
+  lamA *= env;
+
+  const pH = probScore(lamH);
+  const pA = probScore(lamA);
+  const pGG = clamp01(pH * pA);
+
+  const usedN = Math.min(homeHome?.n ?? homeAll?.n ?? 0, awayAway?.n ?? awayAll?.n ?? 0);
+
+  return {
+    pGG,
+    pNG: 1 - pGG,
+    gfH, gaH, gfA, gaA,
+    basePgg: base.pGG,
+    usedN
+  };
+}
+
+function signalFromPgg(pGG, thrGG, thrNG){
+  if (pGG >= thrGG) return "🟢 GG forte";
+  if (pGG <= thrNG) return "🔴 NG forte";
+  if (pGG > 0.52 && pGG < thrGG) return "🟡 GG debole";
+  if (pGG < 0.48 && pGG > thrNG) return "🟡 NG debole";
+  return "⚪ No play";
+}
+
+/* ===== prepare results + backtest ===== */
+$("btnPrepare").addEventListener("click", () => {
+  try{
+    if (!Rraw) throw new Error("Carica prima il CSV risultati.");
+
+    const map = {
+      league: $("r_league").value,
+      date: $("r_date").value,
+      home: $("r_home").value,
+      away: $("r_away").value,
+      hg: $("r_hg").value,
+      ag: $("r_ag").value
+    };
+
+    const clean = [];
+    for (const r of Rraw.rows){
+      const dt = parseDateAny(r[map.date]);
+      const league = String(r[map.league] ?? "").trim();
+      const home = String(r[map.home] ?? "").trim();
+      const away = String(r[map.away] ?? "").trim();
+      const hg = toNumber(r[map.hg]);
+      const ag = toNumber(r[map.ag]);
+      if (!dt || !league || !home || !away || !Number.isFinite(hg) || !Number.isFinite(ag)) continue;
+      clean.push({ dt, league, home, away, hg, ag });
+    }
+
+    // normalize league keys? we keep original league strings but will match by exact league from file (Div codes)
+    // sort by date
+    clean.sort((a,b)=>a.dt-b.dt);
+
+    const { byTeamLeague, byLeague } = buildHistories(clean);
+
+    R.clean = clean;
+    R.byTeamLeague = byTeamLeague;
+    R.byLeague = byLeague;
+    R.ready = true;
+
+    $("resultsStatus").innerHTML = `<span class="pill ok">OK</span> Storico pronto: ${clean.length} match, ${byLeague.size} leghe.`;
+
+    // enable run if fixtures loaded
+    $("btnRun").disabled = !(Fraw && Fraw.rows.length && R.ready);
+
+    // run backtest
+    runBacktest();
+
+  } catch(err){
+    $("resultsStatus").innerHTML = `<span class="pill bad">ERRORE</span> ${err.message}`;
+  }
+});
+
+function runBacktest(){
+  const N = Math.max(3, toNumber($("N").value) || 10);
+  const L = Math.max(50, toNumber($("L").value) || 380);
+  const thrGG = Math.min(0.95, Math.max(0.50, toNumber($("thrGG").value) || 0.58));
+  const thrNG = Math.max(0.05, Math.min(0.50, toNumber($("thrNG").value) || 0.42));
+  const lf = String($("leagueFilter").value || "").trim();
+
+  let tested=0, predicted=0;
+  let acc=0, accBase=0;
+  const buckets = new Map(); // signal -> {n, correct, ggRate}
+
+  // walk-forward: for each match, estimate using only prior data (our functions do that by dt)
+  for (const m of R.clean){
+    if (lf && m.league !== lf) continue;
+
+    const est = estimatePgg(m, N, L);
+    if (!est) continue;
+
+    tested++;
+
+    const isGG = (m.hg > 0 && m.ag > 0);
+    const baseGuessGG = (est.basePgg >= 0.5); // naive baseline decision
+    const modelGuessGG = (est.pGG >= 0.5);
+
+    if ((modelGuessGG && isGG) || (!modelGuessGG && !isGG)) acc++;
+    if ((baseGuessGG && isGG) || (!baseGuessGG && !isGG)) accBase++;
+
+    const sig = signalFromPgg(est.pGG, thrGG, thrNG);
+    if (!buckets.has(sig)) buckets.set(sig, { n:0, correct:0, gg:0 });
+    const b = buckets.get(sig);
+    b.n++;
+    if ((sig.includes("GG") && isGG) || (sig.includes("NG") && !isGG) || (sig.includes("No play") && false)){
+      // for "No play" we don't count correctness
+    }
+    if (sig.includes("GG") || sig.includes("NG")){
+      predicted++;
+      const pickGG = sig.includes("GG");
+      const correct = (pickGG && isGG) || (!pickGG && !isGG);
+      if (correct) b.correct++;
+    }
+    if (isGG) b.gg++;
+  }
+
+  const btKpis = $("btKpis");
+  btKpis.style.display = "flex";
+  const accRate = tested ? (acc/tested) : 0;
+  const accBaseRate = tested ? (accBase/tested) : 0;
+
+  btKpis.innerHTML = `
+    <div class="box"><div class="v">${tested}</div><div class="t">Match valutati</div></div>
+    <div class="box"><div class="v">${(accRate*100).toFixed(1)}%</div><div class="t">Accuratezza modello (soglia 0.5)</div></div>
+    <div class="box"><div class="v">${(accBaseRate*100).toFixed(1)}%</div><div class="t">Accuratezza baseline lega</div></div>
+    <div class="box"><div class="v">${predicted}</div><div class="t">Match con segnale (GG/NG)</div></div>
+  `;
+
+  $("btNote").textContent =
+    `Parametri backtest: N=${N}, Lookback lega L=${L}, soglie GG≥${thrGG}, NG≤${thrNG}. ` +
+    (lf ? `Filtro lega: ${lf}.` : `Tutte le leghe.`);
+
+  // Print bucket table
+  const lines = [];
+  lines.push("Bucket | N | %GG reale | Accuracy (solo bucket GG/NG)");
+  lines.push("--------------------------------------------------------");
+  for (const [sig, b] of [...buckets.entries()].sort((a,b)=>b[1].n-a[1].n)){
+    const ggRate = b.n ? (b.gg/b.n) : 0;
+    const accB = (sig.includes("GG") || sig.includes("NG")) ? (b.correct / Math.max(1, (sig.includes("GG")||sig.includes("NG")) ? b.n : 1)) : null;
+    lines.push(`${sig} | ${b.n} | ${(ggRate*100).toFixed(1)}% | ${accB===null ? "-" : (accB*100).toFixed(1)+"%"}`);
+  }
+  $("btTableText").textContent = lines.join("\n");
+}
+
+/* ===== run on fixtures ===== */
+$("btnRun").addEventListener("click", () => {
+  try{
+    if (!R.ready) throw new Error("Prepara prima lo storico.");
+    if (!Fraw) throw new Error("Carica prima le fixtures.");
+
+    const map = {
+      league: $("f_league").value,
+      date: $("f_date").value,
+      home: $("f_home").value,
+      away: $("f_away").value
+    };
+
+    const lf = String($("leagueFilter").value || "").trim();
+    const from = parseDateAny($("from").value) || null;
+    const to = parseDateAny($("to").value) || null;
+
+    const N = Math.max(3, toNumber($("N").value) || 10);
+    const L = Math.max(50, toNumber($("L").value) || 380);
+    const thrGG = Math.min(0.95, Math.max(0.50, toNumber($("thrGG").value) || 0.58));
+    const thrNG = Math.max(0.05, Math.min(0.50, toNumber($("thrNG").value) || 0.42));
+
+    const cleanF = [];
+    for (const r of Fraw.rows){
+      const dt = parseDateAny(r[map.date]);
+      const league = String(r[map.league] ?? "").trim();
+      const home = String(r[map.home] ?? "").trim();
+      const away = String(r[map.away] ?? "").trim();
+      if (!dt || !league || !home || !away) continue;
+      if (lf && league !== lf) continue;
+      if (from && dt < from) continue;
+      if (to && dt > to) continue;
+      cleanF.push({ dt, league, home, away });
+    }
+
+    // compute outputs
+    outRows = [];
+    let ok=0, miss=0;
+    for (const fx of cleanF){
+      const est = estimatePgg(fx, N, L);
+      if (!est){ miss++; continue; }
+      ok++;
+      const sig = signalFromPgg(est.pGG, thrGG, thrNG);
+      outRows.push({
+        date: isoDate(fx.dt),
+        league: fx.league,
+        match: `${fx.home} - ${fx.away}`,
+        pGG: est.pGG,
+        pNG: est.pNG,
+        signal: sig,
+        gfH: est.gfH, gsH: est.gaH,
+        gfA: est.gfA, gsA: est.gaA,
+        basePgg: est.basePgg,
+        usedN: est.usedN
+      });
+    }
+
+    // sort by strongest signals first
+    const rank = (s) => s.startsWith("🟢") ? 1 : s.startsWith("🔴") ? 2 : s.startsWith("🟡") ? 3 : 4;
+    outRows.sort((a,b)=>{
+      const ra=rank(a.signal), rb=rank(b.signal);
+      if (ra !== rb) return ra - rb;
+      // then by extremeness
+      const ea = Math.abs(a.pGG - 0.5), eb = Math.abs(b.pGG - 0.5);
+      return eb - ea;
+    });
+
+    // render table
+    const tb = $("outTable").querySelector("tbody");
+    tb.innerHTML = "";
+    for (const r of outRows){
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${r.date}</td>
+        <td>${r.league}</td>
+        <td>${r.match}</td>
+        <td>${pct(r.pGG)}</td>
+        <td>${pct(r.pNG)}</td>
+        <td>${r.signal}</td>
+        <td>${fmt(r.gfH,2)}</td>
+        <td>${fmt(r.gsH,2)}</td>
+        <td>${fmt(r.gfA,2)}</td>
+        <td>${fmt(r.gsA,2)}</td>
+        <td>${pct(r.basePgg)}</td>
+        <td>${r.usedN}</td>
+      `;
+      tb.appendChild(tr);
+    }
+
+    $("fixStatus").innerHTML = `<span class="pill ok">OK</span> Fixtures calcolate: ${ok} | non valutabili (poco storico): ${miss}`;
+    $("btnExport").disabled = outRows.length === 0;
+
+  } catch(err){
+    $("fixStatus").innerHTML = `<span class="pill bad">ERRORE</span> ${err.message}`;
+  }
+});
+
+/* ===== export output CSV ===== */
+$("btnExport").addEventListener("click", () => {
+  const header = ["date","league","match","pGG_pct","pNG_pct","signal","gfH","gsH","gfA","gsA","baseGG_pct","usedN"];
+  const lines = [header.join(",")];
+  for (const r of outRows){
+    const row = [
+      r.date,
+      r.league,
+      `"${r.match.replaceAll('"','""')}"`,
+      (r.pGG*100).toFixed(2),
+      (r.pNG*100).toFixed(2),
+      `"${r.signal}"`,
+      r.gfH.toFixed(3),
+      r.gsH.toFixed(3),
+      r.gfA.toFixed(3),
+      r.gsA.toFixed(3),
+      (r.basePgg*100).toFixed(2),
+      r.usedN
+    ];
+    lines.push(row.join(","));
+  }
+  const blob = new Blob([lines.join("\n")], {type:"text/csv;charset=utf-8"});
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "syncras_fixtures_predictions_no_odds.csv";
+  a.click();
+  URL.revokeObjectURL(a.href);
+});
+
+/* if user changes parameters after prepare, re-run backtest for immediate feedback */
+["N","L","thrGG","thrNG","leagueFilter"].forEach(id=>{
+  $(id).addEventListener("change", ()=>{ if(R.ready) runBacktest(); });
+});
+</script>
+</body>
+</html>
