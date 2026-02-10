@@ -3,32 +3,33 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Syncras — Analisi Gol/NoGol per Lega + Confronto Quote</title>
+  <title>Syncras — Backtest GG/NG (Serie A e leghe) con CSV risultati + quote</title>
   <style>
     :root{
       --bg:#0b0b12; --card:#121225; --muted:#a7a7c2; --txt:#f2f2ff;
-      --accent:#8b5cf6; --accent2:#22c55e; --warn:#f59e0b; --bad:#ef4444;
+      --accent:#8b5cf6; --ok:#22c55e; --warn:#f59e0b; --bad:#ef4444;
       --border: rgba(255,255,255,.10);
     }
-    body{margin:0;background:linear-gradient(180deg,#07070f 0%,#0b0b12 100%);color:var(--txt);font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif}
-    .wrap{max-width:1100px;margin:0 auto;padding:18px}
+    body{margin:0;background:linear-gradient(180deg,#07070f 0%,#0b0b12 100%);color:var(--txt);
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif}
+    .wrap{max-width:1200px;margin:0 auto;padding:18px}
     h1{font-size:20px;margin:6px 0 12px}
-    h2{font-size:16px;margin:18px 0 10px;color:#eaeaff}
-    .card{background:rgba(18,18,37,.92);border:1px solid var(--border);border-radius:14px;padding:14px;box-shadow:0 12px 30px rgba(0,0,0,.35)}
+    h2{font-size:16px;margin:18px 0 10px}
+    .card{background:rgba(18,18,37,.92);border:1px solid var(--border);border-radius:14px;padding:14px;
+      box-shadow:0 12px 30px rgba(0,0,0,.35)}
     .row{display:flex;gap:12px;flex-wrap:wrap}
-    .col{flex:1;min-width:280px}
+    .col{flex:1;min-width:300px}
     label{display:block;font-size:12px;color:var(--muted);margin:8px 0 6px}
-    input[type="file"], select, input[type="number"]{
+    input[type="file"], select, input[type="number"], input[type="text"]{
       width:100%;padding:10px;border-radius:12px;border:1px solid var(--border);
       background:#0f0f20;color:var(--txt);outline:none
     }
-    input[type="number"]{appearance:textfield}
     button{
       padding:10px 12px;border-radius:12px;border:1px solid var(--border);
       background:linear-gradient(180deg,rgba(139,92,246,.95),rgba(139,92,246,.75));
-      color:white;cursor:pointer;font-weight:700
+      color:white;cursor:pointer;font-weight:800
     }
-    button:disabled{opacity:.5;cursor:not-allowed}
+    button:disabled{opacity:.55;cursor:not-allowed}
     .muted{color:var(--muted);font-size:13px;line-height:1.35}
     .pill{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;border:1px solid var(--border);font-size:12px}
     .pill.ok{background:rgba(34,197,94,.14);border-color:rgba(34,197,94,.35)}
@@ -37,15 +38,17 @@
     .pill.neutral{background:rgba(255,255,255,.06)}
     .hr{height:1px;background:var(--border);margin:14px 0}
     table{width:100%;border-collapse:collapse}
-    th,td{padding:9px 8px;border-bottom:1px solid var(--border);text-align:left;font-size:13px}
-    th{color:#d9d9ff;font-weight:800;position:sticky;top:0;background:#121225}
+    th,td{padding:9px 8px;border-bottom:1px solid var(--border);text-align:left;font-size:13px;white-space:nowrap}
+    th{color:#d9d9ff;font-weight:900;position:sticky;top:0;background:#121225;z-index:1}
     tr:hover td{background:rgba(255,255,255,.03)}
     .small{font-size:12px;color:var(--muted)}
     .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+    @media (max-width:900px){.grid3{grid-template-columns:1fr}}
     @media (max-width:720px){.grid2{grid-template-columns:1fr}}
     .kpi{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
     .kpi .box{flex:1;min-width:170px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:12px;padding:10px}
-    .kpi .v{font-size:18px;font-weight:900}
+    .kpi .v{font-size:18px;font-weight:950}
     .kpi .t{font-size:12px;color:var(--muted)}
     .note{font-size:12px;color:var(--muted);margin-top:10px}
     a{color:#c4b5fd}
@@ -53,131 +56,93 @@
 </head>
 <body>
 <div class="wrap">
-  <h1>Syncras — Statistica Gol/NoGol per Lega + Confronto Quote (offline)</h1>
+  <h1>Syncras — Backtest Gol/NoGol (GG/NG) con CSV risultati + CSV quote</h1>
 
   <div class="card">
     <div class="muted">
-      Questo tool è <b>solo informativo/statistico</b>: calcola probabilità storiche e confronta quote (EV). <b>Non è un invito a scommettere</b>.
-      Gioca responsabilmente e considera limiti (margine bookmaker, dati incompleti, cambi allenatore/rosa, ecc.).
+      Questo strumento è <b>solo analisi statistica</b> e backtest storico. Non è un invito a scommettere.
+      I risultati passati non garantiscono risultati futuri. Usa sempre responsabilità e limiti.
     </div>
   </div>
 
   <div class="row" style="margin-top:12px">
     <div class="col card">
-      <h2>1) Carica CSV storico partite</h2>
-
-      <label>File storico (CSV)</label>
-      <input id="histFile" type="file" accept=".csv,text/csv" />
+      <h2>1) CSV Risultati (storico)</h2>
+      <label>Carica CSV risultati</label>
+      <input id="resultsFile" type="file" accept=".csv,text/csv" />
 
       <div class="hr"></div>
 
       <div class="grid2">
         <div>
-          <label>Colonna Lega</label>
-          <select id="h_league"></select>
-        </div>
-        <div>
-          <label>Colonna Data</label>
-          <select id="h_date"></select>
-          <div class="small">Supporta date tipo: <i>YYYY-MM-DD</i>, <i>DD/MM/YYYY</i>, <i>DD-MM-YYYY</i></div>
-        </div>
-        <div>
-          <label>HomeTeam</label>
-          <select id="h_home"></select>
-        </div>
-        <div>
-          <label>AwayTeam</label>
-          <select id="h_away"></select>
-        </div>
-        <div>
-          <label>Gol Casa</label>
-          <select id="h_hg"></select>
-        </div>
-        <div>
-          <label>Gol Trasferta</label>
-          <select id="h_ag"></select>
-        </div>
-        <div>
-          <label>Colonna Stagione (opzionale)</label>
-          <select id="h_season">
-            <option value="">(nessuna)</option>
-          </select>
-          <div class="small">Se non c’è, useremo solo la lega (e le date).</div>
-        </div>
-        <div>
-          <label>Separatore CSV</label>
-          <select id="h_sep">
+          <label>Separatore</label>
+          <select id="r_sep">
             <option value="auto">Auto</option>
-            <option value=",">, (virgola)</option>
-            <option value=";">; (punto e virgola)</option>
+            <option value=",">,</option>
+            <option value=";">;</option>
             <option value="\t">TAB</option>
           </select>
         </div>
+        <div>
+          <label>Preset rapido (per il tuo results_unified.csv)</label>
+          <select id="preset">
+            <option value="auto">Auto</option>
+            <option value="results_unified">results_unified (date, league, home_team, away_team, FTHG, FTAG)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid3" style="margin-top:8px">
+        <div><label>date</label><select id="r_date"></select></div>
+        <div><label>league</label><select id="r_league"></select></div>
+        <div><label>home_team</label><select id="r_home"></select></div>
+        <div><label>away_team</label><select id="r_away"></select></div>
+        <div><label>FTHG</label><select id="r_hg"></select></div>
+        <div><label>FTAG</label><select id="r_ag"></select></div>
       </div>
 
       <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap">
-        <button id="btnComputeHist" disabled>Calcola statistiche per lega</button>
-        <button id="btnExportLeague" disabled>Esporta tabella leghe (CSV)</button>
+        <button id="btnPrepare" disabled>Prepara dataset (pulizia + ordinamento)</button>
       </div>
 
-      <div class="note" id="histStatus"></div>
+      <div class="note" id="resultsStatus"></div>
     </div>
 
     <div class="col card">
-      <h2>2) Carica CSV quote (opzionale)</h2>
-
-      <label>File quote (CSV)</label>
+      <h2>2) CSV Quote (GG/NG)</h2>
+      <label>Carica CSV quote</label>
       <input id="oddsFile" type="file" accept=".csv,text/csv" />
 
       <div class="hr"></div>
 
       <div class="grid2">
         <div>
-          <label>Colonna Lega</label>
-          <select id="o_league"></select>
-        </div>
-        <div>
-          <label>Colonna Data</label>
-          <select id="o_date"></select>
-        </div>
-        <div>
-          <label>HomeTeam</label>
-          <select id="o_home"></select>
-        </div>
-        <div>
-          <label>AwayTeam</label>
-          <select id="o_away"></select>
-        </div>
-
-        <div>
-          <label>Quota GG (Gol / BTTS Yes) — opzionale</label>
-          <select id="o_gg"></select>
-        </div>
-        <div>
-          <label>Quota NG (NoGol / BTTS No) — opzionale</label>
-          <select id="o_ng"></select>
-        </div>
-
-        <div>
-          <label>Separatore CSV</label>
+          <label>Separatore</label>
           <select id="o_sep">
             <option value="auto">Auto</option>
-            <option value=",">, (virgola)</option>
-            <option value=";">; (punto e virgola)</option>
+            <option value=",">,</option>
+            <option value=";">;</option>
             <option value="\t">TAB</option>
           </select>
         </div>
-
         <div>
-          <label>Lookback per contesto (n partite precedenti della lega)</label>
-          <input id="lookback" type="number" min="50" step="10" value="380" />
-          <div class="small">Esempio: 380 ≈ una stagione. Più alto = più stabile ma meno “attuale”.</div>
+          <label>Nota</label>
+          <div class="small">Devi avere almeno una quota: <b>GG</b> oppure <b>NG</b> (o entrambe).</div>
         </div>
       </div>
 
+      <div class="grid3" style="margin-top:8px">
+        <div><label>date</label><select id="o_date"></select></div>
+        <div><label>league</label><select id="o_league"></select></div>
+        <div><label>home_team</label><select id="o_home"></select></div>
+        <div><label>away_team</label><select id="o_away"></select></div>
+        <div><label>Quota GG (BTTS Yes)</label><select id="o_gg"></select></div>
+        <div><label>Quota NG (BTTS No)</label><select id="o_ng"></select></div>
+      </div>
+
       <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap">
-        <button id="btnCompare" disabled>Confronta quote vs statistica</button>
-        <button id="btnExportMatches" disabled>Esporta confronto match (CSV)</button>
+        <button id="btnBacktest" disabled>BACKTEST</button>
+        <button id="btnExportBets" disabled>Esporta bets (CSV)</button>
       </div>
 
       <div class="note" id="oddsStatus"></div>
@@ -185,62 +150,81 @@
   </div>
 
   <div class="card" style="margin-top:12px">
-    <h2>Risultati — Statistiche per Lega</h2>
-    <div id="leagueKPIs" class="kpi" style="display:none"></div>
-    <div style="overflow:auto;max-height:420px">
-      <table id="leagueTable">
-        <thead>
-          <tr>
-            <th>Lega</th>
-            <th>Partite</th>
-            <th>Gol casa (avg)</th>
-            <th>Gol trasf (avg)</th>
-            <th>Gol totali (avg)</th>
-            <th>GG %</th>
-            <th>NG %</th>
-            <th>Clean sheet casa %</th>
-            <th>Clean sheet trasf %</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+    <h2>3) Parametri Backtest</h2>
+    <div class="grid3">
+      <div>
+        <label>Mercato da testare</label>
+        <select id="market">
+          <option value="NG">NO GOL (BTTS No)</option>
+          <option value="GG">GOL (BTTS Yes)</option>
+        </select>
+      </div>
+      <div>
+        <label>Lookback lega (quante partite precedenti usare)</label>
+        <input id="lookback" type="number" min="50" step="10" value="380" />
+        <div class="small">Esempio: 380 ≈ una stagione. Più alto = più stabile.</div>
+      </div>
+      <div>
+        <label>Soglia EV minima (in %)</label>
+        <input id="minEV" type="number" step="1" value="5" />
+        <div class="small">Esempio: 5 = prendo solo EV ≥ +5%.</div>
+      </div>
+
+      <div>
+        <label>Puntata fissa per bet</label>
+        <input id="stake" type="number" min="1" step="1" value="10" />
+      </div>
+      <div>
+        <label>Filtro lega (vuoto = tutte)</label>
+        <input id="leagueFilter" type="text" placeholder="Es: I1 (Serie A) oppure D1..." />
+      </div>
+      <div>
+        <label>Range date (opzionale)</label>
+        <input id="dateFrom" type="text" placeholder="YYYY-MM-DD (da)" />
+        <input id="dateTo" type="text" placeholder="YYYY-MM-DD (a)" style="margin-top:8px" />
+      </div>
     </div>
-    <div class="note" id="leagueNote"></div>
+
+    <div class="note">
+      Logica: per ogni match, stimiamo P(GG)/P(NG) dalla <b>stessa lega</b> usando solo partite <b>prima</b> della data match.
+      Se la quota del mercato scelto è presente, calcoliamo EV = p*quota - 1. Se EV ≥ soglia → “bet”.
+    </div>
   </div>
 
   <div class="card" style="margin-top:12px">
-    <h2>Risultati — Confronto Quote vs Statistica (match)</h2>
-    <div class="muted">Qui vedi, per ogni match del CSV quote, una probabilità stimata dal tuo storico (lega + lookback) e il confronto con quota GG/NG se presente.</div>
-    <div style="overflow:auto;max-height:520px;margin-top:10px">
-      <table id="matchTable">
+    <h2>Risultati Backtest</h2>
+    <div id="kpis" class="kpi" style="display:none"></div>
+    <div class="note" id="btNote"></div>
+  </div>
+
+  <div class="card" style="margin-top:12px">
+    <h2>Lista Bets</h2>
+    <div style="overflow:auto;max-height:560px;margin-top:10px">
+      <table id="betsTable">
         <thead>
           <tr>
             <th>Data</th>
             <th>Lega</th>
             <th>Match</th>
-            <th>P(GG) stimata</th>
-            <th>Quota equa GG</th>
-            <th>Quota GG</th>
-            <th>EV GG</th>
-            <th>P(NG) stimata</th>
-            <th>Quota equa NG</th>
-            <th>Quota NG</th>
-            <th>EV NG</th>
-            <th>Giudizio</th>
+            <th>Mercato</th>
+            <th>P stimata</th>
+            <th>Quota</th>
+            <th>EV</th>
+            <th>Esito reale</th>
+            <th>Profitto</th>
+            <th>Bankroll (cum)</th>
+            <th>Lookback N</th>
           </tr>
         </thead>
         <tbody></tbody>
       </table>
     </div>
-    <div class="note" id="matchNote"></div>
+    <div class="note">Profitto calcolato con puntata fissa: se vince → (quota-1)*stake, se perde → -stake.</div>
   </div>
-
 </div>
 
 <script>
-/* =========================
-   CSV parser (robusto base)
-   ========================= */
+/* ============ CSV parser ============ */
 function detectSeparator(text){
   const sample = text.slice(0, 4000);
   const candidates = [",",";","\t"];
@@ -249,7 +233,6 @@ function detectSeparator(text){
     const lines = sample.split(/\r?\n/).slice(0, 30).filter(Boolean);
     let score = 0;
     for (const line of lines){
-      // count non-quoted separators
       score += (line.match(new RegExp(sep.replace("\t","\\t"), "g")) || []).length;
     }
     if (score > bestScore){ bestScore = score; best = sep; }
@@ -258,64 +241,43 @@ function detectSeparator(text){
 }
 
 function parseCSV(text, sep){
-  // Handles quotes, commas/semicolons/tab, newlines
-  // Returns {headers:[], rows:[{...}]}
   if (sep === "auto") sep = detectSeparator(text);
-
   const rows = [];
-  let i = 0, field = "", row = [], inQuotes = false;
-
-  function pushField(){
-    row.push(field);
-    field = "";
-  }
+  let i=0, field="", row=[], inQuotes=false;
+  function pushField(){ row.push(field); field=""; }
   function pushRow(){
-    // Ignore empty trailing row
-    const allEmpty = row.every(v => String(v).trim() === "");
+    const allEmpty = row.every(v => String(v).trim()==="");
     if (!allEmpty) rows.push(row);
-    row = [];
+    row=[];
   }
-
   while (i < text.length){
     const c = text[i];
-
     if (c === '"'){
-      if (inQuotes && text[i+1] === '"'){ field += '"'; i += 2; continue; }
+      if (inQuotes && text[i+1] === '"'){ field+='"'; i+=2; continue; }
       inQuotes = !inQuotes; i++; continue;
     }
-
-    if (!inQuotes && c === sep){
-      pushField(); i++; continue;
-    }
-
+    if (!inQuotes && c === sep){ pushField(); i++; continue; }
     if (!inQuotes && (c === "\n" || c === "\r")){
-      // handle \r\n
       if (c === "\r" && text[i+1] === "\n") i++;
       pushField(); pushRow(); i++; continue;
     }
-
     field += c; i++;
   }
-  // last
   pushField(); pushRow();
-
   const headers = (rows.shift() || []).map(h => String(h).trim());
   const outRows = rows.map(r => {
     const obj = {};
-    for (let k=0;k<headers.length;k++){
-      obj[headers[k]] = (r[k] ?? "").toString().trim();
-    }
+    for (let k=0;k<headers.length;k++) obj[headers[k]] = (r[k] ?? "").toString().trim();
     return obj;
   });
   return { headers, rows: outRows, sep };
 }
 
-/* =========================
-   Helpers
-   ========================= */
+/* ============ helpers ============ */
+const $ = (id) => document.getElementById(id);
+
 function toNumber(x){
-  if (x === null || x === undefined) return NaN;
-  const s = String(x).trim().replace(",", ".");
+  const s = String(x ?? "").trim().replace(",", ".");
   const n = Number(s);
   return Number.isFinite(n) ? n : NaN;
 }
@@ -323,34 +285,40 @@ function toNumber(x){
 function parseDateAny(s){
   if (!s) return null;
   const t = String(s).trim();
-  // Try ISO YYYY-MM-DD
   let m = t.match(/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})/);
   if (m){
     const y=+m[1], mo=+m[2]-1, d=+m[3];
     const dt = new Date(Date.UTC(y,mo,d));
     return isNaN(dt.getTime()) ? null : dt;
   }
-  // Try DD/MM/YYYY or DD-MM-YYYY
   m = t.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/);
   if (m){
     const d=+m[1], mo=+m[2]-1, y=+m[3];
     const dt = new Date(Date.UTC(y,mo,d));
     return isNaN(dt.getTime()) ? null : dt;
   }
-  // fallback Date.parse
   const dt = new Date(t);
   return isNaN(dt.getTime()) ? null : dt;
 }
 
-function pct(x){
-  if (!Number.isFinite(x)) return "";
-  return (x*100).toFixed(1) + "%";
+function pct(x){ return (x*100).toFixed(1) + "%"; }
+function fmt(x,d=2){ return Number.isFinite(x) ? x.toFixed(d) : ""; }
+
+function fillSelect(sel, headers, includeEmpty=false){
+  sel.innerHTML = "";
+  if (includeEmpty){
+    const o = document.createElement("option");
+    o.value = "";
+    o.textContent = "(nessuna)";
+    sel.appendChild(o);
+  }
+  for (const h of headers){
+    const o = document.createElement("option");
+    o.value = h;
+    o.textContent = h;
+    sel.appendChild(o);
+  }
 }
-function fmt(x, d=2){
-  if (!Number.isFinite(x)) return "";
-  return x.toFixed(d);
-}
-function safeDiv(a,b){ return b ? (a/b) : NaN; }
 
 function downloadCSV(filename, headerArr, rowsArr){
   const esc = (v) => {
@@ -373,458 +341,315 @@ function downloadCSV(filename, headerArr, rowsArr){
   URL.revokeObjectURL(a.href);
 }
 
-/* =========================
-   State
-   ========================= */
-let hist = { headers:[], rows:[], map:null, byLeague:null, sortedByLeagueDate:null };
-let odds = { headers:[], rows:[], map:null };
-let leagueSummaryRows = [];
-let matchCompareRows = [];
+/* ============ state ============ */
+let R = { headers:[], rows:[], sep:",", clean:[], byLeagueSorted:new Map(), map:null, ready:false };
+let O = { headers:[], rows:[], sep:",", map:null, loaded:false };
+let bets = [];
 
-/* =========================
-   UI bindings
-   ========================= */
-const $ = (id) => document.getElementById(id);
-
-function fillSelect(sel, headers, includeEmpty=false){
-  sel.innerHTML = "";
-  if (includeEmpty){
-    const o = document.createElement("option");
-    o.value = "";
-    o.textContent = "(nessuna)";
-    sel.appendChild(o);
-  }
-  for (const h of headers){
-    const o = document.createElement("option");
-    o.value = h;
-    o.textContent = h;
-    sel.appendChild(o);
-  }
-}
-
-function autoPick(headers, keywords){
-  const lower = headers.map(h => h.toLowerCase());
-  for (const k of keywords){
-    const idx = lower.findIndex(h => h === k || h.includes(k));
-    if (idx >= 0) return headers[idx];
-  }
-  return "";
-}
-
-function setDefaultMappingsHistory(){
-  const h = hist.headers;
-  $("h_league").value = autoPick(h, ["league","div","competition","campionato","lega"]);
-  $("h_date").value   = autoPick(h, ["date","giorno","data"]);
-  $("h_home").value   = autoPick(h, ["hometeam","home","casa","team1"]);
-  $("h_away").value   = autoPick(h, ["awayteam","away","trasferta","team2"]);
-  $("h_hg").value     = autoPick(h, ["fthg","homegoals","hg","golcasa"]);
-  $("h_ag").value     = autoPick(h, ["ftag","awaygoals","ag","goltrasf"]);
-  // optional season
-  const seasonPick = autoPick(h, ["season","stagione","year"]);
-  if (seasonPick){
-    // insert into season select if not already
-    if (![...$("h_season").options].some(o => o.value === seasonPick)){
-      const o = document.createElement("option");
-      o.value = seasonPick; o.textContent = seasonPick;
-      $("h_season").appendChild(o);
-    }
-    $("h_season").value = seasonPick;
-  }
-}
-
-function setDefaultMappingsOdds(){
-  const h = odds.headers;
-  $("o_league").value = autoPick(h, ["league","div","competition","campionato","lega"]);
-  $("o_date").value   = autoPick(h, ["date","giorno","data"]);
-  $("o_home").value   = autoPick(h, ["hometeam","home","casa","team1"]);
-  $("o_away").value   = autoPick(h, ["awayteam","away","trasferta","team2"]);
-  $("o_gg").value     = autoPick(h, ["btts_yes","gg","gol","btts y","bttsyes","both teams to score yes"]);
-  $("o_ng").value     = autoPick(h, ["btts_no","ng","nogol","no gol","btts n","bttsno","both teams to score no"]);
-}
-
-$("histFile").addEventListener("change", async (e) => {
+/* ============ load results ============ */
+$("resultsFile").addEventListener("change", async (e) => {
   const f = e.target.files?.[0];
   if (!f) return;
   const text = await f.text();
-  const sep = $("h_sep").value;
-  hist = { ...hist, ...parseCSV(text, sep) };
-  fillSelect($("h_league"), hist.headers);
-  fillSelect($("h_date"), hist.headers);
-  fillSelect($("h_home"), hist.headers);
-  fillSelect($("h_away"), hist.headers);
-  fillSelect($("h_hg"), hist.headers);
-  fillSelect($("h_ag"), hist.headers);
+  const sep = $("r_sep").value;
+  R = { ...R, ...parseCSV(text, sep), clean:[], byLeagueSorted:new Map(), ready:false };
+  fillSelect($("r_date"), R.headers);
+  fillSelect($("r_league"), R.headers);
+  fillSelect($("r_home"), R.headers);
+  fillSelect($("r_away"), R.headers);
+  fillSelect($("r_hg"), R.headers);
+  fillSelect($("r_ag"), R.headers);
 
-  // season select: keep (nessuna) + headers
-  $("h_season").innerHTML = `<option value="">(nessuna)</option>`;
-  for (const hh of hist.headers){
-    const o = document.createElement("option"); o.value=hh; o.textContent=hh;
-    $("h_season").appendChild(o);
+  // preset for your unified file
+  if ($("preset").value === "results_unified"){
+    $("r_date").value = "date";
+    $("r_league").value = "league";
+    $("r_home").value = "home_team";
+    $("r_away").value = "away_team";
+    $("r_hg").value = "FTHG";
+    $("r_ag").value = "FTAG";
   }
-  setDefaultMappingsHistory();
-  $("histStatus").textContent = `Caricato storico: ${hist.rows.length} righe. Separatore usato: ${hist.sep === "\t" ? "TAB" : hist.sep}`;
-  $("btnComputeHist").disabled = hist.rows.length === 0;
-  $("btnExportLeague").disabled = true;
-  $("btnCompare").disabled = true;
+
+  $("resultsStatus").textContent = `Caricato risultati: ${R.rows.length} righe. Separatore: ${R.sep === "\t" ? "TAB" : R.sep}`;
+  $("btnPrepare").disabled = R.rows.length === 0;
 });
 
-$("h_sep").addEventListener("change", () => {
-  // user may want to re-upload with chosen separator
+$("preset").addEventListener("change", () => {
+  if ($("preset").value === "results_unified" && R.headers.length){
+    $("r_date").value = "date";
+    $("r_league").value = "league";
+    $("r_home").value = "home_team";
+    $("r_away").value = "away_team";
+    $("r_hg").value = "FTHG";
+    $("r_ag").value = "FTAG";
+  }
 });
 
+/* ============ load odds ============ */
 $("oddsFile").addEventListener("change", async (e) => {
   const f = e.target.files?.[0];
   if (!f) return;
   const text = await f.text();
   const sep = $("o_sep").value;
-  odds = { ...odds, ...parseCSV(text, sep) };
-  fillSelect($("o_league"), odds.headers);
-  fillSelect($("o_date"), odds.headers);
-  fillSelect($("o_home"), odds.headers);
-  fillSelect($("o_away"), odds.headers);
-  fillSelect($("o_gg"), odds.headers, true);
-  fillSelect($("o_ng"), odds.headers, true);
-  setDefaultMappingsOdds();
-  $("oddsStatus").textContent = `Caricato quote: ${odds.rows.length} righe. Separatore usato: ${odds.sep === "\t" ? "TAB" : odds.sep}`;
-  $("btnCompare").disabled = !(odds.rows.length && hist.byLeague);
-  $("btnExportMatches").disabled = true;
+  O = { ...O, ...parseCSV(text, sep), loaded:true };
+  fillSelect($("o_date"), O.headers);
+  fillSelect($("o_league"), O.headers);
+  fillSelect($("o_home"), O.headers);
+  fillSelect($("o_away"), O.headers);
+  fillSelect($("o_gg"), O.headers, true);
+  fillSelect($("o_ng"), O.headers, true);
+
+  $("oddsStatus").textContent = `Caricato quote: ${O.rows.length} righe. Separatore: ${O.sep === "\t" ? "TAB" : O.sep}`;
+  $("btnBacktest").disabled = !(O.rows.length && R.ready);
 });
 
-/* =========================
-   Compute League stats
-   ========================= */
-function computeLeagueStats(){
-  const map = {
-    league: $("h_league").value,
-    date: $("h_date").value,
-    home: $("h_home").value,
-    away: $("h_away").value,
-    hg: $("h_hg").value,
-    ag: $("h_ag").value,
-    season: $("h_season").value || null
-  };
-  hist.map = map;
-
-  const needed = ["league","date","home","away","hg","ag"];
-  for (const k of needed){
-    if (!map[k]) throw new Error(`Mappatura mancante: ${k}`);
-  }
-
-  const cleaned = [];
-  for (const r of hist.rows){
-    const league = r[map.league];
-    const dt = parseDateAny(r[map.date]);
-    const home = r[map.home];
-    const away = r[map.away];
-    const hg = toNumber(r[map.hg]);
-    const ag = toNumber(r[map.ag]);
-    const season = map.season ? (r[map.season] || "") : "";
-    if (!league || !dt || !home || !away || !Number.isFinite(hg) || !Number.isFinite(ag)) continue;
-    cleaned.push({
-      league: String(league).trim(),
-      date: dt,
-      home: String(home).trim(),
-      away: String(away).trim(),
-      hg, ag,
-      season: season ? String(season).trim() : ""
-    });
-  }
-
-  // group by league (and optionally season for table expansion later)
-  const byLeague = new Map();
-  for (const m of cleaned){
-    if (!byLeague.has(m.league)) byLeague.set(m.league, []);
-    byLeague.get(m.league).push(m);
-  }
-  // sort each league by date
-  const sortedByLeagueDate = new Map();
-  for (const [lg, arr] of byLeague.entries()){
-    arr.sort((a,b) => a.date - b.date);
-    sortedByLeagueDate.set(lg, arr);
-  }
-
-  // stats per league
-  leagueSummaryRows = [];
-  for (const [lg, arr] of sortedByLeagueDate.entries()){
-    const n = arr.length;
-    let sumHG=0, sumAG=0, gg=0, ng=0, csH=0, csA=0;
-    for (const m of arr){
-      sumHG += m.hg;
-      sumAG += m.ag;
-      const isGG = (m.hg > 0 && m.ag > 0);
-      if (isGG) gg++; else ng++;
-      if (m.ag === 0) csH++; // away scored 0 => home clean sheet
-      if (m.hg === 0) csA++; // home scored 0 => away clean sheet
-    }
-    const row = {
-      League: lg,
-      Matches: n,
-      AvgHomeGoals: safeDiv(sumHG, n),
-      AvgAwayGoals: safeDiv(sumAG, n),
-      AvgTotalGoals: safeDiv(sumHG+sumAG, n),
-      GG: safeDiv(gg, n),
-      NG: safeDiv(ng, n),
-      CS_Home: safeDiv(csH, n),
-      CS_Away: safeDiv(csA, n),
+/* ============ prepare results ============ */
+$("btnPrepare").addEventListener("click", () => {
+  try{
+    const map = {
+      date: $("r_date").value,
+      league: $("r_league").value,
+      home: $("r_home").value,
+      away: $("r_away").value,
+      hg: $("r_hg").value,
+      ag: $("r_ag").value
     };
-    leagueSummaryRows.push(row);
+    for (const k of Object.keys(map)){
+      if (!map[k]) throw new Error(`Mappatura risultati mancante: ${k}`);
+    }
+    R.map = map;
+
+    const clean = [];
+    for (const r of R.rows){
+      const dt = parseDateAny(r[map.date]);
+      const league = String(r[map.league] ?? "").trim();
+      const home = String(r[map.home] ?? "").trim();
+      const away = String(r[map.away] ?? "").trim();
+      const hg = toNumber(r[map.hg]);
+      const ag = toNumber(r[map.ag]);
+      if (!dt || !league || !home || !away || !Number.isFinite(hg) || !Number.isFinite(ag)) continue;
+      clean.push({ dt, league, home, away, hg, ag });
+    }
+    // group + sort by date within league
+    const by = new Map();
+    for (const m of clean){
+      if (!by.has(m.league)) by.set(m.league, []);
+      by.get(m.league).push(m);
+    }
+    for (const [lg, arr] of by.entries()){
+      arr.sort((a,b)=>a.dt-b.dt);
+    }
+    R.clean = clean;
+    R.byLeagueSorted = by;
+    R.ready = true;
+
+    $("resultsStatus").innerHTML = `<span class="pill ok">OK</span> Risultati pronti: ${clean.length} righe valide, ${by.size} leghe.`;
+    $("btnBacktest").disabled = !(O.rows.length && R.ready);
+  } catch(err){
+    $("resultsStatus").innerHTML = `<span class="pill bad">ERRORE</span> ${err.message}`;
   }
+});
 
-  // render table
-  const tb = $("leagueTable").querySelector("tbody");
-  tb.innerHTML = "";
-  leagueSummaryRows.sort((a,b) => b.Matches - a.Matches);
-
-  for (const r of leagueSummaryRows){
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${r.League}</td>
-      <td>${r.Matches}</td>
-      <td>${fmt(r.AvgHomeGoals,2)}</td>
-      <td>${fmt(r.AvgAwayGoals,2)}</td>
-      <td>${fmt(r.AvgTotalGoals,2)}</td>
-      <td>${pct(r.GG)}</td>
-      <td>${pct(r.NG)}</td>
-      <td>${pct(r.CS_Home)}</td>
-      <td>${pct(r.CS_Away)}</td>
-    `;
-    tb.appendChild(tr);
-  }
-
-  hist.byLeague = byLeague;
-  hist.sortedByLeagueDate = sortedByLeagueDate;
-
-  $("btnExportLeague").disabled = leagueSummaryRows.length === 0;
-  $("btnCompare").disabled = !(odds.rows.length && leagueSummaryRows.length);
-
-  $("leagueNote").textContent =
-    `Righe valide usate: ${[...sortedByLeagueDate.values()].reduce((s,a)=>s+a.length,0)}. ` +
-    `GG = entrambe segnano. NG = almeno una a zero. Clean sheet casa = ospite a zero, clean sheet trasf = casa a zero.`;
-
-  // KPIs (totali)
-  const totalMatches = leagueSummaryRows.reduce((s,r)=>s+r.Matches,0);
-  const weighted = (key) => leagueSummaryRows.reduce((s,r)=>s + r[key]*r.Matches,0) / (totalMatches || 1);
-  const kpi = $("leagueKPIs");
-  kpi.style.display = totalMatches ? "flex" : "none";
-  kpi.innerHTML = `
-    <div class="box"><div class="v">${totalMatches}</div><div class="t">Partite (totale dataset valido)</div></div>
-    <div class="box"><div class="v">${fmt(weighted("AvgTotalGoals"),2)}</div><div class="t">Gol totali medi</div></div>
-    <div class="box"><div class="v">${pct(weighted("GG"))}</div><div class="t">% GG (media pesata)</div></div>
-    <div class="box"><div class="v">${pct(weighted("NG"))}</div><div class="t">% NG (media pesata)</div></div>
-  `;
-
-  $("histStatus").innerHTML =
-    `<span class="pill ok">OK</span> Storico pronto: ${cleaned.length} righe valide, ${sortedByLeagueDate.size} leghe.`;
-}
-
-/* =========================
-   Lookback stats per league up to date
-   ========================= */
-function leagueProbUpToDate(league, dateUTC, lookback){
-  const arr = hist.sortedByLeagueDate.get(league);
+/* ============ probability from lookback ============ */
+function leagueProb(league, dt, lookback){
+  const arr = R.byLeagueSorted.get(league);
   if (!arr || !arr.length) return null;
 
-  // find index of first match >= date
+  // binary search first index >= dt
   let lo=0, hi=arr.length;
   while (lo < hi){
     const mid = (lo+hi)>>1;
-    if (arr[mid].date < dateUTC) lo = mid+1;
+    if (arr[mid].dt < dt) lo = mid+1;
     else hi = mid;
   }
-  const end = lo; // matches strictly before date
+  const end = lo; // strictly before dt
   const start = Math.max(0, end - lookback);
   const slice = arr.slice(start, end);
-
-  if (slice.length < Math.min(50, lookback)) return null; // require enough history
+  if (slice.length < Math.min(50, lookback)) return null;
 
   let gg=0, ng=0;
   for (const m of slice){
     if (m.hg > 0 && m.ag > 0) gg++; else ng++;
   }
   const n = slice.length;
-  const pGG = gg / n;
-  const pNG = ng / n;
-  return { n, pGG, pNG };
+  return { n, pGG: gg/n, pNG: ng/n };
 }
 
-/* =========================
-   Compare Odds vs stats
-   ========================= */
-function compareOdds(){
-  if (!hist.sortedByLeagueDate) throw new Error("Calcola prima lo storico.");
+/* ============ backtest ============ */
+$("btnBacktest").addEventListener("click", () => {
+  try{
+    if (!R.ready) throw new Error("Prepara prima il dataset risultati.");
 
-  const map = {
-    league: $("o_league").value,
-    date: $("o_date").value,
-    home: $("o_home").value,
-    away: $("o_away").value,
-    gg: $("o_gg").value || null,
-    ng: $("o_ng").value || null
-  };
-  odds.map = map;
+    const map = {
+      date: $("o_date").value,
+      league: $("o_league").value,
+      home: $("o_home").value,
+      away: $("o_away").value,
+      gg: $("o_gg").value || null,
+      ng: $("o_ng").value || null
+    };
+    for (const k of ["date","league","home","away"]){
+      if (!map[k]) throw new Error(`Mappatura quote mancante: ${k}`);
+    }
+    O.map = map;
 
-  const needed = ["league","date","home","away"];
-  for (const k of needed){
-    if (!map[k]) throw new Error(`Mappatura quote mancante: ${k}`);
-  }
-  const lookback = Math.max(50, toNumber($("lookback").value) || 380);
+    const market = $("market").value; // "GG" or "NG"
+    const lookback = Math.max(50, toNumber($("lookback").value) || 380);
+    const minEV = (toNumber($("minEV").value) || 0) / 100;
+    const stake = Math.max(1, toNumber($("stake").value) || 10);
+    const lf = String($("leagueFilter").value || "").trim();
+    const dFrom = parseDateAny($("dateFrom").value) || null;
+    const dTo = parseDateAny($("dateTo").value) || null;
 
-  matchCompareRows = [];
-  let used=0, skipped=0;
-
-  for (const r of odds.rows){
-    const league = String(r[map.league] || "").trim();
-    const dt = parseDateAny(r[map.date]);
-    const home = String(r[map.home] || "").trim();
-    const away = String(r[map.away] || "").trim();
-    if (!league || !dt || !home || !away){ skipped++; continue; }
-
-    const probs = leagueProbUpToDate(league, dt, lookback);
-    if (!probs){ skipped++; continue; }
-
-    const qGG = map.gg ? toNumber(r[map.gg]) : NaN;
-    const qNG = map.ng ? toNumber(r[map.ng]) : NaN;
-
-    const pGG = probs.pGG;
-    const pNG = probs.pNG;
-
-    const fairGG = pGG > 0 ? (1/pGG) : NaN;
-    const fairNG = pNG > 0 ? (1/pNG) : NaN;
-
-    const evGG = (Number.isFinite(qGG) && qGG > 1 && Number.isFinite(pGG)) ? (pGG*qGG - 1) : NaN;
-    const evNG = (Number.isFinite(qNG) && qNG > 1 && Number.isFinite(pNG)) ? (pNG*qNG - 1) : NaN;
-
-    // giudizio informativo
-    let verdict = "N/D";
-    let cls = "neutral";
-    if (Number.isFinite(evGG) || Number.isFinite(evNG)){
-      // pick best EV among available
-      const cand = [];
-      if (Number.isFinite(evGG)) cand.push({m:"GG", ev:evGG});
-      if (Number.isFinite(evNG)) cand.push({m:"NG", ev:evNG});
-      cand.sort((a,b)=>b.ev-a.ev);
-      const best = cand[0];
-      if (best.ev > 0){
-        verdict = `Quota sopra statistica (${best.m})`;
-        cls = "ok";
-      } else {
-        verdict = `Quota sotto statistica (${best.m})`;
-        cls = "bad";
-      }
+    // build a fast lookup for results by key
+    const resIndex = new Map();
+    for (const m of R.clean){
+      const key = `${m.dt.toISOString().slice(0,10)}|${m.league}|${m.home}|${m.away}`;
+      resIndex.set(key, m);
     }
 
-    matchCompareRows.push({
-      Date: dt.toISOString().slice(0,10),
-      League: league,
-      Match: `${home} - ${away}`,
-      LookbackMatches: probs.n,
-      pGG: pGG,
-      fairGG: fairGG,
-      qGG: qGG,
-      evGG: evGG,
-      pNG: pNG,
-      fairNG: fairNG,
-      qNG: qNG,
-      evNG: evNG,
-      Verdict: verdict,
-      VerdictClass: cls
-    });
-    used++;
-  }
+    bets = [];
+    let scanned=0, joined=0, chosen=0, skippedNoOdds=0, skippedNoHist=0, skippedNoRes=0, skippedFilter=0;
 
-  // render
-  const tb = $("matchTable").querySelector("tbody");
-  tb.innerHTML = "";
-  matchCompareRows.sort((a,b) => (a.Date < b.Date ? 1 : -1)); // latest first
+    for (const r of O.rows){
+      scanned++;
+      const dt = parseDateAny(r[map.date]);
+      if (!dt) continue;
+      const dateKey = dt.toISOString().slice(0,10);
 
-  for (const r of matchCompareRows){
-    const tr = document.createElement("tr");
-    const pill = `<span class="pill ${r.VerdictClass}">${r.Verdict}</span>`;
-    tr.innerHTML = `
-      <td>${r.Date}</td>
-      <td>${r.League}</td>
-      <td>${r.Match}</td>
-      <td>${pct(r.pGG)}</td>
-      <td>${fmt(r.fairGG,2)}</td>
-      <td>${Number.isFinite(r.qGG) ? fmt(r.qGG,2) : ""}</td>
-      <td>${Number.isFinite(r.evGG) ? (r.evGG>=0?"+":"") + (r.evGG*100).toFixed(1)+"%" : ""}</td>
-      <td>${pct(r.pNG)}</td>
-      <td>${fmt(r.fairNG,2)}</td>
-      <td>${Number.isFinite(r.qNG) ? fmt(r.qNG,2) : ""}</td>
-      <td>${Number.isFinite(r.evNG) ? (r.evNG>=0?"+":"") + (r.evNG*100).toFixed(1)+"%" : ""}</td>
-      <td>${pill}</td>
+      const league = String(r[map.league] ?? "").trim();
+      const home = String(r[map.home] ?? "").trim();
+      const away = String(r[map.away] ?? "").trim();
+      if (!league || !home || !away) continue;
+
+      if (lf && league !== lf){ skippedFilter++; continue; }
+      if (dFrom && dt < dFrom){ skippedFilter++; continue; }
+      if (dTo && dt > dTo){ skippedFilter++; continue; }
+
+      const key = `${dateKey}|${league}|${home}|${away}`;
+      const res = resIndex.get(key);
+      if (!res){ skippedNoRes++; continue; }
+      joined++;
+
+      const probs = leagueProb(league, dt, lookback);
+      if (!probs){ skippedNoHist++; continue; }
+
+      const qGG = map.gg ? toNumber(r[map.gg]) : NaN;
+      const qNG = map.ng ? toNumber(r[map.ng]) : NaN;
+
+      const p = (market === "GG") ? probs.pGG : probs.pNG;
+      const q = (market === "GG") ? qGG : qNG;
+
+      if (!Number.isFinite(q) || q <= 1){ skippedNoOdds++; continue; }
+
+      const ev = p*q - 1;
+      const take = ev >= minEV;
+      if (!take) continue;
+
+      chosen++;
+
+      const isGG = (res.hg > 0 && res.ag > 0);
+      const won = (market === "GG") ? isGG : (!isGG);
+
+      const profit = won ? (q - 1) * stake : -stake;
+
+      bets.push({
+        date: dateKey,
+        league, home, away,
+        market,
+        p, q, ev,
+        won,
+        profit,
+        lookbackN: probs.n
+      });
+    }
+
+    // compute KPIs
+    let bankroll=0, peak=0, maxDD=0;
+    let wins=0, losses=0;
+    let sumProfit=0;
+
+    const tb = $("betsTable").querySelector("tbody");
+    tb.innerHTML = "";
+
+    // sort bets by date asc for equity curve
+    bets.sort((a,b) => (a.date < b.date ? -1 : 1));
+    for (const b of bets){
+      bankroll += b.profit;
+      peak = Math.max(peak, bankroll);
+      maxDD = Math.min(maxDD, bankroll - peak); // negative
+      sumProfit += b.profit;
+      if (b.won) wins++; else losses++;
+
+      const tr = document.createElement("tr");
+      const verdict = b.won ? `<span class="pill ok">Vinta</span>` : `<span class="pill bad">Persa</span>`;
+      tr.innerHTML = `
+        <td>${b.date}</td>
+        <td>${b.league}</td>
+        <td>${b.home} - ${b.away}</td>
+        <td>${b.market}</td>
+        <td>${pct(b.p)}</td>
+        <td>${fmt(b.q,2)}</td>
+        <td>${(b.ev>=0?"+":"") + (b.ev*100).toFixed(1)}%</td>
+        <td>${verdict}</td>
+        <td>${(b.profit>=0?"+":"") + b.profit.toFixed(2)}</td>
+        <td>${bankroll.toFixed(2)}</td>
+        <td>${b.lookbackN}</td>
+      `;
+      tb.appendChild(tr);
+    }
+
+    const nBets = bets.length;
+    const totalStaked = nBets * stake;
+    const roi = totalStaked > 0 ? (sumProfit / totalStaked) : 0;
+    const hit = nBets > 0 ? (wins / nBets) : 0;
+
+    const kpis = $("kpis");
+    kpis.style.display = "flex";
+    kpis.innerHTML = `
+      <div class="box"><div class="v">${scanned}</div><div class="t">Righe quote lette</div></div>
+      <div class="box"><div class="v">${joined}</div><div class="t">Match uniti a risultati</div></div>
+      <div class="box"><div class="v">${nBets}</div><div class="t">Bets (EV ≥ soglia)</div></div>
+      <div class="box"><div class="v">${pct(hit)}</div><div class="t">Hit-rate</div></div>
+      <div class="box"><div class="v">${sumProfit.toFixed(2)}</div><div class="t">Profitto totale</div></div>
+      <div class="box"><div class="v">${pct(roi)}</div><div class="t">ROI su stake</div></div>
+      <div class="box"><div class="v">${maxDD.toFixed(2)}</div><div class="t">Max Drawdown</div></div>
     `;
-    tb.appendChild(tr);
-  }
 
-  $("matchNote").textContent =
-    `Match analizzati: ${used}. Scartati (manca storia/colonne/date): ${skipped}. ` +
-    `La probabilità stimata usa le ultime ${lookback} partite della stessa lega (prima della data match).`;
+    $("btNote").textContent =
+      `Scartati: no risultati=${skippedNoRes}, no storia sufficiente=${skippedNoHist}, quota mancante=${skippedNoOdds}, filtri=${skippedFilter}. ` +
+      `Parametri: mercato=${market}, lookback=${lookback}, soglia EV=${(minEV*100).toFixed(1)}%, stake=${stake}.`;
 
-  $("oddsStatus").innerHTML =
-    `<span class="pill ok">OK</span> Confronto completato: ${used} match.`;
+    $("btnExportBets").disabled = bets.length === 0;
 
-  $("btnExportMatches").disabled = matchCompareRows.length === 0;
-}
+    $("oddsStatus").innerHTML = `<span class="pill ok">OK</span> Backtest completato.`;
 
-/* =========================
-   Buttons
-   ========================= */
-$("btnComputeHist").addEventListener("click", () => {
-  try{
-    computeLeagueStats();
-  }catch(err){
-    $("histStatus").innerHTML = `<span class="pill bad">ERRORE</span> ${err.message}`;
-  }
-});
-
-$("btnCompare").addEventListener("click", () => {
-  try{
-    compareOdds();
-  }catch(err){
+  } catch(err){
     $("oddsStatus").innerHTML = `<span class="pill bad">ERRORE</span> ${err.message}`;
   }
 });
 
-$("btnExportLeague").addEventListener("click", () => {
-  const rows = leagueSummaryRows.map(r => ({
-    League: r.League,
-    Matches: r.Matches,
-    AvgHomeGoals: fmt(r.AvgHomeGoals,2),
-    AvgAwayGoals: fmt(r.AvgAwayGoals,2),
-    AvgTotalGoals: fmt(r.AvgTotalGoals,2),
-    GG_pct: (r.GG*100).toFixed(1),
-    NG_pct: (r.NG*100).toFixed(1),
-    CleanSheetHome_pct: (r.CS_Home*100).toFixed(1),
-    CleanSheetAway_pct: (r.CS_Away*100).toFixed(1),
+/* ============ export bets ============ */
+$("btnExportBets").addEventListener("click", () => {
+  const rows = bets.map(b => ({
+    date: b.date,
+    league: b.league,
+    home_team: b.home,
+    away_team: b.away,
+    market: b.market,
+    p_est: (b.p*100).toFixed(2),
+    odds: fmt(b.q,2),
+    ev_pct: (b.ev*100).toFixed(2),
+    won: b.won ? "1" : "0",
+    profit: b.profit.toFixed(2),
+    lookbackN: b.lookbackN
   }));
-  downloadCSV("syncras_league_gg_ng_summary.csv",
-    ["League","Matches","AvgHomeGoals","AvgAwayGoals","AvgTotalGoals","GG_pct","NG_pct","CleanSheetHome_pct","CleanSheetAway_pct"],
-    rows
-  );
-});
-
-$("btnExportMatches").addEventListener("click", () => {
-  const rows = matchCompareRows.map(r => ({
-    Date: r.Date,
-    League: r.League,
-    Match: r.Match,
-    LookbackMatches: r.LookbackMatches,
-    pGG_pct: (r.pGG*100).toFixed(1),
-    fairGG: fmt(r.fairGG,2),
-    qGG: Number.isFinite(r.qGG) ? fmt(r.qGG,2) : "",
-    evGG_pct: Number.isFinite(r.evGG) ? (r.evGG*100).toFixed(1) : "",
-    pNG_pct: (r.pNG*100).toFixed(1),
-    fairNG: fmt(r.fairNG,2),
-    qNG: Number.isFinite(r.qNG) ? fmt(r.qNG,2) : "",
-    evNG_pct: Number.isFinite(r.evNG) ? (r.evNG*100).toFixed(1) : "",
-    Verdict: r.Verdict
-  }));
-  downloadCSV("syncras_match_odds_vs_stats.csv",
-    ["Date","League","Match","LookbackMatches","pGG_pct","fairGG","qGG","evGG_pct","pNG_pct","fairNG","qNG","evNG_pct","Verdict"],
+  downloadCSV("syncras_backtest_bets.csv",
+    ["date","league","home_team","away_team","market","p_est","odds","ev_pct","won","profit","lookbackN"],
     rows
   );
 });
 </script>
 </body>
 </html>
+
