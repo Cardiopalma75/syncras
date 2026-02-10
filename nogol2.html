@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Syncras — Backtest GG/NG (Serie A e leghe) con CSV risultati + quote</title>
+  <title>Syncras — Backtest GG/NG (v2) CSV risultati + quote</title>
   <style>
     :root{
       --bg:#0b0b12; --card:#121225; --muted:#a7a7c2; --txt:#f2f2ff;
@@ -51,17 +51,16 @@
     .kpi .v{font-size:18px;font-weight:950}
     .kpi .t{font-size:12px;color:var(--muted)}
     .note{font-size:12px;color:var(--muted);margin-top:10px}
-    a{color:#c4b5fd}
+    pre{white-space:pre-wrap;background:rgba(255,255,255,.04);border:1px solid var(--border);padding:10px;border-radius:12px;color:#eaeaff}
   </style>
 </head>
 <body>
 <div class="wrap">
-  <h1>Syncras — Backtest Gol/NoGol (GG/NG) con CSV risultati + CSV quote</h1>
+  <h1>Syncras — Backtest Gol/NoGol (GG/NG) v2 (CSV risultati + CSV quote)</h1>
 
   <div class="card">
     <div class="muted">
-      Questo strumento è <b>solo analisi statistica</b> e backtest storico. Non è un invito a scommettere.
-      I risultati passati non garantiscono risultati futuri. Usa sempre responsabilità e limiti.
+      Solo analisi statistica e backtest. Non è un invito a scommettere. I risultati passati non garantiscono risultati futuri.
     </div>
   </div>
 
@@ -84,7 +83,7 @@
           </select>
         </div>
         <div>
-          <label>Preset rapido (per il tuo results_unified.csv)</label>
+          <label>Preset rapido (results_unified.csv)</label>
           <select id="preset">
             <option value="auto">Auto</option>
             <option value="results_unified">results_unified (date, league, home_team, away_team, FTHG, FTAG)</option>
@@ -102,7 +101,7 @@
       </div>
 
       <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap">
-        <button id="btnPrepare" disabled>Prepara dataset (pulizia + ordinamento)</button>
+        <button id="btnPrepare" disabled>Prepara dataset (pulizia + indicizzazione)</button>
       </div>
 
       <div class="note" id="resultsStatus"></div>
@@ -127,7 +126,7 @@
         </div>
         <div>
           <label>Nota</label>
-          <div class="small">Devi avere almeno una quota: <b>GG</b> oppure <b>NG</b> (o entrambe).</div>
+          <div class="small">Serve almeno una quota: <b>GG</b> oppure <b>NG</b> (o entrambe).</div>
         </div>
       </div>
 
@@ -160,14 +159,12 @@
         </select>
       </div>
       <div>
-        <label>Lookback lega (quante partite precedenti usare)</label>
+        <label>Lookback lega (partite precedenti)</label>
         <input id="lookback" type="number" min="50" step="10" value="380" />
-        <div class="small">Esempio: 380 ≈ una stagione. Più alto = più stabile.</div>
       </div>
       <div>
         <label>Soglia EV minima (in %)</label>
-        <input id="minEV" type="number" step="1" value="5" />
-        <div class="small">Esempio: 5 = prendo solo EV ≥ +5%.</div>
+        <input id="minEV" type="number" step="1" value="0" />
       </div>
 
       <div>
@@ -186,8 +183,8 @@
     </div>
 
     <div class="note">
-      Logica: per ogni match, stimiamo P(GG)/P(NG) dalla <b>stessa lega</b> usando solo partite <b>prima</b> della data match.
-      Se la quota del mercato scelto è presente, calcoliamo EV = p*quota - 1. Se EV ≥ soglia → “bet”.
+      Per ogni match: P(GG)/P(NG) stimata dalla <b>stessa lega</b> usando SOLO match <b>prima</b> della data (lookback).
+      EV = p*quota - 1. Se EV ≥ soglia → bet.
     </div>
   </div>
 
@@ -195,6 +192,12 @@
     <h2>Risultati Backtest</h2>
     <div id="kpis" class="kpi" style="display:none"></div>
     <div class="note" id="btNote"></div>
+  </div>
+
+  <div class="card" style="margin-top:12px">
+    <h2>Debug join (solo se “no risultati” > 0)</h2>
+    <div class="muted">Qui mostra le prime 5 chiavi quote che non trovano match nello storico (dopo normalizzazione).</div>
+    <pre id="debugBox">(nessun debug)</pre>
   </div>
 
   <div class="card" style="margin-top:12px">
@@ -219,7 +222,7 @@
         <tbody></tbody>
       </table>
     </div>
-    <div class="note">Profitto calcolato con puntata fissa: se vince → (quota-1)*stake, se perde → -stake.</div>
+    <div class="note">Profitto con stake fisso: vinta → (quota-1)*stake, persa → -stake.</div>
   </div>
 </div>
 
@@ -297,6 +300,7 @@ function parseDateAny(s){
     const dt = new Date(Date.UTC(y,mo,d));
     return isNaN(dt.getTime()) ? null : dt;
   }
+  // fallback
   const dt = new Date(t);
   return isNaN(dt.getTime()) ? null : dt;
 }
@@ -318,6 +322,21 @@ function fillSelect(sel, headers, includeEmpty=false){
     o.textContent = h;
     sel.appendChild(o);
   }
+}
+
+/* NORMALIZZAZIONE FORTE per join */
+function norm(s){
+  return String(s ?? "")
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, " ")
+    .replace(/[’'".\-]/g, "")      // apostrofi, punti, trattini
+    .replace(/[()]/g, "")
+    .replace(/&/g, "and");
+}
+
+function makeKey(dateISO, league, home, away){
+  return `${dateISO}|${norm(league)}|${norm(home)}|${norm(away)}`;
 }
 
 function downloadCSV(filename, headerArr, rowsArr){
@@ -342,7 +361,7 @@ function downloadCSV(filename, headerArr, rowsArr){
 }
 
 /* ============ state ============ */
-let R = { headers:[], rows:[], sep:",", clean:[], byLeagueSorted:new Map(), map:null, ready:false };
+let R = { headers:[], rows:[], sep:",", clean:[], byLeagueSorted:new Map(), map:null, ready:false, resIndex:new Map() };
 let O = { headers:[], rows:[], sep:",", map:null, loaded:false };
 let bets = [];
 
@@ -352,7 +371,8 @@ $("resultsFile").addEventListener("change", async (e) => {
   if (!f) return;
   const text = await f.text();
   const sep = $("r_sep").value;
-  R = { ...R, ...parseCSV(text, sep), clean:[], byLeagueSorted:new Map(), ready:false };
+  R = { ...R, ...parseCSV(text, sep), clean:[], byLeagueSorted:new Map(), ready:false, resIndex:new Map() };
+
   fillSelect($("r_date"), R.headers);
   fillSelect($("r_league"), R.headers);
   fillSelect($("r_home"), R.headers);
@@ -360,7 +380,6 @@ $("resultsFile").addEventListener("change", async (e) => {
   fillSelect($("r_hg"), R.headers);
   fillSelect($("r_ag"), R.headers);
 
-  // preset for your unified file
   if ($("preset").value === "results_unified"){
     $("r_date").value = "date";
     $("r_league").value = "league";
@@ -392,6 +411,7 @@ $("oddsFile").addEventListener("change", async (e) => {
   const text = await f.text();
   const sep = $("o_sep").value;
   O = { ...O, ...parseCSV(text, sep), loaded:true };
+
   fillSelect($("o_date"), O.headers);
   fillSelect($("o_league"), O.headers);
   fillSelect($("o_home"), O.headers);
@@ -430,7 +450,7 @@ $("btnPrepare").addEventListener("click", () => {
       if (!dt || !league || !home || !away || !Number.isFinite(hg) || !Number.isFinite(ag)) continue;
       clean.push({ dt, league, home, away, hg, ag });
     }
-    // group + sort by date within league
+
     const by = new Map();
     for (const m of clean){
       if (!by.has(m.league)) by.set(m.league, []);
@@ -439,11 +459,23 @@ $("btnPrepare").addEventListener("click", () => {
     for (const [lg, arr] of by.entries()){
       arr.sort((a,b)=>a.dt-b.dt);
     }
+
+    // indicizza risultati con CHIAVE NORMALIZZATA
+    const resIndex = new Map();
+    for (const m of clean){
+      const dateISO = m.dt.toISOString().slice(0,10);
+      const key = makeKey(dateISO, m.league, m.home, m.away);
+      resIndex.set(key, m);
+    }
+
     R.clean = clean;
     R.byLeagueSorted = by;
+    R.resIndex = resIndex;
     R.ready = true;
 
-    $("resultsStatus").innerHTML = `<span class="pill ok">OK</span> Risultati pronti: ${clean.length} righe valide, ${by.size} leghe.`;
+    $("resultsStatus").innerHTML =
+      `<span class="pill ok">OK</span> Risultati pronti: ${clean.length} righe valide, ${by.size} leghe. Indice: ${resIndex.size} chiavi.`;
+
     $("btnBacktest").disabled = !(O.rows.length && R.ready);
   } catch(err){
     $("resultsStatus").innerHTML = `<span class="pill bad">ERRORE</span> ${err.message}`;
@@ -451,18 +483,19 @@ $("btnPrepare").addEventListener("click", () => {
 });
 
 /* ============ probability from lookback ============ */
-function leagueProb(league, dt, lookback){
-  const arr = R.byLeagueSorted.get(league);
+function leagueProb(leagueRaw, dt, lookback){
+  // ATTENZIONE: qui usiamo la lega "raw" perché byLeagueSorted è indicizzata sul valore originale della colonna lega.
+  // Se nelle quote la lega ha nomi diversi, meglio usare filtro lega oppure uniformare le leghe nei dati.
+  const arr = R.byLeagueSorted.get(leagueRaw);
   if (!arr || !arr.length) return null;
 
-  // binary search first index >= dt
   let lo=0, hi=arr.length;
   while (lo < hi){
     const mid = (lo+hi)>>1;
     if (arr[mid].dt < dt) lo = mid+1;
     else hi = mid;
   }
-  const end = lo; // strictly before dt
+  const end = lo;
   const start = Math.max(0, end - lookback);
   const slice = arr.slice(start, end);
   if (slice.length < Math.min(50, lookback)) return null;
@@ -501,37 +534,42 @@ $("btnBacktest").addEventListener("click", () => {
     const dFrom = parseDateAny($("dateFrom").value) || null;
     const dTo = parseDateAny($("dateTo").value) || null;
 
-    // build a fast lookup for results by key
-    const resIndex = new Map();
-    for (const m of R.clean){
-      const key = `${m.dt.toISOString().slice(0,10)}|${m.league}|${m.home}|${m.away}`;
-      resIndex.set(key, m);
-    }
-
     bets = [];
+    $("debugBox").textContent = "(nessun debug)";
+    const debugMiss = [];
+
     let scanned=0, joined=0, chosen=0, skippedNoOdds=0, skippedNoHist=0, skippedNoRes=0, skippedFilter=0;
 
     for (const r of O.rows){
       scanned++;
       const dt = parseDateAny(r[map.date]);
       if (!dt) continue;
-      const dateKey = dt.toISOString().slice(0,10);
+      const dateISO = dt.toISOString().slice(0,10);
 
       const league = String(r[map.league] ?? "").trim();
       const home = String(r[map.home] ?? "").trim();
       const away = String(r[map.away] ?? "").trim();
       if (!league || !home || !away) continue;
 
+      // filtri
       if (lf && league !== lf){ skippedFilter++; continue; }
       if (dFrom && dt < dFrom){ skippedFilter++; continue; }
       if (dTo && dt > dTo){ skippedFilter++; continue; }
 
-      const key = `${dateKey}|${league}|${home}|${away}`;
-      const res = resIndex.get(key);
-      if (!res){ skippedNoRes++; continue; }
+      // join con chiave normalizzata
+      const key = makeKey(dateISO, league, home, away);
+      const res = R.resIndex.get(key);
+      if (!res){
+        skippedNoRes++;
+        if (debugMiss.length < 5){
+          debugMiss.push({ dateISO, league, home, away, key });
+        }
+        continue;
+      }
       joined++;
 
-      const probs = leagueProb(league, dt, lookback);
+      // probabilità: usa lega "raw" della RIGA RISULTATI (così è compatibile con byLeagueSorted)
+      const probs = leagueProb(res.league, dt, lookback);
       if (!probs){ skippedNoHist++; continue; }
 
       const qGG = map.gg ? toNumber(r[map.gg]) : NaN;
@@ -543,19 +581,18 @@ $("btnBacktest").addEventListener("click", () => {
       if (!Number.isFinite(q) || q <= 1){ skippedNoOdds++; continue; }
 
       const ev = p*q - 1;
-      const take = ev >= minEV;
-      if (!take) continue;
+      if (ev < minEV) continue;
 
       chosen++;
 
       const isGG = (res.hg > 0 && res.ag > 0);
       const won = (market === "GG") ? isGG : (!isGG);
-
       const profit = won ? (q - 1) * stake : -stake;
 
       bets.push({
-        date: dateKey,
-        league, home, away,
+        date: dateISO,
+        league: res.league,
+        home: res.home, away: res.away,
         market,
         p, q, ev,
         won,
@@ -564,7 +601,16 @@ $("btnBacktest").addEventListener("click", () => {
       });
     }
 
-    // compute KPIs
+    if (debugMiss.length){
+      const lines = debugMiss.map((d, i) =>
+        `${i+1}) date=${d.dateISO} league="${d.league}" home="${d.home}" away="${d.away}"\n   key=${d.key}`
+      ).join("\n\n");
+      $("debugBox").textContent = lines;
+    } else {
+      $("debugBox").textContent = "(nessun mismatch: join OK)";
+    }
+
+    // KPI + tabella bets
     let bankroll=0, peak=0, maxDD=0;
     let wins=0, losses=0;
     let sumProfit=0;
@@ -572,12 +618,11 @@ $("btnBacktest").addEventListener("click", () => {
     const tb = $("betsTable").querySelector("tbody");
     tb.innerHTML = "";
 
-    // sort bets by date asc for equity curve
     bets.sort((a,b) => (a.date < b.date ? -1 : 1));
     for (const b of bets){
       bankroll += b.profit;
       peak = Math.max(peak, bankroll);
-      maxDD = Math.min(maxDD, bankroll - peak); // negative
+      maxDD = Math.min(maxDD, bankroll - peak);
       sumProfit += b.profit;
       if (b.won) wins++; else losses++;
 
@@ -621,7 +666,6 @@ $("btnBacktest").addEventListener("click", () => {
       `Parametri: mercato=${market}, lookback=${lookback}, soglia EV=${(minEV*100).toFixed(1)}%, stake=${stake}.`;
 
     $("btnExportBets").disabled = bets.length === 0;
-
     $("oddsStatus").innerHTML = `<span class="pill ok">OK</span> Backtest completato.`;
 
   } catch(err){
@@ -652,4 +696,5 @@ $("btnExportBets").addEventListener("click", () => {
 </script>
 </body>
 </html>
+
 
