@@ -469,7 +469,7 @@ function leagueBaselineGG(leagueArr, dt, L){
   const end = lowerBound(leagueArr, dt);
   const start = Math.max(0, end - L);
   const slice = leagueArr.slice(start, end);
-  if (slice.length < Math.min(L, 50)) return null;
+  if (slice.length < Math.min(L, 10)) return null;
   let gg=0;
   for (const m of slice){
     if (m.hg > 0 && m.ag > 0) gg++;
