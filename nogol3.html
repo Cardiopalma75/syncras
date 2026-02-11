@@ -615,7 +615,7 @@ $("btnPrepare").addEventListener("click", () => {
 
 function runBacktest(){
   const N = Math.max(3, toNumber($("N").value) || 10);
-  const L = Math.max(50, toNumber($("L").value) || 380);
+  const L = Math.max(3, toNumber($("L").value) || 380);
   const thrGG = Math.min(0.95, Math.max(0.50, toNumber($("thrGG").value) || 0.58));
   const thrNG = Math.max(0.05, Math.min(0.50, toNumber($("thrNG").value) || 0.42));
   const lf = String($("leagueFilter").value || "").trim();
