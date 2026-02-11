@@ -285,16 +285,15 @@ function parseDateAny(s){
     const dt = new Date(Date.UTC(y,mo,d));
     return isNaN(dt.getTime()) ? null : dt;
   }
-  // DD/MM/YYYY
-  m = t.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/);
-  if (m){
-    const d=+m[1], mo=+m[2]-1, y=+m[3];
-    const dt = new Date(Date.UTC(y,mo,d));
-    return isNaN(dt.getTime()) ? null : dt;
-  }
-  const dt = new Date(t);
+  // DD/MM/YY
+m = t.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2})/);
+if (m){
+  const d=+m[1], mo=+m[2]-1, yy=+m[3];
+  const y = yy >= 70 ? 1900+yy : 2000+yy; // 21 -> 2021
+  const dt = new Date(Date.UTC(y,mo,d));
   return isNaN(dt.getTime()) ? null : dt;
 }
+
 
 function isoDate(dt){ return dt.toISOString().slice(0,10); }
 
