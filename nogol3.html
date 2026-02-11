@@ -257,7 +257,7 @@ function parseCSV(text, sep){
     field += c; i++;
   }
   pushField(); pushRow();
-  const headers = (rows.shift() || []).map(h => String(h).trim());
+ const headers = (rows.shift() || []).map(h => String(h).replace(/^\uFEFF/, "").trim());
   const outRows = rows.map(r => {
     const obj = {};
     for (let k=0;k<headers.length;k++) obj[headers[k]] = (r[k] ?? "").toString().trim();
@@ -278,21 +278,39 @@ function toNumber(x){
 function parseDateAny(s){
   if (!s) return null;
   const t = String(s).trim();
+
+  let m;
+
   // YYYY-MM-DD or YYYY/MM/DD
-  let m = t.match(/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})/);
+  m = t.match(/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})/);
   if (m){
     const y=+m[1], mo=+m[2]-1, d=+m[3];
     const dt = new Date(Date.UTC(y,mo,d));
     return isNaN(dt.getTime()) ? null : dt;
   }
-  // DD/MM/YY
-m = t.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2})/);
-if (m){
-  const d=+m[1], mo=+m[2]-1, yy=+m[3];
-  const y = yy >= 70 ? 1900+yy : 2000+yy; // 21 -> 2021
-  const dt = new Date(Date.UTC(y,mo,d));
+
+  // DD/MM/YYYY (o DD-MM-YYYY)
+  m = t.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/);
+  if (m){
+    const d=+m[1], mo=+m[2]-1, y=+m[3];
+    const dt = new Date(Date.UTC(y,mo,d));
+    return isNaN(dt.getTime()) ? null : dt;
+  }
+
+  // DD/MM/YY (o DD-MM-YY)  <<< FIX FOOTBALL-DATA
+  m = t.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2})/);
+  if (m){
+    const d=+m[1], mo=+m[2]-1, yy=+m[3];
+    const y = yy >= 70 ? 1900+yy : 2000+yy;
+    const dt = new Date(Date.UTC(y,mo,d));
+    return isNaN(dt.getTime()) ? null : dt;
+  }
+
+  // fallback
+  const dt = new Date(t);
   return isNaN(dt.getTime()) ? null : dt;
 }
+
 
 
 function isoDate(dt){ return dt.toISOString().slice(0,10); }
