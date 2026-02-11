@@ -1,9 +1,10 @@
+
 <!doctype html>
 <html lang="it">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Syncras — Modello GG/NG senza quote (Squadre + Backtest)</title>
+  <title>Syncras — GG/NG senza quote (v4 robusta)</title>
   <style>
     :root{
       --bg:#0b0b12; --card:#121225; --muted:#a7a7c2; --txt:#f2f2ff;
@@ -51,24 +52,23 @@
     .kpi .v{font-size:18px;font-weight:950}
     .kpi .t{font-size:12px;color:var(--muted)}
     pre{white-space:pre-wrap;background:rgba(255,255,255,.04);border:1px solid var(--border);padding:10px;border-radius:12px;color:#eaeaff}
-    a{color:#c4b5fd}
   </style>
 </head>
 <body>
 <div class="wrap">
-  <h1>Syncras — Modello GG/NG senza quote (Squadre + Backtest walk-forward)</h1>
+  <h1>Syncras — Modello GG/NG senza quote (v4 robusta)</h1>
 
   <div class="card">
     <div class="muted">
-      Questo tool fa <b>solo analisi statistica</b>. Non usa quote e non è un invito a scommettere.
-      Usa lo storico per stimare P(GG)/P(NG) in modo <b>match-specifico</b> (ultime N partite per squadra, casa/trasferta).
+      Solo analisi statistica. Niente quote. Output: P(GG), P(NG) e segnale (GG/NG/No play).
+      Questa versione è robusta a: <b>BOM</b> su header, date <b>DD/MM/YY</b>, separatore auto.
     </div>
   </div>
 
   <div class="row" style="margin-top:12px">
     <div class="col card">
       <h2>1) Storico risultati</h2>
-      <label>Carica CSV risultati (es. Latest_Results.csv)</label>
+      <label>Carica CSV risultati (football-data)</label>
       <input id="resultsFile" type="file" accept=".csv,text/csv" />
 
       <div class="hr"></div>
@@ -84,10 +84,10 @@
           </select>
         </div>
         <div>
-          <label>Preset (football-data)</label>
+          <label>Preset</label>
           <select id="r_preset">
-            <option value="auto">Auto</option>
             <option value="football_data">football-data (Div, Date, HomeTeam, AwayTeam, FTHG, FTAG)</option>
+            <option value="manuale">Manuale</option>
           </select>
         </div>
       </div>
@@ -110,7 +110,7 @@
 
     <div class="col card">
       <h2>2) Fixtures future</h2>
-      <label>Carica CSV fixtures (es. fixtures.csv)</label>
+      <label>Carica CSV fixtures (football-data)</label>
       <input id="fixFile" type="file" accept=".csv,text/csv" />
 
       <div class="hr"></div>
@@ -126,10 +126,10 @@
           </select>
         </div>
         <div>
-          <label>Preset (football-data)</label>
+          <label>Preset</label>
           <select id="f_preset">
-            <option value="auto">Auto</option>
             <option value="football_data">football-data (Div, Date, HomeTeam, AwayTeam)</option>
+            <option value="manuale">Manuale</option>
           </select>
         </div>
       </div>
@@ -142,8 +142,8 @@
       </div>
 
       <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap">
-        <button id="btnRun" disabled>Calcola previsioni fixtures</button>
-        <button id="btnExport" disabled>Esporta output (CSV)</button>
+        <button id="btnRun" disabled>Calcola fixtures</button>
+        <button id="btnExport" disabled>Esporta output CSV</button>
       </div>
 
       <div class="small" id="fixStatus"></div>
@@ -151,21 +151,21 @@
   </div>
 
   <div class="card" style="margin-top:12px">
-    <h2>3) Parametri modello</h2>
+    <h2>3) Parametri</h2>
     <div class="grid3">
       <div>
-        <label>Ultime N partite per squadra (forma)</label>
+        <label>Ultime N partite per squadra</label>
         <input id="N" type="number" min="3" step="1" value="10" />
-        <div class="small">Suggerito: 8–15. (10 è un buon default)</div>
+        <div class="small">Se hai squadre nuove/neo-promosse, prova 5–8.</div>
       </div>
       <div>
-        <label>Lookback lega (baseline)</label>
-        <input id="L" type="number" min="50" step="10" value="380" />
-        <div class="small">Usato per baseline di lega (GG%).</div>
+        <label>Lookback lega (baseline GG%)</label>
+        <input id="L" type="number" min="3" step="10" value="380" />
+        <div class="small">Qui puoi mettere anche valori bassi (min 3).</div>
       </div>
       <div>
         <label>Filtro lega (vuoto = tutte)</label>
-        <input id="leagueFilter" type="text" placeholder="E0 / I1 / D1 / SP1 ..." />
+        <input id="leagueFilter" type="text" placeholder="I1 / E0 / D1 / SP1 ..." />
       </div>
 
       <div>
@@ -178,27 +178,21 @@
       </div>
       <div>
         <label>Range data fixtures (opzionale)</label>
-        <input id="from" type="text" placeholder="YYYY-MM-DD (da)" />
-        <input id="to" type="text" placeholder="YYYY-MM-DD (a)" style="margin-top:8px" />
+        <input id="from" type="text" placeholder="YYYY-MM-DD o DD/MM/YY (da)" />
+        <input id="to" type="text" placeholder="YYYY-MM-DD o DD/MM/YY (a)" style="margin-top:8px" />
       </div>
-    </div>
-
-    <div class="muted" style="margin-top:10px">
-      Modello: stima P(Home segna) e P(Away segna) dalla forma recente (GF/GS casa/trasferta) + baseline lega.
-      Poi P(GG) = P(Home segna) × P(Away segna). P(NG)=1-P(GG).
     </div>
   </div>
 
   <div class="card" style="margin-top:12px">
     <h2>Backtest rapido (walk-forward) sullo storico</h2>
-    <div class="muted">Verifica se usare le squadre migliora davvero rispetto alla baseline lega. (Senza quote)</div>
     <div id="btKpis" class="kpi" style="display:none"></div>
     <div class="small" id="btNote"></div>
-    <pre id="btTableText">(esegui “Prepara storico” per generare il backtest)</pre>
+    <pre id="btTableText">(premi “Prepara storico”)</pre>
   </div>
 
   <div class="card" style="margin-top:12px">
-    <h2>Output fixtures (P(GG)/P(NG) + segnale)</h2>
+    <h2>Output fixtures</h2>
     <div style="overflow:auto;max-height:560px;margin-top:10px">
       <table id="outTable">
         <thead>
@@ -212,12 +206,12 @@
         <tbody></tbody>
       </table>
     </div>
-    <div class="small">GFh/GSh = media gol fatti/subiti recenti della squadra di casa (in casa). GFa/GSa = squadra ospite (in trasferta).</div>
+    <div class="small">GFh/GSh: forma recente casa (in casa). GFa/GSa: forma recente ospite (in trasferta).</div>
   </div>
 </div>
 
 <script>
-/* ===== CSV parser ===== */
+/* ===== CSV parser (robusto + BOM) ===== */
 function detectSeparator(text){
   const sample = text.slice(0, 4000);
   const candidates = [",",";","\t"];
@@ -234,7 +228,9 @@ function detectSeparator(text){
 }
 
 function parseCSV(text, sep){
+  text = String(text || "").replace(/^\uFEFF/, ""); // BOM su file
   if (sep === "auto") sep = detectSeparator(text);
+
   const rows = [];
   let i=0, field="", row=[], inQuotes=false;
   function pushField(){ row.push(field); field=""; }
@@ -243,6 +239,7 @@ function parseCSV(text, sep){
     if (!allEmpty) rows.push(row);
     row=[];
   }
+
   while (i < text.length){
     const c = text[i];
     if (c === '"'){
@@ -257,12 +254,20 @@ function parseCSV(text, sep){
     field += c; i++;
   }
   pushField(); pushRow();
- const headers = (rows.shift() || []).map(h => String(h).replace(/^\uFEFF/, "").trim());
+
+  let headers = (rows.shift() || []).map(h =>
+    String(h ?? "").replace(/^\uFEFF/, "").trim()
+  );
+
   const outRows = rows.map(r => {
     const obj = {};
-    for (let k=0;k<headers.length;k++) obj[headers[k]] = (r[k] ?? "").toString().trim();
+    for (let k=0;k<headers.length;k++){
+      const key = headers[k] || `col_${k}`;
+      obj[key] = (r[k] ?? "").toString().trim();
+    }
     return obj;
   });
+
   return { headers, rows: outRows, sep };
 }
 
@@ -278,10 +283,9 @@ function toNumber(x){
 function parseDateAny(s){
   if (!s) return null;
   const t = String(s).trim();
-
   let m;
 
-  // YYYY-MM-DD or YYYY/MM/DD
+  // YYYY-MM-DD
   m = t.match(/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})/);
   if (m){
     const y=+m[1], mo=+m[2]-1, d=+m[3];
@@ -289,7 +293,7 @@ function parseDateAny(s){
     return isNaN(dt.getTime()) ? null : dt;
   }
 
-  // DD/MM/YYYY (o DD-MM-YYYY)
+  // DD/MM/YYYY
   m = t.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/);
   if (m){
     const d=+m[1], mo=+m[2]-1, y=+m[3];
@@ -297,7 +301,7 @@ function parseDateAny(s){
     return isNaN(dt.getTime()) ? null : dt;
   }
 
-  // DD/MM/YY (o DD-MM-YY)  <<< FIX FOOTBALL-DATA
+  // DD/MM/YY (football-data)
   m = t.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2})/);
   if (m){
     const d=+m[1], mo=+m[2]-1, yy=+m[3];
@@ -306,12 +310,9 @@ function parseDateAny(s){
     return isNaN(dt.getTime()) ? null : dt;
   }
 
-  // fallback
   const dt = new Date(t);
   return isNaN(dt.getTime()) ? null : dt;
 }
-
-
 
 function isoDate(dt){ return dt.toISOString().slice(0,10); }
 
@@ -328,7 +329,7 @@ function fillSelect(sel, headers){
 function pct(x){ return (x*100).toFixed(1) + "%"; }
 function fmt(x,d=2){ return Number.isFinite(x) ? x.toFixed(d) : ""; }
 
-/* normalizzazione squadre/lega (per join e robustezza) */
+/* normalization */
 function norm(s){
   return String(s ?? "")
     .toLowerCase()
@@ -339,19 +340,19 @@ function norm(s){
     .replace(/&/g, "and");
 }
 
+function keyTL(league, team){ return `${norm(league)}|${norm(team)}`; }
+
 /* ===== state ===== */
 let Rraw = null, Fraw = null;
 let R = { clean:[], byLeague:new Map(), byTeamLeague:new Map(), ready:false };
-let F = { clean:[], ready:false };
 let outRows = [];
 
-/* ===== ingest results ===== */
+/* ===== file load results ===== */
 $("resultsFile").addEventListener("change", async (e) => {
   const f = e.target.files?.[0];
   if (!f) return;
   const text = await f.text();
-  const sep = $("r_sep").value;
-  Rraw = parseCSV(text, sep);
+  Rraw = parseCSV(text, $("r_sep").value);
 
   fillSelect($("r_league"), Rraw.headers);
   fillSelect($("r_date"), Rraw.headers);
@@ -360,49 +361,52 @@ $("resultsFile").addEventListener("change", async (e) => {
   fillSelect($("r_hg"), Rraw.headers);
   fillSelect($("r_ag"), Rraw.headers);
 
+  // preset football-data: prova Div, altrimenti prima colonna che contiene "Div"
+  const findHeader = (name) => Rraw.headers.find(h => h === name) || Rraw.headers.find(h => h.toLowerCase() === name.toLowerCase());
   if ($("r_preset").value === "football_data"){
-    if (Rraw.headers.includes("Div")) $("r_league").value = "Div";
-    if (Rraw.headers.includes("Date")) $("r_date").value = "Date";
-    if (Rraw.headers.includes("HomeTeam")) $("r_home").value = "HomeTeam";
-    if (Rraw.headers.includes("AwayTeam")) $("r_away").value = "AwayTeam";
-    if (Rraw.headers.includes("FTHG")) $("r_hg").value = "FTHG";
-    if (Rraw.headers.includes("FTAG")) $("r_ag").value = "FTAG";
+    $("r_league").value = findHeader("Div") || Rraw.headers[0] || "";
+    $("r_date").value   = findHeader("Date") || "";
+    $("r_home").value   = findHeader("HomeTeam") || "";
+    $("r_away").value   = findHeader("AwayTeam") || "";
+    $("r_hg").value     = findHeader("FTHG") || "";
+    $("r_ag").value     = findHeader("FTAG") || "";
   }
 
-  $("resultsStatus").textContent = `Caricato storico: ${Rraw.rows.length} righe.`;
+  $("resultsStatus").textContent = `Caricato storico: ${Rraw.rows.length} righe (sep=${Rraw.sep === "\t" ? "TAB" : Rraw.sep}).`;
   $("btnPrepare").disabled = (Rraw.rows.length === 0);
 });
 
 $("r_preset").addEventListener("change", () => {
   if (!Rraw) return;
   if ($("r_preset").value === "football_data"){
-    if (Rraw.headers.includes("Div")) $("r_league").value = "Div";
-    if (Rraw.headers.includes("Date")) $("r_date").value = "Date";
-    if (Rraw.headers.includes("HomeTeam")) $("r_home").value = "HomeTeam";
-    if (Rraw.headers.includes("AwayTeam")) $("r_away").value = "AwayTeam";
-    if (Rraw.headers.includes("FTHG")) $("r_hg").value = "FTHG";
-    if (Rraw.headers.includes("FTAG")) $("r_ag").value = "FTAG";
+    const findHeader = (name) => Rraw.headers.find(h => h === name) || Rraw.headers.find(h => h.toLowerCase() === name.toLowerCase());
+    $("r_league").value = findHeader("Div") || Rraw.headers[0] || "";
+    $("r_date").value   = findHeader("Date") || "";
+    $("r_home").value   = findHeader("HomeTeam") || "";
+    $("r_away").value   = findHeader("AwayTeam") || "";
+    $("r_hg").value     = findHeader("FTHG") || "";
+    $("r_ag").value     = findHeader("FTAG") || "";
   }
 });
 
-/* ===== ingest fixtures ===== */
+/* ===== file load fixtures ===== */
 $("fixFile").addEventListener("change", async (e) => {
   const f = e.target.files?.[0];
   if (!f) return;
   const text = await f.text();
-  const sep = $("f_sep").value;
-  Fraw = parseCSV(text, sep);
+  Fraw = parseCSV(text, $("f_sep").value);
 
   fillSelect($("f_league"), Fraw.headers);
   fillSelect($("f_date"), Fraw.headers);
   fillSelect($("f_home"), Fraw.headers);
   fillSelect($("f_away"), Fraw.headers);
 
+  const findHeader = (name) => Fraw.headers.find(h => h === name) || Fraw.headers.find(h => h.toLowerCase() === name.toLowerCase());
   if ($("f_preset").value === "football_data"){
-    if (Fraw.headers.includes("Div")) $("f_league").value = "Div";
-    if (Fraw.headers.includes("Date")) $("f_date").value = "Date";
-    if (Fraw.headers.includes("HomeTeam")) $("f_home").value = "HomeTeam";
-    if (Fraw.headers.includes("AwayTeam")) $("f_away").value = "AwayTeam";
+    $("f_league").value = findHeader("Div") || Fraw.headers[0] || "";
+    $("f_date").value   = findHeader("Date") || "";
+    $("f_home").value   = findHeader("HomeTeam") || "";
+    $("f_away").value   = findHeader("AwayTeam") || "";
   }
 
   $("fixStatus").textContent = `Caricato fixtures: ${Fraw.rows.length} righe.`;
@@ -412,22 +416,15 @@ $("fixFile").addEventListener("change", async (e) => {
 $("f_preset").addEventListener("change", () => {
   if (!Fraw) return;
   if ($("f_preset").value === "football_data"){
-    if (Fraw.headers.includes("Div")) $("f_league").value = "Div";
-    if (Fraw.headers.includes("Date")) $("f_date").value = "Date";
-    if (Fraw.headers.includes("HomeTeam")) $("f_home").value = "HomeTeam";
-    if (Fraw.headers.includes("AwayTeam")) $("f_away").value = "AwayTeam";
+    const findHeader = (name) => Fraw.headers.find(h => h === name) || Fraw.headers.find(h => h.toLowerCase() === name.toLowerCase());
+    $("f_league").value = findHeader("Div") || Fraw.headers[0] || "";
+    $("f_date").value   = findHeader("Date") || "";
+    $("f_home").value   = findHeader("HomeTeam") || "";
+    $("f_away").value   = findHeader("AwayTeam") || "";
   }
 });
 
-/* ===== build per-team histories ===== */
-function keyTL(league, team){ return `${norm(league)}|${norm(team)}`; }
-
-/*
-We store, for each (league, team), two ordered arrays of matches:
-- homeMatches: list of {dt, gf, ga}
-- awayMatches: list of {dt, gf, ga}
-Also league-level ordered list to compute baseline GG%.
-*/
+/* ===== histories ===== */
 function buildHistories(cleanRows){
   const byTeamLeague = new Map();
   const byLeague = new Map();
@@ -447,7 +444,6 @@ function buildHistories(cleanRows){
     byTeamLeague.get(kA).away.push({ dt:m.dt, gf:m.ag, ga:m.hg });
   }
 
-  // sort all
   for (const [k, v] of byTeamLeague.entries()){
     v.home.sort((a,b)=>a.dt-b.dt);
     v.away.sort((a,b)=>a.dt-b.dt);
@@ -455,11 +451,9 @@ function buildHistories(cleanRows){
   for (const [lg, arr] of byLeague.entries()){
     arr.sort((a,b)=>a.dt-b.dt);
   }
-
   return { byTeamLeague, byLeague };
 }
 
-/* binary search: first index >= dt */
 function lowerBound(arr, dt){
   let lo=0, hi=arr.length;
   while (lo < hi){
@@ -472,10 +466,10 @@ function lowerBound(arr, dt){
 
 function avgGFGA(arr, dt, N){
   if (!arr || !arr.length) return null;
-  const end = lowerBound(arr, dt); // strictly before dt
+  const end = lowerBound(arr, dt);
   const start = Math.max(0, end - N);
   const slice = arr.slice(start, end);
-  if (slice.length < Math.min(N, 3)) return null; // need at least 3 matches
+  if (slice.length < Math.min(N, 3)) return null;
   let gf=0, ga=0;
   for (const x of slice){ gf += x.gf; ga += x.ga; }
   return { n: slice.length, gf: gf/slice.length, ga: ga/slice.length };
@@ -487,23 +481,20 @@ function leagueBaselineGG(leagueArr, dt, L){
   const start = Math.max(0, end - L);
   const slice = leagueArr.slice(start, end);
   if (slice.length < Math.min(L, 3)) return null;
+
   let gg=0;
   for (const m of slice){
     if (m.hg > 0 && m.ag > 0) gg++;
   }
-  return { n: slice.length, pGG: gg/slice.length };
+  // smoothing (stabile anche con pochi match)
+  const n = slice.length;
+  const pGG = (gg + 1) / (n + 2);
+  return { n, pGG };
 }
 
-/* clamp probability */
 function clamp01(x){ return Math.max(0.01, Math.min(0.99, x)); }
+function probScore(lambda){ return clamp01(1 - Math.exp(-Math.max(0, lambda))); }
 
-/* convert average goals to prob(team scores at least 1) using Poisson approx: 1 - e^-lambda */
-function probScore(lambda){
-  lambda = Math.max(0, lambda);
-  return clamp01(1 - Math.exp(-lambda));
-}
-
-/* estimate P(GG) for a given match (league, home, away, dt) */
 function estimatePgg(match, N, L){
   const lg = match.league;
 
@@ -512,15 +503,14 @@ function estimatePgg(match, N, L){
   const lgArr = R.byLeague.get(lg);
 
   const base = leagueBaselineGG(lgArr, match.dt, L);
-  // fallback baseline if insufficient: use overall league average up to dt (smaller window)
   if (!base) return null;
 
-  const homeHome = tlH ? avgGFGA(tlH.home, match.dt, N) : null; // A in casa
-  const awayAway = tlA ? avgGFGA(tlA.away, match.dt, N) : null; // B in trasferta
+  const homeHome = tlH ? avgGFGA(tlH.home, match.dt, N) : null;
+  const awayAway = tlA ? avgGFGA(tlA.away, match.dt, N) : null;
+
   const homeAll = tlH ? avgGFGA([...(tlH.home||[]), ...(tlH.away||[])].sort((a,b)=>a.dt-b.dt), match.dt, N) : null;
   const awayAll = tlA ? avgGFGA([...(tlA.home||[]), ...(tlA.away||[])].sort((a,b)=>a.dt-b.dt), match.dt, N) : null;
 
-  // prefer split; fallback to all-matches if split missing
   const gfH = homeHome?.gf ?? homeAll?.gf;
   const gaH = homeHome?.ga ?? homeAll?.ga;
   const gfA = awayAway?.gf ?? awayAll?.gf;
@@ -528,15 +518,10 @@ function estimatePgg(match, N, L){
 
   if (!Number.isFinite(gfH) || !Number.isFinite(gaH) || !Number.isFinite(gfA) || !Number.isFinite(gaA)) return null;
 
-  // expected goals (simple blending)
-  // lambda home: attack of home (gfH) + defense weakness of away (gaA)
-  // lambda away: attack of away (gfA) + defense weakness of home (gaH)
   let lamH = 0.55*gfH + 0.45*gaA;
   let lamA = 0.55*gfA + 0.45*gaH;
 
-  // incorporate league baseline GG: push probabilities toward league environment
-  // Convert baseline GG into an "environment factor" between 0.85 and 1.15
-  const env = 0.85 + 0.30*base.pGG; // pGG 0..1 -> 0.85..1.15
+  const env = 0.85 + 0.30*base.pGG;
   lamH *= env;
   lamA *= env;
 
@@ -546,13 +531,7 @@ function estimatePgg(match, N, L){
 
   const usedN = Math.min(homeHome?.n ?? homeAll?.n ?? 0, awayAway?.n ?? awayAll?.n ?? 0);
 
-  return {
-    pGG,
-    pNG: 1 - pGG,
-    gfH, gaH, gfA, gaA,
-    basePgg: base.pGG,
-    usedN
-  };
+  return { pGG, pNG: 1-pGG, gfH, gaH, gfA, gaA, basePgg: base.pGG, usedN };
 }
 
 function signalFromPgg(pGG, thrGG, thrNG){
@@ -563,7 +542,7 @@ function signalFromPgg(pGG, thrGG, thrNG){
   return "⚪ No play";
 }
 
-/* ===== prepare results + backtest ===== */
+/* ===== prepare + diagnostics ===== */
 $("btnPrepare").addEventListener("click", () => {
   try{
     if (!Rraw) throw new Error("Carica prima il CSV risultati.");
@@ -578,21 +557,39 @@ $("btnPrepare").addEventListener("click", () => {
     };
 
     const clean = [];
+
+    let badDate=0, badLeague=0, badTeam=0, badGoals=0;
+    let sampleDate="", sampleLeague="", sampleHG="", sampleAG="";
+
     for (const r of Rraw.rows){
-      const dt = parseDateAny(r[map.date]);
-      const league = String(r[map.league] ?? "").trim();
+      const rawDate = r[map.date];
+      const rawLeague = r[map.league];
+      const rawHG = r[map.hg];
+      const rawAG = r[map.ag];
+
+      if (!sampleDate && rawDate) sampleDate = rawDate;
+      if (!sampleLeague && rawLeague) sampleLeague = rawLeague;
+      if (!sampleHG && rawHG) sampleHG = rawHG;
+      if (!sampleAG && rawAG) sampleAG = rawAG;
+
+      const dt = parseDateAny(rawDate);
+      if (!dt){ badDate++; continue; }
+
+      const league = String(rawLeague ?? "").trim();
+      if (!league){ badLeague++; continue; }
+
       const home = String(r[map.home] ?? "").trim();
       const away = String(r[map.away] ?? "").trim();
-      const hg = toNumber(r[map.hg]);
-      const ag = toNumber(r[map.ag]);
-      if (!dt || !league || !home || !away || !Number.isFinite(hg) || !Number.isFinite(ag)) continue;
+      if (!home || !away){ badTeam++; continue; }
+
+      const hg = toNumber(rawHG);
+      const ag = toNumber(rawAG);
+      if (!Number.isFinite(hg) || !Number.isFinite(ag)){ badGoals++; continue; }
+
       clean.push({ dt, league, home, away, hg, ag });
     }
 
-    // normalize league keys? we keep original league strings but will match by exact league from file (Div codes)
-    // sort by date
     clean.sort((a,b)=>a.dt-b.dt);
-
     const { byTeamLeague, byLeague } = buildHistories(clean);
 
     R.clean = clean;
@@ -600,12 +597,15 @@ $("btnPrepare").addEventListener("click", () => {
     R.byLeague = byLeague;
     R.ready = true;
 
-    $("resultsStatus").innerHTML = `<span class="pill ok">OK</span> Storico pronto: ${clean.length} match, ${byLeague.size} leghe.`;
+    const badge = clean.length ? "ok" : "bad";
+    $("resultsStatus").innerHTML =
+      `<span class="pill ${badge}">${clean.length ? "OK" : "ERRORE"}</span> ` +
+      `Storico pronto: <b>${clean.length}</b> match, <b>${byLeague.size}</b> leghe.<br>` +
+      `<span class="small">Scarti → date:${badDate} lega:${badLeague} squadre:${badTeam} gol:${badGoals} | ` +
+      `Esempi: date="${sampleDate}" lega="${sampleLeague}" FTHG="${sampleHG}" FTAG="${sampleAG}"</span>`;
 
-    // enable run if fixtures loaded
     $("btnRun").disabled = !(Fraw && Fraw.rows.length && R.ready);
 
-    // run backtest
     runBacktest();
 
   } catch(err){
@@ -613,18 +613,20 @@ $("btnPrepare").addEventListener("click", () => {
   }
 });
 
+/* ===== backtest ===== */
 function runBacktest(){
+  if (!R.ready || !R.clean.length) return;
+
   const N = Math.max(3, toNumber($("N").value) || 10);
   const L = Math.max(3, toNumber($("L").value) || 380);
   const thrGG = Math.min(0.95, Math.max(0.50, toNumber($("thrGG").value) || 0.58));
   const thrNG = Math.max(0.05, Math.min(0.50, toNumber($("thrNG").value) || 0.42));
   const lf = String($("leagueFilter").value || "").trim();
 
-  let tested=0, predicted=0;
-  let acc=0, accBase=0;
-  const buckets = new Map(); // signal -> {n, correct, ggRate}
+  let tested=0, acc=0, accBase=0, predicted=0;
 
-  // walk-forward: for each match, estimate using only prior data (our functions do that by dt)
+  const buckets = new Map();
+
   for (const m of R.clean){
     if (lf && m.league !== lf) continue;
 
@@ -634,60 +636,54 @@ function runBacktest(){
     tested++;
 
     const isGG = (m.hg > 0 && m.ag > 0);
-    const baseGuessGG = (est.basePgg >= 0.5); // naive baseline decision
+    const baseGuessGG = (est.basePgg >= 0.5);
     const modelGuessGG = (est.pGG >= 0.5);
 
     if ((modelGuessGG && isGG) || (!modelGuessGG && !isGG)) acc++;
     if ((baseGuessGG && isGG) || (!baseGuessGG && !isGG)) accBase++;
 
     const sig = signalFromPgg(est.pGG, thrGG, thrNG);
-    if (!buckets.has(sig)) buckets.set(sig, { n:0, correct:0, gg:0 });
+    if (!buckets.has(sig)) buckets.set(sig, { n:0, correct:0, gg:0, pred:0 });
     const b = buckets.get(sig);
     b.n++;
-    if ((sig.includes("GG") && isGG) || (sig.includes("NG") && !isGG) || (sig.includes("No play") && false)){
-      // for "No play" we don't count correctness
-    }
+    if (isGG) b.gg++;
+
     if (sig.includes("GG") || sig.includes("NG")){
       predicted++;
+      b.pred++;
       const pickGG = sig.includes("GG");
       const correct = (pickGG && isGG) || (!pickGG && !isGG);
       if (correct) b.correct++;
     }
-    if (isGG) b.gg++;
   }
 
   const btKpis = $("btKpis");
   btKpis.style.display = "flex";
-  const accRate = tested ? (acc/tested) : 0;
-  const accBaseRate = tested ? (accBase/tested) : 0;
-
   btKpis.innerHTML = `
     <div class="box"><div class="v">${tested}</div><div class="t">Match valutati</div></div>
-    <div class="box"><div class="v">${(accRate*100).toFixed(1)}%</div><div class="t">Accuratezza modello (soglia 0.5)</div></div>
-    <div class="box"><div class="v">${(accBaseRate*100).toFixed(1)}%</div><div class="t">Accuratezza baseline lega</div></div>
-    <div class="box"><div class="v">${predicted}</div><div class="t">Match con segnale (GG/NG)</div></div>
+    <div class="box"><div class="v">${tested ? (acc/tested*100).toFixed(1) : "0.0"}%</div><div class="t">Accuratezza modello (>=0.5)</div></div>
+    <div class="box"><div class="v">${tested ? (accBase/tested*100).toFixed(1) : "0.0"}%</div><div class="t">Accuratezza baseline lega</div></div>
+    <div class="box"><div class="v">${predicted}</div><div class="t">Match con segnale GG/NG</div></div>
   `;
 
   $("btNote").textContent =
-    `Parametri backtest: N=${N}, Lookback lega L=${L}, soglie GG≥${thrGG}, NG≤${thrNG}. ` +
-    (lf ? `Filtro lega: ${lf}.` : `Tutte le leghe.`);
+    `Parametri: N=${N}, L=${L}, soglie GG≥${thrGG}, NG≤${thrNG}. ` + (lf ? `Filtro lega: ${lf}.` : `Tutte le leghe.`);
 
-  // Print bucket table
   const lines = [];
   lines.push("Bucket | N | %GG reale | Accuracy (solo bucket GG/NG)");
   lines.push("--------------------------------------------------------");
   for (const [sig, b] of [...buckets.entries()].sort((a,b)=>b[1].n-a[1].n)){
     const ggRate = b.n ? (b.gg/b.n) : 0;
-    const accB = (sig.includes("GG") || sig.includes("NG")) ? (b.correct / Math.max(1, (sig.includes("GG")||sig.includes("NG")) ? b.n : 1)) : null;
+    const accB = b.pred ? (b.correct/b.pred) : null;
     lines.push(`${sig} | ${b.n} | ${(ggRate*100).toFixed(1)}% | ${accB===null ? "-" : (accB*100).toFixed(1)+"%"}`);
   }
   $("btTableText").textContent = lines.join("\n");
 }
 
-/* ===== run on fixtures ===== */
+/* ===== run fixtures ===== */
 $("btnRun").addEventListener("click", () => {
   try{
-    if (!R.ready) throw new Error("Prepara prima lo storico.");
+    if (!R.ready || !R.clean.length) throw new Error("Prepara prima lo storico (non può essere 0).");
     if (!Fraw) throw new Error("Carica prima le fixtures.");
 
     const map = {
@@ -702,7 +698,7 @@ $("btnRun").addEventListener("click", () => {
     const to = parseDateAny($("to").value) || null;
 
     const N = Math.max(3, toNumber($("N").value) || 10);
-    const L = Math.max(50, toNumber($("L").value) || 380);
+    const L = Math.max(3, toNumber($("L").value) || 380);
     const thrGG = Math.min(0.95, Math.max(0.50, toNumber($("thrGG").value) || 0.58));
     const thrNG = Math.max(0.05, Math.min(0.50, toNumber($("thrNG").value) || 0.42));
 
@@ -719,21 +715,20 @@ $("btnRun").addEventListener("click", () => {
       cleanF.push({ dt, league, home, away });
     }
 
-    // compute outputs
     outRows = [];
     let ok=0, miss=0;
+
     for (const fx of cleanF){
       const est = estimatePgg(fx, N, L);
       if (!est){ miss++; continue; }
       ok++;
-      const sig = signalFromPgg(est.pGG, thrGG, thrNG);
       outRows.push({
         date: isoDate(fx.dt),
         league: fx.league,
         match: `${fx.home} - ${fx.away}`,
         pGG: est.pGG,
         pNG: est.pNG,
-        signal: sig,
+        signal: signalFromPgg(est.pGG, thrGG, thrNG),
         gfH: est.gfH, gsH: est.gaH,
         gfA: est.gfA, gsA: est.gaA,
         basePgg: est.basePgg,
@@ -741,17 +736,13 @@ $("btnRun").addEventListener("click", () => {
       });
     }
 
-    // sort by strongest signals first
     const rank = (s) => s.startsWith("🟢") ? 1 : s.startsWith("🔴") ? 2 : s.startsWith("🟡") ? 3 : 4;
     outRows.sort((a,b)=>{
       const ra=rank(a.signal), rb=rank(b.signal);
       if (ra !== rb) return ra - rb;
-      // then by extremeness
-      const ea = Math.abs(a.pGG - 0.5), eb = Math.abs(b.pGG - 0.5);
-      return eb - ea;
+      return Math.abs(b.pGG-0.5) - Math.abs(a.pGG-0.5);
     });
 
-    // render table
     const tb = $("outTable").querySelector("tbody");
     tb.innerHTML = "";
     for (const r of outRows){
@@ -773,7 +764,7 @@ $("btnRun").addEventListener("click", () => {
       tb.appendChild(tr);
     }
 
-    $("fixStatus").innerHTML = `<span class="pill ok">OK</span> Fixtures calcolate: ${ok} | non valutabili (poco storico): ${miss}`;
+    $("fixStatus").innerHTML = `<span class="pill ok">OK</span> Fixtures calcolate: ${ok} | non valutabili: ${miss}`;
     $("btnExport").disabled = outRows.length === 0;
 
   } catch(err){
@@ -781,7 +772,7 @@ $("btnRun").addEventListener("click", () => {
   }
 });
 
-/* ===== export output CSV ===== */
+/* ===== export ===== */
 $("btnExport").addEventListener("click", () => {
   const header = ["date","league","match","pGG_pct","pNG_pct","signal","gfH","gsH","gfA","gsA","baseGG_pct","usedN"];
   const lines = [header.join(",")];
@@ -805,12 +796,12 @@ $("btnExport").addEventListener("click", () => {
   const blob = new Blob([lines.join("\n")], {type:"text/csv;charset=utf-8"});
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
-  a.download = "syncras_fixtures_predictions_no_odds.csv";
+  a.download = "syncras_predictions_no_odds.csv";
   a.click();
   URL.revokeObjectURL(a.href);
 });
 
-/* if user changes parameters after prepare, re-run backtest for immediate feedback */
+/* auto-refresh backtest when params change */
 ["N","L","thrGG","thrNG","leagueFilter"].forEach(id=>{
   $(id).addEventListener("change", ()=>{ if(R.ready) runBacktest(); });
 });
